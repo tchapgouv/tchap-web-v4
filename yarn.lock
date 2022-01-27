@@ -8080,9 +8080,9 @@ matrix-mock-request@^1.2.3:
     bluebird "^3.5.0"
     expect "^1.20.2"
 
-"matrix-react-sdk@github:matrix-org/matrix-react-sdk#develop":
-  version "3.39.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-react-sdk/tar.gz/a55482b0ff892e37806f3e2d67724d89d7111b00"
+"matrix-react-sdk@github:tchapgouv/matrix-react-sdk-v4#develop_tchap":
+  version "3.38.0"
+  resolved "git+ssh://git@github.com/tchapgouv/matrix-react-sdk-v4.git#f7a9c857c07f656c27a1a1831af705b22ada4f33"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/linkify-element" "^4.0.0-rc.5"
