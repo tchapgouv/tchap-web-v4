@@ -8072,6 +8072,22 @@ matrix-events-sdk@^0.0.1-beta.6:
     request "^2.88.2"
     unhomoglyph "^1.0.6"
 
+"matrix-js-sdk@https://github.com/matrix-org/matrix-js-sdk#develop":
+  version "15.5.0"
+  resolved "https://github.com/matrix-org/matrix-js-sdk#9c242a9ce6d9039574b4032f7f5c1964b3db8d94"
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    another-json "^0.2.0"
+    browser-request "^0.3.3"
+    bs58 "^4.0.1"
+    content-type "^1.0.4"
+    loglevel "^1.7.1"
+    matrix-events-sdk "^0.0.1-beta.6"
+    p-retry "^4.5.0"
+    qs "^6.9.6"
+    request "^2.88.2"
+    unhomoglyph "^1.0.6"
+
 matrix-mock-request@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/matrix-mock-request/-/matrix-mock-request-1.2.3.tgz#56b15d86e2601a9b48a854844396d18caab649c8"
@@ -8143,6 +8159,24 @@ matrix-mock-request@^1.2.3:
     url "^0.11.0"
     what-input "^5.2.10"
     zxcvbn "^4.4.2"
+
+"matrix-react-sdk@https://github.com/tchapgouv/tchap-web-v4#develop_tchap":
+  version "1.9.9"
+  resolved "https://github.com/tchapgouv/tchap-web-v4#d049f8713ba43d01f765fa120b4f08b43b321aae"
+  dependencies:
+    "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz"
+    browser-request "^0.3.3"
+    gfm.css "^1.1.2"
+    jsrsasign "^10.2.0"
+    katex "^0.12.0"
+    matrix-js-sdk "github:matrix-org/matrix-js-sdk#develop"
+    matrix-react-sdk "github:tchapgouv/matrix-react-sdk-v4#develop_tchap"
+    matrix-widget-api "^0.1.0-beta.18"
+    prop-types "^15.7.2"
+    react "17.0.2"
+    react-dom "17.0.2"
+    sanitize-html "^2.3.2"
+    ua-parser-js "^0.7.24"
 
 matrix-react-test-utils@^0.2.3:
   version "0.2.3"
