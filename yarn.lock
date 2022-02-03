@@ -8057,10 +8057,10 @@ matrix-events-sdk@^0.0.1-beta.6:
   resolved "https://registry.yarnpkg.com/matrix-events-sdk/-/matrix-events-sdk-0.0.1-beta.6.tgz#9001090ed2e2bf29efc113d6b29871bcc6520749"
   integrity sha512-VMqPXe3Bg4R9yC9PNqGv6bDFwWlVYadYxp0Ke1ihhXUCpGcx7e28kOYcqK2T3RxLXK4KK7VH4JRbY53Do3r+Fw==
 
-"matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
+matrix-js-sdk@^15.5.0:
   version "15.5.0"
-  uid cf0ccaf93d32249a387c68dcd5f37d24dbcd4fc7
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/cf0ccaf93d32249a387c68dcd5f37d24dbcd4fc7"
+  resolved "https://registry.yarnpkg.com/matrix-js-sdk/-/matrix-js-sdk-15.5.0.tgz#747b3af4b5e1361e6404d88ac88c5518a4f751d3"
+  integrity sha512-Y8BoJ5xEejTeO2vwGrE4hNrSSOKLP6/brqeTy+gjjgti/PUhf+foC+ww9lHv7MqiNYFl9a/8tBf3crhU8+3jVw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
@@ -8074,9 +8074,9 @@ matrix-events-sdk@^0.0.1-beta.6:
     request "^2.88.2"
     unhomoglyph "^1.0.6"
 
-"matrix-js-sdk@https://github.com/matrix-org/matrix-js-sdk#develop":
+"matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
   version "15.5.0"
-  resolved "https://github.com/matrix-org/matrix-js-sdk#cf0ccaf93d32249a387c68dcd5f37d24dbcd4fc7"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/cf0ccaf93d32249a387c68dcd5f37d24dbcd4fc7"
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
@@ -8162,9 +8162,9 @@ matrix-mock-request@^1.2.3:
     what-input "^5.2.10"
     zxcvbn "^4.4.2"
 
-"matrix-react-sdk@https://github.com/tchapgouv/tchap-web-v4#develop_tchap":
+"matrix-react-sdk@github:tchapgouv/tchap-web-v4#develop_tchap":
   version "1.9.9"
-  resolved "https://github.com/tchapgouv/tchap-web-v4#d049f8713ba43d01f765fa120b4f08b43b321aae"
+  resolved "https://codeload.github.com/tchapgouv/tchap-web-v4/tar.gz/d049f8713ba43d01f765fa120b4f08b43b321aae"
   dependencies:
     "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz"
     browser-request "^0.3.3"
