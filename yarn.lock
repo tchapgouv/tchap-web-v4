@@ -1403,7 +1403,7 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/linkifyjs/-/linkifyjs-4.0.0-rc.6.tgz#62bce99272e0b2a78896b01651d8b26602247f32"
   integrity sha512-RoBejrxlv8jJjaZ9itTx0+JW8ECNEvj7iJzbD1rGhToLZjRZ5qXexWIa3+Vu4qmm+Yic+ETPCSH7odYWSYj/fA==
 
-"@matrix-org/olm@^3.2.8", "@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
+"@matrix-org/olm@^3.2.8":
   version "3.2.8"
   resolved "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz#8d53636d045e1776e2a2ec6613e57330dd9ce856"
   integrity sha1-jVNjbQReF3biouxmE+VzMN2c6FY=
@@ -8126,9 +8126,9 @@ matrix-mock-request@^1.2.3:
     bluebird "^3.5.0"
     expect "^1.20.2"
 
-"matrix-react-sdk@github:tchapgouv/matrix-react-sdk-v4#develop_tchap":
+"matrix-react-sdk@https://git@github.com/tchapgouv/matrix-react-sdk-v4#develop_tchap":
   version "3.38.0"
-  resolved "https://codeload.github.com/tchapgouv/matrix-react-sdk-v4/tar.gz/f7a9c857c07f656c27a1a1831af705b22ada4f33"
+  resolved "https://git@github.com/tchapgouv/matrix-react-sdk-v4#f7a9c857c07f656c27a1a1831af705b22ada4f33"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/linkify-element" "^4.0.0-rc.5"
@@ -8189,24 +8189,6 @@ matrix-mock-request@^1.2.3:
     url "^0.11.0"
     what-input "^5.2.10"
     zxcvbn "^4.4.2"
-
-"matrix-react-sdk@https://git@github.com/tchapgouv/tchap-web-v4#develop_tchap":
-  version "1.9.9"
-  resolved "https://git@github.com/tchapgouv/tchap-web-v4#d049f8713ba43d01f765fa120b4f08b43b321aae"
-  dependencies:
-    "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz"
-    browser-request "^0.3.3"
-    gfm.css "^1.1.2"
-    jsrsasign "^10.2.0"
-    katex "^0.12.0"
-    matrix-js-sdk "github:matrix-org/matrix-js-sdk#develop"
-    matrix-react-sdk "github:tchapgouv/matrix-react-sdk-v4#develop_tchap"
-    matrix-widget-api "^0.1.0-beta.18"
-    prop-types "^15.7.2"
-    react "17.0.2"
-    react-dom "17.0.2"
-    sanitize-html "^2.3.2"
-    ua-parser-js "^0.7.24"
 
 matrix-react-test-utils@^0.2.3:
   version "0.2.3"
