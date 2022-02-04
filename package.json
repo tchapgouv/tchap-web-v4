@@ -40,7 +40,7 @@
     "build:res": "node scripts/copy-res.js",
     "build:genfiles": "yarn reskindex && yarn build:res && yarn build:jitsi",
     "build:modernizr": "modernizr -c .modernizr.json -d src/vector/modernizr.js",
-    "build:bundle": "webpack --verbose --bail --mode production",
+    "build:bundle": "webpack --progress --bail --mode production",
     "build:bundle-stats": "webpack --progress --bail --mode production --json > webpack-stats.json",
     "dist": "scripts/package.sh",
     "start": "concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n reskindex,reskindex-react,res,element-js \"yarn reskindex:watch\" \"yarn reskindex:watch-react\" \"yarn start:res\" \"yarn start:js\"",
@@ -52,7 +52,8 @@
     "lint:js-fix": "eslint --fix src",
     "lint:types": "tsc --noEmit --jsx react",
     "lint:style": "stylelint 'res/css/**/*.scss'",
-    "test": "jest"
+    "test": "jest",
+    "scalingo-prebuild": "yarn --cwd node_modules/matrix-react-sdk reskindex"
   },
   "dependencies": {
     "@matrix-org/olm": "^3.2.8",
