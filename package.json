@@ -53,7 +53,7 @@
     "lint:types": "tsc --noEmit --jsx react",
     "lint:style": "stylelint 'res/css/**/*.scss'",
     "test": "jest",
-    "scalingo-prebuild": "cd ./node_modules/matrix-react-sdk && yarn run reskindex"
+    "scalingo-prebuild": "ls -la && cd node_modules && cd matrix-react-sdk && yarn reskindex"
   },
   "dependencies": {
     "@matrix-org/olm": "^3.2.8",
