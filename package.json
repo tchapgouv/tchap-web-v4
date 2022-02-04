@@ -34,7 +34,7 @@
     "reskindex:watch": "reskindex -h src/header -w",
     "reskindex:watch-react": "node scripts/yarn-sub.js matrix-react-sdk reskindex:watch",
     "clean": "rimraf lib webapp",
-    "build": "yarn clean && yarn build:genfiles && yarn build:bundle-stats",
+    "build": "yarn clean && yarn build:genfiles && yarn build:bundle --verbose",
     "build-stats": "yarn clean && yarn build:genfiles && yarn build:bundle-stats",
     "build:jitsi": "node scripts/build-jitsi.js",
     "build:res": "node scripts/copy-res.js",
