@@ -31,7 +31,7 @@
     "default_theme": "light",
     "roomDirectory": {
         "servers": [
-            "matrix.org"
+            "i.tchap.gouv.fr"
         ]
     },
     "piwik": {
