@@ -8,11 +8,11 @@
             "base_url": "https://matrix.i.tchap.gouv.fr"
         }
     },
-    "disable_custom_urls": false,
-    "disable_guests": false,
+    "disable_custom_urls": true,
+    "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": true,
-    "brand": "Element",
+    "brand": "Tchap",
     "integrations_ui_url": "https://scalar.vector.im/",
     "integrations_rest_url": "https://scalar.vector.im/api",
     "integrations_widgets_urls": [
@@ -24,11 +24,11 @@
     ],
     "bug_report_endpoint_url": "https://element.io/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
-    "defaultCountryCode": "GB",
+    "defaultCountryCode": "FR",
     "showLabsSettings": false,
     "features": { },
     "default_federate": true,
-    "default_theme": "light",
+    "default_theme": "custom-Tchap",
     "roomDirectory": {
         "servers": [
             "i.tchap.gouv.fr"
@@ -45,7 +45,30 @@
         "https://matrix-client.matrix.org": false
     },
     "settingDefaults": {
-        "breadcrumbs": true
+        "breadcrumbs": true,
+        "UIFeature.voip": false,
+        "UIFeature.shareSocial": false,
+        "custom_themes": [
+            {
+                "name": "Tchap",
+                "is_dark": false,
+                "colors": {
+                    "accent": "#162d58",
+                    "primary": "#368bd6",
+                    "warning": "#ff4b55",
+                    "sidebar-color": "#162d58",
+                    "roomlist-background-color": "#f3f8fd",
+                    "roomlist-text-color": "#2e2f32",
+                    "roomlist-text-secondary-color": "#61708b",
+                    "roomlist-highlights-color": "#ffffff",
+                    "roomlist-separator-color": "#e3e8f0",
+                    "timeline-background-color": "#ffffff",
+                    "timeline-text-color": "#2e2f32",
+                    "timeline-text-secondary-color": "#61708b",
+                    "timeline-highlights-color": "#f3f8fd"
+                }
+            }
+        ]
     },
     "jitsi": {
         "preferredDomain": "meet.element.io"
