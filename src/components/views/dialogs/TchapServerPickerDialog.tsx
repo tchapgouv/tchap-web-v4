@@ -31,11 +31,13 @@ interface IProps {
 export default class TchapServerPickerDialog extends React.PureComponent<IProps> {
     static replaces = 'ServerPickerDialog';
 
+    selectedHomeServer: string;
+
     private onSubmit = async (ev) => {
         ev.preventDefault();
 
-        const hsUrl = 'matrix.i.tchap.gouv.fr'; // todo pick from list
-        // todo normalise to full url ? or just use full urls in config
+        const hsUrl = this.selectedHomeServer;
+        console.log('onSubmit found hsUrl', hsUrl);
 
         // Fake the discovery process, we don't need it since we know our own servers.
         const discoveryResult = {
@@ -59,12 +61,29 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
         return SdkConfig.get()['hs_url_list'];
     };
 
+    private onHomeServerSelected = (homeServer) => {
+        console.log('onHomeServerSelected', homeServer);
+        this.selectedHomeServer = homeServer;
+    };
+
     public render() {
         // Imports
         const BaseDialog = sdk.getComponent('dialogs.BaseDialog');
         const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        const StyledRadioGroup = sdk.getComponent('elements.StyledRadioGroup');
 
         const homeServerList = this.getHomeServerList();
+
+        const options = homeServerList.map(hsUrl => {
+            return {
+                value: hsUrl,
+                label: <span>Ministère de { hsUrl }</span>,
+                description: <span>Exemple d'emails dans { hsUrl }</span>,
+            };
+        });
+        // todo : add server names, and email examples.
+
+        this.selectedHomeServer = "";
 
         return <BaseDialog
             title={this.props.title || _t("Sign into your homeserver")}
@@ -79,9 +98,12 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
                     <label htmlFor="homeservers">Choose a homeserver (todo : translate this) :</label>
                 </div>
                 <div>
-                    <select name="homeservers" id="homeservers">
-                        { homeServerList.map((url) => <option key={url} value={url}>{ url }</option>) }
-                    </select>;
+                    <StyledRadioGroup
+                        name="homeservers"
+                        value={this.selectedHomeServer}
+                        onChange={this.onHomeServerSelected}
+                        definitions={options}
+                    />
                 </div>
 
                 <AccessibleButton className="mx_ServerPickerDialog_continue" kind="primary" onClick={this.onSubmit}>

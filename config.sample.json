@@ -8,6 +8,10 @@
             "base_url": "https://matrix.i.tchap.gouv.fr"
         }
     },
+    "hs_url_list": [
+        "matrix.i.tchap.gouv.fr",
+        "matrix.e.tchap.gouv.fr"
+    ],
     "disable_custom_urls": false,
     "disable_guests": false,
     "disable_login_language_selector": false,
