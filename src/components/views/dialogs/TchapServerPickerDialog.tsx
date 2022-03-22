@@ -15,15 +15,24 @@ limitations under the License.
 */
 
 import React from "react";
+import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 
 export default class TchapServerPickerDialog extends React.PureComponent {
     static replaces = 'ServerPickerDialog';
 
     public render() {
+        const hsList = SdkConfig.get()['hs_url_list'];
+        const dropdownList = <select name="homeservers" id="homeservers">
+            { hsList.map((url) => <option value="{url}">{ url }</option>) }
+        </select>;
         return <div
             className="mx_ServerPickerDialog"
         >
-            COUCOU
+            <form>
+                <label htmlFor="homeservers">Choose a homeserver (todo translate this) :</label>
+                { dropdownList }
+                <input type="submit" value="Submit" />
+            </form>
         </div>;
     }
 }
