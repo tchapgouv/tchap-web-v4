@@ -55,10 +55,11 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
         // Then continue the same flow as the original ServerPickerDialog.
         const validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(hsUrl, discoveryResult);
         this.props.onFinished(validatedConf);
+        // todo : when dialog closes, can we display the name of the server instead of the url ?
     };
 
     private getHomeServerList = () => {
-        return SdkConfig.get()['hs_url_list'];
+        return SdkConfig.get()['homeserver_list'];
     };
 
     private onHomeServerSelected = (homeServer) => {
@@ -74,14 +75,13 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
 
         const homeServerList = this.getHomeServerList();
 
-        const options = homeServerList.map(hsUrl => {
+        const options = homeServerList.map(homeServer => {
             return {
-                value: hsUrl,
-                label: <span>Ministère de { hsUrl }</span>,
-                description: <span>Exemple d'emails dans { hsUrl }</span>,
+                value: homeServer.url,
+                label: <span>{ homeServer.server_name }</span>,
+                description: <span>{ homeServer.email_examples }</span>,
             };
         });
-        // todo : add server names, and email examples.
 
         this.selectedHomeServer = "";
 

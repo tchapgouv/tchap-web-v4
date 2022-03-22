@@ -2,15 +2,23 @@
     "default_server_config": {
         "m.homeserver": {
             "base_url": "https://matrix.i.tchap.gouv.fr",
-            "server_name": "Matrix Internes Preprod"
+            "server_name": "Internes - preprod"
         },
         "m.identity_server": {
             "base_url": "https://matrix.i.tchap.gouv.fr"
         }
     },
-    "hs_url_list": [
-        "matrix.i.tchap.gouv.fr",
-        "matrix.e.tchap.gouv.fr"
+    "homeserver_list": [
+        {
+            "url": "matrix.i.tchap.gouv.fr",
+            "server_name": "Internes - preprod",
+            "email_examples": "hakim@beta.gouv.fr, alice@dinterieur.gouv.fr, ..."
+        },
+        {
+            "url": "matrix.e.tchap.gouv.fr",
+            "server_name": "Externes - preprod",
+            "email_examples": "nina@soprasteria.com, pedro@athos.fr, ..."
+        }
     ],
     "disable_custom_urls": false,
     "disable_guests": false,
