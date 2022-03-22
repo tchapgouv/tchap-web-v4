@@ -1,11 +1,11 @@
 {
     "default_server_config": {
         "m.homeserver": {
-            "base_url": "https://matrix-client.matrix.org",
-            "server_name": "matrix.org"
+            "base_url": "https://matrix.i.tchap.gouv.fr",
+            "server_name": "Matrix Internes Preprod"
         },
         "m.identity_server": {
-            "base_url": "https://vector.im"
+            "base_url": "https://matrix.i.tchap.gouv.fr"
         }
     },
     "disable_custom_urls": false,
@@ -31,7 +31,7 @@
     "default_theme": "light",
     "roomDirectory": {
         "servers": [
-            "matrix.org"
+            "i.tchap.gouv.fr"
         ]
     },
     "piwik": {
