@@ -35,23 +35,19 @@ interface IState {
 export default class TchapServerPickerDialog extends React.PureComponent<IProps, IState> {
     static replaces = 'ServerPickerDialog';
 
-    private removeProtocolFromUrl = (url) => {
-        return url.replace(/^https?:\/\//, '');
-    };
-
-    private findHomeServerInListByUrl = url => {
-        return this.homeServerList.find(homeServer => homeServer.url === url);
-    };
+    homeServerList;
 
     constructor(props) {
         super(props);
-        this.homeServerList = this.getHomeServerList();
+        this.homeServerList = SdkConfig.get()['homeserver_list'];
         this.state = {
-            selectedHomeServerUrl: this.removeProtocolFromUrl(props.serverConfig.hsUrl),
+            selectedHomeServerUrl: props.serverConfig.hsUrl,
         };
     }
 
-    homeServerList;
+    private findHomeServerInListByUrl = url => {
+        return this.homeServerList.find(homeServer => homeServer.base_url === url);
+    };
 
     private onSubmit = async (ev) => {
         ev.preventDefault();
@@ -63,13 +59,13 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
             "m.homeserver": {
                 state: "SUCCESS",
                 error: null,
-                base_url: "https://" + selectedHomeServer.url, // todo use "base_url" instead of "url" ?
+                base_url: selectedHomeServer.base_url,
                 server_name: selectedHomeServer.server_name,
             },
             "m.identity_server": {
                 state: "PROMPT",
                 error: null,
-                base_url: "https://" + selectedHomeServer.url, // On Tchap our Identity server urls and home server urls are the same
+                base_url: selectedHomeServer.base_url, // On Tchap our Identity server urls and home server urls are the same
                 server_name: selectedHomeServer.server_name,
             },
         };
@@ -77,10 +73,6 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
         const validatedConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
             discoveryResult['m.homeserver'].server_name, discoveryResult);
         this.props.onFinished(validatedConf);
-    };
-
-    private getHomeServerList = () => {
-        return SdkConfig.get()['homeserver_list'];
     };
 
     private onHomeServerSelected = (homeServerUrl) => {
@@ -97,7 +89,7 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
 
         const radioButtonOptions = this.homeServerList.map(homeServer => {
             return {
-                value: homeServer.url,
+                value: homeServer.base_url,
                 label: <span>{ homeServer.server_name }</span>,
                 description: <span>{ homeServer.email_examples }</span>,
             };
