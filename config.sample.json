@@ -12,7 +12,7 @@
         {
             "base_url": "https://matrix.i.tchap.gouv.fr",
             "server_name": "Internes - preprod",
-            "email_examples": "hakim@beta.gouv.fr, alice@dinterieur.gouv.fr, ..."
+            "email_examples": "hakim@beta.gouv.fr, alice@interieur.gouv.fr, ..."
         },
         {
             "base_url": "https://matrix.e.tchap.gouv.fr",

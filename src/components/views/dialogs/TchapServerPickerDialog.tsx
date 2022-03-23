@@ -119,12 +119,6 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
                 <AccessibleButton className="mx_ServerPickerDialog_continue" kind="primary" onClick={this.onSubmit}>
                     { _t("Continue") }
                 </AccessibleButton>
-
-                <h4>{ _t("Learn more") }</h4>
-                <a href="https://matrix.org/faq/#what-is-a-homeserver%3F" target="_blank" rel="noreferrer noopener">
-                    { _t("About homeservers") }
-                </a>
-
             </form>
         </BaseDialog>;
     }
