@@ -105,7 +105,7 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
         >
             <form>
                 <div>
-                    <label htmlFor="homeservers"> { _t("Choose a homeserver :") }</label>
+                    <label htmlFor="homeservers"> { _t("Choose a homeserver:") }</label>
                 </div>
                 <div>
                     <StyledRadioGroup
