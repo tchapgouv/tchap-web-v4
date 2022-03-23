@@ -1,3 +1,7 @@
+/*
+* Copyright 2022 DINUM "Apache License" version 2.0
+*/
+
 import React from "react";
 import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 import { _t } from "matrix-react-sdk/src/languageHandler";
