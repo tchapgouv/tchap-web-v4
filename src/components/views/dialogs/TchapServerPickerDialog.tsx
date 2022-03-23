@@ -24,19 +24,29 @@ import AutoDiscoveryUtils, { ValidatedServerConfig } from "matrix-react-sdk/src/
 
 interface IProps {
     title?: string;
-    serverConfig: ValidatedServerConfig;
+    serverConfig: ValidatedServerConfig; // todo this is never used
     onFinished(config?: ValidatedServerConfig): void;
 }
 
-export default class TchapServerPickerDialog extends React.PureComponent<IProps> {
+interface IState {
+    selectedHomeServer: string;
+}
+
+export default class TchapServerPickerDialog extends React.PureComponent<IProps, IState> {
     static replaces = 'ServerPickerDialog';
 
-    selectedHomeServer: string;
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selectedHomeServer: 'matrix.e.tchap.gouv.fr', // todo don't hard code
+        };
+    }
 
     private onSubmit = async (ev) => {
         ev.preventDefault();
 
-        const hsUrl = this.selectedHomeServer;
+        const hsUrl = this.state.selectedHomeServer;
         console.log('onSubmit found hsUrl', hsUrl);
 
         // Fake the discovery process, we don't need it since we know our own servers.
@@ -64,7 +74,9 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
 
     private onHomeServerSelected = (homeServer) => {
         console.log('onHomeServerSelected', homeServer);
-        this.selectedHomeServer = homeServer;
+        this.setState({
+            selectedHomeServer: homeServer,
+        });
     };
 
     public render() {
@@ -83,8 +95,6 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
             };
         });
 
-        this.selectedHomeServer = "";
-
         return <BaseDialog
             title={this.props.title || _t("Sign into your homeserver")}
             className="mx_ServerPickerDialog"
@@ -100,7 +110,7 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps>
                 <div>
                     <StyledRadioGroup
                         name="homeservers"
-                        value={this.selectedHomeServer}
+                        value={this.state.selectedHomeServer}
                         onChange={this.onHomeServerSelected}
                         definitions={options}
                     />
