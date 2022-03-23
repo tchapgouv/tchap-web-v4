@@ -17,7 +17,7 @@
         {
             "base_url": "https://matrix.e.tchap.gouv.fr",
             "server_name": "Externes - preprod",
-            "email_examples": "nina@soprasteria.com, pedro@athos.fr, ..."
+            "email_examples": "nina@soprasteria.com, paul@athos.fr, ..."
         }
     ],
     "disable_custom_urls": false,

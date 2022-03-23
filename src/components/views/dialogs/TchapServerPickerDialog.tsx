@@ -91,7 +91,7 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
             return {
                 value: homeServer.base_url,
                 label: <span>{ homeServer.server_name }</span>,
-                description: <span>{ homeServer.email_examples }</span>,
+                description: <span> { _t("Examples:") } { homeServer.email_examples }</span>,
             };
         });
 
@@ -105,7 +105,7 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
         >
             <form>
                 <div>
-                    <label htmlFor="homeservers">Choose a homeserver (todo : translate this) :</label>
+                    <label htmlFor="homeservers"> { _t("Choose a homeserver :") }</label>
                 </div>
                 <div>
                     <StyledRadioGroup
@@ -121,7 +121,6 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
                 </AccessibleButton>
 
                 <h4>{ _t("Learn more") }</h4>
-                Todo : specific documentation for tchap
                 <a href="https://matrix.org/faq/#what-is-a-homeserver%3F" target="_blank" rel="noreferrer noopener">
                     { _t("About homeservers") }
                 </a>
