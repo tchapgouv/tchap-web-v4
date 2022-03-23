@@ -1,6 +1,6 @@
 name: Bug report for Element Web (in browser)
 description: File a bug report if you are using Element in a web browser like Firefox, Chrome, Edge, and so on.
-labels: [T-Defect]
+labels: [web, v4, bug]
 body:
   - type: markdown
     attributes:
@@ -42,7 +42,7 @@ body:
     id: browser
     attributes:
       label: Browser information
-      description: Which browser are you using? Which version? 
+      description: Which browser are you using? Which version?
       placeholder: e.g. Chromium Version 92.0.4515.131
     validations:
       required: false
