@@ -8,7 +8,7 @@
             "base_url": "https://matrix.i.tchap.gouv.fr"
         }
     },
-    "disable_custom_urls": true,
+    "disable_custom_urls": false,
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": true,
@@ -53,7 +53,7 @@
         ]
     },
     "branding": {
-        "authHeaderLogoUrl": "themes/element/img/logos/tchap-logo.svg",
+        "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
         "authFooterLinks": []
     },
     "jitsi": {

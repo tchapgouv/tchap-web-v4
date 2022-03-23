@@ -3,7 +3,7 @@
     "powered by Matrix": "propulsé par Matrix",
     "Unknown device": "Appareil inconnu",
     "You need to be using HTTPS to place a screen-sharing call.": "Vous devez utiliser HTTPS pour effectuer un appel avec partage d’écran.",
-    "Welcome to Tchap": "Bienvenue sur Tchap",
+    "Welcome to Element": "Bienvenue sur Element",
     "Decentralised, encrypted chat &amp; collaboration powered by [matrix]": "Messagerie et collaboration décentralisées et chiffrées, propulsées par [matrix]",
     "Sign In": "Se connecter",
     "Create Account": "Créer un compte",
@@ -38,5 +38,6 @@
     "Next recently visited room or community": "Prochain salon ou communauté récemment visité",
     "Previous recently visited room or community": "Salon ou communauté précédemment visité",
     "Username": "E-mail",
-    "Username_comments": "We use E-mail to login in Tchap. The Login code accepts both username and email. So the simplest change for us to force login by email is to just rename the Username field to Email."
+    "Username_comments": "We use E-mail to login in Tchap. The Login code accepts both username and email. So the simplest change for us to force login by email is to just rename the Username field to Email.",
+    "Welcome to Tchap": "Bienvenue sur Tchap"
 }
