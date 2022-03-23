@@ -3,7 +3,7 @@
 set -e
 
 # only available in npm versions > 16
-version=$(npm pkg get version)
+version=$(npm pkg get version | sed 's/"//g')
 #version=$(grep '"version"' package.json | cut -d '"' -f 4 | head -n 1)
 
 yarn clean
@@ -16,10 +16,10 @@ cp nginx.conf.erb webapp/nginx.conf.erb
 mkdir -p dist
 cp -r webapp element-$version
 
-"$(dirname $0)"/normalize-version.sh "${version}" > "element-$version/version"
+$(dirname $0)/normalize-version.sh ${version} > element-$version/version
 
-tar chvzf "dist/element-$version.tar.gz" "element-$version"
-rm -r "element-$version"
+tar chvzf dist/element-$version.tar.gz element-$version
+rm -r element-$version
 
 echo
 echo "Packaged dist/element-$version.tar.gz"
