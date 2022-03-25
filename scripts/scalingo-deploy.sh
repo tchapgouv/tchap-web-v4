@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script is meant to be run locally, to push a locally-made build to a Scalingo machine.
+
 set -e
 
 # only available in npm versions > 16
