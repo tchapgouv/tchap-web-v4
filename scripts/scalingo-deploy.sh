@@ -13,7 +13,13 @@ VERSION=$version yarn build
 
 # FIXME use a dedicated config
 cp config.sample.json webapp/config.json
-cp nginx.conf.erb webapp/nginx.conf.erb
+# Conflict with default nginx.conf.erb
+echo "root /app;
+
+location / {
+    index index.html;
+}
+" > webapp/nginx.conf.erb
 
 mkdir -p dist
 cp -r webapp element-$version
