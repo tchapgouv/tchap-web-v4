@@ -59,19 +59,7 @@
                 "name": "Tchap",
                 "is_dark": false,
                 "colors": {
-                    "accent": "#162d58",
-                    "primary-color": "#368bd6",
-                    "warning-color": "#ff4b55",
-                    "sidebar-color": "#27303a",
-                    "roomlist-background-color": "#f3f8fd",
-                    "roomlist-text-color": "#2e2f32",
-                    "roomlist-text-secondary-color": "#61708b",
-                    "roomlist-highlights-color": "#ffffff",
-                    "roomlist-separator-color": "#e3e8f0",
-                    "timeline-background-color": "#ffffff",
-                    "timeline-text-color": "#2e2f32",
-                    "timeline-text-secondary-color": "#61708b",
-                    "timeline-highlights-color": "#f3f8fd"
+                    "accent": "#162d58"
                 }
             }
         ]
@@ -86,7 +74,5 @@
     "desktopBuilds": {
         "available": false
     },
-    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
-    "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
-    "custom_translations_url": "/i18n/tchap_translations.json"
+    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
 }
