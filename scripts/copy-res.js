@@ -12,6 +12,7 @@ const loaderUtils = require("loader-utils");
 // control when new languages are available.
 const INCLUDE_LANGS = [
     {'value': 'en_EN', 'label': 'English'},
+    {'value': 'en_US', 'label': 'English (US)'},
     {'value': 'fr', 'label': 'Français'}
 ];
 
