@@ -36,10 +36,5 @@
     "Use %(brand)s on mobile": "Utiliser %(brand)s sur téléphone",
     "Switch to space by number": "Afficher un espace par son numéro",
     "Next recently visited room or community": "Prochain salon ou communauté récemment visité",
-    "Previous recently visited room or community": "Salon ou communauté précédemment visité",
-    "Username": "E-mail",
-    "Username_comments": "We use E-mail to login in Tchap. The Login code accepts both username and email. So the simplest change for us to force login by email is to just rename the Username field to Email.",
-    "Welcome to Tchap": "Bienvenue sur Tchap",
-    "Examples:": "Exemples :",
-    "Choose a homeserver:": "Choisissez un serveur d'accueil :"
+    "Previous recently visited room or community": "Salon ou communauté précédemment visité"
 }
