@@ -10,6 +10,10 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 import * as sdk from 'matrix-react-sdk/src/index';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 
+// directly import the style here as this layer does not support rethemedex at this time so no matrix-react-sdk
+// scss variables will be accessible.
+import "../../../../res/css/views/dialogs/_TchapServerPickerDialog.scss";
+
 interface IProps {
     title?: string;
     serverConfig: ValidatedServerConfig;
@@ -78,8 +82,10 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
         const radioButtonOptions = this.homeServerList.map(homeServer => {
             return {
                 value: homeServer.base_url,
-                label: <span>{ homeServer.server_name }</span>,
-                description: <span> { _t("Examples:") } { homeServer.email_examples }</span>,
+                label: <span className="mx_ServerPickerDialog_optionLabel">{ homeServer.server_name }</span>,
+                description: <span className="mx_ServerPickerDialog_optionDescription">
+                    { _t("Examples:") } { homeServer.email_examples }
+                </span>,
             };
         });
 
@@ -93,9 +99,13 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
         >
             <form>
                 <div>
-                    <label htmlFor="homeservers"> { _t("Choose a homeserver:") }</label>
+                    <label htmlFor="homeservers">
+                        <h4>
+                            { _t("Choose a homeserver:") }
+                        </h4>
+                    </label>
                 </div>
-                <div>
+                <div className="mx_ServerPickerDialog_radioGroup">
                     <StyledRadioGroup
                         name="homeservers"
                         value={this.state.selectedHomeServerUrl}
