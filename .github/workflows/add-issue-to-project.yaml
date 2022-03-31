@@ -1,3 +1,6 @@
+# Specify the ORGANIZATION and the PROJECT_NUMBER.
+# The token TRIAGE_TOKEN is a personal token with scopes "repo", "write:org" and "read:org", and added to the organization secrets.
+# Note that your repo needs to be in the scope of the TRIAGE_TOKEN : you can add your repo in the settings of the organization secrets.
 name: Add issue to project
 on:
   issues:
