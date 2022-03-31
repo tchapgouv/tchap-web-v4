@@ -1,0 +1,3 @@
+{
+    "src/components/views/dialogs/ServerPickerDialog.tsx": "src/components/views/dialogs/TchapServerPickerDialog.tsx"
+}

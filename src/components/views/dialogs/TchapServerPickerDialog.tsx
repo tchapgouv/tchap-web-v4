@@ -7,12 +7,18 @@ import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 import { _t } from "matrix-react-sdk/src/languageHandler";
 // We import components from the react-sdk like this to avoid " Attempted to get a component before a skin
 // has been loaded"
-import * as sdk from 'matrix-react-sdk/src/index';
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 
+// not needed now
+// import * as sdk from 'matrix-react-sdk/src/index';
+import AutoDiscoveryUtils, { ValidatedServerConfig } from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 // directly import the style here as this layer does not support rethemedex at this time so no matrix-react-sdk
 // scss variables will be accessible.
+// this one still disturb me
+
 import "../../../../res/css/views/dialogs/_TchapServerPickerDialog.scss";
+import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
+import StyledRadioGroup from "matrix-react-sdk/src/components/views/elements/StyledRadioGroup";
+import AccessibleButton from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 
 interface IProps {
     title?: string;
@@ -25,8 +31,6 @@ interface IState {
 }
 
 export default class TchapServerPickerDialog extends React.PureComponent<IProps, IState> {
-    static replaces = 'ServerPickerDialog';
-
     homeServerList;
 
     constructor(props) {
@@ -75,9 +79,10 @@ export default class TchapServerPickerDialog extends React.PureComponent<IProps,
 
     public render() {
         // Imports
-        const BaseDialog = sdk.getComponent('dialogs.BaseDialog');
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const StyledRadioGroup = sdk.getComponent('elements.StyledRadioGroup');
+        // not needed now
+        // const BaseDialog = sdk.getComponent('dialogs.BaseDialog');
+        // const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
+        // const StyledRadioGroup = sdk.getComponent('elements.StyledRadioGroup');
 
         const radioButtonOptions = this.homeServerList.map(homeServer => {
             return {
