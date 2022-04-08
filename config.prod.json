@@ -108,7 +108,9 @@
     "uisi_autorageshake_app": "element-auto-uisi",
     "defaultCountryCode": "FR",
     "showLabsSettings": false,
-    "features": { },
+    "features": {
+        "feature_thread": true
+    },
     "default_federate": true,
     "default_theme": "custom-Tchap",
     "roomDirectory": {
@@ -139,6 +141,7 @@
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
+        "UIFeature.registration": false,
         "custom_themes": [
             {
                 "name": "Tchap",
