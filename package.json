@@ -25,6 +25,9 @@
     "package.json",
     "contribute.json"
   ],
+  "engines": {
+    "node": "16.13.2"
+  },
   "style": "bundle.css",
   "scripts": {
     "i18n": "matrix-gen-i18n",
