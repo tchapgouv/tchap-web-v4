@@ -142,6 +142,7 @@
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
         "UIFeature.registration": false,
+        "layout": "bubble",
         "custom_themes": [
             {
                 "name": "Tchap",
