@@ -15,6 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/*
+Note on imports : because this file will be copied to a different directory by the customisations
+mechanism, imports must use absolute paths.
+Except when importing from other customisation files. Then imports must use relative paths.
+*/
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
@@ -32,10 +37,11 @@ import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import SpaceStore from "matrix-react-sdk/src/stores/spaces/SpaceStore";
-import JoinRuleDropdown from "matrix-react-sdk/src/components/views/elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
 import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
+
+import TchapRoomTypeDropdown from "./../elements/TchapRoomTypeDropdown";
 // todo remove unused imports at the end.
 
 // todo maybe move this somewhere else ?
@@ -65,16 +71,8 @@ interface IProps {
 }
 
 interface IState {
-//    joinRule: JoinRule;
- //   isPublic: boolean;
-  //  isEncrypted: boolean;
     name: string;
-    //topic: string;
-   // alias: string;
-    //detailsOpen: boolean;
-    //noFederate: boolean;
     nameIsValid: boolean;
-    //canChangeEncryption: boolean;
     tchapRoomType: TchapRoomType;
 }
 
@@ -88,7 +86,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-        }
+        };
     }
 
     componentDidMount() {
@@ -137,7 +135,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 break;
         }
     };
-    
 
     private onOk = async () => {
         const activeElement = document.activeElement as HTMLElement;
@@ -208,9 +205,8 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         return opts;
     }
 
-
     render() {
-        let title = _t("Create a room");
+        const title = _t("Create a room");
         /* todo do we need this ?
         if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
             const name = CommunityPrototypeStore.instance.getSelectedCommunityName();
@@ -238,24 +234,10 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             className="mx_CreateRoomDialog_name"
                         />
 
-                        { /* todo this is actually not a JoinRuleDropdown, but a TchapRoomTypeDropdown. */ }
-                        <Dropdown
-                            id="tc_TchapRoomTypeDropdown"
-                            className="tc_TchapRoomTypeDropdown"
-                            onOptionChange={onChange}
-                            menuWidth={width}
-                            value={value}
-                            label={label}
-                        >
-                            { options }
-                        </Dropdown>
-                        <JoinRuleDropdown
-                            label={_t("Type of room")}
-                            labelInvite={_t("Salon with externs")}
-                            labelPublic={_t("Forum - Public room")}
-                            labelRestricted={_t("Salon without externs")}
-                            value={this.state.tchapRoomType}
+                        <TchapRoomTypeDropdown
                             onChange={this.onTchapRoomTypeChange}
+                            value={this.state.tchapRoomType}
+                            label={_t("Type of room")}
                         />
 
                     </div>
