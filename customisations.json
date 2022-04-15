@@ -1,3 +1,4 @@
 {
-  "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx"
+  "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
+  "src/components/views/elements/JoinRuleDropdown.tsx": "src/components/views/elements/TchapRoomTypeDropdown.tsx"
 }

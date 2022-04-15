@@ -15,6 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/*
+Note on imports : because this file will be copied to a different directory by the customisations
+mechanism, imports must use absolute paths.
+Except when importing from other customisation files. Then imports must use relative paths.
+*/
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
@@ -32,10 +37,10 @@ import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import SpaceStore from "matrix-react-sdk/src/stores/spaces/SpaceStore";
-import Dropdown from "matrix-react-sdk/src/components/views/elements/Dropdown";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
 
+import TchapRoomTypeDropdown from "./../elements/TchapRoomTypeDropdown";
 // todo remove unused imports at the end.
 
 // todo maybe move this somewhere else ?
@@ -55,16 +60,8 @@ interface IProps {
 }
 
 interface IState {
-//    joinRule: JoinRule;
- //   isPublic: boolean;
-  //  isEncrypted: boolean;
     name: string;
-    //topic: string;
-   // alias: string;
-    //detailsOpen: boolean;
-    //noFederate: boolean;
     nameIsValid: boolean;
-    //canChangeEncryption: boolean;
     tchapRoomType: TchapRoomType;
 }
 
@@ -187,25 +184,11 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             className="mx_CreateRoomDialog_name"
                         />
 
-                        { /** todo move this to another file */ }
-                        <Dropdown
-                            id="tc_TchapRoomTypeDropdown"
-                            className="tc_TchapRoomTypeDropdown"
-                            onOptionChange={this.onTchapRoomTypeChange}
-                            menuWidth={448}
+                        <TchapRoomTypeDropdown
+                            onChange={this.onTchapRoomTypeChange}
                             value={this.state.tchapRoomType}
                             label={_t("Type of room")}
-                        >
-                            <div key={TchapRoomType.Private}>
-                                { _t("Salon without externs") }
-                            </div>
-                            <div key={TchapRoomType.External}>
-                                { _t("Salon with externs") }
-                            </div>
-                            <div key={TchapRoomType.Forum}>
-                                { _t("Forum") }
-                            </div>
-                        </Dropdown>
+                        />
 
                     </div>
                 </form>
