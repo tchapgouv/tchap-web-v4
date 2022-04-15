@@ -21,7 +21,7 @@ interface IState {
 }
 
 // todo rename, not a dropdown anymore
-export default class TchapRoomTypeDropdown extends React.Component<IProps, IState> {
+export default class TchapRoomTypeSelector extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 

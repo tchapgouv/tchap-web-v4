@@ -41,7 +41,7 @@ import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
 import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
 
-import TchapRoomTypeDropdown from "./../elements/TchapRoomTypeDropdown";
+import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../@types/tchap";
 // todo remove unused imports at the end.
 
@@ -157,11 +157,11 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         const opts: IOpts = {};
         const createRoomOpts: ITchapCreateRoomOpts = {};
         opts.createOpts = createRoomOpts;
-        
+
         //tchap common options
         createRoomOpts.name = name;
         opts.guestAccess = false; //guest access are not authorized in tchap
-        
+
         //todo: always activate federation within tchap, I guess?
         //from ealier tchap -> noFederate: Tchap.getShortDomain() === "Agent" ? false : !this.state.federate,
         createRoomOpts.creation_content = { 'm.federate': true };
@@ -175,7 +175,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 opts.joinRule = JoinRule.Public;
                 opts.encryption = false;
                 opts.historyVisibility = HistoryVisibility.Shared;
-            
+
             }
             case TchapRoomType.Private:{
                 //"Salon", only for tchap member and encrypted
@@ -187,7 +187,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 opts.historyVisibility = HistoryVisibility.Joined;
             }
             case TchapRoomType.External:{
-                //open to external and encrypted, 
+                //open to external and encrypted,
                 createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted
                 createRoomOpts.visibility = Visibility.Private;
                 createRoomOpts.preset = Preset.PrivateChat;
@@ -228,7 +228,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             className="mx_CreateRoomDialog_name"
                         />
 
-                        <TchapRoomTypeDropdown
+                        <TchapRoomTypeSelector
                             onChange={this.onTchapRoomTypeChange}
                             value={this.state.tchapRoomType}
                             label={_t("Type of room")}
