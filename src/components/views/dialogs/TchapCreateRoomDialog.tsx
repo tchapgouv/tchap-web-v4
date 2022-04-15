@@ -35,6 +35,7 @@ import SpaceStore from "matrix-react-sdk/src/stores/spaces/SpaceStore";
 import JoinRuleDropdown from "matrix-react-sdk/src/components/views/elements/JoinRuleDropdown";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
+import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
 // todo remove unused imports at the end.
 
 // todo maybe move this somewhere else ?
@@ -43,6 +44,16 @@ export enum TchapRoomType {
     Private = "private",
     External = "external",
     Forum = "forum",
+}
+
+// todo maybe move this somewhere else ?
+export enum TchapRoomAccessRule {
+    Unrestricted = "unrestricted", // todo not used in this file, we haven't implemented DMs yet
+    Restricted = "restricted"
+}
+
+export interface ITchapCreateRoomOpts extends ICreateRoomOpts{
+    accessRule?:TchapRoomAccessRule
 }
 
 interface IProps {
@@ -138,7 +149,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         // first. Queue a `setState` callback and wait for it to resolve.
         await new Promise<void>(resolve => this.setState({}, resolve));
         if (this.state.nameIsValid) {
-            this.props.onFinished(true, this.roomCreateOptions());
+            this.props.onFinished(true, this.roomCreateOptions(this.state.name, this.state.tchapRoomType));
         } else {
             let field;
             if (!this.state.nameIsValid) {
@@ -151,14 +162,47 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         }
     };
 
-    private roomCreateOptions() {
+    private roomCreateOptions(name:string,tchapRoomType:TchapRoomType) {
         const opts: IOpts = {};
-        const createOpts: IOpts["createOpts"] = opts.createOpts = {};
-        createOpts.name = this.state.name;
+        const createRoomOpts: ITchapCreateRoomOpts = {};
+        opts.createOpts = createRoomOpts;
+        
+        //tchap common options
+        createRoomOpts.name = name;
+        opts.guestAccess = false; //guest access are not authorized in tchap
+        
+        //todo: always activate federation within tchap, I guess?
+        //from ealier tchap -> noFederate: Tchap.getShortDomain() === "Agent" ? false : !this.state.federate,
+        createRoomOpts.creation_content = { 'm.federate': true };
 
         switch(tchapRoomType){
             case TchapRoomType.Forum:{
-
+                //"Forum" only for tchap members and not encrypted
+                createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
+                createRoomOpts.visibility = Visibility.Public;
+                createRoomOpts.preset = Preset.PublicChat;
+                opts.joinRule = JoinRule.Public;
+                opts.encryption = false;
+                opts.historyVisibility = HistoryVisibility.Shared;
+            
+            }
+            case TchapRoomType.Private:{
+                //"Salon", only for tchap member and encrypted
+                createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
+                createRoomOpts.visibility = Visibility.Private;
+                createRoomOpts.preset = Preset.PrivateChat;
+                opts.joinRule = JoinRule.Invite
+                opts.encryption = true;
+                opts.historyVisibility = HistoryVisibility.Joined;
+            }
+            case TchapRoomType.External:{
+                //open to external and encrypted, 
+                createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted
+                createRoomOpts.visibility = Visibility.Private;
+                createRoomOpts.preset = Preset.PrivateChat;
+                opts.joinRule = JoinRule.Invite
+                opts.encryption = true;
+                opts.historyVisibility = HistoryVisibility.Joined;
             }
         }
         return opts;
