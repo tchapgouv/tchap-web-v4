@@ -39,13 +39,6 @@ Also adds the `/jumptodate 2022-01-31` slash command.
 An experimental approach for supporting custom status messages across DMs. To set a status, click on
 your avatar next to the message composer.
 
-## Custom tags (`feature_custom_tags`)
-
-An experimental approach for dealing with custom tags. Custom tags will appear in the bottom portion
-of the community filter panel.
-
-Setting custom tags is not supported by Element.
-
 ## Render simple counters in room header (`feature_state_counters`)
 
 Allows rendering of labelled counters above the message list.
@@ -118,13 +111,6 @@ For some sample themes, check out [aaronraimist/element-themes](https://github.c
 To enable message previews for reactions in all rooms, enable `feature_roomlist_preview_reactions_all`.
 To enable message previews for reactions in DMs, enable `feature_roomlist_preview_reactions_dms`, ignored when it is enabled for all rooms.
 
-## Communities v2 prototyping (`feature_communities_v2_prototypes`) [In Development]
-
-**This is a highly experimental implementation for parts of the communities v2 experience.** It does not
-represent what communities v2 will look/feel like and can/will change without notice. Due to the early
-stages this feature is in and the requirement for a compatible homeserver, we will not be accepting issues
-or feedback for this functionality at this time.
-
 ## Dehydrated devices (`feature_dehydration`)
 
 Allows users to receive encrypted messages by creating a device that is stored
@@ -196,3 +182,7 @@ Threading allows users to branch out a new conversation from the main timeline o
 Threads can be access by clicking their summary below the root event on the room timeline. Users can find a comprehensive list of threads by click the icon on the room header button.
 
 This feature might work in degraded mode if the homeserver a user is connected to does not advertise support for the unstable feature `org.matrix.msc3440`  when calling the `/versions` API endpoint.
+
+## Voice & video rooms (`feature_video_rooms`) [In Development]
+
+Enables support for creating and joining video rooms, which are persistent video chats that users can jump in and out of.

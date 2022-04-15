@@ -36,12 +36,12 @@
     ],
     "bug_report_endpoint_url": "https://element.io/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
-    "defaultCountryCode": "FR",
-    "showLabsSettings": false,
+    "default_country_code": "FR",
+    "show_labs_settings": false,
     "features": { },
     "default_federate": true,
     "default_theme": "custom-Tchap",
-    "roomDirectory": {
+    "room_directory": {
         "servers": [
             "i.tchap.gouv.fr"
         ]
@@ -50,7 +50,7 @@
         "https://matrix.org": false,
         "https://matrix-client.matrix.org": false
     },
-    "settingDefaults": {
+    "setting_defaults": {
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
@@ -81,7 +81,7 @@
         "authFooterLinks": []
     },
     "jitsi": {
-        "preferredDomain": "meet.element.io"
+        "preferred_domain": "meet.element.io"
     },
     "desktopBuilds": {
         "available": false
