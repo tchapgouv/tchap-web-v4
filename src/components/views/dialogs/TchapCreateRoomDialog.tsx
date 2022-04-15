@@ -32,9 +32,10 @@ import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import SpaceStore from "matrix-react-sdk/src/stores/spaces/SpaceStore";
-import JoinRuleDropdown from "matrix-react-sdk/src/components/views/elements/JoinRuleDropdown";
+import Dropdown from "matrix-react-sdk/src/components/views/elements/Dropdown";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
+
 // todo remove unused imports at the end.
 
 // todo maybe move this somewhere else ?
@@ -77,7 +78,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-        }
+        };
     }
 
     componentDidMount() {
@@ -126,7 +127,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 break;
         }
     };
-    
 
     private onOk = async () => {
         const activeElement = document.activeElement as HTMLElement;
@@ -155,18 +155,11 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         const opts: IOpts = {};
         const createOpts: IOpts["createOpts"] = opts.createOpts = {};
         createOpts.name = this.state.name;
-
-        switch(tchapRoomType){
-            case TchapRoomType.Forum:{
-
-            }
-        }
         return opts;
     }
 
-
     render() {
-        let title = _t("Create a room");
+        const title = _t("Create a room");
         /* todo do we need this ?
         if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
             const name = CommunityPrototypeStore.instance.getSelectedCommunityName();
@@ -194,25 +187,25 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             className="mx_CreateRoomDialog_name"
                         />
 
-                        { /* todo this is actually not a JoinRuleDropdown, but a TchapRoomTypeDropdown. */ }
+                        { /** todo move this to another file */ }
                         <Dropdown
                             id="tc_TchapRoomTypeDropdown"
                             className="tc_TchapRoomTypeDropdown"
-                            onOptionChange={onChange}
-                            menuWidth={width}
-                            value={value}
-                            label={label}
-                        >
-                            { options }
-                        </Dropdown>
-                        <JoinRuleDropdown
-                            label={_t("Type of room")}
-                            labelInvite={_t("Salon with externs")}
-                            labelPublic={_t("Forum - Public room")}
-                            labelRestricted={_t("Salon without externs")}
+                            onOptionChange={this.onTchapRoomTypeChange}
+                            menuWidth={448}
                             value={this.state.tchapRoomType}
-                            onChange={this.onTchapRoomTypeChange}
-                        />
+                            label={_t("Type of room")}
+                        >
+                            <div key={TchapRoomType.Private}>
+                                { _t("Salon without externs") }
+                            </div>
+                            <div key={TchapRoomType.External}>
+                                { _t("Salon with externs") }
+                            </div>
+                            <div key={TchapRoomType.Forum}>
+                                { _t("Forum") }
+                            </div>
+                        </Dropdown>
 
                     </div>
                 </form>
