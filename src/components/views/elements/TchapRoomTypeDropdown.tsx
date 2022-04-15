@@ -6,13 +6,7 @@ import React from 'react';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 import Dropdown from "matrix-react-sdk/src/components/views/elements/Dropdown";
 
-// todo import this
-export enum TchapRoomType {
-  Direct = "direct", // todo not used in this file, we haven't implemented DMs yet
-  Private = "private",
-  External = "external",
-  Forum = "forum",
-}
+import { TchapRoomType } from "../../../@types/tchap";
 
 interface IProps {
     value: TchapRoomType;

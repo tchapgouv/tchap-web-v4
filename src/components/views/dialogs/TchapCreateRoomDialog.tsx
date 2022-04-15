@@ -42,15 +42,9 @@ import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardSho
 import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
 
 import TchapRoomTypeDropdown from "./../elements/TchapRoomTypeDropdown";
+import { TchapRoomType } from "../../../@types/tchap";
 // todo remove unused imports at the end.
 
-// todo maybe move this somewhere else ?
-export enum TchapRoomType {
-    Direct = "direct", // todo not used in this file, we haven't implemented DMs yet
-    Private = "private",
-    External = "external",
-    Forum = "forum",
-}
 
 // todo maybe move this somewhere else ?
 export enum TchapRoomAccessRule {
