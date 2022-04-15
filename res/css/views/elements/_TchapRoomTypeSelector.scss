@@ -1,0 +1,55 @@
+.mx_LayoutSwitcher {
+  .mx_LayoutSwitcher_RadioButtons {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+
+      color: $primary-content;
+
+      > .mx_LayoutSwitcher_RadioButton {
+          flex-grow: 0;
+          flex-shrink: 1;
+          display: flex;
+          flex-direction: column;
+
+          width: 300px;
+          min-width: 0;
+
+          border: 1px solid $appearance-tab-border-color;
+          border-radius: 10px;
+
+          .mx_MessageActionBar {
+              display: none;
+          }
+
+          .mx_LayoutSwitcher_RadioButton_preview {
+              flex-grow: 1;
+              display: flex;
+              align-items: center;
+              padding: 10px;
+              pointer-events: none;
+          }
+
+          .mx_StyledRadioButton {
+              flex-grow: 0;
+              padding: 10px;
+          }
+
+          &.mx_LayoutSwitcher_RadioButton_selected {
+              border-color: $accent;
+          }
+      }
+
+      .mx_StyledRadioButton {
+          border-top: 1px solid $appearance-tab-border-color;
+
+          > input + div {
+              border-color: rgba($muted-fg-color, 0.2);
+          }
+      }
+
+      .mx_StyledRadioButton_checked {
+          background-color: rgba($accent, 0.08);
+      }
+  }
+}
