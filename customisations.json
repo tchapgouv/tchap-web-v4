@@ -1,0 +1,3 @@
+{
+  "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx"
+}
