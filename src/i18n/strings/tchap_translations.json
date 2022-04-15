@@ -17,5 +17,17 @@
   "Choose a homeserver:": {
     "en": "Choose a homeserver:",
     "fr": "Choisissez un serveur d'accueil :"
+  },
+  "Private room": {
+    "en": "Private room",
+    "fr": "Salon privé"
+  },
+  "Private room open to external users": {
+    "en": "Private room open to external users",
+    "fr": "Salon privé ouvert aux externes"
+  },
+  "Forum room": {
+    "en": "Forum room",
+    "fr": "Salon forum"
   }
 }

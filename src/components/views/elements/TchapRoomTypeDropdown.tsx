@@ -29,13 +29,13 @@ const TchapRoomTypeDropdown = ({
 }: IProps) => {
     const options = [
         <div key={TchapRoomType.Private}>
-            { _t("Salon without externs") }
+            { _t("Private room") }
         </div>,
         <div key={TchapRoomType.External}>
-            { _t("Salon with externs") }
+            { _t("Private room open to external users") }
         </div>,
         <div key={TchapRoomType.Forum}>
-            { _t("Forum") }
+            { _t("Forum room") }
         </div>,
     ];
 
