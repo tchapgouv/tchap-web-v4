@@ -31,6 +31,7 @@ import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
 import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
 import * as sdk from 'matrix-react-sdk/src/index';
+import DialogButtons from 'matrix-react-sdk/src/components/views/elements/DialogButtons';
 
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomAccessRule, TchapRoomType } from "../../../@types/tchap";
@@ -58,7 +59,7 @@ interface IState {
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
-    
+
     private nameField = createRef<Field>();
 
     constructor(props) {
@@ -166,7 +167,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 break;
             }
             case TchapRoomType.Private:{
-                
+
                 //"Salon", only for tchap member and encrypted
                 createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
                 createRoomOpts.visibility = Visibility.Private;
@@ -194,7 +195,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     render() {
 
         const Field = sdk.getComponent("elements.Field");
-        const DialogButtons = sdk.getComponent("elements.DialogButtons");
         const BaseDialog =sdk.getComponent("dialogs.BaseDialog");
 
         const title = _t("Create a room");
