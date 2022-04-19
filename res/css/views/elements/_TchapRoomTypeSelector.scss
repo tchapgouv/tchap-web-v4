@@ -1,10 +1,9 @@
-.mx_LayoutSwitcher {
   .mx_LayoutSwitcher_RadioButtons {
       display: flex;
       flex-direction: row;
       gap: 24px;
 
-      color: $primary-content;
+      /*color: $primary-content; todo the variables are not available. */
 
       > .mx_LayoutSwitcher_RadioButton {
           flex-grow: 0;
@@ -15,7 +14,7 @@
           width: 300px;
           min-width: 0;
 
-          border: 1px solid $appearance-tab-border-color;
+          /*border: 1px solid $appearance-tab-border-color;*/
           border-radius: 10px;
 
           .mx_MessageActionBar {
@@ -36,20 +35,19 @@
           }
 
           &.mx_LayoutSwitcher_RadioButton_selected {
-              border-color: $accent;
+              /*border-color: $accent;*/
           }
       }
 
       .mx_StyledRadioButton {
-          border-top: 1px solid $appearance-tab-border-color;
+          /*border-top: 1px solid $appearance-tab-border-color;*/
 
           > input + div {
-              border-color: rgba($muted-fg-color, 0.2);
+              /*border-color: rgba($muted-fg-color, 0.2);*/
           }
       }
 
       .mx_StyledRadioButton_checked {
-          background-color: rgba($accent, 0.08);
+          /*background-color: rgba($accent, 0.08);*/
       }
   }
-}
