@@ -24,33 +24,20 @@ import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "re
 import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
-import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 import withValidation, { IFieldState } from 'matrix-react-sdk/src/components/views/elements/Validation';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
-import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
 import { IOpts, privateShouldBeEncrypted } from "matrix-react-sdk/src/createRoom";
-import { CommunityPrototypeStore } from "matrix-react-sdk/src/stores/CommunityPrototypeStore";
-import { replaceableComponent } from "matrix-react-sdk/src/utils/replaceableComponent";
-import Field from "matrix-react-sdk/src/components/views/elements/Field";
-import RoomAliasField from "matrix-react-sdk/src/components/views/elements/RoomAliasField";
-import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements/LabelledToggleSwitch";
-import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
-import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
-import SpaceStore from "matrix-react-sdk/src/stores/spaces/SpaceStore";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
 import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
+import * as sdk from 'matrix-react-sdk/src/index';
 
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
-import { TchapRoomType } from "../../../@types/tchap";
+import { TchapRoomAccessRule, TchapRoomType } from "../../../@types/tchap";
 // todo remove unused imports at the end.
 
 
-// todo maybe move this somewhere else ?
-export enum TchapRoomAccessRule {
-    Unrestricted = "unrestricted", // todo not used in this file, we haven't implemented DMs yet
-    Restricted = "restricted"
-}
+
 
 export interface ITchapCreateRoomOpts extends ICreateRoomOpts{
     accessRule?:TchapRoomAccessRule
@@ -71,6 +58,7 @@ interface IState {
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
+    
     private nameField = createRef<Field>();
 
     constructor(props) {
@@ -175,9 +163,10 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 opts.joinRule = JoinRule.Public;
                 opts.encryption = false;
                 opts.historyVisibility = HistoryVisibility.Shared;
-
+                break;
             }
             case TchapRoomType.Private:{
+                
                 //"Salon", only for tchap member and encrypted
                 createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
                 createRoomOpts.visibility = Visibility.Private;
@@ -185,8 +174,10 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 opts.joinRule = JoinRule.Invite
                 opts.encryption = true;
                 opts.historyVisibility = HistoryVisibility.Joined;
+                break;
             }
             case TchapRoomType.External:{
+
                 //open to external and encrypted,
                 createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted
                 createRoomOpts.visibility = Visibility.Private;
@@ -194,12 +185,18 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 opts.joinRule = JoinRule.Invite
                 opts.encryption = true;
                 opts.historyVisibility = HistoryVisibility.Joined;
+                break;
             }
         }
         return opts;
     }
 
     render() {
+
+        const Field = sdk.getComponent("elements.Field");
+        const DialogButtons = sdk.getComponent("elements.DialogButtons");
+        const BaseDialog =sdk.getComponent("dialogs.BaseDialog");
+
         const title = _t("Create a room");
         /* todo do we need this ?
         if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {

@@ -5,9 +5,9 @@ Copyright 2022 DINUM
 import React from 'react';
 import classNames from "classnames";
 import { _t } from 'matrix-react-sdk/src/languageHandler';
-import StyledRadioButton from "matrix-react-sdk/src/components/views/elements/StyledRadioButton";
 
 import { TchapRoomType } from "../../../@types/tchap";
+import * as sdk from 'matrix-react-sdk/src/index';
 
 interface IProps {
     value: TchapRoomType;
@@ -38,6 +38,10 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
     };
 
     public render(): JSX.Element {
+
+        const StyledRadioButton = sdk.getComponent("elements.StyledRadioButton");
+
+
         const ircClasses = classNames("mx_LayoutSwitcher_RadioButton", {
             mx_LayoutSwitcher_RadioButton_selected: this.state.roomType == TchapRoomType.Private,
         });
