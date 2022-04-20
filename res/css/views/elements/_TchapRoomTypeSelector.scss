@@ -8,6 +8,7 @@
         flex-shrink: 1;
         display: flex;
         flex-direction: column;
+        padding: 10px;
 
         border-width: 3px;
         border-style: solid;
@@ -19,10 +20,9 @@
         }
     }
 
-    /* todo reuse theme colors */
     .tc_TchapRoomTypeSelector_private {
         .tc_TchapRoomTypeSelector_RadioButton_title {
-            color: red;
+            color: var(--private-color);
             &::before {
                 width: 12px;
                 height: 16px;
@@ -37,13 +37,13 @@
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
-            border-color: red;
+            border-color: var(--private-color);
         }
     }
 
     .tc_TchapRoomTypeSelector_external {
         .tc_TchapRoomTypeSelector_RadioButton_title {
-            color: orange;
+            color: var(--external-color);
             &::before {
                 width: 12px;
                 height: 16px;
@@ -58,14 +58,14 @@
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
-            border-color: orange;
+            border-color: var(--external-color);
         }
 
     }
 
     .tc_TchapRoomTypeSelector_forum {
         .tc_TchapRoomTypeSelector_RadioButton_title {
-            color: green;
+            color: var(--forum-color);
             &::before {
                 width: 12px;
                 height: 16px;
@@ -80,7 +80,7 @@
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
-            border-color: green;
+            border-color: var(--forum-color);
         }
     }
 }
