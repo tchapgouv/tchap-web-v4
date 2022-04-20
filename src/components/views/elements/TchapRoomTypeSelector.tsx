@@ -72,7 +72,6 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                 tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType === TchapRoomType.Forum,
             });
 
-<<<<<<< HEAD
         let roomFederateOpt;
         if (this.state.roomType === TchapRoomType.Forum && this.props.showFederateSwitch) {
             //todo: add traduction
@@ -86,12 +85,8 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
             );
         }
 
-        return <div className="mx_LayoutSwitcher_RadioButtons">
-            <label className={ircClasses}>
-=======
         return <div className="tc_TchapRoomTypeSelector_RadioButtons">
             <label className={privateClasses}>
->>>>>>> 42b9a9e688423b18ed2b8d8480f06cc60133cc55
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.Private}

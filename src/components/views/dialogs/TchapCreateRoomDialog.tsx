@@ -64,7 +64,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-            isFederated: true, //todo: should include a toogle to allow users to choose if room is federated.
+            isFederated: true, //todo: default value should come from config.json
         };
     }
 
