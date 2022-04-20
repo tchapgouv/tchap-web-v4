@@ -20,27 +20,23 @@ Note on imports : because this file will be copied to a different directory by t
 mechanism, imports must use absolute paths.
 Except when importing from other customisation files. Then imports must use relative paths.
 */
-import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
+import React, { ChangeEvent, createRef, KeyboardEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
-
 import withValidation, { IFieldState } from 'matrix-react-sdk/src/components/views/elements/Validation';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
-import { IOpts, privateShouldBeEncrypted } from "matrix-react-sdk/src/createRoom";
+import { IOpts } from "matrix-react-sdk/src/createRoom";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
-import { HistoryVisibility, ICreateRoomOpts } from "matrix-js-sdk";
+import * as matrixJsSdk from "matrix-js-sdk";
 import * as sdk from 'matrix-react-sdk/src/index';
-
+import TchapUtils from '../../../util/TchapUtils'; 
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomAccessRule, TchapRoomType } from "../../../@types/tchap";
 // todo remove unused imports at the end.
 
-
-
-
-export interface ITchapCreateRoomOpts extends ICreateRoomOpts{
-    accessRule?:TchapRoomAccessRule
+export interface ITchapCreateRoomOpts extends matrixJsSdk.ICreateRoomOpts{
+    accessRule?: TchapRoomAccessRule;
 }
 
 interface IProps {
@@ -55,10 +51,10 @@ interface IState {
     name: string;
     nameIsValid: boolean;
     tchapRoomType: TchapRoomType;
+    isFederated: boolean;
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
-    
     private nameField = createRef<Field>();
 
     constructor(props) {
@@ -68,6 +64,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
+            isFederated: true, //todo: should include a toogle to allow users to choose if room is federated.
         };
     }
 
@@ -83,8 +80,9 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         this.props.onFinished(false);
     };
 
-    private onTchapRoomTypeChange = (tchapRoomType: TchapRoomType) => {
-        this.setState({ tchapRoomType });
+    private onTchapRoomTypeChange = (tchapRoomType: TchapRoomType, isFederated: boolean) => {
+        this.setState({ tchapRoomType: tchapRoomType,
+            isFederated: isFederated!==undefined?isFederated:this.state.isFederated });
     };
 
     private onNameChange = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +126,10 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         // first. Queue a `setState` callback and wait for it to resolve.
         await new Promise<void>(resolve => this.setState({}, resolve));
         if (this.state.nameIsValid) {
-            this.props.onFinished(true, this.roomCreateOptions(this.state.name, this.state.tchapRoomType));
+            this.props.onFinished(true, this.roomCreateOptions(
+                this.state.name,
+                this.state.tchapRoomType,
+                this.state.isFederated));
         } else {
             let field;
             if (!this.state.nameIsValid) {
@@ -141,7 +142,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         }
     };
 
-    private roomCreateOptions(name:string,tchapRoomType:TchapRoomType) {
+    private roomCreateOptions(name: string, tchapRoomType: TchapRoomType, federate: boolean) {
         const opts: IOpts = {};
         const createRoomOpts: ITchapCreateRoomOpts = {};
         opts.createOpts = createRoomOpts;
@@ -152,39 +153,37 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
 
         //todo: always activate federation within tchap, I guess?
         //from ealier tchap -> noFederate: Tchap.getShortDomain() === "Agent" ? false : !this.state.federate,
-        createRoomOpts.creation_content = { 'm.federate': true };
+        createRoomOpts.creation_content = { 'm.federate': federate };
 
-        switch(tchapRoomType){
-            case TchapRoomType.Forum:{
+        switch (tchapRoomType) {
+            case TchapRoomType.Forum: {
                 //"Forum" only for tchap members and not encrypted
                 createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
                 createRoomOpts.visibility = Visibility.Public;
                 createRoomOpts.preset = Preset.PublicChat;
                 opts.joinRule = JoinRule.Public;
                 opts.encryption = false;
-                opts.historyVisibility = HistoryVisibility.Shared;
+                opts.historyVisibility = matrixJsSdk.HistoryVisibility.Shared;
                 break;
             }
-            case TchapRoomType.Private:{
-                
+            case TchapRoomType.Private: {
                 //"Salon", only for tchap member and encrypted
                 createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
                 createRoomOpts.visibility = Visibility.Private;
                 createRoomOpts.preset = Preset.PrivateChat;
-                opts.joinRule = JoinRule.Invite
+                opts.joinRule = JoinRule.Invite;
                 opts.encryption = true;
-                opts.historyVisibility = HistoryVisibility.Joined;
+                opts.historyVisibility = matrixJsSdk.HistoryVisibility.Joined;
                 break;
             }
-            case TchapRoomType.External:{
-
+            case TchapRoomType.External: {
                 //open to external and encrypted,
-                createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted
+                createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted;
                 createRoomOpts.visibility = Visibility.Private;
                 createRoomOpts.preset = Preset.PrivateChat;
-                opts.joinRule = JoinRule.Invite
+                opts.joinRule = JoinRule.Invite;
                 opts.encryption = true;
-                opts.historyVisibility = HistoryVisibility.Joined;
+                opts.historyVisibility = matrixJsSdk.HistoryVisibility.Joined;
                 break;
             }
         }
@@ -192,7 +191,8 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     }
 
     render() {
-
+        const shortDomain: string = TchapUtils.getShortDomain();
+        const showFederateSwitch: boolean = shortDomain!=="Agent";
         const Field = sdk.getComponent("elements.Field");
         const DialogButtons = sdk.getComponent("elements.DialogButtons");
         const BaseDialog =sdk.getComponent("dialogs.BaseDialog");
@@ -229,6 +229,8 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             onChange={this.onTchapRoomTypeChange}
                             value={this.state.tchapRoomType}
                             label={_t("Type of room")}
+                            showFederateSwitch={showFederateSwitch}
+                            shortDomain={shortDomain}
                         />
 
                     </div>
