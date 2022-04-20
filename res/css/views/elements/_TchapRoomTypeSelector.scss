@@ -23,6 +23,17 @@
     .tc_TchapRoomTypeSelector_private {
         .tc_TchapRoomTypeSelector_RadioButton_title {
             color: red;
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-private.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
@@ -33,16 +44,39 @@
     .tc_TchapRoomTypeSelector_external {
         .tc_TchapRoomTypeSelector_RadioButton_title {
             color: orange;
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-external.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
             border-color: orange;
         }
+
     }
 
     .tc_TchapRoomTypeSelector_forum {
         .tc_TchapRoomTypeSelector_RadioButton_title {
             color: green;
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-forum.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
