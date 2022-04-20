@@ -9,6 +9,8 @@ import * as sdk from 'matrix-react-sdk/src/index';
 
 import { TchapRoomType } from "../../../@types/tchap";
 
+import "../../../../res/css/views/elements/_TchapRoomTypeSelector.scss";
+
 interface IProps {
     value: TchapRoomType;
     label: string;
