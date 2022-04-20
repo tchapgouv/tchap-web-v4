@@ -1,53 +1,46 @@
-  .mx_LayoutSwitcher_RadioButtons {
-      display: flex;
-      flex-direction: row;
-      gap: 24px;
+.tc_TchapRoomTypeSelector_RadioButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
-      /*color: $primary-content; todo the variables are not available. */
+    >.tc_TchapRoomTypeSelector_RadioButton {
+        flex-grow: 0;
+        flex-shrink: 1;
+        display: flex;
+        flex-direction: column;
 
-      > .mx_LayoutSwitcher_RadioButton {
-          flex-grow: 0;
-          flex-shrink: 1;
-          display: flex;
-          flex-direction: column;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 10px;
 
-          width: 300px;
-          min-width: 0;
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            font-weight: bold;
+        }
+    }
 
-          /*border: 1px solid $appearance-tab-border-color;*/
-          border-radius: 10px;
+    /* todo reuse theme colors */
+    .tc_TchapRoomTypeSelector_private {
+        border-color: red;
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: red;
+        }
+    }
 
-          .mx_MessageActionBar {
-              display: none;
-          }
+    .tc_TchapRoomTypeSelector_external {
+        border-color: orange;
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: orange;
+        }
+    }
 
-          .mx_LayoutSwitcher_RadioButton_preview {
-              flex-grow: 1;
-              display: flex;
-              align-items: center;
-              padding: 10px;
-              pointer-events: none;
-          }
+    .tc_TchapRoomTypeSelector_forum {
+        border-color: green;
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: green;
+        }
+    }
 
-          .mx_StyledRadioButton {
-              flex-grow: 0;
-              padding: 10px;
-          }
-
-          &.mx_LayoutSwitcher_RadioButton_selected {
-              /*border-color: $accent;*/
-          }
-      }
-
-      .mx_StyledRadioButton {
-          /*border-top: 1px solid $appearance-tab-border-color;*/
-
-          > input + div {
-              /*border-color: rgba($muted-fg-color, 0.2);*/
-          }
-      }
-
-      .mx_StyledRadioButton_checked {
-          /*background-color: rgba($accent, 0.08);*/
-      }
-  }
+    .tc_TchapRoomTypeSelector_RadioButton_selected {
+        border-width: 3px;
+    }
+}
