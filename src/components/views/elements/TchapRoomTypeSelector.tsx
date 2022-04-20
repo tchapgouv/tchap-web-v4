@@ -53,16 +53,26 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         const StyledRadioButton = sdk.getComponent("elements.StyledRadioButton");
         const LabelledToggleSwitch = sdk.getComponent("elements.LabelledToggleSwitch");
 
-        const ircClasses = classNames("mx_LayoutSwitcher_RadioButton", {
-            mx_LayoutSwitcher_RadioButton_selected: this.state.roomType == TchapRoomType.Private,
-        });
-        const groupClasses = classNames("mx_LayoutSwitcher_RadioButton", {
-            mx_LayoutSwitcher_RadioButton_selected: this.state.roomType == TchapRoomType.External,
-        });
-        const bubbleClasses = classNames("mx_LayoutSwitcher_RadioButton", {
-            mx_LayoutSwitcher_RadioButton_selected: this.state.roomType === TchapRoomType.Forum,
-        });
+        const privateClasses = classNames(
+            "tc_TchapRoomTypeSelector_RadioButton",
+            "tc_TchapRoomTypeSelector_private",
+            {
+                tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType == TchapRoomType.Private,
+            });
+        const externalClasses = classNames(
+            "tc_TchapRoomTypeSelector_RadioButton",
+            "tc_TchapRoomTypeSelector_external",
+            {
+                tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType == TchapRoomType.External,
+            });
+        const forumClasses = classNames(
+            "tc_TchapRoomTypeSelector_RadioButton",
+            "tc_TchapRoomTypeSelector_forum",
+            {
+                tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType === TchapRoomType.Forum,
+            });
 
+<<<<<<< HEAD
         let roomFederateOpt;
         if (this.state.roomType === TchapRoomType.Forum && this.props.showFederateSwitch) {
             //todo: add traduction
@@ -78,13 +88,17 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
 
         return <div className="mx_LayoutSwitcher_RadioButtons">
             <label className={ircClasses}>
+=======
+        return <div className="tc_TchapRoomTypeSelector_RadioButtons">
+            <label className={privateClasses}>
+>>>>>>> 42b9a9e688423b18ed2b8d8480f06cc60133cc55
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.Private}
                     checked={this.state.roomType === TchapRoomType.Private}
                     onChange={this.onRoomTypeChange}
                 >
-                    <div>
+                    <div className="tc_TchapRoomTypeSelector_RadioButton_title">
                         { _t("Private room") }
                     </div>
                     <div>
@@ -92,14 +106,14 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                     </div>
                 </StyledRadioButton>
             </label>
-            <label className={groupClasses}>
+            <label className={externalClasses}>
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.External}
                     checked={this.state.roomType == TchapRoomType.External}
                     onChange={this.onRoomTypeChange}
                 >
-                    <div>
+                    <div className="tc_TchapRoomTypeSelector_RadioButton_title">
                         { _t("Private room open to external users") }
                     </div>
                     <div>
@@ -107,14 +121,14 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                     </div>
                 </StyledRadioButton>
             </label>
-            <label className={bubbleClasses}>
+            <label className={forumClasses}>
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.Forum}
                     checked={this.state.roomType == TchapRoomType.Forum}
                     onChange={this.onRoomTypeChange}
                 >
-                    <div>
+                    <div className="tc_TchapRoomTypeSelector_RadioButton_title">
                         { _t("Forum room") }
                     </div>
                     <div>

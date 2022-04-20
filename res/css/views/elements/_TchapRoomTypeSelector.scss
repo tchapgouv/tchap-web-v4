@@ -1,53 +1,86 @@
-  .mx_LayoutSwitcher_RadioButtons {
-      display: flex;
-      flex-direction: row;
-      gap: 24px;
+.tc_TchapRoomTypeSelector_RadioButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
-      /*color: $primary-content; todo the variables are not available. */
+    >.tc_TchapRoomTypeSelector_RadioButton {
+        flex-grow: 0;
+        flex-shrink: 1;
+        display: flex;
+        flex-direction: column;
 
-      > .mx_LayoutSwitcher_RadioButton {
-          flex-grow: 0;
-          flex-shrink: 1;
-          display: flex;
-          flex-direction: column;
+        border-width: 3px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 10px;
 
-          width: 300px;
-          min-width: 0;
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            font-weight: bold;
+        }
+    }
 
-          /*border: 1px solid $appearance-tab-border-color;*/
-          border-radius: 10px;
+    /* todo reuse theme colors */
+    .tc_TchapRoomTypeSelector_private {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: red;
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-private.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
+        }
 
-          .mx_MessageActionBar {
-              display: none;
-          }
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: red;
+        }
+    }
 
-          .mx_LayoutSwitcher_RadioButton_preview {
-              flex-grow: 1;
-              display: flex;
-              align-items: center;
-              padding: 10px;
-              pointer-events: none;
-          }
+    .tc_TchapRoomTypeSelector_external {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: orange;
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-external.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
+        }
 
-          .mx_StyledRadioButton {
-              flex-grow: 0;
-              padding: 10px;
-          }
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: orange;
+        }
 
-          &.mx_LayoutSwitcher_RadioButton_selected {
-              /*border-color: $accent;*/
-          }
-      }
+    }
 
-      .mx_StyledRadioButton {
-          /*border-top: 1px solid $appearance-tab-border-color;*/
+    .tc_TchapRoomTypeSelector_forum {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: green;
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-forum.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
+        }
 
-          > input + div {
-              /*border-color: rgba($muted-fg-color, 0.2);*/
-          }
-      }
-
-      .mx_StyledRadioButton_checked {
-          /*background-color: rgba($accent, 0.08);*/
-      }
-  }
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: green;
+        }
+    }
+}
