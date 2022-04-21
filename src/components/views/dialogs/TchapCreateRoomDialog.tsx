@@ -30,7 +30,8 @@ import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
 import * as matrixJsSdk from "matrix-js-sdk";
 import * as sdk from 'matrix-react-sdk/src/index';
-import TchapUtils from '../../../util/TchapUtils'; 
+
+import TchapUtils from '../../../util/TchapUtils';
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomAccessRule, TchapRoomType } from "../../../@types/tchap";
 // todo remove unused imports at the end.
@@ -80,9 +81,12 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         this.props.onFinished(false);
     };
 
-    private onTchapRoomTypeChange = (tchapRoomType: TchapRoomType, isFederated: boolean) => {
-        this.setState({ tchapRoomType: tchapRoomType,
-            isFederated: isFederated!==undefined?isFederated:this.state.isFederated });
+    private onFederatedChange = (isFederated: boolean) => {
+        this.setState({ isFederated: isFederated });
+    };
+
+    private onTchapRoomTypeChange = (tchapRoomType: TchapRoomType) => {
+        this.setState({ tchapRoomType: tchapRoomType });
     };
 
     private onNameChange = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -151,8 +155,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         createRoomOpts.name = name;
         opts.guestAccess = false; //guest access are not authorized in tchap
 
-        //todo: always activate federation within tchap, I guess?
-        //from ealier tchap -> noFederate: Tchap.getShortDomain() === "Agent" ? false : !this.state.federate,
         createRoomOpts.creation_content = { 'm.federate': federate };
 
         switch (tchapRoomType) {
@@ -231,6 +233,8 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             label={_t("Type of room")}
                             showFederateSwitch={showFederateSwitch}
                             shortDomain={shortDomain}
+                            isFederated={this.state.isFederated}
+                            onFederatedChange={this.onFederatedChange}
                         />
 
                     </div>

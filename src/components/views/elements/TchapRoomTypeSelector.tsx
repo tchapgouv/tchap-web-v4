@@ -17,12 +17,13 @@ interface IProps {
     width?: number;
     showFederateSwitch: boolean;
     shortDomain: string;
+    isFederated: boolean;
     onChange(value: TchapRoomType, isFederated?: boolean): void;
+    onFederatedChange(isFederated?: boolean): void;
 }
 
 interface IState {
-  roomType: TchapRoomType;
-  isFederated: boolean;
+    roomType: TchapRoomType;
 }
 
 // todo rename, not a dropdown anymore
@@ -32,7 +33,6 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
 
         this.state = {
             roomType: TchapRoomType.Private,
-            isFederated: false,
         };
     }
 
@@ -40,13 +40,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         const roomType = e.target.value as TchapRoomType;
 
         this.setState({ roomType: roomType });
-        this.props.onChange(roomType);
-    };
-
-    private onFederateChange = (e: boolean): void => {
-        const isFederated = e;
-        this.setState({ isFederated: isFederated });
-        this.props.onChange(this.state.roomType, isFederated);
+        this.props.onChange(roomType, null);
     };
 
     public render(): JSX.Element {
@@ -57,30 +51,30 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
             "tc_TchapRoomTypeSelector_RadioButton",
             "tc_TchapRoomTypeSelector_private",
             {
-                tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType == TchapRoomType.Private,
+                tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value == TchapRoomType.Private,
             });
         const externalClasses = classNames(
             "tc_TchapRoomTypeSelector_RadioButton",
             "tc_TchapRoomTypeSelector_external",
             {
-                tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType == TchapRoomType.External,
+                tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value == TchapRoomType.External,
             });
         const forumClasses = classNames(
             "tc_TchapRoomTypeSelector_RadioButton",
             "tc_TchapRoomTypeSelector_forum",
             {
-                tc_TchapRoomTypeSelector_RadioButton_selected: this.state.roomType === TchapRoomType.Forum,
+                tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value === TchapRoomType.Forum,
             });
 
         let roomFederateOpt;
-        if (this.state.roomType === TchapRoomType.Forum && this.props.showFederateSwitch) {
+        if (this.props.showFederateSwitch) {
             //todo: add traduction
             roomFederateOpt = (
                 <div className="tc_CreateRoomDialog_RoomOption_suboption">
-                    <LabelledToggleSwitch label={_t('Limit access to this room to domain members "%(domain)s"',
+                    <LabelledToggleSwitch label={_t('Limit access to this room to domain members',
                         { domain: this.props.shortDomain })}
-                    onChange={this.onFederateChange}
-                    value={this.state.isFederated} />
+                    onChange={(value: boolean) => this.props.onFederatedChange(!value)}
+                    value={!this.props.isFederated} />
                 </div>
             );
         }
@@ -90,7 +84,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.Private}
-                    checked={this.state.roomType === TchapRoomType.Private}
+                    checked={this.props.value === TchapRoomType.Private}
                     onChange={this.onRoomTypeChange}
                 >
                     <div className="tc_TchapRoomTypeSelector_RadioButton_title">
@@ -105,7 +99,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.External}
-                    checked={this.state.roomType == TchapRoomType.External}
+                    checked={this.props.value == TchapRoomType.External}
                     onChange={this.onRoomTypeChange}
                 >
                     <div className="tc_TchapRoomTypeSelector_RadioButton_title">
@@ -120,7 +114,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                 <StyledRadioButton
                     name="roomType"
                     value={TchapRoomType.Forum}
-                    checked={this.state.roomType == TchapRoomType.Forum}
+                    checked={this.props.value == TchapRoomType.Forum}
                     onChange={this.onRoomTypeChange}
                 >
                     <div className="tc_TchapRoomTypeSelector_RadioButton_title">
