@@ -22,23 +22,19 @@ Except when importing from other customisation files. Then imports must use rela
 */
 import React, { ChangeEvent, createRef, KeyboardEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import withValidation, { IFieldState } from 'matrix-react-sdk/src/components/views/elements/Validation';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 import { IOpts } from "matrix-react-sdk/src/createRoom";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
-import * as matrixJsSdk from "matrix-js-sdk";
 import * as sdk from 'matrix-react-sdk/src/index';
+import Field from "matrix-react-sdk/src/components/views/elements/Field";
 
 import TchapUtils from '../../../util/TchapUtils';
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
-import { TchapRoomAccessRule, TchapRoomType } from "../../../@types/tchap";
+import { TchapRoomType } from "../../../@types/tchap";
+import roomCreateOptions from "../../../lib/createTchapRoom";
 // todo remove unused imports at the end.
-
-export interface ITchapCreateRoomOpts extends matrixJsSdk.ICreateRoomOpts{
-    accessRule?: TchapRoomAccessRule;
-}
 
 interface IProps {
     defaultPublic?: boolean;
@@ -65,7 +61,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-            isFederated: true, //todo: default value should come from config.json
+            isFederated: true,
         };
     }
 
@@ -130,7 +126,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         // first. Queue a `setState` callback and wait for it to resolve.
         await new Promise<void>(resolve => this.setState({}, resolve));
         if (this.state.nameIsValid) {
-            this.props.onFinished(true, this.roomCreateOptions(
+            this.props.onFinished(true, roomCreateOptions(
                 this.state.name,
                 this.state.tchapRoomType,
                 this.state.isFederated));
@@ -145,52 +141,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             }
         }
     };
-
-    private roomCreateOptions(name: string, tchapRoomType: TchapRoomType, federate: boolean) {
-        const opts: IOpts = {};
-        const createRoomOpts: ITchapCreateRoomOpts = {};
-        opts.createOpts = createRoomOpts;
-
-        //tchap common options
-        createRoomOpts.name = name;
-        opts.guestAccess = false; //guest access are not authorized in tchap
-
-        createRoomOpts.creation_content = { 'm.federate': federate };
-
-        switch (tchapRoomType) {
-            case TchapRoomType.Forum: {
-                //"Forum" only for tchap members and not encrypted
-                createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
-                createRoomOpts.visibility = Visibility.Public;
-                createRoomOpts.preset = Preset.PublicChat;
-                opts.joinRule = JoinRule.Public;
-                opts.encryption = false;
-                opts.historyVisibility = matrixJsSdk.HistoryVisibility.Shared;
-                break;
-            }
-            case TchapRoomType.Private: {
-                //"Salon", only for tchap member and encrypted
-                createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
-                createRoomOpts.visibility = Visibility.Private;
-                createRoomOpts.preset = Preset.PrivateChat;
-                opts.joinRule = JoinRule.Invite;
-                opts.encryption = true;
-                opts.historyVisibility = matrixJsSdk.HistoryVisibility.Joined;
-                break;
-            }
-            case TchapRoomType.External: {
-                //open to external and encrypted,
-                createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted;
-                createRoomOpts.visibility = Visibility.Private;
-                createRoomOpts.preset = Preset.PrivateChat;
-                opts.joinRule = JoinRule.Invite;
-                opts.encryption = true;
-                opts.historyVisibility = matrixJsSdk.HistoryVisibility.Joined;
-                break;
-            }
-        }
-        return opts;
-    }
 
     render() {
         const shortDomain: string = TchapUtils.getShortDomain();
