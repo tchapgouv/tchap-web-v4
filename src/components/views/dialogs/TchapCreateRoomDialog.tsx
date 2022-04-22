@@ -143,11 +143,14 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     };
 
     render() {
-        const shortDomain: string = TchapUtils.getShortDomain();
-        const showFederateSwitch: boolean = shortDomain!=="Agent";
         const Field = sdk.getComponent("elements.Field");
         const DialogButtons = sdk.getComponent("elements.DialogButtons");
-        const BaseDialog =sdk.getComponent("dialogs.BaseDialog");
+        const BaseDialog = sdk.getComponent("dialogs.BaseDialog");
+
+        // Only show the federate switch to defense users : it's difficult to understand, so we avoid
+        // displaying it unless it's really necessary.
+        const shortDomain: string = TchapUtils.getShortDomain();
+        const showFederateSwitch: boolean = shortDomain == "Intradef";
 
         const title = _t("Create a room");
         /* todo do we need this ?
