@@ -70,7 +70,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         if (this.props.showFederateSwitch) {
             //todo: add traduction
             roomFederateOpt = (
-                <div className="tc_CreateRoomDialog_RoomOption_suboption">
+                <div>
                     <LabelledToggleSwitch
                         label={_t(
                             "Allow access to this room to all users, even outside \"%(domain)s\" domain",
@@ -82,7 +82,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
             );
         }
 
-        return <div className="tc_TchapRoomTypeSelector_RadioButtons">
+        return <div className="tc_TchapRoomTypeSelector">
             <label className={privateClasses}>
                 <StyledRadioButton
                     name="roomType"

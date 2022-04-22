@@ -34,7 +34,6 @@ import TchapUtils from '../../../util/TchapUtils';
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../@types/tchap";
 import roomCreateOptions from "../../../lib/createTchapRoom";
-// todo remove unused imports at the end.
 
 interface IProps {
     defaultPublic?: boolean;
@@ -165,7 +164,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
 
         return (
             <BaseDialog
-                className="mx_CreateRoomDialog"
+                className="tc_TchapCreateRoomDialog"
                 onFinished={this.props.onFinished}
                 title={title}
                 screenName="CreateRoom"
@@ -178,7 +177,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             onChange={this.onNameChange}
                             onValidate={this.onNameValidate}
                             value={this.state.name}
-                            className="mx_CreateRoomDialog_name"
                         />
 
                         <TchapRoomTypeSelector
