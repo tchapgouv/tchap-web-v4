@@ -42,8 +42,8 @@
     "en": "Accessible to all users from the forum directory or from a shared link.",
     "fr": "Accessible à tous les utilisateurs à partir de la liste des forums ou d'un lien partagé."
   },
-  "Limit access to this room to domain members":{
-    "en":"Limit access to this room to domain members \"%(domain)s\"",
-    "fr":"Limiter l'accès à ce salon aux membres du domaine \"%(domain)s\""
+  "Allow access to this room to all users, even outside \"%(domain)s\" domain":{
+    "en":"Allow access to this room to all users, even outside \"%(domain)s\" domain",
+    "fr":"Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
   }
 }

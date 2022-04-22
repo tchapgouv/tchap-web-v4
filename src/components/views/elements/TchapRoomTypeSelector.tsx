@@ -71,10 +71,13 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
             //todo: add traduction
             roomFederateOpt = (
                 <div className="tc_CreateRoomDialog_RoomOption_suboption">
-                    <LabelledToggleSwitch label={_t('Limit access to this room to domain members',
-                        { domain: this.props.shortDomain })}
-                    onChange={(value: boolean) => this.props.onFederatedChange(!value)}
-                    value={!this.props.isFederated} />
+                    <LabelledToggleSwitch
+                        label={_t(
+                            "Allow access to this room to all users, even outside \"%(domain)s\" domain",
+                            { domain: this.props.shortDomain },
+                        )}
+                        onChange={this.props.onFederatedChange}
+                        value={this.props.isFederated} />
                 </div>
             );
         }
