@@ -17,6 +17,20 @@ export default class TchapUtils {
         return this.capitalize(domain) || 'Tchap';
     }
 
+    // todo return type
+    static getRoomFederationOptions() {
+        const cli = MatrixClientPeg.get();
+        const baseDomain = cli.getDomain();
+
+        // Only show the federate switch to defense users : it's difficult to understand, so we avoid
+        // displaying it unless it's really necessary.
+        if (baseDomain === 'agent.intradef.tchap.gouv.fr') {
+            return { showRoomFederationOption: true, roomFederationDefault: false };
+        }
+
+        return { showRoomFederationOption: false, roomFederationDefault: true };
+    }
+
     /**
      * Capitalize a string.
      * @param {string} s The sting to capitalize.

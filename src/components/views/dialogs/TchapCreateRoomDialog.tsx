@@ -49,6 +49,7 @@ interface IState {
     nameIsValid: boolean;
     tchapRoomType: TchapRoomType;
     isFederated: boolean;
+    showFederateSwitch: boolean;
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
@@ -57,11 +58,14 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     constructor(props) {
         super(props);
 
+        const federationOptions = TchapUtils.getRoomFederationOptions();
+
         this.state = {
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-            isFederated: true,
+            isFederated: federationOptions.roomFederationDefault,
+            showFederateSwitch: federationOptions.showRoomFederationOption,
         };
     }
 
@@ -147,10 +151,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         const DialogButtons = sdk.getComponent("elements.DialogButtons");
         const BaseDialog = sdk.getComponent("dialogs.BaseDialog");
 
-        // Only show the federate switch to defense users : it's difficult to understand, so we avoid
-        // displaying it unless it's really necessary.
         const shortDomain: string = TchapUtils.getShortDomain();
-        const showFederateSwitch: boolean = shortDomain == "Intradef";
 
         const title = _t("Create a room");
         /* todo do we need this ?
@@ -184,7 +185,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             onChange={this.onTchapRoomTypeChange}
                             value={this.state.tchapRoomType}
                             label={_t("Type of room")}
-                            showFederateSwitch={showFederateSwitch}
+                            showFederateSwitch={this.state.showFederateSwitch}
                             shortDomain={shortDomain}
                             isFederated={this.state.isFederated}
                             onFederatedChange={this.onFederatedChange}
