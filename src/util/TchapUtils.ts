@@ -17,8 +17,12 @@ export default class TchapUtils {
         return this.capitalize(domain) || 'Tchap';
     }
 
-    // todo return type
-    static getRoomFederationOptions() {
+    /**
+     * For the current user, get the room federation options.
+     *
+     * @returns { showRoomFederationOption: boolean, roomFederationDefault: boolean } options
+     */
+    static getRoomFederationOptions(): { showRoomFederationOption: boolean, roomFederationDefault: boolean } {
         const cli = MatrixClientPeg.get();
         const baseDomain = cli.getDomain();
 
