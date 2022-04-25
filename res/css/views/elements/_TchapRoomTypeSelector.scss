@@ -1,0 +1,96 @@
+.tc_TchapRoomTypeSelector {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    >.tc_TchapRoomTypeSelector_RadioButton {
+        flex-grow: 0;
+        flex-shrink: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        border-width: 3px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 10px;
+
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            font-weight: bold;
+        }
+    }
+
+    .tc_TchapRoomTypeSelector_private {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: var(--private-color);
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-private.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
+        }
+
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: var(--private-color);
+        }
+    }
+
+    .tc_TchapRoomTypeSelector_external {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: var(--external-color);
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-external.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
+        }
+
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: var(--external-color);
+        }
+
+    }
+
+    .tc_TchapRoomTypeSelector_forum {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: var(--forum-color);
+            &::before {
+                width: 12px;
+                height: 16px;
+                content: "";
+                display: inline-block;
+                vertical-align: sub;
+                background-image: url("../../../img/tchap/padlock-forum.svg");
+                background-repeat: no-repeat;
+                background-size: 100%;
+                margin-right: 4px;
+            }
+        }
+
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: var(--forum-color);
+        }
+
+        .mx_SettingsFlag  {
+            flex-direction: row;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            .mx_SettingsFlag_label {
+                padding-top: 0px;
+            }
+        }
+    }
+}

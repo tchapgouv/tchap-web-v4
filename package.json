@@ -193,8 +193,7 @@
       "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js"
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!matrix-js-sdk).+$",
-      "/node_modules/(?!matrix-react-sdk).+$"
+      "/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"
     ]
   }
 }
