@@ -67,7 +67,9 @@
         {
             "base_url": "https://matrix.agent.intradef.tchap.gouv.fr",
             "server_name": "Intradef",
-            "email_examples": "? ..."
+            "email_examples": "? ...",
+            "show_room_federation_option": true,
+            "room_federation_default": false
         },
         {
             "base_url": "https://matrix.agent.justice.tchap.gouv.fr",

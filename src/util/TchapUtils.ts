@@ -1,4 +1,5 @@
 import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
+import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 
 /**
  * Tchap utils.
@@ -13,10 +14,11 @@ export default class TchapUtils {
         const cli = MatrixClientPeg.get();
         const baseDomain = cli.getDomain();
         const domain = baseDomain.split('.tchap.gouv.fr')[0].split('.').reverse().filter(Boolean)[0];
-
+        // todo doesn't work for preprod
         return this.capitalize(domain) || 'Tchap';
     }
 
+    static DEFAULT_ROOM_FEDERATION_OPTIONS = { showRoomFederationOption: false, roomFederationDefault: true };
     /**
      * For the current user, get the room federation options.
      *
@@ -26,13 +28,34 @@ export default class TchapUtils {
         const cli = MatrixClientPeg.get();
         const baseDomain = cli.getDomain();
 
-        // Only show the federate switch to defense users : it's difficult to understand, so we avoid
-        // displaying it unless it's really necessary.
-        if (baseDomain === 'agent.intradef.tchap.gouv.fr') {
-            return { showRoomFederationOption: true, roomFederationDefault: false };
-        }
+        const findRoomFederationOptionsInConfig = baseDomain => {  // todo untested !
+            const homeServerList = SdkConfig.get()['homeserver_list'];
 
-        return { showRoomFederationOption: false, roomFederationDefault: true };
+            const homeServerConfig = homeServerList.find(homeServer => {
+                return homeServer.base_url.split('https://matrix.')[1] === baseDomain;
+            });
+
+            if (!homeServerConfig) {
+                return undefined;
+            }
+
+            return {
+                showRoomFederationOption: homeServerConfig.show_room_federation_option,
+                roomFederationDefault: homeServerConfig.room_federation_default,
+            };
+        };
+
+        const options = findRoomFederationOptionsInConfig(baseDomain);
+        if (!options) {
+            return this.DEFAULT_ROOM_FEDERATION_OPTIONS;
+        }
+        if (!options.showRoomFederationOption) {
+            options.showRoomFederationOption = this.DEFAULT_ROOM_FEDERATION_OPTIONS.showRoomFederationOption;
+        }
+        if (!options.roomFederationDefault) {
+            options.roomFederationDefault = this.DEFAULT_ROOM_FEDERATION_OPTIONS.roomFederationDefault;
+        }
+        return options;
     }
 
     /**
