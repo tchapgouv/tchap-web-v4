@@ -26,7 +26,6 @@ interface IState {
     roomType: TchapRoomType;
 }
 
-// todo rename, not a dropdown anymore
 export default class TchapRoomTypeSelector extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -68,7 +67,6 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
 
         let roomFederateOpt;
         if (this.props.showFederateSwitch) {
-            //todo: add traduction
             roomFederateOpt = (
                 <div>
                     <LabelledToggleSwitch
