@@ -17,8 +17,8 @@ export const DEFAULT_FEDERATE_VALUE = true;
  * @param federate is the room federated
  * @returns rooms options
  */
-export default function roomCreateOptions(name: string, tchapRoomType: TchapRoomType, federate?: boolean): IOpts {
-    federate = (federate != undefined) ? federate : DEFAULT_FEDERATE_VALUE;
+export default function roomCreateOptions(
+    name: string, tchapRoomType: TchapRoomType, federate: boolean = DEFAULT_FEDERATE_VALUE): IOpts {
     const opts: IOpts = {};
     const createRoomOpts: ITchapCreateRoomOpts = {};
     opts.createOpts = createRoomOpts;
