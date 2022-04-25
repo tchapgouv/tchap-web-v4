@@ -5,8 +5,7 @@ export enum TchapRoomType {
   Forum = "forum",
 }
 
-
 export enum TchapRoomAccessRule {
-  Unrestricted = "unrestricted", // todo not used in this file, we haven't implemented DMs yet
-  Restricted = "restricted"
+  Unrestricted = "unrestricted", // accessible to externals
+  Restricted = "restricted" // not accessible to externals
 }
