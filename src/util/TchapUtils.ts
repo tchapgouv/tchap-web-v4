@@ -9,7 +9,7 @@ export default class TchapUtils {
          * Return a short value for getDomain().
          * @returns {string} The shortened value of getDomain().
          */
-    static getShortDomain() {
+    static getShortDomain(): string {
         const cli = MatrixClientPeg.get();
         const baseDomain = cli.getDomain();
         const domain = baseDomain.split('.tchap.gouv.fr')[0].split('.').reverse().filter(Boolean)[0];
@@ -41,7 +41,7 @@ export default class TchapUtils {
      * @returns {string} The capitalized string.
      * @private
      */
-    static capitalize(s) {
+    static capitalize(s: string): string {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
 }
