@@ -1,9 +1,10 @@
-import * as matrixJsSdk from "matrix-js-sdk";
+import { IOpts } from "matrix-react-sdk/src/createRoom";
+import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import { HistoryVisibility, JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
-import { IOpts } from "../../../matrix-react-sdk-v4/src/createRoom";
 import { TchapRoomAccessRule, TchapRoomType } from "../@types/tchap";
 
-export interface ITchapCreateRoomOpts extends matrixJsSdk.ICreateRoomOpts{
+export interface ITchapCreateRoomOpts extends ICreateRoomOpts {
     accessRule?: TchapRoomAccessRule;
 }
 
@@ -32,31 +33,31 @@ export default function roomCreateOptions(name: string, tchapRoomType: TchapRoom
         case TchapRoomType.Forum: {
             //"Forum" only for tchap members and not encrypted
             createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
-            createRoomOpts.visibility = matrixJsSdk.Visibility.Public;
-            createRoomOpts.preset = matrixJsSdk.Preset.PublicChat;
-            opts.joinRule = matrixJsSdk.JoinRule.Public;
+            createRoomOpts.visibility = Visibility.Public;
+            createRoomOpts.preset = Preset.PublicChat;
+            opts.joinRule = JoinRule.Public;
             opts.encryption = false;
-            opts.historyVisibility = matrixJsSdk.HistoryVisibility.Shared;
+            opts.historyVisibility = HistoryVisibility.Shared;
             break;
         }
         case TchapRoomType.Private: {
             //"Salon", only for tchap member and encrypted
             createRoomOpts.accessRule = TchapRoomAccessRule.Restricted;
-            createRoomOpts.visibility =matrixJsSdk. Visibility.Private;
-            createRoomOpts.preset = matrixJsSdk.Preset.PrivateChat;
-            opts.joinRule = matrixJsSdk.JoinRule.Invite;
+            createRoomOpts.visibility = Visibility.Private;
+            createRoomOpts.preset = Preset.PrivateChat;
+            opts.joinRule = JoinRule.Invite;
             opts.encryption = true;
-            opts.historyVisibility = matrixJsSdk.HistoryVisibility.Joined;
+            opts.historyVisibility = HistoryVisibility.Joined;
             break;
         }
         case TchapRoomType.External: {
             //open to external and encrypted,
             createRoomOpts.accessRule = TchapRoomAccessRule.Unrestricted;
-            createRoomOpts.visibility = matrixJsSdk.Visibility.Private;
-            createRoomOpts.preset = matrixJsSdk.Preset.PrivateChat;
-            opts.joinRule = matrixJsSdk.JoinRule.Invite;
+            createRoomOpts.visibility = Visibility.Private;
+            createRoomOpts.preset = Preset.PrivateChat;
+            opts.joinRule = JoinRule.Invite;
             opts.encryption = true;
-            opts.historyVisibility = matrixJsSdk.HistoryVisibility.Joined;
+            opts.historyVisibility = HistoryVisibility.Joined;
             break;
         }
     }
