@@ -13,7 +13,48 @@ const loaderUtils = require("loader-utils");
 const INCLUDE_LANGS = [
     {'value': 'en_EN', 'label': 'English'},
     {'value': 'en_US', 'label': 'English (US)'},
+<<<<<<< HEAD
     {'value': 'fr', 'label': 'Français'}
+=======
+    {'value': 'eo', 'label': 'Esperanto'},
+    {'value': 'es', 'label': 'Español'},
+    {'value': 'et', 'label': 'Eesti'},
+    {'value': 'eu', 'label': 'Euskara'},
+    {'value': 'fi', 'label': 'Suomi'},
+    {'value': 'fr', 'label': 'Français'},
+    {'value': 'gl', 'label': 'Galego'},
+    {'value': 'he', 'label': 'עברית'},
+    {'value': 'hi', 'label': 'हिन्दी'},
+    {'value': 'hu', 'label': 'Magyar'},
+    {'value': 'id', 'label': 'Bahasa Indonesia'},
+    {'value': 'is', 'label': 'íslenska'},
+    {'value': 'it', 'label': 'Italiano'},
+    {'value': 'ja', 'label': '日本語'},
+    {'value': 'kab', 'label': 'Taqbaylit'},
+    {'value': 'ko', 'label': '한국어'},
+    {'value': 'lo', 'label': 'ລາວ'},
+    {'value': 'lt', 'label': 'Lietuvių'},
+    {'value': 'lv', 'label': 'Latviešu'},
+    {'value': 'nb_NO', 'label': 'Norwegian Bokmål'},
+    {'value': 'nl', 'label': 'Nederlands'},
+    {'value': 'nn', 'label': 'Norsk Nynorsk'},
+    {'value': 'pl', 'label': 'Polski'},
+    {'value': 'pt', 'label': 'Português'},
+    {'value': 'pt_BR', 'label': 'Português do Brasil'},
+    {'value': 'ru', 'label': 'Русский'},
+    {'value': 'sk', 'label': 'Slovenčina'},
+    {'value': 'sq', 'label': 'Shqip'},
+    {'value': 'sr', 'label': 'српски'},
+    {'value': 'sv', 'label': 'Svenska'},
+    {'value': 'te', 'label': 'తెలుగు'},
+    {'value': 'th', 'label': 'ไทย'},
+    {'value': 'tr', 'label': 'Türkçe'},
+    {'value': 'uk', 'label': 'українська мова'},
+    {'value': 'vi', 'label': 'Tiếng Việt'},
+    {'value': 'vls', 'label': 'West-Vlaams'},
+    {'value': 'zh_Hans', 'label': '简体中文'}, // simplified chinese
+    {'value': 'zh_Hant', 'label': '繁體中文'}, // traditional chinese
+>>>>>>> master
 ];
 
 // cpx includes globbed parts of the filename in the destination, but excludes
@@ -192,8 +233,14 @@ function weblateToCounterpart(inTrs) {
         if (keyParts.length === 2) {
             let obj = outTrs[keyParts[0]];
             if (obj === undefined) {
-                obj = {};
-                outTrs[keyParts[0]] = obj;
+                obj = outTrs[keyParts[0]] = {};
+            } else if (typeof obj === "string") {
+                // This is a transitional edge case if a string went from singular to pluralised and both still remain
+                // in the translation json file. Use the singular translation as `other` and merge pluralisation atop.
+                obj = outTrs[keyParts[0]] = {
+                    "other": inTrs[key],
+                };
+                console.warn("Found entry in i18n file in both singular and pluralised form", keyParts[0]);
             }
             obj[keyParts[1]] = inTrs[key];
         } else {
