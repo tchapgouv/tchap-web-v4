@@ -51,7 +51,6 @@
         "UIFeature.registration": false,
         "UIFeature.urlPreviews" : false,
         "UIFeature.widgets" : false,
-        "UIFeature.communities" : false,
         "UIFeature.shareQrCode" : false,
         "layout": "bubble",
         "custom_themes": [
