@@ -19,8 +19,9 @@ import { _t } from 'matrix-react-sdk/src/languageHandler';
 import { IOpts } from "matrix-react-sdk/src/createRoom";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
-import * as sdk from 'matrix-react-sdk/src/index';
 import Field from "matrix-react-sdk/src/components/views/elements/Field";
+import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
+import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 
 import TchapUtils from '../../../util/TchapUtils';
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
@@ -139,10 +140,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     };
 
     render() {
-        const Field = sdk.getComponent("elements.Field");
-        const DialogButtons = sdk.getComponent("elements.DialogButtons");
-        const BaseDialog = sdk.getComponent("dialogs.BaseDialog");
-
         const shortDomain: string = TchapUtils.getShortDomain();
 
         const title = _t("Create a room");
