@@ -3,5 +3,5 @@
   "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
   "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/components/views/elements/TchapRoomTypeSelector.tsx",
   "src/components/views/dialogs/ServerPickerDialog.tsx": "src/components/views/dialogs/TchapServerPickerDialog.tsx",
-  "src/stores/spaces/DisabledSpaceStore.ts": "src/stores/spaces/SpaceStore.ts"
+  "src/stores/spaces/SpaceStore.ts": "src/stores/spaces/DisabledSpaceStore.ts"
 }
