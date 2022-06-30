@@ -4,7 +4,6 @@ Copyright 2022 - DINUM - MIT license
 File copied from ComponentVisibility.ts in matrix-react-sdk v3.46.0
 */
 
-
 // Dev note: this customisation point is heavily inspired by UIFeature flags, though
 // with an intention of being used for more complex switching on whether or not a feature
 // should be shown.
@@ -42,5 +41,5 @@ export interface IComponentVisibilityCustomisations {
 export const ComponentVisibilityCustomisations: IComponentVisibilityCustomisations = {
     // while we don't specify the functions here, their defaults are described
     // in their pseudo-implementations above.
-    shouldShowComponent
+    shouldShowComponent,
 };
