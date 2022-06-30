@@ -86,7 +86,7 @@
     "desktopBuilds": {
         "available": false
     },
-    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.jso",
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
     "custom_translations_url": "/i18n/tchap_translations.json"
 }
