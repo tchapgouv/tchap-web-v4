@@ -158,7 +158,9 @@
                     "timeline-text-color": "#2e2f32",
                     "timeline-text-secondary-color": "#61708b",
                     "timeline-highlights-color": "#f3f8fd",
-                    "togglesw-off-color": "#c1c9d6"
+                    "togglesw-off-color": "#c1c9d6",
+                    "eventbubble-self-bg": "#e4e4f3",
+                    "eventbubble-others-bg": "#f4f4f4"
                 }
             }
         ]
