@@ -37,5 +37,5 @@ rm -r tchap-$version
 echo
 echo "Packaged tchap-$version-$CONFIG"
 
-export VERSION=$version
+scalingo --app $APP env-set VERSION=$version
 echo "VERSION is set to $VERSION"
