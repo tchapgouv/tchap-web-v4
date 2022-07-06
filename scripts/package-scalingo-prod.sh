@@ -7,6 +7,9 @@ set -e
 version=`node -e 'console.log(require("./package.json").version)'`
 today=$(date +%Y%m%d)
 
+export VERSION=$version
+echo "VERSION is set to $VERSION"
+
 if [[ -n "$CONFIG" ]]; then
   echo "CONFIG=$CONFIG"
   cp "config.$CONFIG.json" config.json
