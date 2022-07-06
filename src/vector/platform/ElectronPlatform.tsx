@@ -28,6 +28,7 @@ import BaseEventIndexManager, {
 import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
+import { IConfigOptions } from "matrix-react-sdk/src/IConfigOptions";
 import * as rageshake from 'matrix-react-sdk/src/rageshake/rageshake';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -280,7 +281,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
         this.ipcCall("startSSOFlow", this.ssoID);
     }
 
-    async getConfig(): Promise<{}> {
+    async getConfig(): Promise<IConfigOptions> {
         return this.ipcCall('getConfig');
     }
 
@@ -411,6 +412,18 @@ export default class ElectronPlatform extends VectorBasePlatform {
 
     async setMinimizeToTrayEnabled(enabled: boolean): Promise<void> {
         return this.ipcCall('setMinimizeToTrayEnabled', enabled);
+    }
+
+    public supportsTogglingHardwareAcceleration(): boolean {
+        return true;
+    }
+
+    public async getHardwareAccelerationEnabled(): Promise<boolean> {
+        return this.ipcCall('getHardwareAccelerationEnabled');
+    }
+
+    public async setHardwareAccelerationEnabled(enabled: boolean): Promise<void> {
+        return this.ipcCall('setHardwareAccelerationEnabled', enabled);
     }
 
     async canSelfUpdate(): Promise<boolean> {

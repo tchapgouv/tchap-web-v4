@@ -12,6 +12,11 @@ module.exports = {
         // Things we do that break the ideal style
         "quotes": "off",
     },
+    settings: {
+        react: {
+            version: 'detect'
+        }
+    },
     overrides: [{
         files: ["src/**/*.{ts,tsx}"],
         extends: [
@@ -25,6 +30,8 @@ module.exports = {
 
             // We disable this while we're transitioning
             "@typescript-eslint/no-explicit-any": "off",
+            // We're okay with assertion errors when we ask for them
+            "@typescript-eslint/no-non-null-assertion": "off",
 
             // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
             "no-restricted-imports": ["error", {

@@ -60,7 +60,6 @@
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
             border-color: var(--external-color);
         }
-
     }
 
     .tc_TchapRoomTypeSelector_forum {
@@ -83,7 +82,7 @@
             border-color: var(--forum-color);
         }
 
-        .mx_SettingsFlag  {
+        .mx_SettingsFlag {
             flex-direction: row;
             display: flex;
             align-items: center;
