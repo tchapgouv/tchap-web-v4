@@ -36,12 +36,12 @@
     ],
     "bug_report_endpoint_url": "https://element.io/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
-    "defaultCountryCode": "FR",
-    "showLabsSettings": false,
+    "default_country_code": "FR",
+    "show_labs_settings": false,
     "features": { },
     "default_federate": true,
     "default_theme": "custom-Tchap",
-    "roomDirectory": {
+    "room_directory": {
         "servers": [
             "i.tchap.gouv.fr"
         ]
@@ -50,7 +50,7 @@
         "https://matrix.org": false,
         "https://matrix-client.matrix.org": false
     },
-    "settingDefaults": {
+    "setting_defaults": {
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
@@ -62,7 +62,7 @@
                     "accent": "#162d58",
                     "primary-color": "#368bd6",
                     "warning-color": "#ff4b55",
-                    "sidebar-color": "#27303a",
+                    "sidebar-color": "#c0d8ef",
                     "roomlist-background-color": "#f3f8fd",
                     "roomlist-text-color": "#2e2f32",
                     "roomlist-text-secondary-color": "#61708b",
@@ -71,7 +71,9 @@
                     "timeline-background-color": "#ffffff",
                     "timeline-text-color": "#2e2f32",
                     "timeline-text-secondary-color": "#61708b",
-                    "timeline-highlights-color": "#f3f8fd"
+                    "timeline-highlights-color": "#f3f8fd",
+                    "eventbubble-self-bg": "#e4e4f3",
+                    "eventbubble-others-bg": "#f4f4f4"
                 }
             }
         ]
@@ -81,12 +83,12 @@
         "authFooterLinks": []
     },
     "jitsi": {
-        "preferredDomain": "meet.element.io"
+        "preferred_domain": "meet.element.io"
     },
     "desktopBuilds": {
         "available": false
     },
-    "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
     "custom_translations_url": "/i18n/tchap_translations.json"
 }

@@ -106,11 +106,10 @@ export default class WebPlatform extends VectorBasePlatform {
     }
 
     getNormalizedAppVersion(version: string): string {
-        // if version looks like semver with leading v, strip it
-        // (matches scripts/normalize-version.sh)
-        const semVerRegex = new RegExp("^v[0-9]+.[0-9]+.[0-9]+(-.+)?$");
+        // if version looks like semver with leading v, strip it (matches scripts/normalize-version.sh)
+        const semVerRegex = /^v\d+.\d+.\d+(-.+)?$/;
         if (semVerRegex.test(version)) {
-            return version.substr(1);
+            return version.substring(1);
         }
         return version;
     }
@@ -128,26 +127,22 @@ export default class WebPlatform extends VectorBasePlatform {
         //
         // Ideally, loading an old copy would be impossible with the
         // cache-control: nocache HTTP header set, but Firefox doesn't always obey it :/
+        console.log("startUpdater, current version is " + this.getNormalizedAppVersion(process.env.VERSION));
         this.pollForUpdate((version: string, newVersion: string) => {
             const query = parseQs(location);
-            if (query.updated === "1") {
+            if (query.updated) {
+                console.log("Update reloaded but still on an old version, stopping");
                 // We just reloaded already and are still on the old version!
                 // Show the toast rather than reload in a loop.
                 showUpdateToast(version, newVersion);
                 return;
             }
 
-            // Set updated=1 as a query param so we can detect that we've already done this once
-            // and reload the page.
-            let suffix = "updated=1";
-            if (window.location.search.length === 0) {
-                suffix = "?" + suffix;
-            } else {
-                suffix = "&" + suffix;
-            }
-
-            // This line has the effect of loading the page at the new location
-            window.location.href = window.location.href + suffix;
+            // Set updated as a cachebusting query param and reload the page.
+            const url = new URL(window.location.href);
+            url.searchParams.set("updated", newVersion);
+            console.log("Update reloading to " + url.toString());
+            window.location.href = url.toString();
         });
         setInterval(() => this.pollForUpdate(showUpdateToast, hideUpdateToast), POKE_RATE_MS);
     }
@@ -165,10 +160,14 @@ export default class WebPlatform extends VectorBasePlatform {
 
             if (currentVersion !== mostRecentVersion) {
                 if (this.shouldShowUpdate(mostRecentVersion)) {
+                    console.log("Update available to " + mostRecentVersion + ", will notify user");
                     showUpdate(currentVersion, mostRecentVersion);
+                } else {
+                    console.log("Update available to " + mostRecentVersion + " but won't be shown");
                 }
                 return { status: UpdateCheckStatus.Ready };
             } else {
+                console.log("No update available, already on " + mostRecentVersion);
                 showNoUpdate?.();
             }
 
