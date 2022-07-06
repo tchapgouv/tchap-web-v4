@@ -26,7 +26,7 @@
     "contribute.json"
   ],
   "engines": {
-    "node": "16.13.2"
+    "node": ">=14.19"
   },
   "style": "bundle.css",
   "scripts": {
