@@ -54,6 +54,12 @@
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
+        "UIFeature.registration": false,
+        "UIFeature.urlPreviews" : false,
+        "UIFeature.widgets" : false,
+        "UIFeature.shareQrCode" : false,
+        "UIFeature.thirdPartyId" : false,
+        "UIFeature.identityServer" : false,
         "custom_themes": [
             {
                 "name": "Tchap",

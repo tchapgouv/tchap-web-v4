@@ -136,6 +136,8 @@
         "UIFeature.urlPreviews" : false,
         "UIFeature.widgets" : false,
         "UIFeature.shareQrCode" : false,
+        "UIFeature.thirdPartyId" : false,
+        "UIFeature.identityServer" : false,
         "layout": "bubble",
         "custom_themes": [
             {
