@@ -54,6 +54,7 @@
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
+        "MessageComposerInput.showPollsButton" : false,
         "custom_themes": [
             {
                 "name": "Tchap",
