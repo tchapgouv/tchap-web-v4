@@ -128,7 +128,7 @@ export async function loadLanguage() {
 }
 
 export async function loadTheme() {
-    setTheme(SdkConfig.getObject("default_theme"));
+    setTheme(SdkConfig.get("default_theme"));
 }
 
 export async function loadApp(fragParams: {}) {
