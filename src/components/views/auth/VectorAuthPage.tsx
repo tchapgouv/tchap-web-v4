@@ -23,7 +23,7 @@ export default class VectorAuthPage extends React.PureComponent {
 
     public render() {
         const pageStyle = {
-            background: 'rgb(55, 76, 114)';
+            background: 'rgb(55, 76, 114)'
         };
 
         const modalStyle: CSSProperties = {
