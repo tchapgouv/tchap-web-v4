@@ -56,7 +56,7 @@ export default class TchapAuthPage extends React.PureComponent {
                         { this.props.children }
                     </div>
                 </div>
-                <VectorAuthFooter />
+                <TchapAuthFooter />
             </div>
         );
     }
