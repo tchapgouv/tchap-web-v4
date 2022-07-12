@@ -157,6 +157,7 @@
         "UIFeature.urlPreviews" : false,
         "UIFeature.widgets" : false,
         "UIFeature.shareQrCode" : false,
+        "Spaces.allRoomsInHome" : true,
         "layout": "bubble",
         "custom_themes": [
             {
