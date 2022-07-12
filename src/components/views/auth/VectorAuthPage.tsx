@@ -20,31 +20,10 @@ import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 import VectorAuthFooter from "./VectorAuthFooter";
 
 export default class VectorAuthPage extends React.PureComponent {
-    private static welcomeBackgroundUrl;
-
-    // cache the url as a static to prevent it changing without refreshing
-    private static getWelcomeBackgroundUrl() {
-        if (VectorAuthPage.welcomeBackgroundUrl) return VectorAuthPage.welcomeBackgroundUrl;
-
-        const brandingConfig = SdkConfig.getObject("branding");
-        VectorAuthPage.welcomeBackgroundUrl = "themes/element/img/backgrounds/lake.jpg";
-
-        const configuredUrl = brandingConfig?.get("welcome_background_url");
-        if (configuredUrl) {
-            if (Array.isArray(configuredUrl)) {
-                const index = Math.floor(Math.random() * configuredUrl.length);
-                VectorAuthPage.welcomeBackgroundUrl = configuredUrl[index];
-            } else {
-                VectorAuthPage.welcomeBackgroundUrl = configuredUrl;
-            }
-        }
-
-        return VectorAuthPage.welcomeBackgroundUrl;
-    }
 
     public render() {
         const pageStyle = {
-            background: `center/cover fixed url(${VectorAuthPage.getWelcomeBackgroundUrl()})`,
+            background: 'rgb(55, 76, 114)';
         };
 
         const modalStyle: CSSProperties = {
