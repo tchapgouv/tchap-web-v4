@@ -60,6 +60,7 @@
         "UIFeature.widgets" : false,
         "UIFeature.shareQrCode" : false,
         "MessageComposerInput.showPollsButton" : false,
+        "Spaces.allRoomsInHome" : true,
         "layout": "bubble",
         "custom_themes": [
             {

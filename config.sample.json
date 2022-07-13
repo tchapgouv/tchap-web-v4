@@ -55,6 +55,7 @@
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
         "MessageComposerInput.showPollsButton" : false,
+        "Spaces.allRoomsInHome" : true,
         "custom_themes": [
             {
                 "name": "Tchap",
