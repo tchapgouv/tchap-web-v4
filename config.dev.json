@@ -90,7 +90,8 @@
     },
     "branding": {
         "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": []
+        "authFooterLinks": [],
+        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.png"
     },
     "jitsi": {
         "preferredDomain": "webconf.numerique.gouv.fr"
