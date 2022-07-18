@@ -67,7 +67,7 @@
                 "name": "Tchap",
                 "is_dark": false,
                 "colors": {
-                    "accent": "#162d58",
+                    "accent": "#000091",
                     "primary-color": "#368bd6",
                     "warning-color": "#ff4b55",
                     "private-color": "#eb5757",
