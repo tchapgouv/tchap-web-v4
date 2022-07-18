@@ -17,8 +17,12 @@ export const DEFAULT_FEDERATE_VALUE = true;
  * @param federate is the room federated
  * @returns rooms options
  */
-export default function roomCreateOptions(
-    name: string, tchapRoomType: TchapRoomType, federate: boolean = DEFAULT_FEDERATE_VALUE): IOpts {
+export default class TchapCreateRoom {
+
+    static roomCreateOptions(
+        name: string, 
+        tchapRoomType: TchapRoomType, 
+        federate: boolean = DEFAULT_FEDERATE_VALUE): IOpts {
     const opts: IOpts = {};
     const createRoomOpts: ITchapCreateRoomOpts = {};
     opts.createOpts = createRoomOpts;
@@ -62,4 +66,5 @@ export default function roomCreateOptions(
         }
     }
     return opts;
+    }
 }
