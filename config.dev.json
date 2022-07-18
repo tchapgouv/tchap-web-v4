@@ -86,7 +86,7 @@
                     "togglesw-off-color": "#c1c9d6",
                     "eventbubble-self-bg": "#e4e4f3",
                     "eventbubble-others-bg": "#f4f4f4",
-                    "username-colors": ["#000091"],
+                    "username-colors": ["#000091"]
                     "avatar-background-colors": ["#8F96A4"]
                 }
             }
