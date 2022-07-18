@@ -1,21 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 20.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1023.2 1024.8" style="enable-background:new 0 0 1023.2 1024.8;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:url(#XMLID_2_);}
-	.st1{fill:#FFFFFF;}
-	.st2{fill:#E5434F;}
-</style>
-<radialGradient id="XMLID_2_" cx="-85.1206" cy="-39.5806" r="1135.4574" gradientUnits="userSpaceOnUse">
-	<stop  offset="0" style="stop-color:#132D78"/>
-	<stop  offset="0.3487" style="stop-color:#12296E"/>
-	<stop  offset="0.932" style="stop-color:#0E1F54"/>
-	<stop  offset="1" style="stop-color:#0D1E51"/>
-</radialGradient>
-<path id="XMLID_75_" class="st0" d="M793.2,0h-564c-127,0-230,103-230,230v564c0,127,103,230,230,230h564c127,0,230-103,230-230V230
-	C1023.2,103,920.2,0,793.2,0z"/>
-<polygon id="XMLID_71_" class="st1" points="814.6,676.4 511.1,851.6 207.6,676.4 207.6,326 511.1,150.8 814.6,326 "/>
-<polygon class="st2" points="701.7,365.1 339.7,365.1 339.7,492.8 392.3,492.8 392.3,417.7 488.1,417.7 488.1,697 540.7,697 
-	540.7,417.7 701.7,417.7 "/>
+<svg width="108" height="109" viewBox="0 0 108 109" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M83.7422 0.995117H24.2578C10.8633 0.995117 0 11.8584 0 25.2529V84.7373C0 98.1318 10.8633 108.995 24.2578 108.995H83.7422C97.1367 108.995 108 98.1318 108 84.7373V25.2529C108 11.8584 97.1367 0.995117 83.7422 0.995117Z" fill="#000091"/>
+<path d="M86.0816 72.4627L54.0012 90.9574L21.9209 72.4627V35.4732L54.0012 16.9785L86.0816 35.4732V72.4627Z" fill="white"/>
+<path d="M51.5088 42.1338H57.0341V74.2903H51.5088V42.1338Z" fill="#E1000F"/>
+<path d="M41.4462 52.8024H35.9209V39.3652H73.9469V44.9H41.4462V52.8024Z" fill="#E1000F"/>
 </svg>
