@@ -60,14 +60,14 @@
                 "name": "Tchap",
                 "is_dark": false,
                 "colors": {
-                    "accent": "#162d58",
-                    "primary-color": "#368bd6",
-                    "warning-color": "#ff4b55",
+                    "accent": "#000091",
+                    "primary-color": "#4C69F6",
+                    "warning-color": "#E1000F",
                     "private-color": "#eb5757",
                     "external-color": "#f07a12",
                     "forum-color": "#27ae60",
                     "sidebar-color": "#c0d8ef",
-                    "roomlist-background-color": "#f3f8fd",
+                    "roomlist-background-color": "#EDF1F7",
                     "roomlist-text-color": "#2e2f32",
                     "roomlist-text-secondary-color": "#61708b",
                     "roomlist-highlights-color": "#ffffff",
@@ -78,7 +78,9 @@
                     "timeline-highlights-color": "#f3f8fd",
                     "togglesw-off-color": "#c1c9d6",
                     "eventbubble-self-bg": "#e4e4f3",
-                    "eventbubble-others-bg": "#f4f4f4"
+                    "eventbubble-others-bg": "#f4f4f4",
+                    "username-colors": ["#000091", "#000091", "#000091", "#000091", "#000091", "#000091", "#000091", "#000091"],
+                    "avatar-background-colors": ["#8F96A4", "#8F96A4", "#8F96A4"]
                 }
             }
         ]
