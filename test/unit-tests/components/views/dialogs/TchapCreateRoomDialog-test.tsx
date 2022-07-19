@@ -3,30 +3,35 @@ import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 
-import TchapCreateRoomDialog from "../../../../src/components/views/dialogs/TchapCreateRoomDialog";
-import { TchapRoomType } from '../../../../src/@types/tchap';
+import { TchapRoomType } from '../../../../../src/@types/tchap';
 import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
 import { EventEmitter } from "events";
 
-import TchapUtils from '../../../../src/util/TchapUtils';
+import TchapUtils from '../../../../../src/util/TchapUtils';
+//mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
+//I could not make a mock of TchapCreateRoomDialog, the real implementation was taken each time. Then I used jest spyOn
 
-
-
-/*
-does not work, undefined is answered anyway, why??
-jest.mock('../../src/lib/createTchapRoom',() => {
-    return {
-      __esModule: true,
-      default: jest.fn(() => 42),
-      roomCreateOptions: jest.fn(() => 43),
+/*    return {
+    jest.mock('../../src/lib/createTchapRoom',() => {
+        __esModule: true,
+        default: jest.fn(() => 42),
+        roomCreateOptions: jest.fn(() => 43),
     };
-  });
+});
 */
 
-describe("TchapCreateRoomDiaglog", () => {
+import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
+
+/*
+ * This unit test targets the TchapCreateRoomDialog react component. It is mounted virtually to be tested thanks to enzyme framework.
+ * With the act function, a state is set inside the component, meanwhile the submitForm function submits the form in order to make action on the internal state of the component.
+ * No html snapshot is used in this test. Jest mocking is used to simulate behaviour of depending modules such as TchapUtils, TchapCreateRoomDialog, MatrixClientPeg
+ */
+describe("TchapCreateRoomDialog", () => {
     let mockClient;
     const roomName = "roomName";
     
+    //default props for the component, will be overriden 
     const defaultProps = {
         defaultPublic: undefined, // unused for Tchap version
         defaultName: undefined, // unused for Tchap version
@@ -35,6 +40,7 @@ describe("TchapCreateRoomDiaglog", () => {
         onFinished: jest.fn()
     };
 
+    //simulate the submit of the form
     const submitForm = async (wrapper: ReactWrapper) =>{
         act(() => {
             wrapper.find('form').simulate('submit', { preventDefault: () => { } });
@@ -42,6 +48,7 @@ describe("TchapCreateRoomDiaglog", () => {
         await new Promise(process.nextTick);
     }
     
+    //build a new component using enzyme
     const getComponent = (props ={}): ReactWrapper =>
             mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
@@ -59,7 +66,7 @@ describe("TchapCreateRoomDiaglog", () => {
     it("Should not create any room wihout a name", async () => {
         const onFinished = jest.fn();
         const wrapper = getComponent({ onFinished});
-        // force into valid state
+       // set state in component
         act(() => {
             wrapper.setState({
                 name: "",
@@ -76,7 +83,7 @@ describe("TchapCreateRoomDiaglog", () => {
         const onFinished = jest.fn();
         const defaultName = "defaultName";
         const wrapper = getComponent({ onFinished, defaultName});
-        // force into valid state
+       // set state in component
         act(() => {
             wrapper.setState({
                 tchapRoomType: TchapRoomType.Private
@@ -108,7 +115,7 @@ describe("TchapCreateRoomDiaglog", () => {
         };
         const wrapper = getComponent({ onFinished});
         
-        // force into valid state
+       // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
@@ -142,7 +149,7 @@ describe("TchapCreateRoomDiaglog", () => {
         };
         const wrapper = getComponent({ onFinished});
         
-        // force into valid state
+       // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
@@ -176,7 +183,7 @@ describe("TchapCreateRoomDiaglog", () => {
         };
         const wrapper = getComponent({ onFinished});
         
-        // force into valid state
+       // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
@@ -210,7 +217,7 @@ describe("TchapCreateRoomDiaglog", () => {
         };
         const wrapper = getComponent({ onFinished});
         
-        // set state
+        // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
