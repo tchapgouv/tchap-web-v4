@@ -59,9 +59,12 @@ describe("TchapCreateRoomDialog", () => {
 
     //build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
     //can be used for simple component
+    //not used in this test
+    /*
     const getShallowComponent = (props={}) => {
         shallow(<TchapCreateRoomDialog {...defaultProps} {...props} />);
     }
+    */
 
     beforeEach(() => {
         jest.resetAllMocks();
