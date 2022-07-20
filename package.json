@@ -169,8 +169,19 @@
   "resolutions": {
     "@types/react": "17.0.14"
   },
+  "jest-comments": {
+    "snapshotSerializers" : "used for snapshot",
+    "testEnvironment" :"moved to jsdom like in matrix-react-sdk",
+    "testMatch" :"execute only tests in unit-tests directory",
+    "setupFilesAfterEnv" :"duplicate enzyme configuration in our own setup because it was not taken",
+    "moduleNameMapper" : "use mapper from element-web, helps at mocking {module, ressources} directly with regexp",
+    "transformIgnorePatterns" : "transcompile ts from those module"
+  },
   "jest": {
-    "testEnvironment": "jest-environment-jsdom",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testEnvironment": "jsdom",
     "testMatch": [
       "<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"
     ],
