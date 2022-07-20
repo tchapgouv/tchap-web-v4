@@ -1,11 +1,16 @@
 
 import React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, ReactWrapper,shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+import renderer from 'react-test-renderer';
+import toJson from 'enzyme-to-json'
+
+//jest.mock('matrix-react-sdk/src/languageHandler')
 
 import { TchapRoomType } from '../../../../../src/@types/tchap';
 import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
 import { EventEmitter } from "events";
+import { _t } from 'matrix-react-sdk/src/languageHandler';
 
 import TchapUtils from '../../../../../src/util/TchapUtils';
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
@@ -52,6 +57,12 @@ describe("TchapCreateRoomDialog", () => {
     const getComponent = (props ={}): ReactWrapper =>
             mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
+    //build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
+    //can be used for simple component
+    const getShallowComponent = (props={}) => {
+        shallow(<TchapCreateRoomDialog {...defaultProps} {...props} />);
+    }
+
     beforeEach(() => {
         jest.resetAllMocks();
         
@@ -60,7 +71,44 @@ describe("TchapCreateRoomDialog", () => {
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
         
         //mock tchap utils
-        jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("Tchap");
+        jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("AGENT");
+        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: true, roomFederationDefault: false });
+
+
+    });
+
+/*     
+doesn not work because 
+
+ TypeError: Cannot read property 'focus' of null
+
+      65 |     componentDidMount() {
+      66 |         // move focus to first field when showing dialog
+    > 67 |         this.nameField.current.focus();
+
+it('renders create room dialog with shallow', () => {
+        const component = getShallowComponent();
+        //expect(component).toMatchSnapshot();
+        expect(toJson(component)).toMatchSnapshot();
+    }); */
+
+    it('should render the whole component', () => {
+        const component = getComponent();
+        expect(toJson(component)).toMatchSnapshot("all the component"); //the whole component snapshot is not usefull, or is it?
+    });
+
+    it('should render the whole component with with the button allow access', () => {
+        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: true, roomFederationDefault: false });
+        const component = getComponent();
+        const allowAccessSwitch = component.find(".mx_SettingsFlag"); //selector : https://enzymejs.github.io/enzyme/docs/api/selector.html
+        expect(toJson(allowAccessSwitch)).toMatchSnapshot("button allow access to other domain than AGENT");
+    });
+
+    it('should render the room dialog without the allow access switch', () => {
+        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: false, roomFederationDefault: false });
+        const component = getComponent();
+        const allowAccessSwitch = component.find(".mx_SettingsFlag");
+        expect(allowAccessSwitch).toEqual({});
     });
 
     it("Should not create any room wihout a name", async () => {
@@ -113,13 +161,15 @@ describe("TchapCreateRoomDialog", () => {
             encryption: true,
             historyVisibility: "joined",
         };
+        
         const wrapper = getComponent({ onFinished});
         
        // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
-                tchapRoomType: TchapRoomType.Private
+                tchapRoomType: TchapRoomType.Private,
+                isFederated:true
             });
         });
 
@@ -221,7 +271,8 @@ describe("TchapCreateRoomDialog", () => {
         act(() => {
             wrapper.setState({
                 name: roomName,
-                tchapRoomType: TchapRoomType.External
+                tchapRoomType: TchapRoomType.External,
+                isFederated:true
             });
         });
         
