@@ -56,11 +56,13 @@
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
         "UIFeature.registration": false,
-        "UIFeature.urlPreviews" : false,
-        "UIFeature.widgets" : false,
-        "UIFeature.shareQrCode" : false,
-        "MessageComposerInput.showPollsButton" : false,
-        "Spaces.allRoomsInHome" : true,
+        "UIFeature.urlPreviews": false,
+        "UIFeature.widgets": false,
+        "UIFeature.shareQrCode": false,
+        "UIFeature.thirdPartyId": false,
+        "UIFeature.identityServer": false,
+        "MessageComposerInput.showPollsButton": false,
+        "Spaces.allRoomsInHome": true,
         "layout": "bubble",
         "custom_themes": [
             {
@@ -86,8 +88,21 @@
                     "togglesw-off-color": "#c1c9d6",
                     "eventbubble-self-bg": "#e4e4f3",
                     "eventbubble-others-bg": "#f4f4f4",
-                    "username-colors": ["#000091", "#000091", "#000091", "#000091", "#000091", "#000091", "#000091", "#000091"],
-                    "avatar-background-colors": ["#8F96A4", "#8F96A4", "#8F96A4"]
+                    "username-colors": [
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091"
+                    ],
+                    "avatar-background-colors": [
+                        "#8F96A4",
+                        "#8F96A4",
+                        "#8F96A4"
+                    ]
                 }
             }
         ]
