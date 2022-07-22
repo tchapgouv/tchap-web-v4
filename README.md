@@ -1,3 +1,34 @@
+Setting up a Tchap dev environment
+============================
+
+As tchap project should be not making changes to matrix-react-sdk and matrix-js-sdk, we would like to avoid using yarn links. Instead of using symlinks to checkout projects, we checkout source code by its tag : 
+
+```
+  "dependencies": {
+    ...
+    "matrix-js-sdk": "matrix-org/matrix-js-sdk#v18.1.0",
+    "matrix-react-sdk": "matrix-org/matrix-react-sdk#v3.46.0",
+  }
+```
+
+This option avoids messing up with source code versionning while being able to use /test scripts.
+
+Anyhow it is necessary to build them with
+
+```
+cd ./node_modules/matrix-react-sdk
+yarn install
+```
+
+```
+cd ./node_modules/matrix-js-sdk
+yarn install
+```
+
+EDIT : when building the package tchap, we must build matrix-react-sdk and matrix-js-sdk package. This is not something we want...
+
+============================
+
 [![Chat](https://img.shields.io/matrix/element-web:matrix.org?logo=matrix)](https://matrix.to/#/#element-web:matrix.org)
 ![Tests](https://github.com/vector-im/element-web/actions/workflows/tests.yaml/badge.svg)
 ![Static Analysis](https://github.com/vector-im/element-web/actions/workflows/static_analysis.yaml/badge.svg)
@@ -47,12 +78,12 @@ To host your own copy of Element, the quickest bet is to use a pre-built
 released version of Element:
 
 1. Download the latest version from <https://github.com/vector-im/element-web/releases>
-1. Untar the tarball on your web server
-1. Move (or symlink) the `element-x.x.x` directory to an appropriate name
-1. Configure the correct caching headers in your webserver (see below)
-1. Configure the app by copying `config.sample.json` to `config.json` and
+2. Untar the tarball on your web server
+3. Move (or symlink) the `element-x.x.x` directory to an appropriate name
+4. Configure the correct caching headers in your webserver (see below)
+5. Configure the app by copying `config.sample.json` to `config.json` and
    modifying it. See the [configuration docs](docs/config.md) for details.
-1. Enter the URL into your browser and log into Element!
+6. Enter the URL into your browser and log into Element!
 
 Releases are signed using gpg and the OpenPGP standard, and can be checked against the public key located
 at <https://packages.riot.im/element-release-key.asc>.
