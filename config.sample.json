@@ -105,7 +105,15 @@
     },
     "branding": {
         "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": []
+        "authFooterLinks": [
+            { "text": "Gouvernement", "url": "https://www.gouvernement.fr"},
+            {"text": "OpenData", "url": "https://www.data.gouv.fr"},
+            {"text": "DINUM", "url": "https://numerique.gouv.fr"},
+            {"text": "beta.gouv.fr", "url": "https://beta.gouv.fr"},
+            {"text": "CGU", "url": "https://www.tchap.gouv.fr/cgu"},
+            {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
+        ],
+        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
     "jitsi": {
         "preferred_domain": "meet.element.io"
