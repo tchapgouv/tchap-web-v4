@@ -68,14 +68,24 @@
             {
                 "name": "Tchap",
                 "is_dark": false,
-                "colors": {
+                "fonts": {
+                    "faces": [
+                        {
+                            "font-family": "Marianne",
+                            "src": [{"url": "/fonts/Marianne.woff", "format": "woff"}]
+                        }
+                    ],
+                    "general": "Marianne, sans",
+                    "monospace": "'Courier New'"
+                },
+                "colors": { {
                     "accent": "#000091",
-                    "primary-color": "#4C69F6",
+                    "primary-color": "#334CCC",
                     "warning-color": "#E1000F",
                     "private-color": "#eb5757",
                     "external-color": "#f07a12",
                     "forum-color": "#27ae60",
-                    "sidebar-color": "#c0d8ef",
+                    "sidebar-color": "#000091",
                     "roomlist-background-color": "#EDF1F7",
                     "roomlist-text-color": "#2e2f32",
                     "roomlist-text-secondary-color": "#61708b",
