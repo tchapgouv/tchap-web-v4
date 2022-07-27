@@ -47,7 +47,7 @@ export default function roomCreateOptions(
             createRoomOpts.preset = Preset.PrivateChat;
             opts.joinRule = JoinRule.Invite;
             opts.encryption = true;
-            opts.historyVisibility = HistoryVisibility.Joined;
+            opts.historyVisibility = HistoryVisibility.Invited;
             break;
         }
         case TchapRoomType.External: {
@@ -57,7 +57,7 @@ export default function roomCreateOptions(
             createRoomOpts.preset = Preset.PrivateChat;
             opts.joinRule = JoinRule.Invite;
             opts.encryption = true;
-            opts.historyVisibility = HistoryVisibility.Joined;
+            opts.historyVisibility = HistoryVisibility.Invited;
             break;
         }
     }
