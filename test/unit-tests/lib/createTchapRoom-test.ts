@@ -1,6 +1,9 @@
 import { TchapRoomType } from '../../../src/@types/tchap';
-import roomCreateOptions from '../../../src/lib/createTchapRoom';
+import TchapCreateRoom from '../../../src/lib/createTchapRoom';
 
+
+
+//DEPRECATED, integrated into TchapCreateRoomDialog-test
 describe("Create room options", () => {
 
     beforeEach(() => {
@@ -22,7 +25,7 @@ describe("Create room options", () => {
             encryption: true,
             historyVisibility: "joined",
         };
-        expect(roomCreateOptions("testName", TchapRoomType.Private)).toStrictEqual(privateRoomExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Private)).toStrictEqual(privateRoomExpectedOpts);
         done();
     });
 
@@ -42,7 +45,7 @@ describe("Create room options", () => {
             encryption: false,
             historyVisibility: "shared",
         };
-        expect(roomCreateOptions("testName", TchapRoomType.Forum, false)).toStrictEqual(publicRoomWithoutFederationExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, false)).toStrictEqual(publicRoomWithoutFederationExpectedOpts);
         done();
     });
 
@@ -62,7 +65,7 @@ describe("Create room options", () => {
             encryption: false,
             historyVisibility: "shared",
         };
-        expect(roomCreateOptions("testName", TchapRoomType.Forum, true)).toStrictEqual(publicRoomWithFederationExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, true)).toStrictEqual(publicRoomWithFederationExpectedOpts);
         done();
     });
 
@@ -82,7 +85,7 @@ describe("Create room options", () => {
             encryption: true,
             historyVisibility: "joined",
         };
-        expect(roomCreateOptions("testName", TchapRoomType.External)).toStrictEqual(externalRoomExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.External)).toStrictEqual(externalRoomExpectedOpts);
         done();
     });
 

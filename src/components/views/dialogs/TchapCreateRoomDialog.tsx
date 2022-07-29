@@ -26,7 +26,7 @@ import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog
 import TchapUtils from '../../../util/TchapUtils';
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../@types/tchap";
-import roomCreateOptions from "../../../lib/createTchapRoom";
+import TchapCreateRoom from "../../../lib/createTchapRoom";
 
 // We leave the same props as Element's version, to avoid unknown props warnings.
 interface IProps {
@@ -123,7 +123,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         // first. Queue a `setState` callback and wait for it to resolve.
         await new Promise<void>(resolve => this.setState({}, resolve));
         if (this.state.nameIsValid) {
-            this.props.onFinished(true, roomCreateOptions(
+            this.props.onFinished(true, TchapCreateRoom.roomCreateOptions(
                 this.state.name,
                 this.state.tchapRoomType,
                 this.state.isFederated));
