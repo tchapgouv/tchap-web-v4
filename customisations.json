@@ -3,5 +3,6 @@
   "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
   "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/components/views/elements/TchapRoomTypeSelector.tsx",
   "src/components/views/dialogs/ServerPickerDialog.tsx": "src/components/views/dialogs/TchapServerPickerDialog.tsx",
-  "src/customisations/ComponentVisibility.ts": "src/customisations/TchapComponentVisibility.ts"
+  "src/customisations/ComponentVisibility.ts": "src/customisations/TchapComponentVisibility.ts",
+  "src/customisations/Media.ts": "src/customisations/ContentScanningMedia.ts"
 }
