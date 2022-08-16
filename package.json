@@ -24,7 +24,7 @@
     "AUTHORS.rst",
     "package.json",
     "contribute.json"
-  ],
+  ], 
   "engines": {
     "node": ">=14.19 <15"
   },

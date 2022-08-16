@@ -4,5 +4,12 @@
   "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/components/views/elements/TchapRoomTypeSelector.tsx",
   "src/components/views/dialogs/ServerPickerDialog.tsx": "src/components/views/dialogs/TchapServerPickerDialog.tsx",
   "src/customisations/ComponentVisibility.ts": "src/customisations/TchapComponentVisibility.ts",
-  "src/customisations/Media.ts": "src/customisations/ContentScanningMedia.ts"
+  "src/customisations/Media.ts": "src/customisations/ContentScanningMedia.ts",
+  "src/components/views/messages/MFileBody.tsx": "src/customisations/components/views/messages/ContentScanningFileBody.tsx",
+  "src/components/views/messages/MImageBody.tsx": "src/customisations/components/views/messages/ContentScanningImageBody.tsx",
+  "src/components/views/messages/MVideoBody.tsx": "src/customisations/components/views/messages/ContentScanningVideoBody.tsx",
+  "src/components/views/messages/MAudioBody.tsx": "src/customisations/components/views/messages/ContentScanningAudioBody.tsx",
+  "src/components/views/messages/MVoiceMessageBody.tsx": "src/customisations/components/views/messages/ContentScanningVoiceMessageBody.tsx",
+  "src/components/views/messages/MStickerBody.tsx": "src/customisations/components/views/messages/ContentScanningStickerBody.tsx",
+  "src/components/views/messages/DownloadActionButton.tsx": "src/customisations/components/views/messages/ContentScanningDownloadActionButton.tsx"
 }
