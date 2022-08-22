@@ -20,10 +20,6 @@ import { PkEncryption } from "@matrix-org/olm";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 
-import { ContentScannerInterface } from "./ContentScannerInterface";
-import { NoopContentScanner } from "./NoopContentScanner";
-import { readScannerUrlConfig } from "./readScannerUrlConfig";
-
 export enum ScanErrorReason {
     RequestFailed = "MCS_MEDIA_REQUEST_FAILED",
     DecryptFailed = "MCS_MEDIA_FAILED_TO_DECRYPT",
@@ -47,11 +43,11 @@ export interface ScanResult {
  * Content scanner implementation that interacts with a Matrix Content Scanner.
  * @see https://github.com/matrix-org/matrix-content-scanner
  */
-export class ContentScanner implements ContentScannerInterface {
+export class ContentScanner {
     private static internalInstance: ContentScanner;
 
     private mcsKey: PkEncryption = new global.Olm.PkEncryption();
-    private keySet = false;
+    private hasKey = false;
     private pendingScans = new Map<string, Promise<boolean>>();
 
     constructor(private scannerUrl: string) {
@@ -67,10 +63,10 @@ export class ContentScanner implements ContentScannerInterface {
             return fetch(this.urlForMxc(mxc));
         }
 
-        if (!this.keySet) {
+        if (!this.hasKey) {
             const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key").then(r => r.json());
             this.mcsKey.set_recipient_key(k['public_key']);
-            this.keySet = true;
+            this.hasKey = true;
         }
 
         return fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/download_encrypted", {
@@ -96,11 +92,11 @@ export class ContentScanner implements ContentScannerInterface {
             let response: Response;
 
             if (file) {
-                if (!this.keySet) {
+                if (!this.hasKey) {
                     const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
                         .then(r => r.json());
                     this.mcsKey.set_recipient_key(k["public_key"]);
-                    this.keySet = true;
+                    this.hasKey = true;
                 }
 
                 response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
@@ -124,15 +120,9 @@ export class ContentScanner implements ContentScannerInterface {
         return promise;
     }
 
-    public static get instance(): ContentScannerInterface {
+    public static get instance(): ContentScanner {
         if (!ContentScanner.internalInstance) {
-            const scannerUrl = readScannerUrlConfig();
-
-            if (scannerUrl) {
-                ContentScanner.internalInstance = new ContentScanner(scannerUrl);
-            } else {
-                ContentScanner.internalInstance = new NoopContentScanner(MatrixClientPeg.get());
-            }
+            ContentScanner.internalInstance = new ContentScanner(MatrixClientPeg.get().getHomeserverUrl());
         }
 
         return ContentScanner.internalInstance;
