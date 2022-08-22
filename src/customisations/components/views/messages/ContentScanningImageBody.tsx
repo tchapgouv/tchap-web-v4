@@ -27,7 +27,7 @@ import { ImageSize, suggestedSize as suggestedImageSize } from "matrix-react-sdk
 
 import OriginalImageBody from "../../../../components/views/messages/OriginalImageBody";
 import { Media } from "../../../ContentScanningMedia";
-import { BugIcon } from "../../../../components/views/elements/BugIcon";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 
 interface State {
@@ -85,7 +85,7 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
         } else if (!this.state.isSafe) {
             return <>
                 <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ width, height }}>
-                    <BugIcon className="mx_MImageBody_bugIcon" />
+                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
                 </div>
                 <ContentScanningStatus fileName={this.fileName} status="unsafe" />
             </>;

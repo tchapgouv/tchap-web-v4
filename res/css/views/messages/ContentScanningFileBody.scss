@@ -49,7 +49,7 @@ limitations under the License.
 }
 
 .mx_MFileBody_unsafe_icon {
-    background-color: #e1000f;
+    background-color: #f07a12;
     border-radius: 4px;
     display: inline-block;
     height: 32px;
@@ -63,7 +63,7 @@ limitations under the License.
         content: '';
         height: 17px;
         left: 7px;
-        mask-image: url('../../../img/bug.svg');
+        mask-image: url('../../../img/blocked.svg');
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: contain;

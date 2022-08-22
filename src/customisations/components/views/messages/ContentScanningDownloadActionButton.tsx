@@ -24,7 +24,7 @@ import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import { RovingAccessibleTooltipButton } from "matrix-react-sdk/src/accessibility/RovingTabIndex";
 
 import { Media } from "../../../ContentScanningMedia";
-import { BugIcon } from "../../../../components/views/elements/BugIcon";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -125,7 +125,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
                 : _t("Infected content"));
 
         if (!this.state.isSafe) {
-            spinner = <BugIcon className="mx_BugIcon_messageContext" />;
+            spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
         }
 
         return <RovingAccessibleTooltipButton

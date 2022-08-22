@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import "../../../../res/css/views/elements/BugIcon.scss";
+import "../../../../res/css/views/elements/BlockedIcon.scss";
 
 import React from "react";
 import classNames from 'classnames';
 
-interface BugIconProps {
+interface BlockedIconProps {
     className: string;
 }
 
-export const BugIcon: React.FC<BugIconProps> = (props: BugIconProps) => {
-    return <div className={classNames("mx_BugIcon", props.className)} />;
+export const BlockedIcon: React.FC<BlockedIconProps> = (props: BlockedIconProps) => {
+    return <div className={classNames("mx_BlockedIcon", props.className)} />;
 };

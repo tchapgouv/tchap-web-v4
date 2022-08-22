@@ -25,7 +25,7 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 
 import OriginalImageBody from "../../../../components/views/messages/OriginalImageBody";
 import { Media } from "../../../ContentScanningMedia";
-import { BugIcon } from "../../../../components/views/elements/BugIcon";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 
 interface State {
@@ -77,7 +77,7 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
         } else if (!this.state.isSafe) {
             return <>
                 <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ width, height }}>
-                    <BugIcon className="mx_MImageBody_bugIcon" />
+                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
                 </div>
                 <ContentScanningStatus fileName={this.fileName} status="unsafe" />
             </>;

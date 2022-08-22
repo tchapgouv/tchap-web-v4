@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-.mx_BugIcon {
-    background-color: #e1000f;
+.mx_BlockedIcon {
+    background-color: #f07a12;
     border-radius: 4px;
     content: '';
     display: inline-block;
@@ -28,7 +28,7 @@
         content: '';
         height: 20px;
         left: 10px;
-        mask-image: url('../../../img/bug.svg');
+        mask-image: url('../../../img/blocked.svg');
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: contain;
@@ -38,7 +38,7 @@
     }
 }
 
-.mx_BugIcon_messageContext {
+.mx_BlockedIcon_messageContext {
     height: 28px;
     width: 28px;
     z-index: 1;

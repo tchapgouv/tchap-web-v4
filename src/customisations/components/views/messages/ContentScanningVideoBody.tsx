@@ -25,7 +25,7 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 
 import OriginalVideoBody from "../../../../components/views/messages/OriginalVideoBody";
 import { Media } from "../../../ContentScanningMedia";
-import { BugIcon } from "../../../../components/views/elements/BugIcon";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 
 interface State {
@@ -77,7 +77,7 @@ export default class ContentScanningVideoBody extends React.Component<IBodyProps
         } else if (!this.state.isSafe) {
             return <>
                 <div className="mx_MVideoBody mx_MVideoBody_unsafe" style={{ width, height }}>
-                    <BugIcon className="mx_MVideoBody_bugIcon" />
+                    <BlockedIcon className="mx_MVideoBody_BlockedIcon" />
                 </div>
                 <ContentScanningStatus fileName={this.fileName} status="unsafe" />
             </>;

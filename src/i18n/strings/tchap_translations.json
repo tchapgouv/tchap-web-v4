@@ -50,12 +50,12 @@
     "en": "Scanning",
     "fr": "Scanning"
   },
-  "Infected content": {
-    "en": "Infected content",
-    "fr": "Infected content"
+  "Content blocked": {
+    "en": "Content blocked",
+    "fr": "Content blocked"
   },
-  "Scan done": {
-    "en": "Scan done",
-    "fr": "Scan done"
+  "Trusted": {
+    "en": "Trusted",
+    "fr": "Vérifié"
   }
 }
