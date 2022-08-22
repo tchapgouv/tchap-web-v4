@@ -36,7 +36,6 @@ export interface ScanError {
 export interface ScanResult {
     clean: boolean;
     scanned: boolean;
-    info: string;
 }
 
 /**
@@ -88,29 +87,44 @@ export class ContentScanner {
         }
 
         // eslint-disable-next-line no-async-promise-executor
-        const promise = new Promise<boolean>(async resolve => {
+        const promise = new Promise<boolean>(async (resolve, reject) => {
             let response: Response;
 
             if (file) {
                 if (!this.hasKey) {
-                    const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
-                        .then(r => r.json());
-                    this.mcsKey.set_recipient_key(k["public_key"]);
-                    this.hasKey = true;
+                    try {
+                        const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
+                            .then(r => r.json());
+                        this.mcsKey.set_recipient_key(k["public_key"]);
+                        this.hasKey = true;
+                    } catch (err) {
+                        reject(err);
+                        return;
+                    }
                 }
 
-                response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
-                    method: "POST",
-                    body: JSON.stringify({
-                        encrypted_body: this.mcsKey.encrypt(JSON.stringify({ file })),
-                    }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                try {
+                    response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            encrypted_body: this.mcsKey.encrypt(JSON.stringify({ file })),
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+                } catch (err) {
+                    reject(err);
+                    return;
+                }
             } else {
                 const url = this.scannerUrl + `/_matrix/media_proxy/unstable/scan/${mxc.substring('mxc://'.length)}`;
-                response = await fetch(url);
+                try {
+                    response = await fetch(url);
+                } catch (err) {
+                    reject(err);
+                    return;
+                }
             }
 
             const responseJson: ScanResult = await response.json();

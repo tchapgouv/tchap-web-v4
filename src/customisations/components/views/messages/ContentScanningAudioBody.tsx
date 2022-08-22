@@ -25,6 +25,7 @@ import { ContentScanningStatus } from "../../../../components/views/elements/Con
 interface State {
     isScanning: boolean;
     isSafe: boolean;
+    hasError: boolean;
 }
 
 /**
@@ -41,6 +42,7 @@ export default class ContentScanningAudioBody extends React.PureComponent<IBodyP
         this.state = {
             isScanning: true,
             isSafe: false,
+            hasError: false,
         };
 
         Promise.all([
@@ -51,6 +53,11 @@ export default class ContentScanningAudioBody extends React.PureComponent<IBodyP
             this.setState({
                 isScanning: false,
                 isSafe,
+            });
+        }).catch(() => {
+            this.setState({
+                isScanning: false,
+                hasError: true,
             });
         });
     }

@@ -57,5 +57,9 @@
   "Trusted": {
     "en": "Trusted",
     "fr": "Vérifié"
+  },
+  "Scan unavailable": {
+    "en": "Scan unavailable",
+    "fr": "Scan unavailable"
   }
 }

@@ -29,6 +29,7 @@
     color: var(--timeline-text-color-50pct);
 }
 
-.mx_ContentScanningStatus_unsafe {
+.mx_ContentScanningStatus_unsafe,
+.mx_ContentScanningStatus_error {
     color: #f07a12;
 }

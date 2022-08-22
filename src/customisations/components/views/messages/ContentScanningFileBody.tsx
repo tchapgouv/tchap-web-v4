@@ -36,6 +36,7 @@ interface Props extends IBodyProps {
 interface State {
     isScanning: boolean;
     isSafe: boolean;
+    hasError: boolean;
 }
 
 /**
@@ -52,16 +53,22 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
         this.state = {
             isScanning: true,
             isSafe: false,
+            hasError: false,
         };
 
         Promise.all([
             this.media.scanSource(),
             this.media.scanThumbnail(),
-        ]).then(async ([ok1, ok2]) => {
+        ]).then(([ok1, ok2]) => {
             const isSafe = ok1 && ok2;
             this.setState({
                 isScanning: false,
                 isSafe,
+            });
+        }).catch(() => {
+            this.setState({
+                isScanning: false,
+                hasError: true,
             });
         });
     }
@@ -70,6 +77,12 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
         if (this.state.isScanning) {
             return (
                 <span className="mx_MFileBody mx_MFileBody_scanning">
+                    { this.placeholder }
+                </span>
+            );
+        } else if (this.state.hasError) {
+            return (
+                <span className="mx_MFileBody mx_MFileBody_error">
                     { this.placeholder }
                 </span>
             );
@@ -96,6 +109,8 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
 
             if (this.state.isScanning) {
                 text = <ContentScanningStatus fileName={presentableFileName} status="scanning" />;
+            } else if (this.state.hasError) {
+                text = <ContentScanningStatus fileName={presentableFileName} status="error" />;
             } else if (!this.state.isSafe) {
                 text = <ContentScanningStatus fileName={presentableFileName} status="unsafe" />;
             }
@@ -124,7 +139,7 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
         let icon = <span className="mx_MFileBody_info_icon" />;
         if (this.state.isScanning) {
             icon = <span className="mx_MFileBody_info_icon"><InlineSpinner w={20} h={20} /></span>;
-        } else if (!this.state.isSafe) {
+        } else if (this.state.hasError || !this.state.isSafe) {
             icon = <span className="mx_MFileBody_unsafe_icon" />;
         }
         return icon;

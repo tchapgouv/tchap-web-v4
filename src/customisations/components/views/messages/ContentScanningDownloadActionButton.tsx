@@ -41,6 +41,7 @@ interface IState {
     tooltip: string;
     isSafe: boolean;
     isScanning: boolean;
+    hasError: boolean;
 }
 
 /**
@@ -54,10 +55,11 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         super(props);
 
         this.state = {
+            hasError: false,
+            isSafe: false,
+            isScanning: false,
             loading: false,
             tooltip: _td("Downloading"),
-            isScanning: false,
-            isSafe: true,
         };
     }
 
@@ -87,6 +89,12 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
                 isSafe,
             });
             return isSafe;
+        }).catch(() => {
+            this.setState({
+                loading: false,
+                isScanning: false,
+                hasError: true,
+            });
         });
 
         if (!safe) {
@@ -118,13 +126,19 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
         });
 
-        const tooltip = this.state.isScanning
-            ? _t("Scanning")
-            : (this.state.isSafe
-                ? (spinner ? _t("Decrypting") : _t("Download"))
-                : _t("Infected content"));
+        let tooltip = _t("Scanning");
 
-        if (!this.state.isSafe) {
+        if (!this.state.isScanning) {
+            if (this.state.isSafe) {
+                tooltip = spinner ? _t("Decrypting") : _t("Download");
+            } else if (this.state.hasError) {
+                tooltip = _t("Scan unavailable");
+            } else if (!this.state.isSafe) {
+                tooltip = _t("Infected content");
+            }
+        }
+
+        if (this.state.hasError || !this.state.isSafe) {
             spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
         }
 

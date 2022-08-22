@@ -24,6 +24,7 @@
 
 .mx_EventTile .mx_EventTile_line.mx_EventTile_mediaLine {
     .mx_MVideoBody_pending,
+    .mx_MVideoBody_error,
     .mx_MVideoBody_unsafe {
         background-color: rgba(141, 151, 165, 0.2);
         border-radius: 8px;

@@ -23,7 +23,7 @@ import SettingsStore from "matrix-react-sdk/src/settings/SettingsStore";
 
 interface ContentScanningStatusProps {
     fileName?: string;
-    status: "scanning" | "unsafe" | "done";
+    status: "scanning" | "unsafe" | "done" | "error";
 }
 
 /**
@@ -51,6 +51,17 @@ export const ContentScanningStatus: React.FC<ContentScanningStatusProps> = (prop
         return <div>
             <TextWithTooltip class="mx_ContentScanningStatus_unsafe" tooltip={props.fileName}>
                 { _t("Content blocked") }
+            </TextWithTooltip>
+        </div>;
+    }
+
+    if (props.status === "error") {
+        return <div>
+            <TextWithTooltip
+                class="mx_ContentScanningStatus_error"
+                tooltip={props.fileName}
+            >
+                { _t("Scan unavailable") }
             </TextWithTooltip>
         </div>;
     }

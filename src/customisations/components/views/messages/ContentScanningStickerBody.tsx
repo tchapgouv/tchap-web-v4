@@ -31,6 +31,7 @@ import { ContentScanningStatus } from "../../../../components/views/elements/Con
 interface State {
     isScanning: boolean;
     isSafe: boolean;
+    hasError: boolean;
 }
 
 /**
@@ -43,6 +44,7 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
         this.state = {
             isScanning: true,
             isSafe: false,
+            hasError: false,
         };
 
         Promise.all([
@@ -53,6 +55,11 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
             this.setState({
                 isScanning: false,
                 isSafe,
+            });
+        }).catch(() => {
+            this.setState({
+                isScanning: false,
+                hasError: true,
             });
         });
     }
@@ -73,6 +80,13 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
                     <Spinner />
                 </div>
                 <ContentScanningStatus fileName={this.fileName} status="scanning" />
+            </>;
+        } else if (this.state.hasError) {
+            return <>
+                <div className="mx_MImageBody mx_MImageBody_error" style={{ width, height }}>
+                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
+                </div>
+                <ContentScanningStatus fileName={this.fileName} status="error" />
             </>;
         } else if (!this.state.isSafe) {
             return <>

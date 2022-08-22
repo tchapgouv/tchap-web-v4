@@ -25,6 +25,7 @@ import { ContentScanningStatus } from "../../../../components/views/elements/Con
 interface State {
     isScanning: boolean;
     isSafe: boolean;
+    hasError: boolean;
 }
 
 /**
@@ -41,6 +42,7 @@ export default class ContentScanningVoiceMessageBody extends React.PureComponent
         this.state = {
             isScanning: true,
             isSafe: false,
+            hasError: false,
         };
 
         Promise.all([
@@ -52,11 +54,16 @@ export default class ContentScanningVoiceMessageBody extends React.PureComponent
                 isScanning: false,
                 isSafe,
             });
+        }).catch(() => {
+            this.setState({
+                isScanning: false,
+                hasError: true,
+            });
         });
     }
 
     public render() {
-        if (this.state.isScanning || !this.state.isSafe) {
+        if (this.state.hasError || this.state.isScanning || !this.state.isSafe) {
             return <ContentScanningFileBody {...this.props} />;
         }
 
