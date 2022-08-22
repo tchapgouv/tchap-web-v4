@@ -14,41 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import RecordingPlayback from "matrix-react-sdk/src/components/views/audio_messages/RecordingPlayback";
-import { _t } from "matrix-react-sdk/src/languageHandler";
-import warningIcon from "matrix-react-sdk/res/img/warning.svg";
-import InlineSpinner from "matrix-react-sdk/src/components/views/elements/InlineSpinner";
+/**
+ * This is file is actually not in use and only a placeholder for tool support (editor etc.).
+ * During build it will be replaced with the original component from matrix-react-sdk.
+ *
+ * @see ../../../../customisations.json
+ */
 
-import MAudioBody from "./OriginalAudioBody";
-import MFileBody from "./OriginalFileBody";
-
-export default class MVoiceMessageBody extends MAudioBody {
-    // A voice message is an audio file but rendered in a special way.
-    public render() {
-        if (this.state.error) {
-            return (
-                <span className="mx_MVoiceMessageBody">
-                    <img src={warningIcon} width="16" height="16" />
-                    { _t("Error processing voice message") }
-                </span>
-            );
-        }
-
-        if (!this.state.playback) {
-            return (
-                <span className="mx_MVoiceMessageBody">
-                    <InlineSpinner />
-                </span>
-            );
-        }
-
-        // At this point we should have a playable state
-        return (
-            <span className="mx_MVoiceMessageBody">
-                <RecordingPlayback playback={this.state.playback} />
-                { this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
-            </span>
-        );
-    }
-}
+export { default } from "matrix-react-sdk/src/components/views/messages/MVoiceMessageBody";
