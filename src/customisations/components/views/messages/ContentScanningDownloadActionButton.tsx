@@ -119,7 +119,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         });
 
         const tooltip = this.state.isScanning
-            ? _t("Scanning...")
+            ? _t("Scanning")
             : (this.state.isSafe
                 ? (spinner ? _t("Decrypting") : _t("Download"))
                 : _t("Infected content"));
