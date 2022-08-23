@@ -1,0 +1,509 @@
+Starting synapse with args -m synapse.app.homeserver --config-path /data/homeserver.yaml
+2022-08-16 06:44:55,307 - root - 343 - WARNING - main - ***** STARTING SERVER *****
+2022-08-16 06:44:55,307 - root - 344 - WARNING - main - Server /usr/local/lib/python3.9/site-packages/synapse/app/homeserver.py version 1.64.0rc1
+2022-08-16 06:44:55,307 - root - 349 - INFO - main - Server hostname: localhost
+2022-08-16 06:44:55,307 - root - 350 - INFO - main - Instance name: master
+2022-08-16 06:44:55,307 - synapse.app.homeserver - 376 - INFO - main - Setting up server
+2022-08-16 06:44:55,307 - synapse.server - 306 - INFO - main - Setting up.
+2022-08-16 06:44:55,308 - synapse.storage.prepare_database - 115 - INFO - main - ('main', 'state'): Checking existing schema version
+2022-08-16 06:44:55,309 - synapse.storage.prepare_database - 145 - INFO - main - ('main', 'state'): Initialising new database
+2022-08-16 06:44:55,338 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v55
+2022-08-16 06:44:55,338 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 55/access_token_expiry.sql
+2022-08-16 06:44:55,340 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 55/track_threepid_validations.sql
+2022-08-16 06:44:55,341 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 55/users_alter_deactivated.sql
+2022-08-16 06:44:55,343 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v56
+2022-08-16 06:44:55,344 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/add_spans_to_device_lists.sql
+2022-08-16 06:44:55,346 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/current_state_events_membership.sql
+2022-08-16 06:44:55,348 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/current_state_events_membership_mk2.sql
+2022-08-16 06:44:55,348 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/delete_keys_from_deleted_backups.sql
+2022-08-16 06:44:55,349 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/destinations_failure_ts.sql
+2022-08-16 06:44:55,350 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/device_stream_id_insert.sql
+2022-08-16 06:44:55,351 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/devices_last_seen.sql
+2022-08-16 06:44:55,355 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/drop_unused_event_tables.sql
+2022-08-16 06:44:55,356 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/event_expiry.sql
+2022-08-16 06:44:55,357 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/event_labels.sql
+2022-08-16 06:44:55,358 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/event_labels_background_update.sql
+2022-08-16 06:44:55,358 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/fix_room_keys_index.sql
+2022-08-16 06:44:55,359 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/hidden_devices.sql
+2022-08-16 06:44:55,361 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 56/hidden_devices_fix.sql.sqlite
+2022-08-16 06:44:55,368 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/nuke_empty_communities_from_db.sql
+2022-08-16 06:44:55,369 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/public_room_list_idx.sql
+2022-08-16 06:44:55,370 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/redaction_censor.sql
+2022-08-16 06:44:55,372 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/redaction_censor2.sql
+2022-08-16 06:44:55,374 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/redaction_censor4.sql
+2022-08-16 06:44:55,374 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/remove_tombstoned_rooms_from_directory.sql
+2022-08-16 06:44:55,375 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/room_key_etag.sql
+2022-08-16 06:44:55,378 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/room_membership_idx.sql
+2022-08-16 06:44:55,378 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/room_retention.sql
+2022-08-16 06:44:55,379 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/signing_keys.sql
+2022-08-16 06:44:55,381 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/signing_keys_nonunique_signatures.sql
+2022-08-16 06:44:55,381 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/state_group_room_idx.sql
+2022-08-16 06:44:55,382 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/stats_separated.sql
+2022-08-16 06:44:55,385 - synapse.storage.prepare_database - 502 - INFO - main - Running 56/unique_user_filter_index.py:run_create
+2022-08-16 06:44:55,392 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/user_external_ids.sql
+2022-08-16 06:44:55,393 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 56/users_in_public_rooms_idx.sql
+2022-08-16 06:44:55,393 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v57
+2022-08-16 06:44:55,394 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 57/delete_old_current_state_events.sql
+2022-08-16 06:44:55,394 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 57/device_list_remote_cache_stale.sql
+2022-08-16 06:44:55,395 - synapse.storage.prepare_database - 502 - INFO - main - Running 57/local_current_membership.py:run_create
+2022-08-16 06:44:55,395 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 57/remove_sent_outbound_pokes.sql
+2022-08-16 06:44:55,396 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 57/rooms_version_column.sql
+2022-08-16 06:44:55,398 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 57/rooms_version_column_2.sql.sqlite
+2022-08-16 06:44:55,398 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 57/rooms_version_column_3.sql.sqlite
+2022-08-16 06:44:55,398 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v58
+2022-08-16 06:44:55,399 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/00background_update_ordering.sql
+2022-08-16 06:44:55,401 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/02remove_dup_outbound_pokes.sql
+2022-08-16 06:44:55,401 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/03persist_ui_auth.sql
+2022-08-16 06:44:55,402 - synapse.storage.prepare_database - 502 - INFO - main - Running 58/06dlols_unique_idx.py:run_create
+2022-08-16 06:44:55,402 - synapse.storage.v58_06dlols_unique_idx - 51 - INFO - main - Rebuilding device_lists_outbound_last_success with unique index
+2022-08-16 06:44:55,410 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 58/07add_method_to_thumbnail_constraint.sql.sqlite
+2022-08-16 06:44:55,425 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/07persist_ui_auth_ips.sql
+2022-08-16 06:44:55,426 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 58/08_media_safe_from_quarantine.sql.sqlite
+2022-08-16 06:44:55,428 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/09shadow_ban.sql
+2022-08-16 06:44:55,430 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/10_pushrules_enabled_delete_obsolete.sql
+2022-08-16 06:44:55,430 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/10drop_local_rejections_stream.sql
+2022-08-16 06:44:55,430 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/10federation_pos_instance_name.sql
+2022-08-16 06:44:55,432 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/11dehydration.sql
+2022-08-16 06:44:55,433 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/11fallback.sql
+2022-08-16 06:44:55,433 - synapse.storage.prepare_database - 502 - INFO - main - Running 58/11user_id_seq.py:run_create
+2022-08-16 06:44:55,433 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/12room_stats.sql
+2022-08-16 06:44:55,434 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/13remove_presence_allow_inbound.sql
+2022-08-16 06:44:55,434 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/14events_instance_name.sql
+2022-08-16 06:44:55,436 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/15_catchup_destination_rooms.sql
+2022-08-16 06:44:55,436 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/15unread_count.sql
+2022-08-16 06:44:55,442 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/16populate_stats_process_rooms_fix.sql
+2022-08-16 06:44:55,443 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/17_catchup_last_successful.sql
+2022-08-16 06:44:55,445 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/18stream_positions.sql
+2022-08-16 06:44:55,445 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/19txn_id.sql
+2022-08-16 06:44:55,446 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/20instance_name_event_tables.sql
+2022-08-16 06:44:55,450 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/20user_daily_visits.sql
+2022-08-16 06:44:55,452 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/21as_device_stream.sql
+2022-08-16 06:44:55,455 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/21drop_device_max_stream_id.sql
+2022-08-16 06:44:55,456 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/22puppet_token.sql
+2022-08-16 06:44:55,458 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/22users_have_local_media.sql
+2022-08-16 06:44:55,458 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/23e2e_cross_signing_keys_idx.sql
+2022-08-16 06:44:55,458 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/24drop_event_json_index.sql
+2022-08-16 06:44:55,459 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/25user_external_ids_user_id_idx.sql
+2022-08-16 06:44:55,459 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/26access_token_last_validated.sql
+2022-08-16 06:44:55,461 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 58/27local_invites.sql
+2022-08-16 06:44:55,462 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 58/28drop_last_used_column.sql.sqlite
+2022-08-16 06:44:55,477 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v59
+2022-08-16 06:44:55,478 - synapse.storage.prepare_database - 502 - INFO - main - Running 59/01ignored_user.py:run_create
+2022-08-16 06:44:55,478 - synapse.storage.v59_01ignored_user - 35 - INFO - main - Creating ignored_users table
+2022-08-16 06:44:55,478 - synapse.storage.v59_01ignored_user - 45 - INFO - main - Converting existing ignore lists
+2022-08-16 06:44:55,479 - synapse.storage.v59_01ignored_user - 61 - INFO - main - Adding constraints to ignored_users table
+2022-08-16 06:44:55,479 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/02shard_send_to_device.sql
+2022-08-16 06:44:55,485 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/04_event_auth_chains.sql
+2022-08-16 06:44:55,487 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/04drop_account_data.sql
+2022-08-16 06:44:55,488 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/05cache_invalidation.sql
+2022-08-16 06:44:55,488 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/06chain_cover_index.sql
+2022-08-16 06:44:55,488 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/06shard_account_data.sql
+2022-08-16 06:44:55,496 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/07shard_account_data_fix.sql
+2022-08-16 06:44:55,496 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/08delete_pushers_for_deactivated_accounts.sql
+2022-08-16 06:44:55,496 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/08delete_stale_pushers.sql
+2022-08-16 06:44:55,497 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/09rejected_events_metadata.sql
+2022-08-16 06:44:55,497 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/10delete_purged_chain_cover.sql
+2022-08-16 06:44:55,497 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/11add_knock_members_to_stats.sql
+2022-08-16 06:44:55,501 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/12account_validity_token_used_ts_ms.sql
+2022-08-16 06:44:55,503 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/12presence_stream_instance.sql
+2022-08-16 06:44:55,505 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/13users_to_send_full_presence_to.sql
+2022-08-16 06:44:55,505 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/14refresh_tokens.sql
+2022-08-16 06:44:55,510 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/15locks.sql
+2022-08-16 06:44:55,511 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 59/16federation_inbound_staging.sql
+2022-08-16 06:44:55,513 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v60
+2022-08-16 06:44:55,513 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v61
+2022-08-16 06:44:55,514 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 61/01insertion_event_lookups.sql
+2022-08-16 06:44:55,516 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 61/02drop_redundant_room_depth_index.sql
+2022-08-16 06:44:55,517 - synapse.storage.prepare_database - 502 - INFO - main - Running 61/03recreate_min_depth.py:run_create
+2022-08-16 06:44:55,517 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v62
+2022-08-16 06:44:55,518 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 62/01insertion_event_extremities.sql
+2022-08-16 06:44:55,519 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v63
+2022-08-16 06:44:55,519 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 63/01create_registration_tokens.sql
+2022-08-16 06:44:55,520 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 63/02delete_unlinked_email_pushers.sql
+2022-08-16 06:44:55,520 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 63/02populate-rooms-creator.sql
+2022-08-16 06:44:55,521 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 63/03session_store.sql
+2022-08-16 06:44:55,521 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 63/04add_presence_stream_not_offline_index.sql
+2022-08-16 06:44:55,522 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v64
+2022-08-16 06:44:55,522 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 64/01msc2716_chunk_to_batch_rename.sql.sqlite
+2022-08-16 06:44:55,524 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v65
+2022-08-16 06:44:55,525 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/01msc2716_insertion_event_edges.sql
+2022-08-16 06:44:55,526 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/03remove_hidden_devices_from_device_inbox.sql
+2022-08-16 06:44:55,526 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/04_local_group_updates.sql
+2022-08-16 06:44:55,527 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/05_remove_room_stats_historical_and_user_stats_historical.sql
+2022-08-16 06:44:55,527 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/06remove_deleted_devices_from_device_inbox.sql
+2022-08-16 06:44:55,528 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/07_arbitrary_relations.sql
+2022-08-16 06:44:55,528 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/08_device_inbox_background_updates.sql
+2022-08-16 06:44:55,529 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/10_expirable_refresh_tokens.sql
+2022-08-16 06:44:55,535 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 65/11_devices_auth_provider_session.sql
+2022-08-16 06:44:55,536 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v66
+2022-08-16 06:44:55,536 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v67
+2022-08-16 06:44:55,537 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 67/01drop_public_room_list_stream.sql
+2022-08-16 06:44:55,537 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v68
+2022-08-16 06:44:55,538 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 68/01event_columns.sql
+2022-08-16 06:44:55,545 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 68/02_msc2409_add_device_id_appservice_stream_type.sql
+2022-08-16 06:44:55,548 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 68/03_delete_account_data_for_deactivated_accounts.sql
+2022-08-16 06:44:55,548 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 68/04_refresh_tokens_index_next_token_id.sql
+2022-08-16 06:44:55,548 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 68/04partial_state_rooms.sql
+2022-08-16 06:44:55,549 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 68/05_delete_non_strings_from_event_search.sql.sqlite
+2022-08-16 06:44:55,550 - synapse.storage.prepare_database - 502 - INFO - main - Running 68/05partial_state_rooms_triggers.py:run_create
+2022-08-16 06:44:55,550 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 68/06_msc3202_add_device_list_appservice_stream_type.sql
+2022-08-16 06:44:55,552 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v69
+2022-08-16 06:44:55,553 - synapse.storage.prepare_database - 502 - INFO - main - Running 69/01as_txn_seq.py:run_create
+2022-08-16 06:44:55,553 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 69/01device_list_oubound_by_room.sql
+2022-08-16 06:44:55,554 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 69/02cache_invalidation_index.sql
+2022-08-16 06:44:55,555 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v70
+2022-08-16 06:44:55,555 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 70/01clean_table_purged_rooms.sql
+2022-08-16 06:44:55,556 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 70/08_state_group_edges_unique.sql
+2022-08-16 06:44:55,556 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v71
+2022-08-16 06:44:55,557 - synapse.storage.prepare_database - 527 - INFO - main - Applying engine-specific schema 71/01rebuild_event_edges.sql.sqlite
+2022-08-16 06:44:55,567 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 71/01remove_noop_background_updates.sql
+2022-08-16 06:44:55,568 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 71/02event_push_summary_unique.sql
+2022-08-16 06:44:55,568 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v72
+2022-08-16 06:44:55,568 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 72/01add_room_type_to_state_stats.sql
+2022-08-16 06:44:55,571 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 72/01event_push_summary_receipt.sql
+2022-08-16 06:44:55,573 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 72/02event_push_actions_index.sql
+2022-08-16 06:44:55,574 - synapse.storage.prepare_database - 502 - INFO - main - Running 72/03bg_populate_events_columns.py:run_create
+2022-08-16 06:44:55,574 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 72/03drop_event_reference_hashes.sql
+2022-08-16 06:44:55,575 - synapse.storage.prepare_database - 519 - INFO - main - Applying schema 72/03remove_groups.sql
+2022-08-16 06:44:55,577 - synapse.storage.prepare_database - 546 - INFO - main - Schema now up to date
+2022-08-16 06:44:55,577 - synapse.storage.databases - 66 - INFO - main - [database config 'master']: Checking database server
+2022-08-16 06:44:55,577 - synapse.storage.databases - 69 - INFO - main - [database config 'master']: Preparing for databases ['main', 'state']
+2022-08-16 06:44:55,577 - synapse.storage.prepare_database - 115 - INFO - main - ['main', 'state']: Checking existing schema version
+2022-08-16 06:44:55,578 - synapse.storage.prepare_database - 119 - INFO - main - ['main', 'state']: Existing schema is 72 (+6 deltas)
+2022-08-16 06:44:55,578 - synapse.storage.databases.main - 304 - INFO - main - Checking database for consistency with configuration...
+2022-08-16 06:44:55,578 - synapse.storage.prepare_database - 411 - INFO - main - Applying schema deltas for v72
+2022-08-16 06:44:55,579 - synapse.storage.prepare_database - 546 - INFO - main - Schema now up to date
+2022-08-16 06:44:55,579 - synapse.storage.databases - 84 - INFO - main - [database config 'master']: Starting 'main' database
+2022-08-16 06:44:55,579 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for device_lists_stream(stream_id): 1
+2022-08-16 06:44:55,579 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for user_signature_stream(stream_id): 1
+2022-08-16 06:44:55,579 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for device_lists_outbound_pokes(stream_id): 1
+2022-08-16 06:44:55,580 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for device_lists_changes_in_room(stream_id): 1
+2022-08-16 06:44:55,580 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for receipts_linearized(stream_id): 1
+2022-08-16 06:44:55,580 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for events(stream_ordering): 1
+2022-08-16 06:44:55,580 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for events(stream_ordering): -1
+2022-08-16 06:44:55,580 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for ex_outlier_stream(event_stream_ordering): -1
+2022-08-16 06:44:55,581 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for device_inbox(stream_id): 1
+2022-08-16 06:44:55,583 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for pushers(id): 1
+2022-08-16 06:44:55,583 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for deleted_pushers(stream_id): 1
+2022-08-16 06:44:55,583 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for push_rules_stream(stream_id): 1
+2022-08-16 06:44:55,584 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for room_account_data(stream_id): 1
+2022-08-16 06:44:55,584 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for room_tags_revisions(stream_id): 1
+2022-08-16 06:44:55,584 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for e2e_cross_signing_keys(stream_id): 1
+2022-08-16 06:44:55,584 - synapse.storage.databases.main.event_push_actions - 688 - INFO - main - Searching for stream ordering 1 month ago
+2022-08-16 06:44:55,584 - synapse.storage.databases.main.event_push_actions - 692 - INFO - main - Found stream ordering 1 month ago: it's 0
+2022-08-16 06:44:55,584 - synapse.storage.databases.main.event_push_actions - 695 - INFO - main - Searching for stream ordering 1 day ago
+2022-08-16 06:44:55,584 - synapse.storage.databases.main.event_push_actions - 699 - INFO - main - Found stream ordering 1 day ago: it's 0
+2022-08-16 06:44:55,585 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for push_rules(id): 1
+2022-08-16 06:44:55,585 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for push_rules_enable(id): 1
+2022-08-16 06:44:55,585 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for presence_stream(stream_id): 1
+2022-08-16 06:44:55,585 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for access_tokens(id): 1
+2022-08-16 06:44:55,586 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for refresh_tokens(id): 1
+2022-08-16 06:44:55,586 - synapse.storage.util.id_generators - 88 - INFO - main - Initialising stream generator for event_reports(id): 1
+2022-08-16 06:44:55,586 - synapse.storage.databases - 101 - INFO - main - [database config 'master']: Starting 'state' database
+2022-08-16 06:44:55,586 - synapse.storage.databases - 116 - INFO - main - [database config 'master']: prepared
+2022-08-16 06:44:55,587 - synapse.server - 309 - INFO - main - Finished setting up.
+2022-08-16 06:44:55,602 - synapse.push.pusher - 38 - INFO - main - email enable notifs: False
+2022-08-16 06:44:55,604 - synapse.federation.federation_server - 1365 - INFO - main - Registering federation EDU handler for 'm.device_list_update'
+2022-08-16 06:44:55,604 - synapse.federation.federation_server - 1385 - INFO - main - Registering federation query handler for 'profile'
+2022-08-16 06:44:55,605 - synapse.federation.federation_server - 1365 - INFO - main - Registering federation EDU handler for 'm.presence'
+2022-08-16 06:44:55,605 - synapse.federation.federation_server - 1365 - INFO - main - Registering federation EDU handler for 'm.typing'
+2022-08-16 06:44:55,606 - synapse.federation.federation_server - 1385 - INFO - main - Registering federation query handler for 'directory'
+2022-08-16 06:44:55,607 - twisted - 274 - INFO - main - Redirected stdout/stderr to logs
+2022-08-16 06:44:55,608 - synapse.app.homeserver - 167 - INFO - sentinel - Running
+2022-08-16 06:44:55,611 - synapse.app.homeserver - 29 - INFO - sentinel - Set file limit to: 1048576
+2022-08-16 06:44:55,611 - synapse.metrics._gc - 120 - INFO - sentinel - Collecting gc 1
+2022-08-16 06:44:55,614 - synapse.handlers.deactivate_account - 230 - INFO - user_parter_loop-0 - Starting user parter
+2022-08-16 06:44:55,618 - synapse.storage.prepare_database - 115 - INFO - db.on_new_connection - ('main', 'state'): Checking existing schema version
+2022-08-16 06:44:55,622 - synapse.util.caches.lrucache - 225 - INFO - sentinel - Expiring LRU caches after 1800 seconds
+2022-08-16 06:44:55,636 - synapse.federation.federation_server - 1365 - INFO - sentinel - Registering federation EDU handler for 'm.receipt'
+2022-08-16 06:44:55,636 - synapse.federation.federation_server - 1365 - INFO - sentinel - Registering federation EDU handler for 'm.signing_key_update'
+2022-08-16 06:44:55,637 - synapse.federation.federation_server - 1365 - INFO - sentinel - Registering federation EDU handler for 'org.matrix.signing_key_update'
+2022-08-16 06:44:55,637 - synapse.federation.federation_server - 1385 - INFO - sentinel - Registering federation query handler for 'client_keys'
+2022-08-16 06:44:55,637 - synapse.federation.federation_server - 1365 - INFO - sentinel - Registering federation EDU handler for 'm.direct_to_device'
+2022-08-16 06:44:55,639 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.health.HealthResource object at 0x7fca6dfae340> to path b'/health'
+2022-08-16 06:44:55,639 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.ClientRestResource object at 0x7fca6dfae460> to path b'/_matrix/client'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <twisted.web.resource.Resource object at 0x7fca6df72c70> to path b'/.well-known'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.admin.AdminRestResource object at 0x7fca6df72e50> to path b'/_synapse/admin'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.synapse.client.pick_idp.PickIdpResource object at 0x7fca6df826d0> to path b'/_synapse/client/pick_idp'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <twisted.web.resource.Resource object at 0x7fca6df82610> to path b'/_synapse/client/pick_username'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.synapse.client.new_user_consent.NewUserConsentResource object at 0x7fca6df82a00> to path b'/_synapse/client/new_user_consent'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.synapse.client.sso_register.SsoRegisterResource object at 0x7fca6df82a30> to path b'/_synapse/client/sso_register'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.synapse.client.unsubscribe.UnsubscribeResource object at 0x7fca6df82ca0> to path b'/_synapse/client/unsubscribe'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching FilePath('/usr/local/lib/python3.9/site-packages/synapse/static') to path b'/_matrix/static'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.media.v1.media_repository.MediaRepositoryResource object at 0x7fca6df82cd0> to path b'/_matrix/media/r0'
+2022-08-16 06:44:55,640 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.media.v1.media_repository.MediaRepositoryResource object at 0x7fca6df82cd0> to path b'/_matrix/media/v3'
+2022-08-16 06:44:55,641 - synapse.util.httpresourcetree - 47 - INFO - sentinel - Attaching <synapse.rest.media.v1.media_repository.MediaRepositoryResource object at 0x7fca6df82cd0> to path b'/_matrix/media/v1'
+2022-08-16 06:44:55,641 - twisted - 274 - INFO - sentinel - SynapseSite starting on 8008
+2022-08-16 06:44:55,641 - synapse.app.homeserver - 173 - INFO - sentinel - Synapse now listening on TCP port 8008
+2022-08-16 06:44:55,702 - synapse.storage.background_updates - 288 - INFO - background_updates-0 - Starting background schema updates
+2022-08-16 06:44:55,703 - synapse.storage.prepare_database - 145 - INFO - db.on_new_connection - ('main', 'state'): Initialising new database
+2022-08-16 06:44:55,733 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v55
+2022-08-16 06:44:55,734 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 55/access_token_expiry.sql
+2022-08-16 06:44:55,736 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 55/track_threepid_validations.sql
+2022-08-16 06:44:55,738 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 55/users_alter_deactivated.sql
+2022-08-16 06:44:55,743 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v56
+2022-08-16 06:44:55,744 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/add_spans_to_device_lists.sql
+2022-08-16 06:44:55,746 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/current_state_events_membership.sql
+2022-08-16 06:44:55,748 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/current_state_events_membership_mk2.sql
+2022-08-16 06:44:55,748 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/delete_keys_from_deleted_backups.sql
+2022-08-16 06:44:55,749 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/destinations_failure_ts.sql
+2022-08-16 06:44:55,751 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/device_stream_id_insert.sql
+2022-08-16 06:44:55,751 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/devices_last_seen.sql
+2022-08-16 06:44:55,756 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/drop_unused_event_tables.sql
+2022-08-16 06:44:55,757 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/event_expiry.sql
+2022-08-16 06:44:55,758 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/event_labels.sql
+2022-08-16 06:44:55,758 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/event_labels_background_update.sql
+2022-08-16 06:44:55,759 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/fix_room_keys_index.sql
+2022-08-16 06:44:55,759 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/hidden_devices.sql
+2022-08-16 06:44:55,761 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 56/hidden_devices_fix.sql.sqlite
+2022-08-16 06:44:55,768 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/nuke_empty_communities_from_db.sql
+2022-08-16 06:44:55,769 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/public_room_list_idx.sql
+2022-08-16 06:44:55,770 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/redaction_censor.sql
+2022-08-16 06:44:55,771 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/redaction_censor2.sql
+2022-08-16 06:44:55,773 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/redaction_censor4.sql
+2022-08-16 06:44:55,774 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/remove_tombstoned_rooms_from_directory.sql
+2022-08-16 06:44:55,774 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/room_key_etag.sql
+2022-08-16 06:44:55,776 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/room_membership_idx.sql
+2022-08-16 06:44:55,776 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/room_retention.sql
+2022-08-16 06:44:55,777 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/signing_keys.sql
+2022-08-16 06:44:55,778 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/signing_keys_nonunique_signatures.sql
+2022-08-16 06:44:55,778 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/state_group_room_idx.sql
+2022-08-16 06:44:55,779 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/stats_separated.sql
+2022-08-16 06:44:55,782 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 56/unique_user_filter_index.py:run_create
+2022-08-16 06:44:55,789 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/user_external_ids.sql
+2022-08-16 06:44:55,789 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 56/users_in_public_rooms_idx.sql
+2022-08-16 06:44:55,790 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v57
+2022-08-16 06:44:55,790 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 57/delete_old_current_state_events.sql
+2022-08-16 06:44:55,790 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 57/device_list_remote_cache_stale.sql
+2022-08-16 06:44:55,791 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 57/local_current_membership.py:run_create
+2022-08-16 06:44:55,792 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 57/remove_sent_outbound_pokes.sql
+2022-08-16 06:44:55,792 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 57/rooms_version_column.sql
+2022-08-16 06:44:55,794 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 57/rooms_version_column_2.sql.sqlite
+2022-08-16 06:44:55,794 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 57/rooms_version_column_3.sql.sqlite
+2022-08-16 06:44:55,795 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v58
+2022-08-16 06:44:55,797 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/00background_update_ordering.sql
+2022-08-16 06:44:55,800 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/02remove_dup_outbound_pokes.sql
+2022-08-16 06:44:55,800 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/03persist_ui_auth.sql
+2022-08-16 06:44:55,801 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 58/06dlols_unique_idx.py:run_create
+2022-08-16 06:44:55,801 - synapse.storage.v58_06dlols_unique_idx - 51 - INFO - db.on_new_connection - Rebuilding device_lists_outbound_last_success with unique index
+2022-08-16 06:44:55,813 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 58/07add_method_to_thumbnail_constraint.sql.sqlite
+2022-08-16 06:44:55,836 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/07persist_ui_auth_ips.sql
+2022-08-16 06:44:55,837 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 58/08_media_safe_from_quarantine.sql.sqlite
+2022-08-16 06:44:55,839 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/09shadow_ban.sql
+2022-08-16 06:44:55,841 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/10_pushrules_enabled_delete_obsolete.sql
+2022-08-16 06:44:55,841 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/10drop_local_rejections_stream.sql
+2022-08-16 06:44:55,841 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/10federation_pos_instance_name.sql
+2022-08-16 06:44:55,843 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/11dehydration.sql
+2022-08-16 06:44:55,844 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/11fallback.sql
+2022-08-16 06:44:55,844 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 58/11user_id_seq.py:run_create
+2022-08-16 06:44:55,844 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/12room_stats.sql
+2022-08-16 06:44:55,845 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/13remove_presence_allow_inbound.sql
+2022-08-16 06:44:55,845 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/14events_instance_name.sql
+2022-08-16 06:44:55,847 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/15_catchup_destination_rooms.sql
+2022-08-16 06:44:55,847 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/15unread_count.sql
+2022-08-16 06:44:55,853 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/16populate_stats_process_rooms_fix.sql
+2022-08-16 06:44:55,853 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/17_catchup_last_successful.sql
+2022-08-16 06:44:55,855 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/18stream_positions.sql
+2022-08-16 06:44:55,856 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/19txn_id.sql
+2022-08-16 06:44:55,857 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/20instance_name_event_tables.sql
+2022-08-16 06:44:55,860 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/20user_daily_visits.sql
+2022-08-16 06:44:55,863 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/21as_device_stream.sql
+2022-08-16 06:44:55,867 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/21drop_device_max_stream_id.sql
+2022-08-16 06:44:55,867 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/22puppet_token.sql
+2022-08-16 06:44:55,869 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/22users_have_local_media.sql
+2022-08-16 06:44:55,869 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/23e2e_cross_signing_keys_idx.sql
+2022-08-16 06:44:55,869 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/24drop_event_json_index.sql
+2022-08-16 06:44:55,870 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/25user_external_ids_user_id_idx.sql
+2022-08-16 06:44:55,870 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/26access_token_last_validated.sql
+2022-08-16 06:44:55,872 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 58/27local_invites.sql
+2022-08-16 06:44:55,872 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 58/28drop_last_used_column.sql.sqlite
+2022-08-16 06:44:55,888 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v59
+2022-08-16 06:44:55,889 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 59/01ignored_user.py:run_create
+2022-08-16 06:44:55,889 - synapse.storage.v59_01ignored_user - 35 - INFO - db.on_new_connection - Creating ignored_users table
+2022-08-16 06:44:55,889 - synapse.storage.v59_01ignored_user - 45 - INFO - db.on_new_connection - Converting existing ignore lists
+2022-08-16 06:44:55,890 - synapse.storage.v59_01ignored_user - 61 - INFO - db.on_new_connection - Adding constraints to ignored_users table
+2022-08-16 06:44:55,890 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/02shard_send_to_device.sql
+2022-08-16 06:44:55,896 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/04_event_auth_chains.sql
+2022-08-16 06:44:55,899 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/04drop_account_data.sql
+2022-08-16 06:44:55,899 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/05cache_invalidation.sql
+2022-08-16 06:44:55,899 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/06chain_cover_index.sql
+2022-08-16 06:44:55,899 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/06shard_account_data.sql
+2022-08-16 06:44:55,907 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/07shard_account_data_fix.sql
+2022-08-16 06:44:55,908 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/08delete_pushers_for_deactivated_accounts.sql
+2022-08-16 06:44:55,908 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/08delete_stale_pushers.sql
+2022-08-16 06:44:55,908 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/09rejected_events_metadata.sql
+2022-08-16 06:44:55,908 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/10delete_purged_chain_cover.sql
+2022-08-16 06:44:55,909 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/11add_knock_members_to_stats.sql
+2022-08-16 06:44:55,912 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/12account_validity_token_used_ts_ms.sql
+2022-08-16 06:44:55,914 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/12presence_stream_instance.sql
+2022-08-16 06:44:55,916 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/13users_to_send_full_presence_to.sql
+2022-08-16 06:44:55,917 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/14refresh_tokens.sql
+2022-08-16 06:44:55,921 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/15locks.sql
+2022-08-16 06:44:55,921 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 59/16federation_inbound_staging.sql
+2022-08-16 06:44:55,922 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v60
+2022-08-16 06:44:55,922 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v61
+2022-08-16 06:44:55,923 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 61/01insertion_event_lookups.sql
+2022-08-16 06:44:55,924 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 61/02drop_redundant_room_depth_index.sql
+2022-08-16 06:44:55,925 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 61/03recreate_min_depth.py:run_create
+2022-08-16 06:44:55,925 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v62
+2022-08-16 06:44:55,925 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 62/01insertion_event_extremities.sql
+2022-08-16 06:44:55,926 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v63
+2022-08-16 06:44:55,926 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 63/01create_registration_tokens.sql
+2022-08-16 06:44:55,927 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 63/02delete_unlinked_email_pushers.sql
+2022-08-16 06:44:55,927 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 63/02populate-rooms-creator.sql
+2022-08-16 06:44:55,927 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 63/03session_store.sql
+2022-08-16 06:44:55,927 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 63/04add_presence_stream_not_offline_index.sql
+2022-08-16 06:44:55,928 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v64
+2022-08-16 06:44:55,928 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 64/01msc2716_chunk_to_batch_rename.sql.sqlite
+2022-08-16 06:44:55,929 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v65
+2022-08-16 06:44:55,929 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/01msc2716_insertion_event_edges.sql
+2022-08-16 06:44:55,930 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/03remove_hidden_devices_from_device_inbox.sql
+2022-08-16 06:44:55,930 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/04_local_group_updates.sql
+2022-08-16 06:44:55,930 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/05_remove_room_stats_historical_and_user_stats_historical.sql
+2022-08-16 06:44:55,931 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/06remove_deleted_devices_from_device_inbox.sql
+2022-08-16 06:44:55,931 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/07_arbitrary_relations.sql
+2022-08-16 06:44:55,931 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/08_device_inbox_background_updates.sql
+2022-08-16 06:44:55,932 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/10_expirable_refresh_tokens.sql
+2022-08-16 06:44:55,936 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 65/11_devices_auth_provider_session.sql
+2022-08-16 06:44:55,936 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v66
+2022-08-16 06:44:55,937 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v67
+2022-08-16 06:44:55,937 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 67/01drop_public_room_list_stream.sql
+2022-08-16 06:44:55,937 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v68
+2022-08-16 06:44:55,938 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 68/01event_columns.sql
+2022-08-16 06:44:55,942 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 68/02_msc2409_add_device_id_appservice_stream_type.sql
+2022-08-16 06:44:55,944 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 68/03_delete_account_data_for_deactivated_accounts.sql
+2022-08-16 06:44:55,944 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 68/04_refresh_tokens_index_next_token_id.sql
+2022-08-16 06:44:55,945 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 68/04partial_state_rooms.sql
+2022-08-16 06:44:55,946 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 68/05_delete_non_strings_from_event_search.sql.sqlite
+2022-08-16 06:44:55,946 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 68/05partial_state_rooms_triggers.py:run_create
+2022-08-16 06:44:55,946 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 68/06_msc3202_add_device_list_appservice_stream_type.sql
+2022-08-16 06:44:55,949 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v69
+2022-08-16 06:44:55,949 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 69/01as_txn_seq.py:run_create
+2022-08-16 06:44:55,949 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 69/01device_list_oubound_by_room.sql
+2022-08-16 06:44:55,950 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 69/02cache_invalidation_index.sql
+2022-08-16 06:44:55,950 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v70
+2022-08-16 06:44:55,951 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 70/01clean_table_purged_rooms.sql
+2022-08-16 06:44:55,951 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 70/08_state_group_edges_unique.sql
+2022-08-16 06:44:55,951 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v71
+2022-08-16 06:44:55,951 - synapse.storage.prepare_database - 527 - INFO - db.on_new_connection - Applying engine-specific schema 71/01rebuild_event_edges.sql.sqlite
+2022-08-16 06:44:55,960 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 71/01remove_noop_background_updates.sql
+2022-08-16 06:44:55,961 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 71/02event_push_summary_unique.sql
+2022-08-16 06:44:55,961 - synapse.storage.prepare_database - 411 - INFO - db.on_new_connection - Applying schema deltas for v72
+2022-08-16 06:44:55,961 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 72/01add_room_type_to_state_stats.sql
+2022-08-16 06:44:55,964 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 72/01event_push_summary_receipt.sql
+2022-08-16 06:44:55,966 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 72/02event_push_actions_index.sql
+2022-08-16 06:44:55,967 - synapse.storage.prepare_database - 502 - INFO - db.on_new_connection - Running 72/03bg_populate_events_columns.py:run_create
+2022-08-16 06:44:55,967 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 72/03drop_event_reference_hashes.sql
+2022-08-16 06:44:55,967 - synapse.storage.prepare_database - 519 - INFO - db.on_new_connection - Applying schema 72/03remove_groups.sql
+2022-08-16 06:44:55,969 - synapse.storage.prepare_database - 546 - INFO - db.on_new_connection - Schema now up to date
+2022-08-16 06:44:55,972 - synapse.handlers.deactivate_account - 240 - INFO - user_parter_loop-0 - User parter finished: stopping
+2022-08-16 06:44:55,973 - synapse.push.pusherpool - 314 - INFO - start_pushers-0 - Started pushers
+2022-08-16 06:44:56,573 - synapse.access.http.8008 - 450 - INFO - GET-1 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/0.001sec (0.002sec, 0.000sec) (0.000sec/0.000sec/0) 140B 200 "GET /_synapse/admin/v1/register HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:44:56,942 - synapse.handlers.auth - 965 - INFO - POST-2 - Logging in user @userid_214:localhost on device QSVSKMELAB
+2022-08-16 06:44:56,947 - synapse.access.http.8008 - 450 - INFO - POST-2 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.346sec/0.001sec (0.324sec, 0.000sec) (0.005sec/0.006sec/13) 150B 200 "POST /_synapse/admin/v1/register HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:44:56,964 - synapse.rest.client.login - 283 - INFO - POST-3 - Got login request with identifier: {'type': 'm.id.user', 'user': 'userId_214'}, medium: None, address: None, user: None
+2022-08-16 06:44:56,977 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'add_room_type_column'
+2022-08-16 06:44:56,980 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'add_room_type_column'. Processed 100 items in 1ms. (total_rate=100.0/ms, current_rate=100.0/ms, total_updated=100, batch_size=100)
+2022-08-16 06:44:57,299 - synapse.handlers.auth - 965 - INFO - POST-3 - Logging in user @userid_214:localhost on device UFVYDEHHNO
+2022-08-16 06:44:57,303 - synapse.access.http.8008 - 450 - INFO - POST-3 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.338sec/0.001sec (0.331sec, 0.000sec) (0.002sec/0.002sec/5) 219B 200 "POST /_matrix/client/r0/login HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:44:57,983 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'add_rooms_room_version_column'
+2022-08-16 06:44:57,986 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'add_rooms_room_version_column'. Processed 100 items in 2ms. (total_rate=50.0/ms, current_rate=50.0/ms, total_updated=100, batch_size=100)
+2022-08-16 06:44:58,988 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'current_state_events_membership'
+2022-08-16 06:44:58,990 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'current_state_events_membership'. Processed 0 items in 1ms. (total_rate=None/ms, current_rate=None/ms, total_updated=0, batch_size=100)
+2022-08-16 06:44:59,991 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'delete_old_current_state_events'
+2022-08-16 06:44:59,994 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'delete_old_current_state_events'. Processed 100 items in 1ms. (total_rate=100.0/ms, current_rate=100.0/ms, total_updated=100, batch_size=100)
+2022-08-16 06:45:00,150 - synapse.access.http.8008 - 450 - INFO - GET-4 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.000sec/2) 2B 200 "GET /_matrix/client/r0/thirdparty/protocols HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,249 - synapse.http.server - 169 - INFO - GET-5 - <XForwardedForRequest at 0x7fca6df03a90 method='GET' uri='/_matrix/client/unstable/room_keys/version' clientproto='HTTP/1.1' site='8008'> SynapseError: 404 - No backup found
+2022-08-16 06:45:00,251 - synapse.access.http.8008 - 450 - INFO - GET-5 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.002sec/0.001sec (0.001sec, 0.000sec) (0.000sec/0.000sec/1) 51B 404 "GET /_matrix/client/unstable/room_keys/version HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,254 - synapse.access.http.8008 - 450 - INFO - GET-6 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.001sec/0.001sec (0.000sec, 0.000sec) (0.000sec/0.000sec/0) 2B 200 "GET /_matrix/client/r0/voip/turnServer HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,265 - synapse.access.http.8008 - 450 - INFO - GET-7 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.000sec/0.001sec (0.001sec, 0.000sec) (0.000sec/0.000sec/0) 600B 200 "GET /_matrix/client/versions HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,298 - synapse.access.http.8008 - 450 - INFO - GET-8 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.005sec/0.001sec (0.002sec, 0.000sec) (0.001sec/0.000sec/2) 3526B 200 "GET /_matrix/client/r0/pushrules/ HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,320 - synapse.handlers.e2e_keys - 548 - INFO - POST-9 - Updating device_keys for device 'UFVYDEHHNO' for user @userid_214:localhost at 1660632300319
+2022-08-16 06:45:00,326 - synapse.access.http.8008 - 450 - INFO - POST-9 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.007sec/0.001sec (0.003sec, 0.000sec) (0.001sec/0.001sec/3) 47B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,391 - synapse.access.http.8008 - 450 - INFO - POST-10 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.005sec/0.000sec (0.002sec, 0.000sec) (0.000sec/0.000sec/1) 17B 200 "POST /_matrix/client/r0/user/%40userid_214%3Alocalhost/filter HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,472 - synapse.access.http.8008 - 450 - INFO - GET-11 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.018sec/0.001sec (0.003sec, 0.000sec) (0.003sec/0.002sec/10) 3928B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=0&_cacheBuster=1660632300443 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,687 - synapse.access.http.8008 - 450 - INFO - GET-12 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.005sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.002sec/2) 22B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,692 - synapse.access.http.8008 - 450 - INFO - POST-13 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.009sec/0.001sec (0.001sec, 0.000sec) (0.002sec/0.003sec/4) 574B 200 "POST /_matrix/client/r0/keys/query HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,702 - synapse.access.http.8008 - 450 - INFO - GET-14 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.001sec/2) 22B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,758 - synapse.access.http.8008 - 450 - INFO - GET-16 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.011sec/0.001sec (0.001sec, 0.000sec) (0.008sec/0.001sec/2) 279B 200 "GET /_matrix/client/r0/devices HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,927 - synapse.handlers.sync - 691 - INFO - GET-17 - Failed to find any events in room !DDLdfnfmnrURuBbsxL:localhost at RoomStreamToken(topological=None, stream=1, instance_map=frozendict.frozendict({}))
+2022-08-16 06:45:00,933 - synapse.access.http.8008 - 450 - INFO - POST-15 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.219sec/0.000sec (0.042sec, 0.001sec) (0.066sec/0.028sec/48) 43B 200 "POST /_matrix/client/r0/createRoom HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,955 - synapse.handlers.e2e_keys - 620 - INFO - POST-18 - Adding one_time_keys dict_keys(['signed_curve25519:AAAABQ', 'signed_curve25519:AAAABA', 'signed_curve25519:AAAAAw', 'signed_curve25519:AAAAAg', 'signed_curve25519:AAAAAQ']) for device 'UFVYDEHHNO' for user '@userid_214:localhost' at 1660632300955
+2022-08-16 06:45:00,965 - synapse.access.http.8008 - 450 - INFO - POST-18 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.010sec/0.001sec (0.002sec, 0.000sec) (0.004sec/0.003sec/4) 47B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,967 - synapse.access.http.8008 - 450 - INFO - GET-17 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.053sec/0.001sec (0.011sec, 0.000sec) (0.024sec/0.014sec/18) 2645B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s1_2_0_1_1_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:00,996 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'devices_last_seen'
+2022-08-16 06:45:00,998 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'devices_last_seen'. Processed 1 items in 1ms. (total_rate=1.0/ms, current_rate=1.0/ms, total_updated=1, batch_size=100)
+2022-08-16 06:45:01,201 - synapse.access.http.8008 - 450 - INFO - GET-19 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.000sec/2) 22B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,240 - synapse.access.http.8008 - 450 - INFO - POST-20 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.000sec (0.000sec, 0.000sec) (0.001sec/0.001sec/3) 574B 200 "POST /_matrix/client/r0/keys/query HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,254 - synapse.access.http.8008 - 450 - INFO - GET-21 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.010sec/0.001sec (0.002sec, 0.000sec) (0.001sec/0.001sec/3) 722B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s7_2_0_1_1_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,287 - synapse.rest.media.v1.media_repository - 210 - INFO - POST-22 - Stored local media in file '/data/media_store/local_content/aE/Su/IIuwPcPHUMScDaNIHvnc'
+2022-08-16 06:45:01,288 - synapse.rest.media.v1.upload_resource - 104 - INFO - POST-22 - Uploaded content with URI 'mxc://localhost/aESuIIuwPcPHUMScDaNIHvnc'
+2022-08-16 06:45:01,290 - synapse.access.http.8008 - 450 - INFO - POST-22 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.001sec (0.000sec, 0.000sec) (0.000sec/0.000sec/1) 58B 200 "POST /_matrix/media/r0/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,407 - synapse.access.http.8008 - 450 - INFO - PUT-24 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.032sec/0.001sec (0.002sec, 0.000sec) (0.005sec/0.004sec/15) 2B 200 "PUT /_matrix/client/r0/profile/%40userid_214%3Alocalhost/avatar_url HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,419 - synapse.handlers.e2e_keys - 620 - INFO - POST-25 - Adding one_time_keys dict_keys(['signed_curve25519:AAAACw', 'signed_curve25519:AAAACg', 'signed_curve25519:AAAACQ', 'signed_curve25519:AAAACA', 'signed_curve25519:AAAABw']) for device 'UFVYDEHHNO' for user '@userid_214:localhost' at 1660632301419
+2022-08-16 06:45:01,430 - synapse.access.http.8008 - 450 - INFO - POST-25 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.010sec/0.002sec (0.001sec, 0.000sec) (0.006sec/0.001sec/3) 48B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,440 - synapse.access.http.8008 - 450 - INFO - GET-23 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.108sec/0.000sec (0.004sec, 0.000sec) (0.015sec/0.008sec/12) 1563B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s8_2_0_1_1_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,467 - synapse.access.http.8008 - 450 - INFO - GET-26 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.000sec/2) 78B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,472 - synapse.rest.media.v1.media_repository - 210 - INFO - POST-27 - Stored local media in file '/data/media_store/local_content/ax/sP/ICVKIBbZUnyuMZwrilDs'
+2022-08-16 06:45:01,473 - synapse.rest.media.v1.upload_resource - 104 - INFO - POST-27 - Uploaded content with URI 'mxc://localhost/axsPICVKIBbZUnyuMZwrilDs'
+2022-08-16 06:45:01,475 - synapse.access.http.8008 - 450 - INFO - POST-27 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.003sec/0.001sec (0.000sec, 0.000sec) (0.000sec/0.000sec/1) 58B 200 "POST /_matrix/media/r0/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,531 - synapse.access.http.8008 - 450 - INFO - POST-28 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.003sec/0.003sec (0.000sec, 0.000sec) (0.001sec/0.000sec/3) 574B 200 "POST /_matrix/client/r0/keys/query HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,564 - synapse.access.http.8008 - 450 - INFO - GET-30 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/-0.000sec (0.000sec, 0.000sec) (0.000sec/0.000sec/1) 13B 200 "GET /_matrix/media/r0/download/localhost/aESuIIuwPcPHUMScDaNIHvnc HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,569 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-31 - Failed to find any generated thumbnails
+2022-08-16 06:45:01,571 - synapse.access.http.8008 - 450 - INFO - GET-31 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.003sec/0.001sec (0.003sec, 0.000sec) (0.001sec/0.000sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/aESuIIuwPcPHUMScDaNIHvnc?width=32&height=32&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,576 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-32 - Failed to find any generated thumbnails
+2022-08-16 06:45:01,578 - synapse.access.http.8008 - 450 - INFO - GET-32 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.000sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/aESuIIuwPcPHUMScDaNIHvnc?width=52&height=52&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,591 - synapse.access.http.8008 - 450 - INFO - PUT-33 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.001sec (0.000sec, 0.000sec) (0.000sec/0.000sec/1) 2B 200 "PUT /_matrix/client/r0/user/%40userid_214%3Alocalhost/account_data/im.vector.web.settings HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,597 - synapse.access.http.8008 - 450 - INFO - GET-29 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.067sec/0.001sec (0.000sec, 0.001sec) (0.001sec/0.002sec/2) 327B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s9_2_0_1_1_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,675 - synapse.access.http.8008 - 450 - INFO - GET-34 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.003sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.001sec/2) 78B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,708 - synapse.access.http.8008 - 450 - INFO - GET-37 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.006sec/0.001sec (0.002sec, 0.000sec) (0.002sec/0.002sec/2) 78B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,728 - synapse.access.http.8008 - 450 - INFO - PUT-36 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.033sec/0.001sec (0.005sec, 0.000sec) (0.004sec/0.007sec/9) 59B 200 "PUT /_matrix/client/r0/rooms/!DDLdfnfmnrURuBbsxL%3Alocalhost/send/m.room.message/m1660632301665.0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,737 - synapse.access.http.8008 - 450 - INFO - GET-35 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.054sec/0.001sec (0.003sec, 0.000sec) (0.001sec/0.001sec/1) 800B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s9_2_0_1_2_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [1 dbevts]
+2022-08-16 06:45:01,771 - synapse.access.http.8008 - 450 - INFO - GET-38 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.003sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.001sec/2) 279B 200 "GET /_matrix/client/r0/devices HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,806 - synapse.access.http.8008 - 450 - INFO - PUT-39 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.025sec/0.001sec (0.002sec, 0.000sec) (0.003sec/0.003sec/13) 2B 200 "PUT /_matrix/client/r0/profile/%40userid_214%3Alocalhost/displayname HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,856 - synapse.access.http.8008 - 450 - INFO - GET-40 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.022sec/0.001sec (0.006sec, 0.000sec) (0.004sec/0.005sec/12) 1691B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s10_2_0_1_2_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,887 - synapse.access.http.8008 - 450 - INFO - GET-41 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.003sec/0.001sec (0.002sec, 0.000sec) (0.001sec/0.000sec/2) 85B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,930 - synapse.access.http.8008 - 450 - INFO - PUT-42 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.038sec/0.001sec (0.004sec, 0.000sec) (0.006sec/0.006sec/18) 2B 200 "PUT /_matrix/client/r0/profile/%40userid_214%3Alocalhost/avatar_url HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,966 - synapse.access.http.8008 - 450 - INFO - POST-43 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.001sec/3) 574B 200 "POST /_matrix/client/r0/keys/query HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,989 - synapse.access.http.8008 - 450 - INFO - GET-44 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.018sec/0.001sec (0.003sec, 0.000sec) (0.003sec/0.003sec/12) 1705B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s11_2_0_1_2_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:01,998 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'devices_last_seen'
+2022-08-16 06:45:02,002 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'devices_last_seen'. Processed 0 items in 2ms. (total_rate=0.3333333333333333/ms, current_rate=0.31034482758620685/ms, total_updated=1, batch_size=100)
+2022-08-16 06:45:02,083 - synapse.access.http.8008 - 450 - INFO - GET-45 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.003sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.000sec/2) 85B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,093 - synapse.access.http.8008 - 450 - INFO - POST-46 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.005sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.001sec/3) 574B 200 "POST /_matrix/client/r0/keys/query HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,171 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-48 - Failed to find any generated thumbnails
+2022-08-16 06:45:02,173 - synapse.access.http.8008 - 450 - INFO - GET-48 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.004sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.000sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/axsPICVKIBbZUnyuMZwrilDs?width=32&height=32&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,180 - synapse.access.http.8008 - 450 - INFO - GET-49 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.003sec/-0.000sec (0.001sec, 0.000sec) (0.001sec/0.000sec/1) 13B 200 "GET /_matrix/media/r0/download/localhost/axsPICVKIBbZUnyuMZwrilDs HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,198 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-50 - Failed to find any generated thumbnails
+2022-08-16 06:45:02,199 - synapse.access.http.8008 - 450 - INFO - GET-50 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.003sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.000sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/axsPICVKIBbZUnyuMZwrilDs?width=52&height=52&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,203 - synapse.handlers.e2e_keys - 620 - INFO - POST-51 - Adding one_time_keys dict_keys(['signed_curve25519:AAAAEA', 'signed_curve25519:AAAADw', 'signed_curve25519:AAAADg', 'signed_curve25519:AAAADQ', 'signed_curve25519:AAAADA']) for device 'UFVYDEHHNO' for user '@userid_214:localhost' at 1660632302203
+2022-08-16 06:45:02,208 - synapse.access.http.8008 - 450 - INFO - POST-51 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.005sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.001sec/3) 48B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,240 - synapse.handlers.e2e_keys - 620 - INFO - POST-52 - Adding one_time_keys dict_keys(['signed_curve25519:AAAAFQ', 'signed_curve25519:AAAAFA', 'signed_curve25519:AAAAEw', 'signed_curve25519:AAAAEg', 'signed_curve25519:AAAAEQ']) for device 'UFVYDEHHNO' for user '@userid_214:localhost' at 1660632302240
+2022-08-16 06:45:02,243 - synapse.access.http.8008 - 450 - INFO - POST-52 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.003sec/0.000sec (0.002sec, 0.000sec) (0.001sec/0.000sec/3) 48B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,280 - synapse.access.http.8008 - 450 - INFO - GET-53 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.001sec/0.000sec (0.000sec, 0.000sec) (0.000sec/0.000sec/2) 85B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,404 - synapse.handlers.e2e_keys - 620 - INFO - POST-54 - Adding one_time_keys dict_keys(['signed_curve25519:AAAAGg', 'signed_curve25519:AAAAGQ', 'signed_curve25519:AAAAGA', 'signed_curve25519:AAAAFw', 'signed_curve25519:AAAAFg']) for device 'UFVYDEHHNO' for user '@userid_214:localhost' at 1660632302403
+2022-08-16 06:45:02,408 - synapse.access.http.8008 - 450 - INFO - POST-54 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.005sec/0.001sec (0.003sec, 0.000sec) (0.001sec/0.001sec/3) 48B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,471 - synapse.handlers.e2e_keys - 620 - INFO - POST-55 - Adding one_time_keys dict_keys(['signed_curve25519:AAAAHw', 'signed_curve25519:AAAAHg', 'signed_curve25519:AAAAHQ', 'signed_curve25519:AAAAHA', 'signed_curve25519:AAAAGw']) for device 'UFVYDEHHNO' for user '@userid_214:localhost' at 1660632302470
+2022-08-16 06:45:02,475 - synapse.access.http.8008 - 450 - INFO - POST-55 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.005sec/0.001sec (0.002sec, 0.000sec) (0.001sec/0.001sec/3) 48B 200 "POST /_matrix/client/r0/keys/upload HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,540 - synapse.access.http.8008 - 450 - INFO - PUT-56 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.029sec/0.001sec (0.002sec, 0.000sec) (0.004sec/0.003sec/9) 59B 200 "PUT /_matrix/client/r0/rooms/!DDLdfnfmnrURuBbsxL%3Alocalhost/send/m.room.message/m1660632302496.1 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,554 - synapse.access.http.8008 - 450 - INFO - GET-47 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.451sec/0.003sec (0.006sec, 0.000sec) (0.003sec/0.001sec/1) 801B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s12_2_0_1_2_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [1 dbevts]
+2022-08-16 06:45:02,664 - synapse.access.http.8008 - 450 - INFO - GET-58 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.002sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.000sec/2) 85B 200 "GET /_matrix/client/r0/profile/%40userid_214%3Alocalhost HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,697 - synapse.access.http.8008 - 450 - INFO - GET-59 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.003sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.000sec/2) 279B 200 "GET /_matrix/client/r0/devices HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,754 - synapse.access.http.8008 - 450 - INFO - PUT-60 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.001sec/0.001sec (0.000sec, 0.000sec) (0.000sec/0.000sec/0) 2B 200 "PUT /_matrix/client/r0/presence/%40userid_214%3Alocalhost/status HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:02,783 - synapse.access.http.8008 - 450 - INFO - GET-61 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.001sec/0.001sec (0.000sec, 0.000sec) (0.000sec/0.000sec/0) 656B 200 "GET /_matrix/client/r0/capabilities HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,004 - synapse.storage.background_updates - 428 - INFO - background_updates-0 - Starting update batch on background update 'event_store_labels'
+2022-08-16 06:45:03,013 - synapse.storage.background_updates - 471 - INFO - background_updates-0 - Running background update 'event_store_labels'. Processed 12 items in 7ms. (total_rate=1.7142857142857142/ms, current_rate=1.7142857142857144/ms, total_updated=12, batch_size=100)
+2022-08-16 06:45:03,021 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-63 - Failed to find any generated thumbnails
+2022-08-16 06:45:03,026 - synapse.access.http.8008 - 450 - INFO - GET-63 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.012sec/0.003sec (0.002sec, 0.000sec) (0.005sec/0.000sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/aESuIIuwPcPHUMScDaNIHvnc?width=14&height=14&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,026 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-64 - Failed to find any generated thumbnails
+2022-08-16 06:45:03,027 - synapse.access.http.8008 - 450 - INFO - POST-62 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.012sec/0.006sec (0.002sec, 0.000sec) (0.003sec/0.003sec/2) 2B 200 "POST /_matrix/client/r0/rooms/!DDLdfnfmnrURuBbsxL%3Alocalhost/read_markers HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,029 - synapse.access.http.8008 - 450 - INFO - GET-64 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.012sec/0.002sec (0.001sec, 0.000sec) (0.007sec/0.001sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/aESuIIuwPcPHUMScDaNIHvnc?width=30&height=30&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,032 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-65 - Failed to find any generated thumbnails
+2022-08-16 06:45:03,034 - synapse.access.http.8008 - 450 - INFO - GET-65 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.014sec/0.001sec (0.001sec, 0.000sec) (0.008sec/0.003sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/axsPICVKIBbZUnyuMZwrilDs?width=14&height=14&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,041 - synapse.rest.media.v1.thumbnail_resource - 410 - INFO - GET-66 - Failed to find any generated thumbnails
+2022-08-16 06:45:03,043 - synapse.access.http.8008 - 450 - INFO - GET-57 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.457sec/0.004sec (0.003sec, 0.001sec) (0.007sec/0.006sec/2) 603B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s13_2_0_1_2_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,044 - synapse.access.http.8008 - 450 - INFO - GET-66 - ::ffff:172.17.0.1 - 8008 - {None} Processed request: 0.018sec/0.002sec (0.002sec, 0.000sec) (0.009sec/0.004sec/2) 348B 400 "GET /_matrix/media/r0/thumbnail/localhost/axsPICVKIBbZUnyuMZwrilDs?width=30&height=30&method=crop HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,046 - synapse.access.http.8008 - 450 - INFO - PUT-67 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.006sec/0.001sec (0.002sec, 0.000sec) (0.001sec/0.003sec/1) 2B 200 "PUT /_matrix/client/r0/user/%40userid_214%3Alocalhost/account_data/im.vector.setting.breadcrumbs HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,054 - synapse.access.http.8008 - 450 - INFO - GET-68 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.000sec/2) 831B 200 "GET /_matrix/client/r0/rooms/!DDLdfnfmnrURuBbsxL%3Alocalhost/members?not_membership=leave&at=s13_2_0_1_2_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,164 - synapse.access.http.8008 - 450 - INFO - GET-69 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.008sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.001sec/4) 409B 200 "GET /_matrix/client/r0/rooms/!DDLdfnfmnrURuBbsxL%3Alocalhost/messages?limit=20&dir=b&from=s2_2_0_1_1_1_1_4_0&filter=%7B%22lazy_load_members%22%3Atrue%7D HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,330 - synapse.access.http.8008 - 450 - INFO - GET-70 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.004sec/0.001sec (0.000sec, 0.000sec) (0.001sec/0.001sec/3) 43B 200 "GET /_matrix/client/r0/rooms/!DDLdfnfmnrURuBbsxL%3Alocalhost/messages?limit=20&dir=b&from=t1-1_2_0_1_1_1_1_4_0&filter=%7B%22lazy_load_members%22%3Atrue%7D HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
+2022-08-16 06:45:03,368 - synapse.access.http.8008 - 450 - INFO - GET-71 - ::ffff:172.17.0.1 - 8008 - {@userid_214:localhost} Processed request: 0.006sec/0.001sec (0.001sec, 0.000sec) (0.001sec/0.000sec/2) 353B 200 "GET /_matrix/client/r0/sync?filter=0&timeout=30000&since=s13_2_0_1_3_1_1_4_0 HTTP/1.1" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36" [0 dbevts]
