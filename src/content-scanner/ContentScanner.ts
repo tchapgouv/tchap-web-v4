@@ -86,52 +86,38 @@ export class ContentScanner {
             return this.pendingScans.get(mxc);
         }
 
-        // eslint-disable-next-line no-async-promise-executor
-        const promise = new Promise<boolean>(async (resolve, reject) => {
-            let response: Response;
+        const prom = this.doScan(mxc, file);
+        this.pendingScans.set(mxc, prom);
+        return prom;
+    }
 
-            if (file) {
-                if (!this.hasKey) {
-                    try {
-                        const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
-                            .then(r => r.json());
-                        this.mcsKey.set_recipient_key(k["public_key"]);
-                        this.hasKey = true;
-                    } catch (err) {
-                        reject(err);
-                        return;
-                    }
-                }
+    private async doScan(mxc: string, file?: IEncryptedFile): Promise<boolean> {
+        let response: Response;
 
-                try {
-                    response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
-                        method: "POST",
-                        body: JSON.stringify({
-                            encrypted_body: this.mcsKey.encrypt(JSON.stringify({ file })),
-                        }),
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    });
-                } catch (err) {
-                    reject(err);
-                    return;
-                }
-            } else {
-                const url = this.scannerUrl + `/_matrix/media_proxy/unstable/scan/${mxc.substring('mxc://'.length)}`;
-                try {
-                    response = await fetch(url);
-                } catch (err) {
-                    reject(err);
-                    return;
-                }
+        if (file) {
+            if (!this.hasKey) {
+                const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
+                    .then(r => r.json());
+                this.mcsKey.set_recipient_key(k["public_key"]);
+                this.hasKey = true;
             }
 
-            const responseJson: ScanResult = await response.json();
-            resolve(responseJson.clean);
-        });
-        this.pendingScans.set(mxc, promise);
-        return promise;
+            response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
+                method: "POST",
+                body: JSON.stringify({
+                    encrypted_body: this.mcsKey.encrypt(JSON.stringify({ file })),
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        } else {
+            const url = this.scannerUrl + `/_matrix/media_proxy/unstable/scan/${mxc.substring('mxc://'.length)}`;
+            response = await fetch(url);
+        }
+
+        const responseJson: ScanResult = await response.json();
+        return responseJson.clean;
     }
 
     public static get instance(): ContentScanner {
