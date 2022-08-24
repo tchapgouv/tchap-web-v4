@@ -24,3 +24,11 @@ electron/pub
 .vscode/
 .env
 /coverage
+
+/cypress/videos
+/cypress/downloads
+/cypress/screenshots
+/cypress/synapselogs
+# These could have files in them but don't currently
+# Cypress will still auto-create them though...
+/cypress/performance

@@ -16,6 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
 import * as crypto from "crypto";
@@ -49,8 +50,15 @@ function randB64Bytes(numBytes: number): string {
 
 async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     const templateDir = path.join(__dirname, "templates", template);
+    console.log(templateDir)
+
+    console.log(await fse.stat(templateDir))
+    // console.log(fse.stat(templateDir).then(e => console.log(e)))
+    console.log(fse.statSync(templateDir))
+    console.log('tete', fs.stat(templateDir, (e, s) => console.log(s)))
 
     const stats = await fse.stat(templateDir);
+
     if (!stats?.isDirectory) {
         throw new Error(`No such template: ${template}`);
     }
