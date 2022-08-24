@@ -1,18 +1,18 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+ * Copyright 2022 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import React from "react";
@@ -42,6 +42,7 @@ interface IState {
     isSafe: boolean;
     isScanning: boolean;
     hasError: boolean;
+    downloadClicked: boolean;
 }
 
 /**
@@ -60,23 +61,24 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             isScanning: false,
             loading: false,
             tooltip: _td("Downloading"),
+            downloadClicked: false,
         };
     }
 
     private onDownloadClick = async () => {
-        if (this.state.loading) return;
+        if (this.state.loading || this.state.isScanning) return;
 
-        if (this.props.mediaEventHelperGet().media.isEncrypted) {
-            this.setState({ tooltip: _td("Decrypting") });
-        }
-
-        this.setState({ loading: true });
+        this.setState({
+            downloadClicked: true,
+            loading: true,
+        });
 
         if (this.state.blob) {
             // Cheat and trigger a download, again.
             return this.doDownload();
         }
 
+        this.setState({ isScanning: true });
         const media = this.props.mediaEventHelperGet().media as any as Media;
         const safe = await Promise.all([
             media.scanSource(),
@@ -84,14 +86,12 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         ]).then(([ok1, ok2]) => {
             const isSafe = ok1 && ok2;
             this.setState({
-                loading: false,
                 isScanning: false,
                 isSafe,
             });
             return isSafe;
         }).catch(() => {
             this.setState({
-                loading: false,
                 isScanning: false,
                 hasError: true,
             });
@@ -126,20 +126,22 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
         });
 
-        let tooltip = _t("Scanning");
+        let tooltip: string;
 
-        if (!this.state.isScanning) {
-            if (this.state.isSafe) {
-                tooltip = spinner ? _t("Decrypting") : _t("Download");
+        if (!this.state.downloadClicked) {
+            tooltip = this.state.loading ? _t("Decrypting") : _t("Download");
+        } else {
+            if (this.state.isScanning) {
+                tooltip = _t("Scanning");
             } else if (this.state.hasError) {
+                spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
                 tooltip = _t("Scan unavailable");
-            } else if (!this.state.isSafe) {
-                tooltip = _t("Infected content");
+            } else if (this.state.isSafe) {
+                tooltip = this.state.loading ? _t("Decrypting") : _t("Download");
+            } else {
+                spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
+                tooltip = _t("Content blocked");
             }
-        }
-
-        if (this.state.hasError || !this.state.isSafe) {
-            spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
         }
 
         return <RovingAccessibleTooltipButton
