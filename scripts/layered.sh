@@ -21,7 +21,7 @@ export PR_ORG=vector-im
 export PR_REPO=element-web
 
 # Set up the js-sdk first
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-js-sdk
+node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-js-sdk v18.1.0
 pushd matrix-js-sdk
 yarn link
 yarn install --pure-lockfile
@@ -36,7 +36,7 @@ yarn install --pure-lockfile
 popd
 
 # Now set up the react-sdk
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk
+node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk v3.46.0
 pushd matrix-react-sdk
 yarn link
 yarn link matrix-js-sdk
