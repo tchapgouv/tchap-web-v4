@@ -127,7 +127,6 @@ export class ContentScanner {
     public static get instance(): ContentScanner {
         if (!ContentScanner.internalInstance) {
             ContentScanner.internalInstance = new ContentScanner(MatrixClientPeg.get().getHomeserverUrl());
-            ContentScanner.internalInstance = new ContentScanner("http://localhost:9000");
         }
 
         return ContentScanner.internalInstance;
