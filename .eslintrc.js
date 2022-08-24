@@ -19,7 +19,10 @@ module.exports = {
         }
     },
     overrides: [{
-        files: ["src/**/*.{ts,tsx}"],
+        files: [
+            "src/**/*.{ts,tsx}",
+            "cypress/**/*.ts",
+        ],
         extends: [
             "plugin:matrix-org/typescript",
             "plugin:matrix-org/react",
@@ -28,6 +31,8 @@ module.exports = {
             // Things we do that break the ideal style
             "prefer-promise-reject-errors": "off",
             "quotes": "off",
+
+            "@typescript-eslint/no-empty-interface": "off",
 
             // We disable this while we're transitioning
             "@typescript-eslint/no-explicit-any": "off",
