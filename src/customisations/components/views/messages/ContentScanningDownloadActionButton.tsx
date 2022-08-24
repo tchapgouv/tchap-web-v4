@@ -19,7 +19,7 @@ import React from "react";
 import classNames from "classnames";
 import { MediaEventHelper } from "matrix-react-sdk/src/utils/MediaEventHelper";
 import { FileDownloader } from "matrix-react-sdk/src/utils/FileDownloader";
-import { _t, _td } from "matrix-react-sdk/src/languageHandler";
+import { _t } from "matrix-react-sdk/src/languageHandler";
 import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import { RovingAccessibleTooltipButton } from "matrix-react-sdk/src/accessibility/RovingTabIndex";
 
@@ -38,7 +38,6 @@ interface IProps {
 interface IState {
     loading: boolean;
     blob?: Blob;
-    tooltip: string;
     isSafe: boolean;
     isScanning: boolean;
     hasError: boolean;
@@ -60,7 +59,6 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             isSafe: false,
             isScanning: false,
             loading: false,
-            tooltip: _td("Downloading"),
             downloadClicked: false,
         };
     }
@@ -116,6 +114,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
 
     public render() {
         let spinner: JSX.Element;
+
         if (this.state.loading) {
             spinner = <Spinner w={18} h={18} />;
         }
