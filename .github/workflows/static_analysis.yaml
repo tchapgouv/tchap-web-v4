@@ -26,9 +26,9 @@ jobs:
       - name: Typecheck
         run: "yarn run lint:types"
 
-  i18n_lint:
-    name: "i18n Check"
-    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+#  i18n_lint:
+#    name: "i18n Check"
+#    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
 
   js_lint:
     name: "ESLint"
