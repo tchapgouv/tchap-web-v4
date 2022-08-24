@@ -47,7 +47,7 @@ export class ContentScanner {
 
     private mcsKey: PkEncryption = new global.Olm.PkEncryption();
     private hasKey = false;
-    private pendingScans = new Map<string, Promise<boolean>>();
+    private cachedScans = new Map<string, Promise<boolean>>();
 
     constructor(private scannerUrl: string) {
     }
@@ -82,12 +82,12 @@ export class ContentScanner {
     public async scan(mxc: string, file?: IEncryptedFile): Promise<boolean> {
         // XXX: we're assuming that encryption won't be a differentiating factor and that the MXC URIs
         // will be different.
-        if (this.pendingScans.has(mxc)) {
-            return this.pendingScans.get(mxc);
+        if (this.cachedScans.has(mxc)) {
+            return this.cachedScans.get(mxc);
         }
 
         const prom = this.doScan(mxc, file);
-        this.pendingScans.set(mxc, prom);
+        this.cachedScans.set(mxc, prom);
         return prom;
     }
 
@@ -123,6 +123,7 @@ export class ContentScanner {
     public static get instance(): ContentScanner {
         if (!ContentScanner.internalInstance) {
             ContentScanner.internalInstance = new ContentScanner(MatrixClientPeg.get().getHomeserverUrl());
+            ContentScanner.internalInstance = new ContentScanner("http://localhost:9000");
         }
 
         return ContentScanner.internalInstance;
