@@ -63,9 +63,7 @@ export class ContentScanner {
         }
 
         if (!this.hasKey) {
-            const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key").then(r => r.json());
-            this.mcsKey.set_recipient_key(k['public_key']);
-            this.hasKey = true;
+            this.fetchKey();
         }
 
         return fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/download_encrypted", {
