@@ -3,6 +3,7 @@ module.exports = {
     extends: [
         "plugin:matrix-org/babel",
         "plugin:matrix-org/react",
+        // "plugin:cypress/recommended",
     ],
     env: {
         browser: true,
