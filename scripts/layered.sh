@@ -29,14 +29,14 @@ popd
 
 # Also set up matrix-analytics-events so we get the latest from
 # the main branch or a branch with matching name
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-analytics-events main
+./scripts/fetchdep.sh matrix-org matrix-analytics-events main
 pushd matrix-analytics-events
 yarn link
 yarn install --pure-lockfile
 popd
 
 # Now set up the react-sdk
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk v3.46.0
+./scripts/fetchdep.sh matrix-org matrix-react-sdk v3.46.0
 pushd matrix-react-sdk
 yarn link
 yarn link matrix-js-sdk
