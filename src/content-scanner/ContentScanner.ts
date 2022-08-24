@@ -96,10 +96,7 @@ export class ContentScanner {
 
         if (file) {
             if (!this.hasKey) {
-                const k = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
-                    .then(r => r.json());
-                this.mcsKey.set_recipient_key(k["public_key"]);
-                this.hasKey = true;
+                this.fetchKey();
             }
 
             response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
@@ -118,6 +115,13 @@ export class ContentScanner {
 
         const responseJson: ScanResult = await response.json();
         return responseJson.clean;
+    }
+
+    private async fetchKey() {
+        const response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
+            .then(r => r.json());
+        this.mcsKey.set_recipient_key(response["public_key"]);
+        this.hasKey = true;
     }
 
     public static get instance(): ContentScanner {
