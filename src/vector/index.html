@@ -26,7 +26,7 @@
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
         style-src 'self' 'unsafe-inline';
-        script-src 'self' 'unsafe-eval' https://www.recaptcha.net https://www.gstatic.com;
+        script-src 'self' 'unsafe-eval';
         img-src * blob: data:;
         connect-src *;
         font-src 'self' data:;
@@ -52,8 +52,8 @@
     <% for (var i=0; i < htmlWebpackPlugin.tags.headTags.length; i++) {
         var tag = htmlWebpackPlugin.tags.headTags[i];
         var path = tag.attributes && tag.attributes.href;
-        if (path.indexOf("Inter") !== -1) { %>
-            <link rel="preload" as="font" href="<%= path %>" crossorigin="anonymous"/>
+        if (path.includes("/Inter/")) { %>
+            <link rel="preload" as="font" href=".<%= path %>" crossorigin="anonymous"/>
         <% }
     } %>
 

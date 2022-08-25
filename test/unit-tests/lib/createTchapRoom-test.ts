@@ -23,7 +23,7 @@ describe("Create room options", () => {
             guestAccess: false,
             joinRule: "invite",
             encryption: true,
-            historyVisibility: "joined",
+            historyVisibility: "invited",
         };
         expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Private)).toStrictEqual(privateRoomExpectedOpts);
         done();
@@ -83,7 +83,7 @@ describe("Create room options", () => {
             guestAccess: false,
             joinRule: "invite",
             encryption: true,
-            historyVisibility: "joined",
+            historyVisibility: "invited",
         };
         expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.External)).toStrictEqual(externalRoomExpectedOpts);
         done();

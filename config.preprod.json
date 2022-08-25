@@ -35,10 +35,7 @@
     "default_federate": true,
     "default_theme": "custom-Tchap",
     "roomDirectory": {
-        "servers": [
-            "i.tchap.gouv.fr",
-            "e.tchap.gouv.fr"
-        ]
+        "servers": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"]
     },
     "enable_presence_by_hs_url": {
         "https://matrix.i.tchap.gouv.fr": false,
@@ -49,25 +46,27 @@
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
         "UIFeature.registration": false,
-        "UIFeature.urlPreviews" : false,
-        "UIFeature.widgets" : false,
-        "UIFeature.shareQrCode" : false,
-        "MessageComposerInput.showPollsButton" : false,
-        "Spaces.allRoomsInHome" : true,
+        "UIFeature.urlPreviews": false,
+        "UIFeature.widgets": false,
+        "UIFeature.shareQrCode": false,
+        "UIFeature.thirdPartyId": false,
+        "UIFeature.identityServer": false,
+        "MessageComposerInput.showPollsButton": false,
+        "Spaces.allRoomsInHome": true,
         "layout": "bubble",
         "custom_themes": [
             {
                 "name": "Tchap",
                 "is_dark": false,
                 "colors": {
-                    "accent": "#162d58",
-                    "primary-color": "#368bd6",
-                    "warning-color": "#ff4b55",
+                    "accent": "#000091",
+                    "primary-color": "#4C69F6",
+                    "warning-color": "#E1000F",
                     "private-color": "#eb5757",
                     "external-color": "#f07a12",
                     "forum-color": "#27ae60",
                     "sidebar-color": "#c0d8ef",
-                    "roomlist-background-color": "#f3f8fd",
+                    "roomlist-background-color": "#EDF1F7",
                     "roomlist-text-color": "#2e2f32",
                     "roomlist-text-secondary-color": "#61708b",
                     "roomlist-highlights-color": "#ffffff",
@@ -78,14 +77,37 @@
                     "timeline-highlights-color": "#f3f8fd",
                     "togglesw-off-color": "#c1c9d6",
                     "eventbubble-self-bg": "#e4e4f3",
-                    "eventbubble-others-bg": "#f4f4f4"
+                    "eventbubble-others-bg": "#f4f4f4",
+                    "username-colors": [
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091",
+                        "#000091"
+                    ],
+                    "avatar-background-colors": [
+                        "#8F96A4",
+                        "#8F96A4",
+                        "#8F96A4"
+                    ]
                 }
             }
         ]
     },
     "branding": {
         "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": []
+        "authFooterLinks": [
+            { "text": "Gouvernement", "url": "https://www.gouvernement.fr"},
+            {"text": "OpenData", "url": "https://www.data.gouv.fr"},
+            {"text": "DINUM", "url": "https://numerique.gouv.fr"},
+            {"text": "beta.gouv.fr", "url": "https://beta.gouv.fr"},
+            {"text": "CGU", "url": "https://www.tchap.gouv.fr/cgu"},
+            {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
+        ],
+        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
     "jitsi": {
         "preferredDomain": "webconf.numerique.gouv.fr"
@@ -94,6 +116,7 @@
         "available": false
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    "permalink_prefix": "https://www.beta.tchap.gouv.fr",
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
     "custom_translations_url": "/i18n/tchap_translations.json"
 }
