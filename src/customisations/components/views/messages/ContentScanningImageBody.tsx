@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../../../../../res/css/views/messages/ContentScanningImageBody.scss";
+import "../../../../../res/css/views/messages/ContentScanningImageBody.pcss";
 
 import React from 'react';
 import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
