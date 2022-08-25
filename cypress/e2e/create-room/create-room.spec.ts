@@ -41,17 +41,11 @@ describe("Create Room", () => {
     });
 
     it("should allow us to create a private room with name", () => {
-        const name = "Test room 1";
+        const name = "Test room 1 private";
 
         openCreateRoomDialog().within(() => {
-            // Fill name & topic
+            // Fill name
             cy.get('[label="Name"]').type(name);
-            // cy.get('[label="Topic (optional)"]').type(topic);
-            // Change room to public
-            // cy.get('[aria-label="Room visibility"]').click();
-            // cy.get("#mx_JoinRuleDropdown__public").click();
-            // Fill room address
-            // cy.get('[label="Room address"]').type("test-room-1");
             // Submit
             cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
@@ -64,19 +58,15 @@ describe("Create Room", () => {
         // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
-
-    it("should allow us to create a private room with name and externs allowed", () => {
-        const name = "Test room 1";
+    // fixme: pas d'indicateur d'externes en v4
+    it.skip("should allow us to create a private room with name and externs allowed", () => {
+        const name = "Test room 1 externes";
 
         openCreateRoomDialog().within(() => {
             // Fill name & topic
             cy.get('[label="Name"]').type(name);
-            // cy.get('[label="Topic (optional)"]').type(topic);
-            // Change room to public
-            // cy.get('[aria-label="Room visibility"]').click();
-            // cy.get("#mx_JoinRuleDropdown__public").click();
-            // Fill room address
-            // cy.get('[label="Room address"]').type("test-room-1");
+            // Change room to external
+            cy.get(".tc_TchapRoomTypeSelector_external").click();
             // Submit
             cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
@@ -90,28 +80,23 @@ describe("Create Room", () => {
     });
 
     // TODO
-    it.skip("should allow us to create a public room with name, topic & address set", () => {
-        const name = "Test room 1";
-        const topic = "This room is dedicated to this test and this test only!";
+    it("should allow us to create a public room with name", () => {
+        const name = "Test room 1 public";
 
         openCreateRoomDialog().within(() => {
             // Fill name & topic
             cy.get('[label="Name"]').type(name);
-            // cy.get('[label="Topic (optional)"]').type(topic);
             // Change room to public
-            // cy.get('[aria-label="Room visibility"]').click();
-            cy.get("#mx_JoinRuleDropdown__public").click();
-            // Fill room address
-            cy.get('[label="Room address"]').type("test-room-1");
+            cy.get(".tc_TchapRoomTypeSelector_forum").click();
             // Submit
             cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
         });
 
-        cy.url().should("contain", "/#/room/#test-room-1:localhost");
+        cy.url().should("contain", "/#/room/!");
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
-        cy.get(".mx_RoomHeader_topic").contains(topic);
+        // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
     // TODO
