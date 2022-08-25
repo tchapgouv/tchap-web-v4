@@ -212,5 +212,8 @@
   "jestSonar": {
     "reportPath": "coverage",
     "sonar56x": true
+  },
+  "engines": {
+    "node": ">=14.19 <15"
   }
 }
