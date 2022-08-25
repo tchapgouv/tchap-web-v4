@@ -26,6 +26,14 @@ import { RovingAccessibleTooltipButton } from "matrix-react-sdk/src/accessibilit
 import { Media } from "../../../ContentScanningMedia";
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 
+enum DownloadState {
+    Pristine, // button not cliked, yet
+    Scanning, // scan or decryption in progess
+    Safe, // content scanner reported safe content
+    Untrusted, // content scanner reported untrusted content
+    Error, // content scanner error (unavailability etc.)
+}
+
 interface IProps {
     mxEvent: MatrixEvent;
 
@@ -36,12 +44,8 @@ interface IProps {
 }
 
 interface IState {
-    loading: boolean;
+    downloadState: DownloadState;
     blob?: Blob;
-    isSafe: boolean;
-    isScanning: boolean;
-    hasError: boolean;
-    downloadClicked: boolean;
 }
 
 /**
@@ -55,20 +59,17 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         super(props);
 
         this.state = {
-            hasError: false,
-            isSafe: false,
-            isScanning: false,
-            loading: false,
-            downloadClicked: false,
+            downloadState: DownloadState.Pristine,
         };
     }
 
     private onDownloadClick = async () => {
-        if (this.state.loading || this.state.isScanning) return;
+        if (this.state.downloadState === DownloadState.Scanning) {
+            return;
+        }
 
         this.setState({
-            downloadClicked: true,
-            loading: true,
+            downloadState: DownloadState.Scanning,
         });
 
         if (this.state.blob) {
@@ -76,7 +77,6 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             return this.doDownload();
         }
 
-        this.setState({ isScanning: true });
         const media = this.props.mediaEventHelperGet().media as any as Media;
         const safe = await Promise.all([
             media.scanSource(),
@@ -84,19 +84,18 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         ]).then(([ok1, ok2]) => {
             const isSafe = ok1 && ok2;
             this.setState({
-                isScanning: false,
-                isSafe,
+                downloadState: isSafe ? DownloadState.Safe : DownloadState.Untrusted,
             });
             return isSafe;
         }).catch(() => {
             this.setState({
-                isScanning: false,
-                hasError: true,
+                downloadState: DownloadState.Error,
             });
         });
 
         if (!safe) {
-            return; // don't download
+            // do not download unsafe content
+            return;
         }
 
         const blob = await this.props.mediaEventHelperGet().sourceBlob.value;
@@ -109,47 +108,54 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             blob: this.state.blob,
             name: this.props.mediaEventHelperGet().fileName,
         });
-        this.setState({ loading: false });
     }
 
     public render() {
-        let spinner: JSX.Element;
+        let icon: React.ReactElement;
+        let tooltip: string;
+        let hasSpinner = false;
 
-        if (this.state.loading) {
-            spinner = <Spinner w={18} h={18} />;
+        switch (this.state.downloadState) {
+            case DownloadState.Pristine:
+            case DownloadState.Safe:
+                tooltip = _t("Download");
+                break;
+            case DownloadState.Scanning:
+                icon = this.renderSpinner();
+                hasSpinner = true;
+                tooltip = _t("Scanning");
+                break;
+            case DownloadState.Untrusted:
+                icon = this.renderBlockedIcon();
+                tooltip = _t("Content blocked");
+                break;
+            case DownloadState.Error:
+                icon = this.renderBlockedIcon();
+                tooltip = _t("Scan unavailable");
+                break;
         }
 
         const classes = classNames({
             'mx_MessageActionBar_maskButton': true,
             'mx_MessageActionBar_downloadButton': true,
-            'mx_MessageActionBar_downloadSpinnerButton': !!spinner,
+            'mx_MessageActionBar_downloadSpinnerButton': hasSpinner,
         });
-
-        let tooltip: string;
-
-        if (!this.state.downloadClicked) {
-            tooltip = this.state.loading ? _t("Decrypting") : _t("Download");
-        } else {
-            if (this.state.isScanning) {
-                tooltip = _t("Scanning");
-            } else if (this.state.hasError) {
-                spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
-                tooltip = _t("Scan unavailable");
-            } else if (this.state.isSafe) {
-                tooltip = this.state.loading ? _t("Decrypting") : _t("Download");
-            } else {
-                spinner = <BlockedIcon className="mx_BlockedIcon_messageContext" />;
-                tooltip = _t("Content blocked");
-            }
-        }
 
         return <RovingAccessibleTooltipButton
             className={classes}
             title={tooltip}
             onClick={this.onDownloadClick}
-            disabled={!!spinner}
+            disabled={!!icon}
         >
-            { spinner }
+            { icon }
         </RovingAccessibleTooltipButton>;
+    }
+
+    private renderBlockedIcon(): React.ReactElement {
+        return <BlockedIcon className="mx_BlockedIcon_messageContext" />;
+    }
+
+    private renderSpinner(): React.ReactElement {
+        return <Spinner w={18} h={18} />;
     }
 }
