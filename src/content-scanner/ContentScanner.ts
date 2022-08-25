@@ -137,17 +137,14 @@ export class ContentScanner {
      */
     public static get instance(): ContentScanner {
         if (!ContentScanner.internalInstance) {
-            if (ContentScanner.contentScannerUrl) {
-                ContentScanner.internalInstance = new ContentScanner(ContentScanner.contentScannerUrl);
-            } else {
-                ContentScanner.internalInstance = new ContentScanner(MatrixClientPeg.get().getHomeserverUrl());
-            }
+            ContentScanner.internalInstance = new ContentScanner(this.contentScannerUrl);
         }
 
         return ContentScanner.internalInstance;
     }
 
     private static get contentScannerUrl(): string {
-        return (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url;
+        return (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url
+            ?? MatrixClientPeg.get().getHomeserverUrl();
     }
 }
