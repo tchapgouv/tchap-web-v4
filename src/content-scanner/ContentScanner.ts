@@ -19,6 +19,7 @@ import { IEncryptedFile } from "matrix-react-sdk/src/customisations/models/IMedi
 import { PkEncryption } from "@matrix-org/olm";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
+import SdkConfig from "matrix-react-sdk/src/SdkConfig";
 
 export enum ScanErrorReason {
     RequestFailed = "MCS_MEDIA_REQUEST_FAILED",
@@ -36,6 +37,12 @@ export interface ScanError {
 export interface ScanResult {
     clean: boolean;
     scanned: boolean;
+}
+
+interface ContentScannerConfig {
+    content_scanner?: {
+        url?: string;
+    };
 }
 
 /**
@@ -122,11 +129,24 @@ export class ContentScanner {
         this.hasKey = true;
     }
 
+    /**
+     * Returns a ContentScanner instance.
+     * The ContentScanner uses the same URL as the matrix client.
+     * If content_scanner.url is set in the config, this URL is used instead.
+     */
     public static get instance(): ContentScanner {
         if (!ContentScanner.internalInstance) {
-            ContentScanner.internalInstance = new ContentScanner(MatrixClientPeg.get().getHomeserverUrl());
+            if (ContentScanner.contentScannerUrl) {
+                ContentScanner.internalInstance = new ContentScanner(ContentScanner.contentScannerUrl);
+            } else {
+                ContentScanner.internalInstance = new ContentScanner(MatrixClientPeg.get().getHomeserverUrl());
+            }
         }
 
         return ContentScanner.internalInstance;
+    }
+
+    private static get contentScannerUrl(): string {
+        return (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url;
     }
 }
