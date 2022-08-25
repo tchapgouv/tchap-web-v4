@@ -26,7 +26,8 @@ jobs:
       - name: Typecheck
         run: "yarn run lint:types"
 
-#  i18n_lint:
+# od : tchap does not use extensively i18n 
+# i18n_lint:
 #    name: "i18n Check"
 #    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
 
@@ -64,7 +65,8 @@ jobs:
       - name: Run Linter
         run: "yarn run lint:style"
 
-  # analyse_dead_code:
+# od :  analyse:unused-exports does not work well with tchap customisations, it raises exception for "default export" not used
+  #analyse_dead_code:
   #   name: "Analyse Dead Code"
   #   runs-on: ubuntu-latest
   #   steps:
