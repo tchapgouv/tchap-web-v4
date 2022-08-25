@@ -20,6 +20,7 @@ import { PkEncryption } from "@matrix-org/olm";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import SdkConfig from "matrix-react-sdk/src/SdkConfig";
+import { IConfigOptions } from "matrix-react-sdk/src/IConfigOptions";
 
 export enum ScanErrorReason {
     RequestFailed = "MCS_MEDIA_REQUEST_FAILED",
@@ -39,7 +40,7 @@ export interface ScanResult {
     scanned: boolean;
 }
 
-interface ContentScannerConfig {
+interface ContentScannerConfig extends IConfigOptions {
     content_scanner?: {
         url?: string;
     };
