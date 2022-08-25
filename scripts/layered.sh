@@ -21,7 +21,7 @@ export PR_ORG=vector-im
 export PR_REPO=element-web
 
 # Set up the js-sdk first
-./scripts/fetchdep.sh matrix-org matrix-js-sdk v19.3.0
+node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-js-sdk
 pushd matrix-js-sdk
 yarn link
 yarn install --pure-lockfile
@@ -29,7 +29,7 @@ popd
 
 # Also set up matrix-analytics-events so we get the latest from
 # the main branch or a branch with matching name
-./scripts/fetchdep.sh matrix-org matrix-analytics-events main
+node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-analytics-events main
 pushd matrix-analytics-events
 yarn link
 yarn install --pure-lockfile
@@ -37,7 +37,7 @@ yarn build:ts
 popd
 
 # Now set up the react-sdk
-./scripts/fetchdep.sh matrix-org matrix-react-sdk v3.52.0
+node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk
 pushd matrix-react-sdk
 yarn link
 yarn link matrix-js-sdk
