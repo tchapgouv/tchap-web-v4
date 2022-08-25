@@ -162,7 +162,7 @@ it('renders create room dialog with shallow', () => {
             guestAccess: false,
             joinRule: "invite",
             encryption: true,
-            historyVisibility: "joined",
+            historyVisibility: "invited",
         };
         
         const wrapper = getComponent({ onFinished});
@@ -266,7 +266,7 @@ it('renders create room dialog with shallow', () => {
             guestAccess: false,
             joinRule: "invite",
             encryption: true,
-            historyVisibility: "joined",
+            historyVisibility: "invited",
         };
         const wrapper = getComponent({ onFinished});
         
