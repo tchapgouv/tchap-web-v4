@@ -10,7 +10,7 @@ import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements
 
 import { TchapRoomType } from "../../../@types/tchap";
 
-import "../../../../res/css/views/elements/_TchapRoomTypeSelector.scss";
+import "../../../../res/css/views/elements/_TchapRoomTypeSelector.pcss";
 
 interface IProps {
     value: TchapRoomType;
