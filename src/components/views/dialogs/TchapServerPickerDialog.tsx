@@ -12,7 +12,7 @@ import StyledRadioGroup from "matrix-react-sdk/src/components/views/elements/Sty
 
 // directly import the style here as this layer does not support rethemedex at this time so no matrix-react-sdk
 // scss variables will be accessible.
-import "../../../../res/css/views/dialogs/_TchapServerPickerDialog.scss";
+import "../../../../res/css/views/dialogs/_TchapServerPickerDialog.pcss";
 
 interface IProps {
     title?: string;
