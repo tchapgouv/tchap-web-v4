@@ -21,7 +21,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install Dependencies
-        run: "./scripts/layered.sh"
+        run: "./scripts/layered.with.version.sh"
 
       - name: Typecheck
         run: "yarn run lint:types"
@@ -59,7 +59,7 @@ jobs:
 
       # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
       - name: Install Dependencies
-        run: "./scripts/layered.sh"
+        run: "./scripts/layered.with.version.sh"
 
       - name: Run Linter
         run: "yarn run lint:style"
@@ -75,7 +75,7 @@ jobs:
   #         cache: 'yarn'
 
   #     - name: Install Deps
-  #       run: "scripts/layered.sh"
+  #       run: "scripts/layered.with.version.sh"
 
   #     - name: Dead Code Analysis
   #       run: "yarn run analyse:unused-exports"

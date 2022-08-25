@@ -23,7 +23,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install Dependencies
-        run: "./scripts/layered.sh"
+        run: "./scripts/layered.with.version.sh"
 
       - name: Run tests with coverage
         run: "yarn coverage --ci"
