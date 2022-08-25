@@ -71,7 +71,7 @@ export class ContentScanner {
         }
 
         if (!this.hasKey) {
-            this.fetchKey();
+            await this.fetchKey();
         }
 
         return fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/download_encrypted", {
@@ -102,7 +102,7 @@ export class ContentScanner {
 
         if (file) {
             if (!this.hasKey) {
-                this.fetchKey();
+                await this.fetchKey();
             }
 
             response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
