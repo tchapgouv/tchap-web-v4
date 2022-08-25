@@ -68,14 +68,14 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             return;
         }
 
-        this.setState({
-            downloadState: DownloadState.Scanning,
-        });
-
         if (this.state.blob) {
             // Cheat and trigger a download, again.
             return this.doDownload();
         }
+
+        this.setState({
+            downloadState: DownloadState.Scanning,
+        });
 
         const media = this.props.mediaEventHelperGet().media as any as Media;
         const safe = await Promise.all([
@@ -104,7 +104,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
     };
 
     private async doDownload() {
-        await this.downloader.download({
+        return this.downloader.download({
             blob: this.state.blob,
             name: this.props.mediaEventHelperGet().fileName,
         });
