@@ -22,6 +22,7 @@ import { FileDownloader } from "matrix-react-sdk/src/utils/FileDownloader";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import { RovingAccessibleTooltipButton } from "matrix-react-sdk/src/accessibility/RovingTabIndex";
+import { Icon as DownloadIcon } from "matrix-react-sdk/res/img/download.svg";
 
 import { Media } from "../../../ContentScanningMedia";
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
@@ -118,6 +119,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         switch (this.state.downloadState) {
             case DownloadState.Pristine:
             case DownloadState.Safe:
+                icon = <DownloadIcon />;
                 tooltip = _t("Download");
                 break;
             case DownloadState.Scanning:
@@ -136,7 +138,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         }
 
         const classes = classNames({
-            'mx_MessageActionBar_maskButton': true,
+            'mx_MessageActionBar_iconButton': true,
             'mx_MessageActionBar_downloadButton': true,
             'mx_MessageActionBar_downloadSpinnerButton': hasSpinner,
         });
@@ -145,17 +147,25 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             className={classes}
             title={tooltip}
             onClick={this.onDownloadClick}
-            disabled={!!icon}
+            disabled={this.disabled}
         >
             { icon }
         </RovingAccessibleTooltipButton>;
     }
 
-    private renderBlockedIcon(): React.ReactElement {
+    private renderBlockedIcon(): JSX.Element {
         return <BlockedIcon className="mx_BlockedIcon_messageContext" />;
     }
 
-    private renderSpinner(): React.ReactElement {
+    private renderSpinner(): JSX.Element {
         return <Spinner w={18} h={18} />;
+    }
+
+    private get disabled(): boolean {
+        return [
+            DownloadState.Scanning,
+            DownloadState.Error,
+            DownloadState.Untrusted,
+        ].includes(this.state.downloadState);
     }
 }
