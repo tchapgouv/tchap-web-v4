@@ -33,11 +33,11 @@ describe("Login", () => {
     });
 
     describe("m.login.password", () => {
-        const username = "user1234";
-        const password = "p4s5W0rD";
+        const username = "tchap-identite-dev@tchap.beta.gouv.fr";
+        const password = "s=VfqyiLv:m9";
 
         beforeEach(() => {
-            cy.registerUser(synapse, username, password);
+            // cy.registerUser(synapse, username, password);
         });
 
         it("logs in with an existing account and lands on the home screen", () => {
@@ -45,10 +45,10 @@ describe("Login", () => {
 
             cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
             cy.percySnapshot("Login");
-            cy.checkA11y();
+            // cy.checkA11y();
 
             cy.get(".mx_ServerPicker_change").click();
-            cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
+            // cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
             cy.get(".mx_ServerPickerDialog_continue").click();
             // wait for the dialog to go away
             cy.get('.mx_ServerPickerDialog').should('not.exist');
