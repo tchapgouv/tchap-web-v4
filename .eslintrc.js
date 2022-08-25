@@ -14,11 +14,15 @@ module.exports = {
     },
     settings: {
         react: {
-            version: 'detect'
-        }
+            version: 'detect',
+        },
     },
     overrides: [{
-        files: ["src/**/*.{ts,tsx}", "module_system/**/*.{ts,tsx}"],
+        files: [
+            "src/**/*.{ts,tsx}",
+            "module_system/**/*.{ts,tsx}",
+            "cypress/**/*.ts",
+        ],
         extends: [
             "plugin:matrix-org/typescript",
             "plugin:matrix-org/react",
@@ -34,6 +38,9 @@ module.exports = {
             "@typescript-eslint/no-explicit-any": "off",
             // We're okay with assertion errors when we ask for them
             "@typescript-eslint/no-non-null-assertion": "off",
+
+            // TCHAP: for cypress only
+            "@typescript-eslint/no-empty-interface": "off",
 
             // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
             "no-restricted-imports": ["error", {
