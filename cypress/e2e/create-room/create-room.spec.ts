@@ -64,7 +64,58 @@ describe("Create Room", () => {
         // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
+
+    it("should allow us to create a private room with name and externs allowed", () => {
+        const name = "Test room 1";
+
+        openCreateRoomDialog().within(() => {
+            // Fill name & topic
+            cy.get('[label="Name"]').type(name);
+            // cy.get('[label="Topic (optional)"]').type(topic);
+            // Change room to public
+            // cy.get('[aria-label="Room visibility"]').click();
+            // cy.get("#mx_JoinRuleDropdown__public").click();
+            // Fill room address
+            // cy.get('[label="Room address"]').type("test-room-1");
+            // Submit
+            cy.startMeasuring("from-submit-to-room");
+            cy.get(".mx_Dialog_primary").click();
+        });
+
+        // cy.url().should("contain", "/#/room/![A-z0-9]+:localhost");
+        cy.url().should("contain", "/#/room/!");
+        cy.stopMeasuring("from-submit-to-room");
+        cy.get(".mx_RoomHeader_nametext").contains(name);
+        // cy.get(".mx_RoomHeader_topic").contains(topic);
+    });
+
+    // TODO
     it.skip("should allow us to create a public room with name, topic & address set", () => {
+        const name = "Test room 1";
+        const topic = "This room is dedicated to this test and this test only!";
+
+        openCreateRoomDialog().within(() => {
+            // Fill name & topic
+            cy.get('[label="Name"]').type(name);
+            // cy.get('[label="Topic (optional)"]').type(topic);
+            // Change room to public
+            // cy.get('[aria-label="Room visibility"]').click();
+            cy.get("#mx_JoinRuleDropdown__public").click();
+            // Fill room address
+            cy.get('[label="Room address"]').type("test-room-1");
+            // Submit
+            cy.startMeasuring("from-submit-to-room");
+            cy.get(".mx_Dialog_primary").click();
+        });
+
+        cy.url().should("contain", "/#/room/#test-room-1:localhost");
+        cy.stopMeasuring("from-submit-to-room");
+        cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".mx_RoomHeader_topic").contains(topic);
+    });
+
+    // TODO
+    it.skip("should allow us to create a DM with another user", () => {
         const name = "Test room 1";
         const topic = "This room is dedicated to this test and this test only!";
 
