@@ -32,7 +32,7 @@ describe("Registration", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("registers an account and lands on the home screen", () => {
+    it.skip("registers an account and lands on the home screen", () => {
         cy.injectAxe();
 
         cy.get(".mx_ServerPicker_change", { timeout: 15000 }).click();
