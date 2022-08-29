@@ -7,3 +7,6 @@ karma-reports/
 .idea/
 .tmp/
 config.json*
+matrix-js-sdk/
+matrix-react-sdk/
+matrix-analytics-events/
