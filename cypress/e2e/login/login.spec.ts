@@ -64,7 +64,9 @@ describe("Login", () => {
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
-            cy.get('.mx_CompleteSecurityBody');
+            // TCHAP: Verify device step
+            // this should not be necessary when creating users but for now I get this too often to ignore it
+            // Feels free to delete when not needed
             cy.get("body").then(($body) => {
                 if ($body.find('.mx_CompleteSecurityBody').text().includes('Vérifier')) {
                     cy.get('.mx_CompleteSecurityBody').contains('Vérifier');
