@@ -1,11 +1,11 @@
 #!/bin/bash
-
+#inspired from ./layered.sh
 set -x
 
 # Creates a layered environment with the full repo for the app and SDKs cloned
-# and linked. This gives an element-web dev environment ready to build with
+# and linked. This gives an tchap-web dev environment ready to build with
 # matching branches of react-sdk's dependencies so that changes can be tested
-# in element-web.
+# in tchap-web.
 
 # Note that this style is different from the recommended developer setup: this
 # file nests js-sdk and matrix-react-sdk inside element-web, while the local
@@ -16,10 +16,11 @@ set -x
 # Install dependencies, as we'll be using fetchdep.sh from matrix-react-sdk
 yarn install --pure-lockfile
 
-# Pass appropriate repo to fetchdep.sh
-export PR_ORG=vector-im
-export PR_REPO=element-web
+# Pass appropriate repo to fetchdep.sh (not needed for tchap-web)
+#export PR_ORG=vector-im
+#export PR_REPO=element-web
 
+#tchap added : grep matrix dependencies version from package.json
 export MATRIX_JS_SDK_VERSION=$(awk -F \" '/"matrix-js-sdk": ".+"/ { print $4; exit; }' package.json)
 export MATRIX_REACT_SDK_VERSION=$(awk -F \" '/"matrix-react-sdk": ".+"/ { print $4; exit; }' package.json)
 
