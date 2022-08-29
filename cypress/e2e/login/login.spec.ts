@@ -16,8 +16,12 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { config } from "dotenv";
 
+import { SynapseInstance } from "../../plugins/synapsedocker";
+import 'dotenv/config';
+
+config({ path: '../../../.env', debug: true });
 describe("Login", () => {
     let synapse: SynapseInstance;
 
@@ -33,8 +37,10 @@ describe("Login", () => {
     });
 
     describe("m.login.password", () => {
-        const username = "tchap-identite-dev@tchap.beta.gouv.fr";
-        const password = "s=VfqyiLv:m9";
+        // Should be random user on docker
+        const username = Cypress.env('E2E_TEST_USER_EMAIL');
+        const password = Cypress.env('E2E_TEST_USER_PASSWORD');
+        const key = Cypress.env('E2E_TEST_USER_SECURITY_KEY');
 
         beforeEach(() => {
             // cy.registerUser(synapse, username, password);
@@ -57,6 +63,18 @@ describe("Login", () => {
             cy.get("#mx_LoginForm_password").type(password);
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
+
+            cy.get('.mx_CompleteSecurityBody');
+            cy.get("body").then(($body) => {
+                if ($body.find('.mx_CompleteSecurityBody').text().includes('Vérifier')) {
+                    cy.get('.mx_CompleteSecurityBody').contains('Vérifier');
+                    cy.get('.mx_AccessibleButton_kind_primary').last().click();
+                    cy.get('#mx_securityKey').type(key);
+                    cy.get('[data-test-id=dialog-primary-button]').click();
+
+                    cy.get('.mx_AccessibleButton_kind_primary').first().click();
+                }
+            });
 
             cy.url().should('contain', '/#/home');
             cy.stopMeasuring("from-submit-to-home");

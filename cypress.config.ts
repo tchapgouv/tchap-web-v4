@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { defineConfig } from 'cypress';
+import 'dotenv/config';
 
 export default defineConfig({
     videoUploadOnPasses: false,
@@ -29,5 +30,10 @@ export default defineConfig({
         baseUrl: 'http://localhost:8080',
         experimentalSessionAndOrigin: true,
         specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    },
+    env: {
+        E2E_TEST_USER_EMAIL: process.env.E2E_TEST_USER_EMAIL,
+        E2E_TEST_USER_PASSWORD: process.env.E2E_TEST_USER_PASSWORD,
+        E2E_TEST_USER_SECURITY_KEY: process.env.E2E_TEST_USER_SECURITY_KEY,
     },
 });
