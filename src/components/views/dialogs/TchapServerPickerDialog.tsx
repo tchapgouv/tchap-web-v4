@@ -6,7 +6,8 @@ import React from "react";
 import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import AccessibleButton from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
-import AutoDiscoveryUtils, { ValidatedServerConfig } from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
+import AutoDiscoveryUtils from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
+import { ValidatedServerConfig } from 'matrix-react-sdk/src/utils/ValidatedServerConfig';
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import StyledRadioGroup from "matrix-react-sdk/src/components/views/elements/StyledRadioGroup";
 
