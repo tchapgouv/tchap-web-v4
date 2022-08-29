@@ -183,6 +183,7 @@
     "@types/react": "17.0.14"
   },
   "jest-comments": {
+    "README" : "For the tests to work, you need matrix-react-sdk to be git-cloned and yarn linked into this project.",
     "snapshotSerializers" : "used for jest snapshot",
     "testEnvironment" :"switch to jsdom like in matrix-react-sdk",
     "testMatch" :"execute only tests in unit-tests directory",
