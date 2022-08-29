@@ -3,7 +3,8 @@ import TchapCreateRoom from '../../../src/lib/createTchapRoom';
 
 
 
-//DEPRECATED, integrated into TchapCreateRoomDialog-test
+// todo(estellecomment) : these tests are redundant with TchapCreateRoomDialog-test. Either remove them or modify TchapCreateRoomDialog
+// to not edit state directly.
 describe("Create room options", () => {
 
     beforeEach(() => {

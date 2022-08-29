@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TchapCreateRoomDialog should render the whole component with with the button allow access: button allow access to other domain than AGENT 1`] = `
+exports[`TchapCreateRoomDialog should render the whole component with with the allow access switch: allow access switch is present, allows other domain than AGENT 1`] = `
 <div
   className="mx_SettingsFlag"
 >

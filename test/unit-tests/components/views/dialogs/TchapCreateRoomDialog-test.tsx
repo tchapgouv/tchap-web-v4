@@ -2,7 +2,6 @@
 import React from 'react';
 import { mount, ReactWrapper,shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import renderer from 'react-test-renderer';
 import toJson from 'enzyme-to-json'
 
 //jest.mock('matrix-react-sdk/src/languageHandler')
@@ -13,6 +12,7 @@ import { EventEmitter } from "events";
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 
 import TchapUtils from '../../../../../src/util/TchapUtils';
+
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
 //I could not make a mock of TchapCreateRoomDialog, the real implementation was taken each time. Then I used jest spyOn
 
@@ -35,8 +35,8 @@ import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/T
 describe("TchapCreateRoomDialog", () => {
     let mockClient;
     const roomName = "roomName";
-    
-    //default props for the component, will be overriden 
+
+    // default props for the component, will be overriden
     const defaultProps = {
         defaultPublic: undefined, // unused for Tchap version
         defaultName: undefined, // unused for Tchap version
@@ -52,15 +52,15 @@ describe("TchapCreateRoomDialog", () => {
         })
         await new Promise(process.nextTick);
     }
-    
-    //build a new component using enzyme
-    const getComponent = (props ={}): ReactWrapper =>
+
+    // build a new component using enzyme
+    const getComponent = (props = {}): ReactWrapper =>
             mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
-    //build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
-    //can be used for simple component
-    //not used in this test
     /*
+    // Note : you can also build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
+    // can be used for simple component
+    // not used in this test
     const getShallowComponent = (props={}) => {
         shallow(<TchapCreateRoomDialog {...defaultProps} {...props} />);
     }
@@ -68,43 +68,27 @@ describe("TchapCreateRoomDialog", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        
+
         //mock matrix client
         mockClient = new MockClient();
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
-        
+
         //mock tchap utils
         jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("AGENT");
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: true, roomFederationDefault: false });
-
-
     });
-
-/*     
-doesn not work because 
-
- TypeError: Cannot read property 'focus' of null
-
-      65 |     componentDidMount() {
-      66 |         // move focus to first field when showing dialog
-    > 67 |         this.nameField.current.focus();
-
-it('renders create room dialog with shallow', () => {
-        const component = getShallowComponent();
-        //expect(component).toMatchSnapshot();
-        expect(toJson(component)).toMatchSnapshot();
-    }); */
 
     it('should render the whole component', () => {
         const component = getComponent();
-        expect(toJson(component)).toMatchSnapshot("all the component"); //the whole component snapshot is not usefull, or is it?
+        // If this breaks too often, it may not be useful, we will remove it. Leaving for now.
+        expect(toJson(component)).toMatchSnapshot("all the component");
     });
 
-    it('should render the whole component with with the button allow access', () => {
+    it('should render the whole component with with the allow access switch', () => {
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: true, roomFederationDefault: false });
         const component = getComponent();
-        const allowAccessSwitch = component.find(".mx_SettingsFlag"); //selector : https://enzymejs.github.io/enzyme/docs/api/selector.html
-        expect(toJson(allowAccessSwitch)).toMatchSnapshot("button allow access to other domain than AGENT");
+        const allowAccessSwitch = component.find(".mx_SettingsFlag");
+        expect(toJson(allowAccessSwitch)).toMatchSnapshot("allow access switch is present, allows other domain than AGENT");
     });
 
     it('should render the room dialog without the allow access switch', () => {
@@ -117,7 +101,7 @@ it('renders create room dialog with shallow', () => {
     it("Should not create any room wihout a name", async () => {
         const onFinished = jest.fn();
         const wrapper = getComponent({ onFinished});
-       // set state in component
+        // set state in component
         act(() => {
             wrapper.setState({
                 name: "",
@@ -148,7 +132,7 @@ it('renders create room dialog with shallow', () => {
 
     it("Should create a private room", async () => {
         const onFinished = jest.fn();
-        
+
         const privateRoomExpectedOpts = {
             createOpts: {
                 name: roomName,
@@ -164,10 +148,10 @@ it('renders create room dialog with shallow', () => {
             encryption: true,
             historyVisibility: "invited",
         };
-        
+
         const wrapper = getComponent({ onFinished});
-        
-       // set state in component
+
+        // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
@@ -184,7 +168,7 @@ it('renders create room dialog with shallow', () => {
 
     it("Should create a public room without federation", async () => {
         const onFinished = jest.fn();
-        
+
         const publicRoomWithoutFederationExpectedOpts = {
             createOpts: {
                 name: roomName,
@@ -201,12 +185,12 @@ it('renders create room dialog with shallow', () => {
             historyVisibility: "shared",
         };
         const wrapper = getComponent({ onFinished});
-        
-       // set state in component
+
+        // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
-                tchapRoomType: TchapRoomType.Forum, 
+                tchapRoomType: TchapRoomType.Forum,
                 isFederated:false
             });
         });
@@ -218,7 +202,7 @@ it('renders create room dialog with shallow', () => {
 
     it("Should create a public room with federation", async () => {
         const onFinished = jest.fn();
-        
+
         const publicRoomWithFederationExpectedOpts = {
             createOpts: {
                 name: roomName,
@@ -235,16 +219,16 @@ it('renders create room dialog with shallow', () => {
             historyVisibility: "shared",
         };
         const wrapper = getComponent({ onFinished});
-        
-       // set state in component
+
+        // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
-                tchapRoomType: TchapRoomType.Forum, 
+                tchapRoomType: TchapRoomType.Forum,
                 isFederated:true
             });
         });
-        
+
         await submitForm(wrapper);
 
         expect(onFinished).toHaveBeenCalledWith(true, publicRoomWithFederationExpectedOpts);
@@ -252,7 +236,7 @@ it('renders create room dialog with shallow', () => {
 
     it("Should create an external room", async () => {
         const onFinished = jest.fn();
-        
+
         const externalRoomExpectedOpts = {
             createOpts: {
                 name: roomName,
@@ -269,7 +253,7 @@ it('renders create room dialog with shallow', () => {
             historyVisibility: "invited",
         };
         const wrapper = getComponent({ onFinished});
-        
+
         // set state in component
         act(() => {
             wrapper.setState({
@@ -278,7 +262,7 @@ it('renders create room dialog with shallow', () => {
                 isFederated:true
             });
         });
-        
+
         await submitForm(wrapper);
 
         expect(onFinished).toHaveBeenCalledWith(true, externalRoomExpectedOpts);
