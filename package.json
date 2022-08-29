@@ -56,7 +56,8 @@
     "lint:style": "stylelint \"res/css/**/*.pcss\"",
     "test": "jest",
     "coverage": "yarn test --coverage",
-    "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js"
+    "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.12.tgz",
@@ -140,6 +141,7 @@
     "modernizr": "^3.12.0",
     "node-fetch": "^2.6.7",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "patch-package": "^6.4.7",
     "postcss-easings": "^2.0.0",
     "postcss-hexrgba": "2.0.1",
     "postcss-import": "^12.0.1",
@@ -149,6 +151,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-scss": "^2.1.1",
     "postcss-simple-vars": "^5.0.2",
+    "postinstall-postinstall": "^2.1.0",
     "raw-loader": "^4.0.2",
     "rimraf": "^3.0.2",
     "semver": "^7.3.7",

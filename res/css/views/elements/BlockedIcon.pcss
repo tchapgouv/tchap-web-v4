@@ -1,0 +1,52 @@
+/*
+ * Copyright 2022 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.mx_BlockedIcon {
+    background-color: #f07a12;
+    border-radius: 4px;
+    content: '';
+    display: inline-block;
+    height: 40px;
+    position: relative;
+    width: 40px;
+
+    &::after {
+        background-color: #fff;
+        content: '';
+        height: 20px;
+        left: 10px;
+        mask-image: url('../../../img/blocked.svg');
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        position: absolute;
+        top: 10px;
+        width: 20px;
+    }
+}
+
+.mx_BlockedIcon_messageContext {
+    height: 28px;
+    width: 28px;
+    z-index: 1;
+
+    &::after {
+        height: 24px;
+        left: 2px;
+        top: 2px;
+        width: 24px;
+    }
+}
