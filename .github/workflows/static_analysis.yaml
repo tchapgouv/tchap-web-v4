@@ -1,3 +1,5 @@
+#Run a static analysis
+#tchap modification : use "./scripts/layered.with.version.sh" instead of "./scripts/layered.sh"
 name: Static Analysis
 on:
   pull_request: { }
@@ -27,7 +29,7 @@ jobs:
       - name: Typecheck
         run: "yarn run lint:types"
 
-# od : tchap does not use extensively i18n 
+# tchap : tchap does not use extensively i18n 
 # i18n_lint:
 #    name: "i18n Check"
 #    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
@@ -68,7 +70,7 @@ jobs:
       - name: Run Linter
         run: "yarn run lint:style"
 
-# od :  analyse:unused-exports does not work well with tchap customisations, it raises exception for "default export" not used
+# tchap :  analyse:unused-exports does not work well with tchap customisations, it raises exception for "default export" not used
   #analyse_dead_code:
   #   name: "Analyse Dead Code"
   #   runs-on: ubuntu-latest

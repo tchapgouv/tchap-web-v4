@@ -1,3 +1,5 @@
+#Build the application
+#tchap modification : use "./scripts/layered.with.version.sh" instead of "./scripts/layered.sh"
 name: Build
 on:
   pull_request: { }
