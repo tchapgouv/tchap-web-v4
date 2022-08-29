@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// TCHAP: copied from matrix-rect-sdk
 import { defineConfig } from 'cypress';
 import 'dotenv/config';
 
