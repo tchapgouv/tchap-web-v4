@@ -72,6 +72,13 @@
     "sanitize-html": "^2.3.2",
     "ua-parser-js": "^0.7.24"
   },
+  "devDependencies-comments": {
+    "tchap-added" : {
+      "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+      "enzyme": "^3.11.0",
+      "enzyme-to-json": "^3.6.2"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/eslint-parser": "^7.12.10",
@@ -102,6 +109,7 @@
     "@types/ua-parser-js": "^0.7.36",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "allchange": "^1.0.6",
     "autoprefixer": "^9.8.6",
     "babel-jest": "^28.0.0",
@@ -111,6 +119,8 @@
     "cpx": "^1.5.0",
     "css-loader": "^3.6.0",
     "dotenv": "^10.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
     "eslint": "8.9.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-deprecate": "^0.7.0",
@@ -172,15 +182,28 @@
   "resolutions": {
     "@types/react": "17.0.14"
   },
+  "jest-comments": {
+    "README" : "For the tests to work, you need matrix-react-sdk to be git-cloned and yarn linked into this project.",
+    "snapshotSerializers" : "used for jest snapshot",
+    "testEnvironment" :"switch to jsdom like in matrix-react-sdk",
+    "testMatch" :"execute only tests in unit-tests directory",
+    "setupFilesAfterEnv" :"duplicate enzyme configuration in our own setup file '<rootDir>/test/setupTests.js'",
+    "moduleNameMapper" : "use mapper from element-web, helps at mocking {module, ressources} directly with regexp",
+    "transformIgnorePatterns" : "make regexp inline {matrix-js-sdk|matrix-react-sdk} else it does not work"
+  },
   "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "testEnvironment": "jsdom",
     "testEnvironmentOptions": {
       "url": "http://localhost/"
     },
     "testMatch": [
-      "<rootDir>/test/**/*-test.[tj]s?(x)"
+      "<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"
     ],
     "setupFilesAfterEnv": [
+      "<rootDir>/test/setupTests.js",
       "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"
     ],
     "moduleNameMapper": {
@@ -203,8 +226,7 @@
       "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js"
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!matrix-js-sdk).+$",
-      "/node_modules/(?!matrix-react-sdk).+$"
+      "\/node_modules\/(?!matrix-js-sdk|matrix-react-sdk).+$"
     ],
     "coverageReporters": [
       "text-summary",
