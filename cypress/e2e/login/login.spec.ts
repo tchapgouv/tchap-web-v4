@@ -61,6 +61,12 @@ describe("Login", () => {
             cy.url().should('contain', '/#/home');
             cy.stopMeasuring("from-submit-to-home");
         });
+
+        it.skip("logs in as external user", () => {
+        });
+
+        it.skip("logs in as external user on agent homeserver", () => {
+        });
     });
 
     describe("logout", () => {

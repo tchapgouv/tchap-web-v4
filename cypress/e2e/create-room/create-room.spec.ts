@@ -25,6 +25,12 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     return cy.get(".mx_Dialog");
 }
 
+// TODO
+function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
+    cy.get('.mx_RoomSublist_auxButton').first().click();
+    return cy.get(".mx_Dialog");
+}
+
 describe("Create Room", () => {
     let synapse: SynapseInstance;
 
@@ -101,18 +107,13 @@ describe("Create Room", () => {
 
     // TODO
     it.skip("should allow us to create a DM with another user", () => {
-        const name = "Test room 1";
-        const topic = "This room is dedicated to this test and this test only!";
+        const invitee = "User 2";
 
-        openCreateRoomDialog().within(() => {
+        openCreateDMDialog().within(() => {
             // Fill name & topic
-            cy.get('[label="Name"]').type(name);
-            // cy.get('[label="Topic (optional)"]').type(topic);
-            // Change room to public
-            // cy.get('[aria-label="Room visibility"]').click();
-            cy.get("#mx_JoinRuleDropdown__public").click();
-            // Fill room address
-            cy.get('[label="Room address"]').type("test-room-1");
+            cy.get('data-test-id="invite-dialog-input"').type(invitee);
+            // TODO check if invitee is in list
+            cy.get('.mx_InviteDialog_buttonAndSpinner').click();
             // Submit
             cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
@@ -120,7 +121,7 @@ describe("Create Room", () => {
 
         cy.url().should("contain", "/#/room/#test-room-1:localhost");
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
-        cy.get(".mx_RoomHeader_topic").contains(topic);
+        cy.get(".mx_RoomHeader_nametext").contains(invitee);
+        // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 });
