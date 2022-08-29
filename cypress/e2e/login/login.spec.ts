@@ -38,7 +38,7 @@ describe("Login", () => {
 
     describe("m.login.password", () => {
         // Specify these values in env vars. You can use the .env file. See .env.example.
-        // We should just generate random values here when we have a proper docker setup
+        // Will be replaced by a generated random user when we have a full docker setup
         const username = Cypress.env('E2E_TEST_USER_EMAIL');
         const password = Cypress.env('E2E_TEST_USER_PASSWORD');
         const key = Cypress.env('E2E_TEST_USER_SECURITY_KEY');
