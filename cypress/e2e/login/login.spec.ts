@@ -37,15 +37,18 @@ describe("Login", () => {
     });
 
     describe("m.login.password", () => {
-        // Should be random user on docker
+        // Specify these values in env vars. You can use the .env file. See .env.example.
+        // We should just generate random values here when we have a proper docker setup
         const username = Cypress.env('E2E_TEST_USER_EMAIL');
         const password = Cypress.env('E2E_TEST_USER_PASSWORD');
         const key = Cypress.env('E2E_TEST_USER_SECURITY_KEY');
 
         beforeEach(() => {
+            // We use a pre-existing user on dev backend. If random user was created each time, we would use :
             // cy.registerUser(synapse, username, password);
         });
 
+        // For now, the login is run against the default_server_config.m.homeserver.base_url present in config.json.
         it("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
@@ -53,11 +56,13 @@ describe("Login", () => {
             cy.percySnapshot("Login");
             // cy.checkA11y();
 
-            cy.get(".mx_ServerPicker_change").click();
-            // cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
-            cy.get(".mx_ServerPickerDialog_continue").click();
-            // wait for the dialog to go away
-            cy.get('.mx_ServerPickerDialog').should('not.exist');
+            // For this test we use the default server so no needs to change the targeted homeserver.
+            // For other HS here how to proceed :
+            // cy.get(".mx_ServerPicker_change").click();
+            // // cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
+            // cy.get(".mx_ServerPickerDialog_continue").click();
+            // // wait for the dialog to go away
+            // cy.get('.mx_ServerPickerDialog').should('not.exist');
 
             cy.get("#mx_LoginForm_username").type(username);
             cy.get("#mx_LoginForm_password").type(password);
@@ -69,7 +74,6 @@ describe("Login", () => {
             // Feels free to delete when not needed
             cy.get("body").then(($body) => {
                 if ($body.find('.mx_CompleteSecurityBody').text().includes('Vérifier')) {
-                    cy.get('.mx_CompleteSecurityBody').contains('Vérifier');
                     cy.get('.mx_AccessibleButton_kind_primary').last().click();
                     cy.get('#mx_securityKey').type(key);
                     cy.get('[data-test-id=dialog-primary-button]').click();
@@ -86,47 +90,6 @@ describe("Login", () => {
         });
 
         it.skip("logs in as external user on agent homeserver", () => {
-        });
-    });
-
-    describe("logout", () => {
-        beforeEach(() => {
-            cy.initTestUser(synapse, "Erin");
-        });
-
-        it("should go to login page on logout", () => {
-            cy.get('[aria-label="User menu"]').click();
-
-            // give a change for the outstanding requests queue to settle before logging out
-            cy.wait(500);
-
-            cy.get(".mx_UserMenu_contextMenu").within(() => {
-                cy.get(".mx_UserMenu_iconSignOut").click();
-            });
-
-            cy.url().should("contain", "/#/login");
-        });
-
-        it("should respect logout_redirect_url", () => {
-            cy.tweakConfig({
-                // We redirect to decoder-ring because it's a predictable page that isn't Element itself.
-                // We could use example.org, matrix.org, or something else, however this puts dependency of external
-                // infrastructure on our tests. In the same vein, we don't really want to figure out how to ship a
-                // `test-landing.html` page when running with an uncontrolled Element (via `yarn start`).
-                // Using the decoder-ring is just as fine, and we can search for strategic names.
-                logout_redirect_url: "/decoder-ring/",
-            });
-
-            cy.get('[aria-label="User menu"]').click();
-
-            // give a change for the outstanding requests queue to settle before logging out
-            cy.wait(500);
-
-            cy.get(".mx_UserMenu_contextMenu").within(() => {
-                cy.get(".mx_UserMenu_iconSignOut").click();
-            });
-
-            cy.url().should("contains", "decoder-ring");
         });
     });
 });

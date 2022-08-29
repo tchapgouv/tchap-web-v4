@@ -25,7 +25,7 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     return cy.get(".mx_Dialog");
 }
 
-// TODO
+// TODO: starter implementation for DMs, for now it just open the dialog
 function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
     cy.get('.mx_RoomSublist_auxButton').first().click();
     return cy.get(".mx_Dialog");
@@ -57,11 +57,11 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
+        // fixme Element use room aliases to get a fixed value here. A regex should work for us but it didn't worked for me
         // cy.url().should("contain", "/#/room/![A-z0-9]+:localhost");
         cy.url().should("contain", "/#/room/!");
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
-        // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
     // fixme: pas d'indicateur d'externes en v4
@@ -69,7 +69,7 @@ describe("Create Room", () => {
         const name = "Test room 1 externes";
 
         openCreateRoomDialog().within(() => {
-            // Fill name & topic
+            // Fill name
             cy.get('[label="Name"]').type(name);
             // Change room to external
             cy.get(".tc_TchapRoomTypeSelector_external").click();
@@ -82,15 +82,13 @@ describe("Create Room", () => {
         cy.url().should("contain", "/#/room/!");
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
-        // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
-    // TODO
     it("should allow us to create a public room with name", () => {
         const name = "Test room 1 public";
 
         openCreateRoomDialog().within(() => {
-            // Fill name & topic
+            // Fill name
             cy.get('[label="Name"]').type(name);
             // Change room to public
             cy.get(".tc_TchapRoomTypeSelector_forum").click();
@@ -105,7 +103,7 @@ describe("Create Room", () => {
         // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
-    // TODO
+    // TODO DMs are not tests now
     it.skip("should allow us to create a DM with another user", () => {
         const invitee = "User 2";
 
