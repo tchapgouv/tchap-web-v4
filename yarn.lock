@@ -5510,7 +5510,7 @@ exit@^0.1.2:
 
 expand-brackets@^0.1.4:
   version "0.1.5"
-  resolved "https://regis,try.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
+  resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
   integrity sha512-hxx03P2dJxss6ceIeri9cmYOT4SRs3Zk3afZwWpOsRqLqprhTR8u++SlC+sFGsQr7WGFPdMF7Gjc1njDLDK6UA==
   dependencies:
     is-posix-bracket "^0.1.0"
