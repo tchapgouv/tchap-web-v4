@@ -1,3 +1,5 @@
+#Run a static analysis
+#tchap modification : use "./scripts/layered.with.version.sh" instead of "./scripts/layered.sh"
 name: Static Analysis
 on:
   pull_request: { }
@@ -19,16 +21,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
+          node-version: 14
 
       - name: Install Dependencies
-        run: "./scripts/layered.sh"
+        run: "./scripts/layered.with.version.sh"
 
       - name: Typecheck
         run: "yarn run lint:types"
 
-  i18n_lint:
-    name: "i18n Check"
-    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+# tchap : tchap does not use extensively i18n 
+# i18n_lint:
+#    name: "i18n Check"
+#    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
 
   js_lint:
     name: "ESLint"
@@ -39,6 +43,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
+          node-version: 14
 
       # Does not need branch matching as only analyses this layer
       - name: Install Deps
@@ -56,26 +61,29 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
+          node-version: 14
 
       # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
       - name: Install Dependencies
-        run: "./scripts/layered.sh"
+        run: "./scripts/layered.with.version.sh"
 
       - name: Run Linter
         run: "yarn run lint:style"
 
-  analyse_dead_code:
-    name: "Analyse Dead Code"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+# tchap :  analyse:unused-exports does not work well with tchap customisations, it raises exception for "default export" not used
+  #analyse_dead_code:
+  #   name: "Analyse Dead Code"
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         cache: 'yarn'
+  #         node-version: 14
 
-      - name: Install Deps
-        run: "scripts/layered.sh"
+  #     - name: Install Deps
+  #       run: "scripts/layered.with.version.sh"
 
-      - name: Dead Code Analysis
-        run: "yarn run analyse:unused-exports"
+  #     - name: Dead Code Analysis
+  #       run: "yarn run analyse:unused-exports"

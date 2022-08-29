@@ -22,9 +22,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
+          node-version: 14
 
       - name: Install Dependencies
-        run: "./scripts/layered.sh"
+        run: "./scripts/layered.with.version.sh"
 
       - name: Build, Package & Upload sourcemaps
         run: "./scripts/ci_package.sh"

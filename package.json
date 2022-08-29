@@ -25,9 +25,6 @@
     "package.json",
     "contribute.json"
   ],
-  "engines": {
-    "node": ">=14.19 <15"
-  },
   "style": "bundle.css",
   "scripts": {
     "i18n": "matrix-gen-i18n",
@@ -218,5 +215,8 @@
   "jestSonar": {
     "reportPath": "coverage",
     "sonar56x": true
+  },
+  "engines": {
+    "node": ">=14.19 <15"
   }
 }

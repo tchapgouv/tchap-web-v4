@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/github-script@v5
         with:
-          # PAT needed as the GITHUB_TOKEN won't be able to see cross-references from other orgs (matrix-org)
+          # PAT  needed as the GITHUB_TOKEN won't be able to see cross-references from other orgs (matrix-org)
           github-token: ${{ secrets.ELEMENT_BOT_TOKEN }}
           script: |
             const variables = {
