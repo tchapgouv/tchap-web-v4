@@ -25,6 +25,7 @@ export MATRIX_JS_SDK_VERSION=$(awk -F \" '/"matrix-js-sdk": ".+"/ { print $4; ex
 export MATRIX_REACT_SDK_VERSION=$(awk -F \" '/"matrix-react-sdk": ".+"/ { print $4; exit; }' package.json)
 
 # Set up the js-sdk first
+yarn unlink matrix-js-sdk
 ./scripts/fetchdep.sh matrix-org matrix-js-sdk v$MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
 yarn link
@@ -41,6 +42,7 @@ yarn build:ts
 popd
 
 # Now set up the react-sdk
+yarn unlink matrix-react-sdk
 ./scripts/fetchdep.sh matrix-org matrix-react-sdk v$MATRIX_REACT_SDK_VERSION
 pushd matrix-react-sdk
 yarn link
@@ -52,3 +54,5 @@ popd
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
+
+yarn install --pure-lockfile
