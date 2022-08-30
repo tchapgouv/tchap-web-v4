@@ -25,9 +25,6 @@
     "package.json",
     "contribute.json"
   ],
-  "engines": {
-    "node": ">=14.19 <15"
-  },
   "style": "bundle.css",
   "scripts": {
     "i18n": "matrix-gen-i18n",
@@ -58,7 +55,8 @@
     "test:cypress": "cypress run",
     "test:cypress:open": "cypress open",
     "coverage": "yarn test --coverage",
-    "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js"
+    "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.12.tgz",
@@ -75,6 +73,13 @@
     "react-dom": "17.0.2",
     "sanitize-html": "^2.3.2",
     "ua-parser-js": "^0.7.24"
+  },
+  "devDependencies-comments": {
+    "tchap-added" : {
+      "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+      "enzyme": "^3.11.0",
+      "enzyme-to-json": "^3.6.2"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -108,6 +113,7 @@
     "@types/ua-parser-js": "^0.7.36",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "allchange": "^1.0.6",
     "autoprefixer": "^9.8.6",
     "axe-core": "^4.4.3",
@@ -121,6 +127,8 @@
     "cypress-axe": "^1.0.0",
     "cypress-real-events": "^1.7.1",
     "dotenv": "^10.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
     "eslint": "8.9.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-deprecate": "^0.7.0",
@@ -148,6 +156,7 @@
     "modernizr": "^3.12.0",
     "node-fetch": "^2.6.7",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "patch-package": "^6.4.7",
     "postcss-easings": "^2.0.0",
     "postcss-hexrgba": "2.0.1",
     "postcss-import": "^12.0.1",
@@ -157,6 +166,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-scss": "^2.1.1",
     "postcss-simple-vars": "^5.0.2",
+    "postinstall-postinstall": "^2.1.0",
     "raw-loader": "^4.0.2",
     "rimraf": "^3.0.2",
     "semver": "^7.3.7",
@@ -180,15 +190,28 @@
   "resolutions": {
     "@types/react": "17.0.14"
   },
+  "jest-comments": {
+    "README" : "For the tests to work, you need matrix-react-sdk to be git-cloned and yarn linked into this project.",
+    "snapshotSerializers" : "used for jest snapshot",
+    "testEnvironment" :"switch to jsdom like in matrix-react-sdk",
+    "testMatch" :"execute only tests in unit-tests directory",
+    "setupFilesAfterEnv" :"duplicate enzyme configuration in our own setup file '<rootDir>/test/setupTests.js'",
+    "moduleNameMapper" : "use mapper from element-web, helps at mocking {module, ressources} directly with regexp",
+    "transformIgnorePatterns" : "make regexp inline {matrix-js-sdk|matrix-react-sdk} else it does not work"
+  },
   "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "testEnvironment": "jsdom",
     "testEnvironmentOptions": {
       "url": "http://localhost/"
     },
     "testMatch": [
-      "<rootDir>/test/**/*-test.[tj]s?(x)"
+      "<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"
     ],
     "setupFilesAfterEnv": [
+      "<rootDir>/test/setupTests.js",
       "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"
     ],
     "moduleNameMapper": {
@@ -211,8 +234,7 @@
       "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js"
     },
     "transformIgnorePatterns": [
-      "/node_modules/(?!matrix-js-sdk).+$",
-      "/node_modules/(?!matrix-react-sdk).+$"
+      "\/node_modules\/(?!matrix-js-sdk|matrix-react-sdk).+$"
     ],
     "coverageReporters": [
       "text-summary",
@@ -223,5 +245,8 @@
   "jestSonar": {
     "reportPath": "coverage",
     "sonar56x": true
+  },
+  "engines": {
+    "node": ">=14.19 <15"
   }
 }

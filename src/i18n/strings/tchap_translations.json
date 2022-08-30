@@ -42,8 +42,24 @@
     "en": "Accessible to all users from the forum directory or from a shared link.",
     "fr": "Accessible à tous les utilisateurs à partir de la liste des forums ou d'un lien partagé."
   },
-  "Allow access to this room to all users, even outside \"%(domain)s\" domain":{
+  "Allow access to this room to all users, even outside \"%(domain)s\" domain": {
     "en":"Allow access to this room to all users, even outside \"%(domain)s\" domain",
     "fr":"Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
+  },
+  "Scanning": {
+    "en": "Scanning",
+    "fr": "Scanning"
+  },
+  "Content blocked": {
+    "en": "Content blocked",
+    "fr": "Content blocked"
+  },
+  "Trusted": {
+    "en": "Trusted",
+    "fr": "Vérifié"
+  },
+  "Scan unavailable": {
+    "en": "Scan unavailable",
+    "fr": "Scan unavailable"
   }
 }
