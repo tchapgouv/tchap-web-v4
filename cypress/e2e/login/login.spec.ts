@@ -16,12 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { config } from "dotenv";
-
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import 'dotenv/config';
 
-config({ path: '../../../.env', debug: true });
 describe("Login", () => {
     let synapse: SynapseInstance;
 
@@ -72,8 +68,12 @@ describe("Login", () => {
             // TCHAP: Verify device step
             // this should not be necessary when creating users but for now I get this too often to ignore it
             // Feels free to delete when not needed
-            cy.get("body").then(($body) => {
-                if ($body.find('.mx_CompleteSecurityBody').text().includes('Vérifier')) {
+            cy.wait(2000);
+            cy.get("body").then((body) => {
+                cy.task('log', "well");
+                if (body.find('.mx_CompleteSecurityBody').text().includes('Vérifier')) {
+                    cy.task('log', "no");
+
                     cy.get('.mx_AccessibleButton_kind_primary').last().click();
                     cy.get('#mx_securityKey').type(key);
                     cy.get('[data-test-id=dialog-primary-button]').click();
