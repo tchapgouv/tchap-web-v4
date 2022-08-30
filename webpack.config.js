@@ -129,9 +129,7 @@ module.exports = (env, argv) => {
             "bundle": "./src/vector/index.ts",
             "mobileguide": "./src/vector/mobile_guide/index.ts",
             "jitsi": "./src/vector/jitsi/index.ts",
-            //use the matrix-react-sdk 
-            //"usercontent": "./node_modules/matrix-react-sdk/src/usercontent/index.ts",
-            "usercontent": "./matrix-react-sdk/src/usercontent/index.ts",
+            "usercontent": "./node_modules/matrix-react-sdk/src/usercontent/index.ts",
             ...(useHMR ? {} : cssThemes),
         },
 
