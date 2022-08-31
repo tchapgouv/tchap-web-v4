@@ -62,7 +62,7 @@ describe("Login", () => {
 
             cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
             cy.percySnapshot("Login");
-            // cy.checkA11y();
+            cy.checkA11y();
 
             // For this test we use the default server so no needs to change the targeted homeserver.
             // For other HS here how to proceed :
