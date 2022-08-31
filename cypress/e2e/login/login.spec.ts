@@ -21,8 +21,20 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 describe("Login", () => {
     let synapse: SynapseInstance;
 
+    // Todo : set this more globally for all tests.
+    const frenchLanguageBrowserOpts = {
+        onBeforeLoad(win) {
+            Object.defineProperty(win.navigator, 'language', { value: 'fr-FR' });
+            Object.defineProperty(win.navigator, 'languages', { value: ['fr'] });
+            Object.defineProperty(win.navigator, 'accept_languages', { value: ['fr'] });
+        },
+        headers: {
+            'Accept-Language': 'fr',
+        },
+    };
+
     beforeEach(() => {
-        cy.visit("/#/login");
+        cy.visit("/#/login", frenchLanguageBrowserOpts);
         cy.startSynapse("consent").then(data => {
             synapse = data;
         });
