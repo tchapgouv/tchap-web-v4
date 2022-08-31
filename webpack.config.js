@@ -33,6 +33,10 @@ const cssThemes = {
 
 function getActiveThemes() {
     // Default to `light` theme when the MATRIX_THEMES environment variable is not defined.
+    //const theme = process.env.MATRIX_THEMES ?? 'light';
+    // :TCHAP: We need both themes to avoid "unknown theme light-custom" or "unknown theme light"
+    // being thrown on login page.
+    // Browsers recover, but e2e tests crash, so we add both themes in default here.
     const theme = process.env.MATRIX_THEMES ?? 'light,light-custom';
     return theme.split(',').map(x => x.trim()).filter(Boolean);
 }
