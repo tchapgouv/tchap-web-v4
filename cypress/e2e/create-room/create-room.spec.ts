@@ -57,9 +57,8 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // fixme Element use room aliases to get a fixed value here. A regex should work for us but it didn't worked for me
-        // cy.url().should("contain", "/#/room/![A-z0-9]+:localhost");
-        cy.url().should("contain", "/#/room/!");
+        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
+        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -78,8 +77,8 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // cy.url().should("contain", "/#/room/![A-z0-9]+:localhost");
-        cy.url().should("contain", "/#/room/!");
+        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
+        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -97,13 +96,13 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        cy.url().should("contain", "/#/room/!");
+        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
+        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
-        // cy.get(".mx_RoomHeader_topic").contains(topic);
     });
 
-    // TODO DMs are not tests now
+    // TODO DMs are not tested for now
     it.skip("should allow us to create a DM with another user", () => {
         const invitee = "User 2";
 
