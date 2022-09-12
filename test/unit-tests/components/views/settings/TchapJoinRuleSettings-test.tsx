@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 
 import TchapJoinRuleSettings  from "../../../../../src/components/views/settings/TchapJoinRuleSettings";
 import { createTestClient, mkStubRoom } from "matrix-react-sdk/test/test-utils/test-utils";
-import { EventTimeline, JoinRule, MatrixClient, Room, RoomState } from "matrix-js-sdk/src/matrix";
-import { normalize } from "matrix-js-sdk/src/utils";
+import { JoinRule, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+
 
 
 function mkStubRoomWithInviteRule(roomId: string, name: string, client: MatrixClient, joinRule: JoinRule): Room {
