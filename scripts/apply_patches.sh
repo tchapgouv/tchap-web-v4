@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# script to clean up the deployments made by redeploy.py for vectorwebdev and vectorwebexp
+# Script to apply the patches in patches directory, using patch-package.
 set -e
 
 for d in patches/*/ ; do
@@ -8,6 +8,3 @@ for d in patches/*/ ; do
     patch-package --patch-dir "$d"
     echo "...$d done."
 done
-
-
-#patch-package --patch-dir patches/contentscanner && patch-package --patch-dir patches/joinrules
