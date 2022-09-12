@@ -17,16 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 describe("Registration", () => {
-    let homeserverUrl;
+    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
     beforeEach(() => {
-        // todo we're going to do this a lot, maybe move to somewhere common
-        homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
-        if (!homeserverUrl) {
-            throw Error('Env vars not found : cypress needs ' +
-                'E2E_TEST_USER_HOMESERVER_URL.' +
-                ' Set it in the .env file.');
-        }
-
         cy.visit("/#/register");
     });
 

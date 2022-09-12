@@ -31,20 +31,12 @@ function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
 }
 
 describe("Create Room", () => {
-    let homeserverShortname;
-    beforeEach(() => {
-        // todo we're going to do this a lot, maybe move to somewhere common
-        const email = Cypress.env('E2E_TEST_USER_EMAIL');
-        const password = Cypress.env('E2E_TEST_USER_PASSWORD');
-        const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
-        homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
-        if (!email || !password || !homeserverUrl || !homeserverShortname) {
-            throw Error('Env vars not found : cypress needs ' +
-                'E2E_TEST_USER_EMAIL, E2E_TEST_USER_PASSWORD, E2E_TEST_USER_HOMESERVER_URL and ' +
-                'E2E_TEST_USER_HOMESERVER_SHORT.' +
-                ' Set then in the .env file.');
-        }
+    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+    const email = Cypress.env('E2E_TEST_USER_EMAIL');
+    const password = Cypress.env('E2E_TEST_USER_PASSWORD');
+    const homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
 
+    beforeEach(() => {
         cy.loginUser(homeserverUrl, email, password);
     });
 

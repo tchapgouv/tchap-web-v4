@@ -64,12 +64,6 @@ describe("Login", () => {
             // // wait for the dialog to go away
             // cy.get('.mx_ServerPickerDialog').should('not.exist');
 
-            if (!username || !password || !key) {
-                throw Error('Env vars not found : cypress needs ' +
-                    'E2E_TEST_USER_EMAIL, E2E_TEST_USER_PASSWORD and E2E_TEST_USER_SECURITY_KEY.' +
-                    'Set then in the .env file.');
-            }
-
             cy.get("#mx_LoginForm_username").type(username);
             cy.get("#mx_LoginForm_password").type(password);
             cy.startMeasuring("from-submit-to-home");
