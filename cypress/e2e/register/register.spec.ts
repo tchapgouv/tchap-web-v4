@@ -16,20 +16,22 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-
 describe("Registration", () => {
-    let synapse: SynapseInstance;
-
+    let homeserverUrl;
     beforeEach(() => {
+        // todo we're going to do this a lot, maybe move to somewhere common
+        homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+        if (!homeserverUrl) {
+            throw Error('Env vars not found : cypress needs ' +
+                'E2E_TEST_USER_HOMESERVER_URL.' +
+                ' Set it in the .env file.');
+        }
+
         cy.visit("/#/register");
-        cy.startSynapse("consent").then(data => {
-            synapse = data;
-        });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        // todo delete user
     });
 
     it.skip("registers an account and lands on the home screen", () => {
@@ -40,7 +42,7 @@ describe("Registration", () => {
         cy.percySnapshot("Server Picker");
         cy.checkA11y();
 
-        cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
+        cy.get(".mx_ServerPickerDialog_otherHomeserver").type(homeserverUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
         cy.get('.mx_ServerPickerDialog').should('not.exist');
