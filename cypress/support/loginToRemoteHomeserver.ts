@@ -48,7 +48,6 @@ declare global {
     }
 }
 
-// eslint-disable-next-line max-len
 Cypress.Commands.add("loginUser", (
     homeserverUrl: string,
     email: string,
