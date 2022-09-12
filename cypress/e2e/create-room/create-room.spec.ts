@@ -43,7 +43,7 @@ describe("Create Room", () => {
     });
 
     afterEach(() => {
-        // todo logout ? Otherwise useless to login beforeEach
+        // todo logout, otherwise the login test is not reliable aby more.
         // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 

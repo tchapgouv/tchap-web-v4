@@ -97,8 +97,6 @@ Cypress.Commands.add("loginUser", (
             win.localStorage.setItem("mx_local_settings", '{"language":"fr"}');
         });
 
-        // todo add a .then here ?
-
         prelaunchFn?.();
 
         return cy.visit("/").then(() => {
