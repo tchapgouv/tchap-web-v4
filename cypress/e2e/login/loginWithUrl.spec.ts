@@ -26,7 +26,7 @@ describe("Login", () => {
     describe("loginWithUrl works", () => {
         // Specify these values in env vars. You can use the .env file. See .env.example.
         // Will be replaced by a generated random user when we have a full docker setup
-        const username = Cypress.env('E2E_TEST_USER_EMAIL');
+        const email = Cypress.env('E2E_TEST_USER_EMAIL');
         const password = Cypress.env('E2E_TEST_USER_PASSWORD');
         const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
 
@@ -36,13 +36,13 @@ describe("Login", () => {
         });
 
         it("logs in with an existing account", () => {
-            if (!username || !password || !homeserverUrl) {
+            if (!email || !password || !homeserverUrl) {
                 throw Error('Env vars not found : cypress needs ' +
                     'E2E_TEST_USER_EMAIL, E2E_TEST_USER_PASSWORD and E2E_TEST_USER_HOMESERVER_URL.' +
                     ' Set then in the .env file.');
             }
 
-            cy.loginUser(homeserverUrl, username, password);
+            cy.loginUser(homeserverUrl, email, password);
         });
     });
 });

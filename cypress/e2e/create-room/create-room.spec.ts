@@ -16,7 +16,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
@@ -32,18 +31,26 @@ function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
 }
 
 describe("Create Room", () => {
-    let synapse: SynapseInstance;
-
+    let homeserverShortname;
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        // todo we're going to do this a lot, maybe move to somewhere common
+        const email = Cypress.env('E2E_TEST_USER_EMAIL');
+        const password = Cypress.env('E2E_TEST_USER_PASSWORD');
+        const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+        homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
+        if (!email || !password || !homeserverUrl || !homeserverShortname) {
+            throw Error('Env vars not found : cypress needs ' +
+                'E2E_TEST_USER_EMAIL, E2E_TEST_USER_PASSWORD, E2E_TEST_USER_HOMESERVER_URL and ' +
+                'E2E_TEST_USER_HOMESERVER_SHORT.' +
+                ' Set then in the .env file.');
+        }
 
-            cy.initTestUser(synapse, "Jim");
-        });
+        cy.loginUser(homeserverUrl, email, password);
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        // todo logout ? Otherwise useless to login beforeEach
+        // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 
     it("should allow us to create a private room with name", () => {
@@ -57,8 +64,10 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
-        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
+        // Url of room looks like :
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -77,8 +86,10 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
-        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
+        // Url of room looks like :
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -96,8 +107,10 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
-        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
+        // Url of room looks like :
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -116,7 +129,8 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        cy.url().should("contain", "/#/room/#test-room-1:localhost");
+        const roomUrlRegex = new RegExp("/#/room/#test-room-1:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(invitee);
         // cy.get(".mx_RoomHeader_topic").contains(topic);
