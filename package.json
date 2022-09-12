@@ -56,7 +56,7 @@
     "test:cypress:open": "cypress open",
     "coverage": "yarn test --coverage",
     "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
-    "postinstall": "patch-package --patch-dir patches/contentscanner && patch-package --patch-dir patches/joinrules"
+    "postinstall": "scripts/apply_patches.sh"
   },
   "dependencies": {
     "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.12.tgz",
