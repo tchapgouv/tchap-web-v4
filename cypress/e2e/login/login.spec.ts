@@ -16,11 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-
 describe("Login", () => {
-    let synapse: SynapseInstance;
-
     // Todo : set this more globally for all tests.
     const frenchLanguageBrowserOpts = {
         onBeforeLoad(win) {
@@ -35,13 +31,9 @@ describe("Login", () => {
 
     beforeEach(() => {
         cy.visit("/#/login", frenchLanguageBrowserOpts);
-        cy.startSynapse("consent").then(data => {
-            synapse = data;
-        });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
     });
 
     describe("m.login.password", () => {
