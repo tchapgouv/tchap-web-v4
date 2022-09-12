@@ -36,5 +36,6 @@ export default defineConfig({
         E2E_TEST_USER_EMAIL: process.env.E2E_TEST_USER_EMAIL,
         E2E_TEST_USER_PASSWORD: process.env.E2E_TEST_USER_PASSWORD,
         E2E_TEST_USER_SECURITY_KEY: process.env.E2E_TEST_USER_SECURITY_KEY,
+        E2E_TEST_USER_HOMESERVER_URL: process.env.E2E_TEST_USER_HOMESERVER_URL,
     },
 });
