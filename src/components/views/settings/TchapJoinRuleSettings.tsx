@@ -86,6 +86,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         return roomIds;
     };
 
+    /* code from element web
     const definitions: IDefinition<JoinRule>[] = [{
         value: JoinRule.Invite,
         label: _t("Private (invite only)"),
@@ -98,7 +99,28 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             { _t("Anyone can find and join.") }
             { aliasWarning }
         </>,
-    }];
+    }]; */
+
+    //tchap : we do not permit to change the type of room, thus display only one option
+    const definitions: IDefinition<JoinRule>[] = [];
+
+    if (joinRule === JoinRule.Invite) {
+        definitions.push({
+            value: JoinRule.Invite,
+            label: _t("Private (invite only)"),
+            description: _t("Only invited people can join."),
+            checked: true,
+        });
+    } else if (joinRule === JoinRule.Public) {
+        definitions.push({
+            value: JoinRule.Public,
+            label: _t("Public"),
+            description: <>
+                { _t("Anyone can find and join.") }
+                { aliasWarning }
+            </>,
+        });
+    }
 
     if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
         let upgradeRequiredPill;
