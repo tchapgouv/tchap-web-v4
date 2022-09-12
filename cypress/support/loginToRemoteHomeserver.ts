@@ -94,7 +94,7 @@ Cypress.Commands.add("loginUser", (
             win.localStorage.setItem("mx_has_access_token", "true");
 
             // Ensure the language is set to a consistent value
-            win.localStorage.setItem("mx_local_settings", '{"language":"en"}');
+            win.localStorage.setItem("mx_local_settings", '{"language":"fr"}');
         });
 
         // todo add a .then here ?

@@ -17,7 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 describe("Login", () => {
-    // Todo : set this more globally for all tests.
+    // Set language for browser.
+    // This is only needed before login, since the login function sets language setting for user. Most tests don't need this.
     const frenchLanguageBrowserOpts = {
         onBeforeLoad(win) {
             Object.defineProperty(win.navigator, 'language', { value: 'fr-FR' });

@@ -19,8 +19,10 @@ limitations under the License.
 import Chainable = Cypress.Chainable;
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
-    cy.get('[aria-label="Add room"]').click();
-    cy.get('.mx_ContextualMenu [aria-label="New room"]').click();
+    const addRoomLabel = "Ajouter un salon";
+    const newRoomLabel = "Nouveau salon";
+    cy.get(`[aria-label="${addRoomLabel}"]`).click();
+    cy.get(`.mx_ContextualMenu [aria-label="${newRoomLabel}"]`).click();
     return cy.get(".mx_Dialog");
 }
 
@@ -50,7 +52,8 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name
-            cy.get('[label="Name"]').type(name);
+            const nameLabel = "Nom";
+            cy.get(`[label="${nameLabel}"]`).type(name);
             // Submit
             cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
@@ -70,7 +73,8 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name
-            cy.get('[label="Name"]').type(name);
+            const nameLabel = "Nom";
+            cy.get(`[label="${nameLabel}"]`).type(name);
             // Change room to external
             cy.get(".tc_TchapRoomTypeSelector_external").click();
             // Submit
@@ -91,7 +95,8 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name
-            cy.get('[label="Name"]').type(name);
+            const nameLabel = "Nom";
+            cy.get(`[label="${nameLabel}"]`).type(name);
             // Change room to public
             cy.get(".tc_TchapRoomTypeSelector_forum").click();
             // Submit
