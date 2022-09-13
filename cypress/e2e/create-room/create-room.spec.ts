@@ -43,8 +43,8 @@ describe("Create Room", () => {
     });
 
     afterEach(() => {
-        // todo logout, otherwise the login test is not reliable aby more.
         // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
+        cy.logout(homeserverUrl);
     });
 
     it("should allow us to create a private room with name", () => {

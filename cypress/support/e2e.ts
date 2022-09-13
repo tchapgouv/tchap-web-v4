@@ -23,6 +23,7 @@ import "./performance";
 import "./synapse";
 import "./login";
 import "./loginToRemoteHomeserver";
+import "./logout";
 import "./labs";
 import "./client";
 import "./settings";
