@@ -54,6 +54,7 @@ Cypress.Commands.add("loginUser", (
     password: string,
     prelaunchFn?: () => void,
 ): Chainable<UserCredentials> => {
+    // todo this might cause surprises. Move it to somewhere else ?
     // XXX: work around Cypress not clearing IDB between tests
     cy.window({ log: false }).then(win => {
         win.indexedDB.databases().then(databases => {
@@ -97,11 +98,11 @@ Cypress.Commands.add("loginUser", (
             win.localStorage.setItem("mx_local_settings", '{"language":"fr"}');
         });
 
-        prelaunchFn?.();
+        prelaunchFn?.(); // todo cy.wrap this or something, otherwise it will run synchronously
 
         return cy.visit("/").then(() => {
             // wait for the app to load
-            return cy.get(".mx_MatrixChat", { timeout: 15000 });
+            cy.get(".mx_MatrixChat", { timeout: 15000 });
         }).then(() => ({
             password,
             accessToken: response.body.access_token,
