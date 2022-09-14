@@ -39,6 +39,9 @@ import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
 
 import { ComponentVisibilityCustomisations } from "../../../customisations/TchapComponentVisibility";
 
+import { TchapRoomAccessRule, IAccessRuleEventContent } from "../../../@types/tchap";
+import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements/LabelledToggleSwitch";
+
  interface IProps {
     room: Room;
     promptUpgrade?: boolean;
@@ -61,6 +64,12 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     const [content, setContent] = useLocalEcho<IJoinRuleEventContent>(
         () => room.currentState.getStateEvents(EventType.RoomJoinRules, "")?.getContent(),
         content => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
+        onError,
+    );
+    const RoomAccessRules = "im.vector.room.access_rules";
+    const [accessRule, setContentAccess] = useLocalEcho<IAccessRuleEventContent>(
+        () => room.currentState.getStateEvents(RoomAccessRules, "")?.getContent(),
+        content => cli.sendStateEvent(room.roomId, RoomAccessRules, content, ""),
         onError,
     );
 
@@ -105,10 +114,56 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     const definitions: IDefinition<JoinRule>[] = [];
 
     if (joinRule === JoinRule.Invite) {
+        // NOTE : Code from v2 for the pop up window to confirm the change of access for external users
+        // This code is helpfull to understand how to implement this dialog box 
+        // and should be removed once the code is implemented
+        // _onExternAllowedSwitchChange = () => {
+        //     const self = this;
+        //     const access_rules = this.state.access_rules;
+        //     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
+        //     Modal.createTrackedDialog('Allow the externals to join this room', '', QuestionDialog, {
+        //         title: _t('Allow the externals to join this room'),
+        //         description: ( _t('This action is irreversible.') + " " + _t('Are you sure you want to allow the externals to join this room ?')),
+        //         onFinished: (confirm) => {
+        //             if (confirm) {
+        //                 self.setState({
+        //                     access_rules: 'unrestricted'
+        //                 });
+        //                 MatrixClientPeg.get().sendStateEvent(
+        //                     self.props.roomId, "im.vector.room.access_rules",
+        //                     { rule: 'unrestricted' },
+        //                     "",
+        //                 )
+        //             } else {
+        //                 self.setState({
+        //                     access_rules
+        //                 });
+        //             }
+        //         },
+        //     });
+        // };
+        const onExternalAccessChange = async () => {
+            setContentAccess({ "rule": TchapRoomAccessRule.Unrestricted });
+        };
+
+        const openedToExternalUsers = accessRule.rule === TchapRoomAccessRule.Unrestricted;
+        const privateDescription = <div>
+            <div>
+                { _t("Only invited people can join.") }
+            </div>
+            <span>
+                <LabelledToggleSwitch
+                    value={openedToExternalUsers}
+                    onChange={onExternalAccessChange}
+                    label={_t("Allow the externals to join this room.")}
+                    disabled={!openedToExternalUsers}
+                />
+            </span>
+        </div>;
         definitions.push({
             value: JoinRule.Invite,
             label: _t("Private (invite only)"),
-            description: _t("Only invited people can join."),
+            description: privateDescription,
             checked: true,
         });
     } else if (joinRule === JoinRule.Public) {
