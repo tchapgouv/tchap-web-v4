@@ -35,14 +35,12 @@ declare global {
              * @param homeserverUrl the homeserver to connect to over http
              * @param email the email of an existing user in this homeserver
              * @param password the password of an existing user in this homeserver
-             * @param prelaunchFn optional function to run before the app is visited
              * @return UserCredentials for the logged in user.
              */
             loginUser(
                 homeserverUrl: string,
                 email: string,
                 password: string,
-                prelaunchFn?: () => void,
             ): Chainable<UserCredentials>;
         }
     }
@@ -52,7 +50,6 @@ Cypress.Commands.add("loginUser", (
     homeserverUrl: string,
     email: string,
     password: string,
-    prelaunchFn?: () => void,
 ): Chainable<UserCredentials> => {
     // todo this might cause surprises. Move it to somewhere else ?
     // XXX: work around Cypress not clearing IDB between tests
@@ -97,8 +94,6 @@ Cypress.Commands.add("loginUser", (
             // Ensure the language is set to a consistent value
             win.localStorage.setItem("mx_local_settings", '{"language":"fr"}');
         });
-
-        prelaunchFn?.(); // todo cy.wrap this or something, otherwise it will run synchronously
 
         return cy.visit("/").then(() => {
             // wait for the app to load
