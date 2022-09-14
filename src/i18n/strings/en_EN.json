@@ -28,5 +28,6 @@
     "Decentralised, encrypted chat &amp; collaboration powered by $matrixLogo": "Decentralised, encrypted chat &amp; collaboration powered by $matrixLogo",
     "Sign In": "Sign In",
     "Create Account": "Create Account",
-    "Explore rooms": "Explore rooms"
+    "Explore rooms": "Explore rooms",
+    "Allow the externals to join this room.": "Allow the externals to join this room."
 }
