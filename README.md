@@ -331,7 +331,7 @@ yarn install
 yarn start
 ```
 
-Alternatively, you can skip the above commands and only run. The only difference is that both 'matrix-react-sdk and 'matrix-js-sdk' will be cloned inside the root project folder. 
+Alternatively, you can skip the above commands and only run the command below. The only difference is that both 'matrix-react-sdk and 'matrix-js-sdk' will be cloned inside the root project folder. 
 
 ```bash
 ./scripts/layered.with.version.sh
