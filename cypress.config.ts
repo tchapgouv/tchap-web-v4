@@ -35,6 +35,7 @@ getVar('E2E_TEST_USER_HOMESERVER_URL');
 getVar('E2E_TEST_USER_HOMESERVER_SHORT');
 
 export default defineConfig({
+    watchForFileChanges : false,
     videoUploadOnPasses: false,
     projectId: 'ppvnzg',
     experimentalInteractiveRunEvents: true,
