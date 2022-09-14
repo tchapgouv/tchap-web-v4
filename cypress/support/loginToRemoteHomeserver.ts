@@ -32,25 +32,29 @@ declare global {
         interface Chainable {
             /**
              * Instantiates an Element session with the given user.
-             * @param homeserverUrl the homeserver to connect to over http
-             * @param email the email of an existing user in this homeserver
-             * @param password the password of an existing user in this homeserver
+             * @param homeserverUrl Optional. The homeserver to connect to over http
+             * @param email Optional. The email of an existing user in this homeserver
+             * @param password Optional. The password of an existing user in this homeserver
              * @return UserCredentials for the logged in user.
              */
             loginUser(
-                homeserverUrl: string,
-                email: string,
-                password: string,
+                homeserverUrl?: string,
+                email?: string,
+                password?: string,
             ): Chainable<UserCredentials>;
         }
     }
 }
 
 Cypress.Commands.add("loginUser", (
-    homeserverUrl: string,
-    email: string,
-    password: string,
+    homeserverUrl?: string,
+    email?: string,
+    password?: string,
 ): Chainable<UserCredentials> => {
+    homeserverUrl = homeserverUrl ?? Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+    email = email ?? Cypress.env('E2E_TEST_USER_EMAIL');
+    password = password ?? Cypress.env('E2E_TEST_USER_PASSWORD');
+
     // XXX: work around Cypress not clearing IDB between tests
     // Otherwise Cypress clears all localstorage and cookies between tests.
     // https://github.com/cypress-io/cypress/issues/1208
