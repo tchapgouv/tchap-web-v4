@@ -51,8 +51,9 @@ Cypress.Commands.add("loginUser", (
     email: string,
     password: string,
 ): Chainable<UserCredentials> => {
-    // todo this might cause surprises. Move it to somewhere else ?
     // XXX: work around Cypress not clearing IDB between tests
+    // Otherwise Cypress clears all localstorage and cookies between tests.
+    // https://github.com/cypress-io/cypress/issues/1208
     cy.window({ log: false }).then(win => {
         win.indexedDB.databases().then(databases => {
             databases.forEach(database => {
