@@ -33,6 +33,11 @@ declare global {
              */
             getClient(): Chainable<MatrixClient | undefined>;
             /**
+             * :TCHAP: added this function
+             * Returns the MatrixClient from the MatrixClientPeg or undefined if not present (instead of crashing)
+             */
+             getClientIfPresent(): Chainable<MatrixClient | undefined>;
+             /**
              * Create a room with given options.
              * @param options the options to apply when creating the room
              * @return the ID of the newly created room
@@ -135,6 +140,17 @@ declare global {
 
 Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
     return cy.window({ log: false }).then(win => win.mxMatrixClientPeg.matrixClient);
+});
+
+// :TCHAP: added this function
+Cypress.Commands.add("getClientIfPresent", (): Chainable<MatrixClient | undefined> => {
+    return cy.window({ log: false }).then(win => {
+        if (win && win.mxMatrixClientPeg && win.mxMatrixClientPeg.matrixClient) {
+            return win.mxMatrixClientPeg.matrixClient;
+        } else {
+            return;
+        }
+    });
 });
 
 Cypress.Commands.add("getDmRooms", (userId: string): Chainable<string[]> => {

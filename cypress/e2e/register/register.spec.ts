@@ -18,12 +18,14 @@ limitations under the License.
 
 describe("Registration", () => {
     const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+
     beforeEach(() => {
+        cy.logout(homeserverUrl);
         cy.visit("/#/register");
     });
 
     afterEach(() => {
-        // todo delete user
+        // todo delete user, logout if needed
     });
 
     it.skip("registers an account and lands on the home screen", () => {

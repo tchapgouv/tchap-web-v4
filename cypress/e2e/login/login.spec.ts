@@ -30,11 +30,15 @@ describe("Login", () => {
         },
     };
 
+    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+
     beforeEach(() => {
+        cy.logout(homeserverUrl);
         cy.visit("/#/login", frenchLanguageBrowserOpts);
     });
 
     afterEach(() => {
+        cy.logout(homeserverUrl);
     });
 
     describe("m.login.password", () => {

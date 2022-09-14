@@ -27,29 +27,31 @@ Cypress.Commands.add("logout", (
     homeserverUrl: string,
     prelaunchFn?: () => void,
 ): Chainable => {
-    // XXX: work around Cypress not clearing IDB between tests
-    cy.window({ log: false }).then(win => {
-        win.indexedDB.databases().then(databases => {
-            databases.forEach(database => {
-                win.indexedDB.deleteDatabase(database.name);
-            });
-        });
-    });
-
     const url = `${homeserverUrl}/_matrix/client/r0/logout`;
 
     prelaunchFn?.();
 
-    return cy.getClient().then(matrixClient => {
-        return cy.request({
-            url,
-            method: "POST",
-            body: {},
-            headers: {
-                "Authorization": "Bearer " + matrixClient.getAccessToken(),
-            },
+    try {
+        return cy.getClientIfPresent().then(matrixClient => {
+            // Sometimes the matrixClient is not present or getAccessToken is not present. In that case, no logout.
+            // Not sure when/why this happens.
+            if (!matrixClient || !matrixClient.getAccessToken) {
+                console.error('No matrixClient or accessToken. Cannot logout.');
+                return;
+            }
+            return cy.request({
+                url,
+                method: "POST",
+                body: {},
+                headers: {
+                    "Authorization": "Bearer " + matrixClient.getAccessToken(),
+                },
+            });
         });
-    });
+    } catch (error) {
+        console.error("Could not log out.", error);
+        return cy.wrap('foo');
+    }
 });
 
 // Needed to make this file a module
