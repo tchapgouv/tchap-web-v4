@@ -43,8 +43,22 @@ describe("Create Room", () => {
     });
 
     afterEach(() => {
-        // todo logout, otherwise the login test is not reliable aby more.
-        // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
+        // We find the roomId to clean up from the current URL.
+        // Note : This is simple and works, so good enough for now. But if we want to store the roomId at the end of the test instead, we could use “as”
+        // for passing the value around : https://docs.cypress.io/guides/core-concepts/variables-and-aliases#Sharing-Context
+        // Do NOT use a describe-level variable (like "let roomIdToCleanup") like we do in unit tests, cypress does not work like that.
+        cy.url().then(urlString => {
+            console.log('roomId url string', urlString);
+            console.log('roomId url string split', urlString.split('/#/room/'));
+            console.log('roomIdToCleanup', urlString.split('/#/room/')[1]);
+            const roomId = urlString.split('/#/room/')[1];
+            if (roomId) {
+                cy.leaveRoom(roomId);
+                // todo also forgetRoom to save resources.
+            } else {
+                console.error('Did not find roomId in url. Not cleaning up.');
+            }
+        });
     });
 
     it("should allow us to create a private room with name", () => {

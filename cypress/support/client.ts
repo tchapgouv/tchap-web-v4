@@ -129,6 +129,12 @@ declare global {
              * @param roomIdOrAlias the id or alias of the room to join
              */
             joinRoom(roomIdOrAlias: string): Chainable<Room>;
+            /**
+             * :TCHAP: added this function
+             * Leave a room.
+             * @param roomId the id of the room to invite to
+             */
+            leaveRoom(roomId: string): Chainable<{}>;
         }
     }
 }
@@ -225,4 +231,8 @@ Cypress.Commands.add("bootstrapCrossSigning", () => {
 
 Cypress.Commands.add("joinRoom", (roomIdOrAlias: string): Chainable<Room> => {
     return cy.getClient().then(cli => cli.joinRoom(roomIdOrAlias));
+});
+
+Cypress.Commands.add("leaveRoom", (roomId: string): Chainable<{}> => {
+    return cy.getClient().then(cli => cli.leave(roomId));
 });
