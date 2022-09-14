@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
 Copyright 2021 The Matrix.org Foundation C.I.C.
 
@@ -35,9 +36,8 @@ import { ROOM_SECURITY_TAB } from "matrix-react-sdk/src/components/views/dialogs
 import { Action } from "matrix-react-sdk/src/dispatcher/actions";
 import { ViewRoomPayload } from "matrix-react-sdk/src/dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "matrix-react-sdk/src/utils/PreferredRoomVersions";
-import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
 
-import { ComponentVisibilityCustomisations } from "../../../customisations/TchapComponentVisibility";
+import TchapUIFeature from "../../../util/TchapUIFeature";
 
  interface IProps {
     room: Room;
@@ -122,68 +122,68 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         });
     }
 
-    if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
-        let upgradeRequiredPill;
-        if (preferredRestrictionVersion) {
-            upgradeRequiredPill = <span className="mx_JoinRuleSettings_upgradeRequired">
-                { _t("Upgrade required") }
-            </span>;
-        }
-
-        let description;
-        if (joinRule === JoinRule.Restricted && restrictedAllowRoomIds?.length) {
-            // only show the first 4 spaces we know about, so that the UI doesn't grow out of proportion there are lots.
-            const shownSpaces = restrictedAllowRoomIds
-                .map(roomId => cli.getRoom(roomId))
-                .filter(room => room?.isSpaceRoom())
-                .slice(0, 4);
-
-            let moreText;
-            if (shownSpaces.length < restrictedAllowRoomIds.length) {
-                if (shownSpaces.length > 0) {
-                    moreText = _t("& %(count)s more", {
-                        count: restrictedAllowRoomIds.length - shownSpaces.length,
-                    });
-                } else {
-                    moreText = _t("Currently, %(count)s spaces have access", {
-                        count: restrictedAllowRoomIds.length,
-                    });
-                }
+    /**
+     * TCHAP : disable space-related options if create space feature is not enabled
+     */
+    if (TchapUIFeature.isSpaceDisplayEnabled) {
+        if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
+            let upgradeRequiredPill;
+            if (preferredRestrictionVersion) {
+                upgradeRequiredPill = <span className="mx_JoinRuleSettings_upgradeRequired">
+                    { _t("Upgrade required") }
+                </span>;
             }
 
-            const onRestrictedRoomIdsChange = (newAllowRoomIds: string[]) => {
-                if (!arrayHasDiff(restrictedAllowRoomIds || [], newAllowRoomIds)) return;
+            let description;
+            if (joinRule === JoinRule.Restricted && restrictedAllowRoomIds?.length) {
+                // only show the first 4 spaces we know about, so that the UI doesn't grow out of proportion there are lots.
+                const shownSpaces = restrictedAllowRoomIds
+                    .map(roomId => cli.getRoom(roomId))
+                    .filter(room => room?.isSpaceRoom())
+                    .slice(0, 4);
 
-                if (!newAllowRoomIds.length) {
+                let moreText;
+                if (shownSpaces.length < restrictedAllowRoomIds.length) {
+                    if (shownSpaces.length > 0) {
+                        moreText = _t("& %(count)s more", {
+                            count: restrictedAllowRoomIds.length - shownSpaces.length,
+                        });
+                    } else {
+                        moreText = _t("Currently, %(count)s spaces have access", {
+                            count: restrictedAllowRoomIds.length,
+                        });
+                    }
+                }
+
+                const onRestrictedRoomIdsChange = (newAllowRoomIds: string[]) => {
+                    if (!arrayHasDiff(restrictedAllowRoomIds || [], newAllowRoomIds)) return;
+
+                    if (!newAllowRoomIds.length) {
+                        setContent({
+                            join_rule: JoinRule.Invite,
+                        });
+                        return;
+                    }
+
                     setContent({
-                        join_rule: JoinRule.Invite,
+                        join_rule: JoinRule.Restricted,
+                        allow: newAllowRoomIds.map(roomId => ({
+                            "type": RestrictedAllowType.RoomMembership,
+                            "room_id": roomId,
+                        })),
                     });
-                    return;
-                }
+                };
 
-                setContent({
-                    join_rule: JoinRule.Restricted,
-                    allow: newAllowRoomIds.map(roomId => ({
-                        "type": RestrictedAllowType.RoomMembership,
-                        "room_id": roomId,
-                    })),
-                });
-            };
+                const onEditRestrictedClick = async () => {
+                    const restrictedAllowRoomIds = await editRestrictedRoomIds();
+                    if (!Array.isArray(restrictedAllowRoomIds)) return;
+                    if (restrictedAllowRoomIds.length > 0) {
+                        onRestrictedRoomIdsChange(restrictedAllowRoomIds);
+                    } else {
+                        onChange(JoinRule.Invite);
+                    }
+                };
 
-            const onEditRestrictedClick = async () => {
-                const restrictedAllowRoomIds = await editRestrictedRoomIds();
-                if (!Array.isArray(restrictedAllowRoomIds)) return;
-                if (restrictedAllowRoomIds.length > 0) {
-                    onRestrictedRoomIdsChange(restrictedAllowRoomIds);
-                } else {
-                    onChange(JoinRule.Invite);
-                }
-            };
-
-            /**
-             * TCHAP : disable space-related options if create space feature is not enabled
-             */
-            if (ComponentVisibilityCustomisations.shouldShowComponent(UIComponent.CreateSpaces)) {
                 description = <div>
                     <span>
                         { _t("Anyone in a space can find and join. <a>Edit which spaces can access here.</a>", {}, {
