@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
+index 361b82b..927c1df 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
+@@ -375,7 +375,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const room = client.getRoom(this.props.roomId);
+         const isEncrypted = this.state.encrypted;
+         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
+-        const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
++        const canEnableEncryption =!isEncrypted && hasEncryptionPermission && false; //TCHAP DOES NOT ALLOW ENABLE ENCRYPTION
+ 
+         let encryptionSettings = null;
+         if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
