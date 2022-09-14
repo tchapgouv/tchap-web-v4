@@ -29,5 +29,7 @@
     "Powered by Matrix": "Propulsé par Matrix",
     "Use %(brand)s on mobile": "Utiliser %(brand)s sur téléphone",
     "Decentralised, encrypted chat &amp; collaboration powered by $matrixLogo": "Messagerie décentralisée, chiffrée &amp; une collaboration alimentée par $matrixLogo",
-    "Allow the externals to join this room.": "Autoriser les externes à rejoindre ce salon."
+    "Allow the externals to join this room": "Autoriser les externes à rejoindre ce salon",
+    "This action is irreversible.": "Cette action est irréversible.",
+    "Are you sure you want to allow the externals to join this room ?": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
 }

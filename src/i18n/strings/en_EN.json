@@ -29,5 +29,7 @@
     "Sign In": "Sign In",
     "Create Account": "Create Account",
     "Explore rooms": "Explore rooms",
-    "Allow the externals to join this room.": "Allow the externals to join this room."
+    "Allow the externals to join this room": "Allow the externals to join this room",
+    "This action is irreversible.": "This action is irreversible.",
+    "Are you sure you want to allow the externals to join this room ?": "Are you sure you want to allow the externals to join this room ?"
 }
