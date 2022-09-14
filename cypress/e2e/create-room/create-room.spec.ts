@@ -33,13 +33,10 @@ function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
 }
 
 describe("Create Room", () => {
-    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
-    const email = Cypress.env('E2E_TEST_USER_EMAIL');
-    const password = Cypress.env('E2E_TEST_USER_PASSWORD');
     const homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginUser();
     });
 
     afterEach(() => {
