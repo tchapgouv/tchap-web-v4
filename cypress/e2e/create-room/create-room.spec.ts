@@ -16,12 +16,13 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
-    cy.get('[aria-label="Add room"]').click();
-    cy.get('.mx_ContextualMenu [aria-label="New room"]').click();
+    const addRoomLabel = "Ajouter un salon";
+    const newRoomLabel = "Nouveau salon";
+    cy.get(`[aria-label="${addRoomLabel}"]`).click();
+    cy.get(`.mx_ContextualMenu [aria-label="${newRoomLabel}"]`).click();
     return cy.get(".mx_Dialog");
 }
 
@@ -32,18 +33,18 @@ function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
 }
 
 describe("Create Room", () => {
-    let synapse: SynapseInstance;
+    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+    const email = Cypress.env('E2E_TEST_USER_EMAIL');
+    const password = Cypress.env('E2E_TEST_USER_PASSWORD');
+    const homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
-
-            cy.initTestUser(synapse, "Jim");
-        });
+        cy.loginUser(homeserverUrl, email, password);
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        // todo logout, otherwise the login test is not reliable aby more.
+        // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 
     it("should allow us to create a private room with name", () => {
@@ -51,14 +52,17 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name
-            cy.get('[label="Name"]').type(name);
+            const nameLabel = "Nom";
+            cy.get(`[label="${nameLabel}"]`).type(name);
             // Submit
             cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
-        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
+        // Url of room looks like :
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -69,7 +73,8 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name
-            cy.get('[label="Name"]').type(name);
+            const nameLabel = "Nom";
+            cy.get(`[label="${nameLabel}"]`).type(name);
             // Change room to external
             cy.get(".tc_TchapRoomTypeSelector_external").click();
             // Submit
@@ -77,8 +82,10 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
-        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
+        // Url of room looks like :
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -88,7 +95,8 @@ describe("Create Room", () => {
 
         openCreateRoomDialog().within(() => {
             // Fill name
-            cy.get('[label="Name"]').type(name);
+            const nameLabel = "Nom";
+            cy.get(`[label="${nameLabel}"]`).type(name);
             // Change room to public
             cy.get(".tc_TchapRoomTypeSelector_forum").click();
             // Submit
@@ -96,8 +104,10 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        // Url looks like : http://localhost:8080/#/room/!VQgKFfJxZozETqfXaC:localhost
-        cy.url().should("match", /\/#\/room\/![A-z0-9]+:localhost/);
+        // Url of room looks like :
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
@@ -116,7 +126,8 @@ describe("Create Room", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        cy.url().should("contain", "/#/room/#test-room-1:localhost");
+        const roomUrlRegex = new RegExp("/#/room/#test-room-1:" + homeserverShortname);
+        cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(invitee);
         // cy.get(".mx_RoomHeader_topic").contains(topic);
