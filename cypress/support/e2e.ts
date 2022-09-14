@@ -22,6 +22,7 @@ import "cypress-real-events";
 import "./performance";
 import "./synapse";
 import "./login";
+import "./loginToRemoteHomeserver";
 import "./labs";
 import "./client";
 import "./settings";

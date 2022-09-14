@@ -16,12 +16,9 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-
 describe("Login", () => {
-    let synapse: SynapseInstance;
-
-    // Todo : set this more globally for all tests.
+    // Set language for browser.
+    // This is only needed before login, since the login function sets language setting for user. Most tests don't need this.
     const frenchLanguageBrowserOpts = {
         onBeforeLoad(win) {
             Object.defineProperty(win.navigator, 'language', { value: 'fr-FR' });
@@ -35,13 +32,9 @@ describe("Login", () => {
 
     beforeEach(() => {
         cy.visit("/#/login", frenchLanguageBrowserOpts);
-        cy.startSynapse("consent").then(data => {
-            synapse = data;
-        });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
     });
 
     describe("m.login.password", () => {
@@ -71,12 +64,6 @@ describe("Login", () => {
             // cy.get(".mx_ServerPickerDialog_continue").click();
             // // wait for the dialog to go away
             // cy.get('.mx_ServerPickerDialog').should('not.exist');
-
-            if (!username || !password || !key) {
-                throw Error('Env vars not found : cypress needs ' +
-                    'E2E_TEST_USER_EMAIL, E2E_TEST_USER_PASSWORD and E2E_TEST_USER_SECURITY_KEY.' +
-                    'Set then in the .env file.');
-            }
 
             cy.get("#mx_LoginForm_username").type(username);
             cy.get("#mx_LoginForm_password").type(password);

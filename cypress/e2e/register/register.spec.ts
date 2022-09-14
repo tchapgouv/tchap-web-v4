@@ -16,20 +16,14 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-
 describe("Registration", () => {
-    let synapse: SynapseInstance;
-
+    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
     beforeEach(() => {
         cy.visit("/#/register");
-        cy.startSynapse("consent").then(data => {
-            synapse = data;
-        });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        // todo delete user
     });
 
     it.skip("registers an account and lands on the home screen", () => {
@@ -40,7 +34,7 @@ describe("Registration", () => {
         cy.percySnapshot("Server Picker");
         cy.checkA11y();
 
-        cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
+        cy.get(".mx_ServerPickerDialog_otherHomeserver").type(homeserverUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
         cy.get('.mx_ServerPickerDialog').should('not.exist');
@@ -79,8 +73,10 @@ describe("Registration", () => {
         cy.url().should('contain', '/#/home');
         cy.stopMeasuring("from-submit-to-home");
 
-        cy.get('[aria-label="User menu"]').click();
-        cy.get('[aria-label="Security & Privacy"]').click();
+        const userMenuLabel = "Menu utilisateur";
+        cy.get(`[aria-label="${userMenuLabel}"]`).click();
+        const securityLabel = "Sécurité et vie privée";
+        cy.get(`[aria-label="${securityLabel}"]`).click();
         cy.get(".mx_DevicesPanel_myDevice .mx_DevicesPanel_deviceTrust .mx_E2EIcon")
             .should("have.class", "mx_E2EIcon_verified");
     });
