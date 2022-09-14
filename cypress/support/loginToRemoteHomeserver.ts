@@ -98,7 +98,7 @@ Cypress.Commands.add("loginUser", (
 
         return cy.visit("/").then(() => {
             // wait for the app to load
-            cy.get(".mx_MatrixChat", { timeout: 15000 });
+            return cy.get(".mx_MatrixChat", { timeout: 15000 });
         }).then(() => ({
             password,
             accessToken: response.body.access_token,
