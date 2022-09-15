@@ -21,13 +21,13 @@ yarn install --pure-lockfile
 #export PR_REPO=element-web
 
 # :TCHAP: added : grep matrix dependencies version from package.json
-export MATRIX_JS_SDK_VERSION=$(awk -F \" '/"matrix-js-sdk": ".+"/ { print $4; exit; }' package.json)
-export MATRIX_REACT_SDK_VERSION=$(awk -F \" '/"matrix-react-sdk": ".+"/ { print $4; exit; }' package.json)
+export MATRIX_JS_SDK_VERSION=v$(awk -F \" '/"matrix-js-sdk": ".+"/ { print $4; exit; }' package.json)
+export MATRIX_REACT_SDK_VERSION=v$(awk -F \" '/"matrix-react-sdk": ".+"/ { print $4; exit; }' package.json)
 echo "Using MATRIX_JS_SDK_VERSION $MATRIX_JS_SDK_VERSION"
 echo "Using MATRIX_REACT_SDK_VERSION $MATRIX_REACT_SDK_VERSION"
 
 # Set up the js-sdk first
-./scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk v$MATRIX_JS_SDK_VERSION
+./scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
@@ -45,7 +45,7 @@ popd
 #popd
 
 # Now set up the react-sdk
-./scripts/fetchdep.with.version.sh matrix-org matrix-react-sdk v$MATRIX_REACT_SDK_VERSION
+./scripts/fetchdep.with.version.sh matrix-org matrix-react-sdk $MATRIX_REACT_SDK_VERSION
 pushd matrix-react-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
