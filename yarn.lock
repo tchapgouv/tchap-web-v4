@@ -8637,10 +8637,10 @@ matrix-events-sdk@^0.0.1-beta.7:
   resolved "https://registry.yarnpkg.com/matrix-events-sdk/-/matrix-events-sdk-0.0.1-beta.7.tgz#5ffe45eba1f67cc8d7c2377736c728b322524934"
   integrity sha512-9jl4wtWanUFSy2sr2lCjErN/oC8KTAtaeaozJtrgot1JiQcEI4Rda9OLgQ7nLKaqb4Z/QUx/fR3XpDzm5Jy1JA==
 
-matrix-js-sdk@19.4.0:
-  version "19.4.0"
-  resolved "https://registry.yarnpkg.com/matrix-js-sdk/-/matrix-js-sdk-19.4.0.tgz#ea333ec3b7893ea953bd1ac00c0ce1108fffc0d0"
-  integrity sha512-B8Mm4jCsCHaMaChcdM3VhZDVKrn0nMSDtYvHmS15Iu8Pe0G4qmIpk2AoADBAL9U9yN3pCqvs3TDXaQhM8UxRRA==
+matrix-js-sdk@19.5.0:
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/matrix-js-sdk/-/matrix-js-sdk-19.5.0.tgz#debc8e92b2e73204c8d5bc9a128a2d0ec0a92ade"
+  integrity sha512-WTmXMwyhGjUVv3eR71P9wdZj4qqNPgzg9Ud7V6kB3avhZJTZlIpNdHuldXXUdPJ8WTDKY+/yDtEFLIg8pj2Q8A==
   dependencies:
     "@babel/runtime" "^7.12.5"
     another-json "^0.2.0"
@@ -8661,10 +8661,10 @@ matrix-mock-request@^2.0.0:
   dependencies:
     expect "^28.1.0"
 
-matrix-react-sdk@3.53.0:
-  version "3.53.0"
-  resolved "https://registry.yarnpkg.com/matrix-react-sdk/-/matrix-react-sdk-3.53.0.tgz#eb102d0c9f740735a9385bf8dddc9a27f3ec6bab"
-  integrity sha512-852TdcXKEQsBu9jTCDvXRdkk8czhOzpPcUvqlJbJiFy5jFTRMCsUqYqBYuFip09/e61q8KHMfKfOWslyT8DKFw==
+matrix-react-sdk@3.54.0:
+  version "3.54.0"
+  resolved "https://registry.yarnpkg.com/matrix-react-sdk/-/matrix-react-sdk-3.54.0.tgz#fadff4178a3cac87542b15a760c12bec2b41a00d"
+  integrity sha512-RpbXNUA7nRov67FP/bXZkuJR2z59vmkJ10HPKoOl2aj0ry1nvrjWItIVcr+JVe51tGzV/quFm1NVFd9Z3x7lsQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/analytics-events" "^0.2.0"
@@ -8704,7 +8704,7 @@ matrix-react-sdk@3.53.0:
     maplibre-gl "^1.15.2"
     matrix-encrypt-attachment "^1.0.3"
     matrix-events-sdk "^0.0.1-beta.7"
-    matrix-js-sdk "19.4.0"
+    matrix-js-sdk "19.5.0"
     matrix-widget-api "^1.0.0"
     minimist "^1.2.5"
     opus-recorder "^8.0.3"

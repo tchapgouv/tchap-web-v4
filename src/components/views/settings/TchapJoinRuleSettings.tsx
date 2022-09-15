@@ -101,7 +101,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         </>,
     }]; */
 
-    //tchap : we do not permit to change the type of room, thus display only one option
+    // :TCHAP: we do not permit to change the type of room, thus display only one option
     const definitions: IDefinition<JoinRule>[] = [];
 
     if (joinRule === JoinRule.Invite) {

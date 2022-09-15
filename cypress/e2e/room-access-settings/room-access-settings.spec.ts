@@ -13,7 +13,6 @@ describe("Check room access settings", () => {
     });
 
     afterEach(() => {
-        // todo logout, otherwise the login test is not reliable aby more.
         // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 
