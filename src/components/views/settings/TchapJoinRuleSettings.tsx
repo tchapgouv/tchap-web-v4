@@ -67,16 +67,18 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         content => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
         onError,
     );
-    const [accessRule, setContentAccess] = useLocalEcho<IAccessRuleEventContent>(
-        () => room.currentState.getStateEvents(RoomAccessRulesEventId, "")?.getContent(),
-        content => cli.sendStateEvent(room.roomId, RoomAccessRulesEventId, content, ""),
-        onError,
-    );
-
     const { join_rule: joinRule = JoinRule.Invite } = content || {};
     const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
         ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
+
+
+    const [contentAccessRule, setContentAccess] = useLocalEcho<IAccessRuleEventContent>(
+        () => room.currentState.getStateEvents(RoomAccessRulesEventId, "")?.getContent(),
+        content => cli.sendStateEvent(room.roomId, RoomAccessRulesEventId, content, ""),
+        onError,
+    );
+    const { rule: accessRule = undefined } = contentAccessRule || {};
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
@@ -114,62 +116,37 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     const definitions: IDefinition<JoinRule>[] = [];
 
     if (joinRule === JoinRule.Invite) {
-        // NOTE : Code from v2 for the pop up window to confirm the change of access for external users
-        // This code is helpfull to understand how to implement this dialog box 
-        // and should be removed once the code is implemented
-        // _onExternAllowedSwitchChange = () => {
-        //     const self = this;
-        //     const access_rules = this.state.access_rules;
-        //     const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-        //     Modal.createTrackedDialog('Allow the externals to join this room', '', QuestionDialog, {
-        //         title: _t('Allow the externals to join this room'),
-        //         description: ( _t('This action is irreversible.') + " " + _t('Are you sure you want to allow the externals to join this room ?')),
-        //         onFinished: (confirm) => {
-        //             if (confirm) {
-        //                 self.setState({
-        //                     access_rules: 'unrestricted'
-        //                 });
-        //                 MatrixClientPeg.get().sendStateEvent(
-        //                     self.props.roomId, "im.vector.room.access_rules",
-        //                     { rule: 'unrestricted' },
-        //                     "",
-        //                 )
-        //             } else {
-        //                 self.setState({
-        //                     access_rules
-        //                 });
-        //             }
-        //         },
-        //     });
-        // };
-        const onExternalAccessChange = async () => {
-            console.log(accessRule)
-            Modal.createDialog(QuestionDialog, {
-                title: _t("Allow the externals to join this room"),
-                description: _t('This action is irreversible.') + " "
-                 + _t('Are you sure you want to allow the externals to join this room ?'),
-                button: _t("OK"),
-                onFinished: (confirmed) => {
-                    if (!confirmed) return;
-                    setContentAccess({ "rule": TchapRoomAccessRule.Unrestricted });
-                },
-            });
-        };
-
-        const openedToExternalUsers = accessRule.rule === TchapRoomAccessRule.Unrestricted;
-        const privateRoomDescription = <div>
-            <div>
-                { _t("Only invited people can join.") }
-            </div>
-            <span>
-                <LabelledToggleSwitch
-                    value={openedToExternalUsers}
-                    onChange={onExternalAccessChange}
-                    label={_t("Allow the externals to join this room")}
-                    disabled={openedToExternalUsers}
-                />
-            </span>
+        let privateRoomDescription = <div>
+            { _t("Only invited people can join.") }
         </div>;
+        if (accessRule) {
+            const openedToExternalUsers = accessRule === TchapRoomAccessRule.Unrestricted;
+            const onExternalAccessChange = async () => {
+                Modal.createDialog(QuestionDialog, {
+                    title: _t("Allow the externals to join this room"),
+                    description: _t('This action is irreversible.') + " "
+                     + _t('Are you sure you want to allow the externals to join this room ?'),
+                    button: _t("OK"),
+                    onFinished: (confirmed) => {
+                        if (!confirmed) return;
+                        setContentAccess({ "rule": TchapRoomAccessRule.Unrestricted });
+                    },
+                });
+            };
+            privateRoomDescription = <div>
+                <div>
+                    { _t("Only invited people can join.") }
+                </div>
+                <span>
+                    <LabelledToggleSwitch
+                        value={openedToExternalUsers}
+                        onChange={onExternalAccessChange}
+                        label={_t("Allow the externals to join this room")}
+                        disabled={openedToExternalUsers}
+                    />
+                </span>
+            </div>;
+        }
 
         definitions.push({
             value: JoinRule.Invite,
