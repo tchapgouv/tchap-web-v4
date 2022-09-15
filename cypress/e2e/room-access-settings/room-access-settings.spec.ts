@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import RoomUtils from "../utils/room-utils";
+import RandomUtils from "../utils/random-utils";
 
 describe("Check room access settings", () => {
     const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
@@ -17,7 +18,7 @@ describe("Check room access settings", () => {
     });
 
     it("creates a public room and check access settings", () => {
-        const roomName = "test/"+today+"/public_room_check_access_settings";
+        const roomName = "test/"+today+"/public_room_check_access_settings"+RandomUtils.generateRandom(4);
 
         RoomUtils.createPublicRoom(roomName)
             .then((roomId) => {
@@ -43,7 +44,7 @@ describe("Check room access settings", () => {
     });
 
     it("creates a private room and check access settings", () => {
-        const roomName = "test/"+today+"/private_room_check_access_settings";
+        const roomName = "test/"+today+"/private_room_check_access_settings"+RandomUtils.generateRandom(4);
 
         RoomUtils.createPrivateRoom(roomName)
             .then((roomId) => {
@@ -65,7 +66,7 @@ describe("Check room access settings", () => {
     });
 
     it("creates a private room with external and check access settings", () => {
-        const roomName = "test/"+today+"/external_room_check_access_settings";
+        const roomName = "test/"+today+"/external_room_check_access_settings"+RandomUtils.generateRandom(4);
 
         RoomUtils.createPrivateWithExternalRoom(roomName)
             .then((roomId) => {
