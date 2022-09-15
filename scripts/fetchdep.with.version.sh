@@ -36,4 +36,4 @@ clone() {
     fi
 }
 
-clone $deforg $defrepo $defbranch
+clone $deforg $defrepo $defversion
