@@ -35,11 +35,11 @@ jobs:
           # The built-in Electron runner seems to grind to a halt trying
           # to run the tests, so use chrome.
           browser: chrome
-          install-command: 'echo "Install aready done."' # disable the default install, we used layered.with.version already.
+          install: false # disable the default install, we used layered.with.version already.
           start: yarn start
           #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
           wait-on: 'http://localhost:8080'
-          record: true
+          # record: true # todo record to dashboard, see action's doc
           command: 'yarn test:cypress'
         env:
           E2E_TEST_USER_EMAIL: 'e2e-test-user@tchap.beta.gouv.fr'
@@ -47,4 +47,7 @@ jobs:
           E2E_TEST_USER_SECURITY_KEY: 'todo get this from gihub secret'
           E2E_TEST_USER_HOMESERVER_URL: 'https://matrix.agent1.tchap.incubateur.net'
           E2E_TEST_USER_HOMESERVER_SHORT: 'agent1.tchap.incubateur.net'
+          # todo pass the Dashboard record key as an environment variable
+          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
 
