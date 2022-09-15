@@ -5,7 +5,7 @@ name: Cypress End to End Tests
 on:
   pull_request: { }
   push:
-    branches: [ develop, master ]
+    branches: [ develop_tchap, master_tchap ]
   repository_dispatch: # :TCHAP: do we need this ?
     types: [ element-web-notify ]
 env:
