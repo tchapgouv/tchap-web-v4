@@ -26,8 +26,8 @@ jobs:
           cache: 'yarn'
           node-version: 14
 
-#      - name: Install Dependencies
-#        run: "./scripts/layered.with.version.sh"
+      - name: Install Dependencies
+        run: "./scripts/layered.with.version.sh"
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4.1.1
@@ -35,7 +35,7 @@ jobs:
           # The built-in Electron runner seems to grind to a halt trying
           # to run the tests, so use chrome.
           browser: chrome
-          install-command: ./scripts/layered.with.version.sh
+          install-command: '' # disable the default install, we used layered.with.version already.
           start: yarn start
           #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
           wait-on: 'http://localhost:8080'
