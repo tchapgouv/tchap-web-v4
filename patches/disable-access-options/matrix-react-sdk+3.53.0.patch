@@ -1,0 +1,26 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
+index 361b82b..d533369 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
+@@ -375,7 +375,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const room = client.getRoom(this.props.roomId);
+         const isEncrypted = this.state.encrypted;
+         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
+-        const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
++        // :TCHAP: does not allow to change encryption
++        // const canEnableEncryption = !isEncrypted && hasEncryptionPermission; 
++        const canEnableEncryption = false; 
+ 
+         let encryptionSettings = null;
+         if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
+@@ -390,7 +392,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const historySection = this.renderHistory();
+ 
+         let advanced;
+-        if (room.getJoinRule() === JoinRule.Public) {
++        // :TCHAP: does not show any advanced options for public room (guest access switch)
++        // if (room.getJoinRule() === JoinRule.Public) {
++        if (false) {
+             advanced = (
+                 <div className="mx_SettingsTab_section">
+                     <AccessibleButton

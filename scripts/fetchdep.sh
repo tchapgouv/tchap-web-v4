@@ -9,7 +9,7 @@ defbranch="$3"
 
 [ -z "$defbranch" ] && defbranch="develop"
 
-rm -r "$defrepo" || true
+rm -rf "$defrepo" || true
 
 PR_ORG=${PR_ORG:-"matrix-org"}
 PR_REPO=${PR_REPO:-"matrix-react-sdk"}

@@ -1,51 +1,22 @@
 import Chainable = Cypress.Chainable;
-
+import TchapCreateRoom from '../../../src/lib/createTchapRoom';
+import { TchapRoomType } from '../../../src/@types/tchap';
 export default class RoomUtils {
-
-    static openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
-        const addRoomLabel = "Ajouter un salon";
-        const newRoomLabel = "Nouveau salon";
-        cy.get(`[aria-label="${addRoomLabel}"]`).click();
-        cy.get(`.mx_ContextualMenu [aria-label="${newRoomLabel}"]`).click();
-        return cy.get(".mx_Dialog");
+    static createPublicRoom(roomName: string): Chainable<string> {
+        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Forum, false).createOpts);
     }
-
-
-    static createPrivateRoom(roomName: string) {
-        RoomUtils.openCreateRoomDialog().within(() => {
-          // Fill name
-          const nameLabel = "Nom";
-          cy.get(`[label="${nameLabel}"]`).type(roomName);
-          // Submit
-          cy.startMeasuring("from-submit-to-room");
-          cy.get(".mx_Dialog_primary").click();
-        });
+    static createPrivateRoom(roomName: string): Chainable<string> {
+        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Private, false).createOpts);
     }
-
-    static createPublicRoom(roomName: string) {
-        RoomUtils.openCreateRoomDialog().within(() => {
-          // Fill name
-          const nameLabel = "Nom";
-          cy.get(`[label="${nameLabel}"]`).type(roomName);
-          // Change room to public
-          cy.get(".tc_TchapRoomTypeSelector_forum").click();
-          // Submit
-          cy.startMeasuring("from-submit-to-room");
-          cy.get(".mx_Dialog_primary").click();
-        });
+    static createPrivateWithExternalRoom(roomName: string): Chainable<string> {
+        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.External, false).createOpts);
     }
-
-    static createPrivateRoomWithExternal(roomName: string) {
-        RoomUtils.openCreateRoomDialog().within(() => {
-          // Fill name
-          const nameLabel = "Nom";
-          cy.get(`[label="${nameLabel}"]`).type(roomName);
-          // Change room to public
-          cy.get(".tc_TchapRoomTypeSelector_external").click();
-          // Submit
-          cy.startMeasuring("from-submit-to-room");
-          cy.get(".mx_Dialog_primary").click();
-        });
+    static openRoomAccessSettings(roomName: string) {
+        //open room
+        cy.get('[aria-label="'+roomName+'"]').click();
+        cy.get('.mx_RoomHeader_chevron').click();
+        cy.get('[aria-label="Paramètres"] > .mx_IconizedContextMenu_label').click();
+        cy.get('[data-testid="settings-tab-ROOM_SECURITY_TAB"] > .mx_TabbedView_tabLabel_text').click();
     }
 }
 
