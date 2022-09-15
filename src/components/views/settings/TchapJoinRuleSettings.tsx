@@ -142,7 +142,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         value={openedToExternalUsers}
                         onChange={onExternalAccessChange}
                         label={_t("Allow the externals to join this room")}
-                        disabled={openedToExternalUsers}
+                        disabled={disabled || openedToExternalUsers}
                     />
                 </span>
             </div>;
