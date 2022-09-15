@@ -23,7 +23,7 @@ jobs:
       - name: Yarn cache
         uses: actions/setup-node@v3
         with:
-          cache: 'yarn'
+          #cache: 'yarn'
           node-version: 14
 
       - name: Install Dependencies
@@ -35,7 +35,7 @@ jobs:
           # The built-in Electron runner seems to grind to a halt trying
           # to run the tests, so use chrome.
           browser: chrome
-          install-command: '' # disable the default install, we used layered.with.version already.
+          install-command: 'echo "Install aready done."' # disable the default install, we used layered.with.version already.
           start: yarn start
           #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
           wait-on: 'http://localhost:8080'
