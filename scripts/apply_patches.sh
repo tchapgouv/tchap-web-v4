@@ -5,6 +5,6 @@ set -e
 
 for d in patches/*/ ; do
     echo "Patching $d..."
-    patch-package --patch-dir "$d"
+    yarn patch-package --patch-dir "$d"
     echo "...$d done."
 done
