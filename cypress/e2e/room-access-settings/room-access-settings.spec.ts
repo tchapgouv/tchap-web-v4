@@ -16,7 +16,7 @@ describe("Check room access settings", () => {
         // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 
-    it.only("creates a public room and check access settings", () => {
+    it("creates a public room and check access settings", () => {
         const roomName = "test/"+today+"/public_room_check_access_settings";
 
         RoomUtils.createPublicRoom(roomName);
