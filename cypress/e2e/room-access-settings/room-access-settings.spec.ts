@@ -17,7 +17,7 @@ describe("Check room access settings", () => {
         // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 
-    it("creates a public room and check access settings", () => {
+    it.only("creates a public room and check access settings", () => {
         const roomName = "test/"+today+"/public_room_check_access_settings";
 
         RoomUtils.createPublicRoom(roomName);
@@ -30,8 +30,14 @@ describe("Check room access settings", () => {
         cy.get('#joinRule-public-description').should('exist');
 
         //encryption switch should be off and disabled
-        cy.get('.mx_SettingsFlag > .mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
-        cy.get('.mx_SettingsFlag > .mx_AccessibleButton').should('have.attr', 'aria-checked', 'false');
+        cy.contains(".mx_SettingsFlag", /^Chiffré$/).within(() => {
+            cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'false');
+            cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
+        });
+
+        //should not show more settings, nor invite guests
+        cy.contains('.mx_SettingsTab_section', /^Afficher les paramètres avancés$/).should('not.exist');
+        cy.contains('.mx_SettingsFlag', /^Activer l’accès visiteur$/).should('not.exist');
     });
 
     it("creates a private room and check access settings", () => {
@@ -47,8 +53,10 @@ describe("Check room access settings", () => {
         cy.get('#joinRule-public-description').should('not.exist');
 
         //encryption switch should be on
-        cy.get('.mx_SettingsFlag > .mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
-        cy.get('.mx_SettingsFlag > .mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
+        cy.contains(".mx_SettingsFlag", /^Chiffré$/).within(() => {
+            cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
+            cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
+        });
     });
 
     it("creates a private room with external and check access settings", () => {
@@ -64,8 +72,10 @@ describe("Check room access settings", () => {
         cy.get('#joinRule-public-description').should('not.exist');
 
         //encryption switch should be on
-        cy.get('.mx_SettingsFlag > .mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
-        cy.get('.mx_SettingsFlag > .mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
+        cy.contains(".mx_SettingsFlag", /^Chiffré$/).within(() => {
+            cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
+            cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
+        });
     });
 });
 
