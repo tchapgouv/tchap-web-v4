@@ -9,9 +9,10 @@ on:
   repository_dispatch: # :TCHAP: do we need this ?
     types: [ element-web-notify ]
 env:
+  # :TCHAP: not needed for fetchdep.with.version.sh
   # These must be set for fetchdep.sh to get the right branch
-  REPOSITORY: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+  # REPOSITORY: ${{ github.repository }}
+  # PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
   cypress:
     name: Cypress
@@ -23,7 +24,7 @@ jobs:
       - name: Yarn cache
         uses: actions/setup-node@v3
         with:
-          #cache: 'yarn'
+          cache: 'yarn'
           node-version: 14
 
       - name: Install Dependencies

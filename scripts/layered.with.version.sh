@@ -13,7 +13,6 @@ set -x
 # because some CI systems do not allow moving to a directory above the checkout
 # for the primary repo (element-web in this case).
 
-# Install dependencies, as we'll be using fetchdep.sh from matrix-react-sdk
 yarn install --pure-lockfile
 
 # Pass appropriate repo to fetchdep.sh (:TCHAP: not needed for tchap-web)
