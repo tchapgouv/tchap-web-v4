@@ -35,7 +35,7 @@ jobs:
           # The built-in Electron runner seems to grind to a halt trying
           # to run the tests, so use chrome.
           browser: chrome
-          install: false # disable the default install, we used layered.with.version already.
+          #install: false # disable the default install, we used layered.with.version already.
           start: yarn start
           #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
           wait-on: 'http://localhost:8080'

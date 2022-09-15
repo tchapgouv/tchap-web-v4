@@ -27,7 +27,7 @@ echo "Using MATRIX_JS_SDK_VERSION $MATRIX_JS_SDK_VERSION"
 echo "Using MATRIX_REACT_SDK_VERSION $MATRIX_REACT_SDK_VERSION"
 
 # Set up the js-sdk first
-./scripts/fetchdep.sh matrix-org matrix-js-sdk v$MATRIX_JS_SDK_VERSION
+./scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk v$MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
@@ -45,7 +45,7 @@ popd
 #popd
 
 # Now set up the react-sdk
-./scripts/fetchdep.sh matrix-org matrix-react-sdk v$MATRIX_REACT_SDK_VERSION
+./scripts/fetchdep.with.version.sh matrix-org matrix-react-sdk v$MATRIX_REACT_SDK_VERSION
 pushd matrix-react-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
