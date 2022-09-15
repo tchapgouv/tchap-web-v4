@@ -24,6 +24,12 @@ electron/pub
 .vscode/
 .env
 /coverage
+# yarn links dependencies (generated with /scripts/layered...sh)
+/matrix-react-sdk
+/matrix-js-sdk
+/matrix-analytics-events
+
+
 # Auto-generated file
 /src/modules.ts
 /build_config.yaml

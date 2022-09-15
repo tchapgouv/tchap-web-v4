@@ -16,36 +16,41 @@ set -x
 # Install dependencies, as we'll be using fetchdep.sh from matrix-react-sdk
 yarn install --pure-lockfile
 
-# Pass appropriate repo to fetchdep.sh (not needed for tchap-web)
+# Pass appropriate repo to fetchdep.sh (:TCHAP: not needed for tchap-web)
 #export PR_ORG=vector-im
 #export PR_REPO=element-web
 
-#tchap added : grep matrix dependencies version from package.json
+# :TCHAP: added : grep matrix dependencies version from package.json
 export MATRIX_JS_SDK_VERSION=$(awk -F \" '/"matrix-js-sdk": ".+"/ { print $4; exit; }' package.json)
 export MATRIX_REACT_SDK_VERSION=$(awk -F \" '/"matrix-react-sdk": ".+"/ { print $4; exit; }' package.json)
+echo "Using MATRIX_JS_SDK_VERSION $MATRIX_JS_SDK_VERSION"
+echo "Using MATRIX_REACT_SDK_VERSION $MATRIX_REACT_SDK_VERSION"
 
 # Set up the js-sdk first
 ./scripts/fetchdep.sh matrix-org matrix-js-sdk v$MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
+yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
 yarn install --pure-lockfile
 popd
 
+# :TCHAP: we don't use this.
 # Also set up matrix-analytics-events so we get the latest from
 # the main branch or a branch with matching name
-./scripts/fetchdep.sh matrix-org matrix-analytics-events main
-pushd matrix-analytics-events
-yarn link
-yarn install --pure-lockfile
-yarn build:ts
-popd
+#./scripts/fetchdep.sh matrix-org matrix-analytics-events main
+#pushd matrix-analytics-events
+#yarn link
+#yarn install --pure-lockfile
+#yarn build:ts
+#popd
 
 # Now set up the react-sdk
 ./scripts/fetchdep.sh matrix-org matrix-react-sdk v$MATRIX_REACT_SDK_VERSION
 pushd matrix-react-sdk
+yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
 yarn link matrix-js-sdk
-yarn link @matrix-org/analytics-events
+#yarn link @matrix-org/analytics-events # :TCHAP: we don't use this
 yarn install --pure-lockfile
 popd
 
