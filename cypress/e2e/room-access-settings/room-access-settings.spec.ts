@@ -61,6 +61,12 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
 
+                //external user access switch should not be on and not disabled
+                cy.contains(".mx_SettingsFlag", /^Autoriser les externes à rejoindre ce salon$/).within(() => {
+                    cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'false');
+                    cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'false');
+                });
+
                 cy.leaveRoom(roomId);
             });
     });
