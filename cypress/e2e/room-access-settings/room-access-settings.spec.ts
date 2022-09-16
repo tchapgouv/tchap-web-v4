@@ -89,13 +89,39 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
 
-                //external user access switch should be on and disabled
+                // external user access switch should be on and disabled
                 cy.contains(".mx_SettingsFlag", /^Autoriser les externes à rejoindre ce salon$/).within(() => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
 
-                cy.leaveRoom(roomId);
+                // NOTE : unfortunately we cannot leave a room where access have been give to external users
+                // TODO : we need to find a way to remove a private room with external access (Admin API)
+                // cy.leaveRoom(roomId);
+            });
+    });
+
+    it("allow access for external users on a private room", () => {
+        const roomName = "test/"+today+"/private_room_change_external_access_settings"+RandomUtils.generateRandom(4);
+
+        RoomUtils.createPrivateRoom(roomName)
+            .then((roomId) => {
+                RoomUtils.openRoomAccessSettings(roomName);
+
+                // click on 'Allow the externals to join' this room
+                cy.get('[aria-label="Autoriser les externes à rejoindre ce salon"]').click();
+                // click on the confirmation popup box
+                cy.get('[data-test-id="dialog-primary-button"]').click();
+
+                //assert
+                cy.contains(".mx_SettingsFlag", /^Autoriser les externes à rejoindre ce salon$/).within(() => {
+                    cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
+                    cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
+                });
+
+                // NOTE : unfortunately we cannot leave a room where access have been give to external users
+                // TODO : we need to find a way to remove a private room with external access (Admin API)
+                // cy.leaveRoom(roomId);
             });
     });
 });
