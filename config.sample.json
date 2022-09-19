@@ -38,7 +38,10 @@
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
     "show_labs_settings": false,
-    "features": {},
+    "features": {
+        "feature_thread": true,
+        "feature_video_rooms" : false
+    },
     "default_federate": true,
     "default_theme": "custom-Tchap",
     "room_directory": {

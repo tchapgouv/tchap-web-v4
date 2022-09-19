@@ -105,7 +105,8 @@
     "defaultCountryCode": "FR",
     "showLabsSettings": false,
     "features": {
-        "feature_thread": true
+        "feature_thread": true,
+        "feature_video_rooms" : false
     },
     "default_federate": true,
     "default_theme": "custom-Tchap",
