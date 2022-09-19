@@ -218,9 +218,6 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
-    "jitsi": {
-        "preferredDomain": "webconf.numerique.gouv.fr"
-    },
     "desktopBuilds": {
         "available": false
     },
