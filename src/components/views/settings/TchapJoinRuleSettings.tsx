@@ -36,12 +36,11 @@ import { ROOM_SECURITY_TAB } from "matrix-react-sdk/src/components/views/dialogs
 import { Action } from "matrix-react-sdk/src/dispatcher/actions";
 import { ViewRoomPayload } from "matrix-react-sdk/src/dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "matrix-react-sdk/src/utils/PreferredRoomVersions";
-
-import TchapUIFeature from "../../../util/TchapUIFeature";
-
-import { TchapRoomAccessRule, IAccessRuleEventContent, RoomAccessRulesEventId } from "../../../@types/tchap";
 import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements/LabelledToggleSwitch";
 import QuestionDialog from "matrix-react-sdk/src/components/views/dialogs/QuestionDialog";
+
+import TchapUIFeature from "../../../util/TchapUIFeature";
+import { TchapRoomAccessRule, IAccessRuleEventContent, RoomAccessRulesEventId } from "../../../@types/tchap";
 
  interface IProps {
     room: Room;
@@ -71,7 +70,6 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
         ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
-
 
     const [contentAccessRule, setContentAccess] = useLocalEcho<IAccessRuleEventContent>(
         () => room.currentState.getStateEvents(RoomAccessRulesEventId, "")?.getContent(),
