@@ -1,0 +1,16 @@
+diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
+index d8fc75d..3010db8 100644
+--- a/node_modules/matrix-js-sdk/src/client.ts
++++ b/node_modules/matrix-js-sdk/src/client.ts
+@@ -6659,6 +6659,11 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+         const response = await this.getVersions();
+         if (!response) return false;
+         const unstableFeatures = response["unstable_features"];
++
++        // :TCHAP: disable cross signing, by pretending the server doesn't support it.
++        unstableFeatures["org.matrix.e2e_cross_signing"] = false;
++        // end :TCHAP:
++
+         return unstableFeatures && !!unstableFeatures[feature];
+     }
+ 
