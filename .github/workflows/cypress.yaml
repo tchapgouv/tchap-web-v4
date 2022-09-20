@@ -6,8 +6,6 @@ on:
   pull_request: { }
   push:
     branches: [ develop_tchap, master_tchap ]
-  repository_dispatch: # :TCHAP: do we need this ?
-    types: [ element-web-notify ]
 env:
   # :TCHAP: not needed for fetchdep.with.version.sh
   # These must be set for fetchdep.sh to get the right branch
