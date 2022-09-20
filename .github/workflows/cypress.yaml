@@ -9,10 +9,10 @@ on:
   repository_dispatch: # :TCHAP: do we need this ?
     types: [ element-web-notify ]
 env:
-  # :TCHAP: not needed for fetchdep.with.version.sh
+  # :TCHAP: not needed for fetchdep.with.version.sh but leaving them otherwise it breaks.
   # These must be set for fetchdep.sh to get the right branch
-  # REPOSITORY: ${{ github.repository }}
-  # PR_NUMBER: ${{ github.event.pull_request.number }}
+  REPOSITORY: ${{ github.repository }}
+  PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
   cypress:
     name: Cypress
