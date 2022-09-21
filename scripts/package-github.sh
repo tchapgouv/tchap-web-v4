@@ -18,7 +18,7 @@ else
   echo "No config specified, using config.json."
 fi
 
-yarn build
+yarn build:github
 
 mkdir -p dist
 cp -r webapp tchap-$version
