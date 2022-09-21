@@ -18,7 +18,6 @@ else
   echo "No config specified, using config.json."
 fi
 
-yarn clean
 yarn build
 
 mkdir -p dist
