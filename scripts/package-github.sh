@@ -18,6 +18,7 @@ else
   echo "No config specified, using config.json."
 fi
 
+yarn install
 yarn build:github
 
 mkdir -p dist
