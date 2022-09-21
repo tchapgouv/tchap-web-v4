@@ -105,7 +105,8 @@
     "defaultCountryCode": "FR",
     "showLabsSettings": false,
     "features": {
-        "feature_thread": true
+        "feature_thread": true,
+        "feature_video_rooms" : false
     },
     "default_federate": true,
     "default_theme": "custom-Tchap",
@@ -216,9 +217,6 @@
             {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
-    },
-    "jitsi": {
-        "preferredDomain": "webconf.numerique.gouv.fr"
     },
     "desktopBuilds": {
         "available": false
