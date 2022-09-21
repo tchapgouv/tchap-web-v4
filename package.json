@@ -1,11 +1,12 @@
 {
   "name": "element-web",
-  "version": "1.11.5",
+  "productName": "Tchap",
+  "version": "4.0.0_1.11.5",
   "description": "A feature-rich client for Matrix.org",
   "author": "New Vector Ltd.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vector-im/element-web"
+    "url": "https://github.com/tchapgouv/tchap-web-v4"
   },
   "license": "Apache-2.0",
   "files": [
@@ -40,6 +41,7 @@
     "build:bundle": "webpack --progress --bail --mode production",
     "build:bundle-stats": "webpack --progress --bail --mode production --json > webpack-stats.json",
     "build:module_system": "tsc --project ./tsconfig.module_system.json && node ./lib/module_system/scripts/install.js",
+    "build:github": "yarn build:genfiles && yarn build:bundle",
     "dist": "scripts/package.sh",
     "scalingo-postbuild": "scripts/package-scalingo-prod.sh",
     "start": "yarn build:module_system && concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js\"",
