@@ -1,0 +1,15 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
+index 7bb06f1..a7e9561 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
+@@ -188,7 +188,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
+             },
+             {
+                 'a': (sub) => <a
+-                    href="https://element.io/help"
++                    // :TCHAP: fix url
++                    href="https://tchap.beta.gouv.fr/faq"
++                    // end :TCHAP:
+                     rel="noreferrer noopener"
+                     target="_blank"
+                 >
