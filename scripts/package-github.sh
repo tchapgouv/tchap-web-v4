@@ -25,6 +25,8 @@ mkdir -p dist
 cp -r webapp tchap-$version
 
 # if $version looks like semver with leading v, strip it before writing to file
+# if $version starts with 'v' (ie. v2.5.8) => output a version file with 2.5.8 (remove v)
+# otherwise output a file with the version from package.json
 if [[ ${version} =~ ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(-.+)?$ ]]; then
     echo ${version:1} > tchap-$version/version
 else
