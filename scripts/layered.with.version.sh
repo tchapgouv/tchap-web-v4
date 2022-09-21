@@ -13,7 +13,7 @@ set -x
 # because some CI systems do not allow moving to a directory above the checkout
 # for the primary repo (element-web in this case).
 
-yarn install --pure-lockfile
+#yarn install --pure-lockfile
 
 # Pass appropriate repo to fetchdep.sh (:TCHAP: not needed for tchap-web)
 #export PR_ORG=vector-im
@@ -56,3 +56,5 @@ popd
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
+
+yarn install --pure-lockfile
