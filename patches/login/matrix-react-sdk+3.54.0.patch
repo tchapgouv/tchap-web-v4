@@ -1,0 +1,65 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
+index c00aa90..33899e9 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
+@@ -166,6 +166,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+     isBusy = () => this.state.busy || this.props.busy;
+ 
+     onPasswordLogin = async (username, phoneCountry, phoneNumber, password) => {
++        /* :TCHAP: remove alive check, we don't have server yet todo */
+         if (!this.state.serverIsAlive) {
+             this.setState({ busy: true });
+             // Do a quick liveliness check on the URLs
+@@ -199,6 +200,39 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+             loginIncorrect: false,
+         });
+ 
++        /* :TCHAP: fetch homeserver corresponding to email */
++        console.log("onPasswordLogin", username);
++        //force server url to DINUM todo fetch
++        const homeServerUrl = "https://matrix.agent.dinum.tchap.gouv.fr";
++        const identityServerUrl = "https://matrix.agent.dinum.tchap.gouv.fr";
++        const serverName = "DINUM";
++
++        // Make a ValidatedServerConfig
++        const discoveryResult = {
++            "m.homeserver": {
++                state: "SUCCESS",
++                error: null,
++                base_url: homeServerUrl,
++                server_name: serverName,
++            },
++            "m.identity_server": {
++                state: "PROMPT",
++                error: null,
++                base_url: identityServerUrl, // On Tchap our Identity server urls and home server urls are the same
++                server_name: serverName,
++            },
++        };
++        const validatedServerConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
++            discoveryResult['m.homeserver'].server_name, discoveryResult);
++
++        // Simulate the end of the serverPicker component flow.
++        this.props.onServerConfigChange(validatedServerConf);
++
++
++        this.initLoginLogic(validatedServerConf);
++        // todo what happens if same or different to defaultServer ? What is value of defaultServer ?
++        /** end :TCHAP: */
++
+         this.loginLogic.loginViaPassword(
+             username, phoneCountry, phoneNumber, password,
+         ).then((data) => {
+@@ -606,10 +640,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                     </h1>
+                     { errorTextSection }
+                     { serverDeadSection }
++                    { /* :TCHAP: remove server picker, we're going to query backend to find it
+                     <ServerPicker
+                         serverConfig={this.props.serverConfig}
+                         onServerConfigChange={this.props.onServerConfigChange}
+                     />
++                    end :TCHAP :*/}
+                     { this.renderLoginComponentForFlows() }
+                     { footer }
+                 </AuthBody>
