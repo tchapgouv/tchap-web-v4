@@ -1,18 +1,20 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index c00aa90..25d6f0d 100644
+index c00aa90..4f9636d 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-@@ -165,7 +165,17 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -165,7 +165,19 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
  
      isBusy = () => this.state.busy || this.props.busy;
  
 +    fetchHomeserverForEmail = async (email) => {
-+        // todo draw a random server
-+        // const tchapHostsList = this._shuffle(SdkConfig.get()['hs_url_list']);
-+        const serverBaseToQuery = "https://matrix.agent.diplomatie.tchap.gouv.fr";
++        const homeServerList = SdkConfig.get()['homeserver_list'];
++        const randomHomeServer = homeServerList[ Math.floor(Math.random() * homeServerList.length) ];
++
 +        const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
 +
-+        return fetch(serverBaseToQuery + infoUrl + email).then((response) => response.json());
++        return fetch(randomHomeServer.base_url + infoUrl + email)
++            .then((response) => response.json())
++            .then(response => response.hs);
 +    };
 +
      onPasswordLogin = async (username, phoneCountry, phoneNumber, password) => {
@@ -20,7 +22,7 @@ index c00aa90..25d6f0d 100644
          if (!this.state.serverIsAlive) {
              this.setState({ busy: true });
              // Do a quick liveliness check on the URLs
-@@ -199,6 +209,40 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -199,6 +211,50 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
              loginIncorrect: false,
          });
  
@@ -29,21 +31,31 @@ index c00aa90..25d6f0d 100644
 +        const serverResult = await this.fetchHomeserverForEmail(username);
 +        console.log("onPasswordLogin serverResult", serverResult);
 +        // todo deal with error case
++        const serverUrl = "https://matrix." + serverResult;
 +
-+        const serverName = "DINUM"; // todo look it up in config
++        const homeServerList = SdkConfig.get()['homeserver_list'];
++        const findHomeServerInListByUrl = (homeserverList, url) => {
++            return homeServerList.find(homeServer => homeServer.base_url === url);
++        };
++        const findHomeServerNameFromUrl = (url) => {
++            const homeserver = findHomeServerInListByUrl(homeServerList, url);
++            return homeserver.server_name;
++        };
++        const serverName = findHomeServerNameFromUrl(serverUrl);
++
 +
 +        // Make a ValidatedServerConfig
 +        const discoveryResult = {
 +            "m.homeserver": {
 +                state: "SUCCESS",
 +                error: null,
-+                base_url: "https://matrix." + serverResult.hs,
++                base_url: serverUrl,
 +                server_name: serverName,
 +            },
 +            "m.identity_server": {
 +                state: "PROMPT",
 +                error: null,
-+                base_url: "https://matrix." + serverResult.hs, // On Tchap our Identity server urls and home server urls are the same
++                base_url: serverUrl, // On Tchap our Identity server urls and home server urls are the same
 +                server_name: serverName,
 +            },
 +        };
@@ -61,7 +73,7 @@ index c00aa90..25d6f0d 100644
          this.loginLogic.loginViaPassword(
              username, phoneCountry, phoneNumber, password,
          ).then((data) => {
-@@ -606,10 +650,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -606,10 +662,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                      </h1>
                      { errorTextSection }
                      { serverDeadSection }
