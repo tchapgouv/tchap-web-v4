@@ -53,36 +53,14 @@ describe("Login", () => {
         it("logs in with an existing account and lands on the home screen", () => {
             cy.injectAxe();
 
-            cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
+            cy.get("#mx_LoginForm_email", { timeout: 15000 }).should("be.visible");
             cy.percySnapshot("Login");
             cy.checkA11y();
 
-            // For this test we use the default server so no needs to change the targeted homeserver.
-            // For other HS here how to proceed :
-            // cy.get(".mx_ServerPicker_change").click();
-            // // cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
-            // cy.get(".mx_ServerPickerDialog_continue").click();
-            // // wait for the dialog to go away
-            // cy.get('.mx_ServerPickerDialog').should('not.exist');
-
-            cy.get("#mx_LoginForm_username").type(username);
+            cy.get("#mx_LoginForm_email").type(username);
             cy.get("#mx_LoginForm_password").type(password);
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
-
-            // TCHAP: Verify device step
-            // this should not be necessary when creating users but for now I get this too often to ignore it
-            // Feels free to delete when not needed
-            cy.wait(4000); // Loading may take some time
-            cy.get("body").then((body) => {
-                if (body.find('.mx_CompleteSecurityBody').text().includes('Vérifier')) {
-                    cy.get('.mx_AccessibleButton_kind_primary').last().click();
-                    cy.get('#mx_securityKey').type(key);
-                    cy.get('[data-test-id=dialog-primary-button]').click();
-
-                    cy.get('.mx_AccessibleButton_kind_primary').first().click();
-                }
-            });
 
             cy.url().should('contain', '/#/home');
             cy.stopMeasuring("from-submit-to-home");
