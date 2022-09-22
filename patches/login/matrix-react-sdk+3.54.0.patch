@@ -1,62 +1,56 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index c00aa90..256e66c 100644
+index c00aa90..2ee849f 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-@@ -165,7 +165,19 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -165,7 +165,64 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
  
      isBusy = () => this.state.busy || this.props.busy;
  
-+    fetchHomeserverForEmail = async (email) => {
++    tchap_fetchHomeserverForEmail = async (email) => {
 +        const homeServerList = SdkConfig.get()['homeserver_list'];
-+        const randomHomeServer = homeServerList[ Math.floor(Math.random() * homeServerList.length) ];
 +
-+        const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
-+
-+        return fetch(randomHomeServer.base_url + infoUrl + email)
-+            .then((response) => response.json())
-+            .then(response => response.hs);
-+    };
-+
-     onPasswordLogin = async (username, phoneCountry, phoneNumber, password) => {
-+        /* :TCHAP: remove alive check, we don't have server yet todo */
-         if (!this.state.serverIsAlive) {
-             this.setState({ busy: true });
-             // Do a quick liveliness check on the URLs
-@@ -199,6 +211,48 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
-             loginIncorrect: false,
-         });
- 
-+        /* :TCHAP: fetch homeserver corresponding to email */
-+        console.log("onPasswordLogin", username);
-+        const serverResult = await this.fetchHomeserverForEmail(username);
-+        console.log("onPasswordLogin serverResult", serverResult);
-+        // todo deal with error case
-+        const serverUrl = "https://matrix." + serverResult;
-+
-+        const homeServerList = SdkConfig.get()['homeserver_list'];
-+        const findHomeServerInListByUrl = (homeserverList, url) => {
-+            return homeServerList.find(homeServer => homeServer.base_url === url);
-+        };
 +        const findHomeServerNameFromUrl = (url) => {
-+            const homeserver = findHomeServerInListByUrl(homeServerList, url);
++            const homeserver = homeServerList.find(homeServer => homeServer.base_url === url);
 +            return homeserver.server_name;
 +        };
-+        const serverName = findHomeServerNameFromUrl(serverUrl);
 +
++        const randomHomeServer = homeServerList[ Math.floor(Math.random() * homeServerList.length) ];
++        const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
++        return fetch(randomHomeServer.base_url + infoUrl + email)
++            .then((response) => {
++                if (!response.ok) {
++                  throw new Error('Could not find homeserver for this email');
++                }
++                return response.json();
++            })
++            .then(response => {
++                // Never returns error : anything that doesn't match a homeserver (even invalid email) returns "externe".
++                const serverUrl = "https://matrix." + response.hs;
++                return {
++                    base_url: serverUrl,
++                    server_name: findHomeServerNameFromUrl(serverUrl),
++                };
++            })
++            .catch((error) => {
++                console.error('Could not find homeserver for this email', error);
++                return;
++            });
++    };
 +
-+        // Make a ValidatedServerConfig
++    tchap_setServerInMemory = (serverConfig) => {
++        // Make a ValidatedServerConfig, from a fake discovery result.
 +        const discoveryResult = {
 +            "m.homeserver": {
 +                state: "SUCCESS",
 +                error: null,
-+                base_url: serverUrl,
-+                server_name: serverName,
++                base_url: serverConfig.base_url,
++                server_name: serverConfig.server_name,
 +            },
 +            "m.identity_server": {
 +                state: "SUCCESS",
 +                error: null,
-+                base_url: serverUrl, // On Tchap our Identity server urls and home server urls are the same
-+                server_name: serverName,
++                base_url: serverConfig.base_url, // On Tchap our Identity server urls and home server urls are the same
++                server_name: serverConfig.server_name,
 +            },
 +        };
 +        const validatedServerConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
@@ -66,16 +60,51 @@ index c00aa90..256e66c 100644
 +        this.props.onServerConfigChange(validatedServerConf);
 +
 +        this.initLoginLogic(validatedServerConf);
++    };
++
+     onPasswordLogin = async (username, phoneCountry, phoneNumber, password) => {
++        /* :TCHAP: remove alive check, we don't know which server to call yet.
+         if (!this.state.serverIsAlive) {
+             this.setState({ busy: true });
+             // Do a quick liveliness check on the URLs
+@@ -190,7 +247,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+             if (!aliveAgain) {
+                 return;
+             }
+-        }
++        } end :TCHAP: */
+ 
+         this.setState({
+             busy: true,
+@@ -199,6 +256,23 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+             loginIncorrect: false,
+         });
+ 
++        /* :TCHAP: fetch homeserver corresponding to email */
++        const serverResult = await this.tchap_fetchHomeserverForEmail(username);
++
++        if (!serverResult) {
++            this.setState({
++                busy: false,
++                busyLoggingIn: false,
++                errorText: _t('Server unavailable, overloaded, or something else went wrong.'), // reuse existing string
++                loginIncorrect: false,
++            });
++            return;
++        }
++
++        this.tchap_setServerInMemory(serverResult);
++        // todo remove TchapServerPickerDialog, not used any more.
 +        /** end :TCHAP: */
 +
          this.loginLogic.loginViaPassword(
              username, phoneCountry, phoneNumber, password,
          ).then((data) => {
-@@ -606,10 +660,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -606,10 +680,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                      </h1>
                      { errorTextSection }
                      { serverDeadSection }
-+                    { /* :TCHAP: remove server picker, we're going to query backend to find it
++                    { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
                      <ServerPicker
                          serverConfig={this.props.serverConfig}
                          onServerConfigChange={this.props.onServerConfigChange}
