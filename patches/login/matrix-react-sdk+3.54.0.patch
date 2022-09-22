@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index c00aa90..2ee849f 100644
+index c00aa90..e4df01b 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -165,7 +165,64 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
@@ -76,7 +76,7 @@ index c00aa90..2ee849f 100644
  
          this.setState({
              busy: true,
-@@ -199,6 +256,23 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -199,6 +256,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
              loginIncorrect: false,
          });
  
@@ -94,13 +94,12 @@ index c00aa90..2ee849f 100644
 +        }
 +
 +        this.tchap_setServerInMemory(serverResult);
-+        // todo remove TchapServerPickerDialog, not used any more.
 +        /** end :TCHAP: */
 +
          this.loginLogic.loginViaPassword(
              username, phoneCountry, phoneNumber, password,
          ).then((data) => {
-@@ -606,10 +680,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -606,10 +679,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                      </h1>
                      { errorTextSection }
                      { serverDeadSection }
@@ -113,3 +112,32 @@ index c00aa90..2ee849f 100644
                      { this.renderLoginComponentForFlows() }
                      { footer }
                  </AuthBody>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+index f6b4e19..f3dba35 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+@@ -80,7 +80,10 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+         this.state = {
+             // Field error codes by field ID
+             fieldValid: {},
+-            loginType: LoginField.MatrixId,
++            // :TCHAP: force email login
++            // loginType: LoginField.MatrixId,
++            loginType: LoginField.Email,
++            //
+             password: "",
+         };
+     }
+@@ -417,7 +420,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+         return (
+             <div>
+                 <form onSubmit={this.onSubmitForm}>
+-                    { loginType }
++                    {
++                        /* :TCHAP: remove loginType selector, we only want Email loginType
++                        loginType
++                        */
++                    }
+                     { loginField }
+                     <Field
+                         id="mx_LoginForm_password"
