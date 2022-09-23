@@ -28,7 +28,7 @@
     "disable_custom_urls": false,
     "disable_guests": true,
     "disable_login_language_selector": false,
-    "disable_3pid_login": true,
+    "disable_3pid_login": false,
     "brand": "Tchap",
     "bug_report_endpoint_url": "/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",

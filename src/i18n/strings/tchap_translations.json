@@ -1,11 +1,6 @@
 {
   "README": "This file is for tchap-specific translatsion, which get added on top of fr.json and en.json. See custom_translations_url in config.json.",
 
-  "Username": {
-    "en": "Email",
-    "fr": "E-mail",
-    "comments": "We use E-mail to login in Tchap. The Login code accepts both username and email. So the simplest change for us to force login by email is to just rename the Username field to Email."
-  },
   "Welcome to Tchap": {
     "en": "Welcome to Tchap",
     "fr": "Bienvenue sur Tchap"
