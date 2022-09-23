@@ -54,7 +54,6 @@ describe("Login", () => {
             cy.injectAxe();
 
             cy.get("#mx_LoginForm_email", { timeout: 15000 }).should("be.visible");
-            cy.percySnapshot("Login");
             cy.checkA11y();
 
             cy.get("#mx_LoginForm_email").type(username);
