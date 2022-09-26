@@ -105,5 +105,9 @@
   "Download my logs": {
     "en": "Download my logs",
     "fr": "Obtenir mes journaux"
+  },
+  "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem." : {
+    "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
+    "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
   }
 }
