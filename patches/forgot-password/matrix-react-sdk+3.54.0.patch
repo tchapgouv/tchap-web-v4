@@ -1,0 +1,130 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
+index 83a8e3e..06cdc47 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
+@@ -40,6 +40,7 @@ import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
+ import AccessibleButton from '../../views/elements/AccessibleButton';
+ import StyledCheckbox from '../../views/elements/StyledCheckbox';
+ import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
++import SdkConfig from '../../../SdkConfig'; // :TCHAP: added for homeserver list
+ 
+ enum Phase {
+     // Show the forgot password inputs
+@@ -154,11 +155,12 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+         });
+     }
+ 
+-    public submitPasswordReset(email: string, password: string, logoutDevices = true): void {
++    // :TCHAP: use serverConfig passed as argument, instead of this.props.serverConfig
++    public submitPasswordReset(serverConfig: ValidatedServerConfig, email: string, password: string, logoutDevices = true): void {
+         this.setState({
+             phase: Phase.SendingEmail,
+         });
+-        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
++        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
+         this.reset.resetPassword(email, password, logoutDevices).then(() => {
+             this.setState({
+                 phase: Phase.EmailSent,
+@@ -187,18 +189,80 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+         }
+     };
+ 
++    // todo place this code in common somewhere.
++    tchap_fetchHomeserverForEmail = async (email) => {
++        const homeServerList = SdkConfig.get()['homeserver_list'];
++
++        const findHomeServerNameFromUrl = (url) => {
++            const homeserver = homeServerList.find(homeServer => homeServer.base_url === url);
++            return homeserver.server_name;
++        };
++
++        const randomHomeServer = homeServerList[ Math.floor(Math.random() * homeServerList.length) ];
++        const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
++        return fetch(randomHomeServer.base_url + infoUrl + email)
++            .then((response) => {
++                if (!response.ok) {
++                  throw new Error('Could not find homeserver for this email');
++                }
++                return response.json();
++            })
++            .then(response => {
++                // Never returns error : anything that doesn't match a homeserver (even invalid email) returns "externe".
++                const serverUrl = "https://matrix." + response.hs;
++                return {
++                    base_url: serverUrl,
++                    server_name: findHomeServerNameFromUrl(serverUrl),
++                };
++            })
++            .catch((error) => {
++                console.error('Could not find homeserver for this email', error);
++                return;
++            });
++    };
++
++    tchap_makeValidatedServerConfig = (serverConfig) => {
++        const discoveryResult = {
++            "m.homeserver": {
++                state: "SUCCESS",
++                error: null,
++                base_url: serverConfig.base_url,
++                server_name: serverConfig.server_name,
++            },
++            "m.identity_server": {
++                state: "SUCCESS",
++                error: null,
++                base_url: serverConfig.base_url, // On Tchap our Identity server urls and home server urls are the same
++                server_name: serverConfig.server_name,
++            },
++        };
++        const validatedServerConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
++            discoveryResult['m.homeserver'].server_name, discoveryResult);
++        return validatedServerConf;
++    };
++
+     private onSubmitForm = async (ev: React.FormEvent): Promise<void> => {
+         ev.preventDefault();
+         if (this.state.currentHttpRequest) return;
+ 
++        /* :TCHAP: remove liveliness check, we don't know which server to use yet.
+         // refresh the server errors, just in case the server came back online
+         await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
++        end :TCHAP: */
+ 
+         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
+         if (!allFieldsValid) {
+             return;
+         }
+ 
++        /* :TCHAP: fetch homeserver corresponding to email */
++        const serverResult = await this.tchap_fetchHomeserverForEmail(this.state.email);
++        if (!serverResult) {
++            // todo display error, set Phase probably
++            return
++        }
++        const serverConfig = this.tchap_makeValidatedServerConfig(serverResult);
++
+         if (this.state.logoutDevices) {
+             const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
+                 title: _t('Warning!'),
+@@ -227,7 +291,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+             if (!confirmed) return;
+         }
+ 
+-        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
++        this.submitPasswordReset(serverConfig, this.state.email, this.state.password, this.state.logoutDevices);
+     };
+ 
+     private async verifyFieldsBeforeSubmit() {
+@@ -313,10 +377,12 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+         return <div>
+             { errorText }
+             { serverDeadSection }
++            { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
+             <ServerPicker
+                 serverConfig={this.props.serverConfig}
+                 onServerConfigChange={this.props.onServerConfigChange}
+             />
++            */ }
+             <form onSubmit={this.onSubmitForm}>
+                 <div className="mx_AuthBody_fieldRow">
+                     <EmailField
