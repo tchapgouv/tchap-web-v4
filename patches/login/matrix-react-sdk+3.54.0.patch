@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index c00aa90..e4df01b 100644
+index c00aa90..b806eff 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -165,7 +165,64 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
@@ -37,7 +37,7 @@ index c00aa90..e4df01b 100644
 +            });
 +    };
 +
-+    tchap_setServerInMemory = (serverConfig) => {
++    tchap_setServerInMemory = async (serverConfig) => {
 +        // Make a ValidatedServerConfig, from a fake discovery result.
 +        const discoveryResult = {
 +            "m.homeserver": {
@@ -59,7 +59,7 @@ index c00aa90..e4df01b 100644
 +        // Simulate the end of the serverPicker component flow.
 +        this.props.onServerConfigChange(validatedServerConf);
 +
-+        this.initLoginLogic(validatedServerConf);
++        await this.initLoginLogic(validatedServerConf);
 +    };
 +
      onPasswordLogin = async (username, phoneCountry, phoneNumber, password) => {
@@ -93,7 +93,7 @@ index c00aa90..e4df01b 100644
 +            return;
 +        }
 +
-+        this.tchap_setServerInMemory(serverResult);
++        await this.tchap_setServerInMemory(serverResult);
 +        /** end :TCHAP: */
 +
          this.loginLogic.loginViaPassword(
@@ -112,32 +112,3 @@ index c00aa90..e4df01b 100644
                      { this.renderLoginComponentForFlows() }
                      { footer }
                  </AuthBody>
-diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index f6b4e19..f3dba35 100644
---- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-@@ -80,7 +80,10 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
-         this.state = {
-             // Field error codes by field ID
-             fieldValid: {},
--            loginType: LoginField.MatrixId,
-+            // :TCHAP: force email login
-+            // loginType: LoginField.MatrixId,
-+            loginType: LoginField.Email,
-+            //
-             password: "",
-         };
-     }
-@@ -417,7 +420,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
-         return (
-             <div>
-                 <form onSubmit={this.onSubmitForm}>
--                    { loginType }
-+                    {
-+                        /* :TCHAP: remove loginType selector, we only want Email loginType
-+                        loginType
-+                        */
-+                    }
-                     { loginField }
-                     <Field
-                         id="mx_LoginForm_password"
