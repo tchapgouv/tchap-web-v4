@@ -88,5 +88,9 @@
   "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
     "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
     "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
+  },
+  "You have made to many requests and have been blocked. Try again later.": {
+    "en": "You have made to many requests and have been blocked. Try again later.",
+    "fr": "Vous avez fait trop de requêtes et avez été bloqué. Réessayez plus tard."
   }
 }
