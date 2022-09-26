@@ -1,0 +1,26 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
+index 7df389f..6eb6e17 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
+@@ -225,7 +225,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                             {
+                                 a: (sub) => <a
+                                     target="_blank"
+-                                    href="https://github.com/vector-im/element-web/issues/new/choose"
++                                    // :TCHAP: href="https://github.com/vector-im/element-web/issues/new/choose"
++                                    href="https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
++                                    // :end TCHAP:
+                                 >
+                                     { sub }
+                                 </a>,
+@@ -246,7 +248,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                         label={_t("GitHub issue")}
+                         onChange={this.onIssueUrlChange}
+                         value={this.state.issueUrl}
+-                        placeholder="https://github.com/vector-im/element-web/issues/..."
++                        // :TCHAP: placeholder="https://github.com/vector-im/element-web/issues/..."
++                        placeholder="https://github.com/tchapgouv/tchap-web-v4/issues/..."
++                        // end :TCHAP:
+                     />
+                     <Field
+                         className="mx_BugReportDialog_field_input"
