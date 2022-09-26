@@ -1,26 +1,31 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
-index 7bb06f1..d2ee4d8 100644
+index 7bb06f1..3e23b4b 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
-@@ -188,7 +188,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
-             },
+@@ -181,6 +181,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
+     render() {
+         const brand = SdkConfig.get().brand;
+ 
++        /* :TCHAP: removed this section, replaced by custom section
+         let faqText = _t(
+             'For help with using %(brand)s, click <a>here</a>.',
              {
-                 'a': (sub) => <a
--                    href="https://element.io/help"
-+                    // :TCHAP: fix url
-+                    href="https://tchap.beta.gouv.fr/faq"
-+                    // end :TCHAP:
-                     rel="noreferrer noopener"
-                     target="_blank"
-                 >
-@@ -267,19 +269,64 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
+@@ -223,6 +224,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
+                 </div>
+             );
+         }
++        end :TCHAP: */
+ 
+         let updateButton = null;
+         if (this.state.canUpdate) {
+@@ -267,10 +269,90 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
  
          const { appVersion, olmVersion } = this.getVersionInfo();
  
-+        // :TCHAP: add Contact us section
++        // :TCHAP: add Contact us section, proper FAQ section, Known Issues section
 +        const supportEmail = "support@tchap.gouv.fr";
 +        const contactSection = (
-+            <div>
++            <div className='mx_SettingsTab_section'>
 +                <span className='mx_SettingsTab_subheading'>{ _t("Contact us") }</span>
 +                <div className='mx_SettingsTab_subsectionText'>
 +                    {
@@ -33,28 +38,64 @@ index 7bb06f1..d2ee4d8 100644
 +                        )
 +                    }
 +                </div>
++                <AccessibleButton
++                    kind="primary"
++                    element="a"
++                    href={"mailto:" + supportEmail}
++                    target="_blank"
++                    rel="noreferrer noopener"
++                >
++                    { _t("Contact us") }
++                    <i className='mx_ExternalLink_icon' />
++                </AccessibleButton>
++            </div>
++        );
++
++        const faqUrl = "https://tchap.beta.gouv.fr/faq";
++        const faqSection = (
++            <div className='mx_SettingsTab_section'>
++                <span className='mx_SettingsTab_subheading'>{ _t("Frequently Asked Questions (FAQ)") }</span>
++                <div className='mx_SettingsTab_subsectionText'>
++                    {
++                        _t(
++                            "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there."
++                        )
++                    }
++                </div>
++                <AccessibleButton
++                    kind="primary"
++                    element="a"
++                    href={ faqUrl }
++                    target="_blank"
++                    rel="noreferrer noopener"
++                >
++                    { _t("Read the FAQ") }
++                    <i className='mx_ExternalLink_icon' />
++                </AccessibleButton>
 +            </div>
 +        );
 +
 +        const knownIssuesUrl = "https://github.com/tchapgouv/tchap-web-v4/wiki/Nouveau-Tchap-Web";
 +        const knownIssuesSection = (
-+            <div>
++            <div className='mx_SettingsTab_section'>
 +                <span className='mx_SettingsTab_subheading'>{ _t("Known issues") }</span>
 +                <div className='mx_SettingsTab_subsectionText'>
 +                    {
 +                        _t(
-+                            "This version of Tchap Web is currently in development. There are known issues that will be solved soon." +
-+                            " You can consult the list of known issues by <a>clicking here</a>.",
-+                            {},
-+                            {
-+                                a: sub => <a href={knownIssuesUrl}
-+                                    rel="noreferrer noopener"
-+                                    target="_blank"
-+                                >{ sub }</a>,
-+                            }
++                            "This version of Tchap Web is currently in development. There are known issues that will be solved soon."
 +                        )
 +                    }
 +                </div>
++                <AccessibleButton
++                    kind="primary"
++                    element="a"
++                    href={ knownIssuesUrl }
++                    target="_blank"
++                    rel="noreferrer noopener"
++                >
++                    { _t("Read the Known Issues") }
++                    <i className='mx_ExternalLink_icon' />
++                </AccessibleButton>
 +            </div>
 +        );
 +        // end :TCHAP:
@@ -63,20 +104,19 @@ index 7bb06f1..d2ee4d8 100644
              <div className="mx_SettingsTab mx_HelpUserSettingsTab">
                  <div className="mx_SettingsTab_heading">{ _t("Help & About") }</div>
 -                { bugReportingSection }
-+                { /* :TCHAP: move to lower down the page bugReportingSection */ }
++                { /* :TCHAP: added */ contactSection }
++                { /* :TCHAP: added */ faqSection }
++                { /* :TCHAP: replaced by custom faqSection
                  <div className='mx_SettingsTab_section'>
-+                    { /* :TCHAP: added */ contactSection }
                      <span className='mx_SettingsTab_subheading'>{ _t("FAQ") }</span>
                      <div className='mx_SettingsTab_subsectionText'>
-                         { faqText }
-                     </div>
--                    <AccessibleButton kind="primary" onClick={this.onKeyboardShortcutsClicked}>
-+                    { /* :TCHAP: removed this shortcut, not that important <AccessibleButton kind="primary" onClick={this.onKeyboardShortcutsClicked}>
+@@ -279,7 +361,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
+                     <AccessibleButton kind="primary" onClick={this.onKeyboardShortcutsClicked}>
                          { _t("Keyboard Shortcuts") }
--                    </AccessibleButton>
-+                      </AccessibleButton> */}
-+                    { /* :TCHAP: added */ knownIssuesSection }
-                 </div>
+                     </AccessibleButton>
+-                </div>
++                </div> */}
++                { /* :TCHAP: added */ knownIssuesSection }
 +                { /* :TCHAP: moved from higher up the page */ bugReportingSection }
                  <div className='mx_SettingsTab_section'>
                      <span className='mx_SettingsTab_subheading'>{ _t("Versions") }</span>
