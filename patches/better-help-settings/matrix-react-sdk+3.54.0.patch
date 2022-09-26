@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
-index 7bb06f1..3e23b4b 100644
+index 7bb06f1..a21b096 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 @@ -181,6 +181,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
@@ -23,7 +23,7 @@ index 7bb06f1..3e23b4b 100644
          const { appVersion, olmVersion } = this.getVersionInfo();
  
 +        // :TCHAP: add Contact us section, proper FAQ section, Known Issues section
-+        const supportEmail = "support@tchap.gouv.fr";
++        const supportEmail = "support@tchap.beta.gouv.fr";
 +        const contactSection = (
 +            <div className='mx_SettingsTab_section'>
 +                <span className='mx_SettingsTab_subheading'>{ _t("Contact us") }</span>
