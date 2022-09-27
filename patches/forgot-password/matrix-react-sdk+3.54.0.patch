@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 83a8e3e..7ce6037 100644
+index 83a8e3e..6e93b85 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -40,6 +40,7 @@ import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
@@ -25,7 +25,7 @@ index 83a8e3e..7ce6037 100644
          this.reset.resetPassword(email, password, logoutDevices).then(() => {
              this.setState({
                  phase: Phase.EmailSent,
-@@ -191,14 +193,24 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+@@ -191,14 +193,27 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
          ev.preventDefault();
          if (this.state.currentHttpRequest) return;
  
@@ -42,15 +42,18 @@ index 83a8e3e..7ce6037 100644
 +        /* :TCHAP: fetch homeserver corresponding to email */
 +        const serverResult = await TchapUtils.fetchHomeserverForEmail(this.state.email);
 +        if (!serverResult) {
-+            // todo display error, set Phase probably
-+            return
++            this.setState({
++                phase: Phase.Forgot,
++                errorText: _t('Server unavailable, overloaded, or something else went wrong.'), // reuse existing string
++            });
++            return;
 +        }
 +        const serverConfig = TchapUtils.makeValidatedServerConfig(serverResult);
 +
          if (this.state.logoutDevices) {
              const { finished } = Modal.createDialog<[boolean]>(QuestionDialog, {
                  title: _t('Warning!'),
-@@ -227,7 +239,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+@@ -227,7 +242,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
              if (!confirmed) return;
          }
  
@@ -59,7 +62,7 @@ index 83a8e3e..7ce6037 100644
      };
  
      private async verifyFieldsBeforeSubmit() {
-@@ -313,10 +325,12 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
+@@ -313,10 +328,12 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
          return <div>
              { errorText }
              { serverDeadSection }
