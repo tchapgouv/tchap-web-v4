@@ -44,4 +44,14 @@ export default class TchapUtils {
     static capitalize(s: string): string {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
+
+    /**
+     * Extract the name of the server from a home server address
+     * @param serverName from "agent.dinum.beta.gouv.fr"
+     * @returns to "Dinum"
+     */
+    static toFriendlyServerName = (serverName: string): string => {
+        const friendlyServerName = serverName.replace("agent.", "").replace(".tchap.gouv.fr", "");
+        return this.capitalize(friendlyServerName);
+    }
 }
