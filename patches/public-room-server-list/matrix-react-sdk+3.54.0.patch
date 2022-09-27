@@ -66,3 +66,29 @@ index 701e5e3..e4d8082 100644
                  instance: option.key.instanceId ? option.label : "Matrix",
              }) : _t("Show: Matrix rooms")}
              AdditionalOptions={addNewServer}
+diff --git a/node_modules/matrix-react-sdk/src/i18n/strings/en_EN.json b/node_modules/matrix-react-sdk/src/i18n/strings/en_EN.json
+index 070fb79..920302c 100644
+--- a/node_modules/matrix-react-sdk/src/i18n/strings/en_EN.json
++++ b/node_modules/matrix-react-sdk/src/i18n/strings/en_EN.json
+@@ -2484,7 +2484,7 @@
+     "Enter the name of a new server you want to explore.": "Enter the name of a new server you want to explore.",
+     "Server name": "Server name",
+     "Add new server…": "Add new server…",
+-    "Show: %(instance)s rooms (%(server)s)": "Show: %(instance)s rooms (%(server)s)",
++    "Show: %(instance)s rooms (%(server)s)": "Show forums from directory: %(server)s",
+     "Show: Matrix rooms": "Show: Matrix rooms",
+     "Add existing space": "Add existing space",
+     "Want to add a new space instead?": "Want to add a new space instead?",
+diff --git a/node_modules/matrix-react-sdk/src/i18n/strings/fr.json b/node_modules/matrix-react-sdk/src/i18n/strings/fr.json
+index 2113411..c113229 100644
+--- a/node_modules/matrix-react-sdk/src/i18n/strings/fr.json
++++ b/node_modules/matrix-react-sdk/src/i18n/strings/fr.json
+@@ -3401,7 +3401,7 @@
+     "%(count)s Members|other": "%(count)s membres",
+     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Quand vous vous déconnectez, ces clés seront supprimées de cet appareil, et vous ne pourrez plus lire les messages chiffrés à moins d’avoir les clés de ces messages sur vos autres appareils, ou de les avoir sauvegardées sur le serveur.",
+     "Show: Matrix rooms": "Afficher : Salons Matrix",
+-    "Show: %(instance)s rooms (%(server)s)": "Afficher : %(instance)s salons (%(server)s)",
++    "Show: %(instance)s rooms (%(server)s)": "Afficher les forums de l'annuaire: %(server)s",
+     "Add new server…": "Ajouter un nouveau serveur…",
+     "Remove server “%(roomServer)s”": "Supprimer le serveur « %(roomServer)s »",
+     "Video rooms are a beta feature": "Les salons vidéo sont une fonctionnalité bêta",
