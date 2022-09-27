@@ -40,7 +40,7 @@ import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements
 import QuestionDialog from "matrix-react-sdk/src/components/views/dialogs/QuestionDialog";
 
 import TchapUIFeature from "../../../util/TchapUIFeature";
-import { TchapRoomAccessRule, IAccessRuleEventContent, RoomAccessRulesEventId } from "../../../@types/tchap";
+import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../@types/tchap";
 
  interface IProps {
     room: Room;
@@ -71,12 +71,12 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
 
-    const [contentAccessRule, setContentAccess] = useLocalEcho<IAccessRuleEventContent>(
-        () => room.currentState.getStateEvents(RoomAccessRulesEventId, "")?.getContent(),
-        content => cli.sendStateEvent(room.roomId, RoomAccessRulesEventId, content, ""),
+    const [contentTchapAccessRule, setTchapAccessRule] = useLocalEcho<TchapIAccessRuleEventContent>(
+        () => room.currentState.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent(),
+        content => cli.sendStateEvent(room.roomId, TchapRoomAccessRulesEventId, content, ""),
         onError,
     );
-    const { rule: accessRule = undefined } = contentAccessRule || {};
+    const { rule: accessRule = undefined } = contentTchapAccessRule || {};
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
@@ -121,13 +121,13 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             const openedToExternalUsers = accessRule === TchapRoomAccessRule.Unrestricted;
             const onExternalAccessChange = async () => {
                 Modal.createDialog(QuestionDialog, {
-                    title: _t("Allow the externals to join this room"),
+                    title: _t("Allow external users to join this room"),
                     description: _t('This action is irreversible.') + " "
                      + _t('Are you sure you want to allow the externals to join this room ?'),
                     button: _t("OK"),
                     onFinished: (confirmed) => {
                         if (!confirmed) return;
-                        setContentAccess({ "rule": TchapRoomAccessRule.Unrestricted });
+                        setTchapAccessRule({ "rule": TchapRoomAccessRule.Unrestricted });
                     },
                 });
             };
@@ -139,7 +139,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     <LabelledToggleSwitch
                         value={openedToExternalUsers}
                         onChange={onExternalAccessChange}
-                        label={_t("Allow the externals to join this room")}
+                        label={_t("Allow external users to join this room")}
                         disabled={disabled || openedToExternalUsers}
                     />
                 </span>

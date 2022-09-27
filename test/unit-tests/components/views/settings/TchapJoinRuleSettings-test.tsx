@@ -5,7 +5,7 @@ import { mocked } from 'jest-mock';
 import TchapJoinRuleSettings  from "../../../../../src/components/views/settings/TchapJoinRuleSettings";
 import { createTestClient, mkStubRoom, mockStateEventImplementation, mkEvent } from "matrix-react-sdk/test/test-utils/test-utils";
 import { JoinRule, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { TchapRoomAccessRule, RoomAccessRulesEventId } from "../../../../../src/@types/tchap";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../../../src/@types/tchap";
 
 
 
@@ -17,7 +17,7 @@ function mkStubRoomWithInviteRule(roomId: string, name: string, client: MatrixCl
 }
 
 const makeAccessEvent = (rule: TchapRoomAccessRule = TchapRoomAccessRule.Restricted) => mkEvent({
-    type: RoomAccessRulesEventId, event: true, content: {
+    type: TchapRoomAccessRulesEventId, event: true, content: {
         rule: rule,
     },
 } as any);
@@ -52,7 +52,7 @@ describe("TchapJoinRule", () => {
         //assert that spaces option is not here while private and public are
         const publicText = "Public"
         const privateText = "Private (invite only)"
-        const allowExternalText = "Allow the externals to join this room"
+        const allowExternalText = "Allow external users to join this room"
         const spaceText = "Anyone in a space can find and join"
         
         expect(screen.queryByText(publicText)).toBe(null);
@@ -75,7 +75,7 @@ describe("TchapJoinRule", () => {
         //assert that spaces option is not here while private and public are
         const publicText = "Public"
         const privateText = "Private (invite only)"
-        const allowExternalText = "Allow the externals to join this room"
+        const allowExternalText = "Allow external users to join this room"
         const spaceText = "Anyone in a space can find and join"
         
         expect(screen.queryByText(publicText)).toBe(null);

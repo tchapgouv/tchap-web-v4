@@ -88,5 +88,21 @@
   "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
     "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
     "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
+  },
+  "Allow external users to join this room": {
+    "en": "Allow external users to join this room",
+    "fr": "Autoriser les externes à rejoindre ce salon"
+  },
+  "This action is irreversible.": {
+    "en": "This action is irreversible.",
+    "fr": "Cette action est irréversible."
+  },
+  "Are you sure you want to allow the externals to join this room ?": {
+    "en": "Are you sure you want to allow the externals to join this room ?",
+    "fr": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
+  },
+  "Create Room": {
+    "en": "Create New Room",
+    "fr": "Créer un nouveau salon"
   }
 }

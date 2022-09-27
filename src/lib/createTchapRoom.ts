@@ -2,7 +2,7 @@ import { IOpts } from "matrix-react-sdk/src/createRoom";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import { HistoryVisibility, JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
-import { TchapRoomAccessRule, RoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
 
 export const DEFAULT_FEDERATE_VALUE = true;
 
@@ -34,11 +34,14 @@ export default class TchapCreateRoom {
             //"Forum" only for tchap members and not encrypted
                 createRoomOpts.visibility = Visibility.Public;
                 createRoomOpts.preset = Preset.PublicChat;
+                // Here we could have used createRoomOpts.accessRule directly,
+                // but since accessRules are a custom Tchap event, it is ignored by later code.
+                // So we use createRoomOpts.initial_state, which works properly.
                 createRoomOpts.initial_state.push({
                     content: {
                         rule: TchapRoomAccessRule.Restricted,
                     },
-                    type: RoomAccessRulesEventId,
+                    type: TchapRoomAccessRulesEventId,
                     state_key: '',
                 });
 
@@ -55,7 +58,7 @@ export default class TchapCreateRoom {
                     content: {
                         rule: TchapRoomAccessRule.Restricted,
                     },
-                    type: RoomAccessRulesEventId,
+                    type: TchapRoomAccessRulesEventId,
                     state_key: '',
                 });
                 opts.joinRule = JoinRule.Invite;
@@ -71,7 +74,7 @@ export default class TchapCreateRoom {
                     content: {
                         rule: TchapRoomAccessRule.Unrestricted,
                     },
-                    type: RoomAccessRulesEventId,
+                    type: TchapRoomAccessRulesEventId,
                     state_key: '',
                 });
                 opts.joinRule = JoinRule.Invite;

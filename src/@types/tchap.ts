@@ -10,8 +10,8 @@ export enum TchapRoomAccessRule {
   Restricted = "restricted" // not accessible to externals
 }
 
-export interface IAccessRuleEventContent {
+export interface TchapIAccessRuleEventContent {
   rule: TchapRoomAccessRule; // eslint-disable-line camelcase
 }
 
-export const RoomAccessRulesEventId = "im.vector.room.access_rules";
+export const TchapRoomAccessRulesEventId = "im.vector.room.access_rules";
