@@ -1,11 +1,6 @@
 {
   "README": "This file is for tchap-specific translatsion, which get added on top of fr.json and en.json. See custom_translations_url in config.json.",
 
-  "Username": {
-    "en": "Email",
-    "fr": "E-mail",
-    "comments": "We use E-mail to login in Tchap. The Login code accepts both username and email. So the simplest change for us to force login by email is to just rename the Username field to Email."
-  },
   "Welcome to Tchap": {
     "en": "Welcome to Tchap",
     "fr": "Bienvenue sur Tchap"
@@ -61,5 +56,37 @@
   "Scan unavailable": {
     "en": "Scan unavailable",
     "fr": "Scan unavailable"
+  },
+  "Contact us": {
+    "en": "Contact us",
+    "fr": "Contactez-nous"
+  },
+  "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>": {
+    "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
+    "fr": "Si vous rencontrez des difficultés dans votre utilisation de Tchap, contactez-nous par email à <b>%(supportEmail)s</b>"
+  },
+  "Known issues": {
+    "en": "Known issues",
+    "fr": "Problèmes connus"
+  },
+  "Read the Known Issues": {
+    "en": "Read the Known Issues",
+    "fr": "Consultez les problèmes connus"
+  },
+  "This version of Tchap Web is currently in development. There are known issues that will be solved soon.": {
+    "en": "This version of Tchap Web is currently in development. There are known issues that will be solved soon.",
+    "fr": "Cette version de Tchap Web est en cours de développement. Il y a des problèmes connus qui seront bientôt résolus."
+  },
+  "Frequently Asked Questions (FAQ)": {
+    "en": "Frequently Asked Questions (FAQ)",
+    "fr": "Foire Aux Questions (FAQ)"
+  },
+  "Read the FAQ": {
+    "en": "Read the FAQ",
+    "fr": "Consultez la FAQ"
+  },
+  "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
+    "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
+    "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
   }
 }

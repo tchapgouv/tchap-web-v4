@@ -98,14 +98,15 @@
     "disable_custom_urls": false,
     "disable_guests": true,
     "disable_login_language_selector": false,
-    "disable_3pid_login": true,
+    "disable_3pid_login": false,
     "brand": "Tchap",
-    "bug_report_endpoint_url": "/bugreports/submit",
+    "bug_report_endpoint_url": "https://matrix.agent.dinum.tchap.gouv.fr/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
     "defaultCountryCode": "FR",
     "showLabsSettings": false,
     "features": {
-        "feature_thread": true
+        "feature_thread": true,
+        "feature_video_rooms" : false
     },
     "default_federate": true,
     "default_theme": "custom-Tchap",
@@ -159,6 +160,7 @@
         "UIFeature.shareQrCode": false,
         "UIFeature.thirdPartyId": false,
         "UIFeature.identityServer": false,
+        "UIFeature.advancedEncryption": false,
         "MessageComposerInput.showPollsButton": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
@@ -216,9 +218,6 @@
             {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
-    },
-    "jitsi": {
-        "preferredDomain": "webconf.numerique.gouv.fr"
     },
     "desktopBuilds": {
         "available": false

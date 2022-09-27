@@ -1,0 +1,15 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
+index a70e0c8..ef5363a 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
+@@ -244,6 +244,10 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             </div>;
+         }
+ 
++        // :TCHAP: hide cross-signing actions
++        actionRow = null;
++        // end :TCHAP:
++
+         return (
+             <div>
+                 { summarisedStatus }

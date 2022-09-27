@@ -1,0 +1,143 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
+index c00aa90..e4df01b 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
+@@ -165,7 +165,64 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+ 
+     isBusy = () => this.state.busy || this.props.busy;
+ 
++    tchap_fetchHomeserverForEmail = async (email) => {
++        const homeServerList = SdkConfig.get()['homeserver_list'];
++
++        const findHomeServerNameFromUrl = (url) => {
++            const homeserver = homeServerList.find(homeServer => homeServer.base_url === url);
++            return homeserver.server_name;
++        };
++
++        const randomHomeServer = homeServerList[ Math.floor(Math.random() * homeServerList.length) ];
++        const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
++        return fetch(randomHomeServer.base_url + infoUrl + email)
++            .then((response) => {
++                if (!response.ok) {
++                  throw new Error('Could not find homeserver for this email');
++                }
++                return response.json();
++            })
++            .then(response => {
++                // Never returns error : anything that doesn't match a homeserver (even invalid email) returns "externe".
++                const serverUrl = "https://matrix." + response.hs;
++                return {
++                    base_url: serverUrl,
++                    server_name: findHomeServerNameFromUrl(serverUrl),
++                };
++            })
++            .catch((error) => {
++                console.error('Could not find homeserver for this email', error);
++                return;
++            });
++    };
++
++    tchap_setServerInMemory = (serverConfig) => {
++        // Make a ValidatedServerConfig, from a fake discovery result.
++        const discoveryResult = {
++            "m.homeserver": {
++                state: "SUCCESS",
++                error: null,
++                base_url: serverConfig.base_url,
++                server_name: serverConfig.server_name,
++            },
++            "m.identity_server": {
++                state: "SUCCESS",
++                error: null,
++                base_url: serverConfig.base_url, // On Tchap our Identity server urls and home server urls are the same
++                server_name: serverConfig.server_name,
++            },
++        };
++        const validatedServerConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
++            discoveryResult['m.homeserver'].server_name, discoveryResult);
++
++        // Simulate the end of the serverPicker component flow.
++        this.props.onServerConfigChange(validatedServerConf);
++
++        this.initLoginLogic(validatedServerConf);
++    };
++
+     onPasswordLogin = async (username, phoneCountry, phoneNumber, password) => {
++        /* :TCHAP: remove alive check, we don't know which server to call yet.
+         if (!this.state.serverIsAlive) {
+             this.setState({ busy: true });
+             // Do a quick liveliness check on the URLs
+@@ -190,7 +247,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+             if (!aliveAgain) {
+                 return;
+             }
+-        }
++        } end :TCHAP: */
+ 
+         this.setState({
+             busy: true,
+@@ -199,6 +256,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+             loginIncorrect: false,
+         });
+ 
++        /* :TCHAP: fetch homeserver corresponding to email */
++        const serverResult = await this.tchap_fetchHomeserverForEmail(username);
++
++        if (!serverResult) {
++            this.setState({
++                busy: false,
++                busyLoggingIn: false,
++                errorText: _t('Server unavailable, overloaded, or something else went wrong.'), // reuse existing string
++                loginIncorrect: false,
++            });
++            return;
++        }
++
++        this.tchap_setServerInMemory(serverResult);
++        /** end :TCHAP: */
++
+         this.loginLogic.loginViaPassword(
+             username, phoneCountry, phoneNumber, password,
+         ).then((data) => {
+@@ -606,10 +679,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                     </h1>
+                     { errorTextSection }
+                     { serverDeadSection }
++                    { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
+                     <ServerPicker
+                         serverConfig={this.props.serverConfig}
+                         onServerConfigChange={this.props.onServerConfigChange}
+                     />
++                    end :TCHAP :*/}
+                     { this.renderLoginComponentForFlows() }
+                     { footer }
+                 </AuthBody>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+index f6b4e19..f3dba35 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+@@ -80,7 +80,10 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+         this.state = {
+             // Field error codes by field ID
+             fieldValid: {},
+-            loginType: LoginField.MatrixId,
++            // :TCHAP: force email login
++            // loginType: LoginField.MatrixId,
++            loginType: LoginField.Email,
++            //
+             password: "",
+         };
+     }
+@@ -417,7 +420,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+         return (
+             <div>
+                 <form onSubmit={this.onSubmitForm}>
+-                    { loginType }
++                    {
++                        /* :TCHAP: remove loginType selector, we only want Email loginType
++                        loginType
++                        */
++                    }
+                     { loginField }
+                     <Field
+                         id="mx_LoginForm_password"

@@ -23,7 +23,7 @@
     "disable_custom_urls": false,
     "disable_guests": true,
     "disable_login_language_selector": false,
-    "disable_3pid_login": true,
+    "disable_3pid_login": false,
     "brand": "Tchap",
     "integrations_ui_url": "https://scalar.vector.im/",
     "integrations_rest_url": "https://scalar.vector.im/api",
@@ -38,7 +38,10 @@
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
     "show_labs_settings": false,
-    "features": {},
+    "features": {
+        "feature_thread": true,
+        "feature_video_rooms" : false
+    },
     "default_federate": true,
     "default_theme": "custom-Tchap",
     "room_directory": {
@@ -58,6 +61,7 @@
         "UIFeature.shareQrCode": false,
         "UIFeature.thirdPartyId": false,
         "UIFeature.identityServer": false,
+        "UIFeature.advancedEncryption": false,
         "MessageComposerInput.showPollsButton": false,
         "Spaces.allRoomsInHome": true,
         "custom_themes": [
@@ -114,9 +118,6 @@
             {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
-    },
-    "jitsi": {
-        "preferred_domain": "meet.element.io"
     },
     "desktopBuilds": {
         "available": false
