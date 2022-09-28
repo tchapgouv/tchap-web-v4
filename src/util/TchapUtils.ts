@@ -51,7 +51,8 @@ export default class TchapUtils {
      * @returns to "Dinum"
      */
     static toFriendlyServerName = (serverName: string): string => {
-        const friendlyServerName = serverName.replace("agent.", "").replace(".tchap.gouv.fr", "");
+        const friendlyServerName = serverName === "agent.tchap.gouv.fr" ?
+            "Agents" : serverName.replace("agent.", "").replace(".tchap.gouv.fr", "");
         return this.capitalize(friendlyServerName);
     }
 }

@@ -34,7 +34,7 @@ index 701e5e3..e4d8082 100644
  import AccessibleButton from "../elements/AccessibleButton";
  import withValidation from "../elements/Validation";
 -
-+import TchapUtils from "../../../../../src/util/TchapUtils"
++import TchapUtils from "../../../../../../src/util/TchapUtils";
  const SETTING_NAME = "room_directory_servers";
  
  export interface IPublicRoomDirectoryConfig {
