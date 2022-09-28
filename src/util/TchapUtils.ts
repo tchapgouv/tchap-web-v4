@@ -48,13 +48,14 @@ export default class TchapUtils {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
 
+    static findHomeServerNameFromUrl = (url: string): string => {
+        const homeServerList = SdkConfig.get()['homeserver_list'];
+        const homeserver = homeServerList.find(homeServer => homeServer.base_url === url);
+        return homeserver.server_name;
+    };
+
     static fetchHomeserverForEmail = async (email: string): Promise<void | {base_url: string, server_name: string}> => {
         const homeServerList = SdkConfig.get()['homeserver_list'];
-
-        const findHomeServerNameFromUrl = (url: string): string => {
-            const homeserver = homeServerList.find(homeServer => homeServer.base_url === url);
-            return homeserver.server_name;
-        };
 
         const randomHomeServer = homeServerList[Math.floor(Math.random() * homeServerList.length)];
         const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
@@ -70,7 +71,7 @@ export default class TchapUtils {
                 const serverUrl = "https://matrix." + response.hs;
                 return {
                     base_url: serverUrl,
-                    server_name: findHomeServerNameFromUrl(serverUrl),
+                    server_name: this.findHomeServerNameFromUrl(serverUrl),
                 };
             })
             .catch((error) => {
@@ -97,5 +98,16 @@ export default class TchapUtils {
         const validatedServerConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
             discoveryResult['m.homeserver'].server_name, discoveryResult);
         return validatedServerConf;
+    };
+
+    /**
+     * Extract the name of the server from a home server address
+     * @param serverName from "agent.dinum.beta.gouv.fr"
+     * @returns to "Dinum"
+     */
+    static toFriendlyServerName = (serverName: string): string => {
+        const serverUrl = "https://matrix." + serverName;
+        const friendlyServerName = this.findHomeServerNameFromUrl(serverUrl);
+        return this.capitalize(friendlyServerName);
     };
 }
