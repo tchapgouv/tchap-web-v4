@@ -36,8 +36,11 @@ import { ROOM_SECURITY_TAB } from "matrix-react-sdk/src/components/views/dialogs
 import { Action } from "matrix-react-sdk/src/dispatcher/actions";
 import { ViewRoomPayload } from "matrix-react-sdk/src/dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "matrix-react-sdk/src/utils/PreferredRoomVersions";
+import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements/LabelledToggleSwitch";
+import QuestionDialog from "matrix-react-sdk/src/components/views/dialogs/QuestionDialog";
 
 import TchapUIFeature from "../../../util/TchapUIFeature";
+import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../@types/tchap";
 
  interface IProps {
     room: Room;
@@ -63,11 +66,17 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         content => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
         onError,
     );
-
     const { join_rule: joinRule = JoinRule.Invite } = content || {};
     const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
         ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
+
+    const [contentTchapAccessRule, setTchapAccessRule] = useLocalEcho<TchapIAccessRuleEventContent>(
+        () => room.currentState.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent(),
+        content => cli.sendStateEvent(room.roomId, TchapRoomAccessRulesEventId, content, ""),
+        onError,
+    );
+    const { rule: accessRule = undefined } = contentTchapAccessRule || {};
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
@@ -104,11 +113,46 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     // :TCHAP: we do not permit to change the type of room, thus display only one option
     const definitions: IDefinition<JoinRule>[] = [];
 
+    // :TCHAP: do we need to add the following condition as well (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length)?
     if (joinRule === JoinRule.Invite) {
+        let privateRoomDescription = <div>
+            { _t("Only invited people can join.") }
+        </div>;
+        // :TCHAP: We could add functions in 'TchapUtils' to determine the type of room and rely on this logic to display components as we did in Android :
+        // :TCHAP: https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
+        if (accessRule) {
+            const openedToExternalUsers = accessRule === TchapRoomAccessRule.Unrestricted;
+            const onExternalAccessChange = async () => {
+                Modal.createDialog(QuestionDialog, {
+                    title: _t("Allow external users to join this room"),
+                    description: _t('This action is irreversible.') + " "
+                     + _t('Are you sure you want to allow the externals to join this room ?'),
+                    button: _t("OK"),
+                    onFinished: (confirmed) => {
+                        if (!confirmed) return;
+                        setTchapAccessRule({ "rule": TchapRoomAccessRule.Unrestricted });
+                    },
+                });
+            };
+            privateRoomDescription = <div>
+                <div>
+                    { _t("Only invited people can join.") }
+                </div>
+                <span>
+                    <LabelledToggleSwitch
+                        value={openedToExternalUsers}
+                        onChange={onExternalAccessChange}
+                        label={_t("Allow external users to join this room")}
+                        disabled={disabled || openedToExternalUsers}
+                    />
+                </span>
+            </div>;
+        }
+
         definitions.push({
             value: JoinRule.Invite,
             label: _t("Private (invite only)"),
-            description: _t("Only invited people can join."),
+            description: privateRoomDescription,
             checked: true,
         });
     } else if (joinRule === JoinRule.Public) {
