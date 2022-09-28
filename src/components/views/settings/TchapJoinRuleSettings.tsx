@@ -113,10 +113,13 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     // :TCHAP: we do not permit to change the type of room, thus display only one option
     const definitions: IDefinition<JoinRule>[] = [];
 
+    // :TCHAP: do we need to add the following condition as well (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length)?
     if (joinRule === JoinRule.Invite) {
         let privateRoomDescription = <div>
             { _t("Only invited people can join.") }
         </div>;
+        // :TCHAP: We could add functions in 'TchapUtils' to determine the type of room and rely on this logic to display components as we did in Android :
+        // :TCHAP: https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
         if (accessRule) {
             const openedToExternalUsers = accessRule === TchapRoomAccessRule.Unrestricted;
             const onExternalAccessChange = async () => {
