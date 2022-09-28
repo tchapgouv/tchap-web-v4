@@ -1,8 +1,47 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 7df389f..6eb6e17 100644
+index 7df389f..4523228 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-@@ -225,7 +225,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -88,12 +88,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+     };
+ 
+     private onSubmit = (): void => {
++        /* :TCHAP: do not ask for a github issue
+         if ((!this.state.text || !this.state.text.trim()) && (!this.state.issueUrl || !this.state.issueUrl.trim())) {
+             this.setState({
+                 err: _t("Please tell us what went wrong or, better, create a GitHub issue that describes the problem."),
+             });
+             return;
+         }
++        */
++        if ((!this.state.text || !this.state.text.trim())) {
++            this.setState({
++                err: _t("Please tell us what went wrong in the \"Notes\" field."),
++            });
++            return;
++        }
++        // end :TCHAP:
+ 
+         const userText =
+             (this.state.text.length > 0 ? this.state.text + '\n\n': '') + 'Issue: ' +
+@@ -205,7 +214,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+             <BaseDialog
+                 className="mx_BugReportDialog"
+                 onFinished={this.onCancel}
+-                title={_t('Submit debug logs')}
++                title={_t('Submit debug logs to Tchap support team') /** :TCHAP: more precise title */}
+                 contentId='mx_Dialog_content'
+             >
+                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
+@@ -218,6 +227,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                             "and the usernames of other users. They do not contain messages.",
+                         ) }
+                     </p>
++                    { /* :TCHAP: remove requirement to send github issue, it's too complicated
+                     <p><b>
+                         { _t(
+                             "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.",
+@@ -225,29 +235,38 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                              {
                                  a: (sub) => <a
                                      target="_blank"
@@ -13,7 +52,24 @@ index 7df389f..6eb6e17 100644
                                  >
                                      { sub }
                                  </a>,
-@@ -246,7 +248,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                             },
+                         ) }
+                     </b></p>
++                    */}
+ 
++                    { /* :TCHAP: move this below, it's not where the user expects it, so it's hard to understand
+                     <div className="mx_BugReportDialog_download">
+                         <AccessibleButton onClick={this.onDownload} kind="link" disabled={this.state.downloadBusy}>
+                             { _t("Download logs") }
+                         </AccessibleButton>
+                         { this.state.downloadProgress && <span>{ this.state.downloadProgress } ...</span> }
+                     </div>
++                    */ }
+ 
++                    { /* :TCHAP: remove requirement to send github issue, it's too complicated
+                     <Field
+                         type="text"
+                         className="mx_BugReportDialog_field_input"
                          label={_t("GitHub issue")}
                          onChange={this.onIssueUrlChange}
                          value={this.state.issueUrl}
@@ -22,5 +78,43 @@ index 7df389f..6eb6e17 100644
 +                        placeholder="https://github.com/tchapgouv/tchap-web-v4/issues/..."
 +                        // end :TCHAP:
                      />
++                    */ }
                      <Field
                          className="mx_BugReportDialog_field_input"
+                         element="textarea"
+@@ -264,13 +283,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                     />
+                     { progress }
+                     { error }
++                    <DialogButtons primaryButton={_t("Send logs")}
++                        onPrimaryButtonClick={this.onSubmit}
++                        focus={true}
++                        // :TCHAP: remove cancel button, now that we added more buttons it doesn't make sense
++                        // onCancel={this.onCancel}
++                        hasCancel={false}
++                        disabled={this.state.busy}
++                    />
++
++                    {/** :TCHAP: move the log download here, and add an explanation text */}
++                    <div className="mx_BugReportDialog_download mx_Dialog_content">
++                        <p>
++                            { _t("Just want to get your own logs, without sharing them with the Tchap team?") }
++                        </p>
++                        <div className="mx_Dialog_buttons_row">
++                            { this.state.downloadProgress && <span>{ this.state.downloadProgress } ...</span> }
++                            <AccessibleButton onClick={this.onDownload} kind="primary" disabled={this.state.downloadBusy}>
++                                { _t("Download my logs") }
++                            </AccessibleButton>
++                        </div>
++                    </div>
+                 </div>
+-                <DialogButtons primaryButton={_t("Send logs")}
+-                    onPrimaryButtonClick={this.onSubmit}
+-                    focus={true}
+-                    onCancel={this.onCancel}
+-                    disabled={this.state.busy}
+-                />
++                {/** end :TCHAP: */}
+             </BaseDialog>
+         );
+     }
