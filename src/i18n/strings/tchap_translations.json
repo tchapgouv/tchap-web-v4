@@ -89,6 +89,27 @@
     "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
     "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
   },
+  "Please tell us what went wrong in the \"Notes\" field.": {
+    "en": "Please tell us what went wrong in the \"Notes\" field.",
+    "fr": "Veuillez nous expliquer le problème dans le champ \"Notes\"."
+  },
+  "Submit debug logs to Tchap support team": {
+    "en": "Submit debug logs to Tchap support team",
+    "fr": "Envoyez les journaux de débogage à l'équipe support de Tchap",
+    "comment": "The title of BugReportDialog is unclear, specify it"
+  },
+  "Just want to get your own logs, without sharing them with the Tchap team?": {
+    "en": "Just want to get your own logs, without sharing them with the Tchap team?",
+    "fr": "Vous voulez juste obtenir vos journaux sans les partager avec l'équipe Tchap ?"
+  },
+  "Download my logs": {
+    "en": "Download my logs",
+    "fr": "Obtenir mes journaux"
+  },
+  "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem." : {
+    "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
+    "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
+  },
   "Allow external users to join this room": {
     "en": "Allow external users to join this room",
     "fr": "Autoriser les externes à rejoindre ce salon"
