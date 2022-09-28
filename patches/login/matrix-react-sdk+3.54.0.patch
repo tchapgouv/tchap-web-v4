@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index c00aa90..6dd8c05 100644
+index c00aa90..636f066 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -165,7 +165,64 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
@@ -99,19 +99,18 @@ index c00aa90..6dd8c05 100644
          this.loginLogic.loginViaPassword(
              username, phoneCountry, phoneNumber, password,
          ).then((data) => {
-@@ -261,6 +334,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -261,6 +334,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                  } else {
                      errorText = _t('Incorrect username and/or password.');
                  }
 +            // :TCHAP: display proper message for TOO_MANY_REQUESTS
 +            } else if (error.httpStatus === 429) {
-+                console.log('fff error', error, error.httpStatus, error.errcode);
-+                errorText = _t("You have made to many requests and have been blocked. Try again later.");
++                errorText = _t("Your last three login attempts have failed. Please try again in a few minutes.");
 +            // end :TCHAP:
              } else {
                  // other errors, not specific to doing a password login
                  errorText = this.errorTextFromError(error);
-@@ -606,10 +684,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -606,10 +683,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                      </h1>
                      { errorTextSection }
                      { serverDeadSection }
