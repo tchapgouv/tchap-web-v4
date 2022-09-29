@@ -14,5 +14,5 @@ export default {
     lookupUrl: "/_matrix/client/unstable/account/3pid/lookup",
     accountValidityResendEmailUrl: "/_matrix/client/unstable/account_validity/send_mail",
     passwordRulesUrl: "/_matrix/client/r0/password_policy",
-    expiredInfoUrl: "/_matrix/client/r0/user/"
+    expiredInfoUrl: "/_matrix/client/r0/user/",
 };
