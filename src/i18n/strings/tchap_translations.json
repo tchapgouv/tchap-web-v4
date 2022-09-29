@@ -125,5 +125,9 @@
   "Create Room": {
     "en": "Create New Room",
     "fr": "Créer un nouveau salon"
+  },
+  "Your last three login attempts have failed. Please try again in a few minutes.": {
+    "en": "Your last three login attempts have failed. Please try again in a few minutes.",
+    "fr": "Vos trois dernières tentatives de connexion ont échoué. Veuillez réessayer dans quelques minutes."
   }
 }
