@@ -1,0 +1,82 @@
+{
+  "better-help-settings": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx"
+    ]
+  },
+  "better-help-settings-2": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/BugReportDialog.tsx"
+    ]
+  },
+  "content-scanner": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/messages/MAudioBody.tsx",
+      "src/components/views/messages/MImageBody.tsx",
+      "src/components/views/messages/MStickerBody.tsx",
+      "src/components/views/messages/MVideoBody.tsx",
+      "src/components/views/messages/MVoiceMessageBody.tsx"
+    ]
+  },
+  "disable-access-options": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
+    ]
+  },
+  "disable-cross-signing": {
+    "package": "matrix-js-sdk",
+    "files": [
+      "src/client.ts"
+    ]
+  },
+  "forgot-password": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/auth/ForgotPassword.tsx"
+    ]
+  },
+  "hide-cross-signing-actions": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/CrossSigningPanel.tsx"
+    ]
+  },
+  "hide-room-alias-settings": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx"
+    ]
+  },
+  "hide-secure-storage": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/SecureBackupPanel.tsx"
+    ]
+  },
+  "hide-secure-storage-2": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/LogoutDialog.tsx"
+    ]
+  },
+  "login": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/auth/Login.tsx",
+      "src/components/views/auth/PasswordLogin.tsx"
+    ]
+  },
+  "public-room-server-list": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "res/css/views/directory/_NetworkDropdown.pcss",
+      "src/components/views/directory/NetworkDropdown.tsx",
+      "src/i18n/strings/en_EN.json",
+      "/src/i18n/strings/fr.json"
+    ]
+  }
+}
