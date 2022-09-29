@@ -25,6 +25,11 @@ export MATRIX_REACT_SDK_VERSION=v$(awk -F \" '/"matrix-react-sdk": ".+"/ { print
 echo "Using MATRIX_JS_SDK_VERSION $MATRIX_JS_SDK_VERSION"
 echo "Using MATRIX_REACT_SDK_VERSION $MATRIX_REACT_SDK_VERSION"
 
+# :TCHAP: Create an additional directory to add one layer of depth, otherwise some imports will fail.
+# This is because the normal location of dependencies is in tchap-web-v4/node_modules, so ../.. is expected
+# to take us to tchap-web-v4. Make it work the same way.
+pushd linked-dependencies
+
 # Set up the js-sdk first
 ./scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
@@ -56,5 +61,8 @@ popd
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
+
+# :TCHAP: we are now in linked-dependencies, go back out to tchap-web-v4 dir
+popd
 
 yarn install --pure-lockfile
