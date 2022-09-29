@@ -32,7 +32,7 @@ mkdir -p yarn-linked-dependencies
 cd yarn-linked-dependencies
 
 # Set up the js-sdk first
-./scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
+../scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
@@ -50,7 +50,7 @@ popd
 #popd
 
 # Now set up the react-sdk
-./scripts/fetchdep.with.version.sh matrix-org matrix-react-sdk $MATRIX_REACT_SDK_VERSION
+../scripts/fetchdep.with.version.sh matrix-org matrix-react-sdk $MATRIX_REACT_SDK_VERSION
 pushd matrix-react-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
@@ -59,11 +59,11 @@ yarn link matrix-js-sdk
 yarn install --pure-lockfile
 popd
 
+# :TCHAP: we are now in linked-dependencies, go back out to tchap-web-v4 dir
+cd ..
+
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
-
-# :TCHAP: we are now in linked-dependencies, go back out to tchap-web-v4 dir
-cd ..
 
 yarn install --pure-lockfile
