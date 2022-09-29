@@ -14,35 +14,40 @@ export default class TchapStrongPassword {
         return await res.json();
     }
 
-    static validate = async (fieldState: IFieldState): IValidationResult => {
+    static validate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const passwordValue: string = fieldState.value;
 
         // todo get hsUrl
         // todo avoid getting rules from server everytime, they don't change often.
         const rules = await this._getRules("https://matrix.agent.dinum.tchap.gouv.fr");
 
-        const applyRule = (ruleName: string, ruleValue): boolean => {
+        // todo translation
+        const applyRule = (ruleName: string, ruleValue): string => {
             switch (ruleName) {
                 case "m.minimum_length":
-                    return TchapStrongPassword._minimum_length(passwordValue, ruleValue);
+                    return this._minimum_length(passwordValue, ruleValue) ? "" : "minimum length";
                 case "m.require_digit":
-                    return TchapStrongPassword._require_digit(passwordValue, ruleValue);
+                    return this._require_digit(passwordValue, ruleValue) ? "" : "require_digit";
                 case "m.require_symbol":
-                    return TchapStrongPassword._require_symbol(passwordValue, ruleValue);
+                    return this._require_symbol(passwordValue, ruleValue) ? "" : "require_symbol";
                 case "m.require_lowercase":
-                    return TchapStrongPassword._require_lowercase(passwordValue, ruleValue);
+                    return this._require_lowercase(passwordValue, ruleValue) ? "" : "require_lowercase";
                 case "m.require_uppercase":
-                    return TchapStrongPassword._require_uppercase(passwordValue, ruleValue);
+                    return this._require_uppercase(passwordValue, ruleValue) ? "" : "require_uppercase";
                 default:
                     throw new Error("Unknown password rule : " + ruleName);
             }
         };
 
-        const isPasswordValid = Object.entries(rules).every(([ruleName, ruleValue]) => {
-            return applyRule(ruleName, ruleValue);
-        });
+        const errors = Object.entries(rules).reduce((result, [ruleName, ruleValue]) => {
+            const error = applyRule(ruleName, ruleValue);
+            if (error.length) {
+                result.push(error);
+            }
+            return result;
+        }, []);
 
-        if (isPasswordValid) {
+        if (errors.length === 0) {
             return {
                 valid: true,
             };
@@ -53,9 +58,15 @@ export default class TchapStrongPassword {
             feedback: (
                 <div className="mx_Validation">
                     <ul className="mx_Validation_details">
-                        <li className="mx_Validation_detail mx_Validation_invalid">
-                            Bad password // todo proper message
-                        </li>
+                        {
+                            errors.map((error) => {
+                                return (
+                                    <li className="mx_Validation_detail mx_Validation_invalid">
+                                        { error }
+                                    </li>
+                                );
+                            })
+                        }
                     </ul>
                 </div>
             ),
