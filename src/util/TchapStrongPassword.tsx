@@ -1,39 +1,48 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import React from "react";
 import { IFieldState, IValidationResult } from "matrix-react-sdk/src/components/views/elements/Validation";
+import { _t } from "matrix-react-sdk/src/languageHandler";
 
 import TchapApi from './TchapApi';
+import TchapUtils from "./TchapUtils";
 
 /**
  * Strong Password utils.
- * File copied from v2.
+ * File copied from v2 and modified.
  */
 export default class TchapStrongPassword {
-    static async _getRules(hsUrl) {
-        const res = await fetch(`${hsUrl}${TchapApi.passwordRulesUrl}`);
-        return await res.json();
+    private static passwordRules: { ruleName: string, ruleValue: number|string} = null;
+
+    private static async getRules() {
+        if (!this.passwordRules) {
+            const hsUrl = TchapUtils.randomHomeServer().base_url;
+            const res = await fetch(`${hsUrl}${TchapApi.passwordRulesUrl}`);
+            this.passwordRules = await res.json();
+        }
+        return this.passwordRules;
     }
 
     static validate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const passwordValue: string = fieldState.value;
 
-        // todo get hsUrl
-        // todo avoid getting rules from server everytime, they don't change often.
-        const rules = await this._getRules("https://matrix.agent.dinum.tchap.gouv.fr");
+        const rules = await this.getRules();
 
-        // todo translation
         const applyRule = (ruleName: string, ruleValue): string => {
             switch (ruleName) {
                 case "m.minimum_length":
-                    return this._minimum_length(passwordValue, ruleValue) ? "" : "minimum length";
+                    return this.minimumLength(passwordValue, ruleValue) ? "" :
+                        _t("a minimum of %(number)s characters", { number: ruleValue });
                 case "m.require_digit":
-                    return this._require_digit(passwordValue, ruleValue) ? "" : "require_digit";
+                    return this.requireDigit(passwordValue, ruleValue) ? "" :
+                        _t("a number");
                 case "m.require_symbol":
-                    return this._require_symbol(passwordValue, ruleValue) ? "" : "require_symbol";
+                    return this.requireSymbol(passwordValue, ruleValue) ? "" :
+                        _t("a symbol");
                 case "m.require_lowercase":
-                    return this._require_lowercase(passwordValue, ruleValue) ? "" : "require_lowercase";
+                    return this.requireLowercase(passwordValue, ruleValue) ? "" :
+                        _t("a lowercase letter");
                 case "m.require_uppercase":
-                    return this._require_uppercase(passwordValue, ruleValue) ? "" : "require_uppercase";
+                    return this.requireUppercase(passwordValue, ruleValue) ? "" :
+                        _t("an uppercase letter");
                 default:
                     throw new Error("Unknown password rule : " + ruleName);
             }
@@ -56,7 +65,10 @@ export default class TchapStrongPassword {
         return {
             valid: false,
             feedback: (
-                <div className="mx_Validation">
+                <div className="mx_Validation mx_Validation_invalid">
+                    <div className="mx_Validation_description mx_Validation_invalid">
+                        { _t("Your password must include:") }
+                    </div>
                     <ul className="mx_Validation_details">
                         {
                             errors.map((error) => {
@@ -73,32 +85,32 @@ export default class TchapStrongPassword {
         };
     };
 
-    static _minimum_length(pwd, len) {
+    private static minimumLength(pwd, len) {
         return pwd.length >= len;
     }
 
-    static _require_uppercase(pwd, c) {
+    private static requireUppercase(pwd, c) {
         if (c) {
             return (/[A-Z]/.test(pwd));
         }
         return true;
     }
 
-    static _require_symbol(pwd, c) {
+    private static requireSymbol(pwd, c) {
         if (c) {
             return (/[^a-zA-Z0-9]/.test(pwd));
         }
         return true;
     }
 
-    static _require_digit(pwd, c) {
+    private static requireDigit(pwd, c) {
         if (c) {
             return (/[0-9]/.test(pwd));
         }
         return true;
     }
 
-    static _require_lowercase(pwd, c) {
+    private static requireLowercase(pwd, c) {
         if (c) {
             return (/[a-z]/.test(pwd));
         }
