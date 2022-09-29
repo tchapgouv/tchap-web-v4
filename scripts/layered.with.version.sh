@@ -29,7 +29,7 @@ echo "Using MATRIX_REACT_SDK_VERSION $MATRIX_REACT_SDK_VERSION"
 # This is because the normal location of dependencies is in tchap-web-v4/node_modules, so ../.. is expected
 # to take us to tchap-web-v4. Make it work the same way.
 mkdir -p yarn-linked-dependencies
-cp yarn-linked-dependencies
+cd yarn-linked-dependencies
 
 # Set up the js-sdk first
 ./scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
