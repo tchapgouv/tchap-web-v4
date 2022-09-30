@@ -122,19 +122,19 @@ export default class KeyRequestHandler {
         //get first deviceId for a userId
         const deviceId = this._pendingKeyRequests.get(userId).keys().next().value;
 
-        console.log(`:tchap: Starting KeyShareDialog for ${userId}:${deviceId}`);
+        console.log(`:tchap: Starting VerificationRequestDialog for ${userId}:${deviceId}`);
 
         /**
          * Share keys to the verified session
          */
         const shareKeys = () => {
-            console.log(`:tchap: key request handler finished  for ${userId}:${deviceId}`);
+            console.log(`:tchap: share keys for ${userId}:${deviceId}`);
             const cli = this._matrixClient;
 
             //tchap: this will share keys without taking care of the state of "r" ?!
             for (const req of this._pendingKeyRequests.get(userId).get(deviceId)) {
                 if (cli.checkDeviceTrust(userId, deviceId).isVerified()) {
-                    console.log(":tchap: share for req :", JSON.stringify(req));
+                    console.log(":tchap: share for request :", JSON.stringify(req));
                     req.share();
                 }
             }
@@ -145,7 +145,7 @@ export default class KeyRequestHandler {
          * TODO refactor to map
          */
         const removeCurrentRequest = () => {
-            console.log(`:tchap: key request handler finished  for ${userId}:${deviceId}`);
+            console.log(`:tchap: remove Current Request ${userId}:${deviceId}`);
 
             this._currentUser = null;
             this._currentDevice = null;
@@ -164,8 +164,6 @@ export default class KeyRequestHandler {
             }
             this.processNextRequest();
         };
-
-        console.log(`:tchap: should show modal for ${userId}:${deviceId}`);
 
         /* const KeyShareDialog = sdk.getComponent("dialogs.KeyShareDialog");
         Modal.appendTrackedDialog('Key Share', 'Process Next Request', KeyShareDialog, {
@@ -194,6 +192,7 @@ export default class KeyRequestHandler {
             member: cli.getUser(userId),
             onFinished: async () => {
                 const request = await verificationRequestPromise;
+                console.log(`:tchap: verificationRequestPromise finishes for ${userId}:${deviceId}`);
                 shareKeys();
                 removeCurrentRequest();
                 //tchap: why cancel?
