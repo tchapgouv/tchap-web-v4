@@ -129,5 +129,29 @@
   "Your last three login attempts have failed. Please try again in a few minutes.": {
     "en": "Your last three login attempts have failed. Please try again in a few minutes.",
     "fr": "Vos trois dernières tentatives de connexion ont échoué. Veuillez réessayer dans quelques minutes."
+  },
+  "Your password must include:": {
+    "en": "Your password must include:",
+    "fr": "Votre mot de passe doit comporter :"
+  },
+  "a minimum of %(number)s characters": {
+    "en": "a minimum of %(number)s characters",
+    "fr": "8 caractères au minimum"
+  },
+  "a number": {
+    "en": "a number",
+    "fr": "un chiffre"
+  },
+  "a symbol": {
+    "en": "a symbol",
+    "fr": "un caractère spécial"
+  },
+  "a lowercase letter": {
+    "en": "a lowercase letter",
+    "fr": "une lettre minuscule"
+  },
+  "an uppercase letter": {
+    "en": "an uppercase letter",
+    "fr": "une lettre majuscule"
   }
 }
