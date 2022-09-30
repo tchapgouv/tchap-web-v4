@@ -139,7 +139,15 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                accessRule: "restricted",
+                "initial_state": [
+                    {
+                        "content": {
+                        "rule": "restricted",
+                        },
+                        "state_key": "",
+                        "type": "im.vector.room.access_rules",
+                    },
+                ],
                 visibility: "private",
                 preset: "private_chat",
             },
@@ -175,7 +183,15 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": false,
                 },
-                accessRule: "restricted",
+                "initial_state": [
+                    {
+                        "content": {
+                        "rule": "restricted",
+                        },
+                        "state_key": "",
+                        "type": "im.vector.room.access_rules",
+                    },
+                ],
                 visibility: "public",
                 preset: "public_chat",
             },
@@ -209,7 +225,15 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                accessRule: "restricted",
+                "initial_state": [
+                    {
+                        "content": {
+                        "rule": "restricted",
+                        },
+                        "state_key": "",
+                        "type": "im.vector.room.access_rules",
+                    },
+                ],
                 visibility: "public",
                 preset: "public_chat",
             },
@@ -243,7 +267,15 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                accessRule: "unrestricted",
+                "initial_state": [
+                    {
+                        "content": {
+                        "rule": "unrestricted",
+                        },
+                        "state_key": "",
+                        "type": "im.vector.room.access_rules",
+                    },
+                ],
                 visibility: "private",
                 preset: "private_chat",
             },

@@ -10,14 +10,14 @@ exports[`TchapCreateRoomDialog should render the whole component with with the a
     Allow access to this room to all users, even outside "AGENT" domain
   </span>
   <_default
-    aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+    aria-label="Allow access to this room to all users, even outside "AGENT" domain"
     checked={false}
     onChange={[Function]}
   >
     <AccessibleButton
       aria-checked={false}
       aria-disabled={false}
-      aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+      aria-label="Allow access to this room to all users, even outside "AGENT" domain"
       className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
       element="div"
       onClick={[Function]}
@@ -27,7 +27,7 @@ exports[`TchapCreateRoomDialog should render the whole component with with the a
       <div
         aria-checked={false}
         aria-disabled={false}
-        aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+        aria-label="Allow access to this room to all users, even outside "AGENT" domain"
         className="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
         onClick={[Function]}
         onKeyDown={[Function]}
@@ -62,7 +62,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
     <ForwardRef(FocusLockUICombination)
       className="tc_TchapCreateRoomDialog mx_Dialog_fixedWidth"
       lockProps={
-        Object {
+        {
           "aria-describedby": undefined,
           "aria-labelledby": "mx_BaseDialog_title",
           "onKeyDown": [Function],
@@ -78,7 +78,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
         crossFrame={true}
         disabled={false}
         lockProps={
-          Object {
+          {
             "aria-describedby": undefined,
             "aria-labelledby": "mx_BaseDialog_title",
             "onKeyDown": [Function],
@@ -94,7 +94,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
           data-focus-guard={true}
           key="guard-first"
           style={
-            Object {
+            {
               "height": "0px",
               "left": "1px",
               "overflow": "hidden",
@@ -110,7 +110,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
           autoFocus={true}
           crossFrame={true}
           disabled={false}
-          id={Object {}}
+          id={{}}
           observed={
             <div
               aria-labelledby="mx_BaseDialog_title"
@@ -257,7 +257,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
                               <div
                                 aria-checked="false"
                                 aria-disabled="false"
-                                aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+                                aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                 class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
                                 role="switch"
                                 tabindex="0"
@@ -304,12 +304,12 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
           onDeactivation={[Function]}
           persistentFocus={false}
           returnFocus={[Function]}
-          shards={Array []}
+          shards={[]}
           sideCar={
-            Object {
+            {
               "assignMedium": [Function],
               "assignSyncMedium": [Function],
-              "options": Object {
+              "options": {
                 "async": true,
                 "ssr": false,
               },
@@ -322,7 +322,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
             autoFocus={true}
             crossFrame={true}
             disabled={false}
-            id={Object {}}
+            id={{}}
             observed={
               <div
                 aria-labelledby="mx_BaseDialog_title"
@@ -469,7 +469,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
                                 <div
                                   aria-checked="false"
                                   aria-disabled="false"
-                                  aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+                                  aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
                                   role="switch"
                                   tabindex="0"
@@ -516,12 +516,12 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
             onDeactivation={[Function]}
             persistentFocus={false}
             returnFocus={[Function]}
-            shards={Array []}
+            shards={[]}
             sideCar={
-              Object {
+              {
                 "assignMedium": [Function],
                 "assignSyncMedium": [Function],
-                "options": Object {
+                "options": {
                   "async": true,
                   "ssr": false,
                 },
@@ -745,7 +745,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
                           </div>
                           <div>
                             <LabelledToggleSwitch
-                              label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+                              label="Allow access to this room to all users, even outside "AGENT" domain"
                               onChange={[Function]}
                               value={false}
                             >
@@ -758,14 +758,14 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
                                   Allow access to this room to all users, even outside "AGENT" domain
                                 </span>
                                 <_default
-                                  aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+                                  aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                   checked={false}
                                   onChange={[Function]}
                                 >
                                   <AccessibleButton
                                     aria-checked={false}
                                     aria-disabled={false}
-                                    aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+                                    aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                     className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
                                     element="div"
                                     onClick={[Function]}
@@ -775,7 +775,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
                                     <div
                                       aria-checked={false}
                                       aria-disabled={false}
-                                      aria-label="Allow access to this room to all users, even outside \\"AGENT\\" domain"
+                                      aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                       className="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
                                       onClick={[Function]}
                                       onKeyDown={[Function]}
@@ -839,7 +839,7 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
         <div
           data-focus-guard={true}
           style={
-            Object {
+            {
               "height": "0px",
               "left": "1px",
               "overflow": "hidden",
