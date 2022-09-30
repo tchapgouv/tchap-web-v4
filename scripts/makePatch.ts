@@ -24,3 +24,6 @@ var child = require('child_process').exec(command);
 child.stdout.on('data', function(data) {
   console.log(data.toString());
 });
+child.stderr.on('data', function(data) {
+  console.error(data.toString());
+});
