@@ -60,7 +60,8 @@
     "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
     "postinstall": "./scripts/apply_patches.sh",
     "patch-package": "patch-package",
-    "patch-reset": "rm -rf node_modules/matrix-react-sdk; rm -rf node_modules/matrix-js-sdk; yarn install --force"
+    "patch-reset": "rm -rf node_modules/matrix-react-sdk; rm -rf node_modules/matrix-js-sdk; yarn install --force",
+    "patch-make": "node scripts/makePatch.ts"
   },
   "dependencies": {
     "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.12.tgz",
