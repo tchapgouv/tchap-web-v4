@@ -33,6 +33,13 @@
       "src/client.ts"
     ]
   },
+  "fix-key-request": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/MatrixChat.tsx",
+      "src/components/views/settings/DevicesPanel.tsx"
+    ]
+  },
   "forgot-password": {
     "package": "matrix-react-sdk",
     "files": [
