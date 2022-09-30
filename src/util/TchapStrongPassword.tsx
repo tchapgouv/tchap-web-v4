@@ -10,8 +10,13 @@ import TchapUtils from "./TchapUtils";
  * File copied from v2 and modified.
  */
 export default class TchapStrongPassword {
-    private static passwordRules: { ruleName: string, ruleValue: number|string} = null;
+    private static passwordRules: { ruleName: string, ruleValue: number|string} | null = null;
 
+    /**
+     * Query password_policy rules from a homeserver, and cache them.
+     * They look something like :
+     * {"m.minimum_length":8,"m.require_digit":true,"m.require_symbol":true,"m.require_lowercase":true,"m.require_uppercase":true}
+     */
     private static async getRules() {
         if (!this.passwordRules) {
             const hsUrl = TchapUtils.randomHomeServer().base_url;
@@ -21,6 +26,9 @@ export default class TchapStrongPassword {
         return this.passwordRules;
     }
 
+    /**
+     * Replacement for PassphraseField.validate in matrix-react-sdk, with same inputs and outputs.
+     */
     static validate = async (fieldState: IFieldState): Promise<IValidationResult> => {
         const passwordValue: string = fieldState.value;
 
@@ -48,12 +56,12 @@ export default class TchapStrongPassword {
             }
         };
 
-        const errors = Object.entries(rules).reduce((result, [ruleName, ruleValue]) => {
-            const error = applyRule(ruleName, ruleValue);
+        const errors: string[] = Object.entries(rules).reduce((errors: string[], [ruleName, ruleValue]) => {
+            const error: string = applyRule(ruleName, ruleValue);
             if (error.length) {
-                result.push(error);
+                errors.push(error);
             }
-            return result;
+            return errors;
         }, []);
 
         if (errors.length === 0) {
@@ -85,34 +93,34 @@ export default class TchapStrongPassword {
         };
     };
 
-    private static minimumLength(pwd, len) {
-        return pwd.length >= len;
+    private static minimumLength(passwordValue: string, len: number): boolean {
+        return passwordValue.length >= len;
     }
 
-    private static requireUppercase(pwd, c) {
-        if (c) {
-            return (/[A-Z]/.test(pwd));
+    private static requireUppercase(passwordValue: string, required: boolean): boolean {
+        if (required) {
+            return (/[A-Z]/.test(passwordValue));
         }
         return true;
     }
 
-    private static requireSymbol(pwd, c) {
-        if (c) {
-            return (/[^a-zA-Z0-9]/.test(pwd));
+    private static requireSymbol(passwordValue: string, required: boolean): boolean {
+        if (required) {
+            return (/[^a-zA-Z0-9]/.test(passwordValue));
         }
         return true;
     }
 
-    private static requireDigit(pwd, c) {
-        if (c) {
-            return (/[0-9]/.test(pwd));
+    private static requireDigit(passwordValue: string, required: boolean): boolean {
+        if (required) {
+            return (/[0-9]/.test(passwordValue));
         }
         return true;
     }
 
-    private static requireLowercase(pwd, c) {
-        if (c) {
-            return (/[a-z]/.test(pwd));
+    private static requireLowercase(passwordValue: string, required: boolean): boolean {
+        if (required) {
+            return (/[a-z]/.test(passwordValue));
         }
         return true;
     }
