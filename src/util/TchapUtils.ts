@@ -54,10 +54,13 @@ export default class TchapUtils {
         return homeserver.server_name;
     };
 
-    static fetchHomeserverForEmail = async (email: string): Promise<void | {base_url: string, server_name: string}> => {
+    static randomHomeServer = () => {
         const homeServerList = SdkConfig.get()['homeserver_list'];
+        return homeServerList[Math.floor(Math.random() * homeServerList.length)];
+    };
 
-        const randomHomeServer = homeServerList[Math.floor(Math.random() * homeServerList.length)];
+    static fetchHomeserverForEmail = async (email: string): Promise<void | {base_url: string, server_name: string}> => {
+        const randomHomeServer = this.randomHomeServer();
         const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
         return fetch(randomHomeServer.base_url + infoUrl + email)
             .then((response) => {
