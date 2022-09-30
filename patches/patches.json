@@ -77,6 +77,12 @@
       "src/components/views/auth/PasswordLogin.tsx"
     ]
   },
+  "password-policy": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/auth/PassphraseField.tsx"
+    ]
+  },
   "public-room-server-list": {
     "package": "matrix-react-sdk",
     "files": [
