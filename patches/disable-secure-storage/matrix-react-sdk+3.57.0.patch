@@ -1,0 +1,22 @@
+diff --git a/node_modules/matrix-react-sdk/src/Lifecycle.ts b/node_modules/matrix-react-sdk/src/Lifecycle.ts
+index 1e7fae8..748fa29 100644
+--- a/node_modules/matrix-react-sdk/src/Lifecycle.ts
++++ b/node_modules/matrix-react-sdk/src/Lifecycle.ts
+@@ -62,6 +62,7 @@ import { DialogOpener } from "./utils/DialogOpener";
+ import { Action } from "./dispatcher/actions";
+ import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
+ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
++import TchapUserSettings from '../../../src/util/TchapUserSettings';
+ 
+ const HOMESERVER_URL_KEY = "mx_hs_url";
+ const ID_SERVER_URL_KEY = "mx_is_url";
+@@ -819,6 +820,9 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
+         // before the client.
+         await EventIndexPeg.init();
+         await MatrixClientPeg.start();
++        //:tchap: override user settings after the client init
++        TchapUserSettings.override();
++        //end of :tchap:
+     } else {
+         logger.warn("Caller requested only auxiliary services be started");
+         await MatrixClientPeg.assign();
