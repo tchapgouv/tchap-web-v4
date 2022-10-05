@@ -1,10 +1,4 @@
 {
-  "disable-secure-storage": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/Lifecycle.ts"
-    ]
-  },
   "better-help-settings": {
     "package": "matrix-react-sdk",
     "files": [
