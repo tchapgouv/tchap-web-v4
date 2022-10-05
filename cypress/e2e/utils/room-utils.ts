@@ -18,5 +18,12 @@ export default class RoomUtils {
         cy.get('[aria-label="Paramètres"] > .mx_IconizedContextMenu_label').click();
         cy.get('[data-testid="settings-tab-ROOM_SECURITY_TAB"] > .mx_TabbedView_tabLabel_text').click();
     }
+
+    static openParticipants(roomName: string) {
+        //open room
+        cy.get('[aria-label="'+roomName+'"]').click();
+        cy.get('.mx_RoomHeader_chevron').click();
+        cy.get('[aria-label="Personnes"] > .mx_IconizedContextMenu_label').click();
+    }
 }
 
