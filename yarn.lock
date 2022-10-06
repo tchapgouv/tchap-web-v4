@@ -8308,6 +8308,7 @@ jest-worker@^29.0.3:
   integrity sha512-Tl/YWUugQOjoTYwjKdfJWkSOfhufJHO5LhXTSZC3TRoQKO+fuXnZAdoXXBlpLXKGODBL3OvdUasfDD4PcMe6ng==
   dependencies:
     "@types/node" "*"
+    jest-util "^29.1.2"
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 

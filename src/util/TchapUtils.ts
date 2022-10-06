@@ -113,4 +113,13 @@ export default class TchapUtils {
         const friendlyServerName = this.findHomeServerNameFromUrl(serverUrl);
         return this.capitalize(friendlyServerName);
     };
+
+    /**
+     * Ask the homeserver is cross signing is supported (async)
+     * @returns Promise<true> is cross signing is supported by home server or false
+     */
+    static async isCrossSigningSupportedByServer(): Promise<boolean> {
+        const cli = MatrixClientPeg.get();
+        return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
+    }
 }
