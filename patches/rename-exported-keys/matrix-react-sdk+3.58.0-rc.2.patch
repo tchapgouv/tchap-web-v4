@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx
+index 2f2bc36..63bc57f 100644
+--- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx
+@@ -86,7 +86,7 @@ export default class ExportE2eKeysDialog extends React.Component<IProps, IState>
+             const blob = new Blob([f], {
+                 type: 'text/plain;charset=us-ascii',
+             });
+-            FileSaver.saveAs(blob, 'element-keys.txt');
++            FileSaver.saveAs(blob, 'tchap-keys.txt');
+             this.props.onFinished(true);
+         }).catch((e) => {
+             logger.error("Error exporting e2e keys:", e);
