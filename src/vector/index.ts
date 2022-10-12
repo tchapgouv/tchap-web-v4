@@ -240,6 +240,17 @@ async function start() {
         );
         //end of :tchap:
 
+        //:tchap: intercept and redirect to V2 register new account
+        defaultDispatcher.register(
+            (payload: ActionPayload) => {
+                if (payload.action === "start_registration") {
+                    //should redirect to url /nouveau-compte
+                    window.location.href = "/nouveau-compte";
+                }
+            },
+        );
+        //end of :tchap:
+
         // Finally, load the app. All of the other react-sdk imports are in this file which causes the skinner to
         // run on the components.
         await loadApp(fragparts.params);
