@@ -24,6 +24,7 @@ export default class TchapRoomUtils {
         if (tchapRoomAccessRule === TchapRoomAccessRule.Unrestricted) {
             return TchapRoomType.External;
         }
+        return TchapRoomType.Unknown;
     }
 
     /**
