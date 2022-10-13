@@ -1,0 +1,24 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
+index 06ee20c..c0ef39a 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
+@@ -34,6 +34,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
+ import DMRoomMap from "../../../utils/DMRoomMap";
+ import { IOOBData } from "../../../stores/ThreepidInviteStore";
+ import TooltipTarget from "../elements/TooltipTarget";
++import TchapRoomUtils from "../../../../../../src/util/TchapRoomUtils";
+ 
+ interface IProps {
+     room: Room;
+@@ -173,7 +174,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+             }
+         } else {
+             // Track publicity
+-            icon = this.isPublicRoom ? Icon.Globe : Icon.None;
++            //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
++            //:tchap: use our definition of public room instead (= forum)
++            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Globe : Icon.None;
++            //end of :tchap:
+             if (!this.isWatchingTimeline) {
+                 this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
+                 this.isWatchingTimeline = true;

@@ -3,6 +3,7 @@ export enum TchapRoomType {
   Private = "private",
   External = "external",
   Forum = "forum",
+  Unknown = "unknown",
 }
 
 export enum TchapRoomAccessRule {
