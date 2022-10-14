@@ -142,7 +142,7 @@ describe("Create Room", () => {
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(invitee);
         cy.get('.mx_BasicMessageComposer_input').type("hello{enter}");
-        cy.get('.mx_EventTile_last > .mx_EventTile_line').contains("hello");
+        cy.get('.mx_EventTile_body').contains("hello");
     });
 
     it("should allow us to create a DM by inviting user with email", () => {
@@ -162,6 +162,6 @@ describe("Create Room", () => {
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(email);
         cy.get('.mx_BasicMessageComposer_input').type("hello{enter}");
-        cy.get('.mx_EventTile_last > .mx_EventTile_line').contains("hello");
+        cy.get('.mx_EventTile_body').contains("hello");
     });
 });
