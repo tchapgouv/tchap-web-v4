@@ -110,5 +110,11 @@
       "src/IdentityAuthClient.tsx",
       "src/Terms.ts"
     ]
+  },
+  "hide-discovery-email-phone-settings": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"
+    ]
   }
 }

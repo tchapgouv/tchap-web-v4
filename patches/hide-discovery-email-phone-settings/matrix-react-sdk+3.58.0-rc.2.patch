@@ -1,0 +1,111 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+index ffcd12f..0cdcee3 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+@@ -318,31 +318,33 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         // validate 3PID ownership even if we're just adding to the homeserver only.
+         // For newer homeservers with separate 3PID add and bind methods (MSC2290),
+         // there is no such concern, so we can always show the HS account 3PIDs.
+-        if (SettingsStore.getValue(UIFeature.ThirdPartyID) &&
+-            (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
+-        ) {
+-            const emails = this.state.loading3pids
+-                ? <Spinner />
+-                : <AccountEmailAddresses
+-                    emails={this.state.emails}
+-                    onEmailsChange={this.onEmailsChange}
+-                />;
+-            const msisdns = this.state.loading3pids
+-                ? <Spinner />
+-                : <AccountPhoneNumbers
+-                    msisdns={this.state.msisdns}
+-                    onMsisdnsChange={this.onMsisdnsChange}
+-                />;
+-            threepidSection = <div>
+-                <span className="mx_SettingsTab_subheading">{ _t("Email addresses") }</span>
+-                { emails }
+-
+-                <span className="mx_SettingsTab_subheading">{ _t("Phone numbers") }</span>
+-                { msisdns }
+-            </div>;
+-        } else if (this.state.serverSupportsSeparateAddAndBind === null) {
+-            threepidSection = <Spinner />;
+-        }
++        // :TCHAP: no need for users to edit their email or phone
++        // if (SettingsStore.getValue(UIFeature.ThirdPartyID) &&
++        //     (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
++        // ) {
++        //     const emails = this.state.loading3pids
++        //         ? <Spinner />
++        //         : <AccountEmailAddresses
++        //             emails={this.state.emails}
++        //             onEmailsChange={this.onEmailsChange}
++        //         />;
++        //     const msisdns = this.state.loading3pids
++        //         ? <Spinner />
++        //         : <AccountPhoneNumbers
++        //             msisdns={this.state.msisdns}
++        //             onMsisdnsChange={this.onMsisdnsChange}
++        //         />;
++        //     threepidSection = <div>
++        //         <span className="mx_SettingsTab_subheading">{ _t("Email addresses") }</span>
++        //         { emails }
++
++        //         <span className="mx_SettingsTab_subheading">{ _t("Phone numbers") }</span>
++        //         { msisdns }
++        //     </div>;
++        // } else if (this.state.serverSupportsSeparateAddAndBind === null) {
++        //     threepidSection = <Spinner />;
++        // }
++        // end :TCHAP:
+ 
+         let passwordChangeText = _t("Set a new account password...");
+         if (!this.state.canChangePassword) {
+@@ -468,15 +470,17 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         const plaf = PlatformPeg.get();
+         const supportsMultiLanguageSpellCheck = plaf.supportsSpellCheckSettings();
+ 
+-        const discoWarning = this.state.requiredPolicyInfo.hasTerms
+-            ? <img
+-                className='mx_GeneralUserSettingsTab_warningIcon'
+-                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
+-                width="18"
+-                height="18"
+-                alt={_t("Warning")}
+-            />
+-            : null;
++        // :TCHAP: no need for users to edit the discovery section(`discoWarning` is used `discoverySection`)
++        // const discoWarning = this.state.requiredPolicyInfo.hasTerms
++        //     ? <img
++        //         className='mx_GeneralUserSettingsTab_warningIcon'
++        //         src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
++        //         width="18"
++        //         height="18"
++        //         alt={_t("Warning")}
++        //     />
++        //     : null;
++        // end :TCHAP:
+ 
+         let accountManagementSection;
+         if (SettingsStore.getValue(UIFeature.Deactivate)) {
+@@ -487,12 +491,14 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         }
+ 
+         let discoverySection;
+-        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
+-            discoverySection = <>
+-                <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
+-                { this.renderDiscoverySection() }
+-            </>;
+-        }
++        // :TCHAP: no need for users to edit the discovery section
++        // if (SettingsStore.getValue(UIFeature.IdentityServer)) {
++        //     discoverySection = <>
++        //         <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
++        //         { this.renderDiscoverySection() }
++        //     </>;
++        // }
++        // end :TCHAP:
+ 
+         return (
+             <div className="mx_SettingsTab">
