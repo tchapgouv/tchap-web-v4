@@ -103,5 +103,12 @@
       "src/i18n/strings/en_EN.json",
       "/src/i18n/strings/fr.json"
     ]
+  },
+  "auto-accept-tac": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/IdentityAuthClient.tsx",
+      "src/Terms.ts"
+    ]
   }
 }
