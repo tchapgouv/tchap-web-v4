@@ -38,13 +38,12 @@ export default class TchapRoomUtils {
 
     /**
      * Is room encrypted? search in local storage or in server if needed
-     * @param roomId 
+     * @param roomId
      * @returns true if room is encrypted, false if not
      */
     static isRoomEncrypted(roomId: string): boolean {
         return MatrixClientPeg.get().isRoomEncrypted(roomId);
     }
-
 
     /**
      * Helper method
