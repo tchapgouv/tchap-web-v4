@@ -1,4 +1,10 @@
 {
+  "are-external-users-allowed-in-room": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/rooms/RoomHeader.tsx",
+      "res/css/views/rooms/_RoomHeader.pcss"    ]
+  },
   "show-icon-on-public-room": {
     "package": "matrix-react-sdk",
     "files": [
