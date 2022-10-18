@@ -8,4 +8,9 @@ export default class TchapUIFeature {
      * It is intended to add more fine-grained control over spaces disablement.
      */
     static isSpaceDisplayEnabled = false;
+
+    /**
+     * This flag controls weither Terms and Conditions should be accepted automatically or not.
+     */
+    static autoAcceptTermsAndConditions = true;
 }
