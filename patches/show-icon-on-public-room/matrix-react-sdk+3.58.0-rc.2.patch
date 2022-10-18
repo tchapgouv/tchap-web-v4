@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 06ee20c..892aa0f 100644
+index 06ee20c..3a84dcb 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -34,6 +34,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -30,9 +30,9 @@ index 06ee20c..892aa0f 100644
              return _t("This room is public");
 +        // :TCHAP: add icons for custom room types
 +        case Icon.Forum:
-+            return _t("This room is public");
++            return _t("This room is a public forum");
 +        case Icon.Private:
-+            return _t("This room is private"); // todo add strings
++            return _t("This room is private");
 +        case Icon.External:
 +            return _t("This room is private and open to external users");
 +        // end :TCHAP:
