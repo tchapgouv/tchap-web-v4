@@ -1,40 +1,17 @@
-diff --git a/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss b/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss
-index 3c23045..097861e 100644
---- a/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss
-+++ b/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss
-@@ -45,6 +45,19 @@ limitations under the License.
-         border-radius: 8px;
-     }
- 
-+    .mx_DecoratedRoomAvatar_icon_unlocked::before {
-+        mask-position: center;
-+        mask-size: contain;
-+        mask-repeat: no-repeat;
-+        background: $secondary-content;
-+        mask-image: url('$(res)/img/unlocked.svg');
-+        background-color: var(--forum-color);
-+        bottom: -25%;
-+        right: -25%;
-+        width: 150%;
-+        height: 150%;
-+    }
-+
-     .mx_DecoratedRoomAvatar_icon_globe::before {
-         mask-position: center;
-         mask-size: contain;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 06ee20c..45111d0 100644
+index 06ee20c..056be6b 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-@@ -34,6 +34,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
+@@ -34,6 +34,8 @@ import TextWithTooltip from "../elements/TextWithTooltip";
  import DMRoomMap from "../../../utils/DMRoomMap";
  import { IOOBData } from "../../../stores/ThreepidInviteStore";
  import TooltipTarget from "../elements/TooltipTarget";
 +import TchapRoomUtils from "../../../../../../src/util/TchapRoomUtils";
++import "../../../../../../res/css/views/avatars/_TchapDecoratedRoomAvatar.pcss";
  
  interface IProps {
      room: Room;
-@@ -56,6 +57,7 @@ enum Icon {
+@@ -56,6 +58,7 @@ enum Icon {
      // Note: the names here are used in CSS class names
      None = "NONE", // ... except this one
      Globe = "GLOBE",
@@ -42,7 +19,7 @@ index 06ee20c..45111d0 100644
      PresenceOnline = "ONLINE",
      PresenceAway = "AWAY",
      PresenceOffline = "OFFLINE",
-@@ -66,6 +68,8 @@ function tooltipText(variant: Icon) {
+@@ -66,6 +69,8 @@ function tooltipText(variant: Icon) {
      switch (variant) {
          case Icon.Globe:
              return _t("This room is public");
@@ -51,7 +28,7 @@ index 06ee20c..45111d0 100644
          case Icon.PresenceOnline:
              return _t("Online");
          case Icon.PresenceAway:
-@@ -173,7 +177,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -173,7 +178,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
          } else {
              // Track publicity
