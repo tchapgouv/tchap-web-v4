@@ -95,9 +95,7 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
 
-                // NOTE : unfortunately we cannot leave a room where access have been give to external users
-                // TODO : we need to find a way to remove a private room with external access (Admin API)
-                // cy.leaveRoom(roomId);
+                cy.leaveRoom(roomId);
             });
     });
 
@@ -118,10 +116,8 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
-
-                // NOTE : unfortunately we cannot leave a room where access have been give to external users
-                // TODO : we need to find a way to remove a private room with external access (Admin API)
-                // cy.leaveRoom(roomId);
+                
+                cy.leaveRoom(roomId);
             });
     });
 });
