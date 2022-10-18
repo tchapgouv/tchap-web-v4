@@ -1,0 +1,5 @@
+# VSCode ignore list : which files to ignore when searching.
+# By default it ignores everything in .gitignore.
+
+# Un-ignore /yarn-linked-dependencies
+!/yarn-linked-dependencies
