@@ -13,4 +13,9 @@ export default class TchapUIFeature {
      * This flag controls weither Terms and Conditions should be accepted automatically or not.
      */
     static autoAcceptTermsAndConditions = true;
+
+    /**
+     * This flag controls weither Email, Phone and Discovery UI should be displayed or not in General Settings.
+     */
+    static showEmailPhoneDiscoverySettings = false;
 }
