@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 06ee20c..056be6b 100644
+index 06ee20c..f6340e4 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -34,6 +34,8 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -15,7 +15,7 @@ index 06ee20c..056be6b 100644
      // Note: the names here are used in CSS class names
      None = "NONE", // ... except this one
      Globe = "GLOBE",
-+    Unlocked = "UNLOCKED", // :TCHAP: add the unlock icon for the private rooms
++    Forum = "FORUM", // :TCHAP: add the unlock icon for the forum rooms
      PresenceOnline = "ONLINE",
      PresenceAway = "AWAY",
      PresenceOffline = "OFFLINE",
@@ -23,7 +23,7 @@ index 06ee20c..056be6b 100644
      switch (variant) {
          case Icon.Globe:
              return _t("This room is public");
-+        case Icon.Unlocked: // :TCHAP: add the unlock icon for the private rooms
++        case Icon.Forum: // :TCHAP: add the unlock icon for the forum rooms
 +            return _t("This room is public");
          case Icon.PresenceOnline:
              return _t("Online");
@@ -35,7 +35,7 @@ index 06ee20c..056be6b 100644
 -            icon = this.isPublicRoom ? Icon.Globe : Icon.None;
 +            //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
 +            //:tchap: use our definition of public room instead (= forum) and use custom unlocked icon
-+            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Unlocked : Icon.None;
++            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Forum : Icon.None;
 +            //end :tchap:
              if (!this.isWatchingTimeline) {
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
