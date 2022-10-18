@@ -2,6 +2,8 @@
 Copyright 2021 DINUM
 */
 
+/* todo wrap classes in same overclass */
+
 .mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_forum::before,
 .mx_ExtraTile .mx_DecoratedRoomAvatar_icon_forum::before {
     mask-position: center;
@@ -10,6 +12,34 @@ Copyright 2021 DINUM
     background: var(--secondary-content);
     mask-image: url('../../../img/tchap/padlock-forum.svg');
     background-color: var(--forum-color);
+    bottom: -25%;
+    right: -25%;
+    width: 150%;
+    height: 150%;
+}
+
+.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_private::before,
+.mx_ExtraTile .mx_DecoratedRoomAvatar_icon_private::before {
+    mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    background: var(--secondary-content);
+    mask-image: url('../../../img/tchap/padlock-private.svg');
+    background-color: var(--private-color);
+    bottom: -25%;
+    right: -25%;
+    width: 150%;
+    height: 150%;
+}
+
+.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_external::before,
+.mx_ExtraTile .mx_DecoratedRoomAvatar_icon_external::before {
+    mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    background: var(--secondary-content);
+    mask-image: url('../../../img/tchap/padlock-external.svg');
+    background-color: var(--external-color);
     bottom: -25%;
     right: -25%;
     width: 150%;

@@ -11,7 +11,9 @@ import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
-    static getTchapRoomType(isEncrypted: boolean, tchapRoomAccessRule?: string): TchapRoomType {
+    static getTchapRoomType(room: Room): TchapRoomType { // todo fix unit test
+        const isEncrypted: boolean = this.isRoomEncrypted(room.roomId);
+        const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
         if (!isEncrypted) {
             return TchapRoomType.Forum;
         }
@@ -32,7 +34,7 @@ export default class TchapRoomUtils {
      * @param room
      * @returns string that matches of one TchapRoomAccessRule //todo or null? or empty?
      */
-    static getTchapRoomAccessRule(room: Room): string {
+    static getTchapRoomAccessRule(room: Room): TchapRoomAccessRule {
         return room.currentState.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent().rule;
     }
 
@@ -49,8 +51,7 @@ export default class TchapRoomUtils {
      * Helper method
      * @returns true of room is a Forum
      */
-    static isRoomOfTypeForum(roomId: string): boolean {
-        const isRoomEncrypted: boolean = TchapRoomUtils.isRoomEncrypted(roomId);//is this ressource consuming?
-        return TchapRoomUtils.getTchapRoomType(isRoomEncrypted) === TchapRoomType.Forum;
+    static isRoomOfTypeForum(room: Room): boolean {
+        return TchapRoomUtils.getTchapRoomType(room) === TchapRoomType.Forum;
     }
 }
