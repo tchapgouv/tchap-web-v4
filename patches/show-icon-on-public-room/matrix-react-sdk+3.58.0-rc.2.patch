@@ -1,5 +1,29 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss b/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss
+index 3c23045..097861e 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/avatars/_DecoratedRoomAvatar.pcss
+@@ -45,6 +45,19 @@ limitations under the License.
+         border-radius: 8px;
+     }
+ 
++    .mx_DecoratedRoomAvatar_icon_unlocked::before {
++        mask-position: center;
++        mask-size: contain;
++        mask-repeat: no-repeat;
++        background: $secondary-content;
++        mask-image: url('$(res)/img/unlocked.svg');
++        background-color: var(--forum-color);
++        bottom: -25%;
++        right: -25%;
++        width: 150%;
++        height: 150%;
++    }
++
+     .mx_DecoratedRoomAvatar_icon_globe::before {
+         mask-position: center;
+         mask-size: contain;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 06ee20c..c0ef39a 100644
+index 06ee20c..45111d0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -34,6 +34,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -10,15 +34,32 @@ index 06ee20c..c0ef39a 100644
  
  interface IProps {
      room: Room;
-@@ -173,7 +174,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -56,6 +57,7 @@ enum Icon {
+     // Note: the names here are used in CSS class names
+     None = "NONE", // ... except this one
+     Globe = "GLOBE",
++    Unlocked = "UNLOCKED", // :TCHAP: add the unlock icon for the private rooms
+     PresenceOnline = "ONLINE",
+     PresenceAway = "AWAY",
+     PresenceOffline = "OFFLINE",
+@@ -66,6 +68,8 @@ function tooltipText(variant: Icon) {
+     switch (variant) {
+         case Icon.Globe:
+             return _t("This room is public");
++        case Icon.Unlocked: // :TCHAP: add the unlock icon for the private rooms
++            return _t("This room is public");
+         case Icon.PresenceOnline:
+             return _t("Online");
+         case Icon.PresenceAway:
+@@ -173,7 +177,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
          } else {
              // Track publicity
 -            icon = this.isPublicRoom ? Icon.Globe : Icon.None;
 +            //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
-+            //:tchap: use our definition of public room instead (= forum)
-+            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Globe : Icon.None;
-+            //end of :tchap:
++            //:tchap: use our definition of public room instead (= forum) and use custom unlocked icon
++            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Unlocked : Icon.None;
++            //end :tchap:
              if (!this.isWatchingTimeline) {
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                  this.isWatchingTimeline = true;

@@ -2,7 +2,8 @@
   "show-icon-on-public-room": {
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/views/avatars/DecoratedRoomAvatar.tsx"
+      "src/components/views/avatars/DecoratedRoomAvatar.tsx",
+      "res/css/views/avatars/_DecoratedRoomAvatar.pcss"
     ]
   },
   "rename-exported-keys": {
