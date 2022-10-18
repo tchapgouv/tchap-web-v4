@@ -124,7 +124,7 @@ describe("Create Room", () => {
     });
 
     it("should allow us to create a DM with another user", () => {
-        const invitee = "E2e-Test-1-Morty [Beta]";
+        const invitee = "E2e-Test-1-Summer [Beta]";
 
         openCreateDMDialog().within(() => {
             // Fill name & topic
