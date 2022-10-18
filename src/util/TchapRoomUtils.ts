@@ -11,9 +11,14 @@ import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
-    static getTchapRoomType(room: Room): TchapRoomType { // todo fix unit test
+    static getTchapRoomType(room: Room): TchapRoomType {
         const isEncrypted: boolean = this.isRoomEncrypted(room.roomId);
         const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
+        return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule);
+    }
+
+    private static getTchapRoomTypeInternal(
+        isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule): TchapRoomType {
         if (!isEncrypted) {
             return TchapRoomType.Forum;
         }
@@ -45,13 +50,5 @@ export default class TchapRoomUtils {
      */
     static isRoomEncrypted(roomId: string): boolean {
         return MatrixClientPeg.get().isRoomEncrypted(roomId);
-    }
-
-    /**
-     * Helper method
-     * @returns true of room is a Forum
-     */
-    static isRoomOfTypeForum(room: Room): boolean {
-        return TchapRoomUtils.getTchapRoomType(room) === TchapRoomType.Forum;
     }
 }
