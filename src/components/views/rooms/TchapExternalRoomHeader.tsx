@@ -6,7 +6,6 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from '../../../@types/tchap';
 import TchapRoomUtils from '../../../util/TchapRoomUtils';
 
-
 export interface IProps {
     room?: Room;
 }
@@ -21,7 +20,7 @@ function useExternalAllowed(room: Room): boolean {
     //define the hook functions and initialize the state
     const [isExternalAllowed, setExternalAllowed] = useState(checkExternalAllowed(room));
 
-    //listen to events to refresh the value if needed 
+    //listen to events to refresh the value if needed
     useTypedEventEmitter(room.currentState, RoomStateEvent.Events, (ev: MatrixEvent) => {
         console.log(ev.getType());
         if (ev.getType() === TchapRoomAccessRulesEventId) {
