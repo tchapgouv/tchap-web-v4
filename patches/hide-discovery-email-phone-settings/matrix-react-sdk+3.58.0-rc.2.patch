@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index ffcd12f..889fabf 100644
+index ffcd12f..55e7675 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 @@ -52,6 +52,7 @@ import SetIdServer from "../../SetIdServer";
@@ -21,15 +21,7 @@ index ffcd12f..889fabf 100644
              (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
          ) {
              const emails = this.state.loading3pids
-@@ -468,6 +471,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
-         const plaf = PlatformPeg.get();
-         const supportsMultiLanguageSpellCheck = plaf.supportsSpellCheckSettings();
- 
-+        // :TCHAP: no need for users to edit the discovery section(`discoWarning` is used `discoverySection`)
-         const discoWarning = this.state.requiredPolicyInfo.hasTerms
-             ? <img
-                 className='mx_GeneralUserSettingsTab_warningIcon'
-@@ -487,13 +491,15 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -487,7 +490,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;
@@ -39,10 +31,3 @@ index ffcd12f..889fabf 100644
              discoverySection = <>
                  <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
                  { this.renderDiscoverySection() }
-             </>;
-         }
-         
-+
-         return (
-             <div className="mx_SettingsTab">
-                 <div className="mx_SettingsTab_heading">{ _t("General") }</div>
