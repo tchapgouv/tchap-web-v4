@@ -1,24 +1,42 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 06ee20c..c0ef39a 100644
+index 06ee20c..f6340e4 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-@@ -34,6 +34,7 @@ import TextWithTooltip from "../elements/TextWithTooltip";
+@@ -34,6 +34,8 @@ import TextWithTooltip from "../elements/TextWithTooltip";
  import DMRoomMap from "../../../utils/DMRoomMap";
  import { IOOBData } from "../../../stores/ThreepidInviteStore";
  import TooltipTarget from "../elements/TooltipTarget";
 +import TchapRoomUtils from "../../../../../../src/util/TchapRoomUtils";
++import "../../../../../../res/css/views/avatars/_TchapDecoratedRoomAvatar.pcss";
  
  interface IProps {
      room: Room;
-@@ -173,7 +174,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -56,6 +58,7 @@ enum Icon {
+     // Note: the names here are used in CSS class names
+     None = "NONE", // ... except this one
+     Globe = "GLOBE",
++    Forum = "FORUM", // :TCHAP: add the unlock icon for the forum rooms
+     PresenceOnline = "ONLINE",
+     PresenceAway = "AWAY",
+     PresenceOffline = "OFFLINE",
+@@ -66,6 +69,8 @@ function tooltipText(variant: Icon) {
+     switch (variant) {
+         case Icon.Globe:
+             return _t("This room is public");
++        case Icon.Forum: // :TCHAP: add the unlock icon for the forum rooms
++            return _t("This room is public");
+         case Icon.PresenceOnline:
+             return _t("Online");
+         case Icon.PresenceAway:
+@@ -173,7 +178,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
          } else {
              // Track publicity
 -            icon = this.isPublicRoom ? Icon.Globe : Icon.None;
 +            //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
-+            //:tchap: use our definition of public room instead (= forum)
-+            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Globe : Icon.None;
-+            //end of :tchap:
++            //:tchap: use our definition of public room instead (= forum) and use custom unlocked icon
++            icon = TchapRoomUtils.isRoomOfTypeForum(this.props.room.roomId) ? Icon.Forum : Icon.None;
++            //end :tchap:
              if (!this.isWatchingTimeline) {
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                  this.isWatchingTimeline = true;
