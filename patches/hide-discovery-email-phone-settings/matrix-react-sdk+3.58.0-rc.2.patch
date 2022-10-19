@@ -1,0 +1,33 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+index ffcd12f..55e7675 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+@@ -52,6 +52,7 @@ import SetIdServer from "../../SetIdServer";
+ import SetIntegrationManager from "../../SetIntegrationManager";
+ import ToggleSwitch from "../../../elements/ToggleSwitch";
+ import { IS_MAC } from "../../../../../Keyboard";
++import TchapUIFeature from '../../../../../../../../src/util/TchapUIFeature';
+ 
+ interface IProps {
+     closeSettingsFn: () => void;
+@@ -318,7 +319,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         // validate 3PID ownership even if we're just adding to the homeserver only.
+         // For newer homeservers with separate 3PID add and bind methods (MSC2290),
+         // there is no such concern, so we can always show the HS account 3PIDs.
+-        if (SettingsStore.getValue(UIFeature.ThirdPartyID) &&
++        // :TCHAP: no need for users to view/edit their email or phone (TchapUIFeature.showEmailPhoneDiscoverySettings)
++        if (TchapUIFeature.showEmailPhoneDiscoverySettings &&
++            SettingsStore.getValue(UIFeature.ThirdPartyID) &&
+             (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
+         ) {
+             const emails = this.state.loading3pids
+@@ -487,7 +490,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         }
+ 
+         let discoverySection;
+-        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
++        // :TCHAP: no need for users to edit the discovery section (TchapUIFeature.showEmailPhoneDiscoverySettings)
++        if (TchapUIFeature.showEmailPhoneDiscoverySettings && SettingsStore.getValue(UIFeature.IdentityServer)) {
+             discoverySection = <>
+                 <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
+                 { this.renderDiscoverySection() }
