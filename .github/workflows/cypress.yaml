@@ -40,6 +40,8 @@ jobs:
           start: yarn start
           #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
           wait-on: 'http://localhost:8080'
+          # wait for 3min, the build is long
+          wait-on-timeout: 180
           # record: true # todo record to dashboard, see action's doc
           command: 'yarn test:cypress'
         env:
