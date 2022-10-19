@@ -153,5 +153,9 @@
   "an uppercase letter": {
     "en": "an uppercase letter",
     "fr": "une lettre majuscule"
+  },
+  "External users allowed": {
+    "en": "external users allowed",
+    "fr": "ouvert aux externes"
   }
 }

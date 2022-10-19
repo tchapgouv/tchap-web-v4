@@ -1,8 +1,7 @@
-import "../../../../res/css/views/rooms/_TchapExternalRoomHeader.pcss";
-
 import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
 import { useTypedEventEmitter } from 'matrix-react-sdk/src/hooks/useEventEmitter';
 import React, { useEffect, useState } from 'react';
+import { _t } from "matrix-react-sdk/src/languageHandler";
 
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from '../../../@types/tchap';
 import TchapRoomUtils from '../../../util/TchapRoomUtils';
@@ -40,12 +39,13 @@ function useExternalAllowed(room: Room): boolean {
 export default function TchapExternalRoomHeader({
     room,
 }: IProps) {
+    //configure the use hook for this state variable
     const isExternalAllowed = useExternalAllowed(room);
 
     return (
         isExternalAllowed ?
             <div className="mx_room tc_RoomHeader_external">
-                <span>ouvert aux externes</span>
+                <span>{ _t("External users allowed") }</span>
             </div>
             : null);
 }
