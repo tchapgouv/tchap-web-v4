@@ -76,6 +76,7 @@ describe("Create Room", () => {
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".tc_RoomHeader_external").should('not.exist');
     });
 
     //check that the mention "open to external users" is displayed
