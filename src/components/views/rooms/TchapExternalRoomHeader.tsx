@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from '../../../@types/tchap';
 import TchapRoomUtils from '../../../util/TchapRoomUtils';
 
-//import "../../../../res/css/views/rooms/_TchapRoomHeader.pcss";
+import "../../../../res/css/views/rooms/_TchapExternalRoomHeader.pcss";
 
 export interface IProps {
     room?: Room;
@@ -43,7 +43,7 @@ export default function TchapExternalRoomHeader({
 
     return (
         isExternalAllowed ?
-            <div className="tc_RoomHeader_external">
+            <div className="mx_room tc_RoomHeader_external">
                 <span>ouvert aux externes</span>
             </div>
             : null);
