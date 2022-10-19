@@ -43,7 +43,7 @@ export default function TchapExternalRoomHeader({
 
     return (
         isExternalAllowed ?
-            <div className="mx_room tc_RoomHeader_external">
+            <div className="tc_RoomHeader_external">
                 <span>{ _t("External users allowed") }</span>
             </div>
             : null);

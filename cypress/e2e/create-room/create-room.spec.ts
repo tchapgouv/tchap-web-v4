@@ -78,8 +78,8 @@ describe("Create Room", () => {
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
 
-    // fixme: pas d'indicateur d'externes en v4
-    it.skip("should allow us to create a private room with name and externs allowed", () => {
+    //check that the mention "open to external users" is displayed
+    it("should allow us to create a private room with name and externs allowed", () => {
         const name = "Test room 1 externes";
 
         openCreateRoomDialog().within(() => {
@@ -99,6 +99,7 @@ describe("Create Room", () => {
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".tc_RoomHeader_external").contains("ouvert aux externes");
     });
 
     it("should allow us to create a public room with name", () => {
