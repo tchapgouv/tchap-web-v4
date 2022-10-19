@@ -1,29 +1,28 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-index 80e3bfd..724fb7c 100644
+index 80e3bfd..5c7cb2c 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-@@ -259,3 +259,20 @@ limitations under the License.
-         overflow: hidden;
-     }
+@@ -149,6 +149,20 @@ limitations under the License.
+     cursor: pointer;
  }
-+
-+.mx_RoomHeader{
-+    .tc_RoomHeader_external {
-+        $lineHeight: $font-13px;
-+        $lines: 2;
-+        color: orange;
-+        width: 80px;
-+        font-weight: 400;
-+        font-size: $font-13px;
-+        line-height: $lineHeight;
-+        max-height: calc($lineHeight * $lines);
-+        overflow: hidden;
-+        -webkit-line-clamp: $lines; /* See: https://drafts.csswg.org/css-overflow-3/#webkit-line-clamp */
-+        -webkit-box-orient: vertical;
-+        display: -webkit-box;        
-+    }
+ 
++.tc_RoomHeader_external {
++    color: orange;
++    width: 80px;
++    font-weight: 400;
++    font-size: 1.3rem;
++    line-height: 1.3rem;
++    max-height: calc(1.3rem * 2);
++    overflow: hidden;
++    -webkit-line-clamp: 2;
++    -webkit-box-orient: vertical;
++    display: -webkit-box;        
 +}
-\ No newline at end of file
++
++
+ .mx_RoomHeader_topic {
+     $lineHeight: $font-16px;
+     $lines: 2;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 index 0d01e03..50ec61c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx

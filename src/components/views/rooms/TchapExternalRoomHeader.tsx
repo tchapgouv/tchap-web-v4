@@ -1,3 +1,5 @@
+import "../../../../res/css/views/rooms/_TchapExternalRoomHeader.pcss";
+
 import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
 import { useTypedEventEmitter } from 'matrix-react-sdk/src/hooks/useEventEmitter';
 import React, { useEffect, useState } from 'react';
@@ -5,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from '../../../@types/tchap';
 import TchapRoomUtils from '../../../util/TchapRoomUtils';
 
-import "../../../../res/css/views/rooms/_TchapExternalRoomHeader.pcss";
 
 export interface IProps {
     room?: Room;
