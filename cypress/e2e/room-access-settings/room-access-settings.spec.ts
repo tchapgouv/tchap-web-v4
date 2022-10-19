@@ -101,7 +101,7 @@ describe("Check room access settings", () => {
             });
     });
 
-    it("allow access for external users on a private room", () => {
+    it.only("allow access for external users on a private room", () => {
         const roomName = "test/"+today+"/private_room_change_external_access_settings"+RandomUtils.generateRandom(4);
 
         RoomUtils.createPrivateRoom(roomName)
@@ -118,6 +118,9 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-checked', 'true');
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
+
+                //assert room header is updated
+                cy.get(".tc_RoomHeader_external").contains("ouvert aux externes");
 
                 // NOTE : unfortunately we cannot leave a room where access have been give to external users
                 // TODO : we need to find a way to remove a private room with external access (Admin API)
