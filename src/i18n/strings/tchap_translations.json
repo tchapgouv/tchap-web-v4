@@ -25,6 +25,18 @@
     "en": "Forum room",
     "fr": "Salon forum"
   },
+  "This room is private": {
+    "en": "This room is private",
+    "fr": "Ce salon est privé"
+  },
+  "This room is private and open to external users": {
+    "en": "This room is private and open to external users",
+    "fr": "Ce salon est privé et ouvert aux externes"
+  },
+  "This room is a public forum": {
+    "en": "This room is a public forum",
+    "fr": "Ce salon est un forum public"
+  },
   "Accessible to all users by invitation from an administrator.": {
     "en": "Accessible to all users by invitation from an administrator.",
     "fr": "Accessible à tous les utilisateurs sur invitation d'un administrateur."

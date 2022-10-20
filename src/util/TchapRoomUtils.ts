@@ -11,7 +11,14 @@ import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
-    static getTchapRoomType(isEncrypted: boolean, tchapRoomAccessRule?: string): TchapRoomType {
+    static getTchapRoomType(room: Room): TchapRoomType {
+        const isEncrypted: boolean = this.isRoomEncrypted(room.roomId);
+        const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
+        return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule);
+    }
+
+    private static getTchapRoomTypeInternal(
+        isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule): TchapRoomType {
         if (!isEncrypted) {
             return TchapRoomType.Forum;
         }
@@ -32,7 +39,7 @@ export default class TchapRoomUtils {
      * @param room
      * @returns string that matches of one TchapRoomAccessRule //todo or null? or empty?
      */
-    static getTchapRoomAccessRule(room: Room): string {
+    static getTchapRoomAccessRule(room: Room): TchapRoomAccessRule {
         return room.currentState.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent().rule;
     }
 
@@ -43,14 +50,5 @@ export default class TchapRoomUtils {
      */
     static isRoomEncrypted(roomId: string): boolean {
         return MatrixClientPeg.get().isRoomEncrypted(roomId);
-    }
-
-    /**
-     * Helper method
-     * @returns true of room is a Forum
-     */
-    static isRoomOfTypeForum(roomId: string): boolean {
-        const isRoomEncrypted: boolean = TchapRoomUtils.isRoomEncrypted(roomId);//is this ressource consuming?
-        return TchapRoomUtils.getTchapRoomType(isRoomEncrypted) === TchapRoomType.Forum;
     }
 }
