@@ -63,6 +63,7 @@
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
         "MessageComposerInput.showPollsButton": false,
+        "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "custom_themes": [
             {
