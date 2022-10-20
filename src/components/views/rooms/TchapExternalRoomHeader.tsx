@@ -1,6 +1,6 @@
 import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
 import { useTypedEventEmitter } from 'matrix-react-sdk/src/hooks/useEventEmitter';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { _t } from "matrix-react-sdk/src/languageHandler";
 
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from '../../../@types/tchap';
@@ -27,10 +27,6 @@ function useExternalAllowed(room: Room): boolean {
             setExternalAllowed(checkExternalAllowed(room));
         }
     });
-    //refresh the state after rendering
-    useEffect(() => {
-        setExternalAllowed(checkExternalAllowed(room));
-    }, [room]);// Only re-run the effect if room changes
 
     return isExternalAllowed;
 }
