@@ -20,7 +20,8 @@ if (!process.env.VERSION) {
 }
 
 const cssThemes = {
-    "theme-light": "../../res/themes/tchap-light/css/tchap-light.pcss"
+    "theme-light": "./res/themes/tchap-light/css/tchap-light.pcss"//this path is for building
+    //"theme-light": "../../res/themes/tchap-light/css/tchap-light.pcss" // this path is for hot reload
 };
 
 function getActiveThemes() {
