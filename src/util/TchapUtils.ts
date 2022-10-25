@@ -122,14 +122,4 @@ export default class TchapUtils {
         const cli = MatrixClientPeg.get();
         return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
     }
-
-    /**
-     * Generate username from email, to make the matrixId with.
-     * Example : for matrixId @rick.sanchez-crazy.gouv.fr:agent.ssi.tchap.gouv.fr, the username is rick.sanchez-crazy.gouv.fr
-     * @param email example : rick.sanchez@crazy.gouv.fr. Email can be invalid at this point.
-     */
-    static makeUsername = (email: string) => {
-        // todo : should this be more complicated ? Go check in v2 code.
-        return email.replace("@", "-");
-    };
 }
