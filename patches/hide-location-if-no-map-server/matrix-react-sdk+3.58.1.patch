@@ -1,38 +1,21 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
-index cf0fe3f..c55d062 100644
+index cf0fe3f..41a3bc0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
 @@ -58,6 +58,7 @@ import {
      startNewVoiceBroadcastRecording,
      VoiceBroadcastRecordingsStore,
  } from '../../../voice-broadcast';
-+import { findMapStyleUrl } from '../../../utils/location'; // :TCHAP:
++import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
  
  let instanceCount = 0;
  
-@@ -472,6 +473,16 @@ export default class MessageComposer extends React.Component<IProps, IState> {
-         );
- 
-         const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
-+        // :TCHAP: do not show location button if map server is not configured.
-+        let isMapConfigured;
-+        try {
-+            findMapStyleUrl();
-+            isMapConfigured = true;
-+        } catch (e) {
-+            isMapConfigured = false;
-+        }
-+        const showLocationButton = !window.electron && isMapConfigured;
-+        // end :TCHAP:
- 
-         const classes = classNames({
-             "mx_MessageComposer": true,
-@@ -502,7 +513,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
+@@ -502,7 +503,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                                  }
                              }}
                              setStickerPickerOpen={this.setStickerPickerOpen}
 -                            showLocationButton={!window.electron}
-+                            showLocationButton={showLocationButton} // :TCHAP: showLocationButton only if map server is configured.
++                            showLocationButton={!window.electron && TchapUtils.isMapConfigured() } // :TCHAP: showLocationButton only if map server is configured.
                              showPollsButton={this.state.showPollsButton}
                              showStickersButton={this.showStickersButton}
                              toggleButtonMenu={this.toggleButtonMenu}

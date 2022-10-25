@@ -2,6 +2,7 @@ import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import SdkConfig from "matrix-react-sdk/src/SdkConfig";
 import AutoDiscoveryUtils from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServerConfig";
+import { findMapStyleUrl } from 'matrix-react-sdk/src/utils/location';
 
 /**
  * Tchap utils.
@@ -121,5 +122,18 @@ export default class TchapUtils {
     static async isCrossSigningSupportedByServer(): Promise<boolean> {
         const cli = MatrixClientPeg.get();
         return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
+    }
+
+    /**
+     *
+     * @returns true is a map tile server is present in config or wellknown.
+     */
+    static isMapConfigured(): boolean {
+        try {
+            findMapStyleUrl();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 }
