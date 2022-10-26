@@ -20,8 +20,11 @@ if (!process.env.VERSION) {
 }
 
 const cssThemes = {
-    "theme-light": "./res/themes/tchap-light/css/tchap-light.pcss"//this path is for building
+    "theme-light": "./res/themes/tchap-light/css/tchap-light.pcss", //this path is for building
+    "theme-dark": "./res/themes/tchap-dark/css/tchap-dark.pcss" //this path is for building
+
     //"theme-light": "../../res/themes/tchap-light/css/tchap-light.pcss" // this path is for hot reload
+    //"theme-dark": "../../res/themes/tchap-dark/css/tchap-dark.pcss" // this path is for hot reload
 };
 
 function getActiveThemes() {
@@ -32,7 +35,7 @@ function getActiveThemes() {
     // Browsers recover, but e2e tests crash, so we add both themes in default here.
     //const theme = process.env.MATRIX_THEMES ?? 'light,light-custom';
     //return theme.split(',').map(x => x.trim()).filter(Boolean);
-    return ["light"];
+    return ["light", "dark"];
 }
 
 // See docs/customisations.md
