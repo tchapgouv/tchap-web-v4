@@ -59,6 +59,11 @@ export default class TchapUtils {
         return homeServerList[Math.floor(Math.random() * homeServerList.length)];
     };
 
+    /**
+     * Find the homeserver corresponding to the given email.
+     * @param email Note : if email is invalid, this function still works and returns the externs server. (todo : fix)
+     * @returns
+     */
     static fetchHomeserverForEmail = async (email: string): Promise<void | {base_url: string, server_name: string}> => {
         const randomHomeServer = this.randomHomeServer();
         const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
@@ -83,6 +88,12 @@ export default class TchapUtils {
             });
     };
 
+    /**
+     * Make a ValidatedServerConfig from the server urls.
+     * Todo : merge this function with fetchHomeserverForEmail, they are always used together anyway.
+     * @param
+     * @returns
+     */
     static makeValidatedServerConfig = (serverConfig): ValidatedServerConfig => {
         const discoveryResult = {
             "m.homeserver": {
