@@ -122,4 +122,27 @@ export default class TchapUtils {
         const cli = MatrixClientPeg.get();
         return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
     }
+
+    /**
+     * @returns string The url to pass in next_link during registration. Compared to element-web, the hostname
+     * is the homeserver instead of the tchap-web server. This changes the flow to avoid the redirection to
+     * tchap-web, because tchap-web gets a "M_THREEPID_IN_USE" error from backend which is confusing.
+     * We should fix this bug and remove this custom function.
+     */
+    static makeTchapRegistrationUrl(
+        params: {client_secret: string, hs_url: string, is_url: string, session_id: string}): string {
+        let url: string = params.hs_url + window.location.pathname + '#/register';
+
+        const keys = Object.keys(params);
+        for (let i = 0; i < keys.length; ++i) {
+            if (i === 0) {
+                url += '?';
+            } else {
+                url += '&';
+            }
+            const k = keys[i];
+            url += k + '=' + encodeURIComponent(params[k]);
+        }
+        return url;
+    }
 }
