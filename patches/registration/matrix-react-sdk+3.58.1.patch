@@ -71,7 +71,7 @@ index b577011..d778e6e 100644
                  </div>
                  <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index d1f7c9a..36d09b5 100644
+index d1f7c9a..4591d9d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -262,7 +262,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
@@ -95,7 +95,7 @@ index d1f7c9a..36d09b5 100644
              },
              {
                  key: "email",
-@@ -546,9 +549,11 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -546,18 +549,22 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>
@@ -103,7 +103,23 @@ index d1f7c9a..36d09b5 100644
                      <div className="mx_AuthBody_fieldRow">
                          { this.renderUsername() }
                      </div>
+-                    <div className="mx_AuthBody_fieldRow">
+-                        { this.renderPassword() }
+-                        { this.renderPasswordConfirm() }
+-                    </div>
 +                    end :TCHAP: */}
++                    { /** :TCHAP: switch fields : email first, password under */}
                      <div className="mx_AuthBody_fieldRow">
-                         { this.renderPassword() }
-                         { this.renderPasswordConfirm() }
+                         { this.renderEmail() }
+                         { this.renderPhoneNumber() }
+                     </div>
+-                    { emailHelperText }
++                    <div className="mx_AuthBody_fieldRow">
++                        { this.renderPassword() }
++                        { this.renderPasswordConfirm() }
++                    </div>
++                    { /* end :TCHAP: */}
++                    { /** :TCHAP: remove helper text, adds confusion since email=username in tchap. // emailHelperText */ }
+                     { registerButton }
+                 </form>
+             </div>
