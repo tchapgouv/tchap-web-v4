@@ -109,7 +109,7 @@
         "feature_video_rooms" : false
     },
     "default_federate": true,
-    "default_theme": "custom-Tchap",
+    "default_theme": "light",
     "roomDirectory": {
         "servers": [
             "agent.tchap.gouv.fr",
@@ -166,46 +166,7 @@
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
         "custom_themes": [
-            {
-                "name": "Tchap",
-                "is_dark": false,
-                "colors": {
-                    "accent": "#000091",
-                    "primary-color": "#4C69F6",
-                    "warning-color": "#E1000F",
-                    "private-color": "#eb5757",
-                    "external-color": "#f07a12",
-                    "forum-color": "#27ae60",
-                    "sidebar-color": "#c0d8ef",
-                    "roomlist-background-color": "#EDF1F7",
-                    "roomlist-text-color": "#2e2f32",
-                    "roomlist-text-secondary-color": "#61708b",
-                    "roomlist-highlights-color": "#ffffff",
-                    "roomlist-separator-color": "#e3e8f0",
-                    "timeline-background-color": "#ffffff",
-                    "timeline-text-color": "#2e2f32",
-                    "timeline-text-secondary-color": "#61708b",
-                    "timeline-highlights-color": "#f3f8fd",
-                    "togglesw-off-color": "#c1c9d6",
-                    "eventbubble-self-bg": "#e4e4f3",
-                    "eventbubble-others-bg": "#f4f4f4",
-                    "username-colors": [
-                        "#000091",
-                        "#000091",
-                        "#000091",
-                        "#000091",
-                        "#000091",
-                        "#000091",
-                        "#000091",
-                        "#000091"
-                    ],
-                    "avatar-background-colors": [
-                        "#8F96A4",
-                        "#8F96A4",
-                        "#8F96A4"
-                    ]
-                }
-            }
+            
         ]
     },
     "branding": {
