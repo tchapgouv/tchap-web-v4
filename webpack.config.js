@@ -20,14 +20,26 @@ if (!process.env.VERSION) {
 }
 
 const cssThemes = {
+    // CSS themes
+    //"theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
+    //"theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
+    //"theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
+    //"theme-light-high-contrast": "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    //"theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
+    //"theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
+    //"theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
     //:tchap: use path from our project
     "theme-light": "./res/themes/tchap-light/css/tchap-light.pcss",
     "theme-dark": "./res/themes/tchap-dark/css/tchap-dark.pcss",
 };
 
 function getActiveThemes() {
-    //:tchap: activate only light and dark themes
-    return ["light", "dark"];
+    // :old: :TCHAP: We need both themes to avoid "unknown theme light-custom" or "unknown theme light"
+    // :old: :TCHAP: being thrown on login page.
+    // :old: :TCHAP: Browsers recover, but e2e tests crash, so we add both themes in default here.
+    // Default to `light,dark` theme when the MATRIX_THEMES environment variable is not defined.
+    const theme = process.env.MATRIX_THEMES ?? 'light,dark';
+    return theme.split(',').map(x => x.trim()).filter(Boolean);
 }
 
 // See docs/customisations.md
