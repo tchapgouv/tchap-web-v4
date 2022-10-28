@@ -20,6 +20,7 @@ module.exports = {
     overrides: [{
         files: [
             "src/**/*.{ts,tsx}",
+            "test/**/*.{ts,tsx}",
             "module_system/**/*.{ts,tsx}",
             // :TCHAP: Lint our cypress files, copied from react-sdk. React-sdk lints them too, so we keep up !
             "cypress/**/*.ts",
