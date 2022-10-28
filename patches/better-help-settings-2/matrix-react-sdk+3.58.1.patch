@@ -1,8 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 7df389f..4523228 100644
+index 7df389f..e85bec5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-@@ -88,12 +88,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
+ import { sendSentryReport } from "../../../sentry";
+ import defaultDispatcher from '../../../dispatcher/dispatcher';
+ import { Action } from '../../../dispatcher/actions';
++import { MatrixClientPeg } from '../../../MatrixClientPeg';  // :TCHAP:
+ 
+ interface IProps {
+     onFinished: (success: boolean) => void;
+@@ -88,12 +89,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
      };
  
      private onSubmit = (): void => {
@@ -24,7 +32,45 @@ index 7df389f..4523228 100644
  
          const userText =
              (this.state.text.length > 0 ? this.state.text + '\n\n': '') + 'Issue: ' +
-@@ -205,7 +214,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -102,11 +112,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+         this.setState({ busy: true, progress: null, err: null });
+         this.sendProgressCallback(_t("Preparing to send logs"));
+ 
+-        sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+-            userText,
+-            sendLogs: true,
+-            progressCallback: this.sendProgressCallback,
+-            labels: this.props.label ? [this.props.label] : [],
++        // :TCHAP: customise report : add email, prefix with "tchap-web"
++        const client = MatrixClientPeg.get();
++        client.getThreePids().then(result => {
++            const customFields = {};
++            result.threepids.forEach(threepid => {
++                return customFields[threepid.medium] = threepid.address;
++            });
++            return customFields;
++        }).then(customFields => {
++            return sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
++                userText,
++                sendLogs: true,
++                progressCallback: this.sendProgressCallback,
++                labels: this.props.label ? [this.props.label] : [],
++                customApp: 'tchap-web', // :TCHAP:
++                customFields: customFields, // :TCHAP:
++            });
++            // end :TCHAP:
+         }).then(() => {
+             if (!this.unmounted) {
+                 this.props.onFinished(false);
+@@ -138,6 +161,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                 sendLogs: true,
+                 progressCallback: this.downloadProgressCallback,
+                 labels: this.props.label ? [this.props.label] : [],
++                customApp: 'tchap-web', // :TCHAP: we don't add email here. You know your own email already.
+             });
+ 
+             this.setState({
+@@ -205,7 +229,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              <BaseDialog
                  className="mx_BugReportDialog"
                  onFinished={this.onCancel}
@@ -33,7 +79,7 @@ index 7df389f..4523228 100644
                  contentId='mx_Dialog_content'
              >
                  <div className="mx_Dialog_content" id='mx_Dialog_content'>
-@@ -218,6 +227,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -218,6 +242,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                              "and the usernames of other users. They do not contain messages.",
                          ) }
                      </p>
@@ -41,7 +87,7 @@ index 7df389f..4523228 100644
                      <p><b>
                          { _t(
                              "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.",
-@@ -225,29 +235,38 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -225,29 +250,38 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                              {
                                  a: (sub) => <a
                                      target="_blank"
@@ -82,7 +128,7 @@ index 7df389f..4523228 100644
                      <Field
                          className="mx_BugReportDialog_field_input"
                          element="textarea"
-@@ -264,13 +283,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -264,13 +298,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                      />
                      { progress }
                      { error }
