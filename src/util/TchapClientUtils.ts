@@ -2,10 +2,8 @@ import BasePlatform from "matrix-react-sdk/src/BasePlatform";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 
-export default class TchapClientUtils {
+export default class TchapVersionManagement {
     static SYNC_STORE_NAME = "matrix-js-sdk:riot-web-sync";
-
-
 
     /**
      * replicate the behaviour of the button Clear Cache and Reload
@@ -61,18 +59,27 @@ export default class TchapClientUtils {
 
     static VERSION_APP_KEY = "tchap_app_version";
 
+    /**
+     * Save app version in local storage
+     * ie : tchap_app_version = 4.0.5_1.11.10
+     * @param platform initiated platform
+     */
     public static async saveAppVersion(platform: BasePlatform) {
         const localStorage = window.localStorage;
         if (localStorage) {
             const version: string = await platform.getAppVersion();
-            localStorage.setItem(TchapClientUtils.VERSION_APP_KEY, version);
+            localStorage.setItem(TchapVersionManagement.VERSION_APP_KEY, version);
         }
     }
 
+    /**
+     * returns app version stored in local storage
+     * @returns string, app version in semver form : 4.0.5_1.11.10
+     */
     public static getAppVersion(): string {
         const localStorage = window.localStorage;
         if (localStorage) {
-            return localStorage && localStorage.getItem(TchapClientUtils.VERSION_APP_KEY);
+            return localStorage && localStorage.getItem(TchapVersionManagement.VERSION_APP_KEY);
         } else {
             return "unknown";
         }

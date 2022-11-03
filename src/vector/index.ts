@@ -23,7 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
 import './modernizr';
-import { attachRefreshHandler, attachHandler, doesNeedRefresh, saveAppVersionInLocalStorage } from "../app/initTchap";
+import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage } from "../app/initTchap";
 
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
@@ -134,8 +134,8 @@ async function start() {
             indexedDB = window.indexedDB;
         } catch (e) {}
 
-        const needRefresh = await doesNeedRefresh(indexedDB);
-        console.log(`:TCHAP: queue a hard clear cache and reload for this version? ${needRefresh}`);
+        const needRefreshForV4 = await needsRefreshForVersion4(indexedDB);
+        console.log(`:TCHAP: queue a hard clear cache and reload for this version? ${needRefreshForV4}`);
         //:tchap: end
 
         // don't try to redirect to the native apps if we're
@@ -238,10 +238,10 @@ async function start() {
         await settled(persistLogsPromise);
 
         //:tchap attach handler
-        attachHandler();
+        queueOverideUserSettings();
 
-        if (needRefresh) {
-            attachRefreshHandler();
+        if (needRefreshForV4) {
+            queueClearCacheAndReload();
         }
         //end of :tchap:
 
