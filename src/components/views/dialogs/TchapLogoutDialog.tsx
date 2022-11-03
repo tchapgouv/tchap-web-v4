@@ -260,39 +260,6 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                         </div>
                     </div>
                 );
-
-                // dialogContent = <div>
-                //     <div className="mx_Dialog_content" id='mx_Dialog_content'>
-                //         { description }
-                //     </div>
-                //     { /** :TCHAP: do not suggest key backup. Suggest exporting keys as primary method.
-                //     <DialogButtons primaryButton={setupButtonCaption}
-                //         hasCancel={false}
-                //         onPrimaryButtonClick={this.onSetRecoveryMethodClick}
-                //         focus={true}
-                //     >
-                //         <button onClick={this.onLogoutConfirm}>
-                //             { _t("I don't want my encrypted messages") }
-                //         </button>
-                //     </DialogButtons>
-                //     <details>
-                //         <summary>{ _t("Advanced") }</summary>
-                //         <p><button onClick={this.onExportE2eKeysClicked}>
-                //             { _t("Manually export keys") }
-                //         </button></p>
-                //     </details>
-                //     */ }
-                //     <DialogButtons primaryButton={_t("Manually export keys")}
-                //         hasCancel={false}
-                //         onPrimaryButtonClick={this.onExportE2eKeysClicked}
-                //         focus={true}
-                //     >
-                //         <button onClick={this.onLogoutConfirm}>
-                //             { _t("I don't want my encrypted messages") }
-                //         </button>
-                //     </DialogButtons>
-                //     { /** end :TCHAP: */ }
-                // </div>;
             }
             // Not quite a standard question dialog as the primary button cancels
             // the action and does something else instead, whilst non-default button
