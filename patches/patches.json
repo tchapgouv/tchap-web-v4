@@ -96,6 +96,13 @@
       "src/components/views/auth/PasswordLogin.tsx"
     ]
   },
+  "registration": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/auth/Registration.tsx",
+      "src/components/views/auth/RegistrationForm.tsx"
+    ]
+  },
   "password-policy": {
     "package": "matrix-react-sdk",
     "files": [
