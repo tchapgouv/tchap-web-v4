@@ -19,14 +19,12 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { defaultDispatcher } from "matrix-react-sdk/src/dispatcher/dispatcher";
-import { ActionPayload } from "matrix-react-sdk/src/dispatcher/payloads";
 
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
 import './modernizr';
-import TchapUserSettings from "../util/TchapUserSettings";
-
+import TchapClientUtils from "../util/TchapClientUtils";
+import { attachRefreshHandler, attachVersionAppHandler, attachOverideUsersOptionHandler } from "../app/initTchap";
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
 // in webpack.config.js
@@ -130,6 +128,15 @@ async function start() {
         await settled(rageshakePromise);
 
         const fragparts = parseQsFromFragment(window.location);
+        //:tchap: get the indexedDB store version
+        let indexedDB;
+        try {
+            indexedDB = window.indexedDB;
+        } catch (e) {}
+
+        const needRefresh = await TchapClientUtils.doesNeedRefresh(indexedDB);
+        console.log(`:TCHAP: queue a hard clear cache and reload for this version? ${needRefresh}`);
+        //:tchap: end
 
         // don't try to redirect to the native apps if we're
         // verifying a 3pid (but after we've loaded the config)
@@ -227,17 +234,14 @@ async function start() {
         // the process, making this the first time we check that it did something.
         await settled(persistLogsPromise);
 
-        //:tchap: override user settings after the client init
-        const registerId = defaultDispatcher.register(
-            (payload: ActionPayload) => {
-                if (payload.action === "client_started") {
-                    //override user settings
-                    TchapUserSettings.override();
-                    //unregister callback once the work is done
-                    defaultDispatcher.unregister(registerId);
-                }
-            },
-        );
+        //:tchap attach handler
+        attachOverideUsersOptionHandler();
+
+        attachVersionAppHandler();
+
+        if (needRefresh) {
+            attachRefreshHandler();
+        }
         //end of :tchap:
 
         // Finally, load the app. All of the other react-sdk imports are in this file which causes the skinner to
