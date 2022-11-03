@@ -5,30 +5,7 @@ import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 export default class TchapClientUtils {
     static SYNC_STORE_NAME = "matrix-js-sdk:riot-web-sync";
 
-    /**
-     * Determine weither the app needs a refresh after loading
-     * @param indexedDB the indexDb interface
-     * @returns Promise(true) if a refresh is needed, Promise(false) in other cases
-     */
-    public static async doesNeedRefresh(indexedDB: IDBFactory): Promise<boolean> {
-        if (!indexedDB) {
-            Promise.reject("indexDb is undefined");
-        }
-        //read version of tchap app in localstorage, if it does start with 4, don't refresh
-        if (TchapClientUtils.getAppVersion() && TchapClientUtils.getAppVersion().startsWith("4")) {
-            return Promise.resolve(false);
-        }
 
-        try {
-            //read version of matrix-js-sdk:riot-web-sync, if it is older than version 4, refresh is needed
-            const version = await TchapClientUtils.getStoreVersion(indexedDB, TchapClientUtils.SYNC_STORE_NAME);
-            return Promise.resolve(version < 4);
-        } catch (error) {
-            //if store did not exists or a technical error occured do not refresh (safety first)
-            console.warn(error);
-            return Promise.resolve(false);
-        }
-    }
 
     /**
      * replicate the behaviour of the button Clear Cache and Reload
@@ -94,6 +71,10 @@ export default class TchapClientUtils {
 
     public static getAppVersion(): string {
         const localStorage = window.localStorage;
-        return localStorage && localStorage.getItem(TchapClientUtils.VERSION_APP_KEY);
+        if (localStorage) {
+            return localStorage && localStorage.getItem(TchapClientUtils.VERSION_APP_KEY);
+        } else {
+            return "unknown";
+        }
     }
 }

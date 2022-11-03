@@ -23,8 +23,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
 import './modernizr';
-import TchapClientUtils from "../util/TchapClientUtils";
-import { attachRefreshHandler, attachVersionAppHandler, attachOverideUsersOptionHandler } from "../app/initTchap";
+import { attachRefreshHandler, attachHandler, doesNeedRefresh, saveAppVersionInLocalStorage } from "../app/initTchap";
+
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
 // in webpack.config.js
@@ -128,13 +128,13 @@ async function start() {
         await settled(rageshakePromise);
 
         const fragparts = parseQsFromFragment(window.location);
-        //:tchap: get the indexedDB store version
+        //:tchap: determine if a hard refresh is needed
         let indexedDB;
         try {
             indexedDB = window.indexedDB;
         } catch (e) {}
 
-        const needRefresh = await TchapClientUtils.doesNeedRefresh(indexedDB);
+        const needRefresh = await doesNeedRefresh(indexedDB);
         console.log(`:TCHAP: queue a hard clear cache and reload for this version? ${needRefresh}`);
         //:tchap: end
 
@@ -161,7 +161,10 @@ async function start() {
         // load config requires the platform to be ready
         const loadConfigPromise = loadConfig();
         await settled(loadConfigPromise); // wait for it to settle
-        // keep initialising so that we can show any possible error with as many features (theme, i18n) as possible
+
+        //:tchap: save app in local storage
+        saveAppVersionInLocalStorage();
+        //:tchap end
 
         // now that the config is ready, try to persist logs
         const persistLogsPromise = setupLogStorage();
@@ -235,9 +238,7 @@ async function start() {
         await settled(persistLogsPromise);
 
         //:tchap attach handler
-        attachOverideUsersOptionHandler();
-
-        attachVersionAppHandler();
+        attachHandler();
 
         if (needRefresh) {
             attachRefreshHandler();
