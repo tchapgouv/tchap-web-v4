@@ -23,6 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
 import './modernizr';
+// eslint-disable-next-line max-len
 import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage } from "../app/initTchap";
 
 // Require common CSS here; this will make webpack process it into bundle.css.
@@ -129,12 +130,7 @@ async function start() {
 
         const fragparts = parseQsFromFragment(window.location);
         //:tchap: determine if a hard refresh is needed
-        let indexedDB;
-        try {
-            indexedDB = window.indexedDB;
-        } catch (e) {}
-
-        const needRefreshForV4 = await needsRefreshForVersion4(indexedDB);
+        const needRefreshForV4 = await needsRefreshForVersion4();
         console.log(`:TCHAP: queue a hard clear cache and reload for this version? ${needRefreshForV4}`);
         //:tchap: end
 

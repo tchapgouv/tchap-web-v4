@@ -18,4 +18,9 @@ export default class TchapUIFeature {
      * This flag controls weither Email, Phone and Discovery UI should be displayed or not in General Settings.
      */
     static showEmailPhoneDiscoverySettings = false;
+
+    /**
+     * This flag controls weither clearCacheAndReload can be queued at application start at V4 upgrade
+     */
+    static activateClearCacheAndReloadAtVersion4 = true;
 }

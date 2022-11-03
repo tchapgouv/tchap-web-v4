@@ -11,7 +11,7 @@ export default class TchapVersionManagement {
      * @returns nothing
      */
     public static clearCacheAndReload(): void {
-        console.log(":TCHAP: clearCacheAndReload at client startup");
+        console.log(":TCHAP: clearCacheAndReload");
 
         if (!PlatformPeg.get()) return;
 
@@ -61,7 +61,7 @@ export default class TchapVersionManagement {
 
     /**
      * Save app version in local storage
-     * ie : tchap_app_version = 4.0.5_1.11.10
+     * ie : tchap_app_version = 4.0.5_1.11.10 (no "v" in front !)
      * @param platform initiated platform
      */
     public static async saveAppVersion(platform: BasePlatform) {
@@ -74,14 +74,14 @@ export default class TchapVersionManagement {
 
     /**
      * returns app version stored in local storage
-     * @returns string, app version in semver form : 4.0.5_1.11.10
+     * @returns string, app version in semver form : 4.0.5_1.11.10. Null if not found.
      */
     public static getAppVersion(): string {
         const localStorage = window.localStorage;
         if (localStorage) {
             return localStorage && localStorage.getItem(TchapVersionManagement.VERSION_APP_KEY);
         } else {
-            return "unknown";
+            return null;
         }
     }
 }

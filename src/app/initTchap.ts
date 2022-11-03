@@ -2,35 +2,48 @@ import defaultDispatcher from "matrix-react-sdk/src/dispatcher/dispatcher";
 import { ActionPayload } from "matrix-react-sdk/src/dispatcher/payloads";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 
-import TchapVersionManagement from "../util/TchapClientUtils";
+import TchapVersionManagement from "../util/TchapVersionManagement";
 import TchapUserSettings from "../util/TchapUserSettings";
+import TchapUIFeature from "../util/TchapUIFeature";
 
 /**
- * Determine weither the app needs a refresh after loading
- * @param indexedDB the indexDb interface
+ * Determine weither the app needs a clearCacheAndReload after loading. We do it when upgrading from v2 to v4, to avoid weird keys bugs.
  * @returns Promise(true) if a refresh is needed, Promise(false) in other cases
  */
-export async function needsRefreshForVersion4(indexedDB: IDBFactory): Promise<boolean> {
-    if (!indexedDB) {
-        Promise.reject("indexDb is undefined");
-    }
-
-    //if tchap version is unknown, refresh
-    if (!TchapVersionManagement.getAppVersion() === null) {
-        return Promise.resolve(true);
-    }
-
-    //read version of tchap app in localstorage, if it does start with 4, don't refresh
-    if (TchapVersionManagement.getAppVersion() && TchapVersionManagement.getAppVersion().startsWith("4")) {
+export async function needsRefreshForVersion4(): Promise<boolean> {
+    //check if the feature is activated
+    if (!TchapUIFeature.activateClearCacheAndReloadAtVersion4) {
         return Promise.resolve(false);
     }
 
+    let indexedDB;
     try {
-        //read version of matrix-js-sdk:riot-web-sync, if it is lower than version 4, refresh is needed
-        const version = await TchapVersionManagement.getStoreVersion(indexedDB, TchapVersionManagement.SYNC_STORE_NAME);
-        return Promise.resolve(version < 4);
+        indexedDB = window.indexedDB;
+    } catch (e) {}
+
+    if (!indexedDB) {
+        //not sure why it could happen, do not refresh in this case (safety first, avoid creating an infinite clearCacheAndReload loop !)
+        Promise.resolve(false);
+    }
+
+    // Read version of tchap app in localstorage
+    // if it is strictly less to version 4.x.y, do refresh
+    if (TchapVersionManagement.getAppVersion()) {
+        const previousAppVersion: string = TchapVersionManagement.getAppVersion();
+        const previousAppMajorVersion: number = parseInt(previousAppVersion.charAt(0), 10);
+        return Promise.resolve(!isNaN(previousAppMajorVersion) && previousAppMajorVersion < 4);
+    }
+
+    // If there is no tchap app version, it could be that this is a first install of tchap, or that saving the version has failed in the past, or
+    // that the previous install of tchap was before v4. We only want to refresh when we are upgrading v2->v4.
+    try {
+        // Read version of matrix-js-sdk:riot-web-sync, if it is lower than version 4, refresh is needed.
+        // Note : version 4 of the store happens to coincide with tchap-web v4, but it's unrelated.
+        const previousStoreVersion: number =
+            await TchapVersionManagement.getStoreVersion(indexedDB, TchapVersionManagement.SYNC_STORE_NAME);
+        return Promise.resolve(previousStoreVersion < 4);
     } catch (error) {
-        //if store did not exists or a technical error occured do not refresh (safety first)
+        // Do not refresh (safety first, avoid creating an infinite clearCacheAndReload loop !)
         console.warn(error);
         return Promise.resolve(false);
     }
