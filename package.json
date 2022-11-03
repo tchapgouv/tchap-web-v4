@@ -52,7 +52,7 @@
     "lint:js": "eslint --max-warnings 0 src module_system",
     "lint:js-fix": "eslint --fix src module_system",
     "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --project ./tsconfig.module_system.json",
-    "lint:style": "stylelint \"res/css/**/*.pcss\"",
+    "lint:style": "stylelint \"res/**/*.pcss\"",
     "test": "jest",
     "test:cypress": "cypress run",
     "test:cypress:open": "cypress open",
