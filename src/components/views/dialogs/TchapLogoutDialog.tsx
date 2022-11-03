@@ -26,7 +26,7 @@ import RestoreKeyBackupDialog from "matrix-react-sdk/src/components/views/dialog
 import QuestionDialog from "matrix-react-sdk/src/components/views/dialogs/QuestionDialog";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
-import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
+// import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 
 import MultiDeviceImage from "../../../../res/img/tchap/multi-device.svg";
 import ExportLogoImage from "../../../../res/img/tchap/export-logo.svg";
@@ -45,7 +45,7 @@ interface IState {
 
 export default class TchapLogoutDialog extends React.Component<IProps, IState> {
     static defaultProps = {
-        onFinished: function () {},
+        onFinished: function() { },
     };
 
     constructor(props) {
@@ -91,7 +91,7 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
             ) as unknown as Promise<ComponentType<{}>>,
             {
                 matrixClient: MatrixClientPeg.get(),
-            }
+            },
         );
     };
 
@@ -113,7 +113,7 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                 null,
                 null,
                 /* priority = */ false,
-                /* static = */ true
+                /* static = */ true,
             );
         } else {
             Modal.createDialogAsync(
@@ -123,7 +123,7 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                 null,
                 null,
                 /* priority = */ false,
-                /* static = */ true
+                /* static = */ true,
             );
         }
 
@@ -142,29 +142,29 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
 
     render() {
         if (this.state.shouldLoadBackupStatus) {
-            const description = (
-                <div>
-                    <p>
-                        {_t(
-                            "Encrypted messages are secured with end-to-end encryption. " +
-                                "Only you and the recipient(s) have the keys to read these messages."
-                        )}
-                    </p>
-                    <p>
-                        {_t(
-                            "When you sign out, these keys will be deleted from this device, " +
-                                "which means you won't be able to read encrypted messages unless you " +
-                                "have the keys for them on your other devices, or backed them up to the " +
-                                "server."
-                        )}
-                    </p>
-                    <p>
-                        {_t(
-                            "Back up your keys before signing out to avoid losing them."
-                        )}
-                    </p>
-                </div>
-            );
+            // const description = (
+            //     <div>
+            //         <p>
+            //             { _t(
+            //                 "Encrypted messages are secured with end-to-end encryption. " +
+            //                 "Only you and the recipient(s) have the keys to read these messages.",
+            //             ) }
+            //         </p>
+            //         <p>
+            //             { _t(
+            //                 "When you sign out, these keys will be deleted from this device, " +
+            //                 "which means you won't be able to read encrypted messages unless you " +
+            //                 "have the keys for them on your other devices, or backed them up to the " +
+            //                 "server.",
+            //             ) }
+            //         </p>
+            //         <p>
+            //             { _t(
+            //                 "Back up your keys before signing out to avoid losing them.",
+            //             ) }
+            //         </p>
+            //     </div>
+            // );
 
             let dialogContent;
             if (this.state.loading) {
@@ -173,7 +173,7 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                 let setupButtonCaption;
                 if (this.state.backupInfo) {
                     setupButtonCaption = _t(
-                        "Connect this session to Key Backup"
+                        "Connect this session to Key Backup",
                     );
                 } else {
                     // if there's an error fetching the backup info, we'll just assume there's
@@ -189,22 +189,22 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                         >
                             <div>
                                 <p>
-                                    {_t(
+                                    { _t(
                                         "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.",
                                         {},
                                         {
-                                            b: (sub) => <b>{sub}</b>,
+                                            b: (sub) => <b>{ sub }</b>,
                                             requestLink: (sub) => (
                                                 <a
                                                     target="_blank"
                                                     rel="noopener"
                                                     href={this.helpUrl}
                                                 >
-                                                    {sub}
+                                                    { sub }
                                                 </a>
                                             ),
-                                        }
-                                    )}
+                                        },
+                                    ) }
                                 </p>
                             </div>
                             <div className="tc_TwoColumn_block">
@@ -217,19 +217,19 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                                         />
                                     </div>
                                     <p>
-                                        {_t(
+                                        { _t(
                                             "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.",
                                             {},
                                             {
-                                                b: (sub) => <b>{sub}</b>,
-                                            }
-                                        )}
+                                                b: (sub) => <b>{ sub }</b>,
+                                            },
+                                        ) }
                                     </p>
                                     <button
                                         className="danger"
                                         onClick={this.onLogoutConfirm}
                                     >
-                                        {_t("Sign me out")}
+                                        { _t("Sign me out") }
                                     </button>
                                 </div>
                                 <div className="tc_TwoColumn_block_content">
@@ -241,19 +241,19 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                                         />
                                     </div>
                                     <p>
-                                        {_t(
+                                        { _t(
                                             "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.",
                                             {},
                                             {
-                                                b: (sub) => <b>{sub}</b>,
-                                            }
-                                        )}
+                                                b: (sub) => <b>{ sub }</b>,
+                                            },
+                                        ) }
                                     </p>
                                     <button
                                         className="mx_Dialog_primary"
                                         onClick={this.onExportE2eKeysClicked}
                                     >
-                                        {_t("Save my keys")}
+                                        { _t("Save my keys") }
                                     </button>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                     hasCancel={true}
                     onFinished={this.onFinished}
                 >
-                    {dialogContent}
+                    { dialogContent }
                 </BaseDialog>
             );
         } else {
