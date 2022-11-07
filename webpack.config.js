@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable quote-props */
 
 const dotenv = require('dotenv');
@@ -24,7 +25,7 @@ const cssThemes = {
     //"theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
     //"theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
     //"theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
-    //"theme-light-high-contrast": "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    "theme-light-high-contrast": "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
     //"theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
     //"theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
     //"theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
