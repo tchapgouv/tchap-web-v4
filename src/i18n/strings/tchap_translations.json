@@ -148,7 +148,7 @@
   },
   "a minimum of %(number)s characters": {
     "en": "a minimum of %(number)s characters",
-    "fr": "8 caractères au minimum"
+    "fr": "%(number)s caractères au minimum"
   },
   "a number": {
     "en": "a number",

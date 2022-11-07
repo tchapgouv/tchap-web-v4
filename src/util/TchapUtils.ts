@@ -60,6 +60,11 @@ export default class TchapUtils {
         return homeServerList[Math.floor(Math.random() * homeServerList.length)];
     };
 
+    /**
+     * Find the homeserver corresponding to the given email.
+     * @param email Note : if email is invalid, this function still works and returns the externs server. (todo : fix)
+     * @returns
+     */
     static fetchHomeserverForEmail = async (email: string): Promise<void | {base_url: string, server_name: string}> => {
         const randomHomeServer = this.randomHomeServer();
         const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
@@ -84,6 +89,12 @@ export default class TchapUtils {
             });
     };
 
+    /**
+     * Make a ValidatedServerConfig from the server urls.
+     * Todo : merge this function with fetchHomeserverForEmail, they are always used together anyway.
+     * @param
+     * @returns
+     */
     static makeValidatedServerConfig = (serverConfig): ValidatedServerConfig => {
         const discoveryResult = {
             "m.homeserver": {
@@ -135,5 +146,28 @@ export default class TchapUtils {
         } catch (e) {
             return false;
         }
+    }
+
+    /**
+     * @returns string The url to pass in next_link during registration. Compared to element-web, the hostname
+     * is the homeserver instead of the tchap-web server. This changes the flow to avoid the redirection to
+     * tchap-web, because tchap-web gets a "M_THREEPID_IN_USE" error from backend which is confusing.
+     * We should fix this bug and remove this custom function.
+     */
+    static makeTchapRegistrationUrl(
+        params: {client_secret: string, hs_url: string, is_url: string, session_id: string}): string {
+        let url: string = params.hs_url + window.location.pathname + '#/register';
+
+        const keys = Object.keys(params);
+        for (let i = 0; i < keys.length; ++i) {
+            if (i === 0) {
+                url += '?';
+            } else {
+                url += '&';
+            }
+            const k = keys[i];
+            url += k + '=' + encodeURIComponent(params[k]);
+        }
+        return url;
     }
 }

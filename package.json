@@ -1,7 +1,7 @@
 {
   "name": "element-web",
   "productName": "Tchap",
-  "version": "4.0.5_1.11.12",
+  "version": "4.1.0_1.11.12",
   "description": "A feature-rich client for Matrix.org",
   "author": "DINUM",
   "repository": {
@@ -52,7 +52,7 @@
     "lint:js": "eslint --max-warnings 0 src module_system test",
     "lint:js-fix": "eslint --fix src module_system test",
     "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --project ./tsconfig.module_system.json",
-    "lint:style": "stylelint \"res/css/**/*.pcss\"",
+    "lint:style": "stylelint \"res/**/*.pcss\"",
     "test": "jest",
     "test:cypress": "cypress run",
     "test:cypress:open": "cypress open",

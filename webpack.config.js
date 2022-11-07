@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable quote-props */
 
 const dotenv = require('dotenv');
@@ -21,23 +22,24 @@ if (!process.env.VERSION) {
 
 const cssThemes = {
     // CSS themes
-    "theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
-    "theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
-    "theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
-    "theme-light-high-contrast":
-        "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
-    "theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
-    "theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
-    "theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
+    //"theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
+    //"theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
+    //"theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
+    "theme-light-high-contrast": "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    //"theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
+    //"theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
+    //"theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
+    //:tchap: use path from our project
+    "theme-light": "./res/themes/tchap-light/css/tchap-light.pcss",
+    "theme-dark": "./res/themes/tchap-dark/css/tchap-dark.pcss",
 };
 
 function getActiveThemes() {
-    // Default to `light` theme when the MATRIX_THEMES environment variable is not defined.
-    //const theme = process.env.MATRIX_THEMES ?? 'light';
-    // :TCHAP: We need both themes to avoid "unknown theme light-custom" or "unknown theme light"
-    // being thrown on login page.
-    // Browsers recover, but e2e tests crash, so we add both themes in default here.
-    const theme = process.env.MATRIX_THEMES ?? 'light,light-custom';
+    // :old: :TCHAP: We need both themes to avoid "unknown theme light-custom" or "unknown theme light"
+    // :old: :TCHAP: being thrown on login page.
+    // :old: :TCHAP: Browsers recover, but e2e tests crash, so we add both themes in default here.
+    // Default to `light,dark` theme when the MATRIX_THEMES environment variable is not defined.
+    const theme = process.env.MATRIX_THEMES ?? 'light,dark';
     return theme.split(',').map(x => x.trim()).filter(Boolean);
 }
 
@@ -110,7 +112,11 @@ module.exports = (env, argv) => {
     const ACTIVE_THEMES = getActiveThemes();
     function getThemesImports() {
         const imports = ACTIVE_THEMES.map((t) => {
-            return cssThemes[`theme-${ t }`].replace('./node_modules/', ''); // theme import path
+            if (useHMR) {
+                //:tchap: path is taken from src/vector/devcss.ts more info -> search "use theming"
+                return cssThemes[`theme-${ t }`].replace('.', '../../');
+            }
+            return cssThemes[`theme-${ t }`];
         });
         const s = JSON.stringify(ACTIVE_THEMES);
         return `
