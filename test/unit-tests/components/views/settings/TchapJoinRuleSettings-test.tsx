@@ -9,7 +9,7 @@ import TchapJoinRuleSettings from "../../../../../src/components/views/settings/
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../../../src/@types/tchap";
 
 function mkStubRoomWithInviteRule(roomId: string, name: string, client: MatrixClient, joinRule: JoinRule): Room {
-    const stubRoom: Room = mkStubRoom(roomId,name,client);
+    const stubRoom: Room = mkStubRoom(roomId, name, client);
     stubRoom.getJoinRule = jest.fn().mockReturnValue(joinRule);
     stubRoom.currentState.getJoinRule = jest.fn().mockReturnValue(joinRule);
     return stubRoom;
