@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
-index cf0fe3f..41a3bc0 100644
+index 9783e30..a16de62 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
-@@ -58,6 +58,7 @@ import {
-     startNewVoiceBroadcastRecording,
+@@ -59,6 +59,7 @@ import {
      VoiceBroadcastRecordingsStore,
  } from '../../../voice-broadcast';
+ import { WysiwygComposer } from './wysiwyg_composer/WysiwygComposer';
 +import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
  
  let instanceCount = 0;
  
-@@ -502,7 +503,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
+@@ -528,7 +529,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                                  }
                              }}
                              setStickerPickerOpen={this.setStickerPickerOpen}
