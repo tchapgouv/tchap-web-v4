@@ -46,7 +46,7 @@
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
-        "UIFeature.registration": false,
+        "UIFeature.registration": true,
         "UIFeature.urlPreviews": false,
         "UIFeature.widgets": false,
         "UIFeature.shareQrCode": false,
