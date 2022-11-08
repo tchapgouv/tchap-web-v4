@@ -10,36 +10,53 @@ exports[`TchapCreateRoomDialog should render the whole component with with the a
     Allow access to this room to all users, even outside "AGENT" domain
   </span>
   <_default
-    aria-label="Allow access to this room to all users, even outside "AGENT" domain"
     checked={false}
     onChange={[Function]}
+    title="Allow access to this room to all users, even outside "AGENT" domain"
   >
-    <AccessibleButton
+    <AccessibleTooltipButton
       aria-checked={false}
       aria-disabled={false}
-      aria-label="Allow access to this room to all users, even outside "AGENT" domain"
       className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
-      element="div"
       onClick={[Function]}
       role="switch"
-      tabIndex={0}
+      title="Allow access to this room to all users, even outside "AGENT" domain"
     >
-      <div
+      <AccessibleButton
         aria-checked={false}
         aria-disabled={false}
         aria-label="Allow access to this room to all users, even outside "AGENT" domain"
-        className="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+        className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
+        element="div"
+        onBlur={[Function]}
         onClick={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
         role="switch"
         tabIndex={0}
       >
         <div
-          className="mx_ToggleSwitch_ball"
-        />
-      </div>
-    </AccessibleButton>
+          aria-checked={false}
+          aria-disabled={false}
+          aria-label="Allow access to this room to all users, even outside "AGENT" domain"
+          className="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          role="switch"
+          tabIndex={0}
+        >
+          <div
+            className="mx_ToggleSwitch_ball"
+          />
+        </div>
+      </AccessibleButton>
+    </AccessibleTooltipButton>
   </_default>
 </div>
 `;
@@ -758,36 +775,53 @@ exports[`TchapCreateRoomDialog should render the whole component: all the compon
                                   Allow access to this room to all users, even outside "AGENT" domain
                                 </span>
                                 <_default
-                                  aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                   checked={false}
                                   onChange={[Function]}
+                                  title="Allow access to this room to all users, even outside "AGENT" domain"
                                 >
-                                  <AccessibleButton
+                                  <AccessibleTooltipButton
                                     aria-checked={false}
                                     aria-disabled={false}
-                                    aria-label="Allow access to this room to all users, even outside "AGENT" domain"
                                     className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
-                                    element="div"
                                     onClick={[Function]}
                                     role="switch"
-                                    tabIndex={0}
+                                    title="Allow access to this room to all users, even outside "AGENT" domain"
                                   >
-                                    <div
+                                    <AccessibleButton
                                       aria-checked={false}
                                       aria-disabled={false}
                                       aria-label="Allow access to this room to all users, even outside "AGENT" domain"
-                                      className="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                                      className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                                      element="div"
+                                      onBlur={[Function]}
                                       onClick={[Function]}
-                                      onKeyDown={[Function]}
-                                      onKeyUp={[Function]}
+                                      onFocus={[Function]}
+                                      onMouseLeave={[Function]}
+                                      onMouseOver={[Function]}
                                       role="switch"
                                       tabIndex={0}
                                     >
                                       <div
-                                        className="mx_ToggleSwitch_ball"
-                                      />
-                                    </div>
-                                  </AccessibleButton>
+                                        aria-checked={false}
+                                        aria-disabled={false}
+                                        aria-label="Allow access to this room to all users, even outside "AGENT" domain"
+                                        className="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                                        onBlur={[Function]}
+                                        onClick={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        onKeyUp={[Function]}
+                                        onMouseLeave={[Function]}
+                                        onMouseOver={[Function]}
+                                        role="switch"
+                                        tabIndex={0}
+                                      >
+                                        <div
+                                          className="mx_ToggleSwitch_ball"
+                                        />
+                                      </div>
+                                    </AccessibleButton>
+                                  </AccessibleTooltipButton>
                                 </_default>
                               </div>
                             </LabelledToggleSwitch>

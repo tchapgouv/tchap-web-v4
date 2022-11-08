@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-index 80e3bfd..420256f 100644
+index 1b325db..01a2380 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-@@ -149,6 +149,21 @@ limitations under the License.
+@@ -157,6 +157,21 @@ limitations under the License.
      cursor: pointer;
  }
  
@@ -25,21 +25,20 @@ index 80e3bfd..420256f 100644
      $lineHeight: $font-16px;
      $lines: 2;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 0d01e03..aa3825d 100644
+index 3874627..3d43252 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-@@ -65,7 +65,7 @@ import IconizedContextMenu, {
-     IconizedContextMenuOptionList,
- } from "../context_menus/IconizedContextMenu";
- import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
--
+@@ -68,6 +68,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+ import { CallDurationFromEvent } from "../voip/CallDuration";
+ import { Alignment } from "../elements/Tooltip";
+ import RoomCallBanner from '../beacon/RoomCallBanner';
 +import TchapExternalRoomHeader from "../../../../../../src/components/views/rooms/TchapExternalRoomHeader";
+ 
  class DisabledWithReason {
      constructor(public readonly reason: string) { }
- }
-@@ -583,6 +583,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
+@@ -729,6 +730,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                      <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
-                     <div className="mx_RoomHeader_e2eIcon">{ e2eIcon }</div>
+                     { icon }
                      { name }
 +                    <TchapExternalRoomHeader room={this.props.room}></TchapExternalRoomHeader>
                      { searchStatus }
