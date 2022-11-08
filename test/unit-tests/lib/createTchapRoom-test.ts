@@ -1,12 +1,9 @@
 import { TchapRoomType } from '../../../src/@types/tchap';
 import TchapCreateRoom from '../../../src/lib/createTchapRoom';
 
-
-
 // todo(estellecomment) : these tests are redundant with TchapCreateRoomDialog-test. Either remove them or modify TchapCreateRoomDialog
 // to not edit state directly.
 describe("Create room options", () => {
-
     beforeEach(() => {
     });
 
@@ -17,10 +14,10 @@ describe("Create room options", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "restricted",
+                            "rule": "restricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -34,7 +31,8 @@ describe("Create room options", () => {
             encryption: true,
             historyVisibility: "invited",
         };
-        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Private)).toStrictEqual(privateRoomExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Private))
+            .toStrictEqual(privateRoomExpectedOpts);
         done();
     });
 
@@ -45,10 +43,10 @@ describe("Create room options", () => {
                 creation_content: {
                     "m.federate": false,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "restricted",
+                            "rule": "restricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -62,7 +60,8 @@ describe("Create room options", () => {
             encryption: false,
             historyVisibility: "shared",
         };
-        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, false)).toStrictEqual(publicRoomWithoutFederationExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, false))
+            .toStrictEqual(publicRoomWithoutFederationExpectedOpts);
         done();
     });
 
@@ -73,10 +72,10 @@ describe("Create room options", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "restricted",
+                            "rule": "restricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -90,7 +89,8 @@ describe("Create room options", () => {
             encryption: false,
             historyVisibility: "shared",
         };
-        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, true)).toStrictEqual(publicRoomWithFederationExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, true))
+            .toStrictEqual(publicRoomWithFederationExpectedOpts);
         done();
     });
 
@@ -101,10 +101,10 @@ describe("Create room options", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "unrestricted",
+                            "rule": "unrestricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -118,12 +118,13 @@ describe("Create room options", () => {
             encryption: true,
             historyVisibility: "invited",
         };
-        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.External)).toStrictEqual(externalRoomExpectedOpts);
+        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.External))
+            .toStrictEqual(externalRoomExpectedOpts);
         done();
     });
 
     it("handles wrong inputs", (done) => {
         //todo
-        done()
+        done();
     });
-})
+});
