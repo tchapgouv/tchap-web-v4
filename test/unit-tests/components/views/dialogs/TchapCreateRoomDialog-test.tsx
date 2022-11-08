@@ -1,6 +1,6 @@
 
 import React from 'react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars deprecate/import
+// eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import toJson from 'enzyme-to-json';
