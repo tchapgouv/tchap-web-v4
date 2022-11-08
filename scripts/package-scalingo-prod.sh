@@ -4,9 +4,9 @@
 
 set -e
 
-version=`node -e 'console.log(require("./package.json").version)'`
 today=$(date +%Y%m%d)
 
+version=$(./scripts/get-version-from-package-json.sh)
 export VERSION=$version
 echo "VERSION is set to $VERSION"
 
