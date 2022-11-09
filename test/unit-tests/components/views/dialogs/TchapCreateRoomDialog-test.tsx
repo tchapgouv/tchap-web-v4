@@ -1,17 +1,15 @@
 
 import React from 'react';
-import { mount, ReactWrapper,shallow } from 'enzyme';
+// eslint-disable-next-line deprecate/import
+import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import toJson from 'enzyme-to-json'
-
-//jest.mock('matrix-react-sdk/src/languageHandler')
-
-import { TchapRoomType } from '../../../../../src/@types/tchap';
+import toJson from 'enzyme-to-json';
 import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
 import { EventEmitter } from "events";
-import { _t } from 'matrix-react-sdk/src/languageHandler';
 
+import { TchapRoomType } from '../../../../../src/@types/tchap';
 import TchapUtils from '../../../../../src/util/TchapUtils';
+import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
 
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
 //I could not make a mock of TchapCreateRoomDialog, the real implementation was taken each time. Then I used jest spyOn
@@ -24,8 +22,6 @@ import TchapUtils from '../../../../../src/util/TchapUtils';
     };
 });
 */
-
-import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
 
 /*
  * This unit test targets the TchapCreateRoomDialog react component. It is mounted virtually to be tested thanks to enzyme framework.
@@ -42,20 +38,20 @@ describe("TchapCreateRoomDialog", () => {
         defaultName: undefined, // unused for Tchap version
         parentSpace: undefined, // unused for Tchap version
         defaultEncrypted: undefined, // unused for Tchap version
-        onFinished: jest.fn()
+        onFinished: jest.fn(),
     };
 
     //simulate the submit of the form
-    const submitForm = async (wrapper: ReactWrapper) =>{
+    const submitForm = async (wrapper: ReactWrapper) => {
         act(() => {
             wrapper.find('form').simulate('submit', { preventDefault: () => { } });
-        })
+        });
         await new Promise(process.nextTick);
-    }
+    };
 
     // build a new component using enzyme
     const getComponent = (props = {}): ReactWrapper =>
-            mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
+        mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
     /*
     // Note : you can also build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
@@ -75,7 +71,8 @@ describe("TchapCreateRoomDialog", () => {
 
         //mock tchap utils
         jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("AGENT");
-        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: true, roomFederationDefault: false });
+        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
+            { showRoomFederationOption: true, roomFederationDefault: false });
     });
 
     it('should render the whole component', () => {
@@ -85,14 +82,17 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it('should render the whole component with with the allow access switch', () => {
-        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: true, roomFederationDefault: false });
+        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
+            { showRoomFederationOption: true, roomFederationDefault: false });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
-        expect(toJson(allowAccessSwitch)).toMatchSnapshot("allow access switch is present, allows other domain than AGENT");
+        expect(toJson(allowAccessSwitch)).toMatchSnapshot(
+            "allow access switch is present, allows other domain than AGENT");
     });
 
     it('should render the room dialog without the allow access switch', () => {
-        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue({ showRoomFederationOption: false, roomFederationDefault: false });
+        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
+            { showRoomFederationOption: false, roomFederationDefault: false });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(allowAccessSwitch).toEqual({});
@@ -100,35 +100,35 @@ describe("TchapCreateRoomDialog", () => {
 
     it("Should not create any room wihout a name", async () => {
         const onFinished = jest.fn();
-        const wrapper = getComponent({ onFinished});
+        const wrapper = getComponent({ onFinished });
         // set state in component
         act(() => {
             wrapper.setState({
                 name: "",
-                tchapRoomType: TchapRoomType.Private
+                tchapRoomType: TchapRoomType.Private,
             });
         });
 
         await submitForm(wrapper);
 
         expect(onFinished).toBeCalledTimes(0);
-    })
+    });
 
     it("Should create a room with default value", async () => {
         const onFinished = jest.fn();
         const defaultName = "defaultName";
-        const wrapper = getComponent({ onFinished, defaultName});
-       // set state in component
+        const wrapper = getComponent({ onFinished, defaultName });
+        // set state in component
         act(() => {
             wrapper.setState({
-                tchapRoomType: TchapRoomType.Private
+                tchapRoomType: TchapRoomType.Private,
             });
         });
 
         await submitForm(wrapper);
 
         expect(onFinished).toBeCalledTimes(1);
-    })
+    });
 
     it("Should create a private room", async () => {
         const onFinished = jest.fn();
@@ -139,10 +139,10 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "restricted",
+                            "rule": "restricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -157,22 +157,21 @@ describe("TchapCreateRoomDialog", () => {
             historyVisibility: "invited",
         };
 
-        const wrapper = getComponent({ onFinished});
+        const wrapper = getComponent({ onFinished });
 
         // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Private,
-                isFederated:true
+                isFederated: true,
             });
         });
 
         await submitForm(wrapper);
 
         expect(onFinished).toHaveBeenCalledWith(true, privateRoomExpectedOpts);
-    })
-
+    });
 
     it("Should create a public room without federation", async () => {
         const onFinished = jest.fn();
@@ -183,10 +182,10 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": false,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "restricted",
+                            "rule": "restricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -200,21 +199,21 @@ describe("TchapCreateRoomDialog", () => {
             encryption: false,
             historyVisibility: "shared",
         };
-        const wrapper = getComponent({ onFinished});
+        const wrapper = getComponent({ onFinished });
 
         // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Forum,
-                isFederated:false
+                isFederated: false,
             });
         });
 
         await submitForm(wrapper);
 
         expect(onFinished).toHaveBeenCalledWith(true, publicRoomWithoutFederationExpectedOpts);
-    })
+    });
 
     it("Should create a public room with federation", async () => {
         const onFinished = jest.fn();
@@ -225,10 +224,10 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "restricted",
+                            "rule": "restricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -242,21 +241,21 @@ describe("TchapCreateRoomDialog", () => {
             encryption: false,
             historyVisibility: "shared",
         };
-        const wrapper = getComponent({ onFinished});
+        const wrapper = getComponent({ onFinished });
 
         // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Forum,
-                isFederated:true
+                isFederated: true,
             });
         });
 
         await submitForm(wrapper);
 
         expect(onFinished).toHaveBeenCalledWith(true, publicRoomWithFederationExpectedOpts);
-    })
+    });
 
     it("Should create an external room", async () => {
         const onFinished = jest.fn();
@@ -267,10 +266,10 @@ describe("TchapCreateRoomDialog", () => {
                 creation_content: {
                     "m.federate": true,
                 },
-                "initial_state": [
+                initial_state: [
                     {
                         "content": {
-                        "rule": "unrestricted",
+                            "rule": "unrestricted",
                         },
                         "state_key": "",
                         "type": "im.vector.room.access_rules",
@@ -284,23 +283,22 @@ describe("TchapCreateRoomDialog", () => {
             encryption: true,
             historyVisibility: "invited",
         };
-        const wrapper = getComponent({ onFinished});
+        const wrapper = getComponent({ onFinished });
 
         // set state in component
         act(() => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.External,
-                isFederated:true
+                isFederated: true,
             });
         });
 
         await submitForm(wrapper);
 
         expect(onFinished).toHaveBeenCalledWith(true, externalRoomExpectedOpts);
-    })
-})
-
+    });
+});
 
 class MockClient extends EventEmitter {
     // getUserId = jest.fn();
@@ -321,5 +319,3 @@ class MockClient extends EventEmitter {
     // getClientWellKnown = jest.fn();
     getDomain = jest.fn();
 }
-
-

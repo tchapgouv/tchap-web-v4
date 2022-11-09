@@ -19,13 +19,12 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { defaultDispatcher } from "matrix-react-sdk/src/dispatcher/dispatcher";
-import { ActionPayload } from "matrix-react-sdk/src/dispatcher/payloads";
 
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
 import './modernizr';
-import TchapUserSettings from "../util/TchapUserSettings";
+// eslint-disable-next-line max-len
+import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage } from "../app/initTchap";
 
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
@@ -130,6 +129,10 @@ async function start() {
         await settled(rageshakePromise);
 
         const fragparts = parseQsFromFragment(window.location);
+        //:tchap: determine if a hard refresh is needed
+        const needRefreshForV4 = await needsRefreshForVersion4();
+        console.log(`:TCHAP: queue a hard clear cache and reload for this version? ${needRefreshForV4}`);
+        //:tchap: end
 
         // don't try to redirect to the native apps if we're
         // verifying a 3pid (but after we've loaded the config)
@@ -154,7 +157,10 @@ async function start() {
         // load config requires the platform to be ready
         const loadConfigPromise = loadConfig();
         await settled(loadConfigPromise); // wait for it to settle
-        // keep initialising so that we can show any possible error with as many features (theme, i18n) as possible
+
+        //:tchap: save app in local storage
+        saveAppVersionInLocalStorage();
+        //:tchap end
 
         // now that the config is ready, try to persist logs
         const persistLogsPromise = setupLogStorage();
@@ -227,17 +233,12 @@ async function start() {
         // the process, making this the first time we check that it did something.
         await settled(persistLogsPromise);
 
-        //:tchap: override user settings after the client init
-        const registerId = defaultDispatcher.register(
-            (payload: ActionPayload) => {
-                if (payload.action === "client_started") {
-                    //override user settings
-                    TchapUserSettings.override();
-                    //unregister callback once the work is done
-                    defaultDispatcher.unregister(registerId);
-                }
-            },
-        );
+        //:tchap attach handler
+        queueOverideUserSettings();
+
+        if (needRefreshForV4) {
+            queueClearCacheAndReload();
+        }
         //end of :tchap:
 
         // Finally, load the app. All of the other react-sdk imports are in this file which causes the skinner to

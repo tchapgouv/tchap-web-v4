@@ -323,6 +323,10 @@ The VoIP and Jitsi options are:
       and may be removed at any time without notice. Defaults to `https://call.element.io`.
    - `use_exclusively`: A boolean specifying whether Element Call should be used exclusively as the only VoIP stack in
       the app, removing the ability to start legacy 1:1 calls or Jitsi calls. Defaults to `false`.
+   - `participant_limit`: The maximum number of users who can join a call; if
+     this number is exceeded, the user will not be able to join a given call.
+   - `brand`: Optional name for the app. Defaults to `Element Call`. This is
+     used throughout the application in various strings/locations.
 
 ## Bug reporting
 
@@ -356,8 +360,7 @@ For example:
 ## Integration managers
 
 Integration managers are embedded applications within Element to help the user configure bots, bridges, and widgets. An integration manager
-is a separate piece of software not typically available with your homeserver. To disable integrations, leave the options defined here out of
-your config.
+is a separate piece of software not typically available with your homeserver. To disable integrations, set the options defined here to `null`.
 
 1. `integrations_ui_url`: The UI URL for the integration manager.
 2. `integrations_rest_url`: The REST interface URL for the integration manager.
