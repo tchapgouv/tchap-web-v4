@@ -83,12 +83,6 @@
       "src/components/views/settings/SecureBackupPanel.tsx"
     ]
   },
-  "hide-secure-storage-2": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/dialogs/LogoutDialog.tsx"
-    ]
-  },
   "login": {
     "package": "matrix-react-sdk",
     "files": [
