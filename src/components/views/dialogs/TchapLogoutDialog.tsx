@@ -219,6 +219,7 @@ export default class TchapLogoutDialog extends React.Component<IProps, IState> {
                 </div>
             );
         }
+
         // Not quite a standard question dialog as the primary button cancels
         // the action and does something else instead, whilst non-default button
         // confirms the action.
