@@ -1,0 +1,14 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/ProfileSettings.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/ProfileSettings.tsx
+index fd3ed6c..32966ef 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/ProfileSettings.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/ProfileSettings.tsx
+@@ -206,6 +206,9 @@ export default class ProfileSettings extends React.Component<{}, IState> {
+                             value={this.state.displayName}
+                             autoComplete="off"
+                             onChange={this.onDisplayNameChanged}
++                            //:tchap: disable display form input, the server does not allow its modification
++                            disabled={true}
++                            //:tchap end
+                         />
+                         <p>
+                             { userIdentifier && <span className="mx_ProfileSettings_profile_controls_userId">

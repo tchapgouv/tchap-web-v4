@@ -136,5 +136,11 @@
     "files": [
       "src/components/views/rooms/MessageComposer.tsx"
     ]
+  },
+  "disable-display-name-input": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/ProfileSettings.tsx"
+    ]
   }
 }
