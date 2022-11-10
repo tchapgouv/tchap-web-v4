@@ -65,8 +65,6 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
         this.props.onFinished(true);
     };
 
-    helpUrl = "https://tchap.beta.gouv.fr/faq#tcq05_001";
-
     render() {
         const dialogContent = (
             <div>
