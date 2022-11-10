@@ -169,5 +169,9 @@
   "External users allowed": {
     "en": "external users allowed",
     "fr": "ouvert aux externes"
+  },
+  "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
+    "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
+    "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
   }
 }
