@@ -30,3 +30,19 @@ index cd1f06a..434c949 100644
      const text = mxEvent.getContent().body;
      return (
          <div className="mx_UnknownBody" ref={ref}>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
+index 654cc80..6d3d222 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
+@@ -1167,7 +1167,10 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+         const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
+             _t('Key request sent.') :
+             _t(
+-                '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
++                // :TCHAP: better text
++                //'<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
++                '<requestLink>Re-send a request to your other devices</requestLink>',
++                // end :TCHAP:
+                 {},
+                 {
+                     'requestLink': (sub) =>

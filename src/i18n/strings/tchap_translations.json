@@ -173,5 +173,9 @@
   "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
     "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
     "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
+  },
+  "<requestLink>Re-send a request to your other devices</requestLink>": {
+    "en": "<requestLink>Re-send a request to your other devices</requestLink>",
+    "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
   }
 }
