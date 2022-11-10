@@ -31,12 +31,42 @@ index cd1f06a..434c949 100644
      return (
          <div className="mx_UnknownBody" ref={ref}>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-index 654cc80..6d3d222 100644
+index 654cc80..8e22b5c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-@@ -1167,7 +1167,10 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+@@ -1151,23 +1151,38 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
+                 <p>
+                     { this.state.previouslyRequestedKeys ?
++                        /* :TCHAP: use "device" instead of "session"
+                         _t('Your key share request has been sent - please check your other sessions ' +
+                            'for key share requests.') :
+                         _t('Key share requests are sent to your other sessions automatically. If you ' +
+                            'rejected or dismissed the key share request on your other sessions, click ' +
+                            'here to request the keys for this session again.')
++                        */
++                        _t("Your key share request has been sent - please check your other devices for key share requests.") :
++                        _t("Tchap Key share requests are sent to your other devices automatically. " +
++                          "If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.")
++                        // end :TCHAP:
+                     }
+                 </p>
+                 <p>
+-                    { _t('If your other sessions do not have the key for this message you will not ' +
++                    {/* :TCHAP: use "device" instead of "session"
++                        _t('If your other sessions do not have the key for this message you will not ' +
+                          'be able to decrypt them.')
++                      */
++                      _t("If your other devices do not have the key for this message, you will not be able to decrypt them.")
+                     }
+                 </p>
+             </div>;
          const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
-             _t('Key request sent.') :
+-            _t('Key request sent.') :
++            // :TCHAP: better text
++            //_t('Key request sent.') :
++            _t('Request in progress...') :
++            // end :TCHAP:
              _t(
 -                '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
 +                // :TCHAP: better text
