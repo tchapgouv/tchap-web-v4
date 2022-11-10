@@ -193,5 +193,9 @@
   "Your key share request has been sent - please check your other devices for key share requests.": {
     "en": "Your key share request has been sent - please check your other devices for key share requests.",
     "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
+  },
+  "<requestLink>Import from saved file</requestLink>": {
+    "en": "<requestLink>Import from saved file</requestLink>",
+    "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
   }
 }

@@ -1,3 +1,23 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss b/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss
+index 5b7c0ce..1a494ac 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss
+@@ -15,6 +15,15 @@ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
++/* :TCHAP: tooltips in bubble layout are not visible enough : the bubble backgroud is not white. */
++.mx_EventTile[data-layout="bubble"] {
++    .mx_TooltipButton {
++        color: var(--timeline-text-color);
++        border-color: var(--timeline-text-color);
++    }
++}
++/* end :TCHAP: */
++
+ .mx_TooltipButton {
+     display: inline-block;
+     width: 11px;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/UnknownBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/UnknownBody.tsx
 index cd1f06a..434c949 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/UnknownBody.tsx
@@ -31,10 +51,44 @@ index cd1f06a..434c949 100644
      return (
          <div className="mx_UnknownBody" ref={ref}>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-index 654cc80..8e22b5c 100644
+index 654cc80..b88a304 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-@@ -1151,23 +1151,38 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+@@ -16,6 +16,7 @@ limitations under the License.
+ */
+ 
+ import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
++import { ComponentType } from 'react'; // :TCHAP:
+ import classNames from "classnames";
+ import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+ import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+@@ -84,6 +85,7 @@ import { useTooltip } from "../../../utils/useTooltip";
+ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+ import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+ import { ElementCall } from "../../../models/Call";
++import Modal from '../../../Modal'; // :TCHAP:
+ 
+ export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
+ 
+@@ -754,6 +756,17 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+         MatrixClientPeg.get().cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
+     };
+ 
++    // :TCHAP:
++    private onImportE2eKeysClicked = (): void => {
++        Modal.createDialogAsync(
++            import(
++                '../../../async-components/views/dialogs/security/ImportE2eKeysDialog'
++            ) as unknown as Promise<ComponentType<{}>>,
++            { matrixClient: MatrixClientPeg.get() },
++        );
++    };
++    // end :TCHAP:
++
+     private onPermalinkClicked = e => {
+         // This allows the permalink to be opened in a new tab/window or copied as
+         // matrix.to, but also for it to enable routing within Element when clicked.
+@@ -1151,23 +1164,38 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
              <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
                  <p>
                      { this.state.previouslyRequestedKeys ?
@@ -76,3 +130,35 @@ index 654cc80..8e22b5c 100644
                  {},
                  {
                      'requestLink': (sub) =>
+@@ -1182,9 +1210,31 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+                 },
+             );
+ 
++        // :TCHAP:
++        const importKeys = _t(
++            '<requestLink>Import from saved file</requestLink>',
++            {},
++            {
++                'requestLink': (sub) =>
++                    <AccessibleButton
++                        className="mx_EventTile_rerequestKeysCta"
++                        kind='link_inline'
++                        tabIndex={0}
++                        onClick={this.onImportE2eKeysClicked}
++                    >
++                        { sub }
++                    </AccessibleButton>,
++            },
++        );
++        // end :TCHAP:
++
+         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
+             <div className="mx_EventTile_keyRequestInfo">
+                 <span className="mx_EventTile_keyRequestInfo_text">
++                    {/** :TCHAP: */}
++                    { importKeys }
++                    <br />
++                    {/** end :TCHAP: */}
+                     { keyRequestInfoContent }
+                 </span>
+                 <TooltipButton helpText={keyRequestHelpText} />
