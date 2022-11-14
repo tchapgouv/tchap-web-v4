@@ -169,5 +169,37 @@
   "External users allowed": {
     "en": "external users allowed",
     "fr": "ouvert aux externes"
+  },
+  "Save your Tchap Keys (encryption keys)": {
+    "en": "Save your Tchap Keys (encryption keys)",
+    "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
+  },
+  "If you do not have another connected device, <b>we advice you to save your keys in a file on your device</b>.": {
+    "en": "If you do not have another connected device, <b>we advice you to save your keys in a file on your device</b>.",
+    "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
+  },
+  "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
+    "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
+    "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverouiller vos messages."
+  },
+  "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup (<a>find out more</a>)": {
+    "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup (<a>find out more</a>)",
+    "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde (<a>en savoir plus</a>)"
+  },
+  "Create your Tchap Key password (minimum 8 characters)": {
+    "en": "Create your Tchap Key password (minimum 8 characters)",
+    "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
+  },
+  "Your Tchap password": {
+    "en": "Your Tchap password",
+    "fr": "Votre mot de passe Clés Tchap"
+  },
+  "Confirm your Tchap password": {
+    "en": "Confirm your Tchap password",
+    "fr": "Confirmer votre mot de passe Clés Tchap"
+  },
+  "Save your keys": {
+    "en": "Save your keys",
+    "fr": "Sauvegarder vos clés"
   }
 }
