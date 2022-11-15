@@ -16,13 +16,10 @@ limitations under the License.
 
 import FileSaver from 'file-saver';
 import React, { ComponentType } from 'react';
-// import PropTypes from 'prop-types';
-// import * as Matrix from 'matrix-js-sdk';
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import { IDialogProps } from "matrix-react-sdk/src/components/views/dialogs/IDialogProps";
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 import Field from "matrix-react-sdk/src/components/views/elements/Field";
-// import * as Matrix from "matrix-js-sdk/src/matrix";
 import Modal from 'matrix-react-sdk/src/Modal';
 import * as MegolmExportEncryption from 'matrix-react-sdk/src/utils/MegolmExportEncryption';
 import { KeysStartingWith } from "matrix-react-sdk/src/@types/common";
@@ -88,39 +85,16 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
             // :TCHAP: don't close too fast
         }).then(() => {
             // :TCHAP: added a confirmation modal
-            // Modal.createTrackedDialogAsync('Export E2E Keys Success', '',
-            //     import('./TchapExportE2eKeysSuccessDialog'),
-            //     {
-            //         onFinished: (res) => {
-            //             this.props.onFinished(res);
-            //         },
-            //     },
-            // ); // TODO ??
-
             Modal.createDialogAsync(
                 import(
                     "./TchapExportE2eKeysSuccessDialog"
                 ) as unknown as Promise<ComponentType<{}>>,
                 {
-                    // matrixClient: MatrixClientPeg.get(),
                     onFinished: (res) => {
                         this.props.onFinished(res);
                     },
                 },
             );
-
-            // Modal.createDialog(VerificationRequestDialog, {
-            //     verificationRequestPromise: verificationRequestPromise,
-            //     member: cli.getUser(userId),
-            //     onFinished: async () => {
-            //         const request = await verificationRequestPromise;
-            //         console.log(`:tchap: verificationRequestPromise finishes for ${userId}:${deviceId}`);
-            //         shareKeys();
-            //         removeCurrentRequest();
-            //         //tchap: why cancel?
-            //         request.cancel();
-            //     },
-            // });
         }).catch((e) => {
             logger.error("Error exporting e2e keys:", e);
             if (this.unmounted) {
@@ -200,7 +174,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                         </p>
                         <p className='modalParagraph withMarginTop'>
                             { _t(
-                                '<b>Warning:</b> these keys cannot be used to unlock the messages ' +
+                                '<b>Warning:</b> these keys cannot be used to unlock the messages' +
                                 'received after backup ',
                                 {},
                                 {

@@ -23,7 +23,6 @@ import { _t } from 'matrix-react-sdk/src/languageHandler';
 import KeySavedImage from "../../../../../res/img/tchap/key-saved.svg";
 import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pcss";
 
-// "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
 interface IProps {
     onFinished: (success: boolean) => void;
 }

@@ -182,9 +182,9 @@
     "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
     "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverouiller vos messages."
   },
-  "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup ": {
-    "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup ",
-    "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde "
+  "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup": {
+    "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup",
+    "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde"
   },
   "(find out more)": {
     "en": "(find out more)",
@@ -193,6 +193,10 @@
   "Create your Tchap Key password (minimum 8 characters)": {
     "en": "Create your Tchap Key password (minimum 8 characters)",
     "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
+  },
+  "Passphrase must be at least 8 character long": {
+    "en": "Passphrase must be at least 8 character long",
+    "fr": "Le mot de passe doit minimum faire 8 caractères"
   },
   "Your Tchap password": {
     "en": "Your Tchap password",
