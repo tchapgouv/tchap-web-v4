@@ -206,10 +206,6 @@
     "en": "Confirm your Tchap password",
     "fr": "Confirmer votre mot de passe Clés Tchap"
   },
-  "Save your keys": {
-    "en": "Save your keys",
-    "fr": "Sauvegarder vos clés"
-  },
   "Tchap Keys saved!": {
     "en": "Tchap Keys saved!",
     "fr": "Clés Tchap sauvegardées !"
@@ -221,5 +217,29 @@
   "(Find out more)": {
     "en": "(Find out more)",
     "fr": "(En savoir plus)"
+  },
+  "Save your Tchap Keys before logging out": {
+    "en": "Save your Tchap Keys before logging out",
+    "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"
+  },
+  "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.": {
+    "en": "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.",
+    "fr": "<b>Sans vos Clés Tchap, vous ne pourrez pas lire vos messages</b> à votre prochaine connexion parce qu'ils seront verrouillés. C'est une mesure de sécurité Tchap."
+  },
+  "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.": {
+    "en": "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.",
+    "fr": "<b>Vous pouvez actuellement lire vos messages sur un autre appareil ?</b> Vous pouvez vous déconnecter. Cet autre appareil sauvegarde automatiquement vos Clés Tchap et tous vos messages."
+  },
+  "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.": {
+    "en": "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.",
+    "fr": "<b>Vous n'avez pas d'autre appareil connecté à Tchap ?</b> Sauvegardez vos Clés Tchap. Ces clés déverrouilleront les messages actuels, mais pas ceux reçus entre la sauvegarde et votre prochaine connexion."
+  },
+  "Sign me out": {
+    "en": "Sign me out",
+    "fr": "Me déconnecter"
+  },
+  "Save my keys": {
+    "en": "Save my keys",
+    "fr": "Sauvegarder mes clés"
   }
 }

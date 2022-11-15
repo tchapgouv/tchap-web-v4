@@ -225,7 +225,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                             className='mx_Dialog_primary'
                             disabled={disableForm}
                             type='submit'
-                            value={_t('Save your keys')}
+                            value={_t('Save my keys')}
                         />
                     </div>
                 </form>

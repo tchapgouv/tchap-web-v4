@@ -1,7 +1,8 @@
 {
   "src/@types/tchap.ts": "src/@types/tchap.ts",
-  "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
   "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
+  "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
+  "src/components/views/dialogs/LogoutDialog.tsx": "src/components/views/dialogs/TchapLogoutDialog.tsx",
   "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/components/views/elements/TchapRoomTypeSelector.tsx",
   "src/customisations/ComponentVisibility.ts": "src/customisations/TchapComponentVisibility.ts",
   "src/customisations/Media.ts": "src/customisations/ContentScanningMedia.ts",
