@@ -4,6 +4,8 @@ import AutoDiscoveryUtils from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServerConfig";
 import { findMapStyleUrl } from 'matrix-react-sdk/src/utils/location';
 
+import TchapApi from "./TchapApi";
+
 /**
  * Tchap utils.
  */
@@ -169,5 +171,69 @@ export default class TchapUtils {
             url += k + '=' + encodeURIComponent(params[k]);
         }
         return url;
+    }
+
+    /**
+     * Request a new validation email for expired account.
+     */
+    static async requestNewExpiredAccountEmail(): Promise<boolean> {
+        console.log(":tchap: Requesting an email to renew to account");
+        const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
+        const accessToken = MatrixClientPeg.get().getAccessToken();
+        //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
+        const url = `${homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
+        const options = {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        return fetch(url, options).then((response) => {
+            console.log(":tchap: email NewExpiredAccountEmail sent", response);
+            return true;
+        }).catch((err) => {
+            console.error(":tchap: email NewExpiredAccountEmail error", err);
+            return false;
+        });
+    }
+
+    /**
+     * Get the expiration information for an account
+     * @param matrixId the account matrix Id
+     * @returns true if account is expired, false otherwise
+     */
+    static async isAccountExpired(matrixId?: string): Promise<boolean> {
+        if (!matrixId) {
+            matrixId = MatrixClientPeg.getCredentials().userId;
+        }
+        /* const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
+        const accessToken = MatrixClientPeg.get().getAccessToken();
+ */
+        try {
+            await MatrixClientPeg.get().getProfileInfo(matrixId);
+        } catch (err) {
+            if (err.errcode === 'ORG_MATRIX_EXPIRED_ACCOUNT') {
+                return true;
+            }
+        }
+        return false;
+
+        //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
+        const url = `${homeserverUrl}${TchapApi.expiredInfoUrl(matrixId)}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        return fetch(url, options).then((response) => {
+            console.log(":tchap: email isAccountExpired sent", response);
+            return response.json().then((json) => json["org.matrix.expired"]);
+        }).catch((err) => {
+            console.error(":tchap: email isAccountExpired error", err);
+            return false;
+        });
     }
 }

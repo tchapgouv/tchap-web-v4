@@ -130,5 +130,13 @@
     "files": [
       "src/components/views/rooms/MessageComposer.tsx"
     ]
+  },
+  "activate-expired-account-panel": {
+    "package": "matrix-js-sdk",
+    "files": [
+      "src/http-api/interface.ts",
+      "src/http-api/fetch.ts",
+      "src/sync.ts"
+    ]
   }
 }

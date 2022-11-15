@@ -193,5 +193,25 @@
   "Save my keys": {
     "en": "Save my keys",
     "fr": "Sauvegarder mes clés"
+  },
+  "The validity period of your account has expired": {
+    "en": "The validity period of your account has expired",
+    "fr": "La durée de validité de votre compte a expiré"
+  },
+  "The validity period of your account has expired. An email has been sent to you in order to renew it. Once you’ve followed the link it contains, click below.": {
+    "en": "The validity period of your account has expired. An email has been sent to you in order to renew it. Once you’ve followed the link it contains, click below.",
+    "fr": "La durée de validité de votre compte a expiré. Un email vous a été envoyé pour la renouveler. Une fois que vous aurez suivi le lien qu’il contient, cliquez ci-dessous."
+  },
+  "An email has been sent to you. Click on the link it contains, click below.": {
+    "en":  "An email has been sent to you. Once you’ve followed the link it contains, click below.",
+    "fr": "Un e-mail vous a été envoyé. Une fois que vous aurez suivi le lien qu'il contient, cliquez ci-dessous."
+  },
+  "I renewed the validity of my account": {
+    "en":  "I renewed the validity of my account",
+    "fr": "J’ai renouvelé mon compte"
+  },
+  "Request a renewal email": {
+    "en":  "Request a renewal email",
+    "fr": "Demander l’envoi d’un nouvel email"
   }
 }
