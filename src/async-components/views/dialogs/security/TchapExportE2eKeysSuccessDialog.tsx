@@ -61,7 +61,11 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                             {},
                             { b: (sub) => <b>{ sub }</b> },
                         ) }
-                        <a className="findOutMoreLink" href="#/register">{ _t('(Find out more)') }</a>
+                        <a
+                            className="findOutMoreLink"
+                            href="https://tchap.beta.gouv.fr/faq#tcq07_003"
+                            target="_blank"
+                        >{ _t('(Find out more)') }</a>
                     </p>
                 </div>
                 <div className='mx_Dialog_buttons'>

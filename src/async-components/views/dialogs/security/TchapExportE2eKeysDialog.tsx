@@ -172,17 +172,6 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                                 'when you will import the keys to unlock your messages.',
                             ) }
                         </p>
-                        <p className='modalParagraph withMarginTop'>
-                            { _t(
-                                '<b>Warning:</b> these keys cannot be used to unlock the messages' +
-                                'received after backup ',
-                                {},
-                                {
-                                    b: (sub) => <b>{ sub }</b>,
-                                })
-                            }
-                            <a className="findOutMoreLink" href="#/register">{ _t('(find out more)') }</a>
-                        </p>
                         <p className='modalParagraph withMarginBottom withMarginTop'>
                             { _t('Create your Tchap Key password (minimum 8 characters)') }
                         </p>
