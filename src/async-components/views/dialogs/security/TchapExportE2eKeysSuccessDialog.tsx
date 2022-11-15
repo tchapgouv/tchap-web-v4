@@ -16,42 +16,24 @@ limitations under the License.
 */
 
 import React from 'react';
+import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
+import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 
-import sdk from 'matrix-react-sdk/src/index';
-import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
+import KeySavedImage from "../../../../../res/img/tchap/key-saved.svg";
+import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pcss";
 
-// export default React.createClass({
-//     displayName: 'ExportE2eKeysSuccessDialog',
-
-//     propTypes: {
-//         onFinished: PropTypes.func.isRequired,
-//     },
-
+// "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
 interface IProps {
     onFinished: (success: boolean) => void;
 }
 
 export default class TchapExportE2eKeysSuccessDialog extends React.Component<IProps> {
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
 
         this.onLogoutConfirm = this.onLogoutConfirm.bind(this);
     }
-
-    // componentWillMount: function() {
-    //     this._unmounted = false;
-    // },
-
-    // componentWillUnmount: function() {
-    //     this._unmounted = true;
-    // },
-
-    // private onCancelClick(ev) {
-    //     ev.preventDefault();
-    //     this.props.onFinished(false);
-    //     return false;
-    // }
 
     private onLogoutConfirm() {
         this.props.onFinished(true);
@@ -59,23 +41,29 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
     }
 
     render() {
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
         return (
             <BaseDialog className='mx_exportE2eKeysSuccessDialog'
                 onFinished={this.props.onFinished}
-                title={_t("Export room keys successful")}
+                title={_t("Tchap Keys saved!")}
             >
                 <div className="mx_Dialog_content">
                     <div className="tc_exportE2eKeysSuccessDialog_img">
-                        <img src={require('../../../../../res/img/tchap/key-saved.svg')} alt="Export logo" width="70" />
+                        <img
+                            src={KeySavedImage}
+                            alt="Export logo"
+                            width="70"
+                        />
                     </div>
 
-                    <p>{_t('Your Tchap Keys (encryption keys) have been saved successfully.', {}, {
-                        b: (sub) => <b>{sub}</b>,
-                    })}</p>
-                    <p>{_t('You can import them the next time you log in to unlock your messages.')}</p>
-                    <p>{_t("Messages received after this save cannot be unlocked. So you won't be able to read them.")}</p>
+                    <p className="modalParagraph">
+                        { _t(
+                            'Your Tchap Keys (encryption keys) have been successful saved. ' +
+                            'You can import them when you login again to unlock your messages.',
+                            {},
+                            { b: (sub) => <b>{ sub }</b> },
+                        ) }
+                        <a className="findOutMoreLink" href="#/register">{ _t('(Find out more)') }</a>
+                    </p>
                 </div>
                 <div className='mx_Dialog_buttons'>
                     <button className="mx_Dialog_primary" onClick={this.onLogoutConfirm}>

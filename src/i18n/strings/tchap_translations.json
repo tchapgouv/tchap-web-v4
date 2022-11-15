@@ -182,9 +182,13 @@
     "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
     "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverouiller vos messages."
   },
-  "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup (<a>find out more</a>)": {
-    "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup (<a>find out more</a>)",
-    "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde (<a>en savoir plus</a>)"
+  "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup ": {
+    "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup ",
+    "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde "
+  },
+  "(find out more)": {
+    "en": "(find out more)",
+    "fr": "(en savoir plus)"
   },
   "Create your Tchap Key password (minimum 8 characters)": {
     "en": "Create your Tchap Key password (minimum 8 characters)",
@@ -201,5 +205,17 @@
   "Save your keys": {
     "en": "Save your keys",
     "fr": "Sauvegarder vos clés"
+  },
+  "Tchap Keys saved!": {
+    "en": "Tchap Keys saved!",
+    "fr": "Clés Tchap sauvegardées !"
+  },
+  "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages.": {
+    "en": "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages.",
+    "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages."
+  },
+  "(Find out more)": {
+    "en": "(Find out more)",
+    "fr": "(En savoir plus)"
   }
 }

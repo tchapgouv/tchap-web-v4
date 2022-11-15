@@ -17,36 +17,49 @@ limitations under the License.
 import FileSaver from 'file-saver';
 import React, { ComponentType } from 'react';
 // import PropTypes from 'prop-types';
-import { _t } from 'matrix-react-sdk/src/languageHandler';
 // import * as Matrix from 'matrix-js-sdk';
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
-
+import { IDialogProps } from "matrix-react-sdk/src/components/views/dialogs/IDialogProps";
+import { _t } from 'matrix-react-sdk/src/languageHandler';
+import Field from "matrix-react-sdk/src/components/views/elements/Field";
 // import * as Matrix from "matrix-js-sdk/src/matrix";
-import * as MegolmExportEncryption from 'matrix-react-sdk/src/utils/MegolmExportEncryption';
 import Modal from 'matrix-react-sdk/src/Modal';
+import * as MegolmExportEncryption from 'matrix-react-sdk/src/utils/MegolmExportEncryption';
+import { KeysStartingWith } from "matrix-react-sdk/src/@types/common";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysDialog.pcss";
 
-const PHASE_EDIT = 1;
-const PHASE_EXPORTING = 2;
+enum Phase {
+    Edit = "edit",
+    Exporting = "exporting",
+}
 
-// matrixClient: PropTypes.instanceOf(Matrix.MatrixClient).isRequired,
-interface IProps {
-    matrixClient: any;
-    onFinished: (success: boolean) => void;
+interface IProps extends IDialogProps {
+    matrixClient: MatrixClient;
 }
 
 interface IState {
-    phase: number;
+    phase: Phase;
     errStr: string;
+    passphrase1: string;
+    passphrase2: string;
 }
 
+type AnyPassphrase = KeysStartingWith<IState, "passphrase">;
+
 export default class TchapExportE2eKeysDialog extends React.Component<IProps, IState> {
-    constructor(props) {
+    private unmounted = false;
+
+    constructor(props: IProps) {
         super(props);
 
         this.state = {
-            phase: PHASE_EDIT,
+            phase: Phase.Edit,
             errStr: null,
+            passphrase1: "",
+            passphrase2: "",
         };
 
         this.startExport = this.startExport.bind(this);
@@ -54,15 +67,11 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
         this.onCancelClick = this.onCancelClick.bind(this);
     }
 
-    // componentWillMount() {
-    //     this._unmounted = false;
-    // }
+    public componentWillUnmount(): void {
+        this.unmounted = true;
+    }
 
-    // componentWillUnmount() {
-    //     this._unmounted = true;
-    // }
-
-    private startExport(passphrase) {
+    private startExport(passphrase: string): void {
         // extra Promise.resolve() to turn synchronous exceptions into
         // asynchronous ones.
         Promise.resolve().then(() => {
@@ -113,53 +122,59 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
             //     },
             // });
         }).catch((e) => {
-            console.error("Error exporting e2e keys:", e);
-            // if (this._unmounted) {
-            //     return;
-            // }
+            logger.error("Error exporting e2e keys:", e);
+            if (this.unmounted) {
+                return;
+            }
             const msg = e.friendlyText || _t('Unknown error');
             this.setState({
                 errStr: msg,
-                phase: PHASE_EDIT,
+                phase: Phase.Edit,
             });
         });
 
         this.setState({
             errStr: null,
-            phase: PHASE_EXPORTING,
+            phase: Phase.Exporting,
         });
     }
 
-    private onPassphraseFormSubmit(ev) {
+    private onPassphraseChange = (ev: React.ChangeEvent<HTMLInputElement>, phrase: AnyPassphrase) => {
+        this.setState({
+            [phrase]: ev.target.value,
+        } as Pick<IState, AnyPassphrase>);
+    };
+
+    private onPassphraseFormSubmit = (ev: React.FormEvent): boolean => {
         ev.preventDefault();
 
-        const passphrase = this.refs.passphrase1.value;
-        // :TCHAP:
+        const passphrase = this.state.passphrase1;
+
         if (passphrase.length < 8) {
-            this.setState({errStr: _t('Passphrase must be at least 8 character long')});
+            this.setState({ errStr: _t('Passphrase must be at least 8 character long') });
             return false;
         }
-        if (passphrase !== this.refs.passphrase2.value) {
-            this.setState({errStr: _t('Passphrases must match')});
+        if (passphrase !== this.state.passphrase2) {
+            this.setState({ errStr: _t('Passphrases must match') });
             return false;
         }
         if (!passphrase) {
-            this.setState({errStr: _t('Passphrase must not be empty')});
+            this.setState({ errStr: _t('Passphrase must not be empty') });
             return false;
         }
 
         this.startExport(passphrase);
         return false;
-    }
+    };
 
-    private onCancelClick(ev) {
+    private onCancelClick = (ev: React.MouseEvent): boolean => {
         ev.preventDefault();
         this.props.onFinished(false);
         return false;
-    }
+    };
 
-    render() {
-        const disableForm = (this.state.phase === PHASE_EXPORTING);
+    public render(): JSX.Element {
+        const disableForm = (this.state.phase === Phase.Exporting);
 
         return (
             <BaseDialog className='mx_exportE2eKeysDialog'
@@ -168,33 +183,33 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
             >
                 <form onSubmit={this.onPassphraseFormSubmit}>
                     <div className="mx_Dialog_content">
-                        <p>
+                        <p className='modalParagraph'>
                             { _t(
                                 'If you do not have another connected device, ' +
                                 '<b>we advice you to save your keys in a file on your device</b>.',
                                 {},
-                                {b: (sub) => <b>{sub}</b>},
+                                { b: (sub) => <b>{ sub }</b> },
                             ) }
                         </p>
-                        <p>
+                        <p className='modalParagraph'>
                             { _t(
                                 'This file will be protected by a password, ' +
                                 'which will be asked next time you log in, ' +
                                 'when you will import the keys to unlock your messages.',
                             ) }
                         </p>
-                        <p className='paragraphWithMargin'>
+                        <p className='modalParagraph withMarginTop'>
                             { _t(
                                 '<b>Warning:</b> these keys cannot be used to unlock the messages ' +
-                                'received after backup (<a>find out more</a>)',
+                                'received after backup ',
                                 {},
                                 {
-                                    'a': (sub) => <a href="#/register" key="sub">{ sub }</a>,
-                                    'b': (sub) => <b>{ sub }</b>,
+                                    b: (sub) => <b>{ sub }</b>,
                                 })
                             }
+                            <a className="findOutMoreLink" href="#/register">{ _t('(find out more)') }</a>
                         </p>
-                        <p className='paragraphWithMargin'>
+                        <p className='modalParagraph withMarginBottom withMarginTop'>
                             { _t('Create your Tchap Key password (minimum 8 characters)') }
                         </p>
                         <div className='error'>
@@ -202,29 +217,27 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                         </div>
                         <div className='mx_E2eKeysDialog_inputTable'>
                             <div className='mx_E2eKeysDialog_inputRow passwordInputRow'>
-                                <div className='mx_E2eKeysDialog_inputCell'>
-                                    <input
+                                <div className='mx_E2eKeysDialog_inputCell inputWidth'>
+                                    <Field
                                         autoFocus={true}
-                                        className="input"
                                         disabled={disableForm}
-                                        id='passphrase1'
-                                        placeholder={_t('Your Tchap password')}
-                                        ref='passphrase1'
+                                        label={_t('Your Tchap password')}
+                                        onChange={e => this.onPassphraseChange(e, "passphrase1")}
                                         size={64}
-                                        type='password'
+                                        type="password"
+                                        value={this.state.passphrase1}
                                     />
                                 </div>
                             </div>
                             <div className='mx_E2eKeysDialog_inputRow'>
-                                <div className='mx_E2eKeysDialog_inputCell'>
-                                    <input
-                                        className="input"
+                                <div className='mx_E2eKeysDialog_inputCell inputWidth'>
+                                    <Field
                                         disabled={disableForm}
-                                        id='passphrase2'
-                                        placeholder={_t('Confirm your Tchap password')}
-                                        ref='passphrase2'
+                                        label={_t('Confirm your Tchap password')}
+                                        onChange={e => this.onPassphraseChange(e, "passphrase2")}
                                         size={64}
-                                        type='password'
+                                        type="password"
+                                        value={this.state.passphrase2}
                                     />
                                 </div>
                             </div>
