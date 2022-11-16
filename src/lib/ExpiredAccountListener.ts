@@ -1,7 +1,6 @@
 import { HttpApiEvent } from "matrix-js-sdk/src/matrix";
 import { defaultDispatcher, MatrixDispatcher } from "matrix-react-sdk/src/dispatcher/dispatcher";
 import { ActionPayload } from "matrix-react-sdk/src/dispatcher/payloads";
-import { stopMatrixClient } from "matrix-react-sdk/src/Lifecycle";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import Modal from "matrix-react-sdk/src/Modal";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
@@ -17,7 +16,6 @@ import TchapUtils from "../util/TchapUtils"; "matrix-react-sdk/src/dispatcher/di
 class ExpiredAccountListener {
     private boundOnExpiredAccountEvent: any;//the listener function;
     private dispatcher: MatrixDispatcher;
-    private newEmailRequested: boolean;
     private isPanelOpen: boolean;
     private isAccountExpired: boolean;
 
@@ -26,7 +24,6 @@ class ExpiredAccountListener {
         this.dispatcher = defaultDispatcher;
         this.isPanelOpen = false;
         this.isAccountExpired = false;
-        this.newEmailRequested = false;
     }
 
     /**
@@ -54,22 +51,15 @@ class ExpiredAccountListener {
             return;
         }
 
-        //stop the client to disable sync
-        stopMatrixClient(false);
         //should we sent the email directly? Normally they should have received already an email 7 days earlier
-        TchapUtils.requestNewExpiredAccountEmail()
-            .then((emailRequested) => {
-                this.newEmailRequested = emailRequested;
-                this.isPanelOpen = true;
-                this.showExpirationPanel();
-            });
+        this.isPanelOpen = true;
+        this.showExpirationPanel();
     }
 
     private async showExpirationPanel() {
         Modal.createDialog(ExpiredAccountDialog, {
-            newEmailRequested: this.newEmailRequested,
+            newEmailRequested: false,
             onRequestNewEmail: () => {
-                this.newEmailRequested = true;
                 TchapUtils.requestNewExpiredAccountEmail();
             },
             //check that the account is not expired when finishing
