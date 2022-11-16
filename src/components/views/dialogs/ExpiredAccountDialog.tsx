@@ -14,7 +14,7 @@ interface IState {
 
 /**
  * Expired Account is displayed when the user account is expired. It can not be cancel until the account is renewed.
- * This panel is exclusively opened by the listener ExpiredAccountListener
+ * This panel is exclusively opened by the listener ExpiredAccountHandler
 * This component is required when activating the plugin synapse-email-account-validity on the server side:  https://github.com/matrix-org/synapse-email-account-validity
 
  */

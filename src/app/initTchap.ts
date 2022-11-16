@@ -5,7 +5,7 @@ import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 import TchapVersionManagement from "../util/TchapVersionManagement";
 import TchapUserSettings from "../util/TchapUserSettings";
 import TchapUIFeature from "../util/TchapUIFeature";
-import ExpiredAccountListener from "../lib/ExpiredAccountListener";
+import ExpiredAccountHandler from "../lib/ExpiredAccountHandler";
 /**
  * Determine weither the app needs a clearCacheAndReload after loading. We do it when upgrading from v2 to v4, to avoid weird keys bugs.
  * @returns Promise(true) if a refresh is needed, Promise(false) in other cases
@@ -89,5 +89,5 @@ export function saveAppVersionInLocalStorage() {
 }
 
 export function registerExpiredAccountListener() {
-    ExpiredAccountListener.register();
+    ExpiredAccountHandler.register();
 }

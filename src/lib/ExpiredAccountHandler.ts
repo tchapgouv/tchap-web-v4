@@ -13,7 +13,7 @@ import TchapUtils from "../util/TchapUtils"; "matrix-react-sdk/src/dispatcher/di
  * This component is required when activating the plugin synapse-email-account-validity on the server side:  https://github.com/matrix-org/synapse-email-account-validity
  * The class is instantiated in the default export, thus it is created only once at the first import.
  */
-class ExpiredAccountListener {
+class ExpiredAccountHandler {
     private boundOnExpiredAccountEvent: any;//the listener function;
     private dispatcher: MatrixDispatcher;
     private isPanelOpen: boolean;
@@ -76,4 +76,4 @@ class ExpiredAccountListener {
     }
 }
 
-export default new ExpiredAccountListener();
+export default new ExpiredAccountHandler();
