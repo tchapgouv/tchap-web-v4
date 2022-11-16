@@ -4,7 +4,6 @@ import BaseDialog from 'matrix-react-sdk/src/components/views/dialogs/BaseDialog
 import DialogButtons from 'matrix-react-sdk/src/components/views/elements/DialogButtons';
 
 interface IProps {
-    focus: boolean;
     onFinished();
     onRequestNewEmail();
 }
@@ -13,12 +12,18 @@ interface IState {
     description: string;
 }
 
+/**
+ * Expired Account is displayed when the user account is expired. It can not be cancel until the account is renewed.
+ * This panel is exclusively opened by the listener ExpiredAccountListener
+* This component is required when activating the plugin synapse-email-account-validity on the server side:  https://github.com/matrix-org/synapse-email-account-validity
+
+ */
 export default class ExpiredAccountDialog extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
 
-        //const displayName = 'ExpiredAccountDialog';
         this.state = {
+            // eslint-disable-next-line max-len
             description: _t('The validity period of your account has expired. An email has been sent to you in order to renew it. Once you’ve followed the link it contains, click below.'),
         };
     }
@@ -28,19 +33,11 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
     };
 
     private onResendEmail = () => {
+        this.props.onRequestNewEmail();
         this.setState({
             description: _t('An email has been sent to you. Click on the link it contains, click below.'),
         });
-        this.props.onRequestNewEmail();
     };
-
-    /**
-        <a href="#" className="tc_ExpiredAccountDialog_link" onClick={this.props.onLogout}>
-            { _t('Logout') }
-        </a>
-     This code add a Logout button to the Expired Account Modal.
-     Keep it here in case of need.
-     */
 
     render() {
         return (
@@ -48,7 +45,7 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
                 onFinished={this.props.onFinished}
                 title={_t('The validity period of your account has expired')}
                 contentId='mx_Dialog_content'
-                hasCancel={false}
+                hasCancel={false} //panel does not offer a "close" button
             >
                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
                     <div>
@@ -61,7 +58,6 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
                     cancelButton={null}
                     hasCancel={false}
                     onPrimaryButtonClick={this.onOk}
-                    focus={this.props.focus}
                     onCancel={null}
                 >
                     <button onClick={this.onResendEmail}>

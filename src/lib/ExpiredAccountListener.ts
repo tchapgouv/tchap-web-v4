@@ -10,8 +10,9 @@ import ExpiredAccountDialog from "../components/views/dialogs/ExpiredAccountDial
 import TchapUtils from "../util/TchapUtils"; "matrix-react-sdk/src/dispatcher/dispatcher";
 
 /*
- * Listens for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events in which case, it opens the panel ExpiredAccountDialog.
- * The class is instantiated in the default export, thus it is a singleton object
+ * Listens for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events and opens the panel ExpiredAccountDialog.
+ * This component is required when activating the plugin synapse-email-account-validity on the server side:  https://github.com/matrix-org/synapse-email-account-validity
+ * The class is instantiated in the default export, thus it is created only once at the first import.
  */
 class ExpiredAccountListener {
     private boundOnExpiredAccountEvent: any;//the listener function;
