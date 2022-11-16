@@ -51,45 +51,18 @@ index cd1f06a..434c949 100644
      return (
          <div className="mx_UnknownBody" ref={ref}>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-index 654cc80..41f8bfe 100644
+index 654cc80..2548147 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-@@ -16,6 +16,7 @@ limitations under the License.
- */
- 
- import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
-+import { ComponentType } from 'react'; // :TCHAP:
- import classNames from "classnames";
- import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
- import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-@@ -84,6 +85,8 @@ import { useTooltip } from "../../../utils/useTooltip";
+@@ -84,6 +84,7 @@ import { useTooltip } from "../../../utils/useTooltip";
  import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
  import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
  import { ElementCall } from "../../../models/Call";
-+import Modal from '../../../Modal'; // :TCHAP:
 +import { TchapKeyRequestInfo } from "../../../../../../src/components/views/rooms/TchapKeyRequestInfo"; // :TCHAP:
  
  export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
  
-@@ -754,6 +757,17 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
-         MatrixClientPeg.get().cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
-     };
- 
-+    // :TCHAP:
-+    private onImportE2eKeysClicked = (): void => {
-+        Modal.createDialogAsync(
-+            import(
-+                '../../../async-components/views/dialogs/security/ImportE2eKeysDialog'
-+            ) as unknown as Promise<ComponentType<{}>>,
-+            { matrixClient: MatrixClientPeg.get() },
-+        );
-+    };
-+    // end :TCHAP:
-+
-     private onPermalinkClicked = e => {
-         // This allows the permalink to be opened in a new tab/window or copied as
-         // matrix.to, but also for it to enable routing within Element when clicked.
-@@ -1491,7 +1505,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+@@ -1491,7 +1492,12 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                                  onHeightChanged: this.props.onHeightChanged,
                                  permalinkCreator: this.props.permalinkCreator,
                              }, this.context.showHiddenEvents) }
@@ -97,7 +70,6 @@ index 654cc80..41f8bfe 100644
 +                            <TchapKeyRequestInfo // :TCHAP:
 +                                previouslyRequestedKeys={this.state.previouslyRequestedKeys}
 +                                onRequestKeysClick={this.onRequestKeysClick}
-+                                onImportE2eKeysClicked={this.onImportE2eKeysClicked}
 +                                isEncryptionFailure={isEncryptionFailure}
 +                                isRedacted={isRedacted}>
 +                            </TchapKeyRequestInfo>

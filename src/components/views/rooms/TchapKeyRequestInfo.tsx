@@ -1,20 +1,32 @@
 /**
  * Copyright 2022 DINUM
  */
-import React from "react";
+import React, { ComponentType } from "react";
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 import AccessibleButton from 'matrix-react-sdk/src/components/views/elements/AccessibleButton';
 import TooltipButton from 'matrix-react-sdk/src/components/views/elements/TooltipButton';
+import Modal from 'matrix-react-sdk/src/Modal';
+import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 
 interface TchapKeyRequestInfoProps {
     previouslyRequestedKeys: boolean;
     onRequestKeysClick: () => void;
-    onImportE2eKeysClicked: () => void;
     isEncryptionFailure: boolean;
     isRedacted: boolean;
 }
 
 export const TchapKeyRequestInfo: React.FC<TchapKeyRequestInfoProps> = (props: TchapKeyRequestInfoProps) => {
+    // :TCHAP:
+    const onImportE2eKeysClicked = (): void => {
+        Modal.createDialogAsync(
+            import(
+                'matrix-react-sdk/src/async-components/views/dialogs/security/ImportE2eKeysDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
+            { matrixClient: MatrixClientPeg.get() },
+        );
+    };
+    // end :TCHAP:
+
     const keyRequestHelpText =
         <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
             <p>
@@ -66,7 +78,7 @@ export const TchapKeyRequestInfo: React.FC<TchapKeyRequestInfoProps> = (props: T
                     className="mx_EventTile_rerequestKeysCta"
                     kind='link_inline'
                     tabIndex={0}
-                    onClick={props.onImportE2eKeysClicked}
+                    onClick={onImportE2eKeysClicked}
                 >
                     { sub }
                 </AccessibleButton>,
