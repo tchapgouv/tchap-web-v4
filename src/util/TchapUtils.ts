@@ -174,7 +174,8 @@ export default class TchapUtils {
     }
 
     /**
-     * Request a new validation email for expired account.
+     * Request a new validity email for a user account (expired or not).
+    * @returns true if the mail was sent succesfully, false otherwise
      */
     static async requestNewExpiredAccountEmail(): Promise<boolean> {
         console.log(":tchap: Requesting an email to renew to account");
@@ -199,7 +200,9 @@ export default class TchapUtils {
     }
 
     /**
-     * Get the expiration information for an account
+     * Verify if the account is expired.
+     * It executes an API call and check that it receives a ORG_MATRIX_EXPIRED_ACCOUNT
+     * The API invoked is getProfileInfo()
      * @param matrixId the account matrix Id
      * @returns true if account is expired, false otherwise
      */
@@ -207,9 +210,6 @@ export default class TchapUtils {
         if (!matrixId) {
             matrixId = MatrixClientPeg.getCredentials().userId;
         }
-        /* const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
-        const accessToken = MatrixClientPeg.get().getAccessToken();
- */
         try {
             await MatrixClientPeg.get().getProfileInfo(matrixId);
         } catch (err) {
@@ -218,22 +218,5 @@ export default class TchapUtils {
             }
         }
         return false;
-
-        //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
-        const url = `${homeserverUrl}${TchapApi.expiredInfoUrl(matrixId)}`;
-        const options = {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        };
-
-        return fetch(url, options).then((response) => {
-            console.log(":tchap: email isAccountExpired sent", response);
-            return response.json().then((json) => json["org.matrix.expired"]);
-        }).catch((err) => {
-            console.error(":tchap: email isAccountExpired error", err);
-            return false;
-        });
     }
 }

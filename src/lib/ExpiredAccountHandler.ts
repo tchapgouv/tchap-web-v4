@@ -1,6 +1,7 @@
 import { HttpApiEvent } from "matrix-js-sdk/src/matrix";
 import { defaultDispatcher, MatrixDispatcher } from "matrix-react-sdk/src/dispatcher/dispatcher";
 import { ActionPayload } from "matrix-react-sdk/src/dispatcher/payloads";
+import { stopMatrixClient } from "matrix-react-sdk/src/Lifecycle";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import Modal from "matrix-react-sdk/src/Modal";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
@@ -20,7 +21,7 @@ class ExpiredAccountHandler {
     private isAccountExpired: boolean;
 
     constructor() {
-        this.boundOnExpiredAccountEvent = this.onAccountExpiredError.bind(this);
+        this.boundOnExpiredAccountEvent = this.onExpiredAccountError.bind(this);
         this.dispatcher = defaultDispatcher;
         this.isPanelOpen = false;
         this.isAccountExpired = false;
@@ -46,30 +47,36 @@ class ExpiredAccountHandler {
     /**
      * When account expired account happens, display the panel if not open yet.
      */
-    private onAccountExpiredError() {
+    private onExpiredAccountError() {
+        console.log(":tchap: Expired Account Error received");
+
         if (this.isPanelOpen) {
             return;
         }
+        //shutdown all matrix react services, but without unsetting the client
+        stopMatrixClient(false);
+        console.log(":tchap: matrix react services have been shutdown");
 
         //should we sent the email directly? Normally they should have received already an email 7 days earlier
-        this.isPanelOpen = true;
         this.showExpirationPanel();
+        this.isPanelOpen = true;
     }
 
     private async showExpirationPanel() {
         Modal.createDialog(ExpiredAccountDialog, {
-            newEmailRequested: false,
             onRequestNewEmail: () => {
-                TchapUtils.requestNewExpiredAccountEmail();
+                return TchapUtils.requestNewExpiredAccountEmail();
             },
             //check that the account is not expired when finishing
             onFinished: async () => {
                 this.isPanelOpen = false;
                 PlatformPeg.get().reload();
             },
+        //todo: define which static/dynamic settings are needed for this dialog
         }, null, false, true, {
             //close panel only if account is not expired
             onBeforeClose: async () => {
+                //verify that the account is not expired anymore
                 this.isAccountExpired = await TchapUtils.isAccountExpired();
                 return Promise.resolve(!this.isAccountExpired);
             } });
