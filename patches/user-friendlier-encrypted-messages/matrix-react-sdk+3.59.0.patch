@@ -51,7 +51,7 @@ index cd1f06a..434c949 100644
      return (
          <div className="mx_UnknownBody" ref={ref}>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-index 654cc80..b88a304 100644
+index 654cc80..41f8bfe 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
 @@ -16,6 +16,7 @@ limitations under the License.
@@ -62,15 +62,16 @@ index 654cc80..b88a304 100644
  import classNames from "classnames";
  import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
  import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-@@ -84,6 +85,7 @@ import { useTooltip } from "../../../utils/useTooltip";
+@@ -84,6 +85,8 @@ import { useTooltip } from "../../../utils/useTooltip";
  import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
  import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
  import { ElementCall } from "../../../models/Call";
 +import Modal from '../../../Modal'; // :TCHAP:
++import { TchapKeyRequestInfo } from "../../../../../../src/components/views/rooms/TchapKeyRequestInfo"; // :TCHAP:
  
  export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
  
-@@ -754,6 +756,17 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+@@ -754,6 +757,17 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
          MatrixClientPeg.get().cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
      };
  
@@ -88,77 +89,18 @@ index 654cc80..b88a304 100644
      private onPermalinkClicked = e => {
          // This allows the permalink to be opened in a new tab/window or copied as
          // matrix.to, but also for it to enable routing within Element when clicked.
-@@ -1151,23 +1164,38 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
-             <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
-                 <p>
-                     { this.state.previouslyRequestedKeys ?
-+                        /* :TCHAP: use "device" instead of "session"
-                         _t('Your key share request has been sent - please check your other sessions ' +
-                            'for key share requests.') :
-                         _t('Key share requests are sent to your other sessions automatically. If you ' +
-                            'rejected or dismissed the key share request on your other sessions, click ' +
-                            'here to request the keys for this session again.')
-+                        */
-+                        _t("Your key share request has been sent - please check your other devices for key share requests.") :
-+                        _t("Tchap Key share requests are sent to your other devices automatically. " +
-+                          "If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.")
-+                        // end :TCHAP:
-                     }
-                 </p>
-                 <p>
--                    { _t('If your other sessions do not have the key for this message you will not ' +
-+                    {/* :TCHAP: use "device" instead of "session"
-+                        _t('If your other sessions do not have the key for this message you will not ' +
-                          'be able to decrypt them.')
-+                      */
-+                      _t("If your other devices do not have the key for this message, you will not be able to decrypt them.")
-                     }
-                 </p>
-             </div>;
-         const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
--            _t('Key request sent.') :
-+            // :TCHAP: better text
-+            //_t('Key request sent.') :
-+            _t('Request in progress...') :
-+            // end :TCHAP:
-             _t(
--                '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
-+                // :TCHAP: better text
-+                //'<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
-+                '<requestLink>Re-send a request to your other devices</requestLink>',
-+                // end :TCHAP:
-                 {},
-                 {
-                     'requestLink': (sub) =>
-@@ -1182,9 +1210,31 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
-                 },
-             );
- 
-+        // :TCHAP:
-+        const importKeys = _t(
-+            '<requestLink>Import from saved file</requestLink>',
-+            {},
-+            {
-+                'requestLink': (sub) =>
-+                    <AccessibleButton
-+                        className="mx_EventTile_rerequestKeysCta"
-+                        kind='link_inline'
-+                        tabIndex={0}
-+                        onClick={this.onImportE2eKeysClicked}
-+                    >
-+                        { sub }
-+                    </AccessibleButton>,
-+            },
-+        );
-+        // end :TCHAP:
-+
-         const keyRequestInfo = isEncryptionFailure && !isRedacted ?
-             <div className="mx_EventTile_keyRequestInfo">
-                 <span className="mx_EventTile_keyRequestInfo_text">
-+                    {/** :TCHAP: */}
-+                    { importKeys }
-+                    <br />
-+                    {/** end :TCHAP: */}
-                     { keyRequestInfoContent }
-                 </span>
-                 <TooltipButton helpText={keyRequestHelpText} />
+@@ -1491,7 +1505,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
+                                 onHeightChanged: this.props.onHeightChanged,
+                                 permalinkCreator: this.props.permalinkCreator,
+                             }, this.context.showHiddenEvents) }
+-                            { keyRequestInfo }
++                            <TchapKeyRequestInfo // :TCHAP:
++                                previouslyRequestedKeys={this.state.previouslyRequestedKeys}
++                                onRequestKeysClick={this.onRequestKeysClick}
++                                onImportE2eKeysClicked={this.onImportE2eKeysClicked}
++                                isEncryptionFailure={isEncryptionFailure}
++                                isRedacted={isRedacted}>
++                            </TchapKeyRequestInfo>
+                             { actionBar }
+                             { this.props.layout === Layout.IRC && <>
+                                 { reactionsRow }
