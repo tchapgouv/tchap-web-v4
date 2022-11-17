@@ -3,8 +3,10 @@ import { _t } from 'matrix-react-sdk/src/languageHandler';
 import BaseDialog from 'matrix-react-sdk/src/components/views/dialogs/BaseDialog';
 import DialogButtons from 'matrix-react-sdk/src/components/views/elements/DialogButtons';
 
+import TchapUtils from '../../../util/TchapUtils';
+
 interface IProps {
-    onFinished();
+    onFinished(): void;
     onRequestNewEmail(): Promise<any>;
     emailDelay?: number; //delay betwenn 2 emails in seconds, by default 30
 }
@@ -13,13 +15,15 @@ interface IState {
     emailDelay: number;//delay betwenn 2 emails in seconds, by default 30
     isAccountExpired: boolean; //todo: not used yet
     newEmailSentTimestamp: number;//timestamp
-    newEmailState: EmailState;
+    ProcessState: ProcessState;
 }
 
-enum EmailState {
-    MUST_WAIT,
-    SUCCESS,
-    FAILURE
+enum ProcessState {
+    EMAIL_MUST_WAIT,
+    EMAIL_SUCCESS,
+    EMAIL_FAILURE,
+    ACCOUNT_STILL_EXPIRED,
+    ACCOUNT_RENEWED
 }
 /**
  * Expired Account is displayed when the user account is expired. It can not be cancel until the account is renewed.
@@ -34,7 +38,7 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
             isAccountExpired: false,
             newEmailSentTimestamp: 0,
             emailDelay: this.props.emailDelay || 30, //seconds
-            newEmailState: undefined,
+            ProcessState: null,
         };
     }
 
@@ -45,51 +49,88 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
     }
 
     private onOk = async () => {
-        this.props.onFinished();
+        if (this.state.ProcessState === ProcessState.ACCOUNT_RENEWED) {
+            return this.props.onFinished();
+        }
+
+        //check that the account is still expired
+        if (await TchapUtils.isAccountExpired()) {
+            this.setState({
+                ProcessState: ProcessState.ACCOUNT_STILL_EXPIRED,
+            });
+        } else {
+            //call the onFinished method with a delay of 5 seconds
+            /* setTimeout(() => {
+                this.props.onFinished();
+            }, 5000); */
+            this.setState({
+                ProcessState: ProcessState.ACCOUNT_RENEWED,
+            });
+        }
     };
 
     private onRequestEmail = () => {
         //check if user must wait before sending a new email
         if (this.mustWait()) {
             return this.setState({
-                newEmailState: EmailState.MUST_WAIT,
+                ProcessState: ProcessState.EMAIL_MUST_WAIT,
             });
         }
 
         this.props.onRequestNewEmail().then((success) => {
             if (!success) {
                 this.setState({
-                    newEmailState: EmailState.FAILURE,
+                    ProcessState: ProcessState.EMAIL_FAILURE,
                 });
             } else {
                 //sucess, save timestamp
                 this.setState({
                     newEmailSentTimestamp: Date.now(),
-                    newEmailState: EmailState.SUCCESS,
+                    ProcessState: ProcessState.EMAIL_SUCCESS,
                 });
             }
         });
     };
 
     render() {
+        let titleMessage = _t('The validity period of your account has expired');
+        let descriptionMessage = <p>{ _t('An email has been sent to you. Click on the link it contains, click below.') }</p>;
         let alertMessage = null;
-        switch (this.state.newEmailState) {
-            case EmailState.MUST_WAIT:
+        let requestNewEmailButton = <button onClick={this.onRequestEmail}>{ _t('Request a renewal email') }</button>;
+        let okButtonText = _t('I renewed the validity of my account');
+
+        switch (this.state.ProcessState) {
+            case ProcessState.EMAIL_MUST_WAIT:
                 //don't know which class should decorate this message, it is not really an error
                 //its goal is to avoid users to click twice or more on the button and spam themselves
                 alertMessage = <p className="">{ _t(
                     "Wait for at least %(wait)s seconds between two emails", { wait: this.state.emailDelay },
                 ) }</p>;
                 break;
-            case EmailState.FAILURE:
+            case ProcessState.EMAIL_FAILURE:
                 alertMessage = <p className="text-error">{ _t(
                     "The email was not sent sucessfully, please retry in a moment",
                 ) }</p>;
                 break;
-            case EmailState.SUCCESS:
+            case ProcessState.EMAIL_SUCCESS:
                 alertMessage = <p className="text-success">{ _t(
                     "A new email has been sent",
                 ) }</p>;
+                break;
+            case ProcessState.ACCOUNT_STILL_EXPIRED:
+                alertMessage = <p className="text-error">
+                    { _t("Your account is still expired, please follow the link in the email you have received to renew it") }
+                </p>;
+                break;
+            case ProcessState.ACCOUNT_RENEWED:
+                titleMessage = _t('Congratulations, your account has been renewed');
+                descriptionMessage =
+                    <p>
+                        { _t('The app will reload now') }
+                    </p>;
+                okButtonText = _t('Reload the app');
+                alertMessage = null;
+                requestNewEmailButton = null;
                 break;
             default:
                 break;
@@ -98,27 +139,21 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
         return (
             <BaseDialog className="mx_QuestionDialog"
                 onFinished={this.props.onFinished}
-                title={_t('The validity period of your account has expired')}
+                title={titleMessage}
                 contentId='mx_Dialog_content'
                 hasCancel={false} //panel does not offer a "close" button
             >
                 { alertMessage }
                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
-                    <div>
-                        <p> { _t('An email has been sent to you. Click on the link it contains, click below.') }
-                        </p>
-                    </div>
+
+                    { descriptionMessage }
+
                 </div>
-                <DialogButtons primaryButton={_t('I renewed the validity of my account')}
-                    primaryButtonClass={null}
-                    cancelButton={null}
-                    hasCancel={false}
+                <DialogButtons primaryButton={okButtonText}
+                    hasCancel={false} //panel does not offer a "cancel" button
                     onPrimaryButtonClick={this.onOk}
-                    onCancel={null}
                 >
-                    <button onClick={this.onRequestEmail}>
-                        { _t('Request a renewal email') }
-                    </button>
+                    { requestNewEmailButton }
                 </DialogButtons>
             </BaseDialog>
         );
