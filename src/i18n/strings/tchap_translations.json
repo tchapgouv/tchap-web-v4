@@ -186,10 +186,6 @@
     "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup",
     "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde"
   },
-  "(find out more)": {
-    "en": "(find out more)",
-    "fr": "(en savoir plus)"
-  },
   "Create your Tchap Key password (minimum 8 characters)": {
     "en": "Create your Tchap Key password (minimum 8 characters)",
     "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
@@ -198,25 +194,21 @@
     "en": "Passphrase must be at least 8 character long",
     "fr": "Le mot de passe doit minimum faire 8 caractères"
   },
-  "Your Tchap password": {
-    "en": "Your Tchap password",
+  "Your Tchap Key password": {
+    "en": "Your Tchap Key password",
     "fr": "Votre mot de passe Clés Tchap"
   },
-  "Confirm your Tchap password": {
-    "en": "Confirm your Tchap password",
+  "Confirm your Tchap Key password": {
+    "en": "Confirm your Tchap Key password",
     "fr": "Confirmer votre mot de passe Clés Tchap"
   },
   "Tchap Keys saved!": {
     "en": "Tchap Keys saved!",
     "fr": "Clés Tchap sauvegardées !"
   },
-  "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages.": {
-    "en": "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages.",
-    "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages."
-  },
-  "(Find out more)": {
-    "en": "(Find out more)",
-    "fr": "(En savoir plus)"
+  "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
+    "en": "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages (<a>find out more</a>).",
+    "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
   },
   "Save your Tchap Keys before logging out": {
     "en": "Save your Tchap Keys before logging out",

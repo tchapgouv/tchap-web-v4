@@ -151,13 +151,13 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
         const disableForm = (this.state.phase === Phase.Exporting);
 
         return (
-            <BaseDialog className='mx_exportE2eKeysDialog'
+            <BaseDialog className='tc_exportE2eKeysDialog'
                 onFinished={this.props.onFinished}
                 title={_t("Save your Tchap Keys (encryption keys)")}
             >
                 <form onSubmit={this.onPassphraseFormSubmit}>
                     <div className="mx_Dialog_content">
-                        <p className='modalParagraph'>
+                        <p className='tc_modalParagraph'>
                             { _t(
                                 'If you do not have another connected device, ' +
                                 '<b>we advice you to save your keys in a file on your device</b>.',
@@ -165,26 +165,26 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                                 { b: (sub) => <b>{ sub }</b> },
                             ) }
                         </p>
-                        <p className='modalParagraph'>
+                        <p className='tc_modalParagraph'>
                             { _t(
                                 'This file will be protected by a password, ' +
                                 'which will be asked next time you log in, ' +
                                 'when you will import the keys to unlock your messages.',
                             ) }
                         </p>
-                        <p className='modalParagraph withMarginBottom withMarginTop'>
+                        <p className='tc_modalParagraph tc_withMarginBottom tc_withMarginTop'>
                             { _t('Create your Tchap Key password (minimum 8 characters)') }
                         </p>
                         <div className='error'>
                             { this.state.errStr }
                         </div>
                         <div className='mx_E2eKeysDialog_inputTable'>
-                            <div className='mx_E2eKeysDialog_inputRow passwordInputRow'>
-                                <div className='mx_E2eKeysDialog_inputCell inputWidth'>
+                            <div className='mx_E2eKeysDialog_inputRow'>
+                                <div className='mx_E2eKeysDialog_inputCell'>
                                     <Field
                                         autoFocus={true}
                                         disabled={disableForm}
-                                        label={_t('Your Tchap password')}
+                                        label={_t('Your Tchap Key password')}
                                         onChange={e => this.onPassphraseChange(e, "passphrase1")}
                                         size={64}
                                         type="password"
@@ -193,10 +193,10 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                                 </div>
                             </div>
                             <div className='mx_E2eKeysDialog_inputRow'>
-                                <div className='mx_E2eKeysDialog_inputCell inputWidth'>
+                                <div className='mx_E2eKeysDialog_inputCell'>
                                     <Field
                                         disabled={disableForm}
-                                        label={_t('Confirm your Tchap password')}
+                                        label={_t('Confirm your Tchap Key password')}
                                         onChange={e => this.onPassphraseChange(e, "passphrase2")}
                                         size={64}
                                         type="password"

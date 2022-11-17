@@ -20,6 +20,7 @@ import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog
 import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
 import { _t } from 'matrix-react-sdk/src/languageHandler';
 
+import { TchapAnchor } from '../../../../components/common/TchapAnchor';
 import KeySavedImage from "../../../../../res/img/tchap/key-saved.svg";
 import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pcss";
 
@@ -41,7 +42,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
 
     render() {
         return (
-            <BaseDialog className='mx_exportE2eKeysSuccessDialog'
+            <BaseDialog className='tc_exportE2eKeysSuccessDialog'
                 onFinished={this.props.onFinished}
                 title={_t("Tchap Keys saved!")}
             >
@@ -54,18 +55,23 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                         />
                     </div>
 
-                    <p className="modalParagraph">
+                    <p className="tc_modalParagraph">
                         { _t(
                             'Your Tchap Keys (encryption keys) have been successful saved. ' +
-                            'You can import them when you login again to unlock your messages.',
+                            'You can import them when you login again to unlock your messages ' +
+                            '(<a>find out more</a>).',
                             {},
-                            { b: (sub) => <b>{ sub }</b> },
+                            {
+                                a: (sub) => (
+                                    <TchapAnchor
+                                        href="https://tchap.beta.gouv.fr/faq#tcq07_003"
+                                        openInNewTab
+                                    >{ sub }
+                                    </TchapAnchor>
+                                ),
+                                b: (sub) => <b>{ sub }</b>,
+                            },
                         ) }
-                        <a
-                            className="findOutMoreLink"
-                            href="https://tchap.beta.gouv.fr/faq#tcq07_003"
-                            target="_blank"
-                        >{ _t('(Find out more)') }</a>
                     </p>
                 </div>
                 <div className='mx_Dialog_buttons'>
