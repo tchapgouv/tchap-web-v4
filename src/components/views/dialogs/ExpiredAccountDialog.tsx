@@ -59,10 +59,6 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
                 ProcessState: ProcessState.ACCOUNT_STILL_EXPIRED,
             });
         } else {
-            //call the onFinished method with a delay of 5 seconds
-            /* setTimeout(() => {
-                this.props.onFinished();
-            }, 5000); */
             this.setState({
                 ProcessState: ProcessState.ACCOUNT_RENEWED,
             });
@@ -77,18 +73,12 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
             });
         }
 
+        //send the new email requested
         this.props.onRequestNewEmail().then((success) => {
-            if (!success) {
-                this.setState({
-                    ProcessState: ProcessState.EMAIL_FAILURE,
-                });
-            } else {
-                //sucess, save timestamp
-                this.setState({
-                    newEmailSentTimestamp: Date.now(),
-                    ProcessState: ProcessState.EMAIL_SUCCESS,
-                });
-            }
+            this.setState({
+                newEmailSentTimestamp: success? Date.now() : this.state.newEmailSentTimestamp,
+                ProcessState: success? ProcessState.EMAIL_SUCCESS : ProcessState.EMAIL_FAILURE,
+            });
         });
     };
 
