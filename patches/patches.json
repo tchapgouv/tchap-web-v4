@@ -130,5 +130,12 @@
     "files": [
       "src/components/views/rooms/MessageComposer.tsx"
     ]
+  },
+  "user-friendlier-encrypted-messages": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/rooms/EventTile.tsx",
+      "res/css/views/elements/_TooltipButton.pcss"
+    ]
   }
 }
