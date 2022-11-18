@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index e501f7d..59e44f0 100644
+index e501f7d..a6c54ab 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
 @@ -6632,6 +6632,15 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
@@ -22,9 +22,10 @@ index e501f7d..59e44f0 100644
       * @return {Promise<boolean>} true if server supports the `logout_devices` parameter
       */
      public doesServerSupportLogoutDevices(): Promise<boolean> {
+-        return this.isVersionSupported("r0.6.1");
 +        // :TCHAP: hard-code to true, our custom backend supports it.
-         return this.isVersionSupported("r0.6.1");
-+        //return Promise.resolve(true);
++        // return this.isVersionSupported("r0.6.1");
++        return Promise.resolve(true);
 +        // en :TCHAP:
      }
  
