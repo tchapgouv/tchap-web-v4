@@ -1,12 +1,13 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index e501f7d..fbabfcc 100644
+index e501f7d..59e44f0 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
-@@ -6632,6 +6632,14 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -6632,6 +6632,15 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];
 +
++        console.log('TCHAP server versions', response);
 +        // :TCHAP: disable cross signing, by pretending the server doesn't support it.
 +        unstableFeatures["org.matrix.e2e_cross_signing"] = false;
 +        if (feature === "org.matrix.e2e_cross_signing") {
@@ -17,3 +18,14 @@ index e501f7d..fbabfcc 100644
          return unstableFeatures && !!unstableFeatures[feature];
      }
  
+@@ -6686,7 +6695,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+      * @return {Promise<boolean>} true if server supports the `logout_devices` parameter
+      */
+     public doesServerSupportLogoutDevices(): Promise<boolean> {
++        // :TCHAP: hard-code to true, our custom backend supports it.
+         return this.isVersionSupported("r0.6.1");
++        //return Promise.resolve(true);
++        // en :TCHAP:
+     }
+ 
+     /**

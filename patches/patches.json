@@ -46,7 +46,7 @@
       "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
     ]
   },
-  "disable-cross-signing": {
+  "disable-cross-signing-and-enable-logout-devices-when-changing-password": {
     "package": "matrix-js-sdk",
     "files": [
       "src/client.ts"
