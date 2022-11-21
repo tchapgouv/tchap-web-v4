@@ -237,5 +237,33 @@
   "Reload the app": {
     "en": "Reload page",
     "fr": "Rafraîchir la page"
+  },
+  "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
+    "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
+    "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
+  },
+  "<requestLink>Re-send a request to your other devices</requestLink>": {
+    "en": "<requestLink>Re-send a request to your other devices</requestLink>",
+    "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
+  },
+  "Request in progress...": {
+    "en": "Request in progress...",
+    "fr": "Demande en cours..."
+  },
+  "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.": {
+    "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
+    "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
+  },
+  "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
+    "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
+    "fr": "Si vos autres appareils n'ont pas la clé pour ce message, vous ne pourrez pas le déchiffrer."
+  },
+  "Your key share request has been sent - please check your other devices for key share requests.": {
+    "en": "Your key share request has been sent - please check your other devices for key share requests.",
+    "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
+  },
+  "<requestLink>Import from saved file</requestLink>": {
+    "en": "<requestLink>Import from saved file</requestLink>",
+    "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
   }
 }
