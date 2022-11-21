@@ -194,6 +194,50 @@
     "en": "Save my keys",
     "fr": "Sauvegarder mes clés"
   },
+  "The validity period of your account has expired": {
+    "en": "Your Tchap account has expired",
+    "fr": "Votre compte Tchap a expiré"
+  },
+  "An email has been sent to you. Click on the link it contains, click below.": {
+    "en": "An email has been sent to you. Its title is : \"Renew your Tchap account\" Once you’ve followed the link it contains, click on the button \"I renewed my account\".",
+    "fr": "Un email vous a été envoyé pour renouveler votre compte. Il est intitulé : \"Renouvelez votre compte Tchap\". Une fois que vous aurez suivi le lien qu'il contient, cliquez sur le bouton \"J’ai renouvelé mon compte\"."
+  },
+  "I renewed the validity of my account": {
+    "en": "I renewed my account",
+    "fr": "J’ai renouvelé mon compte"
+  },
+  "Request a renewal email": {
+    "en": "Request a renewal email",
+    "fr": "Demander l’envoi d’un nouvel email"
+  },
+  "A new email has been sent": {
+    "en": "A new email has been sent",
+    "fr": "Un nouvel email de renouvellement vous a été adressé"
+  },
+  "Wait for at least %(wait)s seconds between two emails": {
+    "en": "Wait for at least %(wait)s seconds between two emails",
+    "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux emails"
+  },
+  "The email was not sent sucessfully, please retry in a moment": {
+    "en": "The email was not sent sucessfully, please retry",
+    "fr": "L'email de renouvellement n'a pas pu être envoyé, veuillez réessayer"
+  },
+  "Your account is still expired, please follow the link in the email you have received to renew it": {
+    "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
+    "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
+  },
+  "Congratulations, your account has been renewed": {
+    "en": "Congratulations, your account has been renewed",
+    "fr": "Félicitations, votre compte a été renouvelé"
+  },
+  "The app will reload now": {
+    "en": "You can refresh the page to continue your conversations",
+    "fr": "Vous pouvez dorénavant rafraîchir la page pour continuer vos conversations"
+  },
+  "Reload the app": {
+    "en": "Reload page",
+    "fr": "Rafraîchir la page"
+  },
   "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
     "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
     "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
