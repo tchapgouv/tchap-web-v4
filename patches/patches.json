@@ -145,5 +145,11 @@
       "src/components/views/rooms/EventTile.tsx",
       "res/css/views/elements/_TooltipButton.pcss"
     ]
+  },
+  "remove-authorization-header-in-reset-password": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/PasswordReset.ts"
+    ]
   }
 }

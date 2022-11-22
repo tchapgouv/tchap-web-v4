@@ -1,0 +1,16 @@
+diff --git a/node_modules/matrix-react-sdk/src/PasswordReset.ts b/node_modules/matrix-react-sdk/src/PasswordReset.ts
+index df812ba..a92e1aa 100644
+--- a/node_modules/matrix-react-sdk/src/PasswordReset.ts
++++ b/node_modules/matrix-react-sdk/src/PasswordReset.ts
+@@ -42,6 +42,11 @@ export default class PasswordReset {
+         this.client = createClient({
+             baseUrl: homeserverUrl,
+             idBaseUrl: identityUrl,
++            //:tchap: specify useAuthorization header to false to avoid this bug : 
++            //https://github.com/tchapgouv/tchap-web-v4/issues/311
++            //very strange this regression
++            //if we do not set it to false, a Authorization Bearer token undefined is sent to the server
++            useAuthorizationHeader: false
+         });
+         this.clientSecret = this.client.generateClientSecret();
+     }
