@@ -24,7 +24,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { parseQsFromFragment } from "./url_utils";
 import './modernizr';
 // eslint-disable-next-line max-len
-import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage } from "../app/initTchap";
+import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage, registerExpiredAccountListener } from "../app/initTchap";
 
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
@@ -239,6 +239,8 @@ async function start() {
         if (needRefreshForV4) {
             queueClearCacheAndReload();
         }
+
+        registerExpiredAccountListener();
         //end of :tchap:
 
         // Finally, load the app. All of the other react-sdk imports are in this file which causes the skinner to
