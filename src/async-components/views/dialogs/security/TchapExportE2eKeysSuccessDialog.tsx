@@ -1,3 +1,19 @@
+/*
+Copyright 2022 DINUM
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from 'react';
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
@@ -15,12 +31,11 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
     constructor(props: IProps) {
         super(props);
 
-        this.onLogoutConfirm = this.onLogoutConfirm.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
-    private onLogoutConfirm() {
+    private onClose() {
         this.props.onFinished(true);
-        dis.dispatch({ action: 'logout' });
     }
 
     render() {
@@ -58,8 +73,8 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                     </p>
                 </div>
                 <div className='mx_Dialog_buttons'>
-                    <button className="mx_Dialog_primary" onClick={this.onLogoutConfirm}>
-                        { _t("Sign out") }
+                    <button className="mx_Dialog_primary" onClick={this.onClose}>
+                        { _t("Go back") }
                     </button>
                 </div>
             </BaseDialog>
