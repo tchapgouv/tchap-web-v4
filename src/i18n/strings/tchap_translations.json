@@ -196,7 +196,7 @@
   },
   "One of your devices wants to check your current device. By performing this verification, a link of trust will be established between your two devices to facilitate the sharing of encryption keys.": {
     "en": "One of your devices wants to check your current device. By performing this verification, a link of trust will be established between your two devices to facilitate the sharing of encryption keys.",
-    "fr": "L’un de vos appareils demande à partager vos Clés Tchap (clés de chiffrement) pour déverrouiller vos messages."
+    "fr": "L'un de vos appareils demande à partager vos Clés Tchap pour déverrouiller vos messages."
   },
   "Please also confirm the emojis on the other device.": {
     "en": "Please also confirm the emojis on the other device.",
@@ -205,5 +205,25 @@
   "Incoming Verification Request": {
     "en": "Incoming Verification Request",
     "fr": "Partage de vos Clés Tchap"
+  },
+  "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.": {
+    "en": "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.",
+    "fr": "Le partage de vos Clés Tchap a réussi. Vos messages vont être déverrouillés au fur et à mesure."
+  },
+  "Finish": {
+    "en": "Finish",
+    "fr": "Terminer"
+  },
+  "Please accept the sharing of your Tchap Keys on the other device.": {
+    "en": "Please accept the sharing of your Tchap Keys on the other device.",
+    "fr": "Merci d'accepter la demande de partage de vos Clés Tchap sur l'autre appareil."
+  },
+  "Confirm the emoji below are displayed on both devices, in the same order:": {
+    "en": "Confirm the emoji below are displayed on both devices, in the same order:",
+    "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+  },
+  "Please confirm the objects on the other device.": {
+    "en": "Please confirm the objects on the other device.",
+    "fr": "Veuillez confirmer les objets sur l'autre appareil."
   }
 }

@@ -1,0 +1,77 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
+index 2b15749..128352c 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
+@@ -19,6 +19,7 @@ import { IGeneratedSas, ISasEvent, SasEvent } from "matrix-js-sdk/src/crypto/ver
+ import { VerificationBase, VerificationEvent } from "matrix-js-sdk/src/crypto/verification/Base";
+ import { logger } from "matrix-js-sdk/src/logger";
+ 
++import { TchapAnchor } from '../../../../components/common/TchapAnchor';
+ import { MatrixClientPeg } from '../../../MatrixClientPeg';
+ import { _t } from '../../../languageHandler';
+ import { mediaFromMxc } from "../../../customisations/Media";
+@@ -176,36 +177,15 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
+             profile = <Spinner />;
+         }
+ 
+-        const userDetailText = [
+-            <p key="p1">{ _t(
+-                "Verify this user to mark them as trusted. " +
+-                "Trusting users gives you extra peace of mind when using " +
+-                "end-to-end encrypted messages.",
+-            ) }</p>,
+-            <p key="p2">{ _t(
+-                // NB. Below wording adjusted to singular 'session' until we have
+-                // cross-signing
+-                "Verifying this user will mark their session as trusted, and " +
+-                "also mark your session as trusted to them.",
+-            ) }</p>,
+-        ];
+-
+-        const selfDetailText = [
+-            <p key="p1">{ _t(
+-                "Verify this device to mark it as trusted. " +
+-                "Trusting this device gives you and other users extra peace of mind when using " +
+-                "end-to-end encrypted messages.",
+-            ) }</p>,
+-            <p key="p2">{ _t(
+-                "Verifying this device will mark it as trusted, and users who have verified with " +
+-                "you will trust this device.",
+-            ) }</p>,
+-        ];
+-
+         return (
+             <div>
+-                { profile }
+-                { isSelf ? selfDetailText : userDetailText }
++                {/* { profile } */}
++                {/* :TCHAP: simplify modal message */}
++                <p>{ _t("One of your devices wants to check your current device. " +
++                  "By performing this verification, a link of trust will be established " +
++                  "between your two devices to facilitate the sharing of encryption keys.",
++                ) }</p>
++                {/* end :TCHAP: */}
+                 <DialogButtons
+                     primaryButton={_t('Continue')}
+                     hasCancel={true}
+@@ -230,7 +210,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
+         return (
+             <div>
+                 <Spinner />
+-                <p>{ _t("Waiting for partner to confirm...") }</p>
++                <p>{ _t("Please accept the sharing of your Tchap Keys on the other device.") }</p>
+             </div>
+         );
+     }
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
+index 8830ee2..b0057be 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
+@@ -62,6 +62,7 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
+             title={title}
+             hasCancel={true}
+         >
++            <p>{ _t("Please confirm the objects on the other device.") }</p>
+             <EncryptionPanel
+                 layout="dialog"
+                 verificationRequest={this.props.verificationRequest}
