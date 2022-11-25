@@ -194,9 +194,9 @@
     "en": "Save my keys",
     "fr": "Sauvegarder mes clés"
   },
-  "One of your devices wants to check your current device. By performing this verification, a link of trust will be established between your two devices to facilitate the sharing of encryption keys.": {
-    "en": "One of your devices wants to check your current device. By performing this verification, a link of trust will be established between your two devices to facilitate the sharing of encryption keys.",
-    "fr": "L'un de vos appareils demande à partager vos Clés Tchap pour déverrouiller vos messages."
+  "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
+    "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
+    "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
   },
   "Please also confirm the emojis on the other device.": {
     "en": "Please also confirm the emojis on the other device.",
