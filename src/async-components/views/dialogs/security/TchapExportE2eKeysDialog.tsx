@@ -25,7 +25,6 @@ import * as MegolmExportEncryption from 'matrix-react-sdk/src/utils/MegolmExport
 import { KeysStartingWith } from "matrix-react-sdk/src/@types/common";
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from "matrix-js-sdk/src/logger";
-import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
 
 import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysDialog.pcss";
 

@@ -210,10 +210,6 @@
     "en": "Your Tchap Keys (encryption keys) have been successful saved. You can import them when you login again to unlock your messages (<a>find out more</a>).",
     "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
   },
-  "Go back": {
-    "en": "Go back",
-    "fr": "Retour"
-  },
   "Save your Tchap Keys before logging out": {
     "en": "Save your Tchap Keys before logging out",
     "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"
