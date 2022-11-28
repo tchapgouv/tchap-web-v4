@@ -25,6 +25,7 @@ import * as MegolmExportEncryption from 'matrix-react-sdk/src/utils/MegolmExport
 import { KeysStartingWith } from "matrix-react-sdk/src/@types/common";
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from "matrix-js-sdk/src/logger";
+import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
 
 import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysDialog.pcss";
 
@@ -34,6 +35,7 @@ enum Phase {
 }
 
 interface IProps extends IDialogProps {
+    allowLogout: boolean;
     matrixClient: MatrixClient;
 }
 
@@ -90,6 +92,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                     "./TchapExportE2eKeysSuccessDialog"
                 ) as unknown as Promise<ComponentType<{}>>,
                 {
+                    allowLogout: this.props.allowLogout,
                     onFinished: (res) => {
                         this.props.onFinished(res);
                     },

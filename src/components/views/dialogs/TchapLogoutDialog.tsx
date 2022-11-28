@@ -46,6 +46,7 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
             ) as unknown as Promise<ComponentType<{}>>,
             {
                 matrixClient: MatrixClientPeg.get(),
+                allowLogout: true,
             },
         );
     };

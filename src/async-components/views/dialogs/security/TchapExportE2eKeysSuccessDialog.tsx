@@ -24,6 +24,7 @@ import KeySavedImage from "../../../../../res/img/tchap/key-saved.svg";
 import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pcss";
 
 interface IProps {
+    allowLogout: boolean;
     onFinished: (success: boolean) => void;
 }
 
@@ -31,12 +32,16 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
     constructor(props: IProps) {
         super(props);
 
-        this.onClose = this.onClose.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
-    private onClose() {
+    private onClick = () => {
         this.props.onFinished(true);
-    }
+
+        if (this.props.allowLogout) {
+            dis.dispatch({ action: 'logout' });
+        }
+    };
 
     render() {
         return (
@@ -73,8 +78,8 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                     </p>
                 </div>
                 <div className='mx_Dialog_buttons'>
-                    <button className="mx_Dialog_primary" onClick={this.onClose}>
-                        { _t("Go back") }
+                    <button className="mx_Dialog_primary" onClick={this.onClick}>
+                        { _t(this.props.allowLogout ? "Sign out" : "Go back") }
                     </button>
                 </div>
             </BaseDialog>
