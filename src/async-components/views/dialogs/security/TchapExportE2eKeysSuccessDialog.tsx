@@ -60,8 +60,9 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
 
                     <p className="tc_modalParagraph">
                         { _t(
-                            'Your Tchap Keys (encryption keys) have been successful saved. ' +
-                            'You can import them when you login again to unlock your messages ' +
+                            'Your Tchap Keys (encryption keys) have been successful saved ' +
+                            'in the <b>tchap-keys.txt</b> file. You can import them ' +
+                            'when you login again to unlock your messages ' +
                             '(<a>find out more</a>).',
                             {},
                             {

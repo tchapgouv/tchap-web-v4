@@ -36,6 +36,7 @@ enum Phase {
 interface IProps extends IDialogProps {
     allowLogout: boolean;
     matrixClient: MatrixClient;
+    onFinished: (success: boolean) => void;
 }
 
 interface IState {
