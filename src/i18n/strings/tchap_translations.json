@@ -191,8 +191,8 @@
     "fr": "Me déconnecter"
   },
   "Save my keys": {
-    "en": "Save my keys",
-    "fr": "Sauvegarder mes clés"
+    "en": "Save my Tchap keys",
+    "fr": "Sauvegarder mes clés Tchap"
   },
   "The validity period of your account has expired": {
     "en": "Your Tchap account has expired",
@@ -252,7 +252,7 @@
   },
   "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.": {
     "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
-    "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
+    "fr": "Les demandes de partage de vos lés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
   },
   "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
     "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
@@ -265,5 +265,16 @@
   "<requestLink>Import from saved file</requestLink>": {
     "en": "<requestLink>Import from saved file</requestLink>",
     "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
+  },
+  "Export E2E room keys": {
+    "en": "Save your Tchap keys",
+    "fr": "Sauvegardez vos clés Tchap"
+  },
+  "Import E2E room keys": {
+    "en": "Import your Tchap keys from the downloaded file",
+    "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
+  },
+  "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
+    "fr": "Sauvegardez vos clés Tchap et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisées avec une Clé de Sécurité unique."
   }
 }
