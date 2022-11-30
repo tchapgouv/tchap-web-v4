@@ -22,7 +22,9 @@
     "files": [
       "src/components/views/dialogs/IncomingSasDialog.tsx",
       "src/components/views/dialogs/VerificationRequestDialog.tsx",
-      "src/components/views/verification/TchapVerificationComplete.tsx"
+      "src/components/views/verification/TchapVerificationComplete.tsx",
+      "src/components/views/right_panel/VerificationPanel.tsx",
+      "src/components/views/verification/VerificationComplete.tsx"
     ]
   },
   "better-help-settings": {
