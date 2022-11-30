@@ -170,6 +170,46 @@
     "en": "external users allowed",
     "fr": "ouvert aux externes"
   },
+  "Save your Tchap Keys (encryption keys)": {
+    "en": "Save your Tchap Keys (encryption keys)",
+    "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
+  },
+  "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
+    "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
+    "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
+  },
+  "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
+    "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
+    "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
+  },
+  "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup": {
+    "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup",
+    "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde"
+  },
+  "Create your Tchap Key password (minimum 8 characters)": {
+    "en": "Create your Tchap Key password (minimum 8 characters)",
+    "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
+  },
+  "Passphrase must be at least 8 character long": {
+    "en": "Passphrase must be at least 8 character long",
+    "fr": "Le mot de passe doit minimum faire 8 caractères"
+  },
+  "Your Tchap Key password": {
+    "en": "Your Tchap Key password",
+    "fr": "Votre mot de passe Clés Tchap"
+  },
+  "Confirm your Tchap Key password": {
+    "en": "Confirm your Tchap Key password",
+    "fr": "Confirmer votre mot de passe Clés Tchap"
+  },
+  "Tchap Keys saved!": {
+    "en": "Tchap Keys saved!",
+    "fr": "Clés Tchap sauvegardées !"
+  },
+  "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
+    "en": "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).",
+    "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
+  },
   "Save your Tchap Keys before logging out": {
     "en": "Save your Tchap Keys before logging out",
     "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"

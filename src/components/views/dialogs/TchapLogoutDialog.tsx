@@ -46,6 +46,8 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
             ) as unknown as Promise<ComponentType<{}>>,
             {
                 matrixClient: MatrixClientPeg.get(),
+                allowLogout: true,
+                onFinished: () => this.props.onFinished(true),
             },
         );
     };
@@ -73,7 +75,7 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
                     id="mx_Dialog_content"
                 >
                     <div>
-                        <p>
+                        <p className="tc_modalParagraph">
                             { _t(
                                 "<b>Without your Tchap Keys, you won't be able to read your messages</b>" +
                                 " at your next login because they will be locked. It's a Tchap safety measure.",
@@ -93,7 +95,7 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
                                     width="120"
                                 />
                             </div>
-                            <p>
+                            <p className="tc_modalParagraph">
                                 { _t(
                                     "<b>Can you currently read your messages on another device?</b>"
                                     + " You can disconnect. This other device automatically backs up"
@@ -119,7 +121,7 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
                                     width="70"
                                 />
                             </div>
-                            <p>
+                            <p className="tc_modalParagraph">
                                 { _t(
                                     "<b>You don't have another device connected to Tchap?</b>"
                                     + " Back up your Tchap Keys. These keys will unlock current messages,"
