@@ -231,8 +231,8 @@
     "fr": "Me déconnecter"
   },
   "Save my keys": {
-    "en": "Save my keys",
-    "fr": "Sauvegarder mes clés"
+    "en": "Save my Tchap keys",
+    "fr": "Sauvegarder mes clés Tchap"
   },
   "The validity period of your account has expired": {
     "en": "Your Tchap account has expired",
@@ -321,5 +321,16 @@
   "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": {
     "fr" : "Actuellement %(brand)s ne supporte pas la recherche dans les messages.",
     "en" : "Currently %(brand)s does not support searching into messages."
+  },
+  "Export E2E room keys": {
+    "en": "Save your Tchap keys",
+    "fr": "Sauvegardez vos clés Tchap"
+  },
+  "Import E2E room keys": {
+    "en": "Import your Tchap keys from the downloaded file",
+    "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
+  },
+  "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
+    "fr": "Sauvegardez vos clés Tchap et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisées avec une Clé de Sécurité unique."
   }
 }
