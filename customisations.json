@@ -1,5 +1,6 @@
 {
   "src/@types/tchap.ts": "src/@types/tchap.ts",
+  "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
   "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
   "src/components/views/dialogs/LogoutDialog.tsx": "src/components/views/dialogs/TchapLogoutDialog.tsx",
   "src/components/views/verification/VerificationComplete.tsx": "src/components/views/verification/TchapVerificationComplete.tsx",
@@ -21,5 +22,6 @@
   "src/components/views/messages/OriginalStickerBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx",
   "src/components/views/messages/OriginalVideoBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx",
   "src/components/views/messages/OriginalVoiceMessageBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx",
+  "src/components/views/messages/UnknownBody.tsx": "src/components/views/messages/TchapUnknownBody.tsx",
   "src/components/views/settings/JoinRuleSettings.tsx": "src/components/views/settings/TchapJoinRuleSettings.tsx"
 }

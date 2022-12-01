@@ -56,7 +56,7 @@
       "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
     ]
   },
-  "disable-cross-signing": {
+  "disable-cross-signing-and-enable-logout-devices-when-changing-password": {
     "package": "matrix-js-sdk",
     "files": [
       "src/client.ts"
@@ -139,6 +139,27 @@
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/rooms/MessageComposer.tsx"
+    ]
+  },
+  "activate-expired-account-panel": {
+    "package": "matrix-js-sdk",
+    "files": [
+      "src/http-api/interface.ts",
+      "src/http-api/fetch.ts",
+      "src/sync.ts"
+    ]
+  },
+  "user-friendlier-encrypted-messages": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/rooms/EventTile.tsx",
+      "res/css/views/elements/_TooltipButton.pcss"
+    ]
+  },
+  "remove-authorization-header-in-reset-password": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/PasswordReset.ts"
     ]
   }
 }
