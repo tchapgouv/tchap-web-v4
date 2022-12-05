@@ -234,6 +234,42 @@
     "en": "Save my Tchap keys",
     "fr": "Sauvegarder mes clés Tchap"
   },
+  "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
+    "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
+    "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
+  },
+  "Please also confirm the emojis on the other device.": {
+    "en": "Please also confirm the emojis on the other device.",
+    "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+  },
+  "Incoming Verification Request": {
+    "en": "Incoming Verification Request",
+    "fr": "Partage de vos Clés Tchap"
+  },
+  "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.": {
+    "en": "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.",
+    "fr": "Le partage de vos Clés Tchap a réussi. Vos messages vont être déverrouillés au fur et à mesure."
+  },
+  "Finish": {
+    "en": "Finish",
+    "fr": "Terminer"
+  },
+  "Please <b>accept the sharing</b> of your Tchap Keys on the other device.": {
+    "en": "Please <b>accept the sharing</b> of your Tchap Keys on the other device.",
+    "fr": "Merci d'<b>accepter la demande</b> de partage de vos Clés Tchap pour déverrouiller vos messages."
+  },
+  "Confirm the emoji below are displayed on both devices, in the same order:": {
+    "en": "Confirm the emoji below are displayed on both devices, in the same order:",
+    "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+  },
+  "Please confirm the objects on the other device.": {
+    "en": "Please confirm the objects on the other device.",
+    "fr": "Veuillez confirmer les objets sur l'autre appareil."
+  },
+  "Please confirm the objects on the other device (loading).": {
+    "en": "Please confirm the objects on the other device (loading).",
+    "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
+  },
   "The validity period of your account has expired": {
     "en": "Your Tchap account has expired",
     "fr": "Votre compte Tchap a expiré"
@@ -312,7 +348,7 @@
   },
   "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": {
     "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
-    "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de dévérouiller vos messages"
+    "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
   },
   "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": {
     "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent.",

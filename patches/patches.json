@@ -11,6 +11,22 @@
       "src/components/views/avatars/DecoratedRoomAvatar.tsx"
     ]
   },
+  "rename-exported-keys": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx"
+    ]
+  },
+  "simplify-exchange-key-message": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/IncomingSasDialog.tsx",
+      "src/components/views/dialogs/VerificationRequestDialog.tsx",
+      "src/components/views/verification/TchapVerificationComplete.tsx",
+      "src/components/views/right_panel/VerificationPanel.tsx",
+      "src/components/views/verification/VerificationComplete.tsx"
+    ]
+  },
   "better-help-settings": {
     "package": "matrix-react-sdk",
     "files": [
