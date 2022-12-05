@@ -145,5 +145,11 @@
     "files": [
       "src/PasswordReset.ts"
     ]
+  },
+  "redo-key-sharing-after-own-device-verification": {
+    "package": "matrix-js-sdk",
+    "files": [
+      "src/crypto/index.ts"
+    ]
   }
 }
