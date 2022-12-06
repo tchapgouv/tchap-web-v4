@@ -1,23 +1,30 @@
 {
-  "activate-expired-account-panel": {
-    "package": "matrix-js-sdk",
-    "files": [
-      "src/http-api/interface.ts",
-      "src/http-api/fetch.ts",
-      "src/sync.ts"
-    ]
-  },
   "are-external-users-allowed-in-room": {
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/rooms/RoomHeader.tsx",
       "res/css/views/rooms/_RoomHeader.pcss"    ]
   },
-  "auto-accept-tac": {
+  "show-icon-on-public-room": {
     "package": "matrix-react-sdk",
     "files": [
-      "src/IdentityAuthClient.tsx",
-      "src/Terms.ts"
+      "src/components/views/avatars/DecoratedRoomAvatar.tsx"
+    ]
+  },
+  "rename-exported-keys": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx"
+    ]
+  },
+  "simplify-exchange-key-message": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/IncomingSasDialog.tsx",
+      "src/components/views/dialogs/VerificationRequestDialog.tsx",
+      "src/components/views/verification/TchapVerificationComplete.tsx",
+      "src/components/views/right_panel/VerificationPanel.tsx",
+      "src/components/views/verification/VerificationComplete.tsx"
     ]
   },
   "better-help-settings": {
@@ -74,18 +81,6 @@
       "src/components/views/settings/CrossSigningPanel.tsx"
     ]
   },
-  "hide-discovery-email-phone-settings": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"
-    ]
-  },
-  "hide-location-if-no-map-server": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/rooms/MessageComposer.tsx"
-    ]
-  },
   "hide-room-alias-settings": {
     "package": "matrix-react-sdk",
     "files": [
@@ -98,17 +93,18 @@
       "src/components/views/settings/SecureBackupPanel.tsx"
     ]
   },
-  "interactive-auth-entry": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/auth/InteractiveAuthEntryComponents.tsx"
-    ]
-  },
   "login": {
     "package": "matrix-react-sdk",
     "files": [
       "src/components/structures/auth/Login.tsx",
       "src/components/views/auth/PasswordLogin.tsx"
+    ]
+  },
+  "registration": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/auth/Registration.tsx",
+      "src/components/views/auth/RegistrationForm.tsx"
     ]
   },
   "password-policy": {
@@ -126,17 +122,38 @@
       "/src/i18n/strings/fr.json"
     ]
   },
-  "redo-key-sharing-after-own-device-verification": {
-    "package": "matrix-js-sdk",
-    "files": [
-      "src/crypto/index.ts"
-    ]
-  },
-  "registration": {
+  "auto-accept-tac": {
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/structures/auth/Registration.tsx",
-      "src/components/views/auth/RegistrationForm.tsx"
+      "src/IdentityAuthClient.tsx",
+      "src/Terms.ts"
+    ]
+  },
+  "hide-discovery-email-phone-settings": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"
+    ]
+  },
+  "hide-location-if-no-map-server": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/rooms/MessageComposer.tsx"
+    ]
+  },
+  "activate-expired-account-panel": {
+    "package": "matrix-js-sdk",
+    "files": [
+      "src/http-api/interface.ts",
+      "src/http-api/fetch.ts",
+      "src/sync.ts"
+    ]
+  },
+  "user-friendlier-encrypted-messages": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/rooms/EventTile.tsx",
+      "res/css/views/elements/_TooltipButton.pcss"
     ]
   },
   "remove-authorization-header-in-reset-password": {
@@ -145,33 +162,16 @@
       "src/PasswordReset.ts"
     ]
   },
-  "rename-exported-keys": {
-    "package": "matrix-react-sdk",
+  "redo-key-sharing-after-own-device-verification": {
+    "package": "matrix-js-sdk",
     "files": [
-      "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx"
+      "src/crypto/index.ts"
     ]
   },
-  "show-icon-on-public-room": {
+  "interactive-auth-entry": {
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/views/avatars/DecoratedRoomAvatar.tsx"
-    ]
-  },
-  "simplify-exchange-key-message": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/dialogs/IncomingSasDialog.tsx",
-      "src/components/views/dialogs/VerificationRequestDialog.tsx",
-      "src/components/views/verification/TchapVerificationComplete.tsx",
-      "src/components/views/right_panel/VerificationPanel.tsx",
-      "src/components/views/verification/VerificationComplete.tsx"
-    ]
-  },
-  "user-friendlier-encrypted-messages": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/rooms/EventTile.tsx",
-      "res/css/views/elements/_TooltipButton.pcss"
+      "src/components/views/auth/InteractiveAuthEntryComponents.tsx"
     ]
   }
 }
