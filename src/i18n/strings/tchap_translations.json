@@ -368,5 +368,9 @@
   },
   "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
     "fr": "Sauvegardez vos clés Tchap et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisées avec une Clé de Sécurité unique."
+  },
+  "Invalid password": {
+    "en": "Invalid password",
+    "fr": "Mot de passe incorrect"
   }
 }

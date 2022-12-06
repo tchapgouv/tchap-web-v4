@@ -1,0 +1,14 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/InteractiveAuthEntryComponents.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/InteractiveAuthEntryComponents.tsx
+index ecddd43..d935ba6 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/auth/InteractiveAuthEntryComponents.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/auth/InteractiveAuthEntryComponents.tsx
+@@ -158,7 +158,8 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
+         if (this.props.errorText) {
+             errorSection = (
+                 <div className="error" role="alert">
+-                    { this.props.errorText }
++                    {/** :TCHAP: remove { this.props.errorText } */}
++                    { _t(this.props.errorText) }
+                 </div>
+             );
+         }
