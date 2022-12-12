@@ -205,6 +205,26 @@ export default class WebPlatform extends VectorBasePlatform {
     }
 
     public reload(): void {
+        console.log('>>>> entre ici 1');
+        if (caches) {
+            // Service worker cache should be cleared with caches.delete()
+            caches.keys().then((names) => {
+                for (const name of names) {
+                    caches.delete(name);
+                }
+            });
+
+            console.log('>>>> entre ici 2');
+
+            window.localStorage.setItem(
+                'page-has-been-force-refreshed',
+                'true',
+            );
+            console.log('>>>> entre ici 3');
+        }
+
+        console.log('>>>> avant reload');
         window.location.reload();
+        console.log('>>>> apres reload');
     }
 }
