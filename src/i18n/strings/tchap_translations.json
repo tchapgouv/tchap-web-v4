@@ -343,16 +343,16 @@
     "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
   },
   "Sign out all devices": {
-    "en": "Lock my messages on all my devices",
-    "fr": "Verrouiller mes messages sur tous mes appareils"
+    "en": "Lock my messages on all my devices (Check this box if you think your account has been hacked)",
+    "fr": "Verrouiller mes messages sur tous mes appareils (Cocher cette case si vous pensez que votre compte a été piraté)"
   },
   "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": {
     "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
     "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
   },
   "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": {
-    "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent.",
-    "en": "We will log you out from your devices to lock the messages stored on them"
+    "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté.",
+    "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked."
   },
   "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": {
     "fr" : "Actuellement %(brand)s ne supporte pas la recherche dans les messages.",
