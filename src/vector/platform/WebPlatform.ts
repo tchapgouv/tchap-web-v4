@@ -205,8 +205,6 @@ export default class WebPlatform extends VectorBasePlatform {
     }
 
     public reload(): void {
-        // The bool parameter of reload() works only in firefox, but most of our users use firefox.
-        // @ts-expect-error: reload has no official parameter
-        window.location.reload(true);
+        window.location.reload();
     }
 }

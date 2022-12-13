@@ -6,7 +6,7 @@ export default class TchapVersionManagement {
     static SYNC_STORE_NAME = "matrix-js-sdk:riot-web-sync";
 
     /**
-     * replicate the behaviour of the button Clear Cache and Reload
+     * replicate the behaviour of the button Clear Cache and Reload, and clear browser cache on firefox
     * https://github.com/matrix-org/matrix-react-sdk/blob/3c5c2bef6dbac51ce6e1864056523815ca4c38d9/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx#L308
      * @returns nothing
      */
@@ -17,7 +17,9 @@ export default class TchapVersionManagement {
 
         MatrixClientPeg.get().stopClient();
         MatrixClientPeg.get().store.deleteAllData().then(() => {
-            PlatformPeg.get().reload();
+            // The bool parameter of reload() works only in firefox, but most of our users use firefox.
+            // @ts-expect-error: reload has no official parameter
+            window.location.reload(true);
         });
     }
 
