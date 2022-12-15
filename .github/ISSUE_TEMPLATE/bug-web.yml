@@ -1,4 +1,4 @@
-name: Bug report for Element Web (in browser)
+name: Bug report for Tchap Web (in browser)
 description: File a bug report if you are using Element in a web browser like Firefox, Chrome, Edge, and so on.
 labels: [web, v4, bug]
 body:
@@ -51,7 +51,7 @@ body:
     attributes:
       label: URL for webapp
       description: Which URL are you using to access the webapp? If a private server, tell us what version of Element Web you are using.
-      placeholder: e.g. develop.element.io, app.element.io
+      placeholder: e.g. tchap.gouv.fr
     validations:
       required: false
   - type: input
