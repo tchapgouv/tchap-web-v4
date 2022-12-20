@@ -496,7 +496,7 @@
   },
   "Ban from %(roomName)s": {
     "en": "Ban from %(roomName)s",
-    "fr": "Leur interdire l’accès à l'espace %(roomName)s (définitif)"
+    "fr": "Leur interdire l’accès à %(roomName)s (définitif)"
   },
   "Ban from room": {
     "en": "Ban from room",
@@ -505,5 +505,13 @@
   "Ban from space": {
     "en": "Ban from space",
     "fr": "Leur interdire l’accès à l'espace (définitif)"
+  },
+  "Explore public rooms": {
+    "en": "Explore public rooms",
+    "fr": "Parcourir les forums"
+  },
+  "Forum Members": {
+    "en": "Forum Members",
+    "fr": "Membres du salon"
   }
 }

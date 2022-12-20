@@ -167,5 +167,11 @@
     "files": [
       "src/crypto/index.ts"
     ]
+  },
+  "change-keys-in-room-summary-card": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/right_panel/RoomSummaryCard.tsx"
+    ]
   }
 }
