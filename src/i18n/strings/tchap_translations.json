@@ -510,8 +510,12 @@
     "en": "Explore public rooms",
     "fr": "Parcourir les forums"
   },
-  "Forum Members": {
-    "en": "Forum Members",
+  "Room members": {
+    "en": "Room members",
     "fr": "Membres du salon"
+  },
+  "Start new chat": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
   }
 }
