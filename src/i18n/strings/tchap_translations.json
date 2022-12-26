@@ -382,6 +382,10 @@
     "en": "Explore rooms",
     "fr": "Rejoindre un forum"
   },
+  "Explore public rooms": {
+    "en": "Join a room",
+    "fr": "Rejoindre un forum"
+  },
   "Secure Backup": {
     "en": "Secure Backup",
     "fr": "Sauvegarde automatique des messages"
@@ -497,10 +501,6 @@
   "Ban from space": {
     "en": "Ban from space",
     "fr": "Leur interdire l’accès à l'espace (définitif)"
-  },
-  "Explore public rooms": {
-    "en": "Explore public rooms",
-    "fr": "Parcourir les forums"
   },
   "Room members": {
     "en": "Room members",
