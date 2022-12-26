@@ -454,25 +454,25 @@
     "en": "Add Email Address",
     "fr": "Ajouter une adresse mail"
   },
+  "Room members": {
+    "en": "Room members",
+    "fr": "Membres du salon"
+  },
   "Banned users": {
     "en": "Banned users",
-    "fr": "Membres de Tchap bannis"
+    "fr": "Membres bannis"
   },
   "Privileged Users": {
     "en": "Privileged Users",
-    "fr": "Membres de Tchap privilégiés"
-  },
-  "Users": {
-    "en": "Users",
-    "fr": "Membres de Tchap"
+    "fr": "Membres privilégiés"
   },
   "Muted Users": {
     "en": "Muted Users",
-    "fr": "Membres de Tchap ignorés"
+    "fr": "Membres en sourdine"
   },
   "Ignored users": {
     "en": "Ignored users",
-    "fr": "Membres de Tchap ignorés"
+    "fr": "Membres ignorés"
   },
   "Remove from room": {
     "en": "Remove from room",
@@ -480,11 +480,11 @@
   },
   "Remove them from specific things I'm able to": {
     "en": "Remove them from specific things I'm able to",
-    "fr": "Les retirer de certains endroits où j’ai le droit de le faire (réversible)"
+    "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
   },
   "Remove them from everything I'm able to": {
     "en": "Remove them from everything I'm able to",
-    "fr": "Les retirer de partout où j’ai le droit de le faire (réversible)"
+    "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
   },
   "Remove users": {
     "en": "Remove users",
@@ -512,26 +512,22 @@
   },
   "Ban them from specific things I'm able to": {
     "en": "Ban them from specific things I'm able to",
-    "fr": "Leur interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
+    "fr": "Interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
   },
   "Ban them from everything I'm able to": {
     "en": "Ban them from everything I'm able to",
-    "fr": "Leur interdire l’accès partout où j’ai le droit de le faire (définitif)"
+    "fr": "Interdire l’accès partout où j’ai le droit de le faire (définitif)"
   },
   "Ban from %(roomName)s": {
     "en": "Ban from %(roomName)s",
-    "fr": "Leur interdire l’accès à %(roomName)s (définitif)"
+    "fr": "Interdire l’accès à %(roomName)s (définitif)"
   },
   "Ban from room": {
     "en": "Ban from room",
-    "fr": "Leur interdire l’accès au salon (définitif)"
+    "fr": "Interdire l’accès au salon (définitif)"
   },
   "Ban from space": {
     "en": "Ban from space",
-    "fr": "Leur interdire l’accès à l'espace (définitif)"
-  },
-  "Room members": {
-    "en": "Room members",
-    "fr": "Membres du salon"
+    "fr": "Interdire l’accès à l'espace (définitif)"
   }
 }
