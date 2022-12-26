@@ -386,6 +386,26 @@
     "en": "Join a room",
     "fr": "Rejoindre un forum"
   },
+  "Start new chat": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Chat": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Direct Messages": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Recently Direct Messaged": {
+    "en": "Recents chats",
+    "fr": "Messages directs récents"
+  },
+  "Recent Conversations": {
+    "en": "Recents chats",
+    "fr": "Messages directs récents"
+  },
   "Secure Backup": {
     "en": "Secure Backup",
     "fr": "Sauvegarde automatique des messages"
@@ -505,9 +525,5 @@
   "Room members": {
     "en": "Room members",
     "fr": "Membres du salon"
-  },
-  "Start new chat": {
-    "en": "Start new chat",
-    "fr": "Nouveau message direct"
   }
 }
