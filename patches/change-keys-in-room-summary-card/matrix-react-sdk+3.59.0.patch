@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+index 006a00f..90dfad0 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+@@ -303,7 +303,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
+     return <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
+         <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
+             <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
+-                { _t("People") }
++                { _t("Room members") }
+                 <span className="mx_BaseCard_Button_sublabel">
+                     { memberCount }
+                 </span>

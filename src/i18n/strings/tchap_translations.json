@@ -15,15 +15,19 @@
   },
   "Private room": {
     "en": "Private room",
-    "fr": "Salon privé"
+    "fr": "Salon"
   },
   "Private room open to external users": {
     "en": "Private room open to external users",
-    "fr": "Salon privé ouvert aux externes"
+    "fr": "Salon ouvert aux externes"
+  },
+  "Public room": {
+    "en": "Public room",
+    "fr": "Forum"
   },
   "Forum room": {
-    "en": "Forum room",
-    "fr": "Salon forum"
+    "en": "Public room",
+    "fr": "Forum"
   },
   "This room is private": {
     "en": "This room is private",
@@ -367,6 +371,163 @@
     "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
   },
   "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
+    "en": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
     "fr": "Sauvegardez vos clés Tchap et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisées avec une Clé de Sécurité unique."
+  },
+  "Thread": {
+    "en": "Thread",
+    "fr": "Discussion"
+  },
+  "Join public room": {
+    "en": "Join a room",
+    "fr": "Rejoindre un forum"
+  },
+  "Explore rooms": {
+    "en": "Explore rooms",
+    "fr": "Rejoindre un forum"
+  },
+  "Explore public rooms": {
+    "en": "Join a room",
+    "fr": "Rejoindre un forum"
+  },
+  "Start chat": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Start new chat": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Chat": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Direct Messages": {
+    "en": "Start new chat",
+    "fr": "Nouveau message direct"
+  },
+  "Recently Direct Messaged": {
+    "en": "Recents chats",
+    "fr": "Messages directs récents"
+  },
+  "Recent Conversations": {
+    "en": "Recents chats",
+    "fr": "Messages directs récents"
+  },
+  "Secure Backup": {
+    "en": "Secure Backup",
+    "fr": "Sauvegarde automatique des messages"
+  },
+  "You can also set up Secure Backup & manage your keys in Settings.": {
+    "en": "You can also set up Secure Backup & manage your keys in Settings.",
+    "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
+  },
+  "Set up Secure Backup": {
+    "en": "Set up Secure Backup",
+    "fr": "Configurer la sauvegarde automatique des messages"
+  },
+  "Email": {
+    "en": "Email",
+    "fr": "Adresse mail"
+  },
+  "Invalid Email Address": {
+    "en": "Invalid Email Address",
+    "fr": "Adresse mail non valide"
+  },
+  "Email address": {
+    "en": "Email address",
+    "fr": "Adresse mail"
+  },
+  "Email Address": {
+    "en": "Email Address",
+    "fr": "Adresse mail"
+  },
+  "Email addresses": {
+    "en": "Email addresses",
+    "fr": "Adresses mail"
+  },
+  "Email (optional)": {
+    "en": "Email (optional)",
+    "fr": "Adresse mail (facultatif)"
+  },
+  "Add Email Address": {
+    "en": "Add Email Address",
+    "fr": "Ajouter une adresse mail"
+  },
+  "Room members": {
+    "en": "Room members",
+    "fr": "Membres du salon"
+  },
+  "Banned users": {
+    "en": "Banned users",
+    "fr": "Membres bannis"
+  },
+  "Privileged Users": {
+    "en": "Privileged Users",
+    "fr": "Membres privilégiés"
+  },
+  "Muted Users": {
+    "en": "Muted Users",
+    "fr": "Membres en sourdine"
+  },
+  "Ignored users": {
+    "en": "Ignored users",
+    "fr": "Membres ignorés"
+  },
+  "Remove from room": {
+    "en": "Remove from room",
+    "fr": "Retirer du salon (réversible)"
+  },
+  "Remove them from specific things I'm able to": {
+    "en": "Remove them from specific things I'm able to",
+    "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
+  },
+  "Remove them from everything I'm able to": {
+    "en": "Remove them from everything I'm able to",
+    "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
+  },
+  "Remove users": {
+    "en": "Remove users",
+    "fr": "Retirer des utilisateurs (réversible)"
+  },
+  "Remove, ban, or invite people to your active room, and make you leave": {
+    "en": "Remove, ban, or invite people to your active room, and make you leave",
+    "fr": "Retirer, interdire l'accès ou inviter des personnes dans votre salon actif et en partir"
+  },
+  "Remove, ban, or invite people to this room, and make you leave": {
+    "en": "Remove, ban, or invite people to this room, and make you leave",
+    "fr": "Retirer, interdire l'accès ou inviter une personne dans ce salon et vous permettre de partir"
+  },
+  "Remove from %(roomName)s": {
+    "en": "Remove from %(roomName)s",
+    "fr": "Retirer de %(roomName)s (réversible)"
+  },
+  "You need to be able to kick users to do that.": {
+    "en": "You need to be able to kick users to do that.",
+    "fr": "Vous devez avoir l’autorisation de retirer des utilisateurs pour faire ceci."
+  },
+  "Ban users": {
+    "en": "Ban users",
+    "fr": "Interdire aux utilisateurs l’accès au salon (définitif)"
+  },
+  "Ban them from specific things I'm able to": {
+    "en": "Ban them from specific things I'm able to",
+    "fr": "Interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
+  },
+  "Ban them from everything I'm able to": {
+    "en": "Ban them from everything I'm able to",
+    "fr": "Interdire l’accès partout où j’ai le droit de le faire (définitif)"
+  },
+  "Ban from %(roomName)s": {
+    "en": "Ban from %(roomName)s",
+    "fr": "Interdire l’accès à %(roomName)s (définitif)"
+  },
+  "Ban from room": {
+    "en": "Ban from room",
+    "fr": "Interdire l’accès au salon (définitif)"
+  },
+  "Ban from space": {
+    "en": "Ban from space",
+    "fr": "Interdire l’accès à l'espace (définitif)"
   }
 }
