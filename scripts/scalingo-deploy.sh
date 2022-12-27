@@ -14,11 +14,57 @@ VERSION=$version yarn build
 # FIXME use a dedicated config
 cp config.sample.json webapp/config.json
 # Conflict with default nginx.conf.erb
-echo "root /app;
+echo "set $index_path /app;
+root $index_path;
+
+location = / {
+    root $index_path;
+    add_header Cache-Control no-store; #the server is hit each time the location is requested
+    expires 0;#not sure if needed
+    try_files /index.html =404;
+}
 
 location / {
-    index index.html;
+    root $index_path;
 }
+
+# v4 endpoint
+location = /index.html {
+    root $index_path;
+    add_header Cache-Control no-store;
+}
+
+# v4 endpoint
+location = /version {
+    root $index_path;
+    add_header Cache-Control no-store;
+}
+
+# v4 endpoint
+# covers config.json and config.hostname.json requests as it is prefix.
+location /config {
+    root $index_path;
+    add_header Cache-Control no-store;
+}
+
+# v4 endpoint
+location /i18n {
+    root $index_path;
+    add_header Cache-Control no-store;
+}
+
+# v4 endpoint
+location /home {
+    root $index_path;
+    add_header Cache-Control no-store;
+}
+
+# v4 endpoint
+location /sites {
+    root $index_path;
+    add_header Cache-Control no-store;
+}
+
 " > webapp/nginx.conf.erb
 
 mkdir -p dist
