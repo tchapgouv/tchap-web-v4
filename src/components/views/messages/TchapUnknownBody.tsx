@@ -14,8 +14,8 @@ export default forwardRef(({ mxEvent, children }: IProps, ref: React.RefObject<H
     // :TCHAP: user-friendly message in the case of lost keys
     const content = mxEvent.getContent();
     if (content.msgtype && content.msgtype === "m.bad.encrypted") {
-        const userFriendlyText =
-            _t("Decryption fail: Please open Tchap on an other connected device to allow key sharing.");
+        const reason = content.body.replace(/\*\* Unable to decrypt: /, '').replace(/ \*\*/, '');
+        const userFriendlyText = _t(reason);
         return (
             <div className="mx_UnknownBody" ref={ref}>
                 { userFriendlyText }

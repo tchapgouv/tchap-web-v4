@@ -322,6 +322,102 @@
     "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
     "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
   },
+  "Unknown encryption algorithm m.olm.v1.curve25519-aes-sha2.":{
+    "en": "Unknown encryption algorithm m.olm.v1.curve25519-aes-sha2.",
+    "fr": "Algorithme de chiffrement inconnu: m.olm.v1.curve25519-aes-sha2."
+  },
+  "Unknown encryption algorithm m.megolm.v1.aes-sha2.":{
+    "en": "Unknown encryption algorithm m.megolm.v1.aes-sha2.",
+    "fr": "Algorithme de chiffrement inconnu: m.megolm.v1.aes-sha2."
+  },
+  "Unknown encryption algorithm m.megolm_backup.v1.curve25519-aes-sha2.":{
+    "en": "Unknown encryption algorithm m.megolm_backup.v1.curve25519-aes-sha2.",
+    "fr": "Algorithme de chiffrement inconnu: m.megolm_backup.v1.curve25519-aes-sha2."
+  },
+  "Encryption not enabled":{
+    "en": "Encryption not enabled",
+    "fr": "Chiffrement non activé"
+  },
+  "decryption key withheld":{
+    "en": "decryption key withheld",
+    "fr": "Clé de déchiffrement retenue"
+  },
+  "The sender has disabled encrypting to unverified devices.":{
+    "en": "The sender has disabled encrypting to unverified devices.",
+    "fr": "L'émetteur a désactivé le déchiffrement sur les appareils non-vérifiés."
+  },
+  "The sender has blocked you.":{
+    "en": "The sender has blocked you.",
+    "fr": "L'émetteur vous a bloqué."
+  },
+  "You are not authorised to read the message.":{
+    "en": "You are not authorised to read the message.",
+    "fr": "Vous n'êtes pas autorisé à lire ce message/"
+  },
+  "Unable to establish a secure channel.":{
+    "en": "Unable to establish a secure channel.",
+    "fr": "Impossible d'établir un tunnel sécurisé."
+  },
+  "Missing fields in input":{
+    "en": "Megolm Missing fields in input",
+    "fr": "Champs nécessaires à l'algorithme Megolm sont manquants dans l'événement."
+  },
+  "Unknown Error: Error is undefined":{
+    "en": "Unknown Error: Error is undefined",
+    "fr": "Erreur inconnue: Erreur non définie"
+  },
+  "Trying to create a new secure channel and re-requesting the keys.":{
+    "en": "Trying to create a new secure channel and re-requesting the keys.",
+    "fr": "En cours de création d'un nouveau tunnel sécurisé et de redemander les clés."
+  },
+  "The sender was unable to establish a secure channel.":{
+    "en": "The sender was unable to establish a secure channel.",
+    "fr": "L'émetteur n'a pas pu établir un tunnel sécurisé."
+  },
+  "The secure channel with the sender was corrupted.":{
+    "en": "The secure channel with the sender was corrupted.",
+    "fr": "Le tunnel sécurisé avec l'émetteur a été corrompu."
+  },
+  "The sender's device has not sent us the keys for this message.":{
+    "en": "The sender's device has not sent us the keys for this message.",
+    "fr": "L'appareil de l'émetteur ne nous a pas envoyé les clés pour ce message."
+  },
+  "Message intended for room <room id>":{
+    "en": "",
+    "fr": ""
+  },
+  "Missing ciphertext":{
+    "en": "Missing ciphertext",
+    "fr": "Texte chiffré manquant dans l'algorithme Olm"
+  },
+  "Not included in recipients":{
+    "en": "Not included in recipients",
+    "fr": "L'algorithme Olm n'est pas inclu dans les appareils destinataires"
+  },
+  "Bad Encrypted Message":{
+    "en": "Bad Encrypted Message",
+    "fr": "Erreur de chiffrement du message"
+  },
+  "Message was intented for <recipient>":{
+    "en": "",
+    "fr": ""
+  },
+  "Message not intended for this device":{
+    "en": "Message not intended for this device",
+    "fr": "Le message n'est pas destiné à votre appareil"
+  },
+  "Message claimed to be from <sender>":{
+    "en": "",
+    "fr": ""
+  },
+  "Message forwarded from <sender>":{
+    "en": "",
+    "fr": ""
+  },
+  "Message intended for room <roomId>":{
+    "en": "",
+    "fr": ""
+  },
   "<requestLink>Re-send a request to your other devices</requestLink>": {
     "en": "<requestLink>Re-send a request to your other devices</requestLink>",
     "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
