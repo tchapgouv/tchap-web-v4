@@ -352,7 +352,7 @@
   },
   "You are not authorised to read the message.":{
     "en": "You are not authorised to read the message.",
-    "fr": "Vous n'êtes pas autorisé à lire ce message/"
+    "fr": "Vous n'êtes pas autorisé à lire ce message."
   },
   "Unable to establish a secure channel.":{
     "en": "Unable to establish a secure channel.",
@@ -382,6 +382,7 @@
     "en": "The sender's device has not sent us the keys for this message.",
     "fr": "L'appareil de l'émetteur ne nous a pas envoyé les clés pour ce message."
   },
+  //
   "Message intended for room <room id>":{
     "en": "",
     "fr": ""
@@ -414,7 +415,7 @@
     "en": "",
     "fr": ""
   },
-  "Message intended for room <roomId>":{
+  "Message intended for room <rooId>":{
     "en": "",
     "fr": ""
   },
