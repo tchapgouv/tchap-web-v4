@@ -29,7 +29,7 @@ function shouldShowComponent(component: UIComponent): boolean {
     if (component === UIComponent.CreateSpaces) {
         return false;
     } else if (component === UIComponent.InviteUsers && isExternal) {
-        return false;   
+        return false;
     }
     return true; // default to visible
 }
