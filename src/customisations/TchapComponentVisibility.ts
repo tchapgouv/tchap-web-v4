@@ -28,8 +28,7 @@ function shouldShowComponent(component: UIComponent): boolean {
     const isExternal = userId.endsWith("agent.externe.tchap.gouv.fr") || userId.endsWith("agent.e.tchap.gouv.fr");
     if (component === UIComponent.CreateSpaces) {
         return false;
-    }
-    else if (component === UIComponent.InviteUsers && isExternal) {
+    } else if (component === UIComponent.InviteUsers && isExternal) {
         return false;   
     }
     return true; // default to visible
