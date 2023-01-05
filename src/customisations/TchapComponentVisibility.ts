@@ -23,8 +23,13 @@ import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
  * otherwise.
  */
 function shouldShowComponent(component: UIComponent): boolean {
+    const userId = MatrixClientPeg.get().getUserId();
+    const isExternal = userId.endsWith("agent.externe.tchap.gouv.fr") || userId.endsWith("agent.e.tchap.gouv.fr");
     if (component === UIComponent.CreateSpaces) {
         return false;
+    }
+    else if (component === UIComponent.InviteUsers && isExternal) {
+        return false;   
     }
     return true; // default to visible
 }
