@@ -11,6 +11,7 @@ File copied from ComponentVisibility.ts in matrix-react-sdk v3.46.0
 // Populate this class with the details of your customisations when copying it.
 
 import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
+import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 
 /**
  * Determines whether or not the active MatrixClient user should be able to use
