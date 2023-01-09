@@ -1,5 +1,5 @@
 #Build the application
-#tchap modification : use "./scripts/layered.with.version.sh" instead of "./scripts/layered.sh"
+#tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Build
 on:
   pull_request: { }
@@ -23,7 +23,7 @@ jobs:
           node-version: 16
 
       - name: Install Dependencies
-        run: "./scripts/layered.with.version.sh"
+        run: "./scripts/install-yarn-linked-repositories.sh"
 
       - name: Build
         run: "yarn build"

@@ -25,7 +25,7 @@ jobs:
           node-version: 16
 
       - name: Install Dependencies
-        run: "./scripts/layered.with.version.sh"
+        run: "./scripts/install-yarn-linked-repositories.sh"
 
       - name: Build, Package & Upload sourcemaps
         run: "./scripts/ci_package.sh"
