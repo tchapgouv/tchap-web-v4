@@ -28,7 +28,7 @@ electron/pub
 /matrix-react-sdk
 /matrix-js-sdk
 /matrix-analytics-events
-# yarn links dependencies generated with /scripts/layered.with.version.sh
+# yarn links dependencies generated with /scripts/install-yarn-linked-repositories.sh
 /yarn-linked-dependencies
 
 
