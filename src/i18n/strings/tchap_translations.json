@@ -403,8 +403,8 @@
     "fr": "Nouveau message direct"
   },
   "Direct Messages": {
-    "en": "Start new chat",
-    "fr": "Nouveau message direct"
+    "en":"Direct Messages",
+    "fr":"Messages directs"
   },
   "Recently Direct Messaged": {
     "en": "Recents chats",
@@ -529,5 +529,26 @@
   "Ban from space": {
     "en": "Ban from space",
     "fr": "Interdire l’accès à l'espace (définitif)"
+  },
+  "People": {
+    "comments" : "in element, People label is used to title direct messages room and sometimes room members, use Room Members label in this case)",
+    "en": "Direct messages",
+    "fr": "Messages directs"
+  },
+  "Group all your people in one place.": {
+    "en":"Group all your direct message room in one place.",
+    "fr":"Regroupez tous vos salons de message directs au même endroit."
+  },
+  "Group all your favourite rooms and people in one place.": {
+    "en":"Group all your favourite rooms in one place.",
+    "fr":"Regroupez tous vos salons favoris au même endroit."
+  },
+  "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": {
+    "en":"Spaces are ways to group rooms and direct messages.",
+    "fr":"Les espaces permettent de regrouper des salons et des messages directs."
+  },
+  "Show all your rooms in Home, even if they're in a space." : {
+    "en": "Show all your rooms in Home",
+    "fr": "Affiche tous vos salons dans l’accueil"  
   }
 }
