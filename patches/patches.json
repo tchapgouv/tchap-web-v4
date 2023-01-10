@@ -162,12 +162,6 @@
       "src/PasswordReset.ts"
     ]
   },
-  "redo-key-sharing-after-own-device-verification": {
-    "package": "matrix-js-sdk",
-    "files": [
-      "src/crypto/index.ts"
-    ]
-  },
   "change-keys-in-room-summary-card": {
     "package": "matrix-react-sdk",
     "files": [
