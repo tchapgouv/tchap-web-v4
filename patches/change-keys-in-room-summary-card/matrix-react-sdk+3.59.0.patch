@@ -12,21 +12,6 @@ index b9923d9..3f11062 100644
              iconClassName="mx_RoomTile_iconPeople"
          >
              <span className="mx_IconizedContextMenu_sublabel">
-diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-index 1d35aa3..49a35e7 100644
---- a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-@@ -52,7 +52,9 @@ const SpacePreferencesAppearanceTab = ({ space }: Pick<IProps, "space">) => {
-                         );
-                     }}
-                 >
--                    { _t("People") }
-+                    {/* :tchap: { _t("People") } */}
-+                    { _t("Room Members") }
-+
-                 </StyledCheckbox>
-                 <p>
-                     { _t("This groups your chats with members of this space. " +
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 index 006a00f..4d889bb 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx

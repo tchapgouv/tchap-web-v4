@@ -391,15 +391,19 @@
     "fr": "Rejoindre un forum"
   },
   "Start chat": {
-    "en": "Start new chat",
+    "en": "New direct message",
     "fr": "Nouveau message direct"
   },
   "Start new chat": {
-    "en": "Start new chat",
+    "en": "New direct message",
+    "fr": "Nouveau message direct"
+  },
+  "Start a new chat": {
+    "en": "New direct message",
     "fr": "Nouveau message direct"
   },
   "Chat": {
-    "en": "Start new chat",
+    "en": "New direct message",
     "fr": "Nouveau message direct"
   },
   "Direct Messages": {
@@ -537,11 +541,11 @@
   },
   "Group all your people in one place.": {
     "en":"Group all your direct message room in one place.",
-    "fr":"Regroupez tous vos salons de message directs au même endroit."
+    "fr":"Regroupe tous vos salons de message directs au même endroit."
   },
   "Group all your favourite rooms and people in one place.": {
     "en":"Group all your favourite rooms in one place.",
-    "fr":"Regroupez tous vos salons favoris au même endroit."
+    "fr":"Regroupe tous vos salons favoris au même endroit."
   },
   "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": {
     "en":"Spaces are ways to group rooms and direct messages.",
@@ -550,5 +554,10 @@
   "Show all your rooms in Home, even if they're in a space." : {
     "en": "Show all your rooms in Home",
     "fr": "Affiche tous vos salons dans l’accueil"  
+  }, 
+  "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s." : {
+    "fr": "Cela rassemble vos messages direst avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
+    "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s.",
   }
+
 }
