@@ -1,19 +1,19 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index b577011..2ecc566 100644
+index 5a7a61e..ad31fc0 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-@@ -38,8 +38,10 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
+@@ -39,8 +39,10 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
  import Spinner from "../../views/elements/Spinner";
- import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
- import { AuthHeaderProvider } from './header/AuthHeaderProvider';
+ import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
+ import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
 +import { AuthHeaderModifier } from './header/AuthHeaderModifier'; // :TCHAP:
- import SettingsStore from '../../../settings/SettingsStore';
- import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
-+import TchapUtils from '../../../../../../src/util/TchapUtils';
+ import SettingsStore from "../../../settings/SettingsStore";
+ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
++import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
  
  const debuglog = (...args: any[]) => {
      if (SettingsStore.getValue("debug_registration")) {
-@@ -273,11 +275,22 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -275,11 +277,22 @@ export default class Registration extends React.Component<IProps, IState> {
      }
  
      private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
@@ -36,7 +36,7 @@ index b577011..2ecc566 100644
          });
      };
  
-@@ -286,7 +299,10 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -288,7 +301,10 @@ export default class Registration extends React.Component<IProps, IState> {
              emailAddress,
              clientSecret,
              sendAttempt,
@@ -48,7 +48,7 @@ index b577011..2ecc566 100644
                  client_secret: clientSecret,
                  hs_url: this.state.matrixClient.getHomeserverUrl(),
                  is_url: this.state.matrixClient.getIdentityServerUrl(),
-@@ -453,6 +469,11 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -460,6 +476,11 @@ export default class Registration extends React.Component<IProps, IState> {
              inhibit_login: undefined,
          };
          if (auth) registerParams.auth = auth;
@@ -60,33 +60,33 @@ index b577011..2ecc566 100644
          debuglog("Registration: sending registration request:", auth);
          return this.state.matrixClient.registerRequest(registerParams);
      };
-@@ -491,7 +512,7 @@ export default class Registration extends React.Component<IProps, IState> {
-                 sessionId={this.props.sessionId}
-                 clientSecret={this.props.clientSecret}
-                 emailSid={this.props.idSid}
--                poll={true}
-+                poll={/*true :TCHAP: polling results in M_THREEPID_IN_USE when account is created. Until we solve it, we disable polling. */ false}
-             />;
+@@ -499,7 +520,7 @@ export default class Registration extends React.Component<IProps, IState> {
+                     sessionId={this.props.sessionId}
+                     clientSecret={this.props.clientSecret}
+                     emailSid={this.props.idSid}
+-                    poll={true}
++                    poll={/*true :TCHAP: polling results in M_THREEPID_IN_USE when account is created. Until we solve it, we disable polling. */ false}
+                 />
+             );
          } else if (!this.state.matrixClient && !this.state.busy) {
-             return null;
-@@ -651,6 +672,12 @@ export default class Registration extends React.Component<IProps, IState> {
-                         { errorText }
-                         { serverDeadSection }
-                     </AuthHeaderDisplay>
-+                    { /* :TCHAP: remove the serverpicker, using AuthHeaderModifier. Inspired by InteractiveAuthEntryComponents. */}
-+                    <AuthHeaderModifier
-+                        title={_t('Create account') /* we actually don't want to set this. */}
-+                        hideServerPicker={true}
-+                    />
-+                    { /* end :TCHAP: */}
-                     { this.renderRegisterComponent() }
-                 </div>
-                 <div className="mx_Register_footerActions">
+@@ -692,6 +713,12 @@ export default class Registration extends React.Component<IProps, IState> {
+                             {errorText}
+                             {serverDeadSection}
+                         </AuthHeaderDisplay>
++                        { /* :TCHAP: remove the serverpicker, using AuthHeaderModifier. Inspired by InteractiveAuthEntryComponents. */}
++                        <AuthHeaderModifier
++                            title={_t('Create account') /* we actually don't want to set this. */}
++                            hideServerPicker={true}
++                        />
++                        { /* end :TCHAP: */}
+                         {this.renderRegisterComponent()}
+                     </div>
+                     <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index d1f7c9a..4591d9d 100644
+index 366ff3a..35b3bf3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-@@ -262,7 +262,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -259,7 +259,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
      };
  
      private validateEmailRules = withValidation({
@@ -95,9 +95,9 @@ index d1f7c9a..4591d9d 100644
          hideDescriptionIfValid: true,
          rules: [
              {
-@@ -270,7 +270,10 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -267,7 +267,10 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                  test(this: RegistrationForm, { value, allowEmpty }) {
-                     return allowEmpty || !this.authStepIsRequired('m.login.email.identity') || !!value;
+                     return allowEmpty || !this.authStepIsRequired("m.login.email.identity") || !!value;
                  },
 -                invalid: () => _t("Enter email address (required on this homeserver)"),
 +                // :TCHAP: don't mention homeserver, Tchap hides the concept from users.
@@ -107,31 +107,33 @@ index d1f7c9a..4591d9d 100644
              },
              {
                  key: "email",
-@@ -546,18 +549,22 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -551,16 +554,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>
+-                    <div className="mx_AuthBody_fieldRow">{this.renderUsername()}</div>
 +                    { /* :TCHAP: remove username field, the server will generate it from email.
                      <div className="mx_AuthBody_fieldRow">
-                         { this.renderUsername() }
-                     </div>
--                    <div className="mx_AuthBody_fieldRow">
--                        { this.renderPassword() }
--                        { this.renderPasswordConfirm() }
--                    </div>
+-                        {this.renderPassword()}
+-                        {this.renderPasswordConfirm()}
++                        { this.renderUsername() }
++                    </div>
 +                    end :TCHAP: */}
++
 +                    { /** :TCHAP: switch fields : email first, password under */}
-                     <div className="mx_AuthBody_fieldRow">
-                         { this.renderEmail() }
-                         { this.renderPhoneNumber() }
-                     </div>
--                    { emailHelperText }
 +                    <div className="mx_AuthBody_fieldRow">
++                        { this.renderEmail() }
++                        { this.renderPhoneNumber() }
+                     </div>
+                     <div className="mx_AuthBody_fieldRow">
+-                        {this.renderEmail()}
+-                        {this.renderPhoneNumber()}
 +                        { this.renderPassword() }
 +                        { this.renderPasswordConfirm() }
-+                    </div>
+                     </div>
+-                    {emailHelperText}
 +                    { /* end :TCHAP: */}
 +                    { /** :TCHAP: remove helper text, adds confusion since email=username in tchap. // emailHelperText */ }
-                     { registerButton }
+                     {registerButton}
                  </form>
              </div>
