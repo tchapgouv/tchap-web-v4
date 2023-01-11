@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss b/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss
-index 5b7c0ce..31ccda0 100644
+index cc91c6d..0cbbf73 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/elements/_TooltipButton.pcss
 @@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
@@ -12,28 +12,28 @@ index 5b7c0ce..31ccda0 100644
      display: inline-block;
      width: 11px;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-index 654cc80..2548147 100644
+index 28a6fff..188c1c9 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/EventTile.tsx
-@@ -84,6 +84,7 @@ import { useTooltip } from "../../../utils/useTooltip";
- import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
- import { isLocalRoom } from '../../../utils/localRoom/isLocalRoom';
+@@ -86,6 +86,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
+ import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
  import { ElementCall } from "../../../models/Call";
+ import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 +import { TchapKeyRequestInfo } from "../../../../../../src/components/views/rooms/TchapKeyRequestInfo"; // :TCHAP:
  
- export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
- 
-@@ -1491,7 +1492,12 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
-                                 onHeightChanged: this.props.onHeightChanged,
-                                 permalinkCreator: this.props.permalinkCreator,
-                             }, this.context.showHiddenEvents) }
--                            { keyRequestInfo }
+ export type GetRelationsForEvent = (
+     eventId: string,
+@@ -1543,7 +1544,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState>
+                                 },
+                                 this.context.showHiddenEvents,
+                             )}
+-                            {keyRequestInfo}
 +                            <TchapKeyRequestInfo // :TCHAP:
 +                                previouslyRequestedKeys={this.state.previouslyRequestedKeys}
 +                                onRequestKeysClick={this.onRequestKeysClick}
 +                                isEncryptionFailure={isEncryptionFailure}
 +                                isRedacted={isRedacted}>
 +                            </TchapKeyRequestInfo>
-                             { actionBar }
-                             { this.props.layout === Layout.IRC && <>
-                                 { reactionsRow }
+                             {actionBar}
+                             {this.props.layout === Layout.IRC && (
+                                 <>
