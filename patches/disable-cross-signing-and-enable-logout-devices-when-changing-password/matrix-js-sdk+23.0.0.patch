@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index e501f7d..a6c54ab 100644
+index a4aa9de..ee9e69b 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
-@@ -6632,6 +6632,15 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -6989,6 +6989,15 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];
@@ -18,8 +18,8 @@ index e501f7d..a6c54ab 100644
          return unstableFeatures && !!unstableFeatures[feature];
      }
  
-@@ -6686,7 +6695,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
-      * @return {Promise<boolean>} true if server supports the `logout_devices` parameter
+@@ -7055,7 +7064,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+      * @returns true if server supports the `logout_devices` parameter
       */
      public doesServerSupportLogoutDevices(): Promise<boolean> {
 -        return this.isVersionSupported("r0.6.1");
