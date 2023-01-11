@@ -347,8 +347,8 @@
     "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
   },
   "Sign out all devices": {
-    "en": "Lock my messages on all my devices (Check this box if you think your account has been hacked)",
-    "fr": "Verrouiller mes messages sur tous mes appareils (Cocher cette case si vous pensez que votre compte a été piraté)"
+    "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
+    "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
   },
   "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": {
     "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
