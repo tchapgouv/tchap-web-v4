@@ -1,16 +1,15 @@
 diff --git a/node_modules/matrix-js-sdk/src/crypto/index.ts b/node_modules/matrix-js-sdk/src/crypto/index.ts
-index 7c0092b..9d0358b 100644
+index 9349550..3a1b15e 100644
 --- a/node_modules/matrix-js-sdk/src/crypto/index.ts
 +++ b/node_modules/matrix-js-sdk/src/crypto/index.ts
-@@ -2269,6 +2269,12 @@ export class Crypto extends TypedEventEmitter<CryptoEvent, CryptoEventHandlerMap
-                 await upload({ shouldEmit: true });
+@@ -2245,8 +2245,11 @@ export class Crypto extends TypedEventEmitter<CryptoEvent, CryptoEventHandlerMap
                  // XXX: we'll need to wait for the device list to be updated
              }
-+
+ 
 +            //:tchap: remove this patch after release of element with
 +            // https://github.com/matrix-org/matrix-js-sdk/pull/2921
-+            // redo key requests after verification
-+            this.cancelAndResendAllOutgoingKeyRequests();
+             // redo key requests after verification
+             this.cancelAndResendAllOutgoingKeyRequests();
 +            //:tchap: end
          }
  
