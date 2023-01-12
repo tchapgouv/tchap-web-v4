@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-index 45f924a..ed2c7b9 100644
+index 8d9040b..b2cbb6d 100644
 --- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 +++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 @@ -30,6 +30,7 @@ import {
- } from './utils/IdentityServerUtils';
+ } from "./utils/IdentityServerUtils";
  import QuestionDialog from "./components/views/dialogs/QuestionDialog";
  import { abbreviateUrl } from "./utils/UrlUtils";
 +import TchapUIFeature from "../../../src/util/TchapUIFeature";
  
  export class AbortedIdentityActionError extends Error {}
  
-@@ -138,6 +139,18 @@ export default class IdentityAuthClient {
+@@ -131,6 +132,18 @@ export default class IdentityAuthClient {
              throw e;
          }
  
@@ -30,12 +30,12 @@ index 45f924a..ed2c7b9 100644
              !this.tempClient &&
              !doesAccountDataHaveIdentityServer() &&
 diff --git a/node_modules/matrix-react-sdk/src/Terms.ts b/node_modules/matrix-react-sdk/src/Terms.ts
-index bb7ebb5..8c1e983 100644
+index 1904154..51ec628 100644
 --- a/node_modules/matrix-react-sdk/src/Terms.ts
 +++ b/node_modules/matrix-react-sdk/src/Terms.ts
 @@ -21,6 +21,11 @@ import { logger } from "matrix-js-sdk/src/logger";
- import { MatrixClientPeg } from './MatrixClientPeg';
- import Modal from './Modal';
+ import { MatrixClientPeg } from "./MatrixClientPeg";
+ import Modal from "./Modal";
  import TermsDialog from "./components/views/dialogs/TermsDialog";
 +import {
 +    doesAccountDataHaveIdentityServer,
@@ -45,7 +45,7 @@ index bb7ebb5..8c1e983 100644
  
  export class TermsNotSignedError extends Error {}
  
-@@ -77,6 +82,15 @@ export async function startTermsFlow(
+@@ -76,6 +81,15 @@ export async function startTermsFlow(
      services: Service[],
      interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
  ) {
@@ -57,7 +57,7 @@ index bb7ebb5..8c1e983 100644
 +        return;
 +    }
 +    // end :TCHAP:
-+
-     const termsPromises = services.map(
-         (s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl),
-     );
++    
+     const termsPromises = services.map((s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl));
+ 
+     /*
