@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 208c291..91ddfad 100644
+index 208c291..7250edd 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -43,6 +43,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -10,7 +10,7 @@ index 208c291..91ddfad 100644
  
  const emailCheckInterval = 2000;
  
-@@ -162,6 +163,22 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -162,6 +163,23 @@ export default class ForgotPassword extends React.Component<Props, State> {
      private async onPhaseEmailInputSubmit() {
          this.phase = Phase.SendingEmail;
  
@@ -26,14 +26,15 @@ index 208c291..91ddfad 100644
 +        }
 +        const serverConfig = TchapUtils.makeValidatedServerConfig(serverResult);
 +        console.log('serverConfig', serverConfig);
-+        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl); // TODO we should probably make reset part of the state ?
++        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
++        // Note : this.reset is not a react state variable. It doesn't seem necessary to make it one.
 +        // TODO : should we "close" the previous reset obj ?
 +        // end :TCHAP:
 +
          if (await this.sendVerificationMail()) {
              this.phase = Phase.EmailSent;
              return;
-@@ -323,8 +340,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -323,8 +341,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
              errorText: "",
          });
  
@@ -44,11 +45,12 @@ index 208c291..91ddfad 100644
  
          // Server error
          if (!this.state.serverIsAlive) return;
-@@ -515,6 +534,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -515,6 +535,8 @@ export default class ForgotPassword extends React.Component<Props, State> {
              <AuthPage>
                  <AuthHeader />
                  <AuthBody className="mx_AuthBody_forgot-password">{resetPasswordJsx}</AuthBody>
-+                <div>Current serverConfig : { this.reset.client.baseUrl } TODO remove</div>
++                <div>Current serverConfig : { this.reset.client.baseUrl } </div>
++                <div> | this.state.phase : { this.state.phase } | TODO remove</div>
              </AuthPage>
          );
      }
