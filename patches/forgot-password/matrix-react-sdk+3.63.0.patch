@@ -52,15 +52,22 @@ index 208c291..666b17c 100644
          );
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-index d5f8d84..c4a5416 100644
+index d5f8d84..2bda4d8 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-@@ -66,7 +66,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
+@@ -64,6 +64,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
+         <>
+             <EmailIcon className="mx_AuthBody_icon" />
              <h1>{_t("Enter your email to reset password")}</h1>
++            { /* :TCHAP: we don't display homeservers to users
              <p className="mx_AuthBody_text">
                  {_t(
--                    "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.",
-+                    "<b>%(homeserver)s</b> TODO HIDE",
-                     { homeserver },
+                     "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.",
+@@ -71,6 +72,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
                      { b: (t) => <b>{t}</b> },
                  )}
+             </p>
++                end :TCHAP: */ }
+             <form onSubmit={onSubmit}>
+                 <fieldset disabled={loading}>
+                     <div className="mx_AuthBody_fieldRow">
