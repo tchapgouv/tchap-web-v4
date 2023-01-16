@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 208c291..9b525ed 100644
+index 208c291..732c004 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -43,6 +43,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -15,7 +15,7 @@ index 208c291..9b525ed 100644
  
  interface Props {
 -    serverConfig: ValidatedServerConfig;
-+    // :TCHAP: we get serverConfig from email - serverConfig: ValidatedServerConfig;
++    // :TCHAP: we get serverConfig when user enters email, so remove it from props - serverConfig: ValidatedServerConfig;
      onLoginClick: () => void;
      onComplete: () => void;
  }
@@ -24,7 +24,7 @@ index 208c291..9b525ed 100644
              logoutDevices: false,
          };
 -        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-+        // :TCHAP: no known server yet - this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
++        // :TCHAP: no known server yet, this.reset stays undefined - this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
      }
  
      public componentDidMount() {
@@ -52,7 +52,7 @@ index 208c291..9b525ed 100644
  
 +    // :TCHAP:
 +    private useNewServerConfig =  async (serverConfig) => {
-+        console.log('serverConfig', serverConfig);
++        console.log('Using serverConfig corresponding to this email :', serverConfig);
 +
 +        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
 +        // Note : this.reset is not a react state variable. It doesn't seem necessary to make it one, it seems to work this way.
@@ -89,7 +89,7 @@ index 208c291..9b525ed 100644
              errorText: "",
          });
  
-+        /* :TCHAP: this is be run when we set the new server, and not elsewhere.
++        /* :TCHAP: at this point we may not know the serverConfig to use yet. So don't check.
          // Refresh the server errors. Just in case the server came back online of went offline.
          await this.checkServerLiveliness(this.props.serverConfig);
 +        end :TCHAP: */
@@ -101,7 +101,7 @@ index 208c291..9b525ed 100644
                  email={this.state.email}
                  errorText={this.state.errorText}
 -                homeserver={this.props.serverConfig.hsName}
-+                homeserver={ null /* :TCHAP: - no known homeserver here - this.props.serverConfig.hsName */}
++                homeserver={ null /* :TCHAP: - no known homeserver yet - this.props.serverConfig.hsName */}
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
