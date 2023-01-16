@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 208c291..610894c 100644
+index 208c291..9b525ed 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -43,6 +43,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -10,7 +10,61 @@ index 208c291..610894c 100644
  
  const emailCheckInterval = 2000;
  
-@@ -162,6 +163,24 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -62,7 +63,7 @@ enum Phase {
+ }
+ 
+ interface Props {
+-    serverConfig: ValidatedServerConfig;
++    // :TCHAP: we get serverConfig from email - serverConfig: ValidatedServerConfig;
+     onLoginClick: () => void;
+     onComplete: () => void;
+ }
+@@ -107,14 +108,17 @@ export default class ForgotPassword extends React.Component<Props, State> {
+             serverSupportsControlOfDevicesLogout: false,
+             logoutDevices: false,
+         };
+-        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
++        // :TCHAP: no known server yet - this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
+     }
+ 
+     public componentDidMount() {
++        /* :TCHAP: we don't know which server to use yet, nothing to check here.
+         this.checkServerCapabilities(this.props.serverConfig);
++        end :TCHAP: */
+     }
+ 
+     public componentDidUpdate(prevProps: Readonly<Props>) {
++        /* :TCHAP: we ignore serverConfig passed in props. So no use checking the server here.
+         if (
+             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
+             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
+@@ -125,6 +129,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+             // Do capabilities check on new URLs
+             this.checkServerCapabilities(this.props.serverConfig);
+         }
++        end :TCHAP: */
+     }
+ 
+     private async checkServerLiveliness(serverConfig: ValidatedServerConfig): Promise<void> {
+@@ -159,9 +164,38 @@ export default class ForgotPassword extends React.Component<Props, State> {
+         });
+     }
+ 
++    // :TCHAP:
++    private useNewServerConfig =  async (serverConfig) => {
++        console.log('serverConfig', serverConfig);
++
++        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
++        // Note : this.reset is not a react state variable. It doesn't seem necessary to make it one, it seems to work this way.
++        // Note : we do not shut down or close the previous this.reset object in any way. Existing sessions just stay there. There doesn't
++        // seem to be an API for revoking tokens.
++
++        // If the server is not available, this displays "Server unavailable, overloaded, or something else went wrong."
++        await this.checkServerLiveliness(serverConfig);
++        await this.checkServerCapabilities(serverConfig);
++    }
++    // end :TCHAP:
++
      private async onPhaseEmailInputSubmit() {
          this.phase = Phase.SendingEmail;
  
@@ -25,38 +79,32 @@ index 208c291..610894c 100644
 +            return;
 +        }
 +        const serverConfig = TchapUtils.makeValidatedServerConfig(serverResult);
-+        console.log('serverConfig', serverConfig);
-+        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
-+        // Note : this.reset is not a react state variable. It doesn't seem necessary to make it one, it seems to work this way.
-+        // Note : we do not shut down or close the previous this.reset object in any way. Existing sessions just stay there. There doesn't
-+        // seem to be an API for revoking tokens.
++        await this.useNewServerConfig(serverConfig);
 +        // end :TCHAP:
 +
          if (await this.sendVerificationMail()) {
              this.phase = Phase.EmailSent;
              return;
-@@ -323,8 +342,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -323,8 +357,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
              errorText: "",
          });
  
-+        /* :TCHAP: this should be run when we set the new server, and not elsewhere. The serverconfig could be remove completely from props. TODO
++        /* :TCHAP: this is be run when we set the new server, and not elsewhere.
          // Refresh the server errors. Just in case the server came back online of went offline.
          await this.checkServerLiveliness(this.props.serverConfig);
 +        end :TCHAP: */
  
          // Server error
          if (!this.state.serverIsAlive) return;
-@@ -515,6 +536,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
-             <AuthPage>
-                 <AuthHeader />
-                 <AuthBody className="mx_AuthBody_forgot-password">{resetPasswordJsx}</AuthBody>
-+                <div> serverConfig : { this.reset.client.baseUrl } </div>
-+                <div> clientSecret : { this.reset.clientSecret } </div>
-+                <div> sessionId : { this.reset.sessionId } </div>
-+                <div> | this.state.phase : { this.state.phase } | TODO remove</div>
-             </AuthPage>
-         );
-     }
+@@ -355,7 +391,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+             <EnterEmail
+                 email={this.state.email}
+                 errorText={this.state.errorText}
+-                homeserver={this.props.serverConfig.hsName}
++                homeserver={ null /* :TCHAP: - no known homeserver here - this.props.serverConfig.hsName */}
+                 loading={this.state.phase === Phase.SendingEmail}
+                 onInputChanged={this.onInputChanged}
+                 onLoginClick={this.props.onLoginClick!} // set by default props
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 index d5f8d84..2bda4d8 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
