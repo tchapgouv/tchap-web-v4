@@ -1,5 +1,5 @@
 #Run the tests
-#tchap modification : use "./scripts/layered.with.version.sh" instead of "./scripts/layered.sh"
+#tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Tests
 on:
     pull_request: {}
@@ -25,7 +25,7 @@ jobs:
           cache: "yarn"
 
       - name: Install Dependencies
-        run: "./scripts/layered.with.version.sh"
+        run: "./scripts/install-yarn-linked-repositories.sh"
 
             - name: Get number of CPU cores
               id: cpu-cores

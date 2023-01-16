@@ -1,5 +1,5 @@
 #Run a static analysis
-#tchap modification : use "./scripts/layered.with.version.sh" instead of "./scripts/layered.sh"
+#tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Static Analysis
 on:
     pull_request: {}
@@ -12,14 +12,36 @@ env:
     REPOSITORY: ${{ github.repository }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
-  # Removing until we fix the crash :
-  # Error: matrix-react-sdk/src/autocomplete/CommandProvider.tsx(38,24): error TS2589:
-  # Type instantiation is excessively deep and possibly infinite.
-  # ts_lint:
-  #   name: "Typescript Syntax Check"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+# Removing until we fix the crash :
+# Error: matrix-react-sdk/src/autocomplete/CommandProvider.tsx(38,24): error TS2589:
+# Type instantiation is excessively deep and possibly infinite.
+#  ts_lint:
+#    name: "Typescript Syntax Check"
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - uses: actions/setup-node@v3
+#        with:
+#          cache: 'yarn'
+#          node-version: 16
+#
+#      - name: Install Dependencies
+#        run: "./scripts/install-yarn-linked-repositories.sh"
+#
+#      - name: Typecheck
+#        run: "yarn run lint:types"
+
+# tchap : tchap does not use extensively i18n
+# i18n_lint:
+#    name: "i18n Check"
+#    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+
+  js_lint:
+    name: "ESLint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
   #     - uses: actions/setup-node@v3
   #       with:
@@ -53,11 +75,9 @@ jobs:
             - name: Run Linter
               run: "yarn run lint:js"
 
-    style_lint:
-        name: "Style Lint"
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
+      # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
+      - name: Install Dependencies
+        run: "./scripts/install-yarn-linked-repositories.sh"
 
             - uses: actions/setup-node@v3
               with:
@@ -82,7 +102,7 @@ jobs:
   #         cache: "yarn"
 
   #     - name: Install Deps
-  #       run: "scripts/layered.with.version.sh"
+  #       run: "scripts/install-yarn-linked-repositories.sh"
 
   #     - name: Dead Code Analysis
   #       run: "yarn run analyse:unused-exports"
