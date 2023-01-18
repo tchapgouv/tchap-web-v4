@@ -36,7 +36,8 @@
     "showLabsSettings": false,
     "features": {
         "feature_thread": true,
-        "feature_video_rooms" : false
+        "feature_video_rooms" : false,
+        "feature_new_device_manager" : false
     },
     "default_federate": true,
     "default_theme": "light",
