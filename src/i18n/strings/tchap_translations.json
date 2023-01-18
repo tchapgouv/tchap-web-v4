@@ -557,7 +557,7 @@
   }, 
   "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s." : {
     "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
-    "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s.",
+    "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."
   }
 
 }
