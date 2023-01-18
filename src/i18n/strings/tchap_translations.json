@@ -382,7 +382,6 @@
     "en": "The sender's device has not sent us the keys for this message.",
     "fr": "L'appareil de l'émetteur ne nous a pas envoyé les clés pour ce message."
   },
-  //
   "Message intended for room <room id>":{
     "en": "",
     "fr": ""
