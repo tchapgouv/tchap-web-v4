@@ -1,12 +1,27 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
+index b9923d9..3f11062 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
+@@ -214,7 +214,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
+                 onFinished();
+                 PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
+             }}
+-            label={_t("People")}
++            //:tchap: label={_t("People")}
++            label={_t("Room members")}
+             iconClassName="mx_RoomTile_iconPeople"
+         >
+             <span className="mx_IconizedContextMenu_sublabel">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-index 006a00f..90dfad0 100644
+index 006a00f..4d889bb 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-@@ -303,7 +303,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
+@@ -303,7 +303,8 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, onClose }) => {
      return <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
          <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
              <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
 -                { _t("People") }
++                {/* :tchap: { _t("People") } */}
 +                { _t("Room members") }
                  <span className="mx_BaseCard_Button_sublabel">
                      { memberCount }
