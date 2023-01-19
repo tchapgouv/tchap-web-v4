@@ -166,16 +166,14 @@
       "src/PasswordReset.ts"
     ]
   },
-  "redo-key-sharing-after-own-device-verification": {
-    "package": "matrix-js-sdk",
-    "files": [
-      "src/crypto/index.ts"
-    ]
-  },
   "change-keys-in-room-summary-card": {
+    "comments" : "add RoomContextMenu and SpacePreferencesDialog under the same patch (same update)",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/365",
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/views/right_panel/RoomSummaryCard.tsx"
+      "src/components/views/right_panel/RoomSummaryCard.tsx",
+      "src/components/views/context_menus/RoomContextMenu.tsx",
+      "src/components/views/dialogs/SpacePreferencesDialog.tsx"
     ]
   }
 }
