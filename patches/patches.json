@@ -160,12 +160,6 @@
       "res/css/views/elements/_TooltipButton.pcss"
     ]
   },
-  "remove-authorization-header-in-reset-password": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/PasswordReset.ts"
-    ]
-  },
   "change-keys-in-room-summary-card": {
     "comments" : "add RoomContextMenu and SpacePreferencesDialog under the same patch (same update)",
     "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/365",
