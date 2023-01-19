@@ -1,25 +1,21 @@
 diff --git a/node_modules/matrix-react-sdk/src/PasswordReset.ts b/node_modules/matrix-react-sdk/src/PasswordReset.ts
-index f4a7771..45e8796 100644
+index f4a7771..8e7b64f 100644
 --- a/node_modules/matrix-react-sdk/src/PasswordReset.ts
 +++ b/node_modules/matrix-react-sdk/src/PasswordReset.ts
-@@ -104,10 +104,17 @@ export default class PasswordReset {
+@@ -104,6 +104,13 @@ export default class PasswordReset {
          );
      }
  
++    // :TCHAP: this is a cherry-pick of https://github.com/matrix-org/matrix-react-sdk/pull/9925/files.
++    // Should be removed when we upgrade to 1.11.20 or more.
 +    public setLogoutDevices(logoutDevices: boolean): void {
 +        this.logoutDevices = logoutDevices;
 +    }
++    // end :TCHAP:
 +
-+    // :TCHAP: this is a cherry-pick of https://github.com/matrix-org/matrix-react-sdk/pull/9925/files.
-+    // Should be removed when we upgrade to 1.11.20 or more.
      public async setNewPassword(password: string): Promise<void> {
          this.password = password;
          await this.checkEmailLinkClicked();
-     }
-+    // end :TCHAP:
- 
-     /**
-      * Checks if the email link has been clicked by attempting to change the password
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 index 208c291..bcb7c35 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
