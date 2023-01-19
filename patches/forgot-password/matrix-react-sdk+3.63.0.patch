@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 208c291..732c004 100644
+index 208c291..75650af 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -43,6 +43,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -105,6 +105,17 @@ index 208c291..732c004 100644
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
+@@ -446,7 +482,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
+                                     onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
+                                     checked={this.state.logoutDevices}
+                                 >
+-                                    {_t("Sign out of all devices")}
++                                    { /* :TCHAP: _t("Sign out of all devices") */
++                                        _t('Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)')
++                                    /*end :TCHAP: */ }
+                                 </StyledCheckbox>
+                             </div>
+                         ) : null}
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 index d5f8d84..2bda4d8 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
