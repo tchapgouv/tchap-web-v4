@@ -76,7 +76,8 @@
     "package": "matrix-react-sdk",
     "files": [
       "src/components/structures/auth/ForgotPassword.tsx",
-      "src/components/structures/auth/forgot-password/EnterEmail.tsx"
+      "src/components/structures/auth/forgot-password/EnterEmail.tsx",
+      "src/PasswordReset.ts"
     ]
   },
   "hide-cross-signing-actions": {

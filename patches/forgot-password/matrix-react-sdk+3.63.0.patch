@@ -1,5 +1,27 @@
+diff --git a/node_modules/matrix-react-sdk/src/PasswordReset.ts b/node_modules/matrix-react-sdk/src/PasswordReset.ts
+index f4a7771..45e8796 100644
+--- a/node_modules/matrix-react-sdk/src/PasswordReset.ts
++++ b/node_modules/matrix-react-sdk/src/PasswordReset.ts
+@@ -104,10 +104,17 @@ export default class PasswordReset {
+         );
+     }
+ 
++    public setLogoutDevices(logoutDevices: boolean): void {
++        this.logoutDevices = logoutDevices;
++    }
++
++    // :TCHAP: this is a cherry-pick of https://github.com/matrix-org/matrix-react-sdk/pull/9925/files.
++    // Should be removed when we upgrade to 1.11.20 or more.
+     public async setNewPassword(password: string): Promise<void> {
+         this.password = password;
+         await this.checkEmailLinkClicked();
+     }
++    // end :TCHAP:
+ 
+     /**
+      * Checks if the email link has been clicked by attempting to change the password
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 208c291..75650af 100644
+index 208c291..bcb7c35 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -43,6 +43,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -85,7 +107,18 @@ index 208c291..75650af 100644
          if (await this.sendVerificationMail()) {
              this.phase = Phase.EmailSent;
              return;
-@@ -323,8 +357,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -258,6 +292,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
+         }
+ 
+         this.phase = Phase.ResettingPassword;
++        // :TCHAP: this is a cherry-pick of https://github.com/matrix-org/matrix-react-sdk/pull/9925/files.
++        // Should be removed when we upgrade to 1.11.20 or more.
++        this.reset.setLogoutDevices(this.state.logoutDevices);
++        // end :TCHAP:
+ 
+         try {
+             await this.reset.setNewPassword(this.state.password);
+@@ -323,8 +361,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
              errorText: "",
          });
  
@@ -96,7 +129,7 @@ index 208c291..75650af 100644
  
          // Server error
          if (!this.state.serverIsAlive) return;
-@@ -355,7 +391,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -355,7 +395,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
              <EnterEmail
                  email={this.state.email}
                  errorText={this.state.errorText}
@@ -105,7 +138,7 @@ index 208c291..75650af 100644
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
-@@ -446,7 +482,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -446,7 +486,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
                                      onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
                                      checked={this.state.logoutDevices}
                                  >
