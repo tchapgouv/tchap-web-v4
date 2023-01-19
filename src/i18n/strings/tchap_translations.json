@@ -347,16 +347,16 @@
     "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
   },
   "Sign out all devices": {
-    "en": "Lock my messages on all my devices (Check this box if you think your account has been hacked)",
-    "fr": "Verrouiller mes messages sur tous mes appareils (Cocher cette case si vous pensez que votre compte a été piraté)"
+    "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
+    "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
   },
   "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": {
     "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
     "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
   },
   "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": {
-    "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté.",
-    "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked."
+    "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté ou si vous avez perdu un de vos appareils.",
+    "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked or a device has been lost."
   },
   "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": {
     "fr" : "Actuellement %(brand)s ne supporte pas la recherche dans les messages.",
@@ -391,20 +391,24 @@
     "fr": "Rejoindre un forum"
   },
   "Start chat": {
-    "en": "Start new chat",
+    "en": "New direct message",
     "fr": "Nouveau message direct"
   },
   "Start new chat": {
-    "en": "Start new chat",
+    "en": "New direct message",
+    "fr": "Nouveau message direct"
+  },
+  "Start a new chat": {
+    "en": "New direct message",
     "fr": "Nouveau message direct"
   },
   "Chat": {
-    "en": "Start new chat",
+    "en": "New direct message",
     "fr": "Nouveau message direct"
   },
   "Direct Messages": {
-    "en": "Start new chat",
-    "fr": "Nouveau message direct"
+    "en":"Direct Messages",
+    "fr":"Messages directs"
   },
   "Recently Direct Messaged": {
     "en": "Recents chats",
@@ -529,5 +533,31 @@
   "Ban from space": {
     "en": "Ban from space",
     "fr": "Interdire l’accès à l'espace (définitif)"
+  },
+  "People": {
+    "comments" : "in element, People label is used to title direct messages room and sometimes room members, use Room Members label in this case)",
+    "en": "Direct messages",
+    "fr": "Messages directs"
+  },
+  "Group all your people in one place.": {
+    "en":"Group all your direct message room in one place.",
+    "fr":"Regroupe tous vos salons de message directs au même endroit."
+  },
+  "Group all your favourite rooms and people in one place.": {
+    "en":"Group all your favourite rooms in one place.",
+    "fr":"Regroupe tous vos salons favoris au même endroit."
+  },
+  "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": {
+    "en":"Spaces are ways to group rooms and direct messages.",
+    "fr":"Les espaces permettent de regrouper des salons et des messages directs."
+  },
+  "Show all your rooms in Home, even if they're in a space." : {
+    "en": "Show all your rooms in Home",
+    "fr": "Affiche tous vos salons dans l’accueil"  
+  }, 
+  "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s." : {
+    "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
+    "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."
   }
+
 }
