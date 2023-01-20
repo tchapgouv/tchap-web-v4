@@ -31,6 +31,17 @@ module.exports = {
             // NOTE: These rules are frozen and new rules should not be added here.
             // New changes belong in https://github.com/matrix-org/eslint-plugin-matrix-org/
             rules: {
+                "unicorn/expiring-todo-comments": [
+                    "warn",
+                    {
+                        "allowWarningComments": true,
+                        "terms": [
+                            "todo",
+                            "fixme"
+                        ]
+                    }
+                ],
+
                 // Things we do that break the ideal style
                 "prefer-promise-reject-errors": "off",
                 "quotes": "off",
