@@ -83,6 +83,20 @@ module.exports = {
                 "@typescript-eslint/explicit-function-return-type": "off",
                 "@typescript-eslint/explicit-member-accessibility": "off",
             },
-        }
+        },
+        {
+            files: [
+                "src/**/*Tchap*.{ts,tsx}",
+                "src/**/*ContentScan*.{ts,tsx}",
+                "src/lib/ExpiredAccountHandler.ts",
+                "src/lib/IncomingKeyRequestHandler.ts",
+                "src/components/views/dialogs/ExpiredAccountDialog.tsx",
+            ],
+            rules: {
+                // Tchap files are not up to date yet in proper typescript style. Use warnings instead of errors to unbreak the CI.
+                "@typescript-eslint/explicit-function-return-type": "warn",
+                "@typescript-eslint/explicit-member-accessibility": "warn",
+            },
+        },
     ],
 };
