@@ -1,14 +1,25 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 2e6e6fb..3da7298 100644
+index 2e6e6fb..5571eda 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-@@ -500,7 +500,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
-                     </table>
-                     {extraDetails}
-                 </details>
-+                { /* :TCHAP: remove actions button, to block setup
-                 {actionRow}
-+                end :TCHAP:*/ }
-             </div>
-         );
-     }
+@@ -30,6 +30,7 @@ import AccessibleButton from "../elements/AccessibleButton";
+ import QuestionDialog from "../dialogs/QuestionDialog";
+ import RestoreKeyBackupDialog from "../dialogs/security/RestoreKeyBackupDialog";
+ import { accessSecretStorage } from "../../../SecurityManager";
++import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
+ 
+ interface IState {
+     loading: boolean;
+@@ -460,6 +461,12 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+         let actionRow;
+         if (actions.length) {
+             actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
++            // :TCHAP: hide action buttons if secure storage is not supported
++            // actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
++            if (!TchapUIFeature.isCrossSigningAndSecureStorageActive) {
++                actionRow = null;
++            }
++            // end :TCHAP:
+         }
+ 
+         return (
