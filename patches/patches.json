@@ -13,12 +13,6 @@
       "src/components/views/avatars/DecoratedRoomAvatar.tsx"
     ]
   },
-  "rename-exported-keys": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx"
-    ]
-  },
   "simplify-exchange-key-message": {
     "package": "matrix-react-sdk",
     "files": [
