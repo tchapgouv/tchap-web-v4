@@ -1,14 +1,13 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index e39d197..b725e59 100644
+index 2e6e6fb..3da7298 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-@@ -472,7 +472,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
-                     </tbody></table>
-                     { extraDetails }
+@@ -500,7 +500,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+                     </table>
+                     {extraDetails}
                  </details>
--                { actionRow }
 +                { /* :TCHAP: remove actions button, to block setup
-+                    actionRow
+                 {actionRow}
 +                end :TCHAP:*/ }
              </div>
          );

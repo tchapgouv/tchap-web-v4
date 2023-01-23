@@ -1,9 +1,9 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index a70e0c8..ef5363a 100644
+index b04714e..7b209b2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-@@ -244,6 +244,10 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
-             </div>;
+@@ -237,6 +237,10 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
 +        // :TCHAP: hide cross-signing actions
@@ -12,4 +12,4 @@ index a70e0c8..ef5363a 100644
 +
          return (
              <div>
-                 { summarisedStatus }
+                 {summarisedStatus}

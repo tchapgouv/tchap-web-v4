@@ -1,17 +1,17 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index cd1b3f5..6c53ebd 100644
+index 97d623a..31bee35 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-@@ -33,6 +33,8 @@ import { throttle } from "lodash";
+@@ -32,6 +32,8 @@ import { throttle } from "lodash";
  import { CryptoEvent } from "matrix-js-sdk/src/crypto";
  import { RoomType } from "matrix-js-sdk/src/@types/event";
- import { DecryptionError } from 'matrix-js-sdk/src/crypto/algorithms';
+ import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 +//:tchap: import incoming key request handler from tchap project
 +import KeyRequestHandler from '../../../../../src/lib/IncomingKeyRequestHandler';
  
  // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
- import 'focus-visible';
-@@ -1532,6 +1534,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+ import "focus-visible";
+@@ -1580,6 +1582,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
          cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
          cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
  
@@ -26,23 +26,23 @@ index cd1b3f5..6c53ebd 100644
 +            krh.handleKeyRequestCancellation(req);
 +        });
 +        //:tchap: end of tchap
-+
++        
          cli.on(ClientEvent.Room, (room) => {
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
-index f32f799..7c3df03 100644
+index 56fdb5e..d67fb6d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
-@@ -26,6 +26,7 @@ import DevicesPanelEntry from "./DevicesPanelEntry";
- import Spinner from "../elements/Spinner";
+@@ -27,6 +27,7 @@ import Spinner from "../elements/Spinner";
  import AccessibleButton from "../elements/AccessibleButton";
- import { deleteDevicesWithInteractiveAuth } from './devices/deleteDevices';
+ import { deleteDevicesWithInteractiveAuth } from "./devices/deleteDevices";
+ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 +import TchapUtils from '../../../../../../src/util/TchapUtils';
  
  interface IProps {
      className?: string;
-@@ -37,6 +38,7 @@ interface IState {
+@@ -38,6 +39,7 @@ interface IState {
      deviceLoadError?: string;
      selectedDevices: string[];
      deleting?: boolean;
@@ -50,7 +50,7 @@ index f32f799..7c3df03 100644
  }
  
  export default class DevicesPanel extends React.Component<IProps, IState> {
-@@ -52,6 +54,11 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
+@@ -55,6 +57,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
      }
  
      public componentDidMount(): void {
@@ -59,19 +59,20 @@ index f32f799..7c3df03 100644
 +            this.setState({isCrossSigningSupported: isCrossSigningSupported})
 +        });
 +        //:end of tchap
++
+         this.context.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
          this.loadDevices();
      }
- 
-@@ -112,6 +119,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
+@@ -125,6 +133,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
      private isDeviceVerified(device: IMyDevice): boolean | null {
          try {
-             const cli = MatrixClientPeg.get();
+             const cli = this.context;
 +            //:tchap: if cross signing is not supported, use the legacy device check
-+            if (!this.state.isCrossSigningSupported){
++            if (!this.state.isCrossSigningSupported) {
 +                return cli.checkDeviceTrust(cli.getUserId(), device.device_id).isVerified();
 +            }
 +            //:tchap: end
-+            
++
              const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-             return this.state.crossSigningInfo.checkDeviceTrust(
-                 this.state.crossSigningInfo,
+             return this.state.crossSigningInfo
+                 .checkDeviceTrust(this.state.crossSigningInfo, deviceInfo, false, true)

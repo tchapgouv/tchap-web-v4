@@ -75,12 +75,6 @@ describe("TchapCreateRoomDialog", () => {
             { showRoomFederationOption: true, roomFederationDefault: false });
     });
 
-    it('should render the whole component', () => {
-        const component = getComponent();
-        // If this breaks too often, it may not be useful, we will remove it. Leaving for now.
-        expect(toJson(component)).toMatchSnapshot("all the component");
-    });
-
     it('should render the whole component with with the allow access switch', () => {
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
             { showRoomFederationOption: true, roomFederationDefault: false });

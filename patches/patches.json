@@ -3,7 +3,9 @@
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/rooms/RoomHeader.tsx",
-      "res/css/views/rooms/_RoomHeader.pcss"    ]
+      "res/css/views/rooms/_RoomHeader.pcss"
+    ],
+    "description": "TODO: Remplir ici"
   },
   "show-icon-on-public-room": {
     "package": "matrix-react-sdk",
@@ -30,7 +32,8 @@
   "better-help-settings": {
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx"
+      "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx",
+      "src/components/views/elements/AccessibleButton.tsx"
     ]
   },
   "better-help-settings-2": {
@@ -72,7 +75,9 @@
   "forgot-password": {
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/structures/auth/ForgotPassword.tsx"
+      "src/components/structures/auth/ForgotPassword.tsx",
+      "src/components/structures/auth/forgot-password/EnterEmail.tsx",
+      "src/PasswordReset.ts"
     ]
   },
   "hide-cross-signing-actions": {
@@ -154,12 +159,6 @@
     "files": [
       "src/components/views/rooms/EventTile.tsx",
       "res/css/views/elements/_TooltipButton.pcss"
-    ]
-  },
-  "remove-authorization-header-in-reset-password": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/PasswordReset.ts"
     ]
   },
   "change-keys-in-room-summary-card": {

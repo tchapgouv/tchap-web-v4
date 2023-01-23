@@ -346,7 +346,7 @@
     "en": "<requestLink>Import from saved file</requestLink>",
     "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
   },
-  "Sign out all devices": {
+  "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)": {
     "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
     "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
   },
@@ -553,8 +553,8 @@
   },
   "Show all your rooms in Home, even if they're in a space." : {
     "en": "Show all your rooms in Home",
-    "fr": "Affiche tous vos salons dans l’accueil"  
-  }, 
+    "fr": "Affiche tous vos salons dans l’accueil"
+  },
   "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s." : {
     "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
     "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."

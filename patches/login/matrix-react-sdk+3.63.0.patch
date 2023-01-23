@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index c00aa90..d542993 100644
+index a8612d7..eb643df 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-@@ -38,6 +38,7 @@ import AuthBody from "../../views/auth/AuthBody";
+@@ -39,6 +39,7 @@ import AuthBody from "../../views/auth/AuthBody";
  import AuthHeader from "../../views/auth/AuthHeader";
- import AccessibleButton from '../../views/elements/AccessibleButton';
- import { ValidatedServerConfig } from '../../../utils/ValidatedServerConfig';
+ import AccessibleButton from "../../views/elements/AccessibleButton";
+ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 +import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
  
  // These are used in several places, and come from the js-sdk's autodiscovery
  // stuff. We define them here so that they'll be picked up by i18n.
-@@ -165,7 +166,17 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -164,7 +165,17 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
  
      isBusy = () => this.state.busy || this.props.busy;
  
@@ -28,16 +28,15 @@ index c00aa90..d542993 100644
          if (!this.state.serverIsAlive) {
              this.setState({ busy: true });
              // Do a quick liveliness check on the URLs
-@@ -190,7 +201,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
-             if (!aliveAgain) {
+@@ -190,6 +201,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                  return;
              }
--        }
-+        } end :TCHAP: */
+         }
++        end :TCHAP: */
  
          this.setState({
              busy: true,
-@@ -199,6 +210,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -198,6 +210,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
              loginIncorrect: false,
          });
  
@@ -57,35 +56,35 @@ index c00aa90..d542993 100644
 +        await this.tchap_setServerInMemory(serverResult);
 +        /** end :TCHAP: */
 +
-         this.loginLogic.loginViaPassword(
-             username, phoneCountry, phoneNumber, password,
-         ).then((data) => {
-@@ -261,6 +288,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+         this.loginLogic.loginViaPassword(username, phoneCountry, phoneNumber, password).then(
+             (data) => {
+                 this.setState({ serverIsAlive: true }); // it must be, we logged in.
+@@ -245,6 +273,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                     } else {
+                         errorText = _t("Incorrect username and/or password.");
+                     }
++                // :TCHAP: display proper message for TOO_MANY_REQUESTS
++                } else if (error.httpStatus === 429) {
++                    errorText = _t("Your last three login attempts have failed. Please try again in a few minutes.");
++                // end :TCHAP:
                  } else {
-                     errorText = _t('Incorrect username and/or password.');
-                 }
-+            // :TCHAP: display proper message for TOO_MANY_REQUESTS
-+            } else if (error.httpStatus === 429) {
-+                errorText = _t("Your last three login attempts have failed. Please try again in a few minutes.");
-+            // end :TCHAP:
-             } else {
-                 // other errors, not specific to doing a password login
-                 errorText = this.errorTextFromError(error);
-@@ -606,10 +637,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                     // other errors, not specific to doing a password login
+                     errorText = this.errorTextFromError(error);
+@@ -621,10 +653,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                      </h1>
-                     { errorTextSection }
-                     { serverDeadSection }
+                     {errorTextSection}
+                     {serverDeadSection}
 +                    { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
                      <ServerPicker
                          serverConfig={this.props.serverConfig}
                          onServerConfigChange={this.props.onServerConfigChange}
                      />
 +                    end :TCHAP :*/}
-                     { this.renderLoginComponentForFlows() }
-                     { footer }
+                     {this.renderLoginComponentForFlows()}
+                     {footer}
                  </AuthBody>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index f6b4e19..f3dba35 100644
+index 8bbbd5e..18a1810 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 @@ -80,7 +80,10 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
@@ -100,16 +99,16 @@ index f6b4e19..f3dba35 100644
              password: "",
          };
      }
-@@ -417,7 +420,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+@@ -416,7 +419,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
          return (
              <div>
                  <form onSubmit={this.onSubmitForm}>
--                    { loginType }
+-                    {loginType}
 +                    {
 +                        /* :TCHAP: remove loginType selector, we only want Email loginType
 +                        loginType
 +                        */
 +                    }
-                     { loginField }
+                     {loginField}
                      <Field
                          id="mx_LoginForm_password"

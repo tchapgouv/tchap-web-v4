@@ -1,11 +1,11 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 7df389f..e85bec5 100644
+index 9f88040..86ff272 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
  import { sendSentryReport } from "../../../sentry";
- import defaultDispatcher from '../../../dispatcher/dispatcher';
- import { Action } from '../../../dispatcher/actions';
+ import defaultDispatcher from "../../../dispatcher/dispatcher";
+ import { Action } from "../../../dispatcher/actions";
 +import { MatrixClientPeg } from '../../../MatrixClientPeg';  // :TCHAP:
  
  interface IProps {
@@ -31,8 +31,8 @@ index 7df389f..e85bec5 100644
 +        // end :TCHAP:
  
          const userText =
-             (this.state.text.length > 0 ? this.state.text + '\n\n': '') + 'Issue: ' +
-@@ -102,11 +112,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+             (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
+@@ -103,11 +113,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
          this.setState({ busy: true, progress: null, err: null });
          this.sendProgressCallback(_t("Preparing to send logs"));
  
@@ -59,10 +59,10 @@ index 7df389f..e85bec5 100644
 +                customFields: customFields, // :TCHAP:
 +            });
 +            // end :TCHAP:
-         }).then(() => {
-             if (!this.unmounted) {
-                 this.props.onFinished(false);
-@@ -138,6 +161,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+         }).then(
+             () => {
+                 if (!this.unmounted) {
+@@ -142,6 +165,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  sendLogs: true,
                  progressCallback: this.downloadProgressCallback,
                  labels: this.props.label ? [this.props.label] : [],
@@ -70,45 +70,46 @@ index 7df389f..e85bec5 100644
              });
  
              this.setState({
-@@ -205,7 +229,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -209,7 +233,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              <BaseDialog
                  className="mx_BugReportDialog"
                  onFinished={this.onCancel}
--                title={_t('Submit debug logs')}
-+                title={_t('Submit debug logs to Tchap support team') /** :TCHAP: more precise title */}
-                 contentId='mx_Dialog_content'
+-                title={_t("Submit debug logs")}
++                title={_t('Submit debug logs to Tchap support team') /** :TCHAP: more precise title than "Submit debug logs"*/}
+                 contentId="mx_Dialog_content"
              >
-                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
-@@ -218,6 +242,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
-                             "and the usernames of other users. They do not contain messages.",
-                         ) }
+                 <div className="mx_Dialog_content" id="mx_Dialog_content">
+@@ -222,6 +246,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                                 "and the usernames of other users. They do not contain messages.",
+                         )}
                      </p>
 +                    { /* :TCHAP: remove requirement to send github issue, it's too complicated
-                     <p><b>
-                         { _t(
-                             "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.",
-@@ -225,29 +250,38 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
-                             {
-                                 a: (sub) => <a
-                                     target="_blank"
--                                    href="https://github.com/vector-im/element-web/issues/new/choose"
-+                                    // :TCHAP: href="https://github.com/vector-im/element-web/issues/new/choose"
-+                                    href="https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
-+                                    // :end TCHAP:
-                                 >
-                                     { sub }
-                                 </a>,
-                             },
-                         ) }
-                     </b></p>
+                     <p>
+                         <b>
+                             {_t(
+@@ -231,7 +256,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                                     a: (sub) => (
+                                         <a
+                                             target="_blank"
+-                                            href="https://github.com/vector-im/element-web/issues/new/choose"
++                                            // :TCHAP: href="https://github.com/vector-im/element-web/issues/new/choose"
++                                            href="https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
++                                            // :end TCHAP:
+                                         >
+                                             {sub}
+                                         </a>
+@@ -240,22 +267,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                             )}
+                         </b>
+                     </p>
 +                    */}
  
 +                    { /* :TCHAP: move this below, it's not where the user expects it, so it's hard to understand
                      <div className="mx_BugReportDialog_download">
                          <AccessibleButton onClick={this.onDownload} kind="link" disabled={this.state.downloadBusy}>
-                             { _t("Download logs") }
+                             {_t("Download logs")}
                          </AccessibleButton>
-                         { this.state.downloadProgress && <span>{ this.state.downloadProgress } ...</span> }
+                         {this.state.downloadProgress && <span>{this.state.downloadProgress} ...</span>}
                      </div>
 +                    */ }
  
@@ -120,18 +121,18 @@ index 7df389f..e85bec5 100644
                          onChange={this.onIssueUrlChange}
                          value={this.state.issueUrl}
 -                        placeholder="https://github.com/vector-im/element-web/issues/..."
+-                    />
 +                        // :TCHAP: placeholder="https://github.com/vector-im/element-web/issues/..."
 +                        placeholder="https://github.com/tchapgouv/tchap-web-v4/issues/..."
-+                        // end :TCHAP:
-                     />
++                        // end :TCHAP:                    />
 +                    */ }
                      <Field
                          className="mx_BugReportDialog_field_input"
                          element="textarea"
-@@ -264,13 +298,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -272,14 +305,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                      />
-                     { progress }
-                     { error }
+                     {progress}
+                     {error}
 +                    <DialogButtons primaryButton={_t("Send logs")}
 +                        onPrimaryButtonClick={this.onSubmit}
 +                        focus={true}
@@ -154,7 +155,8 @@ index 7df389f..e85bec5 100644
 +                        </div>
 +                    </div>
                  </div>
--                <DialogButtons primaryButton={_t("Send logs")}
+-                <DialogButtons
+-                    primaryButton={_t("Send logs")}
 -                    onPrimaryButtonClick={this.onSubmit}
 -                    focus={true}
 -                    onCancel={this.onCancel}

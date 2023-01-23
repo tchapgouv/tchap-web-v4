@@ -2,31 +2,31 @@ name: Bug report for Tchap Web (in browser)
 description: File a bug report if you are using Element in a web browser like Firefox, Chrome, Edge, and so on.
 labels: [web, v4, bug]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report!
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this bug report!
 
-        Please report security issues by email to security@matrix.org
-  - type: textarea
-    id: reproduction-steps
-    attributes:
-      label: Steps to reproduce
-      description: Please attach screenshots, videos or logs if you can.
-      placeholder: Tell us what you see!
-      value: |
-        1. Where are you starting? What can you see?
-        2. What do you click?
-        3. More steps…
-    validations:
-      required: true
-  - type: textarea
-    id: result
-    attributes:
-      label: Outcome
-      placeholder: Tell us what went wrong
-      value: |
-        #### What did you expect?
+              Please report security issues by email to security@matrix.org
+    - type: textarea
+      id: reproduction-steps
+      attributes:
+          label: Steps to reproduce
+          description: Please attach screenshots, videos or logs if you can.
+          placeholder: Tell us what you see!
+          value: |
+              1. Where are you starting? What can you see?
+              2. What do you click?
+              3. More steps…
+      validations:
+          required: true
+    - type: textarea
+      id: result
+      attributes:
+          label: Outcome
+          placeholder: Tell us what went wrong
+          value: |
+              #### What did you expect?
 
         #### What happened instead?
     validations:
@@ -42,7 +42,7 @@ body:
     id: browser
     attributes:
       label: Browser information
-      description: Which browser are you using? Which version?
+      description: Which browser are you using? Which version? 
       placeholder: e.g. Chromium Version 92.0.4515.131
     validations:
       required: false
@@ -78,7 +78,7 @@ body:
       description:  |
         Did you know that you can send a /rageshake command from the web application to submit logs for this issue? Trigger the defect, then type `/rageshake` into the message input area followed by a description of the problem and send the command. You will be able to add a link to this defect report and submit anonymous logs to the developers.
       options:
-        - 'Yes'
-        - 'No'
+        - "Yes"
+        - "No"
     validations:
       required: true

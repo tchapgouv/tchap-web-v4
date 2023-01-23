@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-index 1b325db..01a2380 100644
+index f163605..4f7e24c 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
 @@ -157,6 +157,21 @@ limitations under the License.
@@ -25,22 +25,22 @@ index 1b325db..01a2380 100644
      $lineHeight: $font-16px;
      $lines: 2;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 3874627..3d43252 100644
+index 207e22d..99f1fcd 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-@@ -68,6 +68,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
- import { CallDurationFromEvent } from "../voip/CallDuration";
+@@ -69,6 +69,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+ import { GroupCallDuration } from "../voip/CallDuration";
  import { Alignment } from "../elements/Tooltip";
- import RoomCallBanner from '../beacon/RoomCallBanner';
+ import RoomCallBanner from "../beacon/RoomCallBanner";
 +import TchapExternalRoomHeader from "../../../../../../src/components/views/rooms/TchapExternalRoomHeader";
  
  class DisabledWithReason {
-     constructor(public readonly reason: string) { }
-@@ -729,6 +730,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
-                     <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
-                     { icon }
-                     { name }
+     constructor(public readonly reason: string) {}
+@@ -806,6 +807,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
+                     <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
+                     {icon}
+                     {name}
 +                    <TchapExternalRoomHeader room={this.props.room}></TchapExternalRoomHeader>
-                     { searchStatus }
-                     { topicElement }
-                     { betaPill }
+                     {searchStatus}
+                     {topicElement}
+                     {betaPill}
