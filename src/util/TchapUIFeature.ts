@@ -23,4 +23,9 @@ export default class TchapUIFeature {
      * This flag controls weither clearCacheAndReload can be queued at application start at V4 upgrade
      */
     public static activateClearCacheAndReloadAtVersion4 = true;
+
+    /**
+     * This flag controls whether to activate cross-signing and secure storage.
+     */
+    public static isCrossSigningAndSecureStorageActive = true;
 }
