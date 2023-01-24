@@ -582,5 +582,21 @@
   "Re-enter email address": {
     "en": "Re-enter email address",
     "fr": "Re-saisir l'adresse mail"
+  },
+  "Check your email to continue": {
+    "en": "Check your email to continue",
+    "fr": "Vérifiez vos mails avant de continuer"
+  },
+  "Verify your email to continue": {
+    "en": "Verify your email to continue",
+    "fr": "Vérifiez vos mails avant de continuer"
+  },
+  "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": {
+    "en": "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>",
+    "fr": "Nous avons besoin de savoir que c’est vous avant de réinitialiser votre mot de passe.\n                    Cliquer sur le lien dans le mail que nous venons juste d’envoyer à <b>%(email)s</b>"
+  },
+  "Send email": {
+    "en": "Send email",
+    "fr": "Envoyer le mail"
   }
 }
