@@ -558,6 +558,29 @@
   "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s." : {
     "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
     "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."
+  },
+  "Sign in instead": {
+    "en" : "Sign in instead",
+    "fr" : "ou connectez-vous"
+  },
+  "Enter your email to reset password": {
+    "en": "Enter your email to reset password",
+    "fr": "Entrez votre adresse mail pour réinitialiser votre mot de passe"
+  },
+  "Reset your password": {
+    "en": "Reset your password",
+    "fr": "Réinitialisez votre mot de passe"
+  },
+  "Did not receive it?": {
+    "en": "Did not receive it?",
+    "fr": "Pas reçu ?"
+  },
+  "Wrong email address?": {
+    "en": "Wrong email address?",
+    "fr": "Mauvaise adresse mail ?"
+  },
+  "Re-enter email address": {
+    "en": "Re-enter email address",
+    "fr": "Re-saisir l'adresse mail"
   }
-
 }
