@@ -109,7 +109,7 @@ describe("Check room access settings", () => {
                 // click on 'Allow the externals to join' this room
                 cy.get('[aria-label="Autoriser les externes à rejoindre ce salon"]').click();
                 // click on the confirmation popup box
-                cy.get('[data-test-id="dialog-primary-button"]').click();
+                cy.get('[data-testid="dialog-primary-button"]').click();
 
                 //assert
                 cy.contains(".mx_SettingsFlag", /^Autoriser les externes à rejoindre ce salon$/).within(() => {
