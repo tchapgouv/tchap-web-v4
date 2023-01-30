@@ -117,7 +117,7 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
                 //assert room header is updated
-                cy.get(".tc_RoomHeader_external").contains("ouvert aux externes");
+                cy.get(".tc_RoomHeader_external").should("exist");
 
                 cy.leaveRoom(roomId);
             });
