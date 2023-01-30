@@ -42,7 +42,7 @@ jobs:
           wait-on: 'http://localhost:8080'
           # wait for 3min, the build is long
           wait-on-timeout: 180
-          # record: true # todo record to dashboard, see action's doc
+          record: true
           command: 'yarn test:cypress'
         env:
           E2E_TEST_USER_EMAIL: ${{ secrets.E2E_TEST_USER_EMAIL }}
@@ -51,6 +51,6 @@ jobs:
           E2E_TEST_USER_HOMESERVER_URL: 'https://matrix.agent1.tchap.incubateur.net'
           E2E_TEST_USER_HOMESERVER_SHORT: 'agent1.tchap.incubateur.net'
           # todo pass the Dashboard record key as an environment variable
-          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
 
