@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
-import RoomUtils from "../utils/room-utils";
-import RandomUtils from "../utils/random-utils";
+import RoomUtils from "../../utils/room-utils";
+import RandomUtils from "../../utils/random-utils";
 
 describe("Check room access settings", () => {
     const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
