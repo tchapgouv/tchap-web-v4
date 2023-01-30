@@ -26,12 +26,6 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     return cy.get(".mx_Dialog");
 }
 
-// TODO: starter implementation for DMs, for now it just open the dialog
-function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
-    cy.get('.mx_RoomSublist_auxButton').first().click();
-    return cy.get(".mx_Dialog");
-}
-
 describe("Create Room", () => {
     const homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
 
@@ -125,45 +119,5 @@ describe("Create Room", () => {
         cy.get(".mx_RoomHeader_nametext").contains(name);
     });
 
-    it("should allow us to create a DM with another user", () => {
-        const invitee = "E2e-Test-1-Summer [Beta]";
-
-        openCreateDMDialog().within(() => {
-            // Fill name & topic
-            cy.get('[data-testid="invite-dialog-input"]').type(invitee);
-            // TODO check if invitee is in list
-            cy.get('.mx_InviteDialog_buttonAndSpinner').click();
-            // Submit
-            cy.startMeasuring("from-submit-to-room");
-            // Click on the suggestion matching the invitee
-            cy.contains(invitee).click();
-            // Click on the Go button
-            cy.get(".mx_InviteDialog_goButton").click();
-        });
-
-        cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(invitee);
-        cy.get('.mx_BasicMessageComposer_input').type("hello{enter}");
-        cy.get('.mx_EventTile_body').contains("hello");
-    });
-
-    it("should allow us to create a DM by inviting user with email", () => {
-        const email = "test@tchap.beta.gouv.fr";
-
-        openCreateDMDialog().within(() => {
-            // Fill name & topic
-            cy.get('[data-testid="invite-dialog-input"]').type(email);
-            // Submit
-            cy.startMeasuring("from-submit-to-room");
-            // Click on the suggestion matching the invitee
-            cy.contains(email).click();
-            // Click on the Go button
-            cy.get(".mx_InviteDialog_goButton").click();
-        });
-
-        cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(email);
-        cy.get('.mx_BasicMessageComposer_input').type("hello{enter}");
-        cy.get('.mx_EventTile_body').contains("hello");
-    });
+    // Note : DM creation is not tested here, because Tchap has no custom implementation for DMs. (2023-01-30)
 });
