@@ -56,6 +56,7 @@
     "test": "jest",
     "test:cypress": "cypress run",
     "test:cypress:open": "cypress open",
+    "test:cypress:record": "cypress run --record",
     "coverage": "yarn test --coverage",
     "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
     "postinstall": "./scripts/apply_patches.sh",
