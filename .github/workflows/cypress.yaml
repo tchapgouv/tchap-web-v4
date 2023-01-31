@@ -51,3 +51,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # pass the project ID
           CYPRESS_PROJECT_ID: 'x8og2r'
+      - name: Upload Artifact
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+            name: cypress-results
+            path: |
+                cypress/screenshots
+                cypress/videos
+                cypress/synapselogs
