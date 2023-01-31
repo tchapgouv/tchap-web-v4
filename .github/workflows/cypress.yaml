@@ -50,7 +50,9 @@ jobs:
           E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY }}
           E2E_TEST_USER_HOMESERVER_URL: 'https://matrix.agent1.tchap.incubateur.net'
           E2E_TEST_USER_HOMESERVER_SHORT: 'agent1.tchap.incubateur.net'
-          # todo pass the Dashboard record key as an environment variable
+          # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-
+          # pass GitHub token to allow accurately detecting a build vs a re-run build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # pass the project ID
+          CYPRESS_PROJECT_ID: 'x8og2r'
