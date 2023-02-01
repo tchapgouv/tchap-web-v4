@@ -29,7 +29,7 @@ electron/pub
 /matrix-js-sdk
 /matrix-analytics-events
 # yarn links dependencies generated with /scripts/install-yarn-linked-repositories.sh
-/yarn-linked-dependencies
+# /yarn-linked-dependencies
 
 
 # Auto-generated file
