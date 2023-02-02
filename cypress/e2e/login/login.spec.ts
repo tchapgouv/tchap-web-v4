@@ -61,6 +61,7 @@ describe("Login", () => {
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
+            //TODO: does not work if account has cross signing because the screen is /#/login "Vérifier cet appareil"
             cy.url().should('contain', '/#/home');
             cy.stopMeasuring("from-submit-to-home");
         });
