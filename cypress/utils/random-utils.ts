@@ -4,7 +4,7 @@ export default class RandomUtils {
      * @param length < 10
      * @returns random string
      */
-    static generateRandom(length: number): string {
+    public static generateRandom(length: number): string {
         return (Math.random() + 1).toString(36).substring(2, 2+length);
     }
 }

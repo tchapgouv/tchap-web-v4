@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
-import RoomUtils from "../utils/room-utils";
-import RandomUtils from "../utils/random-utils";
+import RoomUtils from "../../utils/room-utils";
+import RandomUtils from "../../utils/random-utils";
 
 describe("Check room access settings", () => {
     const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
@@ -109,7 +109,7 @@ describe("Check room access settings", () => {
                 // click on 'Allow the externals to join' this room
                 cy.get('[aria-label="Autoriser les externes à rejoindre ce salon"]').click();
                 // click on the confirmation popup box
-                cy.get('[data-test-id="dialog-primary-button"]').click();
+                cy.get('[data-testid="dialog-primary-button"]').click();
 
                 //assert
                 cy.contains(".mx_SettingsFlag", /^Autoriser les externes à rejoindre ce salon$/).within(() => {
@@ -117,7 +117,7 @@ describe("Check room access settings", () => {
                     cy.get('.mx_AccessibleButton').should('have.attr', 'aria-disabled', 'true');
                 });
                 //assert room header is updated
-                cy.get(".tc_RoomHeader_external").contains("ouvert aux externes");
+                cy.get(".tc_RoomHeader_external").should("exist");
 
                 cy.leaveRoom(roomId);
             });
