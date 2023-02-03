@@ -39,9 +39,12 @@ export default class KeyRequestHandler {
         const deviceId: string = keyRequest.deviceId;
         const requestId: string = keyRequest.requestId;
 
+        console.log(":tchap: recevieving a key request event for device ",deviceId, " requestId ", requestId);
+
         //This instruction hides the toast that appears when a new device is detected
         //As we are receiving a legacy incomingroomkeyrequest we can assume the veryfing
         //will occur via this process and hide the toast
+        console.log(":tchap: hidding UnverifiedSessionsToast for ",deviceId);
         hideUnverifiedSessionsToast(deviceId);
 
         
