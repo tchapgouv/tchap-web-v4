@@ -427,8 +427,8 @@
     "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
   },
   "Set up Secure Backup": {
-    "en": "Set up Secure Backup",
-    "fr": "Configurer la sauvegarde automatique des messages"
+    "en": "Synchonize this device",
+    "fr": "Synchroniser cet appareil"
   },
   "Email": {
     "en": "Email",
@@ -598,5 +598,29 @@
   "Send email": {
     "en": "Send email",
     "fr": "Envoyer le mail"
+  },
+  "Save your Security Key" : {
+    "fr": "Clé de synchronisation",
+    "en": "Synchronization key"
+  },
+  "This is your synchronization key" : {
+    "fr": "Voici votre clé de synchronisation. Cette clé vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment.",
+    "en": "This is your synchronization key. This key allows you to backup automatically your messages and restore whenever you want"
+  },
+  "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
+    "fr": "Conservez votre clé dans un endroit sûr, par exemple : votre gestionnaire de mot de passe sur un papier dans une armoire ou un tiroir fermé à clé.",
+    "en": "Store your synchronization key somewhere safe, like a password manager or a safe"
+  },
+  "Activate my backup": {
+    "fr" : "Activer ma sauvegarde",
+    "en" : "Activate my backup"
+  },
+  "Safeguard against losing access to encrypted messages & data":{
+    "fr" : "Synchroniser vos messages sur cet appareil pour ne jamais les perdre.",
+    "en" : "Synchronize your messages on this device to never loose them."
+  },
+  "Synchronization": {
+    "fr" : "Synchroniser",
+    "en" : "Synchronize"
   }
 }
