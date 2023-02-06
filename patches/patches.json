@@ -170,5 +170,14 @@
       "src/components/views/context_menus/RoomContextMenu.tsx",
       "src/components/views/dialogs/SpacePreferencesDialog.tsx"
     ]
+  },
+  "rewording-key-backup-configuration": {
+    "comments" : "rewording on key backup configuration",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/406",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
+      "src/toasts/SetupEncryptionToast.ts"
+    ]
   }
 }

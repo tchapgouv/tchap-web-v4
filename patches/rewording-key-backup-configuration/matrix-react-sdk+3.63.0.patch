@@ -1,0 +1,120 @@
+diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
+index cf0c160..56a9675 100644
+--- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
+@@ -57,7 +57,7 @@ enum Phase {
+     Migrate = "migrate",
+     Passphrase = "passphrase",
+     PassphraseConfirm = "passphrase_confirm",
+-    ShowKey = "show_key",
++    ShowKey = "show_key", //:tchap: we use this screen
+     Storing = "storing",
+     ConfirmSkip = "confirm_skip",
+ }
+@@ -177,13 +177,28 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+                 MatrixClientPeg.get().isCryptoEnabled() && (await MatrixClientPeg.get().isKeyBackupTrusted(backupInfo));
+ 
+             const { forceReset } = this.props;
+-            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
++            //const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
++            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ShowKey;//:tchap: goes directly to showkey
+ 
+-            this.setState({
+-                phase,
+-                backupInfo,
+-                backupSigStatus,
+-            });
++            if(phase === Phase.ShowKey){
++                this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
++                this.setState({
++                    phase,
++                    backupInfo,
++                    backupSigStatus,
++                    passPhraseKeySelected:SecureBackupSetupMethod.Key,
++                    copied: false,
++                    downloaded: false,
++                    setPassphrase: false 
++                });
++            }else{
++                //if phase is Phase.Migrate
++                this.setState({
++                    phase,
++                    backupInfo,
++                    backupSigStatus,
++                });
++            }
+ 
+             return {
+                 backupInfo,
+@@ -219,12 +234,27 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+         if (this.state.phase === Phase.Migrate) this.fetchBackupInfo();
+     };
+ 
++    /**
++     * :TCHAP: GOES DIRECTLY TO Phase.ShowKey SCREEN
++     */
++/*     private tchapGotoSecurityKey = async () => {
++        this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
++        this.setState({
++            passPhraseKeySelected:SecureBackupSetupMethod.Key,
++            copied: false,
++            downloaded: false,
++            setPassphrase: false,
++            phase: Phase.ShowKey,
++        });
++    } */
++    
+     private onKeyPassphraseChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+         this.setState({
+             passPhraseKeySelected: e.target.value,
+         });
+     };
+ 
++
+     private onChooseKeyPassphraseFormSubmit = async (): Promise<void> => {
+         if (this.state.passPhraseKeySelected === SecureBackupSetupMethod.Key) {
+             this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
+@@ -717,7 +747,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+         if (this.state.phase === Phase.ShowKey) {
+             continueButton = (
+                 <DialogButtons
+-                    primaryButton={_t("Continue")}
++                    //primaryButton={_t("Continue")}
++                    //:tchap: change label
++                    primaryButton={_t("Activate my backup")}
+                     disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
+                     onPrimaryButtonClick={this.onShowKeyContinueClick}
+                     hasCancel={false}
+@@ -733,12 +765,18 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+ 
+         return (
+             <div>
++                <p>
++                    {_t(
++                        "This is your synchronization key"
++                    )}
++                </p>
+                 <p>
+                     {_t(
+                         "Store your Security Key somewhere safe, like a password manager or a safe, " +
+                             "as it's used to safeguard your encrypted data.",
+                     )}
+                 </p>
++
+                 <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
+                     <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
+                         <div className="mx_CreateSecretStorageDialog_recoveryKey">
+diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
+index 5dc32de..9c36d84 100644
+--- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
++++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
+@@ -50,7 +50,8 @@ const getIcon = (kind: Kind) => {
+ const getSetupCaption = (kind: Kind) => {
+     switch (kind) {
+         case Kind.SET_UP_ENCRYPTION:
+-            return _t("Continue");
++            //:tchap: return _t("Continue");
++            return _t("Synchronization");
+         case Kind.UPGRADE_ENCRYPTION:
+             return _t("Upgrade");
+         case Kind.VERIFY_THIS_SESSION:
