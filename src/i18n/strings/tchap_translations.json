@@ -619,9 +619,9 @@
     "fr" : "Activez votre clé de synchronisation pour ne jamais perdre vos messages",
     "en" : "Activate your synchronization key to never lose your messages"
   },
-  "Synchronization": {
-    "fr" : "Synchroniser",
-    "en" : "Synchronize"
+  "Activate": {
+    "fr" : "Activer",
+    "en" : "Activate"
   }
 
 }
