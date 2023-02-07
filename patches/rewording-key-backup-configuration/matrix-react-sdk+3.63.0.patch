@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-index cf0c160..56a9675 100644
+index cf0c160..b268494 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 @@ -57,7 +57,7 @@ enum Phase {
@@ -46,35 +46,7 @@ index cf0c160..56a9675 100644
  
              return {
                  backupInfo,
-@@ -219,12 +234,27 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
-         if (this.state.phase === Phase.Migrate) this.fetchBackupInfo();
-     };
- 
-+    /**
-+     * :TCHAP: GOES DIRECTLY TO Phase.ShowKey SCREEN
-+     */
-+/*     private tchapGotoSecurityKey = async () => {
-+        this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
-+        this.setState({
-+            passPhraseKeySelected:SecureBackupSetupMethod.Key,
-+            copied: false,
-+            downloaded: false,
-+            setPassphrase: false,
-+            phase: Phase.ShowKey,
-+        });
-+    } */
-+    
-     private onKeyPassphraseChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-         this.setState({
-             passPhraseKeySelected: e.target.value,
-         });
-     };
- 
-+
-     private onChooseKeyPassphraseFormSubmit = async (): Promise<void> => {
-         if (this.state.passPhraseKeySelected === SecureBackupSetupMethod.Key) {
-             this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
-@@ -717,7 +747,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -717,7 +732,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
          if (this.state.phase === Phase.ShowKey) {
              continueButton = (
                  <DialogButtons
@@ -85,7 +57,7 @@ index cf0c160..56a9675 100644
                      disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
                      onPrimaryButtonClick={this.onShowKeyContinueClick}
                      hasCancel={false}
-@@ -733,12 +765,18 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -733,12 +750,18 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
  
          return (
              <div>
