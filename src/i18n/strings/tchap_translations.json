@@ -558,6 +558,33 @@
   "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s." : {
     "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
     "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."
+  },
+  "Other users may not trust it": {
+    "fr": "Synchroniser vos messages sur cet appareil pour ne jamais les perdre.",
+    "en": "Other users may not trust it"
+  },
+  "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
+    "fr": "Activez cette fonction pour toujours récupérer vos messages et ne jamais les perdre.",
+    "en": "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
+  },
+  "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": {
+    "fr": "Sans sauvegarde automatique vous n’aurez pas accès à tous vos messages !",
+    "en": "Without verifying, you won't have access to all your messages and may appear as untrusted to others."
+  },
+  "Activate": {
+    "fr": "Activez",
+    "en": "Activate"
+  },
+  "Unable to verify this device": {
+    "fr": "Activez la sauvegarde automatique des messages",
+    "en": "Unable to verify this device"
+  },
+  "Synchronize this device": {
+    "fr": "Synchroniser cet appareil",
+    "en": "Synchronize this device"
+  },
+  "Synchronize": {
+    "fr": "Synchroniser",
+    "en": "Synchronize"
   }
-
 }

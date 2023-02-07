@@ -170,5 +170,14 @@
       "src/components/views/context_menus/RoomContextMenu.tsx",
       "src/components/views/dialogs/SpacePreferencesDialog.tsx"
     ]
+  },
+  "change-secure-storage-translations": {
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/auth/SetupEncryptionBody.tsx",
+      "src/components/views/settings/DevicesPanelEntry.tsx",
+      "src/toasts/SetupEncryptionToast.ts",
+      "res/css/views/auth/_CompleteSecurityBody.pcss"
+    ]
   }
 }
