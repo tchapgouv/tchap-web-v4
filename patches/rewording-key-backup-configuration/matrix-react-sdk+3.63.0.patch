@@ -1,3 +1,18 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss b/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
+index c23f53b..0e206d7 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
+@@ -16,7 +16,10 @@ limitations under the License.
+ */
+ 
+ .mx_CompleteSecurityBody {
++    /* :TCHAP: remove
+     width: 600px;
++    end :TCHAP: */
++    width: 660px;
+     color: $authpage-primary-color;
+     background-color: $background;
+     border-radius: 4px;
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 index cf0c160..b268494 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
@@ -76,11 +91,54 @@ index cf0c160..b268494 100644
                  <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                      <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                          <div className="mx_CreateSecretStorageDialog_recoveryKey">
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
+index 3f2fb26..8238857 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
+@@ -169,7 +169,10 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
+ 
+                         <div className="mx_CompleteSecurity_actionRow">
+                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
+-                                {_t("Proceed with reset")}
++                                {/* :TCHAP: change this trad
++                                _t("Proceed with reset")
++                                end :TCHAP: */}
++                                {_t("Activate")}
+                             </AccessibleButton>
+                         </div>
+                     </div>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx
+index 37b65bc..986586d 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx
+@@ -125,7 +125,10 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
+             if (!this.props.verified && this.props.canBeVerified) {
+                 verifyButton = (
+                     <AccessibleButton kind="primary" onClick={this.verify}>
+-                        {_t("Verify")}
++                        {/* :TCHAP: change this trad
++                        _t("Verify")
++                        end :TCHAP: */}
++                        {_t("Synchronize")}
+                     </AccessibleButton>
+                 );
+             }
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 5dc32de..868cd7b 100644
+index 5dc32de..6b01c0f 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-@@ -50,7 +50,8 @@ const getIcon = (kind: Kind) => {
+@@ -33,7 +33,10 @@ const getTitle = (kind: Kind) => {
+         case Kind.UPGRADE_ENCRYPTION:
+             return _t("Encryption upgrade available");
+         case Kind.VERIFY_THIS_SESSION:
++            /* :TCHAP: change this trad
+             return _t("Verify this session");
++            end :TCHAP: */
++            return _t("Synchronize this device");
+     }
+ };
+ 
+@@ -50,11 +53,15 @@ const getIcon = (kind: Kind) => {
  const getSetupCaption = (kind: Kind) => {
      switch (kind) {
          case Kind.SET_UP_ENCRYPTION:
@@ -90,3 +148,10 @@ index 5dc32de..868cd7b 100644
          case Kind.UPGRADE_ENCRYPTION:
              return _t("Upgrade");
          case Kind.VERIFY_THIS_SESSION:
++            /* :TCHAP: change this trad
+             return _t("Verify");
++            end :TCHAP: */
++            return _t("Synchronize");
+     }
+ };
+ 
