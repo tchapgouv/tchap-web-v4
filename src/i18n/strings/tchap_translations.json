@@ -619,48 +619,8 @@
     "fr" : "Activez votre clé de synchronisation pour ne jamais perdre vos messages",
     "en" : "Activate your synchronization key to never lose your messages"
   },
-  "Synchronization": {
-    "fr" : "Synchroniser",
-    "en" : "Synchronize"
-  },
-  "Sign in instead": {
-    "en" : "Sign in instead",
-    "fr" : "ou connectez-vous"
-  },
-  "Enter your email to reset password": {
-    "en": "Enter your email to reset password",
-    "fr": "Entrez votre adresse mail pour réinitialiser votre mot de passe"
-  },
-  "Reset your password": {
-    "en": "Reset your password",
-    "fr": "Réinitialisez votre mot de passe"
-  },
-  "Did not receive it?": {
-    "en": "Did not receive it?",
-    "fr": "Pas reçu ?"
-  },
-  "Wrong email address?": {
-    "en": "Wrong email address?",
-    "fr": "Mauvaise adresse mail ?"
-  },
-  "Re-enter email address": {
-    "en": "Re-enter email address",
-    "fr": "Re-saisir l'adresse mail"
-  },
-  "Check your email to continue": {
-    "en": "Check your email to continue",
-    "fr": "Vérifiez vos mails avant de continuer"
-  },
-  "Verify your email to continue": {
-    "en": "Verify your email to continue",
-    "fr": "Vérifiez vos mails avant de continuer"
-  },
-  "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": {
-    "en": "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>",
-    "fr": "Nous avons besoin de savoir que c’est vous avant de réinitialiser votre mot de passe.\n                    Cliquer sur le lien dans le mail que nous venons juste d’envoyer à <b>%(email)s</b>"
-  },
-  "Send email": {
-    "en": "Send email",
-    "fr": "Envoyer le mail"
+  "Activate": {
+    "fr" : "Activer",
+    "en" : "Activate"
   }
 }
