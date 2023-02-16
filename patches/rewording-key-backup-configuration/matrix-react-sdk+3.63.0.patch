@@ -14,7 +14,7 @@ index c23f53b..0e206d7 100644
      background-color: $background;
      border-radius: 4px;
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-index cf0c160..b268494 100644
+index cf0c160..cb09b56 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 @@ -57,7 +57,7 @@ enum Phase {
@@ -26,7 +26,7 @@ index cf0c160..b268494 100644
      Storing = "storing",
      ConfirmSkip = "confirm_skip",
  }
-@@ -177,13 +177,28 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -177,13 +177,36 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                  MatrixClientPeg.get().isCryptoEnabled() && (await MatrixClientPeg.get().isKeyBackupTrusted(backupInfo));
  
              const { forceReset } = this.props;
@@ -34,12 +34,15 @@ index cf0c160..b268494 100644
 +            //const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
 +            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ShowKey;//:tchap: goes directly to showkey
  
--            this.setState({
--                phase,
--                backupInfo,
--                backupSigStatus,
--            });
-+            if(phase === Phase.ShowKey){
++            /* :TCHAP: remove
+             this.setState({
+                 phase,
+                 backupInfo,
+                 backupSigStatus,
+             });
++            end :TCHAP: */
++
++            if (phase === Phase.ShowKey) {
 +                this.recoveryKey = await MatrixClientPeg.get().createRecoveryKeyFromPassphrase();
 +                this.setState({
 +                    phase,
@@ -50,7 +53,7 @@ index cf0c160..b268494 100644
 +                    downloaded: false,
 +                    setPassphrase: false 
 +                });
-+            }else{
++            } else {
 +                //if phase is Phase.Migrate
 +                this.setState({
 +                    phase,
@@ -61,33 +64,35 @@ index cf0c160..b268494 100644
  
              return {
                  backupInfo,
-@@ -717,7 +732,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -717,7 +740,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
          if (this.state.phase === Phase.ShowKey) {
              continueButton = (
                  <DialogButtons
 -                    primaryButton={_t("Continue")}
-+                    //primaryButton={_t("Continue")}
-+                    //:tchap: change label
++                    // :tchap: change label
++                    // primaryButton={_t("Continue")}
 +                    primaryButton={_t("Activate my backup")}
                      disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
                      onPrimaryButtonClick={this.onShowKeyContinueClick}
                      hasCancel={false}
-@@ -733,12 +750,18 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -733,12 +758,20 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
  
          return (
              <div>
++                {/* tchap: add this <p /> */}
 +                <p>
 +                    {_t(
 +                        "This is your synchronization key"
 +                    )}
 +                </p>
++                {/* end tchap */}
                  <p>
                      {_t(
                          "Store your Security Key somewhere safe, like a password manager or a safe, " +
                              "as it's used to safeguard your encrypted data.",
                      )}
                  </p>
-+
++                
                  <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                      <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                          <div className="mx_CreateSecretStorageDialog_recoveryKey">
@@ -107,38 +112,11 @@ index 3f2fb26..8238857 100644
                              </AccessibleButton>
                          </div>
                      </div>
-diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx
-index 37b65bc..986586d 100644
---- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanelEntry.tsx
-@@ -125,7 +125,10 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
-             if (!this.props.verified && this.props.canBeVerified) {
-                 verifyButton = (
-                     <AccessibleButton kind="primary" onClick={this.verify}>
--                        {_t("Verify")}
-+                        {/* :TCHAP: change this trad
-+                        _t("Verify")
-+                        end :TCHAP: */}
-+                        {_t("Synchronize")}
-                     </AccessibleButton>
-                 );
-             }
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 5dc32de..6b01c0f 100644
+index 5dc32de..868cd7b 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-@@ -33,7 +33,10 @@ const getTitle = (kind: Kind) => {
-         case Kind.UPGRADE_ENCRYPTION:
-             return _t("Encryption upgrade available");
-         case Kind.VERIFY_THIS_SESSION:
-+            /* :TCHAP: change this trad
-             return _t("Verify this session");
-+            end :TCHAP: */
-+            return _t("Synchronize this device");
-     }
- };
- 
-@@ -50,11 +53,15 @@ const getIcon = (kind: Kind) => {
+@@ -50,7 +50,8 @@ const getIcon = (kind: Kind) => {
  const getSetupCaption = (kind: Kind) => {
      switch (kind) {
          case Kind.SET_UP_ENCRYPTION:
@@ -148,10 +126,3 @@ index 5dc32de..6b01c0f 100644
          case Kind.UPGRADE_ENCRYPTION:
              return _t("Upgrade");
          case Kind.VERIFY_THIS_SESSION:
-+            /* :TCHAP: change this trad
-             return _t("Verify");
-+            end :TCHAP: */
-+            return _t("Synchronize");
-     }
- };
- 

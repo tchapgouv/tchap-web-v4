@@ -172,7 +172,6 @@
     "files": [
       "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
       "src/toasts/SetupEncryptionToast.ts",
-      "src/components/views/settings/DevicesPanelEntry.tsx",
       "res/css/views/auth/_CompleteSecurityBody.pcss",
       "src/components/structures/auth/SetupEncryptionBody.tsx"
     ]
