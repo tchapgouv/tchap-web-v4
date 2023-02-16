@@ -427,8 +427,8 @@
     "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
   },
   "Set up Secure Backup": {
-    "en": "Synchonize your messages",
-    "fr": "Synchroniser vos messages"
+    "en": "Set up Secure Backup",
+    "fr": "Configurer la sauvegarde automatique des messages"
   },
   "Email": {
     "en": "Email",
@@ -624,7 +624,7 @@
     "en" : "Activate"
   },
   "Other users may not trust it": {
-    "fr": "Synchroniser vos messages sur cet appareil pour ne jamais les perdre.",
+    "fr": "D’autres utilisateurs pourraient ne pas lui faire confiance.",
     "en": "Other users may not trust it"
   },
   "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
@@ -638,13 +638,5 @@
   "Unable to verify this device": {
     "fr": "Activez la sauvegarde automatique des messages",
     "en": "Unable to verify this device"
-  },
-  "Synchronize this device": {
-    "fr": "Synchroniser cet appareil",
-    "en": "Synchronize this device"
-  },
-  "Synchronize": {
-    "fr": "Synchroniser",
-    "en": "Synchronize"
   }
 }
