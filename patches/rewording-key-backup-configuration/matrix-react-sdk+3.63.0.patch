@@ -96,22 +96,6 @@ index cf0c160..cb09b56 100644
                  <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                      <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                          <div className="mx_CreateSecretStorageDialog_recoveryKey">
-diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
-index 3f2fb26..8238857 100644
---- a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
-@@ -169,7 +169,10 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
- 
-                         <div className="mx_CompleteSecurity_actionRow">
-                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
--                                {_t("Proceed with reset")}
-+                                {/* :TCHAP: change this trad
-+                                _t("Proceed with reset")
-+                                end :TCHAP: */}
-+                                {_t("Activate")}
-                             </AccessibleButton>
-                         </div>
-                     </div>
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 5dc32de..868cd7b 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts

@@ -428,7 +428,7 @@
   },
   "Set up Secure Backup": {
     "en": "Set up Secure Backup",
-    "fr": "Configurer la sauvegarde automatique des messages"
+    "fr": "Activer la sauvegarde automatique des messages"
   },
   "Email": {
     "en": "Email",
@@ -600,11 +600,11 @@
     "fr": "Envoyer le mail"
   },
   "Save your Security Key" : {
-    "fr": "Clé de synchronisation",
+    "fr": "Clé de récupération",
     "en": "Synchronization key"
   },
   "This is your synchronization key" : {
-    "fr": "Voici votre clé de synchronisation. Cette clé vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment.",
+    "fr": "Voici votre clé de récupération. Cette clé vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment.",
     "en": "This is your synchronization key. This key allows you to backup automatically your messages and restore whenever you want"
   },
   "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
@@ -616,7 +616,7 @@
     "en" : "Activate my key"
   },
   "Safeguard against losing access to encrypted messages & data":{
-    "fr" : "Activez votre clé de synchronisation pour ne jamais perdre vos messages",
+    "fr" : "Activez votre clé de récupération pour ne jamais perdre vos messages",
     "en" : "Activate your synchronization key to never lose your messages"
   },
   "Activate": {
@@ -626,10 +626,6 @@
   "Other users may not trust it": {
     "fr": "D’autres utilisateurs pourraient ne pas lui faire confiance.",
     "en": "Other users may not trust it"
-  },
-  "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
-    "fr": "Activez cette fonction pour toujours récupérer vos messages et ne jamais les perdre.",
-    "en": "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
   },
   "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": {
     "fr": "Sans sauvegarde automatique vous n’aurez pas accès à tous vos messages !",
