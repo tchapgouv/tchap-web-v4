@@ -124,19 +124,6 @@ index cf0c160..2281f64 100644
                              <AccessibleButton
                                  kind="primary"
                                  className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
-diff --git a/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts b/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts
-index 3bbcca7..0167be7 100644
---- a/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts
-+++ b/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts
-@@ -200,7 +200,7 @@ export class SetupEncryptionStore extends EventEmitter {
-     };
- 
-     public skip(): void {
--        this.phase = Phase.ConfirmSkip;
-+        this.phase = Phase.Finished;
-         this.emit("update");
-     }
- 
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 5dc32de..868cd7b 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
