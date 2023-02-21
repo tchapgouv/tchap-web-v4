@@ -13,8 +13,21 @@ index c23f53b..0e206d7 100644
      color: $authpage-primary-color;
      background-color: $background;
      border-radius: 4px;
+diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateKeyBackupDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateKeyBackupDialog.tsx
+index 9d9e9fd..dd4cbfa 100644
+--- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateKeyBackupDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateKeyBackupDialog.tsx
+@@ -72,7 +72,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
+ 
+         this.state = {
+             secureSecretStorage: null,
+-            phase: Phase.Passphrase,
++            phase: Phase.ShowKey,
+             passPhrase: "",
+             passPhraseValid: false,
+             passPhraseConfirm: "",
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-index cf0c160..cb09b56 100644
+index cf0c160..2281f64 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 @@ -57,7 +57,7 @@ enum Phase {
@@ -71,11 +84,11 @@ index cf0c160..cb09b56 100644
 -                    primaryButton={_t("Continue")}
 +                    // :tchap: change label
 +                    // primaryButton={_t("Continue")}
-+                    primaryButton={_t("Activate my backup")}
++                    primaryButton={_t("Activate")}
                      disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
                      onPrimaryButtonClick={this.onShowKeyContinueClick}
                      hasCancel={false}
-@@ -733,12 +758,20 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -733,18 +758,27 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
  
          return (
              <div>
@@ -92,10 +105,38 @@ index cf0c160..cb09b56 100644
                              "as it's used to safeguard your encrypted data.",
                      )}
                  </p>
-+                
++
                  <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                      <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                          <div className="mx_CreateSecretStorageDialog_recoveryKey">
+                             <code ref={this.recoveryKeyNode}>{this.recoveryKey.encodedPrivateKey}</code>
+                         </div>
+                         <div className="mx_CreateSecretStorageDialog_recoveryKeyButtons">
++                            {/* :TCHAP: remove
+                             <AccessibleButton
+                                 kind="primary"
+                                 className="mx_Dialog_primary"
+@@ -759,6 +793,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+                                     copyButton: "",
+                                 })}
+                             </span>
++                            end :TCHAP: */}
+                             <AccessibleButton
+                                 kind="primary"
+                                 className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
+diff --git a/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts b/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts
+index 3bbcca7..0167be7 100644
+--- a/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts
++++ b/node_modules/matrix-react-sdk/src/stores/SetupEncryptionStore.ts
+@@ -200,7 +200,7 @@ export class SetupEncryptionStore extends EventEmitter {
+     };
+ 
+     public skip(): void {
+-        this.phase = Phase.ConfirmSkip;
++        this.phase = Phase.Finished;
+         this.emit("update");
+     }
+ 
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 5dc32de..868cd7b 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
