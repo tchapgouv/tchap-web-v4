@@ -599,7 +599,7 @@
     "en": "Send email",
     "fr": "Envoyer le mail"
   },
-  "This is your synchronization key" : {
+  "This is your recovery key" : {
     "fr": "Voici votre clé de récupération. Cette clé vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment.",
     "en": "This is your recovery key. This key allows you to backup automatically your messages and restore whenever you want"
   },
