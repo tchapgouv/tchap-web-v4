@@ -165,16 +165,14 @@
       "src/components/views/dialogs/SpacePreferencesDialog.tsx"
     ]
   },
-  "rewording-key-backup-configuration": {
+  "change-csss-process": {
     "comments" : "rewording on key backup configuration",
     "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/406",
     "package": "matrix-react-sdk",
     "files": [
       "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
       "src/toasts/SetupEncryptionToast.ts",
-      "src/components/views/settings/DevicesPanelEntry.tsx",
-      "res/css/views/auth/_CompleteSecurityBody.pcss",
-      "src/components/structures/auth/SetupEncryptionBody.tsx"
+      "res/css/views/auth/_CompleteSecurityBody.pcss"
     ]
   },
   "temp-settings-remove-enable-email-notifications-option": {
