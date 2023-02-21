@@ -599,21 +599,17 @@
     "en": "Send email",
     "fr": "Envoyer le mail"
   },
-  "Save your Security Key" : {
-    "fr": "Clé de récupération",
-    "en": "Synchronization key"
-  },
   "This is your synchronization key" : {
     "fr": "Voici votre clé de récupération. Cette clé vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment.",
     "en": "This is your recovery key. This key allows you to backup automatically your messages and restore whenever you want"
   },
   "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
     "fr": "Conservez votre clé dans un endroit sûr, par exemple : votre gestionnaire de mot de passe sur un papier dans une armoire ou un tiroir fermé à clé.",
-    "en": "Store your synchronization key somewhere safe, like a password manager or a safe"
+    "en": "Store your Recovery Key key somewhere safe, like a password manager or a safe"
   },
   "Safeguard against losing access to encrypted messages & data": {
     "fr" : "Activez votre clé de récupération pour ne jamais perdre vos messages",
-    "en" : "Activate your synchronization key to never lose your messages"
+    "en" : "Activate your Recovery Key key to never lose your messages"
   },
   "Activate": {
     "fr" : "Activer",
@@ -638,5 +634,93 @@
   "Start using Key Backup": {
     "fr": "Utiliser la sauvegarde automatique",
     "en": "Use automatic Backup"
+  },
+  "Use your Security Key to continue.": {
+    "fr": "Utilisez votre clé de récupération pour continuer.",
+    "en": "Use your Recovery Key to continue."
+  },
+  "Generate a Security Key": {
+    "fr": "Générer une clé de récupération",
+    "en": "Generate a Recovery Key"
+  },
+  "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": {
+    "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement une clé de récupération à utiliser pour la sauvegarde.",
+    "en": "Use a secret phrase only you know, and optionally save a Recovery Key to use for backup."
+  },
+  "Save your Security Key": {
+    "fr": "Sauvegarder votre clé de récupération",
+    "en": "Save your Recovery Key"
+  },
+  "This session has detected that your Security Phrase and key for Secure Messages have been removed.": {
+    "fr": "Cette session a détecté que votre phrase secrète et clé de récupération pour les messages sécurisés ont été supprimées.",
+    "en": "This session has detected that your Security Phrase and key for Secure Messages have been removed."
+  },
+  "A new Security Phrase and key for Secure Messages have been detected.": {
+    "fr": "Une nouvelle phrase secrète et clé de récupération pour les messages sécurisés ont été détectées.",
+    "en": "A new Security Phrase and key for Secure Messages have been detected."
+  },
+  "Make a copy of your Security Key": {
+    "fr": "Faire une copie de votre clé de récupération",
+    "en": "Make a copy of your Recovery Key"
+  },
+  "Secure your backup with a Security Phrase": {
+    "fr": "Protégez votre sauvegarde avec une clé de récupération",
+    "en": "Secure your backup with a Security Phrase"
+  },
+  "Your Security Key is in your <b>Downloads</b> folder.": {
+    "fr": "Votre clé de récupération est dans le répertoire <b>Téléchargements</b>.",
+    "en": "Your Recovery Key is in your <b>Downloads</b> folder."
+  },
+  "Your Security Key": {
+    "fr": "Votre clé de récupération",
+    "en": "Your Recovery Key"
+  },
+  "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
+    "fr": "Votre clé de récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
+    "en": "Your Recovery Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
+  },
+  "Set up with a Security Key": {
+    "fr": "Configurer avec une clé de récupération",
+    "en": "Set up with a Recovery Key"
+  },
+  "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
+    "fr": "Si vous avez oublié votre clé de récupération, vous pouvez <button>définir de nouvelles options de récupération</button>",
+    "en": "If you've forgotten your Recovery Key you can <button>set up new recovery options</button>"
+  },
+  "Access your secure message history and set up secure messaging by entering your Security Key.": {
+    "fr": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre clé de récupération.",
+    "en": "Access your secure message history and set up secure messaging by entering your Recovery Key."
+  },
+  "Enter Security Key": {
+    "fr": "Saisir la clé de récupération",
+    "en": "Enter Recovery Key"
+  },
+  "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": {
+    "fr": "Si vous avez oublié votre phrase secrète vous pouvez <button1>utiliser votre clé de récupération</button1> ou <button2>définir de nouvelles options de récupération</button2>",
+    "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery Key</button1> or <button2>set up new recovery options</button2>"
+  },
+  "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
+    "fr": "La sauvegarde n’a pas pu être déchiffrée avec cette clé de sécurité : merci de vérifier que vous avez saisi la bonne clé de récupération.",
+    "en": "Backup could not be decrypted with this Recovery Key: please verify that you entered the correct Recovery Key."
+  },
+  "Please only proceed if you're sure you've lost all of your other devices and your security key.": {
+    "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre clé de récupération.",
+    "en": "Please only proceed if you're sure you've lost all of your other devices and your recovery key."
+  },
+  "Verify with Security Key or Phrase": {
+    "fr": "Vérifier avec une clé de récupération ou une phrase",
+    "en": "Verify with Recovery Key or Phrase"
+  },
+  "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
+    "fr": "Il semblerait que vous n’avez pas de clé de récupération ou d’autres appareils pour faire la vérification. Cet appareil ne pourra pas accéder aux anciens messages chiffrés. Afin de vérifier votre identité sur cet appareil, vous devrez réinitialiser vos clés de vérifications.",
+    "en": "It looks like you don't have a Recovery Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
+  },
+  "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
+    "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de récupération</button> pour continuer.",
+    "en": "Enter your Security Phrase or <button>use your Recovery Key</button> to continue."
+  },
+  "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
+    "fr": "Nous génèrerons une clé de récupération que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
+    "en": "We'll generate a Recovery Key for you to store somewhere safe, like a password manager or a safe."
   }
 }
