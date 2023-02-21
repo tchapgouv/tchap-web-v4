@@ -611,11 +611,7 @@
     "fr": "Conservez votre clé dans un endroit sûr, par exemple : votre gestionnaire de mot de passe sur un papier dans une armoire ou un tiroir fermé à clé.",
     "en": "Store your synchronization key somewhere safe, like a password manager or a safe"
   },
-  // "Activate my backup": {
-  //   "fr" : "Activer ma clé",
-  //   "en" : "Activate my key"
-  // },
-  "Safeguard against losing access to encrypted messages & data":{
+  "Safeguard against losing access to encrypted messages & data": {
     "fr" : "Activez votre clé de récupération pour ne jamais perdre vos messages",
     "en" : "Activate your synchronization key to never lose your messages"
   },
@@ -623,18 +619,6 @@
     "fr" : "Activer",
     "en" : "Activate"
   },
-  // "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
-  //   "fr": "Activez cette fonction pour toujours récupérer vos messages et ne jamais les perdre.",
-  //   "en": "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
-  // },
-  // "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": {
-  //   "fr": "Sans sauvegarde automatique vous n’aurez pas accès à tous vos messages !",
-  //   "en": "Without verifying, you won't have access to all your messages and may appear as untrusted to others."
-  // },
-  // "Unable to verify this device": {
-  //   "fr": "Activez la sauvegarde automatique des messages",
-  //   "en": "Unable to verify this device"
-  // }
   "Security Key": {
     "fr": "Clé de récupération",
     "en": "Recovery Key"
