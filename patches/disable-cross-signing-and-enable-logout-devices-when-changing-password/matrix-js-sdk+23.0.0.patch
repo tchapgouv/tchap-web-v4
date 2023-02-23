@@ -1,15 +1,26 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index a4aa9de..ee9e69b 100644
+index a4aa9de..00bf62b 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
-@@ -6989,6 +6989,15 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -212,6 +212,8 @@ import { UNREAD_THREAD_NOTIFICATIONS } from "./@types/sync";
+ import { buildFeatureSupportMap, Feature, ServerSupport } from "./feature";
+ import { CryptoBackend } from "./common-crypto/CryptoBackend";
+ 
++import TchapUIFeature from '../../../src/util/TchapUIFeature'; // :TCHAP:
++
+ export type Store = IStore;
+ 
+ export type ResetTimelineCallback = (roomId: string) => boolean;
+@@ -6989,6 +6991,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];
 +
 +        console.log('TCHAP server versions', response);
-+        // :TCHAP: disable cross signing, by pretending the server doesn't support it.
-+        unstableFeatures["org.matrix.e2e_cross_signing"] = false;
++        // :TCHAP: disable cross signing if needed, by pretending the server doesn't support it.
++        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive) {
++            unstableFeatures["org.matrix.e2e_cross_signing"] = false;
++        }
 +        if (feature === "org.matrix.e2e_cross_signing") {
 +            console.info(':TCHAP: doesServerSupportUnstableFeature org.matrix.e2e_cross_signing', unstableFeatures);
 +        }
@@ -18,7 +29,7 @@ index a4aa9de..ee9e69b 100644
          return unstableFeatures && !!unstableFeatures[feature];
      }
  
-@@ -7055,7 +7064,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -7055,7 +7068,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
       * @returns true if server supports the `logout_devices` parameter
       */
      public doesServerSupportLogoutDevices(): Promise<boolean> {

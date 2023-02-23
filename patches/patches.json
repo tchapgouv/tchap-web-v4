@@ -165,6 +165,17 @@
       "src/components/views/dialogs/SpacePreferencesDialog.tsx"
     ]
   },
+  "cross-signing-ui": {
+    "comments" : "reword cross-signing dialogs and remove confirmation dialog",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/406",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
+      "src/toasts/SetupEncryptionToast.ts",
+      "src/components/structures/auth/CompleteSecurity.tsx",
+      "res/css/views/auth/_CompleteSecurityBody.pcss"
+    ]
+  },
   "temp-settings-remove-enable-email-notifications-option": {
     "comments" : "Notifications by email is currently not activated on Tchap backend. So we must remove this option.",
     "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/405",

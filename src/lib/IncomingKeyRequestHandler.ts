@@ -1,6 +1,9 @@
 import { IncomingRoomKeyRequest, verificationMethods } from 'matrix-js-sdk/src/crypto';
 import VerificationRequestDialog from 'matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog';
 import Modal from 'matrix-react-sdk/src/Modal';
+import {
+    hideToast as hideUnverifiedSessionsToast
+} from "matrix-react-sdk/src/toasts/UnverifiedSessionToast";
 
 /**
  * :tchap: inspired from
@@ -31,11 +34,20 @@ export default class KeyRequestHandler {
      * @param keyRequest
      * @returns
      */
-    public handleKeyRequest(keyRequest: IncomingRoomKeyRequest) {
+    public handleKeyRequest(keyRequest: IncomingRoomKeyRequest): void {
         const userId: string = keyRequest.userId;
         const deviceId: string = keyRequest.deviceId;
         const requestId: string = keyRequest.requestId;
 
+        console.log(":tchap: receiving a legacy key request event for device ",deviceId, " requestId ", requestId);
+
+        //This instruction hides the toast that appears when a new device is detected
+        //As we are receiving a legacy incomingroomkeyrequest we can assume the veryfing
+        //will occur via this process and hide the toast
+        console.log(":tchap: hidding UnverifiedSessionsToast for ",deviceId);
+        hideUnverifiedSessionsToast(deviceId);
+
+        
         if (!this._pendingKeyRequests.has(userId)) {
             this._pendingKeyRequests.set(userId, new Map<string, Array<IncomingRoomKeyRequest>>());
         }
