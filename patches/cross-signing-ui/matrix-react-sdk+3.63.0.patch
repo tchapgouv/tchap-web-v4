@@ -1,37 +1,30 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss b/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
-index c23f53b..0e206d7 100644
+index c23f53b..7aa9f25 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
-@@ -16,7 +16,10 @@ limitations under the License.
+@@ -16,7 +16,12 @@ limitations under the License.
  */
  
  .mx_CompleteSecurityBody {
-+    /* :TCHAP: remove
++    /* :TCHAP:
      width: 600px;
-+    end :TCHAP: */
++    */
 +    width: 660px;
++    /* end :TCHAP: */
++
      color: $authpage-primary-color;
      background-color: $background;
      border-radius: 4px;
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-index cf0c160..861ff87 100644
+index cf0c160..9a970b9 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-@@ -57,7 +57,7 @@ enum Phase {
-     Migrate = "migrate",
-     Passphrase = "passphrase",
-     PassphraseConfirm = "passphrase_confirm",
--    ShowKey = "show_key",
-+    ShowKey = "show_key", //:tchap: we use this screen
-     Storing = "storing",
-     ConfirmSkip = "confirm_skip",
- }
 @@ -177,13 +177,38 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                  MatrixClientPeg.get().isCryptoEnabled() && (await MatrixClientPeg.get().isKeyBackupTrusted(backupInfo));
  
              const { forceReset } = this.props;
 -            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
-+            //const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
++            // :tchap: const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
 +            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ShowKey;//:tchap: goes directly to showkey
  
 +            /* :TCHAP: remove
@@ -73,8 +66,8 @@ index cf0c160..861ff87 100644
 -                    primaryButton={_t("Continue")}
 +                    // :tchap: change label
 +                    // primaryButton={_t("Continue")}
-+                    // end :tchap:
 +                    primaryButton={_t("Activate")}
++                    // end :tchap:
                      disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
                      onPrimaryButtonClick={this.onShowKeyContinueClick}
                      hasCancel={false}
@@ -115,10 +108,10 @@ index cf0c160..861ff87 100644
                                  kind="primary"
                                  className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
-index 8da8e5c..b261324 100644
+index 8da8e5c..b2c463f 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
-@@ -92,9 +92,13 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
+@@ -92,9 +92,16 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
  
          let skipButton;
          if (phase === Phase.Intro || phase === Phase.ConfirmReset) {
@@ -129,21 +122,25 @@ index 8da8e5c..b261324 100644
              skipButton = (
                  <AccessibleButton
 -                    onClick={this.onSkipClick}
++                    // :tchap: remove onClick={this.onSkipClick}
++                    // add instead
 +                    onClick={tchapOnSkipClick}
++                    // end :tchap:
                      className="mx_CompleteSecurity_skip"
                      aria-label={_t("Skip verification for now")}
                  />
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 5dc32de..868cd7b 100644
+index 5dc32de..c087058 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-@@ -50,7 +50,8 @@ const getIcon = (kind: Kind) => {
+@@ -50,7 +50,9 @@ const getIcon = (kind: Kind) => {
  const getSetupCaption = (kind: Kind) => {
      switch (kind) {
          case Kind.SET_UP_ENCRYPTION:
 -            return _t("Continue");
-+            //:tchap: return _t("Continue");
++            // :tchap: return _t("Continue");
 +            return _t("Activate");
++            // end :tchap:
          case Kind.UPGRADE_ENCRYPTION:
              return _t("Upgrade");
          case Kind.VERIFY_THIS_SESSION:

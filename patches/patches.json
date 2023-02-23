@@ -165,8 +165,8 @@
       "src/components/views/dialogs/SpacePreferencesDialog.tsx"
     ]
   },
-  "change-csss-process": {
-    "comments" : "rewording on key backup configuration",
+  "cross-signing-ui": {
+    "comments" : "reword cross-signing dialogs and remove confirmation dialog",
     "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/406",
     "package": "matrix-react-sdk",
     "files": [
