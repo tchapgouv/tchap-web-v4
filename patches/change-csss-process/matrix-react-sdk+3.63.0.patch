@@ -114,6 +114,25 @@ index cf0c160..861ff87 100644
                              <AccessibleButton
                                  kind="primary"
                                  className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
+index 8da8e5c..b261324 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
+@@ -92,9 +92,13 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
+ 
+         let skipButton;
+         if (phase === Phase.Intro || phase === Phase.ConfirmReset) {
++            // :Tchap: Condition to skip Phase.ConfirmSkip and its "Are you sure" modal after login for csss
++            const tchapOnSkipClick = phase === Phase.Intro ? this.props.onFinished : this.onSkipClick;
++            // end :Tchap:
++
+             skipButton = (
+                 <AccessibleButton
+-                    onClick={this.onSkipClick}
++                    onClick={tchapOnSkipClick}
+                     className="mx_CompleteSecurity_skip"
+                     aria-label={_t("Skip verification for now")}
+                 />
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 5dc32de..868cd7b 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
