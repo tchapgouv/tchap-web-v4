@@ -1,0 +1,11 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_E2EIcon.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_E2EIcon.pcss
+index 5ae6de0..832a4ab 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/rooms/_E2EIcon.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_E2EIcon.pcss
+@@ -76,5 +76,5 @@ limitations under the License.
+ 
+ .mx_E2EIcon_verified::after {
+     mask-image: url("$(res)/img/e2e/verified.svg");
+-    background-color: $accent;
++    background-color: var(--confirmation-color);
+ }
