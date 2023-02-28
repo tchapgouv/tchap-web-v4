@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
+index 4bceab5..b7dad05 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
+@@ -75,7 +75,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T>
+     disabled?: boolean;
+     className?: string;
+     triggerOnMouseDown?: boolean;
+-    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
++    onClick?: ((e: ButtonEvent) => void | Promise<void>) | null;
+ };
+ 
+ export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {

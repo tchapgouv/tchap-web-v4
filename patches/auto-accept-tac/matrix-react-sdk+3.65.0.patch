@@ -1,0 +1,31 @@
+diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
+index 293a3c1..fb0fb86 100644
+--- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
++++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
+@@ -30,6 +30,7 @@ import {
+ } from "./utils/IdentityServerUtils";
+ import QuestionDialog from "./components/views/dialogs/QuestionDialog";
+ import { abbreviateUrl } from "./utils/UrlUtils";
++import TchapUIFeature from "../../../src/util/TchapUIFeature";
+ 
+ export class AbortedIdentityActionError extends Error {}
+ 
+@@ -131,6 +132,18 @@ export default class IdentityAuthClient {
+             throw e;
+         }
+ 
++        // :TCHAP: no need confirmation of Terms and Conditions to set a default identity server as we trust our backend servers 
++        if (TchapUIFeature.autoAcceptTermsAndConditions){
++            if (
++                !this.tempClient &&
++                !doesAccountDataHaveIdentityServer() 
++            ) {
++                setToDefaultIdentityServer();
++            }
++            return;
++        }
++        // end :TCHAP:
++
+         if (
+             !this.tempClient &&
+             !doesAccountDataHaveIdentityServer() &&

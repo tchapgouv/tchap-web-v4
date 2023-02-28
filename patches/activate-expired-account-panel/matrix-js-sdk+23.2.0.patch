@@ -40,22 +40,3 @@ index 9946aa3..8cf51ed 100644
  };
  
  export interface UploadProgress {
-diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index 0169ff5..529cdc5 100644
---- a/node_modules/matrix-js-sdk/src/sync.ts
-+++ b/node_modules/matrix-js-sdk/src/sync.ts
-@@ -569,6 +569,14 @@ export class SyncApi {
-             this.updateSyncState(SyncState.Error, { error });
-             return true;
-         }
-+        //:tchap: this error is sent by (synapse-email-account-validity)[https://github.com/matrix-org/synapse-email-account-validity] 
-+        // when user account has expired. client must be stopped and sync aborted when the user account is not valid anymore
-+        if (error.errcode === "ORG_MATRIX_EXPIRED_ACCOUNT") {
-+            // The account is expired
-+            this.stop();
-+            this.updateSyncState(SyncState.Error, { error });
-+            return true;
-+        }
-         return false;
-     }
- 
