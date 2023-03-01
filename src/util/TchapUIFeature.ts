@@ -33,8 +33,8 @@ export default class TchapUIFeature {
     public static isCrossSigningAndSecureStorageActive = () : Boolean => {
         //retrieve the feature flag from the config.json features flag section. 
         //beware SdkConfig does not like to be invoked before the MatrixClient is initialized
-        const isCrossSigningAndSecureStorageActive =  SdkConfig.get("features")['tchap_activate_cross_signing'];
-        console.log(":tchap: isCrossSigningAndSecureStorageActive from config.json: ", isCrossSigningAndSecureStorageActive);
+        const isCrossSigningAndSecureStorageActive =  SdkConfig.get("features")['tchap_activate_cross_signing_and_secure_storage'];
+        console.log(":tchap: tchap_activate_cross_signing_and_secure_storage from config.json: ", isCrossSigningAndSecureStorageActive);
         return isCrossSigningAndSecureStorageActive;
     };
 
