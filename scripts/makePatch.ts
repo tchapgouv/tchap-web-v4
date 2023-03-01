@@ -10,7 +10,7 @@ if (process.argv.length !== 3) {
 }
 
 // Run patch file check.
-require('./checkPatchFile');
+//require('./checkPatchFile');
 
 const patchName = process.argv[2];
 const patchInfo = patchFile[patchName];

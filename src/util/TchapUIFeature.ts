@@ -2,6 +2,8 @@
  * Tchap UI Feature flags
  */
 
+import SdkConfig from "matrix-react-sdk/src/SdkConfig";
+
 export default class TchapUIFeature {
     /**
      * This flag controls weither space related settings should be displayed or not. It differs from the flag UIComponent.CreateSpaces.
@@ -27,7 +29,12 @@ export default class TchapUIFeature {
     /**
      * This flag controls whether to activate cross-signing and secure storage.
      */
-    public static isCrossSigningAndSecureStorageActive = true;
+    public static isCrossSigningAndSecureStorageActive = () : Boolean => {
+        //retrieve the feature flag from the config.json features flag section
+        const isCrossSigningAndSecureStorageActive =  SdkConfig.get("features")['tchap_activate_cross_signing'];
+        console.log(":tchap: isCrossSigningAndSecureStorageActive from config.json: ", isCrossSigningAndSecureStorageActive);
+        return isCrossSigningAndSecureStorageActive;
+    };
 
      /**
      * This flag controls whether to force incoming key legacy verification (usefull for older mobile device than android 2.6, ios 2.2.3)

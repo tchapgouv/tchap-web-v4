@@ -37,7 +37,8 @@
     "features": {
         "feature_thread": true,
         "feature_video_rooms" : false,
-        "feature_new_device_manager" : false
+        "feature_new_device_manager" : false,
+        "tchap_activate_cross_signing" : true
     },
     "default_federate": true,
     "default_theme": "light",
