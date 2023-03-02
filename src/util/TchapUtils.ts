@@ -35,7 +35,7 @@ export default class TchapUtils {
         // Only show the federate switch to defense users : it's difficult to understand, so we avoid
         // displaying it unless it's really necessary.
         if (baseDomain === 'agent.intradef.tchap.gouv.fr') {
-            return { showRoomFederationOption: true, roomFederationDefault: false };
+            return { showRoomFederationOption: true, roomFederationDefault: true };
         }
 
         return { showRoomFederationOption: false, roomFederationDefault: true };
