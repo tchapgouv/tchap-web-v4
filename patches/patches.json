@@ -191,5 +191,13 @@
     "files": [
       "res/css/views/rooms/_E2EIcon.pcss"
     ]
+  },
+  "fix-inviting-a-person-already-present-in-the-room" : {
+    "comments" : "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/394",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/utils/MultiInviter.ts"
+    ]
   }
 }
