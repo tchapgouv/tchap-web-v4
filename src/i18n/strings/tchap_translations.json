@@ -722,5 +722,13 @@
   "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
     "fr": "Nous génèrerons une clé de récupération que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
     "en": "We'll generate a Recovery Key for you to store somewhere safe, like a password manager or a safe."
+  },
+  "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": {
+    "fr": "Invitez quelqu’un à partir de son nom, pseudo (comme <userId/>) ou <a>partagez ce salon</a>. Il est possible d'inviter en masse en copiant et collant une liste d'emails séparé par une virgule : prenom1.nom1@beta.gouv.fr,prenom2.nom2@beta.gouv.fr,prenom3.nom3@beta.gouv.fr.",
+    "en": "Invite someone using their name, username (like <userId/>) or <a>share this room</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma: prenom1.nom1@beta.gouv.fr,prenom2.nom2@beta.gouv.fr,prenom3.nom3@beta.gouv.fr."
+  },
+  "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": {
+    "fr": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste d'emails séparé par une virgule : prenom1.nom1@beta.gouv.fr,prenom2.nom2@beta.gouv.fr,prenom3.nom3@beta.gouv.fr.",
+    "en": "Invite someone using their name, username (like <userId/>) or <a>share this space</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma: prenom1.nom1@beta.gouv.fr,prenom2.nom2@beta.gouv.fr,prenom3.nom3@beta.gouv.fr."
   }
 }
