@@ -19,8 +19,9 @@ interface IProps {
     showFederateSwitch: boolean;
     shortDomain: string;
     isFederated: boolean;
+    isForumFederated: boolean;
     onChange(value: TchapRoomType, isFederated?: boolean): void;
-    onFederatedChange(isFederated?: boolean): void;
+    onFederatedChange(isForumFederated?: boolean): void;
 }
 
 interface IState {
@@ -73,7 +74,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                             { domain: this.props.shortDomain },
                         )}
                         onChange={this.props.onFederatedChange}
-                        value={this.props.isFederated} />
+                        value={this.props.isForumFederated} />
                 </div>
             );
         }
