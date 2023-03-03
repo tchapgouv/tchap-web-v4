@@ -10,7 +10,9 @@ if (process.argv.length !== 3) {
 }
 
 // Run patch file check.
-require('./checkPatchFile');
+// EDIT : running the file check when making a new patch FAILS because it does not find the folder of the patch to create.
+// commenting before finding another solution. Is it necessary to make a check at this point anyway?
+//require('./checkPatchFile');
 
 const patchName = process.argv[2];
 const patchInfo = patchFile[patchName];

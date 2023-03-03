@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 97d623a..ed0daf5 100644
+index 97d623a..2a02d90 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 @@ -32,6 +32,8 @@ import { throttle } from "lodash";
@@ -28,7 +28,7 @@ index 97d623a..ed0daf5 100644
 +        //this listener can be forced with forceLegacyIncomingRoomKeyVerification
 +        //or is added only if the xs is not active
 +        if(TchapUIFeature.forceLegacyIncomingRoomKeyVerification || 
-+            !TchapUIFeature.isCrossSigningAndSecureStorageActive){
++            !TchapUIFeature.isCrossSigningAndSecureStorageActive()){
 +            const krh = new KeyRequestHandler(cli);
 +            cli.on(CryptoEvent.RoomKeyRequest, (req) => {
 +                krh.handleKeyRequest(req);
@@ -43,6 +43,31 @@ index 97d623a..ed0daf5 100644
          cli.on(ClientEvent.Room, (room) => {
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
+index b04714e..8adbba3 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
+@@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
+ import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+ import { accessSecretStorage } from "../../../SecurityManager";
+ import AccessibleButton from "../elements/AccessibleButton";
++import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
+ 
+ interface IState {
+     error?: Error;
+@@ -237,6 +238,12 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
+         }
+ 
++        // :TCHAP: hide cross-signing actions if cross-signing is not supported
++        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
++            actionRow = null;
++        }
++        // end :TCHAP:
++
+         return (
+             <div>
+                 {summarisedStatus}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
 index 56fdb5e..d67fb6d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
@@ -89,3 +114,28 @@ index 56fdb5e..d67fb6d 100644
              const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
              return this.state.crossSigningInfo
                  .checkDeviceTrust(this.state.crossSigningInfo, deviceInfo, false, true)
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
+index 2e6e6fb..dae664a 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
+@@ -30,6 +30,7 @@ import AccessibleButton from "../elements/AccessibleButton";
+ import QuestionDialog from "../dialogs/QuestionDialog";
+ import RestoreKeyBackupDialog from "../dialogs/security/RestoreKeyBackupDialog";
+ import { accessSecretStorage } from "../../../SecurityManager";
++import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
+ 
+ interface IState {
+     loading: boolean;
+@@ -460,6 +461,12 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+         let actionRow;
+         if (actions.length) {
+             actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
++            // :TCHAP: hide action buttons if secure storage is not supported
++            // actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
++            if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
++                actionRow = null;
++            }
++            // end :TCHAP:
+         }
+ 
+         return (

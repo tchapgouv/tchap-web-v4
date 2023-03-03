@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index a4aa9de..00bf62b 100644
+index a4aa9de..0773cf9 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
 @@ -212,6 +212,8 @@ import { UNREAD_THREAD_NOTIFICATIONS } from "./@types/sync";
@@ -18,7 +18,7 @@ index a4aa9de..00bf62b 100644
 +
 +        console.log('TCHAP server versions', response);
 +        // :TCHAP: disable cross signing if needed, by pretending the server doesn't support it.
-+        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive) {
++        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
 +            unstableFeatures["org.matrix.e2e_cross_signing"] = false;
 +        }
 +        if (feature === "org.matrix.e2e_cross_signing") {
