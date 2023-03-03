@@ -94,7 +94,7 @@
       "res/css/views/directory/_NetworkDropdown.pcss",
       "src/components/views/directory/NetworkDropdown.tsx",
       "src/i18n/strings/en_EN.json",
-      "/src/i18n/strings/fr.json"
+      "src/i18n/strings/fr.json"
     ]
   },
   "auto-accept-tac": {
@@ -185,6 +185,14 @@
       "src/components/views/settings/CrossSigningPanel.tsx",
       "src/components/structures/MatrixChat.tsx",
       "src/components/views/settings/DevicesPanel.tsx"
+    ]
+  },
+  "add-a-help-tab-in-menu-to-redirect-to-external-tchap-faq": {
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/395",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/structures/UserMenu.tsx",
+      "res/css/structures/_UserMenu.pcss"
     ]
   }
 }

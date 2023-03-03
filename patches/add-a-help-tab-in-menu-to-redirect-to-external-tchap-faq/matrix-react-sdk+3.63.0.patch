@@ -1,0 +1,49 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
+index 08ef894..4e33170 100644
+--- a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
++++ b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
+@@ -206,6 +206,10 @@ limitations under the License.
+         mask-image: url("$(res)/img/element-icons/settings.svg");
+     }
+ 
++    .mx_UserMenu_iconInfo::before {
++        mask-image: url("$(res)/img/element-icons/info.svg");
++    }
++
+     .mx_UserMenu_iconMessage::before {
+         mask-image: url("$(res)/img/element-icons/feedback.svg");
+     }
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
+index 5e6970f..71636ca 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
+@@ -245,6 +245,17 @@ export default class UserMenu extends React.Component<IProps, IState> {
+         this.setState({ contextMenuPosition: null }); // also close the menu
+     };
+ 
++    private onOpenFAQPage = (ev: ButtonEvent, tabId: string) => {
++        ev.preventDefault();
++        ev.stopPropagation();
++
++        const faqUrl = "https://tchap.beta.gouv.fr/faq";
++
++        const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: tabId };
++        defaultDispatcher.dispatch(payload);
++        this.setState({ contextMenuPosition: null }); // also close the menu
++    };
++
+     private onProvideFeedback = (ev: ButtonEvent) => {
+         ev.preventDefault();
+         ev.stopPropagation();
+@@ -370,6 +381,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
+                     onClick={(e) => this.onSettingsOpen(e, null)}
+                 />
+                 {feedbackButton}
++                <IconizedContextMenuOption
++                    iconClassName="mx_UserMenu_iconInfo"
++                    label={_t("Help")}
++                    onClick={(e) => {window.open("https://tchap.beta.gouv.fr/faq", '_blank')}}
++                />
+                 <IconizedContextMenuOption
+                     className="mx_IconizedContextMenu_option_red"
+                     iconClassName="mx_UserMenu_iconSignOut"
