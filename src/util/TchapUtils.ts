@@ -26,15 +26,11 @@ export default class TchapUtils {
     /**
      * For the current user, get the room federation options.
      *
-     * @returns { showRoomFederationOption: boolean,roomDefaultFederation: { external: boolean, private: boolean, forum: boolean } } options
+     * @returns { showForumFederationSwitch: boolean, forumFederationSwitchDefaultValue?: boolean } options
      */
     public static getRoomFederationOptions(): {
-        showRoomFederationOption: boolean,
-        roomDefaultFederation: {
-            external: boolean,
-            private: boolean,
-            forum: boolean
-        }
+        showForumFederationSwitch: boolean,
+        forumFederationSwitchDefaultValue?: boolean
     } {
         const cli = MatrixClientPeg.get();
         const baseDomain = cli.getDomain();
@@ -43,22 +39,13 @@ export default class TchapUtils {
         // displaying it unless it's really necessary.
         if (baseDomain === 'agent.intradef.tchap.gouv.fr') {
             return {
-                showRoomFederationOption: true,
-                roomDefaultFederation: {
-                    external: true,
-                    private: true,
-                    forum: false,
-                }
-            };
+                showForumFederationSwitch: true,
+                forumFederationSwitchDefaultValue: false
+            }
         }
 
         return {
-            showRoomFederationOption: false,
-            roomDefaultFederation: {
-                external: true,
-                private: true,
-                forum: true,
-            }
+            showForumFederationSwitch: false
         };
     }
 

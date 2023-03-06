@@ -72,12 +72,12 @@ describe("TchapCreateRoomDialog", () => {
         //mock tchap utils
         jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("AGENT");
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showRoomFederationOption: true, roomDefaultFederation: { external: true, private: true, forum: false }});
+            { showForumFederationSwitch: true, forumFederationSwitchDefaultValue: false });
     });
 
     it('should render the whole component with with the allow access switch', () => {
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showRoomFederationOption: true, roomDefaultFederation: { external: true, private: true, forum: false } });
+            { showForumFederationSwitch: true, forumFederationSwitchDefaultValue: false });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(toJson(allowAccessSwitch)).toMatchSnapshot(
@@ -86,7 +86,7 @@ describe("TchapCreateRoomDialog", () => {
 
     it('should render the room dialog without the allow access switch', () => {
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showRoomFederationOption: false, roomDefaultFederation: { external: true, private: true, forum: false } });
+            { showForumFederationSwitch: false, forumFederationSwitchDefaultValue: false });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(allowAccessSwitch).toEqual({});

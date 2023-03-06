@@ -18,10 +18,9 @@ interface IProps {
     width?: number;
     showFederateSwitch: boolean;
     shortDomain: string;
-    isFederated: boolean;
-    isForumFederated: boolean;
-    onChange(value: TchapRoomType, isFederated?: boolean): void;
-    onFederatedChange(isForumFederated?: boolean): void;
+    forumFederationSwitchValue: boolean;
+    setRoomType(value: TchapRoomType): void;
+    setForumFederationSwitchValue(forumFederationSwitchValue?: boolean): void;
 }
 
 interface IState {
@@ -29,7 +28,7 @@ interface IState {
 }
 
 export default class TchapRoomTypeSelector extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -41,7 +40,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         const roomType = e.target.value as TchapRoomType;
 
         this.setState({ roomType: roomType });
-        this.props.onChange(roomType, null);
+        this.props.setRoomType(roomType);
     };
 
     public render(): JSX.Element {
@@ -73,8 +72,8 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                             "Allow access to this room to all users, even outside \"%(domain)s\" domain",
                             { domain: this.props.shortDomain },
                         )}
-                        onChange={this.props.onFederatedChange}
-                        value={this.props.isForumFederated} />
+                        onChange={this.props.setForumFederationSwitchValue}
+                        value={this.props.forumFederationSwitchValue} />
                 </div>
             );
         }
