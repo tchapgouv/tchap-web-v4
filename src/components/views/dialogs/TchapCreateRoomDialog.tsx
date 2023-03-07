@@ -111,7 +111,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     };
 
     private isSelectedRoomFederated = (): boolean => {
-        return this.state.tchapRoomType === TchapRoomType.Forum ? this.state.forumFederationSwitchValue : true;
+        return this.state.tchapRoomType === TchapRoomType.Forum  && this.state.showFederateSwitch ? this.state.forumFederationSwitchValue : true;
     }
 
     private onOk = async () => {
