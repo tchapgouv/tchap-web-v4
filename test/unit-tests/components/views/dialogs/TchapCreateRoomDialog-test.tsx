@@ -158,7 +158,8 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Private,
-                isFederated: true,
+                forumFederationSwitchValue: false,
+                showFederateSwitch: false,
             });
         });
 
@@ -200,7 +201,8 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Forum,
-                isFederated: false,
+                forumFederationSwitchValue: false,
+                showFederateSwitch: true,
             });
         });
 
@@ -242,7 +244,8 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Forum,
-                isFederated: true,
+                forumFederationSwitchValue: true,
+                showFederateSwitch: true,
             });
         });
 
@@ -284,7 +287,8 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.External,
-                isFederated: true,
+                forumFederationSwitchValue: false,
+                showFederateSwitch: false,
             });
         });
 
