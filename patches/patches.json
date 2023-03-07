@@ -173,7 +173,7 @@
     "package": "matrix-react-sdk",
     "files": [
       "res/css/views/dialogs/_InviteDialog.pcss"
-     ],
+     ]
   },  
   "fix-inviting-a-person-already-present-in-the-room" : {
     "comments" : "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
