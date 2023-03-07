@@ -18,9 +18,9 @@ interface IProps {
     width?: number;
     showFederateSwitch: boolean;
     shortDomain: string;
-    forumFederationSwitchValue: boolean;
+    forumFederationSwitchValue?: boolean;
     setRoomType(value: TchapRoomType): void;
-    setForumFederationSwitchValue(forumFederationSwitchValue?: boolean): void;
+    setForumFederationSwitchValue(forumFederationSwitchValue: boolean): void;
 }
 
 interface IState {
