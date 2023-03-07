@@ -1,0 +1,12 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss b/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
+index c03e78d..cdcd3e6 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
+@@ -194,6 +194,7 @@ limitations under the License.
+ 
+     .mx_InviteDialog_addressBar {
+         margin-inline-end: 0;
++        overflow-y: scroll;
+     }
+ 
+     .mx_InviteDialog_userSections {
