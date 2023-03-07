@@ -53,19 +53,6 @@
       "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
     ]
   },
-  "disable-cross-signing-and-enable-logout-devices-when-changing-password": {
-    "package": "matrix-js-sdk",
-    "files": [
-      "src/client.ts"
-    ]
-  },
-  "fix-key-request": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/structures/MatrixChat.tsx",
-      "src/components/views/settings/DevicesPanel.tsx"
-    ]
-  },
   "forgot-password": {
     "package": "matrix-react-sdk",
     "files": [
@@ -74,24 +61,13 @@
       "src/PasswordReset.ts"
     ]
   },
-  "hide-cross-signing-actions": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/settings/CrossSigningPanel.tsx"
-    ]
-  },
   "hide-room-alias-settings": {
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx"
     ]
   },
-  "hide-secure-storage": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/settings/SecureBackupPanel.tsx"
-    ]
-  },
+  
   "login": {
     "package": "matrix-react-sdk",
     "files": [
@@ -197,6 +173,33 @@
     "package": "matrix-react-sdk",
     "files": [
       "res/css/views/dialogs/_InviteDialog.pcss"
+     ],
+  },  
+  "fix-inviting-a-person-already-present-in-the-room" : {
+    "comments" : "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/394",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/utils/MultiInviter.ts"
+    ]
+  },
+  "activate-cross-signing-and-secure-storage-js": {
+    "comments" : "introduce a feature flag for activating cross signing and secure storage",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/433",
+    "package": "matrix-js-sdk",
+    "files": [
+      "src/client.ts"
+    ]
+  },
+  "activate-cross-signing-and-secure-storage-react": {
+    "comments" : "introduce a feature flag for activating cross signing and secure storage (unify previous patches)",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/433",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/settings/SecureBackupPanel.tsx",
+      "src/components/views/settings/CrossSigningPanel.tsx",
+      "src/components/structures/MatrixChat.tsx",
+      "src/components/views/settings/DevicesPanel.tsx"
     ]
   }
 }

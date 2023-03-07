@@ -730,5 +730,9 @@
   "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": {
     "fr": "Invitez quelqu’un grâce à son nom, adresse e-mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste d'emails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne.",
     "en": "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break."
+  },
+  "User is already in the room": {
+    "fr": "Cette personne est déjà dans le salon.",
+    "en": "User is already in the room."
   }
 }
