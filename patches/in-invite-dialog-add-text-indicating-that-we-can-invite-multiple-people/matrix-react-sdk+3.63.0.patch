@@ -1,17 +1,18 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss b/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
-index c03e78d..8f7854d 100644
+index c03e78d..9d795b1 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
-@@ -38,7 +38,7 @@ limitations under the License.
+@@ -37,8 +37,7 @@ limitations under the License.
+         border-radius: 4px;
          min-height: 25px;
          padding-inline-start: $spacing-8;
-         overflow-x: hidden;
+-        overflow-x: hidden;
 -        overflow-y: auto;
 +        overflow: auto;
          display: flex;
          flex-wrap: wrap;
  
-@@ -194,6 +194,7 @@ limitations under the License.
+@@ -194,6 +193,7 @@ limitations under the License.
  
      .mx_InviteDialog_addressBar {
          margin-inline-end: 0;
