@@ -1,0 +1,21 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
+index 586ce4a..1c0942c 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
+@@ -428,6 +428,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+                             </div>
+                         </div>
+                         {recoveryKeyFeedback}
++                        {/* :TCHAP: hide for csss feature
+                         <DialogButtons
+                             primaryButton={_t("Continue")}
+                             onPrimaryButtonClick={this.onRecoveryKeyNext}
+@@ -439,6 +440,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+                             primaryDisabled={!this.state.recoveryKeyValid}
+                             additive={resetButton}
+                         /> 
++                        :end TCHAP
++                        */}
+                     </form>
+                 </div>
+             );
