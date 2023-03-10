@@ -23,9 +23,6 @@ import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
  * otherwise.
  */
 function shouldShowComponent(component: UIComponent): boolean {
-    if (component === UIComponent.CreateSpaces) {
-        return false;
-    }
     return true; // default to visible
 }
 
