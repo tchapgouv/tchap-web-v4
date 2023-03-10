@@ -9,7 +9,7 @@ export default class TchapUIFeature {
      * This flag controls weither space related settings should be displayed or not. It differs from the flag UIComponent.CreateSpaces.
      * It is intended to add more fine-grained control over spaces disablement.
      */
-    public static isSpaceDisplayEnabled = false;
+    public static isSpaceDisplayEnabled = true;
 
     /**
      * This flag controls weither Terms and Conditions should be accepted automatically or not.
