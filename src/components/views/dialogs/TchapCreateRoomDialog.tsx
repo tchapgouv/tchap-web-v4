@@ -41,14 +41,14 @@ interface IState {
     name: string;
     nameIsValid: boolean;
     tchapRoomType: TchapRoomType;
-    isFederated: boolean;
+    forumFederationSwitchValue: boolean;
     showFederateSwitch: boolean;
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
     private nameField = createRef<Field>();
 
-    constructor(props) {
+    public constructor(props) {
         super(props);
 
         const federationOptions = TchapUtils.getRoomFederationOptions();
@@ -57,8 +57,8 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-            isFederated: federationOptions.roomFederationDefault,
-            showFederateSwitch: federationOptions.showRoomFederationOption,
+            forumFederationSwitchValue: federationOptions.forumFederationSwitchDefaultValue,
+            showFederateSwitch: federationOptions.showForumFederationSwitch,
         };
     }
 
@@ -67,22 +67,19 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         this.nameField.current.focus();
     }
 
-    componentWillUnmount() {
-    }
-
     private onCancel = () => {
         this.props.onFinished(false);
     };
 
-    private onFederatedChange = (isFederated: boolean) => {
-        this.setState({ isFederated: isFederated });
+    private onForumFederatedChange = (forumFederationSwitchValue: boolean): void => {
+        this.setState({ forumFederationSwitchValue });
     };
 
-    private onTchapRoomTypeChange = (tchapRoomType: TchapRoomType) => {
+    private onTchapRoomTypeChange = (tchapRoomType: TchapRoomType): void => {
         this.setState({ tchapRoomType: tchapRoomType });
     };
 
-    private onNameChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    private onNameChange = (ev: ChangeEvent<HTMLInputElement>): void => {
         this.setState({ name: ev.target.value });
     };
 
@@ -102,7 +99,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         ],
     });
 
-    private onKeyDown = (event: KeyboardEvent) => {
+    private onKeyDown = (event: KeyboardEvent): void => {
         const action = getKeyBindingsManager().getAccessibilityAction(event);
         switch (action) {
             case KeyBindingAction.Enter:
@@ -112,6 +109,10 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 break;
         }
     };
+
+    private isSelectedRoomFederated = (): boolean => {
+        return this.state.tchapRoomType === TchapRoomType.Forum  && this.state.showFederateSwitch ? this.state.forumFederationSwitchValue : true;
+    }
 
     private onOk = async () => {
         const activeElement = document.activeElement as HTMLElement;
@@ -126,7 +127,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             this.props.onFinished(true, TchapCreateRoom.roomCreateOptions(
                 this.state.name,
                 this.state.tchapRoomType,
-                this.state.isFederated));
+                this.isSelectedRoomFederated()));
         } else {
             let field;
             if (!this.state.nameIsValid) {
@@ -139,7 +140,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         }
     };
 
-    render() {
+    public render() {
         const shortDomain: string = TchapUtils.getShortDomain();
 
         const title = _t("Create a room");
@@ -162,13 +163,13 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                         />
 
                         <TchapRoomTypeSelector
-                            onChange={this.onTchapRoomTypeChange}
                             value={this.state.tchapRoomType}
                             label={_t("Type of room")}
                             showFederateSwitch={this.state.showFederateSwitch}
                             shortDomain={shortDomain}
-                            isFederated={this.state.isFederated}
-                            onFederatedChange={this.onFederatedChange}
+                            forumFederationSwitchValue={this.state.forumFederationSwitchValue}
+                            setForumFederationSwitchValue={this.onForumFederatedChange}
+                            setRoomType={this.onTchapRoomTypeChange}
                         />
 
                     </div>

@@ -26,19 +26,27 @@ export default class TchapUtils {
     /**
      * For the current user, get the room federation options.
      *
-     * @returns { showRoomFederationOption: boolean, roomFederationDefault: boolean } options
+     * @returns { showForumFederationSwitch: boolean, forumFederationSwitchDefaultValue?: boolean } options
      */
-    static getRoomFederationOptions(): { showRoomFederationOption: boolean, roomFederationDefault: boolean } {
+    public static getRoomFederationOptions(): {
+        showForumFederationSwitch: boolean,
+        forumFederationSwitchDefaultValue?: boolean
+    } {
         const cli = MatrixClientPeg.get();
         const baseDomain = cli.getDomain();
 
         // Only show the federate switch to defense users : it's difficult to understand, so we avoid
         // displaying it unless it's really necessary.
         if (baseDomain === 'agent.intradef.tchap.gouv.fr') {
-            return { showRoomFederationOption: true, roomFederationDefault: false };
+            return {
+                showForumFederationSwitch: true,
+                forumFederationSwitchDefaultValue: false
+            }
         }
 
-        return { showRoomFederationOption: false, roomFederationDefault: true };
+        return {
+            showForumFederationSwitch: false
+        };
     }
 
     /**

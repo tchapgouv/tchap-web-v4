@@ -72,12 +72,12 @@ describe("TchapCreateRoomDialog", () => {
         //mock tchap utils
         jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("AGENT");
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showRoomFederationOption: true, roomFederationDefault: false });
+            { showForumFederationSwitch: true, forumFederationSwitchDefaultValue: false });
     });
 
     it('should render the whole component with with the allow access switch', () => {
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showRoomFederationOption: true, roomFederationDefault: false });
+            { showForumFederationSwitch: true, forumFederationSwitchDefaultValue: false });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(toJson(allowAccessSwitch)).toMatchSnapshot(
@@ -86,7 +86,7 @@ describe("TchapCreateRoomDialog", () => {
 
     it('should render the room dialog without the allow access switch', () => {
         jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showRoomFederationOption: false, roomFederationDefault: false });
+            { showForumFederationSwitch: false, forumFederationSwitchDefaultValue: false });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(allowAccessSwitch).toEqual({});
@@ -158,7 +158,7 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Private,
-                isFederated: true,
+                showFederateSwitch: false,
             });
         });
 
@@ -200,7 +200,8 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Forum,
-                isFederated: false,
+                forumFederationSwitchValue: false,
+                showFederateSwitch: true,
             });
         });
 
@@ -209,7 +210,7 @@ describe("TchapCreateRoomDialog", () => {
         expect(onFinished).toHaveBeenCalledWith(true, publicRoomWithoutFederationExpectedOpts);
     });
 
-    it("Should create a public room with federation", async () => {
+    it("Should create a public room with federation and switch", async () => {
         const onFinished = jest.fn();
 
         const publicRoomWithFederationExpectedOpts = {
@@ -242,7 +243,50 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.Forum,
-                isFederated: true,
+                forumFederationSwitchValue: true,
+                showFederateSwitch: true,
+            });
+        });
+
+        await submitForm(wrapper);
+
+        expect(onFinished).toHaveBeenCalledWith(true, publicRoomWithFederationExpectedOpts);
+    });
+
+    it("Should create a public room with federation but no switch", async () => {
+        const onFinished = jest.fn();
+
+        const publicRoomWithFederationExpectedOpts = {
+            createOpts: {
+                name: roomName,
+                creation_content: {
+                    "m.federate": true,
+                },
+                initial_state: [
+                    {
+                        "content": {
+                            "rule": "restricted",
+                        },
+                        "state_key": "",
+                        "type": "im.vector.room.access_rules",
+                    },
+                ],
+                visibility: "public",
+                preset: "public_chat",
+            },
+            guestAccess: false,
+            joinRule: "public",
+            encryption: false,
+            historyVisibility: "shared",
+        };
+        const wrapper = getComponent({ onFinished });
+
+        // set state in component
+        act(() => {
+            wrapper.setState({
+                name: roomName,
+                tchapRoomType: TchapRoomType.Forum,
+                showFederateSwitch: false,
             });
         });
 
@@ -284,7 +328,7 @@ describe("TchapCreateRoomDialog", () => {
             wrapper.setState({
                 name: roomName,
                 tchapRoomType: TchapRoomType.External,
-                isFederated: true,
+                showFederateSwitch: false,
             });
         });
 
