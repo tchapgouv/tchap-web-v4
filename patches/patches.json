@@ -160,14 +160,21 @@
       "src/components/views/settings/Notifications.tsx"
     ]
   },
-  "green-confirmation-shield" : {
-    "comments": "When finishing a session verification with mobile using the QR code, we need the shield image to be green on all clients.",
-    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/432",
+  "green-confirmation-shield": {
+    "comments" : "When finishing a session verification with mobile using the QR code, we need the shield image to be green on all clients.",
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/432",
     "package": "matrix-react-sdk",
     "files": [
       "res/css/views/rooms/_E2EIcon.pcss"
     ]
   },
+  "in-invite-dialog-add-text-indicating-that-we-can-invite-multiple-people": {
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/342",
+    "package": "matrix-react-sdk",
+    "files": [
+      "res/css/views/dialogs/_InviteDialog.pcss"
+     ]
+  },  
   "fix-inviting-a-person-already-present-in-the-room" : {
     "comments": "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
     "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/394",

@@ -296,7 +296,7 @@
   },
   "Wait for at least %(wait)s seconds between two emails": {
     "en": "Wait for at least %(wait)s seconds between two emails",
-    "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux emails"
+    "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
   },
   "The email was not sent sucessfully, please retry in a moment": {
     "en": "The email was not sent sucessfully, please retry",
@@ -726,6 +726,14 @@
   "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
     "fr": "Nous génèrerons votre code de récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
     "en": "We'll generate your unique Recovery code for you to store somewhere safe, like a password manager or a safe."
+  },
+  "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": {
+    "fr": "Invitez quelqu’un via son nom, mail ou pseudo (p. ex. <userId/>) ou <a>partagez ce salon</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne.",
+    "en": "Invite someone using their name, email or username (like <userId/>) or <a>share this room</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break."
+  },
+  "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": {
+    "fr": "Invitez quelqu’un grâce à son nom, adresse mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne.",
+    "en": "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break."
   },
   "User is already in the room": {
     "fr": "Cette personne est déjà dans le salon.",
