@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/spotlight/SpotlightDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/spotlight/SpotlightDialog.tsx
+index 266021a..9fdfd8a 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/spotlight/SpotlightDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/spotlight/SpotlightDialog.tsx
+@@ -132,7 +132,7 @@ export enum Filter {
+ function filterToLabel(filter: Filter): string {
+     switch (filter) {
+         case Filter.People:
+-            return _t("People");
++            return _t("Persons");
+         case Filter.PublicRooms:
+             return _t("Public rooms");
+     }

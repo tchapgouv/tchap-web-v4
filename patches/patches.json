@@ -209,5 +209,12 @@
       "src/components/structures/UserMenu.tsx",
       "res/css/structures/_UserMenu.pcss"
     ]
+  },
+  "change-personal-messages-to-people-wording": {
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/448",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/spotlight/SpotlightDialog.tsx"
+    ]
   }
 }

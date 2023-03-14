@@ -539,6 +539,11 @@
     "en": "Direct messages",
     "fr": "Messages directs"
   },
+  "Persons": {
+    "comments" : "Use persons to differenciate from Element label 'People' which we use in Tchap as 'Messages directs'",
+    "en": "People",
+    "fr": "Personnes"
+  },
   "Group all your people in one place.": {
     "en":"Group all your direct message room in one place.",
     "fr":"Regroupe tous vos salons de message directs au même endroit."
