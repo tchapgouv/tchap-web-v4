@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 97d623a..ed0daf5 100644
+index 97d623a..2a02d90 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 @@ -32,6 +32,8 @@ import { throttle } from "lodash";
@@ -28,7 +28,7 @@ index 97d623a..ed0daf5 100644
 +        //this listener can be forced with forceLegacyIncomingRoomKeyVerification
 +        //or is added only if the xs is not active
 +        if(TchapUIFeature.forceLegacyIncomingRoomKeyVerification || 
-+            !TchapUIFeature.isCrossSigningAndSecureStorageActive){
++            !TchapUIFeature.isCrossSigningAndSecureStorageActive()){
 +            const krh = new KeyRequestHandler(cli);
 +            cli.on(CryptoEvent.RoomKeyRequest, (req) => {
 +                krh.handleKeyRequest(req);
@@ -44,7 +44,7 @@ index 97d623a..ed0daf5 100644
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index b04714e..30c9c24 100644
+index b04714e..8adbba3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -60,7 +60,7 @@ index b04714e..30c9c24 100644
          }
  
 +        // :TCHAP: hide cross-signing actions if cross-signing is not supported
-+        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive) {
++        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
 +            actionRow = null;
 +        }
 +        // end :TCHAP:
@@ -115,7 +115,7 @@ index 56fdb5e..d67fb6d 100644
              return this.state.crossSigningInfo
                  .checkDeviceTrust(this.state.crossSigningInfo, deviceInfo, false, true)
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 2e6e6fb..4eb56f2 100644
+index 2e6e6fb..e1fbe50 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -30,6 +30,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -179,7 +179,7 @@ index 2e6e6fb..4eb56f2 100644
              actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
 +            // :TCHAP: hide action buttons if secure storage is not supported
 +            // actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
-+            if (!TchapUIFeature.isCrossSigningAndSecureStorageActive) {
++            if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
 +                actionRow = null;
 +            }
 +            // end :TCHAP:

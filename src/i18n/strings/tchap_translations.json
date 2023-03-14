@@ -376,7 +376,7 @@
   },
   "This function allows you to save your messages automatically and retrieve them anytime thanks to a recovery Code.": {
     "en": "This function allows you to save your messages automatically and retrieve them anytime thanks to a recovery Code.",
-    "fr": "Cette fonction vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment à l’aide d’un Code de récupération."
+    "fr": "Cette fonction vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment à l’aide du Code de récupération."
   },
   "Thread": {
     "en": "Thread",
@@ -608,12 +608,12 @@
     "en": "This is your recovery code. This code allows you to backup automatically your messages and restore whenever you want"
   },
   "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
-    "fr": "Conservez votre clé dans un endroit sûr, par exemple : votre gestionnaire de mot de passe sur un papier dans une armoire ou un tiroir fermé à clé.",
-    "en": "Store your Recovery Key key somewhere safe, like a password manager or a safe"
+    "fr": "Conservez votre clé dans un endroit sûr, par exemple dans votre gestionnaire de mot de passe, sur un papier dans une armoire ou un tiroir fermé à clé.",
+    "en": "Store your Recovery Code somewhere safe, like a password manager or a safe"
   },
   "Safeguard against losing access to encrypted messages & data": {
     "fr" : "Activez votre code de récupération pour ne jamais perdre vos messages",
-    "en" : "Activate your Recovery Code key to never lose your messages"
+    "en" : "Activate your Recovery code to never lose your messages"
   },
   "Activate": {
     "fr" : "Activer",
@@ -621,11 +621,11 @@
   },
   "Security Key": {
     "fr": "Code de récupération",
-    "en": "Recovery Code"
+    "en": "Recovery code"
   },
   "Verify with Security Key": {
     "fr": "Vérifier avec un code de récupération",
-    "en": "Verify with Recovery Code"
+    "en": "Verify with Recovery code"
   },
   "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": {
     "fr": "Votre nouvel appareil est maintenant vérifié. Il a accès à vos messages chiffrés et les autres utilisateurs le verront comme fiable.",
@@ -641,71 +641,71 @@
   },
   "Use your Security Key to continue.": {
     "fr": "Utilisez votre code de récupération pour continuer.",
-    "en": "Use your Recovery Code to continue."
+    "en": "Use your Recovery code to continue."
   },
   "Generate a Security Key": {
     "fr": "Générer un code de récupération",
-    "en": "Generate a Recovery Code"
+    "en": "Generate a Recovery code"
   },
   "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": {
     "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un code de récupération à utiliser pour la sauvegarde.",
-    "en": "Use a secret phrase only you know, and optionally save a Recovery Code to use for backup."
+    "en": "Use a secret phrase only you know, and optionally save a Recovery code to use for backup."
   },
   "Save your Security Key": {
     "fr": "Sauvegarder votre code de récupération",
-    "en": "Save your Recovery Code"
+    "en": "Save your Recovery code"
   },
   "This session has detected that your Security Phrase and key for Secure Messages have been removed.": {
     "fr": "Cette session a détecté que votre phrase secrète et code de récupération pour les messages sécurisés ont été supprimés.",
     "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed."
   },
   "A new Security Phrase and key for Secure Messages have been detected.": {
-    "fr": "Une nouvelle phrase secrète et code de récupération pour les messages sécurisés ont été détectés.",
-    "en": "A new Security Phrase and code for Secure Messages have been detected."
+    "fr": "Un nouveau code de récupération pour les messages sécurisés a été détecté.",
+    "en": "A new Recovery code for Secure Messages has been detected."
   },
   "Make a copy of your Security Key": {
     "fr": "Faire une copie de votre code de récupération",
-    "en": "Make a copy of your Recovery Code"
+    "en": "Make a copy of your Recovery code"
   },
   "Secure your backup with a Security Phrase": {
     "fr": "Protégez votre sauvegarde avec un code de récupération",
-    "en": "Secure your backup with a Recovery Code"
+    "en": "Secure your backup with a Recovery code"
   },
   "Your Security Key is in your <b>Downloads</b> folder.": {
     "fr": "Votre code de récupération est dans le répertoire <b>Téléchargements</b>.",
-    "en": "Your Recovery Code is in your <b>Downloads</b> folder."
+    "en": "Your Recovery code is in your <b>Downloads</b> folder."
   },
   "Your Security Key": {
     "fr": "Votre code de récupération",
-    "en": "Your Recovery Code"
+    "en": "Your Recovery code"
   },
   "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
     "fr": "Votre code de récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
-    "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
+    "en": "Your Recovery code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
   },
   "Set up with a Security Key": {
     "fr": "Configurer avec un code de récupération",
-    "en": "Set up with a Recovery Code"
+    "en": "Set up with a Recovery code"
   },
   "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
     "fr": "Si vous avez oublié votre code de récupération, vous pouvez <button>définir de nouvelles options de récupération</button>",
-    "en": "If you've forgotten your Recovery Code you can <button>set up new recovery options</button>"
+    "en": "If you've forgotten your Recovery code you can <button>set up new recovery options</button>"
   },
   "Access your secure message history and set up secure messaging by entering your Security Key.": {
     "fr": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre code de récupération.",
-    "en": "Access your secure message history and set up secure messaging by entering your Recovery Code."
+    "en": "Access your secure message history and set up secure messaging by entering your Recovery code."
   },
   "Enter Security Key": {
     "fr": "Saisir le code de récupération",
-    "en": "Enter Recovery Code"
+    "en": "Enter Recovery code"
   },
   "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": {
     "fr": "Si vous avez oublié votre phrase secrète vous pouvez <button1>utiliser votre code de récupération</button1> ou <button2>définir de nouvelles options de récupération</button2>",
-    "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery Code</button1> or <button2>set up new recovery options</button2>"
+    "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery code</button1> or <button2>set up new recovery options</button2>"
   },
   "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
     "fr": "La sauvegarde n’a pas pu être déchiffrée avec cette clé de sécurité : merci de vérifier que vous avez saisi le bon code de récupération.",
-    "en": "Backup could not be decrypted with this Recovery Key: please verify that you entered the correct Recovery Code."
+    "en": "Backup could not be decrypted with this Recovery Key: please verify that you entered the correct Recovery code."
   },
   "Please only proceed if you're sure you've lost all of your other devices and your security key.": {
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre code de récupération.",
@@ -713,19 +713,19 @@
   },
   "Verify with Security Key or Phrase": {
     "fr": "Vérifier avec un code de récupération ou une phrase",
-    "en": "Verify with Recovery Code or Phrase"
+    "en": "Verify with Recovery code or Phrase"
   },
   "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
     "fr": "Il semblerait que vous n’avez pas de code de récupération ou d’autres appareils pour faire la vérification. Cet appareil ne pourra pas accéder aux anciens messages chiffrés. Afin de vérifier votre identité sur cet appareil, vous devrez réinitialiser vos clés de vérifications.",
-    "en": "It looks like you don't have a Recovery Code or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
+    "en": "It looks like you don't have a Recovery code or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
     "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre code de récupération</button> pour continuer.",
-    "en": "Enter your Security Phrase or <button>use your Recovery Code</button> to continue."
+    "en": "Enter your Security Phrase or <button>use your Recovery code</button> to continue."
   },
   "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
-    "fr": "Nous génèrerons un code de récupération que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
-    "en": "We'll generate a Recovery Code for you to store somewhere safe, like a password manager or a safe."
+    "fr": "Nous génèrerons votre code de récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
+    "en": "We'll generate your unique Recovery code for you to store somewhere safe, like a password manager or a safe."
   },
   "User is already in the room": {
     "fr": "Cette personne est déjà dans le salon.",
