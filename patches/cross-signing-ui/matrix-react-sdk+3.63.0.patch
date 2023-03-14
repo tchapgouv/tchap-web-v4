@@ -138,7 +138,7 @@ index 8da8e5c..746ab0a 100644
                      aria-label={_t("Skip verification for now")}
                  />
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 5dc32de..170e429 100644
+index 5dc32de..f5cb1cd 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 @@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
@@ -160,12 +160,16 @@ index 5dc32de..170e429 100644
          case Kind.UPGRADE_ENCRYPTION:
              return _t("Upgrade");
          case Kind.VERIFY_THIS_SESSION:
-@@ -79,6 +82,12 @@ const onReject = () => {
+@@ -79,6 +82,16 @@ const onReject = () => {
  };
  
  export const showToast = (kind: Kind) => {
 +    /* :TCHAP: hide cross-signing setup toast when feature flag tchap_disable_cross_signing_setup_toast is on */
-+    if (TchapUIFeature.isCrossSigningAndSecureStorageActiveWithoutSetupToast() && (kind === Kind.SET_UP_ENCRYPTION || kind === Kind.UPGRADE_ENCRYPTION)) {
++    if (
++        TchapUIFeature.isCrossSigningAndSecureStorageActive()
++        && TchapUIFeature.isCrossSigningSetupToastDisabled()
++        && (kind === Kind.SET_UP_ENCRYPTION || kind === Kind.UPGRADE_ENCRYPTION)
++    ) {
 +        return;
 +    }
 +    /* end :TCHAP: */
