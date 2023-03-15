@@ -746,5 +746,9 @@
   "Connect this session to Key Backup": {
     "fr": "Vérifier cette session",
     "en": "Verify this session"
+  },
+  "Forgotten or lost all recovery methods? <a>Reset all</a>": {
+    "fr": "Vous avez perdu votre code de récupération ? <a>Générer un nouveau code</a>",
+    "en": "You have lost your recovery code? <a>Create a new code</a>"
   }
 }
