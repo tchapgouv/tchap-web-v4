@@ -131,14 +131,12 @@
       "res/css/views/elements/_TooltipButton.pcss"
     ]
   },
-  "change-keys-in-room-summary-card": {
+  "use-the-term-person-not-message-direct": {
     "comments" : "add RoomContextMenu and SpacePreferencesDialog under the same patch (same update)",
     "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/365",
     "package": "matrix-react-sdk",
     "files": [
-      "src/components/views/right_panel/RoomSummaryCard.tsx",
-      "src/components/views/context_menus/RoomContextMenu.tsx",
-      "src/components/views/dialogs/SpacePreferencesDialog.tsx"
+      "src/components/views/right_panel/RoomSummaryCard.tsx"
     ]
   },
   "cross-signing-ui": {
