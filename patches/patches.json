@@ -140,8 +140,8 @@
     ]
   },
   "cross-signing-ui": {
-    "comments" : "reword cross-signing dialogs and remove confirmation dialog",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/406",
+    "comments": "reword cross-signing dialogs and remove confirmation dialog",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/406",
     "package": "matrix-react-sdk",
     "files": [
       "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
@@ -151,8 +151,8 @@
     ]
   },
   "temp-settings-remove-enable-email-notifications-option": {
-    "comments" : "Notifications by email is currently not activated on Tchap backend. So we must remove this option.",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/405",
+    "comments": "Notifications by email is currently not activated on Tchap backend. So we must remove this option.",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/405",
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/settings/Notifications.tsx"
@@ -174,16 +174,16 @@
      ]
   },  
   "fix-inviting-a-person-already-present-in-the-room" : {
-    "comments" : "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/394",
+    "comments": "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/394",
     "package": "matrix-react-sdk",
     "files": [
       "src/utils/MultiInviter.ts"
     ]
   },
   "activate-cross-signing-and-secure-storage-js": {
-    "comments" : "introduce a feature flag for activating cross signing and secure storage",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/433",
+    "comments": "introduce a feature flag for activating cross signing and secure storage",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/433",
     "package": "matrix-js-sdk",
     "files": [
       "src/client.ts"
@@ -191,7 +191,7 @@
   },
   "activate-cross-signing-and-secure-storage-react": {
     "comments" : "introduce a feature flag for activating cross signing and secure storage (unify previous patches)",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/433",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/433",
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/settings/SecureBackupPanel.tsx",
@@ -201,11 +201,18 @@
     ]
   },
   "add-a-help-tab-in-menu-to-redirect-to-external-tchap-faq": {
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/395",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/395",
     "package": "matrix-react-sdk",
     "files": [
       "src/components/structures/UserMenu.tsx",
       "res/css/structures/_UserMenu.pcss"
+    ]
+  },
+  "ux-improvements-for-xsss": {
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/442",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/security/AccessSecretStorageDialog.tsx"
     ]
   }
 }

@@ -108,7 +108,7 @@ index cf0c160..9a970b9 100644
                                  kind="primary"
                                  className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
-index 8da8e5c..746ab0a 100644
+index 8da8e5c..1fdb336 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 @@ -22,6 +22,7 @@ import SetupEncryptionBody from "./SetupEncryptionBody";
@@ -132,7 +132,7 @@ index 8da8e5c..746ab0a 100644
 -                    onClick={this.onSkipClick}
 +                    // :tchap: remove onClick={this.onSkipClick}
 +                    // add instead
-+                    onClick={TchapUIFeature.isCrossSigningAndSecureStorageActive ? tchapOnSkipClick : this.onSkipClick}
++                    onClick={TchapUIFeature.isCrossSigningAndSecureStorageActive() ? tchapOnSkipClick : this.onSkipClick}
 +                    // end :tchap:
                      className="mx_CompleteSecurity_skip"
                      aria-label={_t("Skip verification for now")}

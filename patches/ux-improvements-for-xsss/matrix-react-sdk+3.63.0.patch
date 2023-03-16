@@ -1,0 +1,31 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
+index 586ce4a..7d7a735 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
+@@ -408,13 +408,15 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+                                     autoComplete="off"
+                                 />
+                             </div>
++                            {/*
++                             :TCHAP: hide for csss feature
+                             <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
+                                 {_t("%(securityKey)s or %(recoveryFile)s", {
+                                     recoveryFile: "",
+                                     securityKey: "",
+                                 })}
+                             </span>
+-                            <div>
++                             <div>
+                                 <input
+                                     type="file"
+                                     className="mx_AccessSecretStorageDialog_recoveryKeyEntry_fileInput"
+@@ -425,7 +427,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+                                 <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
+                                     {_t("Upload")}
+                                 </AccessibleButton>
+-                            </div>
++                            :end TCHAP
++                            </div> */}
+                         </div>
+                         {recoveryKeyFeedback}
+                         <DialogButtons
