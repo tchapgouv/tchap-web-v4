@@ -371,10 +371,6 @@
     "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
   },
   "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
-    "en": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Recovery Code.",
-    "fr": "Sauvegardez vos clés Tchap et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisées avec un Code de récupération unique."
-  },
-  "This function allows you to save your messages automatically and retrieve them anytime thanks to a recovery Code.": {
     "en": "This function allows you to save your messages automatically and retrieve them anytime thanks to a recovery Code.",
     "fr": "Cette fonction vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment à l’aide du Code de récupération."
   },

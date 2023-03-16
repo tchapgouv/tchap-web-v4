@@ -115,7 +115,7 @@ index 56fdb5e..d67fb6d 100644
              return this.state.crossSigningInfo
                  .checkDeviceTrust(this.state.crossSigningInfo, deviceInfo, false, true)
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 2e6e6fb..8431907 100644
+index 2e6e6fb..f718552 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -30,6 +30,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -126,7 +126,7 @@ index 2e6e6fb..8431907 100644
  
  interface IState {
      loading: boolean;
-@@ -460,17 +461,30 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -460,17 +461,24 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
          let actionRow;
          if (actions.length) {
              actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
@@ -141,7 +141,6 @@ index 2e6e6fb..8431907 100644
          return (
              <div>
 -                <p>
-+                {/* TCHAP change complex text to simpler one
 +                 <p>
                      {_t(
                          "Back up your encryption keys with your account data in case you " +
@@ -149,11 +148,6 @@ index 2e6e6fb..8431907 100644
                              "unique Security Key.",
                      )}
                  </p>
-+                */}
-+                <p>
-+                    {_t("This function allows you to save your messages automatically and retrieve them anytime thanks to a recovery Code.")}
-+                </p>
-+                {/* end TCHAP */}
 +                
                  {statusDescription}
                  <details>
