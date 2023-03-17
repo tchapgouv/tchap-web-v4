@@ -707,8 +707,8 @@
     "en": "Verify with Recovery code or Phrase"
   },
   "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
-    "fr": "Il semblerait que vous n’avez pas de code de récupération ou d’autres appareils pour faire la vérification. Cet appareil ne pourra pas accéder aux anciens messages chiffrés. Afin de vérifier votre identité sur cet appareil, vous devrez réinitialiser vos clés de vérifications.",
-    "en": "It looks like you don't have a Recovery code or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys."
+    "fr": "L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements. Vous pouvez y accéder dans la section Securité et vie privée > Sauvegarde automatique des messages",
+    "en": "The Tchap team is working on the deployment of a new feature to prevent encryption key loss. You can access it in the section Security and privacy > Secure Backup"
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
     "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre code de récupération</button> pour continuer.",
@@ -741,5 +741,9 @@
   "Forgotten or lost all recovery methods? <a>Reset all</a>": {
     "fr": "Vous avez perdu votre code de récupération ? <a>Générer un nouveau code</a>",
     "en": "You have lost your recovery code? <a>Create a new code</a>"
+  },
+  "Unable to verify this device": {
+    "fr": "Vous vous connectez à un nouvel appareil",
+    "en": "You are logging into a new device"
   }
 }
