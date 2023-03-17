@@ -27,6 +27,19 @@ index 61c9de1..5833e76 100644
                  </StyledCheckbox>
                  <p>
                      {_t(
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
+index 90c53d5..cffe6f9 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
+@@ -397,7 +397,7 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
+         defaultHidden: false,
+     },
+     [DefaultTagID.DM]: {
+-        sectionLabel: _td("People"),
++        sectionLabel: _td("Direct Messages"),
+         isInvite: false,
+         defaultHidden: false,
+         AuxButtonComponent: DmAuxButton,
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
 index 4518fcf..845641a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx

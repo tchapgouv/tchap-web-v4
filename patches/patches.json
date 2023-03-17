@@ -215,6 +215,7 @@
       "src/components/views/context_menus/RoomContextMenu.tsx",
       "src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx",
       "src/components/views/spaces/QuickSettingsButton.tsx",
+      "src/components/views/rooms/RoomList.tsx",
       "src/stores/spaces/index.ts"
     ]
   }
