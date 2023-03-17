@@ -139,7 +139,8 @@
       "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
       "src/toasts/SetupEncryptionToast.ts",
       "src/components/structures/auth/CompleteSecurity.tsx",
-      "res/css/views/auth/_CompleteSecurityBody.pcss"
+      "res/css/views/auth/_CompleteSecurityBody.pcss",
+      "src/components/structures/auth/SetupEncryptionBody.tsx"
     ]
   },
   "temp-settings-remove-enable-email-notifications-option": {

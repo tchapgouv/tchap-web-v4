@@ -114,7 +114,7 @@ index cf0c160..9371607 100644
                                  kind="primary"
                                  className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
-index 8da8e5c..1fdb336 100644
+index 8da8e5c..2973592 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 @@ -22,6 +22,7 @@ import SetupEncryptionBody from "./SetupEncryptionBody";
@@ -125,7 +125,18 @@ index 8da8e5c..1fdb336 100644
  
  interface IProps {
      onFinished: () => void;
-@@ -92,9 +93,16 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
+@@ -66,7 +67,9 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
+             return null;
+         } else if (phase === Phase.Intro) {
+             if (lostKeys) {
+-                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
++                //:tchap: hide anxious icon of warning
++                //icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
++                //:tchap: end
+                 title = _t("Unable to verify this device");
+             } else {
+                 icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
+@@ -92,9 +95,16 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
  
          let skipButton;
          if (phase === Phase.Intro || phase === Phase.ConfirmReset) {
@@ -143,6 +154,35 @@ index 8da8e5c..1fdb336 100644
                      className="mx_CompleteSecurity_skip"
                      aria-label={_t("Skip verification for now")}
                  />
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
+index 3f2fb26..ebef93e 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
+@@ -164,13 +164,23 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
+                                     "verify against.  This device will not be able to access old encrypted messages. " +
+                                     "In order to verify your identity on this device, you'll need to reset " +
+                                     "your verification keys.",
+-                            )}
++                            )
++                            }               
+                         </p>
+                         
++                        {/* :tchap: replace button of proceed with reset by a no-effect Continue button */}
+                         <div className="mx_CompleteSecurity_actionRow">
++                            <AccessibleButton kind="primary" onClick={this.onSkipConfirmClick}>
++                                {_t("Continue")}
++                            </AccessibleButton>
++
++                        {/* 
+                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
+                                 {_t("Proceed with reset")}
+                             </AccessibleButton> 
++                            :tchap: end
++                            */
++                        }
+                         </div>
+                     </div>
+                 );
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 5dc32de..f5cb1cd 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
