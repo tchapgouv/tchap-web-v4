@@ -534,11 +534,6 @@
     "en": "Ban from space",
     "fr": "Interdire l’accès à l'espace (définitif)"
   },
-  "People": {
-    "comments" : "in element, People label is used to title direct messages room and sometimes room members, use Room Members label in this case)",
-    "en": "Direct messages",
-    "fr": "Messages directs"
-  },
   "Group all your people in one place.": {
     "en":"Group all your direct message room in one place.",
     "fr":"Regroupe tous vos salons de message directs au même endroit."

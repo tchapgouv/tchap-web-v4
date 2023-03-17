@@ -131,14 +131,6 @@
       "res/css/views/elements/_TooltipButton.pcss"
     ]
   },
-  "use-the-term-person-not-message-direct": {
-    "comments" : "add RoomContextMenu and SpacePreferencesDialog under the same patch (same update)",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/365",
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/right_panel/RoomSummaryCard.tsx"
-    ]
-  },
   "cross-signing-ui": {
     "comments": "reword cross-signing dialogs and remove confirmation dialog",
     "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/406",
@@ -213,6 +205,18 @@
     "package": "matrix-react-sdk",
     "files": [
       "src/components/views/dialogs/security/AccessSecretStorageDialog.tsx"
+    ]
+  },
+  "use-the-term-people-not-direct-messages": {
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/448",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/dialogs/SpacePreferencesDialog.tsx",
+      "src/components/views/context_menus/RoomContextMenu.tsx",
+      "src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx",
+      "src/components/views/spaces/QuickSettingsButton.tsx",
+      "src/components/views/rooms/RoomList.tsx",
+      "src/stores/spaces/index.ts"
     ]
   }
 }
