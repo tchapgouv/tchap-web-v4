@@ -595,12 +595,20 @@
     "fr": "Envoyer le mail"
   },
   "This is your recovery key" : {
-    "fr": "Voici votre code de récupération. Ce code vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment.",
-    "en": "This is your recovery code. This code allows you to backup automatically your messages and restore whenever you want"
+    "fr": "Ce code vous permettra de toujours récupérer vos messages.",
+    "en": "This code will allow you to always restore your messages."
+  },
+  "Warning: this is the only time this code will be displayed!" : {
+    "fr": "Attention: c’est la seule fois que ce code sera affiché !",
+    "en": "Warning: this is the only time this code will be displayed!"
   },
   "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
-    "fr": "Conservez votre clé dans un endroit sûr, par exemple dans votre gestionnaire de mot de passe, sur un papier dans une armoire ou un tiroir fermé à clé.",
-    "en": "Store your Recovery Code somewhere safe, like a password manager or a safe"
+    "fr": "Pensez à le conserver dans un endroit sûr, par exemple dans votre gestionnaire de mot de passe, sur un papier dans une armoire ou un tiroir fermé à clé.",
+    "en": "Remember to keep it in a safe place, for example in your password manager, on a piece of paper in a locked cupboard or drawer."
+  },
+  "I wrote down my code": {
+    "fr": "J'ai noté mon code",
+    "en": "I wrote down my code"
   },
   "Safeguard against losing access to encrypted messages & data": {
     "fr" : "Activez votre code de récupération pour ne jamais perdre vos messages",
@@ -643,8 +651,8 @@
     "en": "Use a secret phrase only you know, and optionally save a Recovery code to use for backup."
   },
   "Save your Security Key": {
-    "fr": "Sauvegarder votre code de récupération",
-    "en": "Save your Recovery code"
+    "fr": "Notez votre code de récupération",
+    "en": "Write down your Recovery code"
   },
   "This session has detected that your Security Phrase and key for Secure Messages have been removed.": {
     "fr": "Cette session a détecté que votre phrase secrète et code de récupération pour les messages sécurisés ont été supprimés.",
