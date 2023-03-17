@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/DialogButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/DialogButtons.tsx
+index a17ce6c..953e7aa 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/elements/DialogButtons.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/elements/DialogButtons.tsx
+@@ -87,7 +87,7 @@ export default class DialogButtons extends React.Component<IProps> {
+                     type="button"
+                     onClick={this.onCancelClick}
+                     className={this.props.cancelButtonClass}
+-                    disabled={this.props.disabled}
++                    // :TCHAP: why disable a cancel button? disabled={this.props.disabled}
+                 >
+                     {this.props.cancelButton || _t("Cancel")}
+                 </button>
