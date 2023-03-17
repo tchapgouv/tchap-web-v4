@@ -28,6 +28,7 @@ import { ElementWidgetActions } from "matrix-react-sdk/src/stores/widgets/Elemen
 import { logger } from "matrix-js-sdk/src/logger";
 import { IConfigOptions } from "matrix-react-sdk/src/IConfigOptions";
 import { SnakedObject } from "matrix-react-sdk/src/utils/SnakedObject";
+import { ElementWidgetCapabilities } from "matrix-react-sdk/src/stores/widgets/ElementWidgetCapabilities";
 
 import { getVectorConfig } from "../getconfig";
 
@@ -56,6 +57,7 @@ let roomName: string;
 let startAudioOnly: boolean;
 let isVideoChannel: boolean;
 let supportsScreensharing: boolean;
+let language: string;
 
 let widgetApi: WidgetApi;
 let meetApi: any; // JitsiMeetExternalAPI
@@ -85,6 +87,7 @@ const setupCompleted = (async (): Promise<string | void> => {
         const parentUrl = qsParam("parentUrl", true);
         const widgetId = qsParam("widgetId", true);
         const theme = qsParam("theme", true);
+        language = qsParam("language", true) ?? "en";
 
         if (theme) {
             document.body.classList.add(`theme-${theme.replace(" ", "_")}`);
@@ -98,6 +101,13 @@ const setupCompleted = (async (): Promise<string | void> => {
 
             widgetApiReady = new Promise<void>((resolve) => widgetApi.once("ready", resolve));
             widgetApi.requestCapabilities(VideoConferenceCapabilities);
+
+            // jitsi cannot work in a popup if auth token is provided because widgetApi is not available there
+            // so check the token and request the 'requires_client' capability to hide the popup icon in the Element
+            if (qsParam("auth", true) === "openidtoken-jwt") {
+                widgetApi.requestCapability(ElementWidgetCapabilities.RequiresClient);
+            }
+
             widgetApi.start();
 
             const handleAction = (
@@ -305,6 +315,31 @@ function closeConference(): void {
     }
 }
 
+// Converts from IETF language tags used by Element (en-US) to the format used
+// by Jitsi (enUS)
+function normalizeLanguage(language: string): string {
+    const [lang, variant] = language.replace("_", "-").split("-");
+
+    if (!variant || lang === variant) {
+        return lang;
+    }
+
+    return lang + variant.toUpperCase();
+}
+
+function mapLanguage(language: string): string {
+    // Element and Jitsi don't agree how to interpret en, so we go with Elements
+    // interpretation to stay consistent
+    switch (language) {
+        case "en":
+            return "enGB";
+        case "enUS":
+            return "en";
+        default:
+            return language;
+    }
+}
+
 // event handler bound in HTML
 // An audio input of undefined instructs Jitsi to start unmuted with whatever
 // audio input it can find, while an input of null instructs it to start muted,
@@ -363,6 +398,7 @@ function joinConference(audioInput?: string | null, videoInput?: string | null):
             apiLogLevels: ["warn", "error"],
         } as any,
         jwt: jwt,
+        lang: mapLanguage(normalizeLanguage(language)),
     };
 
     // Video channel widgets need some more tailored config options

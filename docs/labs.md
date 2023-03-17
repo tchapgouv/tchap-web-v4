@@ -145,21 +145,9 @@ If no right panel state is known for the room or it was closed on the last room
 visit, it will default to the room member list. Otherwise, the saved card last
 used in that room is shown.
 
-## Pin drop location sharing (`feature_location_share_pin_drop`) [In Development]
-
-Enables sharing a pin drop location to the timeline.
-
 ## Live location sharing (`feature_location_share_live`) [In Development]
 
 Enables sharing your current location to the timeline, with live updates.
-
-## Threaded Messaging (`feature_thread`)
-
-Threading allows users to branch out a new conversation from the main timeline of a room. This is particularly useful in high traffic rooms where multiple conversations can happen in parallel or when a single discussion might stretch over a very long period of time.
-
-Threads can be access by clicking their summary below the root event on the room timeline. Users can find a comprehensive list of threads by click the icon on the room header button.
-
-This feature might work in degraded mode if the homeserver a user is connected to does not advertise support for the unstable feature `org.matrix.msc3440` when calling the `/versions` API endpoint.
 
 ## Video rooms (`feature_video_rooms`)
 
@@ -189,3 +177,13 @@ have [MSC3827](https://github.com/matrix-org/matrix-spec-proposals/pull/3827) en
 ## Favourite Messages (`feature_favourite_messages`) [In Development]
 
 Enables users to bookmark a message or content for a later reference.
+
+## Sign in another device by showing a QR code (`feature_qr_signin_reciprocate_show`)
+
+Add capability to the session/device manager screens to generate a QR code to sign in another device + set up E2EE. This requires the homeserver to have support for [MSC3882](https://github.com/matrix-org/matrix-spec-proposals/pull/3882) and [MSC3886](https://github.com/matrix-org/matrix-spec-proposals/pull/3886) enabled.
+
+## Use the Rust cryptography implementation (`feature_rust_crypto`) [In Development]
+
+Configures Element to use a new cryptography implementation based on the [matrix-rust-sdk](https://github.com/matrix-org/matrix-rust-sdk).
+
+This setting is (currently) _sticky_ to a user's session: it only takes effect when the user logs in to a new session. Likewise, even after disabling the setting in `config.json`, the Rust implemention will remain in use until users log out.
