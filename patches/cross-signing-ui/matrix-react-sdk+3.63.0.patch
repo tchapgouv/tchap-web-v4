@@ -16,7 +16,7 @@ index c23f53b..7aa9f25 100644
      background-color: $background;
      border-radius: 4px;
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-index cf0c160..83fc3a6 100644
+index cf0c160..9371607 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 @@ -177,13 +177,38 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
@@ -64,18 +64,19 @@ index cf0c160..83fc3a6 100644
              continueButton = (
                  <DialogButtons
 -                    primaryButton={_t("Continue")}
+-                    disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
 +                    // :tchap: change label
 +                    // primaryButton={_t("Continue")}
 +                    primaryButton={_t("I wrote down my code")}
 +                    cancelButtonClass="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline"
 +                    hasCancel
 +                    onCancel={this.onCancel}
++                    primaryDisabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
 +                    // end :tchap:
-                     disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
++                    // TCHAP: disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
                      onPrimaryButtonClick={this.onShowKeyContinueClick}
 -                    hasCancel={false}
 +                    // TCHAP: hasCancel={false}
-+                    
                  />
              );
          } else {
@@ -143,7 +144,7 @@ index 8da8e5c..1fdb336 100644
                      aria-label={_t("Skip verification for now")}
                  />
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 5dc32de..029c6d6 100644
+index 5dc32de..f5cb1cd 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 @@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
@@ -170,13 +171,13 @@ index 5dc32de..029c6d6 100644
  
  export const showToast = (kind: Kind) => {
 +    /* :TCHAP: hide cross-signing setup toast when feature flag tchap_disable_cross_signing_setup_toast is on */
-+    // if (
-+    //     TchapUIFeature.isCrossSigningAndSecureStorageActive()
-+    //     && TchapUIFeature.isCrossSigningSetupToastDisabled()
-+    //     && (kind === Kind.SET_UP_ENCRYPTION || kind === Kind.UPGRADE_ENCRYPTION)
-+    // ) {
-+    //     return;
-+    // }
++    if (
++        TchapUIFeature.isCrossSigningAndSecureStorageActive()
++        && TchapUIFeature.isCrossSigningSetupToastDisabled()
++        && (kind === Kind.SET_UP_ENCRYPTION || kind === Kind.UPGRADE_ENCRYPTION)
++    ) {
++        return;
++    }
 +    /* end :TCHAP: */
 +
      if (SecurityCustomisations.setupEncryptionNeeded?.(kind)) {

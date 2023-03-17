@@ -218,13 +218,5 @@
       "src/components/views/rooms/RoomList.tsx",
       "src/stores/spaces/index.ts"
     ]
-  },
-  "remove-disable-property-of-cancel-button-in-dialog-buttons": {
-    "comments" : "Remove the disable of because no cancel button in a popup should be disabled",
-    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/464",
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/elements/DialogButtons.tsx"
-    ]
   }
 }
