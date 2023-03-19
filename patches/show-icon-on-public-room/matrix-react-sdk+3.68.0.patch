@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 06ee20c..3a84dcb 100644
+index 953ffc2..7d12841 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -34,6 +34,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -24,7 +24,7 @@ index 06ee20c..3a84dcb 100644
      PresenceOnline = "ONLINE",
      PresenceAway = "AWAY",
      PresenceOffline = "OFFLINE",
-@@ -66,6 +74,14 @@ function tooltipText(variant: Icon) {
+@@ -66,6 +74,14 @@ function tooltipText(variant: Icon): string | undefined {
      switch (variant) {
          case Icon.Globe:
              return _t("This room is public");
@@ -39,7 +39,7 @@ index 06ee20c..3a84dcb 100644
          case Icon.PresenceOnline:
              return _t("Online");
          case Icon.PresenceAway:
-@@ -173,7 +189,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -171,7 +187,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
          } else {
              // Track publicity

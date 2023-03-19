@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index 5a7a61e..ad31fc0 100644
+index dd9be19..4226280 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 @@ -39,8 +39,10 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
@@ -11,9 +11,9 @@ index 5a7a61e..ad31fc0 100644
  import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 +import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
  
- const debuglog = (...args: any[]) => {
+ const debuglog = (...args: any[]): void => {
      if (SettingsStore.getValue("debug_registration")) {
-@@ -275,11 +277,22 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -277,11 +279,22 @@ export default class Registration extends React.Component<IProps, IState> {
      }
  
      private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
@@ -36,7 +36,7 @@ index 5a7a61e..ad31fc0 100644
          });
      };
  
-@@ -288,7 +301,10 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -296,7 +309,10 @@ export default class Registration extends React.Component<IProps, IState> {
              emailAddress,
              clientSecret,
              sendAttempt,
@@ -48,7 +48,7 @@ index 5a7a61e..ad31fc0 100644
                  client_secret: clientSecret,
                  hs_url: this.state.matrixClient.getHomeserverUrl(),
                  is_url: this.state.matrixClient.getIdentityServerUrl(),
-@@ -460,6 +476,11 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -476,6 +492,11 @@ export default class Registration extends React.Component<IProps, IState> {
              inhibit_login: undefined,
          };
          if (auth) registerParams.auth = auth;
@@ -60,7 +60,7 @@ index 5a7a61e..ad31fc0 100644
          debuglog("Registration: sending registration request:", auth);
          return this.state.matrixClient.registerRequest(registerParams);
      };
-@@ -499,7 +520,7 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -515,7 +536,7 @@ export default class Registration extends React.Component<IProps, IState> {
                      sessionId={this.props.sessionId}
                      clientSecret={this.props.clientSecret}
                      emailSid={this.props.idSid}
@@ -69,7 +69,7 @@ index 5a7a61e..ad31fc0 100644
                  />
              );
          } else if (!this.state.matrixClient && !this.state.busy) {
-@@ -692,6 +713,12 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -711,6 +732,12 @@ export default class Registration extends React.Component<IProps, IState> {
                              {errorText}
                              {serverDeadSection}
                          </AuthHeaderDisplay>
@@ -83,10 +83,10 @@ index 5a7a61e..ad31fc0 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index 366ff3a..35b3bf3 100644
+index 17d540b..9b6e012 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-@@ -259,7 +259,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -268,7 +268,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
      };
  
      private validateEmailRules = withValidation({
@@ -95,7 +95,7 @@ index 366ff3a..35b3bf3 100644
          hideDescriptionIfValid: true,
          rules: [
              {
-@@ -267,7 +267,10 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -276,7 +276,10 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                  test(this: RegistrationForm, { value, allowEmpty }) {
                      return allowEmpty || !this.authStepIsRequired("m.login.email.identity") || !!value;
                  },
@@ -107,7 +107,7 @@ index 366ff3a..35b3bf3 100644
              },
              {
                  key: "email",
-@@ -551,16 +554,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -560,16 +563,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>

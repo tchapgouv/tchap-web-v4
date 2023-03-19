@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index bc0ce7f..8c94265 100644
+index a1c6e60..780f911 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-@@ -52,6 +52,7 @@ import SetIdServer from "../../SetIdServer";
+@@ -54,6 +54,7 @@ import SetIdServer from "../../SetIdServer";
  import SetIntegrationManager from "../../SetIntegrationManager";
  import ToggleSwitch from "../../../elements/ToggleSwitch";
  import { IS_MAC } from "../../../../../Keyboard";
@@ -10,7 +10,7 @@ index bc0ce7f..8c94265 100644
  
  interface IProps {
      closeSettingsFn: () => void;
-@@ -314,7 +315,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -315,7 +316,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          // validate 3PID ownership even if we're just adding to the homeserver only.
          // For newer homeservers with separate 3PID add and bind methods (MSC2290),
          // there is no such concern, so we can always show the HS account 3PIDs.
@@ -20,7 +20,7 @@ index bc0ce7f..8c94265 100644
              SettingsStore.getValue(UIFeature.ThirdPartyID) &&
              (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
          ) {
-@@ -487,7 +489,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -516,7 +518,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;

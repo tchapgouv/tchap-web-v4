@@ -1,17 +1,17 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index a4aa9de..0773cf9 100644
+index 8f86189..fcea882 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
-@@ -212,6 +212,8 @@ import { UNREAD_THREAD_NOTIFICATIONS } from "./@types/sync";
- import { buildFeatureSupportMap, Feature, ServerSupport } from "./feature";
+@@ -207,6 +207,8 @@ import { buildFeatureSupportMap, Feature, ServerSupport } from "./feature";
  import { CryptoBackend } from "./common-crypto/CryptoBackend";
+ import { RUST_SDK_STORE_PREFIX } from "./rust-crypto/constants";
  
 +import TchapUIFeature from '../../../src/util/TchapUIFeature'; // :TCHAP:
 +
  export type Store = IStore;
  
  export type ResetTimelineCallback = (roomId: string) => boolean;
-@@ -6989,6 +6991,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -7178,6 +7180,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];
@@ -29,7 +29,7 @@ index a4aa9de..0773cf9 100644
          return unstableFeatures && !!unstableFeatures[feature];
      }
  
-@@ -7055,7 +7068,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -7244,7 +7257,10 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
       * @returns true if server supports the `logout_devices` parameter
       */
      public doesServerSupportLogoutDevices(): Promise<boolean> {
