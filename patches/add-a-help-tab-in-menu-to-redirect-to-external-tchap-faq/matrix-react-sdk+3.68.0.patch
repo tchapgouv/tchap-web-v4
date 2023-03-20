@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
-index 08ef894..4e33170 100644
+index 9c9e1ce..6fe1939 100644
 --- a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
-@@ -206,6 +206,10 @@ limitations under the License.
+@@ -198,6 +198,10 @@ limitations under the License.
          mask-image: url("$(res)/img/element-icons/settings.svg");
      }
  
@@ -14,10 +14,10 @@ index 08ef894..4e33170 100644
          mask-image: url("$(res)/img/element-icons/feedback.svg");
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-index 5e6970f..9497bc8 100644
+index ec6477a..4d94484 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-@@ -245,6 +245,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
+@@ -244,6 +244,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
          this.setState({ contextMenuPosition: null }); // also close the menu
      };
  
@@ -25,10 +25,10 @@ index 5e6970f..9497bc8 100644
 +        window.open("https://www.tchap.gouv.fr/faq", '_blank');
 +    };
 +
-     private onProvideFeedback = (ev: ButtonEvent) => {
+     private onProvideFeedback = (ev: ButtonEvent): void => {
          ev.preventDefault();
          ev.stopPropagation();
-@@ -370,6 +374,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
+@@ -359,6 +363,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
                      onClick={(e) => this.onSettingsOpen(e, null)}
                  />
                  {feedbackButton}
