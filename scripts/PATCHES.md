@@ -48,4 +48,4 @@ Creating a Patch from the Temporary Folder
 - Make sure to commit the changes to your patches folder after updating or creating patches.
 - The script assumes you're using yarn as your package manager. If you're using a different package manager, you'll need to modify the script accordingly.
 - Ensure you have Python installed on your system for the script to work correctly.
-- You need an environment with patch that support `--merge` option, you use linux or docker with `docker run -ti -v "$(pwd):/home/node" node:16 /bin/bash`
+- You need an environment with patch that support `--merge` option, you can use linux or docker with `docker run -ti -v "$(pwd):/home/node" node:16 /bin/bash`
