@@ -124,13 +124,6 @@
       "src/sync.ts"
     ]
   },
-  "user-friendlier-encrypted-messages": {
-    "package": "matrix-react-sdk",
-    "files": [
-      "src/components/views/rooms/EventTile.tsx",
-      "res/css/views/elements/_TooltipButton.pcss"
-    ]
-  },
   "cross-signing-ui": {
     "comments": "reword cross-signing dialogs and remove confirmation dialog",
     "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/406",
