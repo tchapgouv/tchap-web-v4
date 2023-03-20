@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
-index 9435366..76a5cb1 100644
+index 5175de6..9ed1fe0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 @@ -22,6 +22,7 @@ import SdkConfig from "../../../SdkConfig";
@@ -13,7 +13,7 @@ index 9435366..76a5cb1 100644
 @@ -95,7 +96,10 @@ class PassphraseField extends PureComponent<IProps> {
      });
  
-     onValidate = async (fieldState: IFieldState) => {
+     public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
 -        const result = await this.validate(fieldState);
 +        // :TCHAP: use home-made validation
 +        // const result = await this.validate(fieldState);

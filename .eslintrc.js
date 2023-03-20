@@ -19,7 +19,6 @@ module.exports = {
     },
     overrides: [
         {
-<<<<<<< HEAD
             files: [
                 "src/**/*.{ts,tsx}",
                 "test/**/*.{ts,tsx}",
@@ -32,10 +31,6 @@ module.exports = {
                 "plugin:matrix-org/typescript",
                 "plugin:matrix-org/react",
             ],
-=======
-            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}"],
-            extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
->>>>>>> v1.11.25
             // NOTE: These rules are frozen and new rules should not be added here.
             // New changes belong in https://github.com/matrix-org/eslint-plugin-matrix-org/
             rules: {

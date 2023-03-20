@@ -1,29 +1,29 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-index e58adb7..a1134a9 100644
+index 78bb1fe..a4449b2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 @@ -415,11 +415,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
      }
  
-     render() {
+     public render(): React.ReactNode {
 +        const isEncrypted = this.state.encrypted;
 +        /* :TCHAP: does not allow to change encryption
          const client = this.context;
          const room = client.getRoom(this.props.roomId);
 -        const isEncrypted = this.state.encrypted;
-         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
+         const hasEncryptionPermission = room?.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
          const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
 +        end :TCHAP: */
 +        const canEnableEncryption = false;
  
-         let encryptionSettings = null;
+         let encryptionSettings: JSX.Element | undefined;
          if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
 @@ -436,7 +439,10 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
          const historySection = this.renderHistory();
  
-         let advanced;
+         let advanced: JSX.Element | undefined;
 +        /* :TCHAP: does not show any advanced options for public room (guest access switch)
-         if (room.getJoinRule() === JoinRule.Public) {
+         if (room?.getJoinRule() === JoinRule.Public) {
 +        end :TCHAP: */
 +        if (false) {
              advanced = (

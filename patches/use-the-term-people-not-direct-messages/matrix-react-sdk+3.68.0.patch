@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-index c4a3c2a..5d6d1df 100644
+index 03914b3..04cdcd0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-@@ -222,7 +222,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
+@@ -222,7 +222,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                      onFinished();
                      PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
                  }}
@@ -13,10 +13,10 @@ index c4a3c2a..5d6d1df 100644
              >
                  <span className="mx_IconizedContextMenu_sublabel">{room.getJoinedMemberCount()}</span>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-index 61c9de1..5833e76 100644
+index a66d0aa..96d8a54 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-@@ -52,7 +52,9 @@ const SpacePreferencesAppearanceTab = ({ space }: Pick<IProps, "space">) => {
+@@ -52,7 +52,9 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space
                          );
                      }}
                  >
@@ -28,10 +28,10 @@ index 61c9de1..5833e76 100644
                  <p>
                      {_t(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-index 90c53d5..cffe6f9 100644
+index 7e2bd9d..d7fbc74 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-@@ -397,7 +397,7 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
+@@ -396,7 +396,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
          defaultHidden: false,
      },
      [DefaultTagID.DM]: {
@@ -41,10 +41,10 @@ index 90c53d5..cffe6f9 100644
          defaultHidden: false,
          AuxButtonComponent: DmAuxButton,
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
-index 4518fcf..845641a 100644
+index 1a11e0d..b4800b3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
-@@ -105,7 +105,9 @@ const SidebarUserSettingsTab = () => {
+@@ -105,7 +105,9 @@ const SidebarUserSettingsTab: React.FC = () => {
                      onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebSettingsSidebarTabSpacesCheckbox")}
                      className="mx_SidebarUserSettingsTab_peopleCheckbox"
                  >
@@ -56,10 +56,10 @@ index 4518fcf..845641a 100644
                  <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
                      {_t("Group all your people in one place.")}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
-index 2402907..6b81b41 100644
+index 1adcd41..2054ab9 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
-@@ -103,7 +103,9 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
+@@ -105,7 +105,9 @@ const QuickSettingsButton: React.FC<{
                      onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
                  >
                      <MembersIcon className="mx_QuickSettingsButton_icon" />
@@ -71,7 +71,7 @@ index 2402907..6b81b41 100644
                  <AccessibleButton
                      className="mx_QuickSettingsButton_moreOptionsButton"
 diff --git a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
-index 77d65c1..d08c798 100644
+index 0cc4bba..165e2bb 100644
 --- a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 +++ b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 @@ -42,7 +42,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s

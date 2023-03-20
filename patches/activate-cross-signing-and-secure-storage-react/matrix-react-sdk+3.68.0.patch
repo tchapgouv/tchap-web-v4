@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 97d623a..2a02d90 100644
+index 00a05b1..2009120 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 @@ -32,6 +32,8 @@ import { throttle } from "lodash";
@@ -11,15 +11,15 @@ index 97d623a..2a02d90 100644
  
  // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
  import "focus-visible";
-@@ -138,6 +140,7 @@ import { VoiceBroadcastResumer } from "../../voice-broadcast";
- import GenericToast from "../views/toasts/GenericToast";
- import { Linkify } from "../views/elements/Linkify";
- import RovingSpotlightDialog, { Filter } from "../views/dialogs/spotlight/SpotlightDialog";
+@@ -143,6 +145,7 @@ import { findDMForUser } from "../../utils/dm/findDMForUser";
+ import { Linkify } from "../../HtmlUtils";
+ import { NotificationColor } from "../../stores/notifications/NotificationColor";
+ import { UserTab } from "../views/dialogs/UserTab";
 +import TchapUIFeature from "../../../../../src/util/TchapUIFeature";
  
  // legacy export
  export { default as Views } from "../../Views";
-@@ -1580,6 +1583,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+@@ -1581,6 +1584,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
          cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
          cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
  
@@ -44,7 +44,7 @@ index 97d623a..2a02d90 100644
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index b04714e..8adbba3 100644
+index 0ba8f58..34d459c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -69,18 +69,18 @@ index b04714e..8adbba3 100644
              <div>
                  {summarisedStatus}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
-index 56fdb5e..d67fb6d 100644
+index cf7506c..dca86c3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
-@@ -27,6 +27,7 @@ import Spinner from "../elements/Spinner";
- import AccessibleButton from "../elements/AccessibleButton";
+@@ -27,6 +27,7 @@ import AccessibleButton from "../elements/AccessibleButton";
  import { deleteDevicesWithInteractiveAuth } from "./devices/deleteDevices";
  import MatrixClientContext from "../../../contexts/MatrixClientContext";
+ import { isDeviceVerified } from "../../../utils/device/isDeviceVerified";
 +import TchapUtils from '../../../../../../src/util/TchapUtils';
  
  interface IProps {
      className?: string;
-@@ -38,6 +39,7 @@ interface IState {
+@@ -37,6 +38,7 @@ interface IState {
      deviceLoadError?: string;
      selectedDevices: string[];
      deleting?: boolean;
@@ -88,7 +88,7 @@ index 56fdb5e..d67fb6d 100644
  }
  
  export default class DevicesPanel extends React.Component<IProps, IState> {
-@@ -55,6 +57,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
+@@ -54,6 +56,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
      }
  
      public componentDidMount(): void {
@@ -101,24 +101,25 @@ index 56fdb5e..d67fb6d 100644
          this.context.on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
          this.loadDevices();
      }
-@@ -125,6 +133,12 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
+@@ -120,6 +128,13 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
+     }
+ 
      private isDeviceVerified(device: IMyDevice): boolean | null {
-         try {
-             const cli = this.context;
-+            //:tchap: if cross signing is not supported, use the legacy device check
-+            if (!this.state.isCrossSigningSupported) {
-+                return cli.checkDeviceTrust(cli.getUserId(), device.device_id).isVerified();
-+            }
-+            //:tchap: end
++        //:tchap: if cross signing is not supported, use the legacy device check
++        const cli = this.context;
++        if (!this.state.isCrossSigningSupported) {
++            return cli.checkDeviceTrust(cli.getUserId(), device.device_id).isVerified();
++        }
++        //:tchap: end           
 +
-             const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-             return this.state.crossSigningInfo
-                 .checkDeviceTrust(this.state.crossSigningInfo, deviceInfo, false, true)
+         return isDeviceVerified(device, this.context);
+     }
+ 
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 2e6e6fb..f718552 100644
+index 7ab2273..53fb1e2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-@@ -30,6 +30,7 @@ import AccessibleButton from "../elements/AccessibleButton";
+@@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
  import QuestionDialog from "../dialogs/QuestionDialog";
  import RestoreKeyBackupDialog from "../dialogs/security/RestoreKeyBackupDialog";
  import { accessSecretStorage } from "../../../SecurityManager";
@@ -126,7 +127,7 @@ index 2e6e6fb..f718552 100644
  
  interface IState {
      loading: boolean;
-@@ -460,17 +461,24 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -463,17 +464,24 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
          let actionRow;
          if (actions.length) {
              actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;

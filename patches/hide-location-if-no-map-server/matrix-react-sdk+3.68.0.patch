@@ -1,18 +1,18 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
-index c270608..9c1f0cf 100644
+index 86e0256..89b1b36 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
-@@ -60,6 +60,7 @@ import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/Matrix
- import { htmlToPlainText } from "../../../utils/room/htmlToPlaintext";
- import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/setUpVoiceBroadcastPreRecording";
+@@ -60,6 +60,7 @@ import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/
  import { SdkContextClass } from "../../../contexts/SDKContext";
+ import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
+ import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 +import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
  
  let instanceCount = 0;
  
-@@ -592,7 +593,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
-                                         }
-                                     }}
+@@ -611,7 +612,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
+                                     relation={this.props.relation}
+                                     onRecordStartEndClick={this.onRecordStartEndClick}
                                      setStickerPickerOpen={this.setStickerPickerOpen}
 -                                    showLocationButton={!window.electron}
 +                                    showLocationButton={!window.electron && TchapUtils.isMapConfigured() } // :TCHAP: showLocationButton only if map server is configured.
