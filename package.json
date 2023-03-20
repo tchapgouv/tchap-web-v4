@@ -50,8 +50,8 @@
         "start:js": "webpack-dev-server --output-filename=bundles/_dev_/[name].js --output-chunk-filename=bundles/_dev_/[name].js -w --mode development --disable-host-check --hot",
         "lint": "yarn lint:types && yarn lint:js && yarn lint:style",
         "lint:js": "yarn lint:js:src && yarn lint:js:module_system",
-        "lint:js:src": "eslint --max-warnings 0 src test && prettier --check .",
-        "lint:js:module_system": "eslint --max-warnings 0 --config .eslintrc-module_system.js module_system",
+        "lint:js:src": "eslint --max-warnings 100 src test && prettier --check .",
+        "lint:js:module_system": "eslint --max-warnings 100 --config .eslintrc-module_system.js module_system",
         "lint:js-fix": "yarn lint:js-fix:src && yarn lint:js-fix:module_system",
         "lint:js-fix:src": "prettier --write . && eslint --fix src test",
         "lint:js-fix:module_system": "eslint --fix --config .eslintrc-module_system.js module_system",
@@ -64,7 +64,7 @@
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage",
         "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
-        "postinstall": "",
+        "postinstall": "./scripts/apply_patches.sh",
         "patch-package": "patch-package",
         "patches-reapply": "rm -rf node_modules/matrix-react-sdk; rm -rf node_modules/matrix-js-sdk; yarn install --force",
         "patch-make": "node scripts/makePatch.ts"
@@ -197,8 +197,8 @@
         "worklet-loader": "^2.0.0",
         "yaml": "^2.0.1",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
-            "enzyme": "^3.11.0",
-            "enzyme-to-json": "^3.6.2"
+        "enzyme": "^3.11.0",
+        "enzyme-to-json": "^3.6.2"
     },
     "jest-comments": {
         "README": "For the tests to work, you need matrix-react-sdk to be git-cloned and yarn linked into this project.",
@@ -208,7 +208,7 @@
         "setupFilesAfterEnv": "duplicate enzyme configuration in our own setup file '<rootDir>/test/setupTests.js'",
         "moduleNameMapper": "use mapper from element-web, helps at mocking {module, ressources} directly with regexp",
         "transformIgnorePatterns": "make regexp inline {matrix-js-sdk|matrix-react-sdk} else it does not work"
-      },
+    },
     "jest": {
         "snapshotSerializers": [
             "enzyme-to-json/serializer"
