@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
-index 68cb728..78e3894 100644
+index 1edb3d9..0033741 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
 @@ -179,6 +179,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
@@ -39,32 +39,32 @@ index 68cb728..78e3894 100644
              <div>
                  <Spinner />
 +                {/* :TCHAP: remove code
-                 <p>{_t("Waiting for partner to confirm...")}</p>
+                 <p>{_t("Waiting for partner to confirm…")}</p>
 +                end :TCHAP: */}
 +                <p>{ _t("Please confirm the objects on the other device (loading).")}</p>
              </div>
          );
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
-index 89c10d6..8592917 100644
+index 53ac14f..dd600f8 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
-@@ -51,7 +51,10 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
+@@ -49,7 +49,10 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
          const request = this.state.verificationRequest;
-         const otherUserId = request && request.otherUserId;
-         const member = this.props.member || (otherUserId && MatrixClientPeg.get().getUser(otherUserId));
+         const otherUserId = request?.otherUserId;
+         const member = this.props.member || (otherUserId ? MatrixClientPeg.get().getUser(otherUserId) : null);
 +        /* :TCHAP: remove code
-         const title = request && request.isSelfVerification ? _t("Verify other device") : _t("Verification Request");
+         const title = request?.isSelfVerification ? _t("Verify other device") : _t("Verification Request");
 +        end :TCHAP: */
 +        const title = _t("Incoming Verification Request");
          
          return (
              <BaseDialog
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/VerificationPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/VerificationPanel.tsx
-index 946cf32..e9b9a93 100644
+index d0c6ab4..e4a8c49 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/VerificationPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/VerificationPanel.tsx
-@@ -270,10 +270,13 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
+@@ -271,10 +271,13 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                  logger.warn("Verified device we don't know about: " + this.props.request.channel.deviceId);
                  description = _t("You've successfully verified your device!");
              } else {
