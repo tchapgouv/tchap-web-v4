@@ -57,8 +57,7 @@
     "package": "matrix-react-sdk",
     "files": [
       "src/components/structures/auth/ForgotPassword.tsx",
-      "src/components/structures/auth/forgot-password/EnterEmail.tsx",
-      "src/PasswordReset.ts"
+      "src/components/structures/auth/forgot-password/EnterEmail.tsx"
     ]
   },
   "hide-room-alias-settings": {
