@@ -22,22 +22,29 @@ function merge_patches() {
     # Check if the package version exists and if the patch needs to be updated
     if [ "$PACKAGE_VERSION" == "null" ] || [[ "$PATCH_FILE" =~ "$PACKAGE_NAME+$PACKAGE_VERSION".patch ]]; then
       echo "Package '$PACKAGE_NAME' not found in package.json or patch already up-to-date. Skipping patch update."
+      echo ""
       continue
     fi
 
     # Create a subfolder for the current package inside the temporary directory
     PACKAGE_TEMP_DIR="$TEMP_DIR/$PATCH_DIR"
+    if [ -d "$PACKAGE_TEMP_DIR" ]; then
+      echo "$PACKAGE_TEMP_DIR already exist, skipping patch update. Remove it to regenerate."
+      echo ""
+      continue
+    fi
+
     mkdir -p "$PACKAGE_TEMP_DIR"
-    LOG_FILE=$PACKAGE_TEMP_DIR/result.log
+    LOG_FILE="$PACKAGE_TEMP_DIR".log
 
     # Install the package in the package subfolder
     cd "$PACKAGE_TEMP_DIR"
     echo '{ }' > package.json
-    yarn add "$PACKAGE_NAME@$PACKAGE_VERSION" > $LOG_FILE 2>&1
-    yarn add patch-package > $LOG_FILE 2>&1
+    yarn add "$PACKAGE_NAME@$PACKAGE_VERSION" >> $LOG_FILE 2>&1
+    yarn add patch-package <> $LOG_FILE 2>&1
 
     # Apply the patch with --merge option
-    patch -p1 --no-backup-if-mismatch --input="$PATCH_PATH" --forward --merge 2>&1 > $LOG_FILE || true
+    patch -p1 --no-backup-if-mismatch --input="$PATCH_PATH" --forward --merge 2>&1 >> $LOG_FILE || true
 
     # Check for conflicts
     CONFLICTS=$(grep -lr "<<<<<<<" node_modules/"$PACKAGE_NAME") || true
@@ -51,10 +58,10 @@ function merge_patches() {
       CONFLICTS_FOUND=true
     else
       # If there are no conflicts, generate a new patch file
-      yarn patch-package "$PACKAGE_NAME" > $LOG_FILE 2>&1
+      yarn patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
 
       # Move the new patch file to the old patch file's location
-      mv patches/"$PACKAGE_NAME"*.patch "$(dirname $PATCH_PATH)"
+      mv patches/*.patch "$(dirname $PATCH_PATH)"
       rm $PATCH_PATH
 
       # Clean up the package subfolder
@@ -78,11 +85,15 @@ function continue_patches() {
 
   # Iterate through the package subfolders
   for PACKAGE_TEMP_DIR in "$TEMP_DIR"/*; do
-    echo "# Manage $PATCH_PATH"
+    if [ ! -d $PACKAGE_TEMP_DIR ]; then
+       continue
+    fi       
     PATCH_DIR="$PATCHES_DIR/$(basename "$PACKAGE_TEMP_DIR")"
     PATCH_PATH="$PATCH_DIR"/*.patch
-    PATCH_FILE=$(basename $PATCH_PATH)    
+    PATCH_FILE=$(basename $PATCH_PATH)
     PACKAGE_NAME=$(echo "$PATCH_FILE" | cut -d'+' -f1)
+    LOG_FILE="$PACKAGE_TEMP_DIR".log
+    echo "# Manage $PATCH_PATH"
 
     # Check for conflicts
     CONFLICTS=$(grep -lr "<<<<<<<" "$PACKAGE_TEMP_DIR/node_modules/$PACKAGE_NAME") || true
@@ -97,14 +108,16 @@ function continue_patches() {
     else
       # If there are no conflicts, generate a new patch file
       cd "$PACKAGE_TEMP_DIR"
-      yarn patch-package "$PACKAGE_NAME"
+      yarn patch-package "$PACKAGE_NAME" 2>&1 >> $LOG_FILE || true
 
       # Move the new patch file to the old patch file's location
-      mv patches/"$PACKAGE_NAME"*.patch "$(dirname $PATCH_PATH)"
+      mv patches/*.patch "$PATCH_DIR"
+      rm $PATCH_PATH
 
       # Clean up the package subfolder
       cd "$TEMP_DIR"
       rm -rf "$(basename "$PACKAGE_TEMP_DIR")"
+      echo "Patch Done and temp file cleaned"
     fi
   done
 
