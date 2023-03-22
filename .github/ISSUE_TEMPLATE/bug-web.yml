@@ -2,33 +2,33 @@ name: Bug report for Tchap Web (in browser)
 description: File a bug report if you are using Element in a web browser like Firefox, Chrome, Edge, and so on.
 labels: [web, v4, bug]
 body:
-    - type: markdown
-      attributes:
-          value: |
-              Thanks for taking the time to fill out this bug report!
+  - type: markdown
+    attributes:
+        value: |
+            Thanks for taking the time to fill out this bug report!
 
-              Please report security issues by email to security@matrix.org
-    - type: textarea
-      id: reproduction-steps
-      attributes:
-          label: Steps to reproduce
-          description: Please attach screenshots, videos or logs if you can.
-          placeholder: Tell us what you see!
-          value: |
-              1. Where are you starting? What can you see?
-              2. What do you click?
-              3. More steps…
-      validations:
-          required: true
-    - type: textarea
-      id: result
-      attributes:
-          label: Outcome
-          placeholder: Tell us what went wrong
-          value: |
-              #### What did you expect?
+            Please report security issues by email to security@matrix.org
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+        label: Steps to reproduce
+        description: Please attach screenshots, videos or logs if you can.
+        placeholder: Tell us what you see!
+        value: |
+            1. Where are you starting? What can you see?
+            2. What do you click?
+            3. More steps…
+    validations:
+        required: true
+  - type: textarea
+    id: result
+    attributes:
+        label: Outcome
+        placeholder: Tell us what went wrong
+        value: |
+            #### What did you expect?
 
-        #### What happened instead?
+            #### What happened instead?
     validations:
       required: true
   - type: input
