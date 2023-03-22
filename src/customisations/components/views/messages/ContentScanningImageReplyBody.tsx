@@ -15,7 +15,7 @@
  */
 
 import React from "react";
-import Spinner from 'matrix-react-sdk/src/components/views/elements/Spinner';
+import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
 import { IMediaEventContent } from "matrix-react-sdk/src/customisations/models/IMediaEventContent";
 import { _t } from "matrix-react-sdk/src/languageHandler";
@@ -43,51 +43,58 @@ export default class ContentScanningImageReplyBody extends React.PureComponent<I
             hasError: false,
         };
 
-        Promise.all([
-            this.media.scanSource(),
-            this.media.scanThumbnail(),
-        ]).then(async ([ok1, ok2]) => {
-            const isSafe = ok1 && ok2;
-            this.setState({
-                isScanning: false,
-                isSafe,
+        Promise.all([this.media.scanSource(), this.media.scanThumbnail()])
+            .then(async ([ok1, ok2]) => {
+                const isSafe = ok1 && ok2;
+                this.setState({
+                    isScanning: false,
+                    isSafe,
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    isScanning: false,
+                    hasError: true,
+                });
             });
-        }).catch(() => {
-            this.setState({
-                isScanning: false,
-                hasError: true,
-            });
-        });
     }
 
     public render() {
         if (this.state.isScanning) {
-            return <>
-                <div className="mx_MImageBody mx_MImageBody_pending" style={{ height: FORCED_IMAGE_HEIGHT }}>
-                    <Spinner />
-                </div>
-                <ContentScanningStatus fileName={this.fileName} status="scanning" />
-            </>;
+            return (
+                <>
+                    <div className="mx_MImageBody mx_MImageBody_pending" style={{ height: FORCED_IMAGE_HEIGHT }}>
+                        <Spinner />
+                    </div>
+                    <ContentScanningStatus fileName={this.fileName} status="scanning" />
+                </>
+            );
         } else if (this.state.hasError) {
-            return <>
-                <div className="mx_MImageBody mx_MImageBody_error" style={{ height: FORCED_IMAGE_HEIGHT }}>
-                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
-                </div>
-                <ContentScanningStatus fileName={this.fileName} status="error" />
-            </>;
+            return (
+                <>
+                    <div className="mx_MImageBody mx_MImageBody_error" style={{ height: FORCED_IMAGE_HEIGHT }}>
+                        <BlockedIcon className="mx_MImageBody_BlockedIcon" />
+                    </div>
+                    <ContentScanningStatus fileName={this.fileName} status="error" />
+                </>
+            );
         } else if (!this.state.isSafe) {
-            return <>
-                <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ height: FORCED_IMAGE_HEIGHT }}>
-                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
-                </div>
-                <ContentScanningStatus fileName={this.fileName} status="unsafe" />
-            </>;
+            return (
+                <>
+                    <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ height: FORCED_IMAGE_HEIGHT }}>
+                        <BlockedIcon className="mx_MImageBody_BlockedIcon" />
+                    </div>
+                    <ContentScanningStatus fileName={this.fileName} status="unsafe" />
+                </>
+            );
         }
 
-        return <>
-            { this.renderOriginal() }
-            <ContentScanningStatus status="done" />
-        </>;
+        return (
+            <>
+                {this.renderOriginal()}
+                <ContentScanningStatus status="done" />
+            </>
+        );
     }
 
     protected renderOriginal() {

@@ -31,7 +31,7 @@ export async function needsRefreshForVersion4(): Promise<boolean> {
     if (TchapVersionManagement.getAppVersion()) {
         const previousAppVersion: string = TchapVersionManagement.getAppVersion();
         const previousAppMajorVersion: number = parseInt(previousAppVersion.charAt(0), 10);
-        return (!isNaN(previousAppMajorVersion) && previousAppMajorVersion < 4);
+        return !isNaN(previousAppMajorVersion) && previousAppMajorVersion < 4;
     }
 
     // If there is no tchap app version, it could be that this is a first install of tchap, or that saving the version has failed in the past, or
@@ -39,8 +39,10 @@ export async function needsRefreshForVersion4(): Promise<boolean> {
     try {
         // Read version of matrix-js-sdk:riot-web-sync, if it is lower than version 4, refresh is needed.
         // Note : version 4 of the store happens to coincide with tchap-web v4, but it's unrelated.
-        const previousStoreVersion: number =
-            await TchapVersionManagement.getStoreVersion(indexedDB, TchapVersionManagement.SYNC_STORE_NAME);
+        const previousStoreVersion: number = await TchapVersionManagement.getStoreVersion(
+            indexedDB,
+            TchapVersionManagement.SYNC_STORE_NAME,
+        );
         return previousStoreVersion < 4;
     } catch (error) {
         // Do not refresh (safety first, avoid creating an infinite clearCacheAndReload loop !)
@@ -52,42 +54,38 @@ export async function needsRefreshForVersion4(): Promise<boolean> {
 /**
  * Force refresh after the client has started
  */
-export function queueClearCacheAndReload() {
-    const clearCacheAndReloadId = defaultDispatcher.register(
-        (payload: ActionPayload) => {
-            if (payload.action === "client_started") {
-                //unregister callback once the work is done
-                defaultDispatcher.unregister(clearCacheAndReloadId);
-                //:tchap: use localstorage instead of matric idDB ?
-                TchapVersionManagement.clearCacheAndReload();
-            }
-        },
-    );
+export function queueClearCacheAndReload(): void {
+    const clearCacheAndReloadId = defaultDispatcher.register((payload: ActionPayload) => {
+        if (payload.action === "client_started") {
+            //unregister callback once the work is done
+            defaultDispatcher.unregister(clearCacheAndReloadId);
+            //:tchap: use localstorage instead of matric idDB ?
+            TchapVersionManagement.clearCacheAndReload();
+        }
+    });
 }
 
 /**
  * Save app version to localstorage after the client has started
  */
-export function queueOverideUserSettings() {
-    const saveVersionId = defaultDispatcher.register(
-        (payload: ActionPayload) => {
-            if (payload.action === "client_started") {
-                //override user settings
-                TchapUserSettings.override();
+export function queueOverideUserSettings(): void {
+    const saveVersionId = defaultDispatcher.register((payload: ActionPayload) => {
+        if (payload.action === "client_started") {
+            //override user settings
+            TchapUserSettings.override();
 
-                //unregister callback once the work is done
-                defaultDispatcher.unregister(saveVersionId);
-            }
-        },
-    );
+            //unregister callback once the work is done
+            defaultDispatcher.unregister(saveVersionId);
+        }
+    });
 }
 
-export function saveAppVersionInLocalStorage() {
+export function saveAppVersionInLocalStorage(): void {
     //:tchap: keep initialising so that we can show any possible error with as many features (theme, i18n) as possible
     TchapVersionManagement.saveAppVersion(PlatformPeg.get());
     //end
 }
 
-export function registerExpiredAccountListener() {
+export function registerExpiredAccountListener(): void {
     ExpiredAccountHandler.register();
 }

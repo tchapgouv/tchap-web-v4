@@ -17,7 +17,7 @@
 import "../../../../res/css/views/elements/BlockedIcon.pcss";
 
 import React from "react";
-import classNames from 'classnames';
+import classNames from "classnames";
 
 interface BlockedIconProps {
     className: string;

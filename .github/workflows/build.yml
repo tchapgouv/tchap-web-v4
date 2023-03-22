@@ -2,28 +2,28 @@
 #tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Build
 on:
-  pull_request: { }
-  push:
-    branches: [ master ]
+    pull_request: {}
+    push:
+        branches: [master]
 # develop pushes and repository_dispatch handled in build_develop.yaml
 env:
-  # These must be set for fetchdep.sh to get the right branch
-  REPOSITORY: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
-  build:
-    name: "Build"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+    build:
+        name: "Build"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: 16
+            - uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: 16
 
-      - name: Install Dependencies
-        run: "./scripts/install-yarn-linked-repositories.sh"
+            - name: Install Dependencies
+              run: "./scripts/install-yarn-linked-repositories.sh"
 
-      - name: Build
-        run: "yarn build"
+            - name: Build
+              run: "yarn build"

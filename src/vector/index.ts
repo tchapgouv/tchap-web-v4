@@ -22,9 +22,15 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
-import './modernizr';
+import "./modernizr";
 // eslint-disable-next-line max-len
-import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage, registerExpiredAccountListener } from "../app/initTchap";
+import {
+    queueClearCacheAndReload,
+    queueOverideUserSettings,
+    needsRefreshForVersion4,
+    saveAppVersionInLocalStorage,
+    registerExpiredAccountListener,
+} from "../app/initTchap";
 
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points

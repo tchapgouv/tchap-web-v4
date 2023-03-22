@@ -2,7 +2,7 @@ import React from "react";
 import { IFieldState, IValidationResult } from "matrix-react-sdk/src/components/views/elements/Validation";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 
-import TchapApi from './TchapApi';
+import TchapApi from "./TchapApi";
 import TchapUtils from "./TchapUtils";
 
 /**
@@ -10,7 +10,7 @@ import TchapUtils from "./TchapUtils";
  * File copied from v2 and modified.
  */
 export default class TchapStrongPassword {
-    private static passwordRules: { ruleName: string, ruleValue: number|string} | null = null;
+    private static passwordRules: { ruleName: string; ruleValue: number | string } | null = null;
 
     /**
      * Query password_policy rules from a homeserver, and cache them.
@@ -37,20 +37,17 @@ export default class TchapStrongPassword {
         const applyRule = (ruleName: string, ruleValue): string => {
             switch (ruleName) {
                 case "m.minimum_length":
-                    return this.minimumLength(passwordValue, ruleValue) ? "" :
-                        _t("a minimum of %(number)s characters", { number: ruleValue });
+                    return this.minimumLength(passwordValue, ruleValue)
+                        ? ""
+                        : _t("a minimum of %(number)s characters", { number: ruleValue });
                 case "m.require_digit":
-                    return this.requireDigit(passwordValue, ruleValue) ? "" :
-                        _t("a number");
+                    return this.requireDigit(passwordValue, ruleValue) ? "" : _t("a number");
                 case "m.require_symbol":
-                    return this.requireSymbol(passwordValue, ruleValue) ? "" :
-                        _t("a symbol");
+                    return this.requireSymbol(passwordValue, ruleValue) ? "" : _t("a symbol");
                 case "m.require_lowercase":
-                    return this.requireLowercase(passwordValue, ruleValue) ? "" :
-                        _t("a lowercase letter");
+                    return this.requireLowercase(passwordValue, ruleValue) ? "" : _t("a lowercase letter");
                 case "m.require_uppercase":
-                    return this.requireUppercase(passwordValue, ruleValue) ? "" :
-                        _t("an uppercase letter");
+                    return this.requireUppercase(passwordValue, ruleValue) ? "" : _t("an uppercase letter");
                 default:
                     throw new Error("Unknown password rule : " + ruleName);
             }
@@ -75,18 +72,12 @@ export default class TchapStrongPassword {
             feedback: (
                 <div className="mx_Validation mx_Validation_invalid">
                     <div className="mx_Validation_description mx_Validation_invalid">
-                        { _t("Your password must include:") }
+                        {_t("Your password must include:")}
                     </div>
                     <ul className="mx_Validation_details">
-                        {
-                            errors.map((error) => {
-                                return (
-                                    <li className="mx_Validation_detail mx_Validation_invalid">
-                                        { error }
-                                    </li>
-                                );
-                            })
-                        }
+                        {errors.map((error) => {
+                            return <li className="mx_Validation_detail mx_Validation_invalid">{error}</li>;
+                        })}
                     </ul>
                 </div>
             ),
@@ -99,28 +90,28 @@ export default class TchapStrongPassword {
 
     private static requireUppercase(passwordValue: string, required: boolean): boolean {
         if (required) {
-            return (/[A-Z]/.test(passwordValue));
+            return /[A-Z]/.test(passwordValue);
         }
         return true;
     }
 
     private static requireSymbol(passwordValue: string, required: boolean): boolean {
         if (required) {
-            return (/[^a-zA-Z0-9]/.test(passwordValue));
+            return /[^a-zA-Z0-9]/.test(passwordValue);
         }
         return true;
     }
 
     private static requireDigit(passwordValue: string, required: boolean): boolean {
         if (required) {
-            return (/[0-9]/.test(passwordValue));
+            return /[0-9]/.test(passwordValue);
         }
         return true;
     }
 
     private static requireLowercase(passwordValue: string, required: boolean): boolean {
         if (required) {
-            return (/[a-z]/.test(passwordValue));
+            return /[a-z]/.test(passwordValue);
         }
         return true;
     }

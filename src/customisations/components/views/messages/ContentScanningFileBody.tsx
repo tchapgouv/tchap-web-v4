@@ -56,48 +56,37 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
             hasError: false,
         };
 
-        Promise.all([
-            this.media.scanSource(),
-            this.media.scanThumbnail(),
-        ]).then(([ok1, ok2]) => {
-            const isSafe = ok1 && ok2;
-            this.setState({
-                isScanning: false,
-                isSafe,
+        Promise.all([this.media.scanSource(), this.media.scanThumbnail()])
+            .then(([ok1, ok2]) => {
+                const isSafe = ok1 && ok2;
+                this.setState({
+                    isScanning: false,
+                    isSafe,
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    isScanning: false,
+                    hasError: true,
+                });
             });
-        }).catch(() => {
-            this.setState({
-                isScanning: false,
-                hasError: true,
-            });
-        });
     }
 
     public render() {
         if (this.state.isScanning) {
-            return (
-                <span className="mx_MFileBody mx_MFileBody_scanning">
-                    { this.placeholder }
-                </span>
-            );
+            return <span className="mx_MFileBody mx_MFileBody_scanning">{this.placeholder}</span>;
         } else if (this.state.hasError) {
-            return (
-                <span className="mx_MFileBody mx_MFileBody_error">
-                    { this.placeholder }
-                </span>
-            );
+            return <span className="mx_MFileBody mx_MFileBody_error">{this.placeholder}</span>;
         } else if (!this.state.isSafe) {
-            return (
-                <span className="mx_MFileBody mx_MFileBody_unsafe">
-                    { this.placeholder }
-                </span>
-            );
+            return <span className="mx_MFileBody mx_MFileBody_unsafe">{this.placeholder}</span>;
         }
 
-        return <div>
-            <OriginalFileBody {...this.props} />
-            <ContentScanningStatus status="done" />
-        </div>;
+        return (
+            <div>
+                <OriginalFileBody {...this.props} />
+                <ContentScanningStatus status="done" />
+            </div>
+        );
     }
 
     private get placeholder(): React.ReactNode {
@@ -115,17 +104,19 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
                 text = <ContentScanningStatus fileName={presentableFileName} status="unsafe" />;
             }
 
-            placeholder = <>
-                <div className="mx_MediaBody mx_MFileBody_info">
-                    { this.icon }
-                    <TextWithTooltip tooltip={presentableFileName}>
-                        <span className="mx_MFileBody_info_filename">
-                            { presentableTextForFile(this.content, _t("Attachment"), true, true) }
-                        </span>
-                    </TextWithTooltip>
-                </div>
-                { text }
-            </>;
+            placeholder = (
+                <>
+                    <div className="mx_MediaBody mx_MFileBody_info">
+                        {this.icon}
+                        <TextWithTooltip tooltip={presentableFileName}>
+                            <span className="mx_MFileBody_info_filename">
+                                {presentableTextForFile(this.content, _t("Attachment"), true, true)}
+                            </span>
+                        </TextWithTooltip>
+                    </div>
+                    {text}
+                </>
+            );
         }
 
         return placeholder;
@@ -138,7 +129,11 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
     private get icon(): React.ReactNode {
         let icon = <span className="mx_MFileBody_info_icon" />;
         if (this.state.isScanning) {
-            icon = <span className="mx_MFileBody_info_icon"><InlineSpinner w={20} h={20} /></span>;
+            icon = (
+                <span className="mx_MFileBody_info_icon">
+                    <InlineSpinner w={20} h={20} />
+                </span>
+            );
         } else if (this.state.hasError || !this.state.isSafe) {
             icon = <span className="mx_MFileBody_unsafe_icon" />;
         }

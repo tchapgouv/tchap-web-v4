@@ -63,7 +63,7 @@ Cypress.on("window:before:unload", (event: BeforeUnloadEvent) => {
     if (doc.location.href === "about:blank") return;
     const win = doc.defaultView as AUTWindow;
     if (!win.mxPerformanceMonitor) return;
-    const entries = win.mxPerformanceMonitor.getEntries().filter(entry => {
+    const entries = win.mxPerformanceMonitor.getEntries().filter((entry) => {
         return entry.name.startsWith("cy:");
     });
     if (!entries || entries.length === 0) return;
@@ -71,4 +71,4 @@ Cypress.on("window:before:unload", (event: BeforeUnloadEvent) => {
 });
 
 // Needed to make this file a module
-export { };
+export {};

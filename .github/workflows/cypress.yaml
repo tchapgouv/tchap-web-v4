@@ -3,54 +3,52 @@
 # tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Cypress End to End Tests
 on:
-  pull_request: { }
-  push:
-    branches: [ develop_tchap, master_tchap ]
-  #repository_dispatch: # :TCHAP: we don't use this
-  #  types: [ element-web-notify ]
+    pull_request: {}
+    push:
+        branches: [develop_tchap, master_tchap]
+    #repository_dispatch: # :TCHAP: we don't use this
+    #  types: [ element-web-notify ]
 env:
-  # :TCHAP: not needed for fetchdep.with.version.sh but leaving them otherwise it breaks.
-  # These must be set for fetchdep.sh to get the right branch
-  REPOSITORY: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+    # :TCHAP: not needed for fetchdep.with.version.sh but leaving them otherwise it breaks.
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
-  cypress:
-    name: Cypress
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    cypress:
+        name: Cypress
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Yarn cache
-        uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: 16
+            - name: Yarn cache
+              uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: 16
 
-      - name: Install Dependencies
-        run: "./scripts/install-yarn-linked-repositories.sh"
+            - name: Install Dependencies
+              run: "./scripts/install-yarn-linked-repositories.sh"
 
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v4.1.1
-        with:
-          # The built-in Electron runner seems to grind to a halt trying
-          # to run the tests, so use chrome.
-          browser: chrome
-          #install: false # disable the default install, we used layered.with.version already.
-          start: yarn start
-          #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
-          wait-on: 'http://localhost:8080'
-          # wait for 3min, the build is long
-          wait-on-timeout: 180
-          # record: true # todo record to dashboard, see action's doc
-          command: 'yarn test:cypress'
-        env:
-          E2E_TEST_USER_EMAIL: ${{ secrets.E2E_TEST_USER_EMAIL }}
-          E2E_TEST_USER_PASSWORD: ${{ secrets.E2E_TEST_USER_PASSWORD }}
-          E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY }}
-          E2E_TEST_USER_HOMESERVER_URL: 'https://matrix.agent1.tchap.incubateur.net'
-          E2E_TEST_USER_HOMESERVER_SHORT: 'agent1.tchap.incubateur.net'
-          # todo pass the Dashboard record key as an environment variable
-          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
-
+            - name: Run Cypress tests
+              uses: cypress-io/github-action@v4.1.1
+              with:
+                  # The built-in Electron runner seems to grind to a halt trying
+                  # to run the tests, so use chrome.
+                  browser: chrome
+                  #install: false # disable the default install, we used layered.with.version already.
+                  start: yarn start
+                  #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
+                  wait-on: "http://localhost:8080"
+                  # wait for 3min, the build is long
+                  wait-on-timeout: 180
+                  # record: true # todo record to dashboard, see action's doc
+                  command: "yarn test:cypress"
+              env:
+                  E2E_TEST_USER_EMAIL: ${{ secrets.E2E_TEST_USER_EMAIL }}
+                  E2E_TEST_USER_PASSWORD: ${{ secrets.E2E_TEST_USER_PASSWORD }}
+                  E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY }}
+                  E2E_TEST_USER_HOMESERVER_URL: "https://matrix.agent1.tchap.incubateur.net"
+                  E2E_TEST_USER_HOMESERVER_SHORT: "agent1.tchap.incubateur.net"
+                  # todo pass the Dashboard record key as an environment variable
+                  # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

@@ -16,9 +16,9 @@ limitations under the License.
 
 import "../../../../../res/css/views/messages/ContentScanningImageBody.pcss";
 
-import React from 'react';
+import React from "react";
 import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
-import Spinner from 'matrix-react-sdk/src/components/views/elements/Spinner';
+import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import { IMediaEventContent } from "matrix-react-sdk/src/customisations/models/IMediaEventContent";
 import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 import { _t } from "matrix-react-sdk/src/languageHandler";
@@ -49,21 +49,20 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
             hasError: false,
         };
 
-        Promise.all([
-            this.media.scanSource(),
-            this.media.scanThumbnail(),
-        ]).then(async ([ok1, ok2]) => {
-            const isSafe = ok1 && ok2;
-            this.setState({
-                isScanning: false,
-                isSafe,
+        Promise.all([this.media.scanSource(), this.media.scanThumbnail()])
+            .then(async ([ok1, ok2]) => {
+                const isSafe = ok1 && ok2;
+                this.setState({
+                    isScanning: false,
+                    isSafe,
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    isScanning: false,
+                    hasError: true,
+                });
             });
-        }).catch(() => {
-            this.setState({
-                isScanning: false,
-                hasError: true,
-            });
-        });
     }
 
     public render() {
@@ -83,32 +82,40 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
         );
 
         if (this.state.isScanning) {
-            return <>
-                <div className="mx_MImageBody mx_MImageBody_pending" style={{ width, height }}>
-                    <Spinner />
-                </div>
-                <ContentScanningStatus fileName={this.fileName} status="scanning" />
-            </>;
+            return (
+                <>
+                    <div className="mx_MImageBody mx_MImageBody_pending" style={{ width, height }}>
+                        <Spinner />
+                    </div>
+                    <ContentScanningStatus fileName={this.fileName} status="scanning" />
+                </>
+            );
         } else if (this.state.hasError) {
-            return <>
-                <div className="mx_MImageBody mx_MImageBody_error" style={{ width, height }}>
-                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
-                </div>
-                <ContentScanningStatus fileName={this.fileName} status="error" />
-            </>;
+            return (
+                <>
+                    <div className="mx_MImageBody mx_MImageBody_error" style={{ width, height }}>
+                        <BlockedIcon className="mx_MImageBody_BlockedIcon" />
+                    </div>
+                    <ContentScanningStatus fileName={this.fileName} status="error" />
+                </>
+            );
         } else if (!this.state.isSafe) {
-            return <>
-                <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ width, height }}>
-                    <BlockedIcon className="mx_MImageBody_BlockedIcon" />
-                </div>
-                <ContentScanningStatus fileName={this.fileName} status="unsafe" />
-            </>;
+            return (
+                <>
+                    <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ width, height }}>
+                        <BlockedIcon className="mx_MImageBody_BlockedIcon" />
+                    </div>
+                    <ContentScanningStatus fileName={this.fileName} status="unsafe" />
+                </>
+            );
         }
 
-        return <>
-            { this.renderOriginal() }
-            <ContentScanningStatus status="done" />
-        </>;
+        return (
+            <>
+                {this.renderOriginal()}
+                <ContentScanningStatus status="done" />
+            </>
+        );
     }
 
     protected renderOriginal() {

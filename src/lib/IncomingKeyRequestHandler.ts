@@ -1,9 +1,7 @@
-import { IncomingRoomKeyRequest, verificationMethods } from 'matrix-js-sdk/src/crypto';
-import VerificationRequestDialog from 'matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog';
-import Modal from 'matrix-react-sdk/src/Modal';
-import {
-    hideToast as hideUnverifiedSessionsToast
-} from "matrix-react-sdk/src/toasts/UnverifiedSessionToast";
+import { IncomingRoomKeyRequest, verificationMethods } from "matrix-js-sdk/src/crypto";
+import VerificationRequestDialog from "matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog";
+import Modal from "matrix-react-sdk/src/Modal";
+import { hideToast as hideUnverifiedSessionsToast } from "matrix-react-sdk/src/toasts/UnverifiedSessionToast";
 
 /**
  * :tchap: inspired from
@@ -14,7 +12,7 @@ export default class KeyRequestHandler {
     private _currentUser: string;
     private _currentDevice: string;
     // MAP <userId,  MAP <deviceId, [keyRequest] >
-    private _pendingKeyRequests= new Map<string, Map<string, Array<IncomingRoomKeyRequest>>>();//Map<userId, Map<deviceId, array of requests>>
+    private _pendingKeyRequests = new Map<string, Map<string, Array<IncomingRoomKeyRequest>>>(); //Map<userId, Map<deviceId, array of requests>>
 
     constructor(matrixClient) {
         this._matrixClient = matrixClient;
@@ -39,15 +37,14 @@ export default class KeyRequestHandler {
         const deviceId: string = keyRequest.deviceId;
         const requestId: string = keyRequest.requestId;
 
-        console.log(":tchap: receiving a legacy key request event for device ",deviceId, " requestId ", requestId);
+        console.log(":tchap: receiving a legacy key request event for device ", deviceId, " requestId ", requestId);
 
         //This instruction hides the toast that appears when a new device is detected
         //As we are receiving a legacy incomingroomkeyrequest we can assume the veryfing
         //will occur via this process and hide the toast
-        console.log(":tchap: hidding UnverifiedSessionsToast for ",deviceId);
+        console.log(":tchap: hidding UnverifiedSessionsToast for ", deviceId);
         hideUnverifiedSessionsToast(deviceId);
 
-        
         if (!this._pendingKeyRequests.has(userId)) {
             this._pendingKeyRequests.set(userId, new Map<string, Array<IncomingRoomKeyRequest>>());
         }
@@ -85,10 +82,7 @@ export default class KeyRequestHandler {
         const requestId = cancellation.requestId;
 
         if (userId === this._currentUser && deviceId === this._currentDevice) {
-            console.log(
-                ":tchap: room key request cancellation for the user we currently have a"
-                + " dialog open for",
-            );
+            console.log(":tchap: room key request cancellation for the user we currently have a" + " dialog open for");
             // TODO: update the dialog. For now, we just ignore the
             // cancellation.
             return;
@@ -186,11 +180,7 @@ export default class KeyRequestHandler {
         }); */
 
         const cli = this._matrixClient;
-        const verificationRequestPromise = cli.legacyDeviceVerification(
-            userId,
-            deviceId,
-            verificationMethods.SAS,
-        );
+        const verificationRequestPromise = cli.legacyDeviceVerification(userId, deviceId, verificationMethods.SAS);
         /*         Modal.createDialog(VerificationRequestDialog, {
             verificationRequestPromise,
             member: cli.getUser(userId),
