@@ -155,7 +155,7 @@ index 3171a0e..8751e6b 100644
                      aria-label={_t("Skip verification for now")}
                  />
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
-index fe8a24a..025b10c 100644
+index fe8a24a..4611cb6 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
 @@ -164,13 +164,23 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
@@ -166,7 +166,7 @@ index fe8a24a..025b10c 100644
 +                            )
 +                            }               
                          </p>
-                         
+ 
 +                        {/* :tchap: replace button of proceed with reset by a no-effect Continue button */}
                          <div className="mx_CompleteSecurity_actionRow">
 +                            <AccessibleButton kind="primary" onClick={this.onSkipConfirmClick}>
@@ -176,13 +176,37 @@ index fe8a24a..025b10c 100644
 +                        {/* 
                              <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
                                  {_t("Proceed with reset")}
-                             </AccessibleButton> 
+                             </AccessibleButton>
 +                            :tchap: end
 +                            */
 +                        }
                          </div>
                      </div>
                  );
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
+index 7849f63..d174462 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
+@@ -180,11 +180,19 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
+                     )}
+                 </React.Fragment>
+             );
++            /* :tchap: replace reset button by open-security button
+             button = (
+                 <AccessibleButton kind="primary" onClick={onResetClick}>
+                     {_t("Reset")}
+                 </AccessibleButton>
+             );
++             */
++            button = (
++                <AccessibleButton kind="primary" onClick={onDeviceListClick}>
++                    {_t("Security & Privacy")}
++                </AccessibleButton>
++            );
++            /* :tchap: end */ 
+         }
+     } else if (hasOtherVerifiedDevices) {
+         headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 3b60705..aeeaee0 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts

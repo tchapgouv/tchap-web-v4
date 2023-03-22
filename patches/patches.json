@@ -125,14 +125,15 @@
   },
   "cross-signing-ui": {
     "comments": "reword cross-signing dialogs and remove confirmation dialog",
-    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/406",
+    "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/406,https://github.com/tchapgouv/tchap-web-v4/issues/487",
     "package": "matrix-react-sdk",
     "files": [
       "src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx",
       "src/toasts/SetupEncryptionToast.ts",
       "src/components/structures/auth/CompleteSecurity.tsx",
       "res/css/views/auth/_CompleteSecurityBody.pcss",
-      "src/components/structures/auth/SetupEncryptionBody.tsx"
+      "src/components/structures/auth/SetupEncryptionBody.tsx",
+      "src/components/views/rooms/DecryptionFailureBar.tsx"
     ]
   },
   "temp-settings-remove-enable-email-notifications-option": {
