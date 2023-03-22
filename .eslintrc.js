@@ -1,9 +1,12 @@
 module.exports = {
     plugins: ["matrix-org"],
     extends: ["plugin:matrix-org/babel", "plugin:matrix-org/react"],
+/*
+    I suspect this option has a big impact in eslint, it is activted on element
     parserOptions: {
         project: ["./tsconfig.json"],
     },
+*/
     env: {
         browser: true,
         node: true,
