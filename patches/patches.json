@@ -203,5 +203,14 @@
       "src/components/views/rooms/RoomList.tsx",
       "src/stores/spaces/index.ts"
     ]
+  },
+  "remove-thread-buttons": {
+    "github-issue" : "https://github.com/tchapgouv/tchap-web-v4/issues/472; ",
+    "package": "matrix-react-sdk",
+    "files": [
+      "src/components/views/context_menus/MessageContextMenu.tsx",
+      "src/components/views/messages/MessageActionBar.tsx",
+      "src/components/views/right_panel/RoomHeaderButtons.tsx"
+    ]
   }
 }
