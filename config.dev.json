@@ -36,19 +36,15 @@
     "showLabsSettings": false,
     "features": {
         "feature_thread": true,
-        "feature_video_rooms" : false,
-        "feature_new_device_manager" : false,
-        "tchap_activate_cross_signing_and_secure_storage" : true,
+        "feature_video_rooms": false,
+        "feature_new_device_manager": false,
+        "tchap_activate_cross_signing_and_secure_storage": true,
         "tchap_disable_cross_signing_setup_toast": true
     },
     "default_federate": true,
     "default_theme": "light",
     "roomDirectory": {
-        "servers": [
-            "agent1.tchap.incubateur.net",
-            "agent2.tchap.incubateur.net",
-            "externe.tchap.incubateur.net"
-        ]
+        "servers": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"]
     },
     "enable_presence_by_hs_url": {
         "https://matrix.agent1.tchap.incubateur.net": false,
@@ -70,18 +66,17 @@
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
-        "custom_themes": [
-        ]
+        "custom_themes": []
     },
     "branding": {
         "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
         "authFooterLinks": [
-            { "text": "Gouvernement", "url": "https://www.gouvernement.fr"},
-            {"text": "OpenData", "url": "https://www.data.gouv.fr"},
-            {"text": "DINUM", "url": "https://numerique.gouv.fr"},
-            {"text": "beta.gouv.fr", "url": "https://beta.gouv.fr"},
-            {"text": "CGU", "url": "https://www.tchap.gouv.fr/cgu"},
-            {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
+            { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
+            { "text": "OpenData", "url": "https://www.data.gouv.fr" },
+            { "text": "DINUM", "url": "https://numerique.gouv.fr" },
+            { "text": "beta.gouv.fr", "url": "https://beta.gouv.fr" },
+            { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
+            { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },

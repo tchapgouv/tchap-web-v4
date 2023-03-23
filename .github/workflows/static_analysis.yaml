@@ -2,91 +2,90 @@
 #tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Static Analysis
 on:
-  pull_request: { }
-  push:
-    branches: [ develop, master ]
-  repository_dispatch:
-    types: [ element-web-notify ]
+    pull_request: {}
+    push:
+        branches: [develop, master]
+    repository_dispatch:
+        types: [element-web-notify]
 env:
-  # These must be set for fetchdep.sh to get the right branch
-  REPOSITORY: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
-# Removing until we fix the crash :
-# Error: matrix-react-sdk/src/autocomplete/CommandProvider.tsx(38,24): error TS2589:
-# Type instantiation is excessively deep and possibly infinite.
-#  ts_lint:
-#    name: "Typescript Syntax Check"
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      - uses: actions/setup-node@v3
-#        with:
-#          cache: 'yarn'
-#          node-version: 16
-#
-#      - name: Install Dependencies
-#        run: "./scripts/install-yarn-linked-repositories.sh"
-#
-#      - name: Typecheck
-#        run: "yarn run lint:types"
+    # Removing until we fix the crash :
+    # Error: matrix-react-sdk/src/autocomplete/CommandProvider.tsx(38,24): error TS2589:
+    # Type instantiation is excessively deep and possibly infinite.
+    #  ts_lint:
+    #    name: "Typescript Syntax Check"
+    #    runs-on: ubuntu-latest
+    #    steps:
+    #      - uses: actions/checkout@v2
+    #
+    #      - uses: actions/setup-node@v3
+    #        with:
+    #          cache: 'yarn'
+    #          node-version: 16
+    #
+    #      - name: Install Dependencies
+    #        run: "./scripts/install-yarn-linked-repositories.sh"
+    #
+    #      - name: Typecheck
+    #        run: "yarn run lint:types"
 
-# tchap : tchap does not use extensively i18n
-# i18n_lint:
-#    name: "i18n Check"
-#    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+    # tchap : tchap does not use extensively i18n
+    # i18n_lint:
+    #    name: "i18n Check"
+    #    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
 
-  js_lint:
-    name: "ESLint"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+    js_lint:
+        name: "ESLint"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: 16
+            - uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: 16
 
-      # Does not need branch matching as only analyses this layer
-      - name: Install Deps
-        run: "yarn install --pure-lockfile"
+            # Does not need branch matching as only analyses this layer
+            - name: Install Deps
+              run: "yarn install --pure-lockfile"
 
-      - name: Run Linter
-        run: "yarn run lint:js"
+            - name: Run Linter
+              run: "yarn run lint:js"
 
-  style_lint:
-    name: "Style Lint"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+    style_lint:
+        name: "Style Lint"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: 16
+            - uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: 16
 
-      # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
-      - name: Install Dependencies
-        run: "./scripts/install-yarn-linked-repositories.sh"
+            # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
+            - name: Install Dependencies
+              run: "./scripts/install-yarn-linked-repositories.sh"
 
-      - name: Run Linter
-        run: "yarn run lint:style"
-
+            - name: Run Linter
+              run: "yarn run lint:style"
 # tchap :  analyse:unused-exports does not work well with tchap customisations, it raises exception for "default export" not used
-  #analyse_dead_code:
-  #   name: "Analyse Dead Code"
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+#analyse_dead_code:
+#   name: "Analyse Dead Code"
+#   runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/checkout@v2
 
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         cache: 'yarn'
-  #         node-version: 16
+#     - uses: actions/setup-node@v3
+#       with:
+#         cache: 'yarn'
+#         node-version: 16
 
-  #     - name: Install Deps
-  #       run: "scripts/install-yarn-linked-repositories.sh"
+#     - name: Install Deps
+#       run: "scripts/install-yarn-linked-repositories.sh"
 
-  #     - name: Dead Code Analysis
-  #       run: "yarn run analyse:unused-exports"
+#     - name: Dead Code Analysis
+#       run: "yarn run analyse:unused-exports"

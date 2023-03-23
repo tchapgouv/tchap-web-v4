@@ -36,7 +36,8 @@ const cssThemes = {
     //"theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
     //"theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
     //"theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
-    "theme-light-high-contrast": "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    "theme-light-high-contrast":
+        "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
     //"theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
     //"theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
     //"theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
@@ -50,8 +51,11 @@ function getActiveThemes() {
     // :old: :TCHAP: being thrown on login page.
     // :old: :TCHAP: Browsers recover, but e2e tests crash, so we add both themes in default here.
     // Default to `light,dark` theme when the MATRIX_THEMES environment variable is not defined.
-    const theme = process.env.MATRIX_THEMES ?? 'light,dark';
-    return theme.split(',').map(x => x.trim()).filter(Boolean);
+    const theme = process.env.MATRIX_THEMES ?? "light,dark";
+    return theme
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean);
 }
 
 // See docs/customisations.md
@@ -127,11 +131,11 @@ module.exports = (env, argv) => {
         const imports = ACTIVE_THEMES.map((t) => {
             if (useHMR) {
                 //:tchap: path is taken from src/vector/devcss.ts more info -> search "use theming"
-                return cssThemes[`theme-${ t }`].replace(".", "../../");
+                return cssThemes[`theme-${t}`].replace(".", "../../");
             }
 
             // return cssThemes[`theme-${t}`].replace("./node_modules/", ""); // theme import path
-            return cssThemes[`theme-${ t }`];
+            return cssThemes[`theme-${t}`];
         });
         const s = JSON.stringify(ACTIVE_THEMES);
         return `
@@ -339,34 +343,34 @@ module.exports = (env, argv) => {
                          */
                         useHMR
                             ? {
-                                loader: "style-loader",
-                                /**
+                                  loader: "style-loader",
+                                  /**
                                    * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
                                    * we could try using `lazyStyleTag` here to add and remove styles on demand,
                                    * that would nicely resolve issues of race conditions for themes,
                                    * at least for development purposes.
                                    */
-                                options: {
-                                    insert: function insertBeforeAt(element) {
-                                        const parent = document.querySelector("head");
-                                        // We're in iframe
-                                        if (!window.MX_DEV_ACTIVE_THEMES) {
-                                            parent.appendChild(element);
-                                            return;
-                                        }
-                                        // Properly disable all other instances of themes
-                                        element.disabled = true;
-                                        element.onload = () => {
-                                            element.disabled = true;
-                                        };
-                                        const theme =
+                                  options: {
+                                      insert: function insertBeforeAt(element) {
+                                          const parent = document.querySelector("head");
+                                          // We're in iframe
+                                          if (!window.MX_DEV_ACTIVE_THEMES) {
+                                              parent.appendChild(element);
+                                              return;
+                                          }
+                                          // Properly disable all other instances of themes
+                                          element.disabled = true;
+                                          element.onload = () => {
+                                              element.disabled = true;
+                                          };
+                                          const theme =
                                               window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
-                                        element.setAttribute("data-mx-theme", theme);
-                                        window.MX_insertedThemeStylesCounter++;
-                                        parent.appendChild(element);
-                                    },
-                                },
-                            }
+                                          element.setAttribute("data-mx-theme", theme);
+                                          window.MX_insertedThemeStylesCounter++;
+                                          parent.appendChild(element);
+                                      },
+                                  },
+                              }
                             : MiniCssExtractPlugin.loader,
                         {
                             loader: "css-loader",
@@ -516,7 +520,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     const outputPath = getAssetOutputPath(url, resourcePath);
                                     return toPublicPath(outputPath);
                                 },
@@ -528,7 +532,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     const outputPath = getAssetOutputPath(url, resourcePath);
                                     return toPublicPath(outputPath);
                                 },
@@ -546,7 +550,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     // CSS image usages end up in the `bundles/[hash]` output
                                     // directory, so we adjust the final path to navigate up
                                     // twice.
@@ -570,7 +574,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     // CSS image usages end up in the `bundles/[hash]` output
                                     // directory, so we adjust the final path to navigate up
                                     // twice.
@@ -586,7 +590,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     const outputPath = getAssetOutputPath(url, resourcePath);
                                     return toPublicPath(outputPath);
                                 },

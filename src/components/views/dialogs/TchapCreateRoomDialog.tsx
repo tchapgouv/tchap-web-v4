@@ -14,8 +14,8 @@ Except when importing from other customisation files. Then imports must use rela
 */
 import React, { ChangeEvent, createRef, KeyboardEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import withValidation, { IFieldState } from 'matrix-react-sdk/src/components/views/elements/Validation';
-import { _t } from 'matrix-react-sdk/src/languageHandler';
+import withValidation, { IFieldState } from "matrix-react-sdk/src/components/views/elements/Validation";
+import { _t } from "matrix-react-sdk/src/languageHandler";
 import { IOpts } from "matrix-react-sdk/src/createRoom";
 import { getKeyBindingsManager } from "matrix-react-sdk/src/KeyBindingsManager";
 import { KeyBindingAction } from "matrix-react-sdk/src/accessibility/KeyboardShortcuts";
@@ -23,7 +23,7 @@ import Field from "matrix-react-sdk/src/components/views/elements/Field";
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 
-import TchapUtils from '../../../util/TchapUtils';
+import TchapUtils from "../../../util/TchapUtils";
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../@types/tchap";
 import TchapCreateRoom from "../../../lib/createTchapRoom";
@@ -111,8 +111,10 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     };
 
     private isSelectedRoomFederated = (): boolean => {
-        return this.state.tchapRoomType === TchapRoomType.Forum  && this.state.showFederateSwitch ? this.state.forumFederationSwitchValue : true;
-    }
+        return this.state.tchapRoomType === TchapRoomType.Forum && this.state.showFederateSwitch
+            ? this.state.forumFederationSwitchValue
+            : true;
+    };
 
     private onOk = async () => {
         const activeElement = document.activeElement as HTMLElement;
@@ -122,12 +124,16 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         await this.nameField.current.validate({ allowEmpty: false });
         // Validation and state updates are async, so we need to wait for them to complete
         // first. Queue a `setState` callback and wait for it to resolve.
-        await new Promise<void>(resolve => this.setState({}, resolve));
+        await new Promise<void>((resolve) => this.setState({}, resolve));
         if (this.state.nameIsValid) {
-            this.props.onFinished(true, TchapCreateRoom.roomCreateOptions(
-                this.state.name,
-                this.state.tchapRoomType,
-                this.isSelectedRoomFederated()));
+            this.props.onFinished(
+                true,
+                TchapCreateRoom.roomCreateOptions(
+                    this.state.name,
+                    this.state.tchapRoomType,
+                    this.isSelectedRoomFederated(),
+                ),
+            );
         } else {
             let field;
             if (!this.state.nameIsValid) {
@@ -156,7 +162,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                     <div className="mx_Dialog_content">
                         <Field
                             ref={this.nameField}
-                            label={_t('Name')}
+                            label={_t("Name")}
                             onChange={this.onNameChange}
                             onValidate={this.onNameValidate}
                             value={this.state.name}
@@ -171,12 +177,13 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             setForumFederationSwitchValue={this.onForumFederatedChange}
                             setRoomType={this.onTchapRoomTypeChange}
                         />
-
                     </div>
                 </form>
-                <DialogButtons primaryButton={_t('Create Room')}
+                <DialogButtons
+                    primaryButton={_t("Create Room")}
                     onPrimaryButtonClick={this.onOk}
-                    onCancel={this.onCancel} />
+                    onCancel={this.onCancel}
+                />
             </BaseDialog>
         );
     }

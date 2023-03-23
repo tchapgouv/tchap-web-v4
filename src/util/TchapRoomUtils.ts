@@ -1,4 +1,3 @@
-
 /**
  * Tchap Room utils.
  */
@@ -17,8 +16,7 @@ export default class TchapRoomUtils {
         return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule);
     }
 
-    static getTchapRoomTypeInternal(
-        isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule): TchapRoomType {
+    static getTchapRoomTypeInternal(isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule): TchapRoomType {
         if (!isEncrypted) {
             return TchapRoomType.Forum;
         }

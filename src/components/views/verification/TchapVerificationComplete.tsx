@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { _t } from 'matrix-react-sdk/src/languageHandler';
+import React from "react";
+import { _t } from "matrix-react-sdk/src/languageHandler";
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 
 interface IProps {
@@ -24,13 +24,16 @@ interface IProps {
 
 export default class TchapVerificationComplete extends React.Component<IProps> {
     public render(): React.ReactNode {
-        return <div>
-            <h2>{ _t("Verified!") }</h2>
-            <p>{ _t("The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.") }</p>
-            <DialogButtons onPrimaryButtonClick={this.props.onDone}
-                primaryButton={_t("Finish")}
-                hasCancel={false}
-            />
-        </div>;
+        return (
+            <div>
+                <h2>{_t("Verified!")}</h2>
+                <p>{_t("The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.")}</p>
+                <DialogButtons
+                    onPrimaryButtonClick={this.props.onDone}
+                    primaryButton={_t("Finish")}
+                    hasCancel={false}
+                />
+            </div>
+        );
     }
 }

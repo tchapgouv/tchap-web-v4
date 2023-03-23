@@ -40,7 +40,7 @@
     "show_labs_settings": false,
     "features": {
         "feature_thread": true,
-        "feature_video_rooms" : false
+        "feature_video_rooms": false
     },
     "default_federate": true,
     "default_theme": "light",
@@ -65,19 +65,17 @@
         "MessageComposerInput.showPollsButton": false,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
-        "custom_themes": [
-            
-        ]
+        "custom_themes": []
     },
     "branding": {
         "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
         "authFooterLinks": [
-            { "text": "Gouvernement", "url": "https://www.gouvernement.fr"},
-            {"text": "OpenData", "url": "https://www.data.gouv.fr"},
-            {"text": "DINUM", "url": "https://numerique.gouv.fr"},
-            {"text": "beta.gouv.fr", "url": "https://beta.gouv.fr"},
-            {"text": "CGU", "url": "https://www.tchap.gouv.fr/cgu"},
-            {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
+            { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
+            { "text": "OpenData", "url": "https://www.data.gouv.fr" },
+            { "text": "DINUM", "url": "https://numerique.gouv.fr" },
+            { "text": "beta.gouv.fr", "url": "https://beta.gouv.fr" },
+            { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
+            { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },

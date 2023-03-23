@@ -31,8 +31,7 @@ import { ContentScanner } from "./../content-scanner/ContentScanner";
  * Routes all media through a content scanner.
  */
 export class Media {
-    constructor(public readonly prepared: IPreparedMedia) {
-    }
+    constructor(public readonly prepared: IPreparedMedia) {}
 
     /**
      * True if the media appears to be encrypted. Actual file contents may vary.
@@ -111,9 +110,9 @@ export class Media {
      */
     public getSquareThumbnailHttp(dim: number): string {
         if (this.hasThumbnail) {
-            return this.getThumbnailHttp(dim, dim, 'crop');
+            return this.getThumbnailHttp(dim, dim, "crop");
         }
-        return this.getThumbnailOfSourceHttp(dim, dim, 'crop');
+        return this.getThumbnailOfSourceHttp(dim, dim, "crop");
     }
 
     /**

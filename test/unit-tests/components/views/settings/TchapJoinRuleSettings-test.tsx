@@ -1,8 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { mocked } from 'jest-mock';
-import { createTestClient, mkStubRoom, mockStateEventImplementation, mkEvent }
-    from "matrix-react-sdk/test/test-utils/test-utils";
+import { mocked } from "jest-mock";
+import {
+    createTestClient,
+    mkStubRoom,
+    mockStateEventImplementation,
+    mkEvent,
+} from "matrix-react-sdk/test/test-utils/test-utils";
 import { JoinRule, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import TchapJoinRuleSettings from "../../../../../src/components/views/settings/TchapJoinRuleSettings";
@@ -15,24 +19,26 @@ function mkStubRoomWithInviteRule(roomId: string, name: string, client: MatrixCl
     return stubRoom;
 }
 
-const makeAccessEvent = (rule: TchapRoomAccessRule = TchapRoomAccessRule.Restricted) => mkEvent({
-    type: TchapRoomAccessRulesEventId, event: true, content: {
-        rule: rule,
-    },
-} as any);
+const makeAccessEvent = (rule: TchapRoomAccessRule = TchapRoomAccessRule.Restricted) =>
+    mkEvent({
+        type: TchapRoomAccessRulesEventId,
+        event: true,
+        content: {
+            rule: rule,
+        },
+    } as any);
 
 function mkStubRoomWithAccessRule(
     roomId: string,
     name: string,
     client: MatrixClient,
     joinRule: JoinRule,
-    accessRule: TchapRoomAccessRule): Room {
+    accessRule: TchapRoomAccessRule,
+): Room {
     const stubRoom: Room = mkStubRoom(roomId, name, client);
     stubRoom.getJoinRule = jest.fn().mockReturnValue(joinRule);
     stubRoom.currentState.getJoinRule = jest.fn().mockReturnValue(joinRule);
-    const events = [
-        makeAccessEvent(accessRule),
-    ];
+    const events = [makeAccessEvent(accessRule)];
     mocked(stubRoom.currentState).getStateEvents.mockImplementation(mockStateEventImplementation(events));
     return stubRoom;
 }
@@ -67,7 +73,12 @@ describe("TchapJoinRule", () => {
         //build stub private room
         const props = {
             room: mkStubRoomWithAccessRule(
-                "roomId", "roomName", createTestClient(), JoinRule.Invite, TchapRoomAccessRule.Restricted),
+                "roomId",
+                "roomName",
+                createTestClient(),
+                JoinRule.Invite,
+                TchapRoomAccessRule.Restricted,
+            ),
             closeSettingsFn() {},
             onError(error: Error) {},
         };
