@@ -1,15 +1,14 @@
-
-import React from 'react';
+import React from "react";
 // eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from 'enzyme';
+import { mount, ReactWrapper } from "enzyme";
 // eslint-disable-next-line deprecate/import
-import { act } from 'react-dom/test-utils';
-import toJson from 'enzyme-to-json';
-import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
+import { act } from "react-dom/test-utils";
+import toJson from "enzyme-to-json";
+import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import { EventEmitter } from "events";
 
-import { TchapRoomType } from '../../../../../src/@types/tchap';
-import TchapUtils from '../../../../../src/util/TchapUtils';
+import { TchapRoomType } from "../../../../../src/@types/tchap";
+import TchapUtils from "../../../../../src/util/TchapUtils";
 import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
 
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
@@ -45,14 +44,13 @@ describe("TchapCreateRoomDialog", () => {
     //simulate the submit of the form
     const submitForm = async (wrapper: ReactWrapper) => {
         act(() => {
-            wrapper.find('form').simulate('submit', { preventDefault: () => { } });
+            wrapper.find("form").simulate("submit", { preventDefault: () => {} });
         });
         await new Promise(process.nextTick);
     };
 
     // build a new component using enzyme
-    const getComponent = (props = {}): ReactWrapper =>
-        mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
+    const getComponent = (props = {}): ReactWrapper => mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
     /*
     // Note : you can also build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
@@ -68,26 +66,33 @@ describe("TchapCreateRoomDialog", () => {
 
         //mock matrix client
         mockClient = new MockClient();
-        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
+        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 
         //mock tchap utils
-        jest.spyOn(TchapUtils, 'getShortDomain').mockReturnValue("AGENT");
-        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showForumFederationSwitch: true, forumFederationSwitchDefaultValue: false });
+        jest.spyOn(TchapUtils, "getShortDomain").mockReturnValue("AGENT");
+        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            showForumFederationSwitch: true,
+            forumFederationSwitchDefaultValue: false,
+        });
     });
 
-    it('should render the whole component with with the allow access switch', () => {
-        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showForumFederationSwitch: true, forumFederationSwitchDefaultValue: false });
+    it("should render the whole component with with the allow access switch", () => {
+        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            showForumFederationSwitch: true,
+            forumFederationSwitchDefaultValue: false,
+        });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(toJson(allowAccessSwitch)).toMatchSnapshot(
-            "allow access switch is present, allows other domain than AGENT");
+            "allow access switch is present, allows other domain than AGENT",
+        );
     });
 
-    it('should render the room dialog without the allow access switch', () => {
-        jest.spyOn(TchapUtils, 'getRoomFederationOptions').mockReturnValue(
-            { showForumFederationSwitch: false, forumFederationSwitchDefaultValue: false });
+    it("should render the room dialog without the allow access switch", () => {
+        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            showForumFederationSwitch: false,
+            forumFederationSwitchDefaultValue: false,
+        });
         const component = getComponent();
         const allowAccessSwitch = component.find(".mx_SettingsFlag");
         expect(allowAccessSwitch).toEqual({});
@@ -136,11 +141,11 @@ describe("TchapCreateRoomDialog", () => {
                 },
                 initial_state: [
                     {
-                        "content": {
-                            "rule": "restricted",
+                        content: {
+                            rule: "restricted",
                         },
-                        "state_key": "",
-                        "type": "im.vector.room.access_rules",
+                        state_key: "",
+                        type: "im.vector.room.access_rules",
                     },
                 ],
                 visibility: "private",
@@ -179,11 +184,11 @@ describe("TchapCreateRoomDialog", () => {
                 },
                 initial_state: [
                     {
-                        "content": {
-                            "rule": "restricted",
+                        content: {
+                            rule: "restricted",
                         },
-                        "state_key": "",
-                        "type": "im.vector.room.access_rules",
+                        state_key: "",
+                        type: "im.vector.room.access_rules",
                     },
                 ],
                 visibility: "public",
@@ -222,11 +227,11 @@ describe("TchapCreateRoomDialog", () => {
                 },
                 initial_state: [
                     {
-                        "content": {
-                            "rule": "restricted",
+                        content: {
+                            rule: "restricted",
                         },
-                        "state_key": "",
-                        "type": "im.vector.room.access_rules",
+                        state_key: "",
+                        type: "im.vector.room.access_rules",
                     },
                 ],
                 visibility: "public",
@@ -265,11 +270,11 @@ describe("TchapCreateRoomDialog", () => {
                 },
                 initial_state: [
                     {
-                        "content": {
-                            "rule": "restricted",
+                        content: {
+                            rule: "restricted",
                         },
-                        "state_key": "",
-                        "type": "im.vector.room.access_rules",
+                        state_key: "",
+                        type: "im.vector.room.access_rules",
                     },
                 ],
                 visibility: "public",
@@ -307,11 +312,11 @@ describe("TchapCreateRoomDialog", () => {
                 },
                 initial_state: [
                     {
-                        "content": {
-                            "rule": "unrestricted",
+                        content: {
+                            rule: "unrestricted",
                         },
-                        "state_key": "",
-                        "type": "im.vector.room.access_rules",
+                        state_key: "",
+                        type: "im.vector.room.access_rules",
                     },
                 ],
                 visibility: "private",

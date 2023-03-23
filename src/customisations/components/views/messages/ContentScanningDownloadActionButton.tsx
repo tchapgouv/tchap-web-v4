@@ -79,20 +79,19 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         });
 
         const media = this.props.mediaEventHelperGet().media as any as Media;
-        const safe = await Promise.all([
-            media.scanSource(),
-            media.scanThumbnail(),
-        ]).then(([ok1, ok2]) => {
-            const isSafe = ok1 && ok2;
-            this.setState({
-                downloadState: isSafe ? DownloadState.Safe : DownloadState.Untrusted,
+        const safe = await Promise.all([media.scanSource(), media.scanThumbnail()])
+            .then(([ok1, ok2]) => {
+                const isSafe = ok1 && ok2;
+                this.setState({
+                    downloadState: isSafe ? DownloadState.Safe : DownloadState.Untrusted,
+                });
+                return isSafe;
+            })
+            .catch(() => {
+                this.setState({
+                    downloadState: DownloadState.Error,
+                });
             });
-            return isSafe;
-        }).catch(() => {
-            this.setState({
-                downloadState: DownloadState.Error,
-            });
-        });
 
         if (!safe) {
             // do not download unsafe content
@@ -138,19 +137,21 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         }
 
         const classes = classNames({
-            'mx_MessageActionBar_iconButton': true,
-            'mx_MessageActionBar_downloadButton': true,
-            'mx_MessageActionBar_downloadSpinnerButton': hasSpinner,
+            mx_MessageActionBar_iconButton: true,
+            mx_MessageActionBar_downloadButton: true,
+            mx_MessageActionBar_downloadSpinnerButton: hasSpinner,
         });
 
-        return <RovingAccessibleTooltipButton
-            className={classes}
-            title={tooltip}
-            onClick={this.onDownloadClick}
-            disabled={this.disabled}
-        >
-            { icon }
-        </RovingAccessibleTooltipButton>;
+        return (
+            <RovingAccessibleTooltipButton
+                className={classes}
+                title={tooltip}
+                onClick={this.onDownloadClick}
+                disabled={this.disabled}
+            >
+                {icon}
+            </RovingAccessibleTooltipButton>
+        );
     }
 
     private renderBlockedIcon(): JSX.Element {
@@ -162,10 +163,8 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
     }
 
     private get disabled(): boolean {
-        return [
-            DownloadState.Scanning,
-            DownloadState.Error,
-            DownloadState.Untrusted,
-        ].includes(this.state.downloadState);
+        return [DownloadState.Scanning, DownloadState.Error, DownloadState.Untrusted].includes(
+            this.state.downloadState,
+        );
     }
 }

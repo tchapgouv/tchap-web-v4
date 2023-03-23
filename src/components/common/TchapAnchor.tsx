@@ -16,12 +16,8 @@ export const TchapAnchor: React.FC<TchapAnchorProps> = ({
     openInNewTab,
 }: TchapAnchorProps) => {
     return (
-        <a
-            className={`tc_anchor ${className}`}
-            href={href}
-            target={openInNewTab && '_blank'}
-        >
-            { children }
+        <a className={`tc_anchor ${className}`} href={href} target={openInNewTab && "_blank"}>
+            {children}
         </a>
     );
 };

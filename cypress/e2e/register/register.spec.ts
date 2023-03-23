@@ -17,7 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 describe("Registration", () => {
-    const homeserverUrl = Cypress.env('E2E_TEST_USER_HOMESERVER_URL');
+    const homeserverUrl = Cypress.env("E2E_TEST_USER_HOMESERVER_URL");
     beforeEach(() => {
         cy.visit("/#/register");
     });
@@ -37,7 +37,7 @@ describe("Registration", () => {
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(homeserverUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
-        cy.get('.mx_ServerPickerDialog').should('not.exist');
+        cy.get(".mx_ServerPickerDialog").should("not.exist");
 
         cy.get("#mx_RegistrationForm_username").should("be.visible");
         // Hide the server text as it contains the randomly allocated Synapse port
@@ -70,14 +70,16 @@ describe("Registration", () => {
         cy.checkA11y();
         cy.get(".mx_UseCaseSelection_skip .mx_AccessibleButton").click();
 
-        cy.url().should('contain', '/#/home');
+        cy.url().should("contain", "/#/home");
         cy.stopMeasuring("from-submit-to-home");
 
         const userMenuLabel = "Menu utilisateur";
         cy.get(`[aria-label="${userMenuLabel}"]`).click();
         const securityLabel = "Sécurité et vie privée";
         cy.get(`[aria-label="${securityLabel}"]`).click();
-        cy.get(".mx_DevicesPanel_myDevice .mx_DevicesPanel_deviceTrust .mx_E2EIcon")
-            .should("have.class", "mx_E2EIcon_verified");
+        cy.get(".mx_DevicesPanel_myDevice .mx_DevicesPanel_deviceTrust .mx_E2EIcon").should(
+            "have.class",
+            "mx_E2EIcon_verified",
+        );
     });
 });

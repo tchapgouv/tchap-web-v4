@@ -57,8 +57,7 @@ export class ContentScanner {
     private hasKey = false;
     private cachedScans = new Map<string, Promise<boolean>>();
 
-    constructor(private scannerUrl: string) {
-    }
+    constructor(private scannerUrl: string) {}
 
     public urlForMxc(mxc: string, width?: number, height?: number, method?: ResizeMethod): string {
         const matrixUrl = getHttpUriForMxc(this.scannerUrl, mxc, width, height, method);
@@ -115,7 +114,7 @@ export class ContentScanner {
                 },
             });
         } else {
-            const url = this.scannerUrl + `/_matrix/media_proxy/unstable/scan/${mxc.substring('mxc://'.length)}`;
+            const url = this.scannerUrl + `/_matrix/media_proxy/unstable/scan/${mxc.substring("mxc://".length)}`;
             response = await fetch(url);
         }
 
@@ -124,8 +123,9 @@ export class ContentScanner {
     }
 
     private async fetchKey() {
-        const response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key")
-            .then(r => r.json());
+        const response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key").then((r) =>
+            r.json(),
+        );
         this.mcsKey.set_recipient_key(response["public_key"]);
         this.hasKey = true;
     }
@@ -144,7 +144,8 @@ export class ContentScanner {
     }
 
     private static get contentScannerUrl(): string {
-        return (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url
-            ?? MatrixClientPeg.get().getHomeserverUrl();
+        return (
+            (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url ?? MatrixClientPeg.get().getHomeserverUrl()
+        );
     }
 }

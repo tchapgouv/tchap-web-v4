@@ -45,21 +45,20 @@ export default class ContentScanningVoiceMessageBody extends React.PureComponent
             hasError: false,
         };
 
-        Promise.all([
-            this.media.scanSource(),
-            this.media.scanThumbnail(),
-        ]).then(async ([ok1, ok2]) => {
-            const isSafe = ok1 && ok2;
-            this.setState({
-                isScanning: false,
-                isSafe,
+        Promise.all([this.media.scanSource(), this.media.scanThumbnail()])
+            .then(async ([ok1, ok2]) => {
+                const isSafe = ok1 && ok2;
+                this.setState({
+                    isScanning: false,
+                    isSafe,
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    isScanning: false,
+                    hasError: true,
+                });
             });
-        }).catch(() => {
-            this.setState({
-                isScanning: false,
-                hasError: true,
-            });
-        });
     }
 
     public render() {
@@ -67,10 +66,12 @@ export default class ContentScanningVoiceMessageBody extends React.PureComponent
             return <ContentScanningFileBody {...this.props} />;
         }
 
-        return <div>
-            <OriginalVoiceMessageBody {...this.props} />
-            <ContentScanningStatus status="done" />
-        </div>;
+        return (
+            <div>
+                <OriginalVoiceMessageBody {...this.props} />
+                <ContentScanningStatus status="done" />
+            </div>
+        );
     }
 
     private get media(): Media {

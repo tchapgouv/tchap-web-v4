@@ -5,6 +5,6 @@ export default class RandomUtils {
      * @returns random string
      */
     public static generateRandom(length: number): string {
-        return (Math.random() + 1).toString(36).substring(2, 2+length);
+        return (Math.random() + 1).toString(36).substring(2, 2 + length);
     }
 }

@@ -32,7 +32,7 @@ interface IProps {
 
 export default class TchapLogoutDialog extends React.Component<IProps> {
     static defaultProps = {
-        onFinished: function() { },
+        onFinished: function () {},
     };
 
     constructor(props) {
@@ -70,73 +70,56 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
     render() {
         const dialogContent = (
             <div>
-                <div
-                    className="mx_Dialog_content"
-                    id="mx_Dialog_content"
-                >
+                <div className="mx_Dialog_content" id="mx_Dialog_content">
                     <div>
                         <p className="tc_modalParagraph">
-                            { _t(
+                            {_t(
                                 "<b>Without your Tchap Keys, you won't be able to read your messages</b>" +
-                                " at your next login because they will be locked. It's a Tchap safety measure.",
+                                    " at your next login because they will be locked. It's a Tchap safety measure.",
                                 {},
                                 {
-                                    b: (sub) => <b>{ sub }</b>,
+                                    b: (sub) => <b>{sub}</b>,
                                 },
-                            ) }
+                            )}
                         </p>
                     </div>
                     <div className="tc_TwoColumn_block">
                         <div className="tc_TwoColumn_block_content">
                             <div className="tc_TwoColumn_block_image">
-                                <img
-                                    src={MultiDeviceImage}
-                                    alt="Login logo"
-                                    width="120"
-                                />
+                                <img src={MultiDeviceImage} alt="Login logo" width="120" />
                             </div>
                             <p className="tc_modalParagraph">
-                                { _t(
-                                    "<b>Can you currently read your messages on another device?</b>"
-                                    + " You can disconnect. This other device automatically backs up"
-                                    + " your Tchat Keys and messages.",
+                                {_t(
+                                    "<b>Can you currently read your messages on another device?</b>" +
+                                        " You can disconnect. This other device automatically backs up" +
+                                        " your Tchat Keys and messages.",
                                     {},
                                     {
-                                        b: (sub) => <b>{ sub }</b>,
+                                        b: (sub) => <b>{sub}</b>,
                                     },
-                                ) }
+                                )}
                             </p>
-                            <button
-                                className="danger"
-                                onClick={this.onLogoutConfirm}
-                            >
-                                { _t("Sign me out") }
+                            <button className="danger" onClick={this.onLogoutConfirm}>
+                                {_t("Sign me out")}
                             </button>
                         </div>
                         <div className="tc_TwoColumn_block_content">
                             <div className="tc_TwoColumn_block_image">
-                                <img
-                                    src={ExportLogoImage}
-                                    alt="Export logo"
-                                    width="70"
-                                />
+                                <img src={ExportLogoImage} alt="Export logo" width="70" />
                             </div>
                             <p className="tc_modalParagraph">
-                                { _t(
-                                    "<b>You don't have another device connected to Tchap?</b>"
-                                    + " Back up your Tchap Keys. These keys will unlock current messages,"
-                                    + " but not those received after saving.",
+                                {_t(
+                                    "<b>You don't have another device connected to Tchap?</b>" +
+                                        " Back up your Tchap Keys. These keys will unlock current messages," +
+                                        " but not those received after saving.",
                                     {},
                                     {
-                                        b: (sub) => <b>{ sub }</b>,
+                                        b: (sub) => <b>{sub}</b>,
                                     },
-                                ) }
+                                )}
                             </p>
-                            <button
-                                className="mx_Dialog_primary"
-                                onClick={this.onExportE2eKeysClicked}
-                            >
-                                { _t("Save my keys") }
+                            <button className="mx_Dialog_primary" onClick={this.onExportE2eKeysClicked}>
+                                {_t("Save my keys")}
                             </button>
                         </div>
                     </div>
@@ -154,7 +137,7 @@ export default class TchapLogoutDialog extends React.Component<IProps> {
                 hasCancel={true}
                 onFinished={this.onFinished}
             >
-                { dialogContent }
+                {dialogContent}
             </BaseDialog>
         );
     }
