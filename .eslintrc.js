@@ -1,6 +1,9 @@
 module.exports = {
     plugins: ["matrix-org"],
     extends: ["plugin:matrix-org/babel", "plugin:matrix-org/react"],
+    parserOptions: {
+        project: ["./tsconfig.json"],
+    },
     env: {
         browser: true,
         node: true,

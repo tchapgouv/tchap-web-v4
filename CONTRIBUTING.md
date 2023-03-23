@@ -17,9 +17,15 @@ into our repo (https://help.github.com/articles/using-pull-requests/)
 We use GitHub's pull request workflow to review the contribution, and either
 ask you to make any refinements needed or merge it and make them ourselves.
 
-Things that should go into your PR description:
+Your PR should have a title that describes what change is being made. This
+is used for the text in the Changelog entry by default (see below), so a good
+title will tell a user succinctly what change is being made. "Fix bug where
+cows had five legs" and, "Add support for miniature horses" are examples of good
+titles. Don't include an issue number here: that belongs in the description.
+Definitely don't use the GitHub default of "Update file.ts".
 
--   A changelog entry in the `Notes` section (see below)
+As for your PR description, it should include these things:
+
 -   References to any bugs fixed by the change (in GitHub's `Fixes` notation)
 -   Describe the why and what is changing in the PR description so it's easy for
     onlookers and reviewers to onboard and context switch. This information is
@@ -41,11 +47,14 @@ Things that should go into your PR description:
 -   Add comments to the diff for the reviewer that might help them to understand
     why the change is necessary or how they might better understand and review it.
 
-We rely on information in pull request to populate the information that goes into
-the changelogs our users see, both for Element Web itself and other projects on
-which it is based. This is picked up from both labels on the pull request and
-the `Notes:` annotation in the description. By default, the PR title will be
-used for the changelog entry, but you can specify more options, as follows.
+### Changelogs
+
+There's no need to manually add Changelog entries: we use information in the
+pull request to populate the information that goes into the changelogs our
+users see, both for Element Web itself and other projects on which it is based.
+This is picked up from both labels on the pull request and the `Notes:`
+annotation in the description. By default, the PR title will be used for the
+changelog entry, but you can specify more options, as follows.
 
 To add a longer, more detailed description of the change for the changelog:
 
@@ -280,3 +289,10 @@ When stacking pull requests, you may wish to do the following:
 3. Merge the first PR using a merge commit otherwise your stacked PR will need a rebase. Github will automatically adjust the base branch of your other PR to be develop.
 
 [1]: https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md
+
+# Decoding Stack Traces
+
+Element Web has crashed and given you an obfuscated stack trace? Don't panic:
+use the [Decoder Ring](https://app.element.io/decoder-ring/) (or /decoder-ring/
+on any Element Web deploy). It is somewhat of a manual process, but it should
+tell you what lines the stack trace corresponds to from the source maps.

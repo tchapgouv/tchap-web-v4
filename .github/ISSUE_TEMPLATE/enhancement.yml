@@ -15,22 +15,22 @@ body:
       value: |
         #### What would you like to do?
 
-              #### Why would you like to do it?
+        #### Why would you like to do it?
 
-              #### How would you like to achieve it?
-      validations:
-          required: true
-    - type: textarea
-      id: alternative
-      attributes:
-          label: Have you considered any alternatives?
-          placeholder: A clear and concise description of any alternative solutions or features you've considered.
-      validations:
-          required: false
-    - type: textarea
-      id: additional-context
-      attributes:
-          label: Additional context
-          placeholder: Is there anything else you'd like to add?
-      validations:
-          required: false
+        #### How would you like to achieve it?
+    validations:
+      required: true
+  - type: textarea
+    id: alternative
+    attributes:
+      label: Have you considered any alternatives?
+      placeholder: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      placeholder: Is there anything else you'd like to add?
+    validations:
+      required: false

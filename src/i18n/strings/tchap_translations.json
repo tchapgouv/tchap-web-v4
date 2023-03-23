@@ -753,5 +753,13 @@
   "Unable to verify this device": {
     "fr": "Vous vous connectez à un nouvel appareil",
     "en": "You are logging into a new device"
+  },
+  "Reset your keys to prevent future decryption errors": {
+    "fr": "Activez la sauvegarde automatique des messages",
+    "en": "Enable automatic secure backup"
+  },
+  "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
+    "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
+    "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
   }
 }

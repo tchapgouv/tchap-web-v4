@@ -24,7 +24,7 @@ Element has several tiers of support for different environments:
         that are actively supported by the OS vendor and receive security updates
 -   Experimental
     -   Definition: Issues **accepted**, regressions **do not block** the release
-    -   Element as an installed PWA via current stable version of Chrome, Firefox, and Safari
+    -   Element as an installed PWA via current stable version of Chrome
     -   Mobile web for current stable version of Chrome, Firefox, and Safari on Android, iOS, and iPadOS
 -   Not supported
     -   Definition: Issues only affecting unsupported environments are **closed**
@@ -104,7 +104,7 @@ If you are using nginx, this would look something like the following:
 add_header X-Frame-Options SAMEORIGIN;
 add_header X-Content-Type-Options nosniff;
 add_header X-XSS-Protection "1; mode=block";
-add_header Content-Security-Policy "frame-ancestors 'none'";
+add_header Content-Security-Policy "frame-ancestors 'self'";
 ```
 
 For Apache, the configuration looks like:

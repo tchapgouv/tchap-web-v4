@@ -2,6 +2,7 @@
 import React from 'react';
 // eslint-disable-next-line deprecate/import
 import { mount, ReactWrapper } from 'enzyme';
+// eslint-disable-next-line deprecate/import
 import { act } from 'react-dom/test-utils';
 import toJson from 'enzyme-to-json';
 import { MatrixClientPeg } from 'matrix-react-sdk/src/MatrixClientPeg';
