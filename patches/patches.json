@@ -163,7 +163,7 @@
         ]
     },
     "remove-thread-buttons": {
-        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/472; ",
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/472",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/context_menus/MessageContextMenu.tsx",

@@ -761,5 +761,33 @@
   "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
     "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
     "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
+  },
+  "Resend key requests": {
+    "fr": "Renvoyer une demande",
+    "en": "Resend key requests"
+  },
+  "Open another device to load encrypted messages": {
+    "fr": "Utiliser un autre appareil pour déverrouiller vos messages",
+    "en": "Open another device to unlock messages"
+  },
+    "Unable to decrypt message": {
+    "fr": "Impossible de déverrouiller le message",
+    "en": "Unable to unlock message"
+  },
+  "Decrypting messages…": {
+    "fr": "Déverrouillage des messages…",
+    "end": "Unlocking messages…"
+  },
+  "Please wait as we try to decrypt your messages. This may take a few moments.": {
+    "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",
+    "en": "Please wait as we try to unlock your messages. This may take a few moments."
+  },
+  "Some messages could not be decrypted": {
+    "fr": "Certains messages n’ont pas pu être déverrouillés",
+    "en": "Some messages could not be unlocked"
+  },
+  "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
+    "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
+    "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
   }
 }
