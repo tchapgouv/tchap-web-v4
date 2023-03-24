@@ -31,6 +31,8 @@ electron/pub
 # yarn links dependencies generated with /scripts/install-yarn-linked-repositories.sh
 /yarn-linked-dependencies
 
+# ignore folder for patch merging conflicts
+/patches_temp
 
 # Auto-generated file
 /src/modules.ts
