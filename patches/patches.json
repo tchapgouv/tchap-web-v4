@@ -163,12 +163,19 @@
         ]
     },
     "remove-thread-buttons": {
-        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/472; ",
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/472",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/context_menus/MessageContextMenu.tsx",
             "src/components/views/messages/MessageActionBar.tsx",
             "src/components/views/right_panel/RoomHeaderButtons.tsx"
+        ]
+    },
+    "shrink-long-banner-when-locked-messages": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/492",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/rooms/DecryptionFailureBar.tsx"
         ]
     }
 }
