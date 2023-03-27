@@ -714,9 +714,10 @@
     "fr": "Vérifier avec un code de récupération ou une phrase",
     "en": "Verify with Recovery code or Phrase"
   },
-  "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": {
-    "fr": "L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements. Vous pouvez y accéder dans la section Securité et vie privée > Sauvegarde automatique des messages",
-    "en": "The Tchap team is working on the deployment of a new feature to prevent encryption key loss. You can access it in the section Security and privacy > Secure Backup"
+  "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>" : {
+    "fr": "<p>L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements.</p><p>Vous pouvez y accéder depuis les Paramètres : </p><p>Securité et vie privée > Sauvegarde automatique des messages</p>",
+    "en": "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access from the settings :</p><p>Security and privacy > Secure Backup</p>"
+
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
     "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre code de récupération</button> pour continuer.",
