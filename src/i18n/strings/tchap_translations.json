@@ -715,8 +715,8 @@
     "en": "Verify with Recovery code or Phrase"
   },
   "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>" : {
-    "fr": "<p>L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements.</p><p>Vous pouvez y accéder dans la section : </p><p>Securité et vie privée > Sauvegarde automatique des messages</p>",
-    "en": "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>"
+    "fr": "<p>L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements.</p><p>Vous pouvez y accéder depuis les Paramètres : </p><p>Securité et vie privée > Sauvegarde automatique des messages</p>",
+    "en": "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access from the settings :</p><p>Security and privacy > Secure Backup</p>"
 
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
