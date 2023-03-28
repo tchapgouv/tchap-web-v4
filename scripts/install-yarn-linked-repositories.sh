@@ -65,9 +65,5 @@ cd ..
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
-
-patch -p1 -d yarn-linked-dependencies/matrix-js-sdk < patches-r2/matrix-js-sdk-r2.patch
-patch -p1 -d yarn-linked-dependencies/matrix-react-sdk < patches-r2/matrix-react-sdk-r2.patch
-
 yarn install --pure-lockfile
 
