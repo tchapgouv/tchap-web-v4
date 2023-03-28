@@ -1,0 +1,812 @@
+diff --git a/src/components/structures/MessagePanel.tsx b/src/components/structures/MessagePanel.tsx
+index 3bfbe8e9c5..cc95d21861 100644
+--- a/src/components/structures/MessagePanel.tsx
++++ b/src/components/structures/MessagePanel.tsx
+@@ -235,7 +235,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+     // This is recomputed on each render. It's only stored on the component
+     // for ease of passing the data around since it's computed in one pass
+     // over all events.
+-    private readReceiptsByEvent: Record<string, IReadReceiptProps[]> = {};
++    private readReceiptsByEvent: Map<string, IReadReceiptProps[]> = new Map();
+ 
+     // Track read receipts by user ID. For each user ID we've ever shown a
+     // a read receipt for, we store an object:
+@@ -254,7 +254,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+     // This is recomputed on each render, using the data from the previous
+     // render as our fallback for any user IDs we can't match a receipt to a
+     // displayed event in the current render cycle.
+-    private readReceiptsByUserId: Record<string, IReadReceiptForUser> = {};
++    private readReceiptsByUserId: Map<string, IReadReceiptForUser> = new Map();
+ 
+     private readonly _showHiddenEvents: boolean;
+     private isMounted = false;
+@@ -624,7 +624,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+         // Note: the EventTile might still render a "sent/sending receipt" independent of
+         // this information. When not providing read receipt information, the tile is likely
+         // to assume that sent receipts are to be shown more often.
+-        this.readReceiptsByEvent = {};
++        this.readReceiptsByEvent = new Map();
+         if (this.props.showReadReceipts) {
+             this.readReceiptsByEvent = this.getReadReceiptsByShownEvent();
+         }
+@@ -727,7 +727,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+         const eventId = mxEv.getId();
+         const highlight = eventId === this.props.highlightedEventId;
+ 
+-        const readReceipts = this.readReceiptsByEvent[eventId];
++        const readReceipts = this.readReceiptsByEvent.get(eventId);
+ 
+         let isLastSuccessful = false;
+         const isSentState = (s: EventStatus): boolean => !s || s === EventStatus.SENT;
+@@ -846,17 +846,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+     // Get an object that maps from event ID to a list of read receipts that
+     // should be shown next to that event. If a hidden event has read receipts,
+     // they are folded into the receipts of the last shown event.
+-    private getReadReceiptsByShownEvent(): Record<string, IReadReceiptProps[]> {
+-        const receiptsByEvent: Record<string, IReadReceiptProps[]> = {};
+-        const receiptsByUserId: Record<
+-            string,
+-            {
+-                lastShownEventId: string;
+-                receipt: IReadReceiptProps;
+-            }
+-        > = {};
++    private getReadReceiptsByShownEvent(): Map<string, IReadReceiptProps[]> {
++        const receiptsByEvent: Map<string, IReadReceiptProps[]> = new Map();
++        const receiptsByUserId: Map<string, IReadReceiptForUser> = new Map();
+ 
+-        let lastShownEventId;
++        let lastShownEventId: string;
+         for (const event of this.props.events) {
+             if (this.shouldShowEvent(event)) {
+                 lastShownEventId = event.getId();
+@@ -865,9 +859,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+                 continue;
+             }
+ 
+-            const existingReceipts = receiptsByEvent[lastShownEventId] || [];
++            const existingReceipts = receiptsByEvent.get(lastShownEventId) || [];
+             const newReceipts = this.getReadReceiptsForEvent(event);
+-            receiptsByEvent[lastShownEventId] = existingReceipts.concat(newReceipts);
++            receiptsByEvent.set(lastShownEventId, existingReceipts.concat(newReceipts));
+ 
+             // Record these receipts along with their last shown event ID for
+             // each associated user ID.
+@@ -885,21 +879,21 @@ export default class MessagePanel extends React.Component<IProps, IState> {
+         // someone which had one in the last. By looking through our previous
+         // mapping of receipts by user ID, we can cover recover any receipts
+         // that would have been lost by using the same event ID from last time.
+-        for (const userId in this.readReceiptsByUserId) {
+-            if (receiptsByUserId[userId]) {
++        for (const userId of this.readReceiptsByUserId.keys()) {
++            if (receiptsByUserId.get(userId)) {
+                 continue;
+             }
+-            const { lastShownEventId, receipt } = this.readReceiptsByUserId[userId];
+-            const existingReceipts = receiptsByEvent[lastShownEventId] || [];
+-            receiptsByEvent[lastShownEventId] = existingReceipts.concat(receipt);
+-            receiptsByUserId[userId] = { lastShownEventId, receipt };
++            const { lastShownEventId, receipt } = this.readReceiptsByUserId.get(userId);
++            const existingReceipts = receiptsByEvent.get(lastShownEventId) || [];
++            receiptsByEvent.set(lastShownEventId, existingReceipts.concat(receipt));
++            receiptsByUserId.set(userId, { lastShownEventId, receipt });
+         }
+         this.readReceiptsByUserId = receiptsByUserId;
+ 
+         // After grouping receipts by shown events, do another pass to sort each
+         // receipt list.
+-        for (const eventId in receiptsByEvent) {
+-            receiptsByEvent[eventId].sort((r1, r2) => {
++        for (const receipts of receiptsByEvent.values()) {
++            receipts.sort((r1, r2) => {
+                 return r2.ts - r1.ts;
+             });
+         }
+diff --git a/src/components/views/dialogs/devtools/AccountData.tsx b/src/components/views/dialogs/devtools/AccountData.tsx
+index 23f952cbd9..a5317b49c5 100644
+--- a/src/components/views/dialogs/devtools/AccountData.tsx
++++ b/src/components/views/dialogs/devtools/AccountData.tsx
+@@ -51,7 +51,7 @@ export const RoomAccountDataEventEditor: React.FC<IEditorProps> = ({ mxEvent, on
+ };
+ 
+ interface IProps extends IDevtoolsProps {
+-    events: Record<string, MatrixEvent>;
++    events: Map<string, MatrixEvent>;
+     Editor: React.FC<IEditorProps>;
+     actionLabel: string;
+ }
+@@ -74,7 +74,7 @@ const BaseAccountDataExplorer: React.FC<IProps> = ({ events, Editor, actionLabel
+     return (
+         <BaseTool onBack={onBack} actionLabel={actionLabel} onAction={onAction}>
+             <FilteredList query={query} onChange={setQuery}>
+-                {Object.entries(events).map(([eventType, ev]) => {
++                {Array.from(events.entries()).map(([eventType, ev]) => {
+                     const onClick = (): void => {
+                         setEvent(ev);
+                     };
+diff --git a/src/languageHandler.tsx b/src/languageHandler.tsx
+index ec37d32965..d7e5b70cdb 100644
+--- a/src/languageHandler.tsx
++++ b/src/languageHandler.tsx
+@@ -21,6 +21,7 @@ import counterpart from "counterpart";
+ import React from "react";
+ import { logger } from "matrix-js-sdk/src/logger";
+ import { Optional } from "matrix-events-sdk";
++import { MapWithDefault, safeSet } from "matrix-js-sdk/src/utils";
+ 
+ import SettingsStore from "./settings/SettingsStore";
+ import PlatformPeg from "./PlatformPeg";
+@@ -629,21 +630,16 @@ export class CustomTranslationOptions {
+ function doRegisterTranslations(customTranslations: ICustomTranslations): void {
+     // We convert the operator-friendly version into something counterpart can
+     // consume.
+-    const langs: {
+-        // same structure, just flipped key order
+-        [lang: string]: {
+-            [str: string]: string;
+-        };
+-    } = {};
++    // Map: lang → Record: string → translation
++    const langs: MapWithDefault<string, Record<string, string>> = new MapWithDefault(() => ({}));
+     for (const [str, translations] of Object.entries(customTranslations)) {
+         for (const [lang, newStr] of Object.entries(translations)) {
+-            if (!langs[lang]) langs[lang] = {};
+-            langs[lang][str] = newStr;
++            safeSet(langs.getOrCreate(lang), str, newStr);
+         }
+     }
+ 
+     // Finally, tell counterpart about our translations
+-    for (const [lang, translations] of Object.entries(langs)) {
++    for (const [lang, translations] of langs) {
+         counterpart.registerTranslations(lang, translations);
+     }
+ }
+diff --git a/src/modules/ModuleRunner.ts b/src/modules/ModuleRunner.ts
+index 2545d04e06..1a94eb16b3 100644
+--- a/src/modules/ModuleRunner.ts
++++ b/src/modules/ModuleRunner.ts
+@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
++import { safeSet } from "matrix-js-sdk/src/utils";
+ import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
+ import { AnyLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/types";
+ 
+ import { AppModule } from "./AppModule";
+ import { ModuleFactory } from "./ModuleFactory";
++
+ import "./ModuleComponents";
+ 
+ /**
+@@ -53,9 +55,10 @@ export class ModuleRunner {
+             if (!i18n) continue;
+ 
+             for (const [lang, strings] of Object.entries(i18n)) {
+-                if (!merged[lang]) merged[lang] = {};
++                safeSet(merged, lang, merged[lang] || {});
++
+                 for (const [str, val] of Object.entries(strings)) {
+-                    merged[lang][str] = val;
++                    safeSet(merged[lang], str, val);
+                 }
+             }
+         }
+diff --git a/src/settings/handlers/RoomDeviceSettingsHandler.ts b/src/settings/handlers/RoomDeviceSettingsHandler.ts
+index 418ff62118..555bdbca47 100644
+--- a/src/settings/handlers/RoomDeviceSettingsHandler.ts
++++ b/src/settings/handlers/RoomDeviceSettingsHandler.ts
+@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
++import { safeSet } from "matrix-js-sdk/src/utils";
++
+ import { SettingLevel } from "../SettingLevel";
+ import { WatchManager } from "../WatchManager";
+ import AbstractLocalStorageSettingsHandler from "./AbstractLocalStorageSettingsHandler";
+@@ -48,7 +50,7 @@ export default class RoomDeviceSettingsHandler extends AbstractLocalStorageSetti
+             let value = this.read("mx_local_settings");
+             if (!value) value = {};
+             if (!value["blacklistUnverifiedDevicesPerRoom"]) value["blacklistUnverifiedDevicesPerRoom"] = {};
+-            value["blacklistUnverifiedDevicesPerRoom"][roomId] = newValue;
++            safeSet(value["blacklistUnverifiedDevicesPerRoom"], roomId, newValue);
+             this.setObject("mx_local_settings", value);
+             this.watchers.notifyUpdate(settingName, roomId, SettingLevel.ROOM_DEVICE, newValue);
+             return Promise.resolve();
+diff --git a/src/stores/AutoRageshakeStore.ts b/src/stores/AutoRageshakeStore.ts
+index f5e7bfe92c..7d1246ef0a 100644
+--- a/src/stores/AutoRageshakeStore.ts
++++ b/src/stores/AutoRageshakeStore.ts
+@@ -135,9 +135,10 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
+                 ...eventInfo,
+                 recipient_rageshake: rageshakeURL,
+             };
+-            this.matrixClient.sendToDevice(AUTO_RS_REQUEST, {
+-                [messageContent.user_id]: { [messageContent.device_id]: messageContent },
+-            });
++            this.matrixClient.sendToDevice(
++                AUTO_RS_REQUEST,
++                new Map([["messageContent.user_id", new Map([[messageContent.device_id, messageContent]])]]),
++            );
+         }
+     }
+ 
+diff --git a/src/stores/widgets/StopGapWidgetDriver.ts b/src/stores/widgets/StopGapWidgetDriver.ts
+index 8e892a05e6..19f2cb63f7 100644
+--- a/src/stores/widgets/StopGapWidgetDriver.ts
++++ b/src/stores/widgets/StopGapWidgetDriver.ts
+@@ -275,7 +275,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
+                         if (deviceId === "*") {
+                             // Send the message to all devices we have keys for
+                             await client.encryptAndSendToDevices(
+-                                Object.values(deviceInfoMap[userId]).map((deviceInfo) => ({
++                                Array.from(deviceInfoMap.get(userId).values()).map((deviceInfo) => ({
+                                     userId,
+                                     deviceInfo,
+                                 })),
+@@ -284,7 +284,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
+                         } else {
+                             // Send the message to a specific device
+                             await client.encryptAndSendToDevices(
+-                                [{ userId, deviceInfo: deviceInfoMap[userId][deviceId] }],
++                                [{ userId, deviceInfo: deviceInfoMap.get(userId).get(deviceId) }],
+                                 content,
+                             );
+                         }
+diff --git a/src/stores/widgets/WidgetLayoutStore.ts b/src/stores/widgets/WidgetLayoutStore.ts
+index 74a6d6c3ee..6dba3e87b5 100644
+--- a/src/stores/widgets/WidgetLayoutStore.ts
++++ b/src/stores/widgets/WidgetLayoutStore.ts
+@@ -18,7 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
+ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+ import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+ import { Optional } from "matrix-events-sdk";
+-import { compare } from "matrix-js-sdk/src/utils";
++import { compare, MapWithDefault, recursiveMapToObject } from "matrix-js-sdk/src/utils";
+ 
+ import SettingsStore from "../../settings/SettingsStore";
+ import WidgetStore, { IApp } from "../WidgetStore";
+@@ -92,19 +92,17 @@ export const MAX_PINNED = 3;
+ const MIN_WIDGET_WIDTH_PCT = 10; // 10%
+ const MIN_WIDGET_HEIGHT_PCT = 2; // 2%
+ 
++interface ContainerValue {
++    ordered: IApp[];
++    height?: number;
++    distributions?: number[];
++}
++
+ export class WidgetLayoutStore extends ReadyWatchingStore {
+     private static internalInstance: WidgetLayoutStore;
+ 
+-    private byRoom: {
+-        [roomId: string]: Partial<{
+-            [container in Container]: {
+-                ordered: IApp[];
+-                height?: number | null;
+-                distributions?: number[];
+-            };
+-        }>;
+-    } = {};
+-
++    // Map: room Id → container → ContainerValue
++    private byRoom: MapWithDefault<string, Map<Container, ContainerValue>> = new MapWithDefault(() => new Map());
+     private pinnedRef: string;
+     private layoutRef: string;
+ 
+@@ -138,7 +136,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+     }
+ 
+     protected async onNotReady(): Promise<void> {
+-        this.byRoom = {};
++        this.byRoom = new MapWithDefault(() => new Map());
+ 
+         this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
+         SettingsStore.unwatchSetting(this.pinnedRef);
+@@ -147,7 +145,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+     }
+ 
+     private updateAllRooms = (): void => {
+-        this.byRoom = {};
++        this.byRoom = new MapWithDefault(() => new Map());
++
+         for (const room of this.matrixClient.getVisibleRooms()) {
+             this.recalculateRoom(room);
+         }
+@@ -180,12 +179,13 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+     public recalculateRoom(room: Room): void {
+         const widgets = WidgetStore.instance.getApps(room.roomId);
+         if (!widgets?.length) {
+-            this.byRoom[room.roomId] = {};
++            this.byRoom.set(room.roomId, new Map());
+             this.emitFor(room);
+             return;
+         }
+ 
+-        const beforeChanges = JSON.stringify(this.byRoom[room.roomId]);
++        const roomContainers = this.byRoom.getOrCreate(room.roomId);
++        const beforeChanges = JSON.stringify(recursiveMapToObject(roomContainers));
+ 
+         const layoutEv = room.currentState.getStateEvents(WIDGET_LAYOUT_EVENT_TYPE, "");
+         const legacyPinned = SettingsStore.getValue("Widgets.pinned", room.roomId);
+@@ -321,33 +321,35 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+         }
+ 
+         // Finally, fill in our cache and update
+-        this.byRoom[room.roomId] = {};
++        const newRoomContainers = new Map();
++        this.byRoom.set(room.roomId, newRoomContainers);
+         if (topWidgets.length) {
+-            this.byRoom[room.roomId][Container.Top] = {
++            newRoomContainers.set(Container.Top, {
+                 ordered: topWidgets,
+                 distributions: widths,
+                 height: maxHeight,
+-            };
++            });
+         }
+         if (rightWidgets.length) {
+-            this.byRoom[room.roomId][Container.Right] = {
++            newRoomContainers.set(Container.Right, {
+                 ordered: rightWidgets,
+-            };
++            });
+         }
+         if (centerWidgets.length) {
+-            this.byRoom[room.roomId][Container.Center] = {
++            newRoomContainers.set(Container.Center, {
+                 ordered: centerWidgets,
+-            };
++            });
+         }
+ 
+-        const afterChanges = JSON.stringify(this.byRoom[room.roomId]);
++        const afterChanges = JSON.stringify(recursiveMapToObject(newRoomContainers));
++
+         if (afterChanges !== beforeChanges) {
+             this.emitFor(room);
+         }
+     }
+ 
+     public getContainerWidgets(room: Optional<Room>, container: Container): IApp[] {
+-        return this.byRoom[room?.roomId]?.[container]?.ordered || [];
++        return this.byRoom.get(room?.roomId)?.get(container)?.ordered || [];
+     }
+ 
+     public isInContainer(room: Optional<Room>, widget: IApp, container: Container): boolean {
+@@ -367,7 +369,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+ 
+     public getResizerDistributions(room: Room, container: Container): string[] {
+         // yes, string.
+-        let distributions = this.byRoom[room.roomId]?.[container]?.distributions;
++        let distributions = this.byRoom.get(room.roomId)?.get(container)?.distributions;
+         if (!distributions || distributions.length < 2) return [];
+ 
+         // The distributor actually expects to be fed N-1 sizes and expands the middle section
+@@ -396,19 +398,19 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+                 container: container,
+                 width: numbers[i],
+                 index: i,
+-                height: this.byRoom[room.roomId]?.[container]?.height || MIN_WIDGET_HEIGHT_PCT,
++                height: this.byRoom.get(room.roomId)?.get(container)?.height || MIN_WIDGET_HEIGHT_PCT,
+             };
+         });
+         this.updateUserLayout(room, localLayout);
+     }
+ 
+     public getContainerHeight(room: Room, container: Container): number | null {
+-        return this.byRoom[room.roomId]?.[container]?.height ?? null; // let the default get returned if needed
++        return this.byRoom.get(room.roomId)?.get(container)?.height ?? null; // let the default get returned if needed
+     }
+ 
+     public setContainerHeight(room: Room, container: Container, height?: number): void {
+         const widgets = this.getContainerWidgets(room, container);
+-        const widths = this.byRoom[room.roomId]?.[container]?.distributions;
++        const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
+         const localLayout: Record<string, IStoredLayout> = {};
+         widgets.forEach((w, i) => {
+             localLayout[w.id] = {
+@@ -430,8 +432,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+         const newIdx = clamp(currentIdx + delta, 0, widgets.length);
+         widgets.splice(newIdx, 0, widget);
+ 
+-        const widths = this.byRoom[room.roomId]?.[container]?.distributions;
+-        const height = this.byRoom[room.roomId]?.[container]?.height;
++        const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
++        const height = this.byRoom.get(room.roomId)?.get(container)?.height;
+         const localLayout: Record<string, IStoredLayout> = {};
+         widgets.forEach((w, i) => {
+             localLayout[w.id] = {
+@@ -498,8 +500,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+             if (container === Container.Top) {
+                 const containerWidgets = this.getContainerWidgets(room, container);
+                 const idx = containerWidgets.findIndex((w) => w.id === widget.id);
+-                const widths = this.byRoom[room.roomId]?.[container]?.distributions;
+-                const height = this.byRoom[room.roomId]?.[container]?.height;
++                const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
++                const height = this.byRoom.get(room.roomId)?.get(container)?.height;
+                 evContent.widgets[widget.id] = {
+                     ...evContent.widgets[widget.id],
+                     height: height ? Math.round(height) : undefined,
+@@ -512,12 +514,12 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+     }
+ 
+     private getAllWidgets(room: Room): [IApp, Container][] {
+-        const containers = this.byRoom[room.roomId];
++        const containers = this.byRoom.get(room.roomId);
+         if (!containers) return [];
+ 
+         const ret: [IApp, Container][] = [];
+-        for (const container in containers) {
+-            const widgets = containers[container as Container].ordered;
++        for (const [container, containerValue] of containers) {
++            const widgets = containerValue.ordered;
+             for (const widget of widgets) {
+                 ret.push([widget, container as Container]);
+             }
+@@ -531,12 +533,12 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
+         for (const [widget, container] of allWidgets) {
+             const containerWidgets = this.getContainerWidgets(room, container);
+             const idx = containerWidgets.findIndex((w) => w.id === widget.id);
+-            const widths = this.byRoom[room.roomId]?.[container]?.distributions;
++            const widths = this.byRoom.get(room.roomId)?.get(container)?.distributions;
+             if (!newLayout[widget.id]) {
+                 newLayout[widget.id] = {
+                     container: container,
+                     index: idx,
+-                    height: this.byRoom[room.roomId]?.[container]?.height,
++                    height: this.byRoom.get(room.roomId)?.get(container)?.height,
+                     width: widths?.[idx],
+                 };
+             }
+diff --git a/src/utils/device/clientInformation.ts b/src/utils/device/clientInformation.ts
+index de247a5743..e67f159edf 100644
+--- a/src/utils/device/clientInformation.ts
++++ b/src/utils/device/clientInformation.ts
+@@ -71,7 +71,7 @@ export const recordClientInformation = async (
+  *                      client information for devices NOT in this list will be removed
+  */
+ export const pruneClientInformation = (validDeviceIds: string[], matrixClient: MatrixClient): void => {
+-    Object.values(matrixClient.store.accountData).forEach((event) => {
++    Array.from(matrixClient.store.accountData.values()).forEach((event) => {
+         if (!event.getType().startsWith(clientInformationEventPrefix)) {
+             return;
+         }
+diff --git a/test/components/views/settings/tabs/user/SessionManagerTab-test.tsx b/test/components/views/settings/tabs/user/SessionManagerTab-test.tsx
+index 8358922527..7a1336ddd5 100644
+--- a/test/components/views/settings/tabs/user/SessionManagerTab-test.tsx
++++ b/test/components/views/settings/tabs/user/SessionManagerTab-test.tsx
+@@ -75,7 +75,10 @@ describe("<SessionManagerTab />", () => {
+     const mockCrossSigningInfo = {
+         checkDeviceTrust: jest.fn(),
+     };
+-    const mockVerificationRequest = { cancel: jest.fn(), on: jest.fn() } as unknown as VerificationRequest;
++    const mockVerificationRequest = {
++        cancel: jest.fn(),
++        on: jest.fn(),
++    } as unknown as VerificationRequest;
+     const mockClient = getMockClientWithEventEmitter({
+         ...mockClientMethodsUser(aliceId),
+         getStoredCrossSigningForUser: jest.fn().mockReturnValue(mockCrossSigningInfo),
+@@ -184,7 +187,7 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         // @ts-ignore mock
+-        mockClient.store = { accountData: {} };
++        mockClient.store = { accountData: new Map() };
+ 
+         mockClient.getAccountData.mockReset().mockImplementation((eventType) => {
+             if (eventType.startsWith(LOCAL_NOTIFICATION_SETTINGS_PREFIX.name)) {
+@@ -221,7 +224,9 @@ describe("<SessionManagerTab />", () => {
+ 
+     it("does not fail when checking device verification fails", async () => {
+         const logSpy = jest.spyOn(logger, "error").mockImplementation(() => {});
+-        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++        mockClient.getDevices.mockResolvedValue({
++            devices: [alicesDevice, alicesMobileDevice],
++        });
+         const noCryptoError = new Error("End-to-end encryption disabled");
+         mockClient.getStoredDevice.mockImplementation(() => {
+             throw noCryptoError;
+@@ -276,7 +281,9 @@ describe("<SessionManagerTab />", () => {
+     });
+ 
+     it("extends device with client information when available", async () => {
+-        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++        mockClient.getDevices.mockResolvedValue({
++            devices: [alicesDevice, alicesMobileDevice],
++        });
+         mockClient.getAccountData.mockImplementation((eventType: string) => {
+             const content = {
+                 name: "Element Web",
+@@ -304,7 +311,9 @@ describe("<SessionManagerTab />", () => {
+     });
+ 
+     it("renders devices without available client information without error", async () => {
+-        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++        mockClient.getDevices.mockResolvedValue({
++            devices: [alicesDevice, alicesMobileDevice],
++        });
+ 
+         const { getByTestId, queryByTestId } = render(getComponent());
+ 
+@@ -342,7 +351,9 @@ describe("<SessionManagerTab />", () => {
+     });
+ 
+     it("goes to filtered list from security recommendations", async () => {
+-        mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++        mockClient.getDevices.mockResolvedValue({
++            devices: [alicesDevice, alicesMobileDevice],
++        });
+         const { getByTestId, container } = render(getComponent());
+ 
+         await act(async () => {
+@@ -375,7 +386,9 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         it("renders current session section with an unverified session", async () => {
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             const { getByTestId } = render(getComponent());
+ 
+             await act(async () => {
+@@ -386,7 +399,9 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         it("opens encryption setup dialog when verifiying current session", async () => {
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             const { getByTestId } = render(getComponent());
+             const modalSpy = jest.spyOn(Modal, "createDialog");
+ 
+@@ -401,7 +416,9 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         it("renders current session section with a verified session", async () => {
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             mockClient.getStoredDevice.mockImplementation(() => new DeviceInfo(alicesDevice.device_id));
+             mockCrossSigningInfo.checkDeviceTrust.mockReturnValue(new DeviceTrustLevel(true, true, false, false));
+ 
+@@ -415,7 +432,9 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         it("expands current session details", async () => {
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             const { getByTestId } = render(getComponent());
+ 
+             await act(async () => {
+@@ -499,7 +518,9 @@ describe("<SessionManagerTab />", () => {
+             const modalSpy = jest.spyOn(Modal, "createDialog");
+ 
+             // make the current device verified
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
+             mockCrossSigningInfo.checkDeviceTrust.mockImplementation((_userId, { deviceId }) => {
+                 if (deviceId === alicesDevice.device_id) {
+@@ -524,7 +545,9 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         it("does not allow device verification on session that do not support encryption", async () => {
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
+             mockCrossSigningInfo.checkDeviceTrust.mockImplementation((_userId, { deviceId }) => {
+                 // current session verified = able to verify other sessions
+@@ -556,7 +579,9 @@ describe("<SessionManagerTab />", () => {
+             const modalSpy = jest.spyOn(Modal, "createDialog");
+ 
+             // make the current device verified
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice, alicesMobileDevice],
++            });
+             mockClient.getStoredDevice.mockImplementation((_userId, deviceId) => new DeviceInfo(deviceId));
+             mockCrossSigningInfo.checkDeviceTrust.mockImplementation((_userId, { deviceId }) => {
+                 if (deviceId === alicesDevice.device_id) {
+@@ -594,7 +619,9 @@ describe("<SessionManagerTab />", () => {
+         it("Signs out of current device", async () => {
+             const modalSpy = jest.spyOn(Modal, "createDialog");
+ 
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice],
++            });
+             const { getByTestId } = render(getComponent());
+ 
+             await act(async () => {
+@@ -613,7 +640,9 @@ describe("<SessionManagerTab />", () => {
+ 
+         it("Signs out of current device from kebab menu", async () => {
+             const modalSpy = jest.spyOn(Modal, "createDialog");
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice],
++            });
+             const { getByTestId, getByLabelText } = render(getComponent());
+ 
+             await act(async () => {
+@@ -628,7 +657,9 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         it("does not render sign out other devices option when only one device", async () => {
+-            mockClient.getDevices.mockResolvedValue({ devices: [alicesDevice] });
++            mockClient.getDevices.mockResolvedValue({
++                devices: [alicesDevice],
++            });
+             const { getByTestId, queryByLabelText } = render(getComponent());
+ 
+             await act(async () => {
+@@ -670,9 +701,7 @@ describe("<SessionManagerTab />", () => {
+             // @ts-ignore setup mock
+             mockClient.store = {
+                 // @ts-ignore setup mock
+-                accountData: {
+-                    [mobileDeviceClientInfo.getType()]: mobileDeviceClientInfo,
+-                },
++                accountData: new Map([[mobileDeviceClientInfo.getType(), mobileDeviceClientInfo]]),
+             };
+ 
+             mockClient.getDevices
+@@ -702,7 +731,10 @@ describe("<SessionManagerTab />", () => {
+         });
+ 
+         describe("other devices", () => {
+-            const interactiveAuthError = { httpStatus: 401, data: { flows: [{ stages: ["m.login.password"] }] } };
++            const interactiveAuthError = {
++                httpStatus: 401,
++                data: { flows: [{ stages: ["m.login.password"] }] },
++            };
+ 
+             beforeEach(() => {
+                 mockClient.deleteMultipleDevices.mockReset();
+@@ -711,9 +743,13 @@ describe("<SessionManagerTab />", () => {
+             it("deletes a device when interactive auth is not required", async () => {
+                 mockClient.deleteMultipleDevices.mockResolvedValue({});
+                 mockClient.getDevices
+-                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice] })
++                    .mockResolvedValueOnce({
++                        devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
++                    })
+                     // pretend it was really deleted on refresh
+-                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesOlderMobileDevice] });
++                    .mockResolvedValueOnce({
++                        devices: [alicesDevice, alicesOlderMobileDevice],
++                    });
+ 
+                 const { getByTestId } = render(getComponent());
+ 
+@@ -784,9 +820,13 @@ describe("<SessionManagerTab />", () => {
+                     .mockResolvedValueOnce({});
+ 
+                 mockClient.getDevices
+-                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice] })
++                    .mockResolvedValueOnce({
++                        devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
++                    })
+                     // pretend it was really deleted on refresh
+-                    .mockResolvedValueOnce({ devices: [alicesDevice, alicesOlderMobileDevice] });
++                    .mockResolvedValueOnce({
++                        devices: [alicesDevice, alicesOlderMobileDevice],
++                    });
+ 
+                 const { getByTestId, getByLabelText } = render(getComponent());
+ 
+@@ -820,7 +860,9 @@ describe("<SessionManagerTab />", () => {
+ 
+                 // fill password and submit for interactive auth
+                 act(() => {
+-                    fireEvent.change(getByLabelText("Password"), { target: { value: "topsecret" } });
++                    fireEvent.change(getByLabelText("Password"), {
++                        target: { value: "topsecret" },
++                    });
+                     fireEvent.submit(getByLabelText("Password"));
+                 });
+ 
+@@ -1061,7 +1103,9 @@ describe("<SessionManagerTab />", () => {
+ 
+             await updateDeviceName(getByTestId, alicesDevice, "");
+ 
+-            expect(mockClient.setDeviceDetails).toHaveBeenCalledWith(alicesDevice.device_id, { display_name: "" });
++            expect(mockClient.setDeviceDetails).toHaveBeenCalledWith(alicesDevice.device_id, {
++                display_name: "",
++            });
+         });
+ 
+         it("displays an error when session display name fails to save", async () => {
+diff --git a/test/createRoom-test.ts b/test/createRoom-test.ts
+index 9bb4f79875..fc49c5656a 100644
+--- a/test/createRoom-test.ts
++++ b/test/createRoom-test.ts
+@@ -16,7 +16,7 @@ limitations under the License.
+ 
+ import { mocked, Mocked } from "jest-mock";
+ import { MatrixClient } from "matrix-js-sdk/src/matrix";
+-import { IDevice } from "matrix-js-sdk/src/crypto/deviceinfo";
++import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+ import { RoomType } from "matrix-js-sdk/src/@types/event";
+ 
+ import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg } from "./test-utils";
+@@ -147,12 +147,16 @@ describe("createRoom", () => {
+ });
+ 
+ describe("canEncryptToAllUsers", () => {
+-    const trueUser = {
+-        "@goodUser:localhost": {
+-            DEV1: {} as unknown as IDevice,
+-            DEV2: {} as unknown as IDevice,
+-        },
+-    };
++    const trueUser = new Map([
++        [
++            "@goodUser:localhost",
++            new Map([
++                ["DEV1", {} as unknown as DeviceInfo],
++                ["DEV2", {} as unknown as DeviceInfo],
++            ]),
++        ],
++    ]);
++
+     const falseUser = {
+         "@badUser:localhost": {},
+     };
+diff --git a/test/stores/AutoRageshakeStore-test.ts b/test/stores/AutoRageshakeStore-test.ts
+index d7efeaee17..76b42209c3 100644
+--- a/test/stores/AutoRageshakeStore-test.ts
++++ b/test/stores/AutoRageshakeStore-test.ts
+@@ -79,9 +79,9 @@ describe("AutoRageshakeStore", () => {
+                     [
+                       [
+                         "im.vector.auto_rs_request",
+-                        {
+-                          "@userId:matrix.org": {
+-                            "undefined": {
++                        Map {
++                          "messageContent.user_id" => Map {
++                            undefined => {
+                               "device_id": undefined,
+                               "event_id": "utd_event_id",
+                               "recipient_rageshake": undefined,
+diff --git a/test/stores/widgets/StopGapWidgetDriver-test.ts b/test/stores/widgets/StopGapWidgetDriver-test.ts
+index 8d1e067d30..8b9b6bfdec 100644
+--- a/test/stores/widgets/StopGapWidgetDriver-test.ts
++++ b/test/stores/widgets/StopGapWidgetDriver-test.ts
+@@ -184,10 +184,18 @@ describe("StopGapWidgetDriver", () => {
+             const aliceMobile = new DeviceInfo("aliceMobile");
+             const bobDesktop = new DeviceInfo("bobDesktop");
+ 
+-            mocked(client.crypto!.deviceList).downloadKeys.mockResolvedValue({
+-                "@alice:example.org": { aliceWeb, aliceMobile },
+-                "@bob:example.org": { bobDesktop },
+-            });
++            mocked(client.crypto.deviceList).downloadKeys.mockResolvedValue(
++                new Map([
++                    [
++                        "@alice:example.org",
++                        new Map([
++                            ["aliceWeb", aliceWeb],
++                            ["aliceMobile", aliceMobile],
++                        ]),
++                    ],
++                    ["@bob:example.org", new Map([["bobDesktop", bobDesktop]])],
++                ]),
++            );
+ 
+             await driver.sendToDevice("org.example.foo", true, contentMap);
+             expect(client.encryptAndSendToDevices.mock.calls).toMatchSnapshot();
