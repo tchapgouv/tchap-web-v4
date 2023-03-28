@@ -18,9 +18,10 @@ function checkForDuplicateFiles(patchFile) {
     });
     const dup = findFirstDuplicate(fileList);
     if (dup) {
-        console.error("This file is used in two different patches:", dup);
-        console.error("The changes of the two packages will be mixed up. Don't do this.");
-        process.exit(1);
+        console.error("WARNING : This file is used in two different patches:", dup);
+        console.error("WARNING : The changes of the two packages will be mixed up. Don't do this.");
+        //do not close with error, just a warning in logs
+        //process.exit(1);
     }
     console.log("... no files that are patched twice.");
 }

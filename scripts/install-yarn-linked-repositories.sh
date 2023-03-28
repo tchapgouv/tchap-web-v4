@@ -65,5 +65,5 @@ cd ..
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
-
 yarn install --pure-lockfile
+
