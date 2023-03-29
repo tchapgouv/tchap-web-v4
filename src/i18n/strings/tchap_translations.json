@@ -794,9 +794,9 @@
     "fr": "Ces clés ne concernent que la session en cours.",
     "en": "These keys only apply to the current session."
   },
-  "Please note this is not your recovery key for your automatic backup.": {
-    "fr": "Attention ceci n’est pas votre clé de récuperation pour votre sauvegarde automatique.",
-    "en": "Please note this is not your recovery key for your automatic backup."
+  "Please note this is not your recovery code for your automatic backup.": {
+    "fr": "Attention ceci n’est pas votre code de récupération pour votre sauvegarde automatique.",
+    "en": "Please note this is not your recovery code for your automatic backup."
   },
   "Tchap keys": {
     "fr": "Clés Tchap",
