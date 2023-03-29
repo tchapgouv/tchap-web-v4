@@ -1,7 +1,10 @@
 {
     "are-external-users-allowed-in-room": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/views/rooms/RoomHeader.tsx", "res/css/views/rooms/_RoomHeader.pcss"],
+        "files": [
+            "src/components/views/rooms/RoomHeader.tsx",
+            "res/css/views/rooms/_RoomHeader.pcss"
+        ],
         "description": "TODO: Remplir ici"
     },
     "show-icon-on-public-room": {
@@ -13,7 +16,6 @@
         "files": [
             "src/components/views/dialogs/IncomingSasDialog.tsx",
             "src/components/views/dialogs/VerificationRequestDialog.tsx",
-            "src/components/views/verification/TchapVerificationComplete.tsx",
             "src/components/views/right_panel/VerificationPanel.tsx",
             "src/components/views/verification/VerificationComplete.tsx"
         ]
@@ -58,11 +60,17 @@
 
     "login": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/structures/auth/Login.tsx", "src/components/views/auth/PasswordLogin.tsx"]
+        "files": [
+            "src/components/structures/auth/Login.tsx",
+            "src/components/views/auth/PasswordLogin.tsx"
+        ]
     },
     "registration-for-mainlining": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/structures/auth/Registration.tsx", "src/components/views/auth/RegistrationForm.tsx"]
+        "files": [
+            "src/components/structures/auth/Registration.tsx",
+            "src/components/views/auth/RegistrationForm.tsx"
+        ]
     },
     "password-policy": {
         "package": "matrix-react-sdk",
@@ -72,14 +80,15 @@
         "package": "matrix-react-sdk",
         "files": [
             "res/css/views/directory/_NetworkDropdown.pcss",
-            "src/components/views/directory/NetworkDropdown.tsx",
-            "src/i18n/strings/en_EN.json",
-            "src/i18n/strings/fr.json"
+            "src/components/views/directory/NetworkDropdown.tsx"
         ]
     },
     "auto-accept-tac": {
         "package": "matrix-react-sdk",
-        "files": ["src/IdentityAuthClient.tsx", "src/Terms.ts"]
+        "files": [
+            "src/IdentityAuthClient.tsx",
+            "src/Terms.ts"
+        ]
     },
     "hide-discovery-email-phone-settings": {
         "package": "matrix-react-sdk",
@@ -91,7 +100,11 @@
     },
     "activate-expired-account-panel": {
         "package": "matrix-js-sdk",
-        "files": ["src/http-api/interface.ts", "src/http-api/fetch.ts", "src/sync.ts"]
+        "files": [
+            "src/http-api/interface.ts",
+            "src/http-api/fetch.ts",
+            "src/sync.ts"
+        ]
     },
     "cross-signing-ui": {
         "comments": "reword cross-signing dialogs and remove confirmation dialog",
@@ -137,7 +150,10 @@
     "add-a-help-tab-in-menu-to-redirect-to-external-tchap-faq": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/395",
         "package": "matrix-react-sdk",
-        "files": ["src/components/structures/UserMenu.tsx", "res/css/structures/_UserMenu.pcss"]
+        "files": [
+            "src/components/structures/UserMenu.tsx",
+            "res/css/structures/_UserMenu.pcss"
+        ]
     },
     "ux-improvements-for-xsss": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/442",
