@@ -1,0 +1,50 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
+index 34b52e4..1383002 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
+@@ -73,6 +73,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+ 
+         return (
+             <div className="mx_SettingsTab_section mx_CryptographyPanel">
++                {/* :TCHAP: modify content
+                 <span className="mx_SettingsTab_subheading">{_t("Cryptography")}</span>
+                 <table className="mx_SettingsTab_subsectionText mx_CryptographyPanel_sessionInfo">
+                     <tbody>
+@@ -92,7 +93,36 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+                         </tr>
+                     </tbody>
+                 </table>
+-                {importExportButtons}
++                {importExportButtons} */}
++
++                <span className="mx_SettingsTab_subheading">{_t("Tchap keys")}</span>
++                <div className="mx_SettingsTab_subsectionText">{_t("These keys only apply to the current session.")}</div>
++                <div className="mx_SettingsTab_subsectionText"><b>{_t("Please note this is not your recovery code for your automatic backup.")}</b></div>
++                
++                <details className="mx_SettingsTab_subsectionText">
++                    <summary>{_t("Advanced")}</summary>
++                    <table className="mx_CryptographyPanel_sessionInfo">
++                        <tbody>
++                            <tr>
++                                <td>{_t("Session ID:")}</td>
++                                <td>
++                                    <code>{deviceId}</code>
++                                </td>
++                            </tr>
++                            <tr>
++                                <td>{_t("Tchap keys:")}</td>
++                                <td>
++                                    <code>
++                                        <b>{identityKey}</b>
++                                    </code>
++                                </td>
++                            </tr>
++                        </tbody>
++                    </table>
++                </details>
++
++                <div className="mx_CrossSigningPanel_buttonRow">{importExportButtons}</div>
++                {/* end :TCHAP: */}
+                 {noSendUnverifiedSetting}
+             </div>
+         );

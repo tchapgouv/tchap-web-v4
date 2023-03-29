@@ -790,5 +790,21 @@
   "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
     "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
     "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
+  },
+  "These keys only apply to the current session.": {
+    "fr": "Ces clés ne concernent que la session en cours.",
+    "en": "These keys only apply to the current session."
+  },
+  "Please note this is not your recovery code for your automatic backup.": {
+    "fr": "Attention ceci n’est pas votre code de récupération pour votre sauvegarde automatique.",
+    "en": "Please note this is not your recovery code for your automatic backup."
+  },
+  "Tchap keys": {
+    "fr": "Clés Tchap",
+    "en": "Tchap keys"
+  },
+  "Tchap keys:": {
+    "fr": "Clés Tchap :",
+    "en": "Tchap keys:"
   }
 }
