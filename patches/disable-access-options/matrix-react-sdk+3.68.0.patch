@@ -1,8 +1,33 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-index 78bb1fe..a4449b2 100644
+index 78bb1fe..d286db9 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-@@ -415,11 +415,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+@@ -251,14 +251,16 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const room = client.getRoom(this.props.roomId);
+ 
+         let aliasWarning: JSX.Element | undefined;
+-        if (room?.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
+-            aliasWarning = (
+-                <div className="mx_SecurityRoomSettingsTab_warning">
+-                    <WarningIcon width={15} height={15} />
+-                    <span>{_t("To link to this room, please add an address.")}</span>
+-                </div>
+-            );
+-        }
++        // :TCHAP: remove
++        // if (room?.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
++        //     aliasWarning = (
++        //         <div className="mx_SecurityRoomSettingsTab_warning">
++        //             <WarningIcon width={15} height={15} />
++        //             <span>{_t("To link to this room, please add an address.")}</span>
++        //         </div>
++        //     );
++        // }
++        // end :TCHAP:
+         const description = _t("Decide who can join %(roomName)s.", {
+             roomName: room?.name,
+         });
+@@ -415,11 +417,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
      }
  
      public render(): React.ReactNode {
@@ -18,7 +43,7 @@ index 78bb1fe..a4449b2 100644
  
          let encryptionSettings: JSX.Element | undefined;
          if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
-@@ -436,7 +439,10 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+@@ -436,7 +441,10 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
          const historySection = this.renderHistory();
  
          let advanced: JSX.Element | undefined;
