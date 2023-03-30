@@ -116,7 +116,7 @@ index cf7506c..dca86c3 100644
      }
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 7ab2273..5ff7b9e 100644
+index 7ab2273..9106928 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -150,16 +150,18 @@ index 7ab2273..5ff7b9e 100644
          } else {
              statusDescription = (
                  <>
-@@ -445,7 +448,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -445,7 +448,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
          if (secretStorageKeyInAccount) {
              actions.push(
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
 -                    {_t("Reset")}
++                    {/* :TCHAP: change {_t("Reset")} into */}
 +                    {_t("Lost code?")}
++                    {/* end :TCHAP */}
                  </AccessibleButton>,
              );
          }
-@@ -463,17 +466,24 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -463,17 +468,24 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
          let actionRow;
          if (actions.length) {
              actionRow = <div className="mx_SecureBackupPanel_buttonRow">{actions}</div>;
