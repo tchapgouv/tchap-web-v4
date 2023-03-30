@@ -806,5 +806,9 @@
   "Tchap keys:": {
     "fr": "Clés Tchap :",
     "en": "Tchap keys:"
+  },
+  "That email is not allowed on Tchap" : {
+    "fr": "Votre adresse mail n'est pas autorisée sur Tchap. Demandez l'accès à Tchap pour votre administration via <a>ce formulaire</a>",
+    "en": "Your email adress is not allowed on Tchap. Make an autorization request <a>here</a>"
   }
 }

@@ -67,6 +67,8 @@
     },
     "registration-for-mainlining": {
         "package": "matrix-react-sdk",
+        "comments": "registration process is customized",
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/460",
         "files": [
             "src/components/structures/auth/Registration.tsx",
             "src/components/views/auth/RegistrationForm.tsx"
