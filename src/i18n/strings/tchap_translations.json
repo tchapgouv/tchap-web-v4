@@ -807,8 +807,8 @@
     "fr": "Clés Tchap :",
     "en": "Tchap keys:"
   },
-  "Lost code?": {
-    "fr": "Code perdu ?",
-    "en": "Lost code?"
+  "Generate a new code": {
+    "fr": "Générer un nouveau code",
+    "en": "Generate a new code"
   }
 }

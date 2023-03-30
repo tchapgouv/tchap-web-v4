@@ -44,7 +44,7 @@ index 00a05b1..2009120 100644
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index 0ba8f58..34d459c 100644
+index 0ba8f58..0c202a6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -55,10 +55,38 @@ index 0ba8f58..34d459c 100644
  
  interface IState {
      error?: Error;
-@@ -237,6 +238,12 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -210,6 +211,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             userSigningPrivateKeyCached;
+ 
+         const actions: JSX.Element[] = [];
++        // :TCHAP move Reset button to advanced section
++        const advancedActions: JSX.Element[] = [];
++        // end :TCHAP:
+ 
+         // TODO: determine how better to expose this to users in addition to prompts at login/toast
+         if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
+@@ -225,7 +229,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+         }
+ 
+         if (keysExistAnywhere) {
+-            actions.push(
++            // :TCHAP actions.push(
++            advancedActions.push(
++            // end :TCHAP:
+                 <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
+                     {_t("Reset")}
+                 </AccessibleButton>,
+@@ -237,6 +243,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
++        // :TCHAP add
++        let advancedActionRow;
++        if (advancedActions.length) {
++            advancedActionRow = <div className="mx_CrossSigningPanel_buttonRow">{advancedActions}</div>;
++        }
++        // end :TCHAP:
++
 +        // :TCHAP: hide cross-signing actions if cross-signing is not supported
 +        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
 +            actionRow = null;
@@ -68,6 +96,14 @@ index 0ba8f58..34d459c 100644
          return (
              <div>
                  {summarisedStatus}
+@@ -274,6 +293,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+                             </tr>
+                         </tbody>
+                     </table>
++                    {advancedActionRow}
+                 </details>
+                 {errorSection}
+                 {actionRow}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
 index cf7506c..dca86c3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
@@ -116,7 +152,7 @@ index cf7506c..dca86c3 100644
      }
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 7ab2273..9106928 100644
+index 7ab2273..9bc08c5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -156,7 +192,7 @@ index 7ab2273..9106928 100644
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
 -                    {_t("Reset")}
 +                    {/* :TCHAP: change {_t("Reset")} into */}
-+                    {_t("Lost code?")}
++                    {_t("Generate a new code")}
 +                    {/* end :TCHAP */}
                  </AccessibleButton>,
              );
