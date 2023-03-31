@@ -6,7 +6,7 @@ set -e
 
 today=$(date +%Y%m%d)
 
-version=$(./scripts/get-version-from-package-json.sh)
+version=$(./scripts/tchap/get-version-from-package-json.sh)
 export VERSION=$version
 echo "VERSION is set to $VERSION"
 
