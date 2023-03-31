@@ -23,7 +23,7 @@ jobs:
                   node-version: 16
 
             - name: Install Dependencies
-              run: "./scripts/tchap/install-yarn-linked-repositories.sh"
+              run: "yarn install"
 
             - name: Build
               run: "yarn build"
