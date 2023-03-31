@@ -28,7 +28,7 @@
     ],
     "style": "bundle.css",
     "scripts_comments": {
-        "build:jitsi": "tchap don't need that, deactivate?"  
+        "build:jitsi": "tchap don't need that, deactivate?"
     },
     "scripts": {
         "i18n": "matrix-gen-i18n",
