@@ -7,3 +7,4 @@ src/modules.ts
 # remove those files from eslint
 test/.eslintrc.js
 test/setupTests.js
+patches/patches.json
