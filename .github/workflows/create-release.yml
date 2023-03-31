@@ -19,6 +19,8 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ steps.node_version.outputs.node_version }}
+            - name: Install Dependencies
+              run: "yarn install"
             - name: Get Tchap Web Version
               id: version
               run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
