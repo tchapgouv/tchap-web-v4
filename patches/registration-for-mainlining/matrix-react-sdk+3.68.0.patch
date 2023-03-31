@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index dd9be19..4226280 100644
+index dd9be19..144efa3 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-@@ -39,8 +39,10 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
+@@ -39,8 +39,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
  import Spinner from "../../views/elements/Spinner";
  import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
  import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
@@ -10,10 +10,11 @@ index dd9be19..4226280 100644
  import SettingsStore from "../../../settings/SettingsStore";
  import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 +import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
++import TchapUrls from "../../../../../../src/util/TchapUrls";
  
  const debuglog = (...args: any[]): void => {
      if (SettingsStore.getValue("debug_registration")) {
-@@ -277,11 +279,22 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -277,11 +280,22 @@ export default class Registration extends React.Component<IProps, IState> {
      }
  
      private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
@@ -36,7 +37,7 @@ index dd9be19..4226280 100644
          });
      };
  
-@@ -296,7 +309,10 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -296,7 +310,10 @@ export default class Registration extends React.Component<IProps, IState> {
              emailAddress,
              clientSecret,
              sendAttempt,
@@ -48,7 +49,16 @@ index dd9be19..4226280 100644
                  client_secret: clientSecret,
                  hs_url: this.state.matrixClient.getHomeserverUrl(),
                  is_url: this.state.matrixClient.getIdentityServerUrl(),
-@@ -476,6 +492,11 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -341,6 +358,8 @@ export default class Registration extends React.Component<IProps, IState> {
+                 errorText = _t("Someone already has that username, please try another.");
+             } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
+                 errorText = _t("That e-mail address or phone number is already in use.");
++            } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_DENIED") {
++                errorText = _t("That email is not allowed on Tchap", {}, {a: (sub)=><a href={TchapUrls.requestDomainUrl}>{sub}</a>});
+             }
+ 
+             this.setState({
+@@ -476,6 +495,11 @@ export default class Registration extends React.Component<IProps, IState> {
              inhibit_login: undefined,
          };
          if (auth) registerParams.auth = auth;
@@ -60,7 +70,7 @@ index dd9be19..4226280 100644
          debuglog("Registration: sending registration request:", auth);
          return this.state.matrixClient.registerRequest(registerParams);
      };
-@@ -515,7 +536,7 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -515,7 +539,7 @@ export default class Registration extends React.Component<IProps, IState> {
                      sessionId={this.props.sessionId}
                      clientSecret={this.props.clientSecret}
                      emailSid={this.props.idSid}
@@ -69,7 +79,7 @@ index dd9be19..4226280 100644
                  />
              );
          } else if (!this.state.matrixClient && !this.state.busy) {
-@@ -711,6 +732,12 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -711,6 +735,12 @@ export default class Registration extends React.Component<IProps, IState> {
                              {errorText}
                              {serverDeadSection}
                          </AuthHeaderDisplay>
