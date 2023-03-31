@@ -1,5 +1,5 @@
 #Run the tests
-#tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
+#tchap modification : use "./scripts/tchap/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Tests
 on:
     pull_request: {}
@@ -26,7 +26,7 @@ jobs:
                   node-version: 16
 
             - name: Install Dependencies
-              run: "./scripts/install-yarn-linked-repositories.sh"
+              run: "./scripts/tchap/install-yarn-linked-repositories.sh"
 
             - name: Run tests with coverage
               run: "yarn coverage --ci"
