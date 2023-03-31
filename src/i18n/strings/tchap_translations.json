@@ -806,5 +806,9 @@
   "Tchap keys:": {
     "fr": "Clés Tchap :",
     "en": "Tchap keys:"
+  },
+  "Generate a new code": {
+    "fr": "Générer un nouveau code",
+    "en": "Generate a new code"
   }
 }
