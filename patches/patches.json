@@ -231,5 +231,12 @@
             "src/stores/widgets/WidgetLayoutStore.ts",
             "src/utils/device/clientInformation.ts"
         ]
+    },
+    "add-translations-for-server-errors": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/485",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/stores/RoomViewStore.tsx"
+        ]
     }
 }

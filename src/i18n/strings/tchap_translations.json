@@ -810,5 +810,9 @@
   "Generate a new code": {
     "fr": "Générer un nouveau code",
     "en": "Generate a new code"
+  },
+  "You have not been invited to this room.": {
+    "fr": "Vous n'avez pas été pas invité dans ce salon.",
+    "en": "You have not been invited to this room."
   }
 }
