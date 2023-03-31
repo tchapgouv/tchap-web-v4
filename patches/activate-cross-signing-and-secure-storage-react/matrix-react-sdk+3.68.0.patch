@@ -152,7 +152,7 @@ index cf7506c..dca86c3 100644
      }
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 7ab2273..9106928 100644
+index 7ab2273..9bc08c5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -192,7 +192,7 @@ index 7ab2273..9106928 100644
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
 -                    {_t("Reset")}
 +                    {/* :TCHAP: change {_t("Reset")} into */}
-+                    {_t("Lost code?")}
++                    {_t("Generate a new code")}
 +                    {/* end :TCHAP */}
                  </AccessibleButton>,
              );
