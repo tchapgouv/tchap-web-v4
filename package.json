@@ -37,7 +37,7 @@
         "clean": "rimraf lib webapp",
         "build": "yarn clean && yarn build:genfiles && yarn build:bundle",
         "build-stats": "yarn clean && yarn build:genfiles && yarn build:bundle-stats",
-        "build:jitsi": "",
+        "build:jitsi": "node scripts/build-jitsi.js",
         "build:res": "node scripts/copy-res.js",
         "build:genfiles": "yarn build:res && yarn build:jitsi && yarn build:module_system",
         "build:modernizr": "modernizr -c .modernizr.json -d src/vector/modernizr.js",
