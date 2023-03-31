@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Tchap: File copied from scripts/package.json.
-# use package-github instead
+# Tchap: File copied from scripts/package.js
+# This file is meant to be used in scalingo and github actions
 
 set -e
 
@@ -19,7 +19,7 @@ else
   echo "No config specified, using config.json."
 fi
 
-yarn clean
+yarn install
 yarn build
 
 mkdir -p dist
@@ -34,7 +34,8 @@ fi
 
 # Copy the files in /dist, ready to be served.
 cp -r tchap-$version/* dist/
-# Also make a tar file. Useful for releases. EDIT: not needed
+
+# Also make a tar file. Useful for releases.
 #tar chvzf tchap-$version-$CONFIG-$today.tar.gz dist
 rm -r tchap-$version
 

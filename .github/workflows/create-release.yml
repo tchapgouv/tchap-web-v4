@@ -23,15 +23,15 @@ jobs:
               id: version
               run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
             - name: Build the archive ${{ steps.version.outputs.version }} for dev
-              run: scripts/tchap/package-github.sh
+              run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: dev
             - name: Build the archive ${{ steps.version.outputs.version }} for preprod
-              run: scripts/tchap/package-github.sh
+              run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: preprod
             - name: Build the archive ${{ steps.version.outputs.version }} for prod
-              run: scripts/tchap/package-github.sh
+              run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: prod
             - name: Get current date
