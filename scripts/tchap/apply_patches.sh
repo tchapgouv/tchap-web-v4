@@ -3,7 +3,7 @@
 # Script to apply the patches in patches directory, using patch-package.
 set -e
 
-node scripts/checkPatchFile.js
+node scripts/tchap/checkPatchFile.js
 
 for d in patches/*/ ; do
     echo "Patching $d..."
