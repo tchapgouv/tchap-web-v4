@@ -41,7 +41,7 @@ index 9946aa3..8cf51ed 100644
  
  export interface UploadProgress {
 diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index 057ee15..1ea95f3 100644
+index 3fa3616..72cc65e 100644
 --- a/node_modules/matrix-js-sdk/src/sync.ts
 +++ b/node_modules/matrix-js-sdk/src/sync.ts
 @@ -610,6 +610,14 @@ export class SyncApi {
