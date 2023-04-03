@@ -1,5 +1,4 @@
 #Run a static analysis
-#tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Static Analysis
 on:
     pull_request: {}
@@ -27,7 +26,7 @@ jobs:
     #          node-version: 16
     #
     #      - name: Install Dependencies
-    #        run: "./scripts/install-yarn-linked-repositories.sh"
+    #        run: "./scripts/tchap/install-yarn-linked-repositories.sh"
     #
     #      - name: Typecheck
     #        run: "yarn run lint:types"
@@ -68,24 +67,7 @@ jobs:
 
             # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
             - name: Install Dependencies
-              run: "./scripts/install-yarn-linked-repositories.sh"
+              run: "yarn install --pure-lockfile"
 
             - name: Run Linter
               run: "yarn run lint:style"
-# tchap :  analyse:unused-exports does not work well with tchap customisations, it raises exception for "default export" not used
-#analyse_dead_code:
-#   name: "Analyse Dead Code"
-#   runs-on: ubuntu-latest
-#   steps:
-#     - uses: actions/checkout@v2
-
-#     - uses: actions/setup-node@v3
-#       with:
-#         cache: 'yarn'
-#         node-version: 16
-
-#     - name: Install Deps
-#       run: "scripts/install-yarn-linked-repositories.sh"
-
-#     - name: Dead Code Analysis
-#       run: "yarn run analyse:unused-exports"

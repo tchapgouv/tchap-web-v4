@@ -1,4 +1,4 @@
-const patchFile = require("../patches/patches.json");
+const patchFile = require("../../patches/patches.json");
 
 if (process.argv.length !== 3) {
     console.log("\nMissing patch name.");

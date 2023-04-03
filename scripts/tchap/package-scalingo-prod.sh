@@ -1,12 +1,15 @@
 #!/bin/bash
 
+#DEPRECRATED, see package-tchap.sh
+
 # Tchap: File copied from scripts/package.json.
+# use package-github instead
 
 set -e
 
 today=$(date +%Y%m%d)
 
-version=$(./scripts/get-version-from-package-json.sh)
+version=$(./scripts/tchap/get-version-from-package-json.sh)
 export VERSION=$version
 echo "VERSION is set to $VERSION"
 
@@ -33,8 +36,8 @@ fi
 
 # Copy the files in /dist, ready to be served.
 cp -r tchap-$version/* dist/
-# Also make a tar file. Useful for releases.
-tar chvzf tchap-$version-$CONFIG-$today.tar.gz dist
+# Also make a tar file. Useful for releases. EDIT: not needed
+#tar chvzf tchap-$version-$CONFIG-$today.tar.gz dist
 rm -r tchap-$version
 
 echo

@@ -69,7 +69,7 @@ const getPatchDirs = () => {
         .map((dir) => dir.name);
 };
 
-const patchFile = require("../patches/patches.json");
+const patchFile = require("../../patches/patches.json");
 const patchDirs = getPatchDirs();
 checkForDuplicateFiles(patchFile);
 checkForMissingPatchDirs(patchFile, patchDirs);

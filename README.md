@@ -323,7 +323,7 @@ yarn start
 Alternatively, you can skip the above commands and only run the command below. The only difference is that both 'matrix-react-sdk and 'matrix-js-sdk' will be cloned inside the root project folder.
 
 ```bash
-./scripts/install-yarn-linked-repositories.sh
+./scripts/tchap/install-yarn-linked-repositories.sh
 yarn install
 yarn start
 ```
