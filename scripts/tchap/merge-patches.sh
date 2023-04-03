@@ -67,6 +67,7 @@ function merge_patches() {
         CONFLICTS_FOUND=true
       else
         # If there are no conflicts, generate a new patch file
+        # TODO : if would be nice if we don't generate a new patch, but keep the old one to avoid unnecessary updates
         yarn patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
 
         # Move the new patch file to the old patch file's location
@@ -157,10 +158,11 @@ function continue_patches() {
   fi
 
   if [ "$CONFLICTS_FOUND" = false ]; then
+    # bug here, this condition can be true if we work only with one patch but there is more to fix
     echo "All patches have been updated successfully."
     # Remove the temporary directory
     cd "$PROJECT_DIR"
-    clean_temp_dir
+    # clean_temp_dir
   else
     echo "Some patches still have conflicts. Resolve them and run the script again with the 'continue' command."
   fi
