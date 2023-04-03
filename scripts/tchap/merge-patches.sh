@@ -29,6 +29,8 @@ function merge_patches() {
       echo "# Manage $PATCH_PATH"
 
       # Check if the package version exists and if the patch needs to be updated
+      # TODO : it would be better to keep patch even if the package version does not match to avoid unecessay patches commits
+      # EDIT : in github PR, the files appear as renamed without modifications
       if [ "$PACKAGE_VERSION" == "null" ] || [[ "$PATCH_FILE" =~ "$PACKAGE_NAME+$PACKAGE_VERSION".patch ]]; then
         echo "Package '$PACKAGE_NAME' not found in package.json or patch already up-to-date. Skipping patch update."
         echo ""
@@ -67,7 +69,8 @@ function merge_patches() {
         CONFLICTS_FOUND=true
       else
         # If there are no conflicts, generate a new patch file
-        # TODO : if would be nice if we don't generate a new patch, but keep the old one to avoid unnecessary updates
+        # TODO : would it be nicer if we don't generate a new patch, but keep the old one to avoid unnecessary patches commit
+        # EDIT : in github PR, the files appear as renamed without modifications
         yarn patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
 
         # Move the new patch file to the old patch file's location
