@@ -32,7 +32,7 @@ mkdir -p yarn-linked-dependencies
 cd yarn-linked-dependencies
 
 # Set up the js-sdk first
-../scripts/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
+../scripts/tchap/fetchdep.with.version.sh matrix-org matrix-js-sdk $MATRIX_JS_SDK_VERSION
 pushd matrix-js-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
@@ -50,7 +50,7 @@ popd
 #popd
 
 # Now set up the react-sdk
-../scripts/fetchdep.with.version.sh matrix-org matrix-react-sdk $MATRIX_REACT_SDK_VERSION
+../scripts/tchap/fetchdep.with.version.sh matrix-org matrix-react-sdk $MATRIX_REACT_SDK_VERSION
 pushd matrix-react-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
