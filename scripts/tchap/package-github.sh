@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#DEPRECRATED, see package-tchap.sh
+
 # Tchap: File copied from scripts/package.json.
 
 set -e
