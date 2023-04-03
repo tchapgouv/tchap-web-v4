@@ -1,0 +1,40 @@
+diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
+index 708abd3..369d221 100644
+--- a/node_modules/matrix-js-sdk/src/client.ts
++++ b/node_modules/matrix-js-sdk/src/client.ts
+@@ -20,6 +20,7 @@ limitations under the License.
+ 
+ import { Optional } from "matrix-events-sdk";
+ 
++
+ import type { IDeviceKeys, IMegolmSessionData, IOneTimeKey } from "./@types/crypto";
+ import { ISyncStateData, SyncApi, SyncApiOptions, SyncState } from "./sync";
+ import {
+@@ -208,6 +209,9 @@ import { CryptoBackend } from "./common-crypto/CryptoBackend";
+ import { RUST_SDK_STORE_PREFIX } from "./rust-crypto/constants";
+ import { DeviceInfoMap } from "./crypto/DeviceList";
+ 
++import TchapUIFeature from '../../../src/util/TchapUIFeature'; // :TCHAP:
++
++
+ export type Store = IStore;
+ 
+ export type ResetTimelineCallback = (roomId: string) => boolean;
+@@ -7183,6 +7187,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+         const response = await this.getVersions();
+         if (!response) return false;
+         const unstableFeatures = response["unstable_features"];
++
++        // :TCHAP: disable cross signing if needed, by pretending the server doesn't support it.
++        console.log('TCHAP server versions', response);
++        if (!TchapUIFeature.isCrossSigningAndSecureStorageActive()) {
++            unstableFeatures["org.matrix.e2e_cross_signing"] = false;
++        }
++        if (feature === "org.matrix.e2e_cross_signing") {
++            console.info(':TCHAP: doesServerSupportUnstableFeature org.matrix.e2e_cross_signing', unstableFeatures);
++        }
++        // end :TCHAP:
++
+         return unstableFeatures && !!unstableFeatures[feature];
+     }
+ 
