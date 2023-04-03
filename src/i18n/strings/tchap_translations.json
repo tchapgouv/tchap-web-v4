@@ -815,8 +815,12 @@
     "fr": "Générer un nouveau code",
     "en": "Generate a new code"
   },
-  "You have not been invited to this room.": {
-    "fr": "Vous n'avez pas été pas invité dans ce salon.",
-    "en": "You have not been invited to this room."
+  "Failed to join": {
+    "fr": "Impossible de rejoindre ce salon",
+    "en": "Failed to join this room."
+  },
+  "Access possible only by invitation of a member of the room.": {
+    "fr": "Accès possible uniquement sur invitation d'un membre du salon.",
+    "en": "Access possible only by invitation of a member of the room."
   }
 }

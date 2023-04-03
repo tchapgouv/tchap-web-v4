@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx b/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
-index 47bc9b9..1c1d4d6 100644
+index 47bc9b9..05902fd 100644
 --- a/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
 +++ b/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
 @@ -581,6 +581,12 @@ export class RoomViewStore extends EventEmitter {
@@ -8,7 +8,7 @@ index 47bc9b9..1c1d4d6 100644
  
 +        /* :TCHAP: add this for a translation */
 +        if (typeof description === 'string' && description.includes('You are not invited to this room')) {
-+            description = _t("You have not been invited to this room.");
++            description = _t("Access possible only by invitation of a member of the room.");
 +        }
 +        /* end :TCHAP: */
 +
