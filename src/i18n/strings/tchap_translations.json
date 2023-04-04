@@ -822,5 +822,9 @@
   "Access possible only by invitation of a member of the room.": {
     "fr": "Accès possible uniquement sur invitation d'un membre du salon.",
     "en": "Access possible only by invitation of a member of the room."
+  },
+  "Where you're signed in": {
+    "fr": "Appareils connectés",
+    "en": "Connected devices"
   }
 }

@@ -1,16 +1,19 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-index 34b52e4..1383002 100644
+index 34b52e4..8085f20 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-@@ -73,6 +73,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+@@ -72,7 +72,9 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+         }
  
          return (
-             <div className="mx_SettingsTab_section mx_CryptographyPanel">
+-            <div className="mx_SettingsTab_section mx_CryptographyPanel">
++            <div className="mx_CryptographyPanel">
++            {/* :TCHAP: remove class <div className="mx_SettingsTab_section mx_CryptographyPanel"> */}
 +                {/* :TCHAP: modify content
                  <span className="mx_SettingsTab_subheading">{_t("Cryptography")}</span>
                  <table className="mx_SettingsTab_subsectionText mx_CryptographyPanel_sessionInfo">
                      <tbody>
-@@ -92,7 +93,36 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+@@ -92,7 +94,36 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
                          </tr>
                      </tbody>
                  </table>
@@ -48,3 +51,26 @@ index 34b52e4..1383002 100644
                  {noSendUnverifiedSetting}
              </div>
          );
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
+index 9697af8..04ae847 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
+@@ -414,14 +414,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+         return (
+             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
+                 {warning}
+-                {devicesSection}
+                 <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
+-                <div className="mx_SettingsTab_section">
++                {/* :TCHAP: change position {devicesSection} */}
++                {/* :TCHAP: remove class <div className="mx_SettingsTab_section"> */}
++                <div>
+                     {secureBackup}
+                     {eventIndex}
+                     {crossSigning}
+                     <CryptographyPanel />
+                 </div>
++                {/* :TCHAP: */}{devicesSection}{/* end :TCHAP: */}
+                 {privacySection}
+                 {advancedSection}
+             </div>
