@@ -37,6 +37,9 @@ pushd matrix-js-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
 yarn install --pure-lockfile
+#remove problematic folder for our patches yarn-linked-dependencies/matrix-js-sdk/examples
+rm -R examples/
+
 popd
 
 # :TCHAP: we don't use this.
