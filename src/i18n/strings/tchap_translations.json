@@ -822,5 +822,17 @@
   "Access possible only by invitation of a member of the room.": {
     "fr": "Accès possible uniquement sur invitation d'un membre du salon.",
     "en": "Access possible only by invitation of a member of the room."
+  },
+  "Restore from Backup": {
+    "fr": "Récupérer les messages",
+    "en": "Restore messages"
+  },
+  "This session is backing up your keys.": {
+    "fr": "Cette session sauvegarde vos messages.",
+    "en": "This session is backing up your messages."
+  },
+  "Cross-signing is ready for use.": {
+    "fr": "La signature croisée est activée sur cet appareil.",
+    "en": "Cross-signing is activated on this device."
   }
 }
