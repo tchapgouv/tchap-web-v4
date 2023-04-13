@@ -202,5 +202,13 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
-    }
+    },
+    "room-avatars-default-colors": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/282",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/Avatar.ts"
+        ]
+    }	
+    
 }
