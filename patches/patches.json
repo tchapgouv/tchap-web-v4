@@ -202,5 +202,15 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
+    },
+    "report-bug-to-tchap": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/526",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/elements/ErrorBoundary.tsx",
+	    "src/components/views/rooms/RoomPreviewBar.tsx",
+	    "src/components/views/dialogs/FeedbackDialog.tsx",
+	    "src/components/views/dialogs/BugReportDialog.tsx"
+	]
     }
 }
