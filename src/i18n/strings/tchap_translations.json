@@ -371,8 +371,8 @@
     "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
   },
   "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
-    "en": "This function allows you to save your messages automatically and retrieve them anytime thanks to a recovery Code.",
-    "fr": "Cette fonction vous permet de sauvegarder automatiquement vos messages et de les récupérer à tout moment à l’aide du Code de récupération."
+    "en": "Automatically back up your messages and retrieve them at any time using the recovery Code.",
+    "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de récupération."
   },
   "Thread": {
     "en": "Thread",
@@ -744,8 +744,8 @@
     "en": "Activate"
   },
   "Connect this session to Key Backup": {
-    "fr": "Vérifier cette session",
-    "en": "Verify this session"
+    "fr": "Vérifier cet appareil",
+    "en": "Verify this device"
   },
   "Forgotten or lost all recovery methods? <a>Reset all</a>": {
     "fr": "Vous avez perdu votre code de récupération ? <a>Générer un nouveau code</a>",
@@ -830,6 +830,14 @@
   "This session is backing up your keys.": {
     "fr": "Cette session sauvegarde vos messages.",
     "en": "This session is backing up your messages."
+  },
+  "Cross-signing is not set up.": {
+    "fr": "La signature croisée n’est pas active",
+    "en": "Cross-signing is not active."
+  },
+  "Cross-signing is ready but keys are not backed up.": {
+    "fr": "La signature croisée est activée mais pas la sauvegarde automatique des messages.",
+    "en": "Cross-signing is ready but not the secure backup."
   },
   "Cross-signing is ready for use.": {
     "fr": "La signature croisée est activée sur cet appareil.",
