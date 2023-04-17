@@ -166,3 +166,38 @@ index 4074db6..dc057bc 100644
              </BaseDialog>
          );
      }
+diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
+index dce8799..d34353d 100644
+--- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
++++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
+@@ -295,12 +295,13 @@ export async function submitFeedback(
+         version = await PlatformPeg.get()?.getAppVersion();
+     } catch (err) {} // PlatformPeg already logs this.
+ 
++
+     const body = new FormData();
+     body.append("label", label);
+     body.append("text", comment);
+     body.append("can_contact", canContact ? "yes" : "no");
+ 
+-    body.append("app", "element-web");
++    body.append("app", "tchap-web");
+     body.append("version", version || "UNKNOWN");
+     body.append("platform", PlatformPeg.get().getHumanReadableName());
+     body.append("user_id", MatrixClientPeg.get()?.getUserId());
+@@ -309,6 +310,15 @@ export async function submitFeedback(
+         body.append(k, JSON.stringify(extraData[k]));
+     }
+ 
++    //:tchap: add email in body
++    const client = MatrixClientPeg.get();
++    const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
++    result.threepids.forEach(threepid => {
++        body.append(threepid.medium, threepid.address);
++    });
++    //:tchap: end
++    
++
+     await submitReport(SdkConfig.get().bug_report_endpoint_url, body, () => {});
+ }
+ 

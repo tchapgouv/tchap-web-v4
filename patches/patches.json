@@ -29,7 +29,11 @@
     },
     "better-help-settings-2": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/views/dialogs/BugReportDialog.tsx"]
+        "github-issue":"https://github.com/tchapgouv/tchap-web-v4/issues/527",
+        "comments" : "add email in rageshake",
+        "files": [
+            "src/components/views/dialogs/BugReportDialog.tsx",
+            "src/rageshake/submit-rageshake.ts"]
     },
     "content-scanner": {
         "package": "matrix-react-sdk",
@@ -203,5 +207,13 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
-    }
+    },
+    "room-avatars-default-colors": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/282",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/Avatar.ts"
+        ]
+    }	
+    
 }
