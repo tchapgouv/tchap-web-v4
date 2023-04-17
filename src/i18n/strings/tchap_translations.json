@@ -856,9 +856,11 @@
     "en": "Your messages are now automatically backed up on this device."
   },
   "Wrong Security Key": {
-    "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent et qu’il comprend / ne comprend pas les espaces.",
-    "en": "The Recovery Code is not valid. Check that it is the latest one and that it includes/doesn't include spaces."
+    "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent et qu’il comprend des espaces.",
+    "en": "The Recovery Code is not valid. Check that it is the latest one and that it includes spaces."
   },
-
-  "Reset": "Réinitialiser"
+  "Generate a new password. Note that your locked messages will remain locked.": {
+    "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
+    "en": "Generate a new password. Note that your locked messages will remain locked."
+  }
 }
