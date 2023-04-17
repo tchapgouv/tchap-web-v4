@@ -371,7 +371,7 @@
     "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
   },
   "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
-    "en": "Automatically back up your messages and retrieve them at any time using the recovery Code.",
+    "en": "Automatically back up your messages and retrieve them at any time using the Recovery Code.",
     "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de Récupération."
   },
   "Thread": {
@@ -612,7 +612,7 @@
   },
   "Safeguard against losing access to encrypted messages & data": {
     "fr" : "Activez votre Code de Récupération pour ne jamais perdre vos messages",
-    "en" : "Activate your Recovery code to never lose your messages"
+    "en" : "Activate your Recovery Code to never lose your messages"
   },
   "Activate": {
     "fr" : "Activer",
@@ -620,11 +620,11 @@
   },
   "Security Key": {
     "fr": "Code de Récupération",
-    "en": "Recovery code"
+    "en": "Recovery Code"
   },
   "Verify with Security Key": {
     "fr": "Vérifier avec un Code de Récupération",
-    "en": "Verify with Recovery code"
+    "en": "Verify with Recovery Code"
   },
   "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": {
     "fr": "Votre nouvel appareil est maintenant vérifié. Il a accès à vos messages chiffrés et les autres utilisateurs le verront comme fiable.",
@@ -640,19 +640,19 @@
   },
   "Use your Security Key to continue.": {
     "fr": "Utilisez votre Code de Récupération pour continuer.",
-    "en": "Use your Recovery code to continue."
+    "en": "Use your Recovery Code to continue."
   },
   "Generate a Security Key": {
     "fr": "Générer un Code de Récupération",
-    "en": "Generate a Recovery code"
+    "en": "Generate a Recovery Code"
   },
   "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": {
     "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un Code de Récupération à utiliser pour la sauvegarde.",
-    "en": "Use a secret phrase only you know, and optionally save a Recovery code to use for backup."
+    "en": "Use a secret phrase only you know, and optionally save a Recovery Code to use for backup."
   },
   "Save your Security Key": {
     "fr": "Notez votre Code de Récupération",
-    "en": "Write down your Recovery code"
+    "en": "Write down your Recovery Code"
   },
   "This session has detected that your Security Phrase and key for Secure Messages have been removed.": {
     "fr": "Cette session a détecté que votre phrase secrète et Code de Récupération pour les messages sécurisés ont été supprimés.",
@@ -660,59 +660,59 @@
   },
   "A new Security Phrase and key for Secure Messages have been detected.": {
     "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté.",
-    "en": "A new Recovery code for Secure Messages has been detected."
+    "en": "A new Recovery Code for Secure Messages has been detected."
   },
   "Make a copy of your Security Key": {
     "fr": "Faire une copie de votre Code de Récupération",
-    "en": "Make a copy of your Recovery code"
+    "en": "Make a copy of your Recovery Code"
   },
   "Secure your backup with a Security Phrase": {
     "fr": "Protégez votre sauvegarde avec un Code de Récupération",
-    "en": "Secure your backup with a Recovery code"
+    "en": "Secure your backup with a Recovery Code"
   },
   "Your Security Key is in your <b>Downloads</b> folder.": {
     "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
-    "en": "Your Recovery code is in your <b>Downloads</b> folder."
+    "en": "Your Recovery Code is in your <b>Downloads</b> folder."
   },
   "Your Security Key": {
     "fr": "Votre Code de Récupération",
-    "en": "Your Recovery code"
+    "en": "Your Recovery Code"
   },
   "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
     "fr": "Votre Code de Récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
-    "en": "Your Recovery code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
+    "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
   },
   "Set up with a Security Key": {
     "fr": "Configurer avec un Code de Récupération",
-    "en": "Set up with a Recovery code"
+    "en": "Set up with a Recovery Code"
   },
   "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
     "fr": "Si vous avez oublié votre Code de Récupération, vous pouvez <button>définir de nouvelles options de récupération</button>",
-    "en": "If you've forgotten your Recovery code you can <button>set up new recovery options</button>"
+    "en": "If you've forgotten your Recovery Code you can <button>set up new recovery options</button>"
   },
   "Access your secure message history and set up secure messaging by entering your Security Key.": {
     "fr": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre Code de Récupération.",
-    "en": "Access your secure message history and set up secure messaging by entering your Recovery code."
+    "en": "Access your secure message history and set up secure messaging by entering your Recovery Code."
   },
   "Enter Security Key": {
     "fr": "Saisir le Code de Récupération",
-    "en": "Enter Recovery code"
+    "en": "Enter Recovery Code"
   },
   "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": {
     "fr": "Si vous avez oublié votre phrase secrète vous pouvez <button1>utiliser votre Code de Récupération</button1> ou <button2>définir de nouvelles options de récupération</button2>",
-    "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery code</button1> or <button2>set up new recovery options</button2>"
+    "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery Code</button1> or <button2>set up new recovery options</button2>"
   },
   "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
     "fr": "La sauvegarde n’a pas pu être déchiffrée avec cette clé de sécurité : merci de vérifier que vous avez saisi le bon Code de Récupération.",
-    "en": "Backup could not be decrypted with this Recovery Key: please verify that you entered the correct Recovery code."
+    "en": "Backup could not be decrypted with this Recovery Key: please verify that you entered the correct Recovery Code."
   },
   "Please only proceed if you're sure you've lost all of your other devices and your security key.": {
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
-    "en": "Please only proceed if you're sure you've lost all of your other devices and your recovery code."
+    "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
   },
   "Verify with Security Key or Phrase": {
     "fr": "Vérifier avec un Code de Récupération ou une phrase",
-    "en": "Verify with Recovery code or Phrase"
+    "en": "Verify with Recovery Code or Phrase"
   },
   "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>" : {
     "fr": "<p>L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements.</p><p>Vous pouvez y accéder depuis les Paramètres : </p><p>Securité et vie privée > Sauvegarde automatique des messages</p>",
@@ -721,11 +721,11 @@
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
     "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre Code de Récupération</button> pour continuer.",
-    "en": "Enter your Security Phrase or <button>use your Recovery code</button> to continue."
+    "en": "Enter your Security Phrase or <button>use your Recovery Code</button> to continue."
   },
   "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
     "fr": "Nous génèrerons votre Code de Récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
-    "en": "We'll generate your unique Recovery code for you to store somewhere safe, like a password manager or a safe."
+    "en": "We'll generate your unique Recovery Code for you to store somewhere safe, like a password manager or a safe."
   },
   "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": {
     "fr": "Invitez quelqu’un via son nom, mail ou pseudo (p. ex. <userId/>) ou <a>partagez ce salon</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne.",
@@ -749,7 +749,7 @@
   },
   "Forgotten or lost all recovery methods? <a>Reset all</a>": {
     "fr": "Vous avez perdu votre Code de Récupération ? <a>Générer un nouveau code</a>",
-    "en": "You have lost your recovery code? <a>Create a new code</a>"
+    "en": "You have lost your Recovery Code? <a>Create a new code</a>"
   },
   "Unable to verify this device": {
     "fr": "Vous vous connectez à un nouvel appareil",
@@ -797,7 +797,7 @@
   },
   "Please note this is not your recovery code for your automatic backup.": {
     "fr": "Attention ceci n’est pas votre Code de Récupération pour votre sauvegarde automatique.",
-    "en": "Please note this is not your recovery code for your automatic backup."
+    "en": "Please note this is not your Recovery Code for your automatic backup."
   },
   "Tchap keys": {
     "fr": "Clés Tchap",
