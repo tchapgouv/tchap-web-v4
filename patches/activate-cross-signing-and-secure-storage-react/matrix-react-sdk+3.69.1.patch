@@ -44,7 +44,7 @@ index 00a05b1..2009120 100644
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index 0ba8f58..0c202a6 100644
+index 0ba8f58..a5ab881 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -65,7 +65,7 @@ index 0ba8f58..0c202a6 100644
  
          // TODO: determine how better to expose this to users in addition to prompts at login/toast
          if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
-@@ -225,7 +229,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -225,9 +229,12 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
          }
  
          if (keysExistAnywhere) {
@@ -74,9 +74,13 @@ index 0ba8f58..0c202a6 100644
 +            advancedActions.push(
 +            // end :TCHAP:
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
-                     {_t("Reset")}
+-                    {_t("Reset")}
++                    {/* :TCHAP: change label {_t("Reset")} */}
++                    {_t("Generate a new password. Note that your locked messages will remain locked.")}
                  </AccessibleButton>,
-@@ -237,6 +243,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             );
+         }
+@@ -237,6 +244,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
@@ -96,7 +100,7 @@ index 0ba8f58..0c202a6 100644
          return (
              <div>
                  {summarisedStatus}
-@@ -274,6 +293,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -274,6 +294,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                              </tr>
                          </tbody>
                      </table>
@@ -152,7 +156,7 @@ index cf7506c..dca86c3 100644
      }
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 7ab2273..9bc08c5 100644
+index 7ab2273..dbacc05 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -186,6 +190,15 @@ index 7ab2273..9bc08c5 100644
          } else {
              statusDescription = (
                  <>
+@@ -432,7 +435,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+                             { b: (sub) => <b>{sub}</b> },
+                         )}
+                     </p>
+-                    <p>{_t("Back up your keys before signing out to avoid losing them.")}</p>
++                    {/* :TCHAP: remove <p>{_t("Back up your keys before signing out to avoid losing them.")}</p> */}
+                 </>
+             );
+             actions.push(
 @@ -445,7 +448,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
          if (secretStorageKeyInAccount) {
              actions.push(
