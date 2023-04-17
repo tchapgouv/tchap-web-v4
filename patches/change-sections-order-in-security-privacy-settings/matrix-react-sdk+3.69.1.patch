@@ -52,25 +52,38 @@ index 34b52e4..8085f20 100644
              </div>
          );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 9697af8..04ae847 100644
+index 9697af8..00fcc04 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
+@@ -287,7 +287,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+     public render(): React.ReactNode {
+         const secureBackup = (
+             <div className="mx_SettingsTab_section">
+-                <span className="mx_SettingsTab_subheading">{_t("Secure Backup")}</span>
++                <span className="mx_SettingsTab_heading">{_t("Secure Backup")}</span>
+                 <div className="mx_SettingsTab_subsectionText">
+                     <SecureBackupPanel />
+                 </div>
 @@ -414,14 +414,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
          return (
              <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                  {warning}
 -                {devicesSection}
-                 <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
+-                <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
 -                <div className="mx_SettingsTab_section">
 +                {/* :TCHAP: change position {devicesSection} */}
 +                {/* :TCHAP: remove class <div className="mx_SettingsTab_section"> */}
 +                <div>
                      {secureBackup}
-                     {eventIndex}
-                     {crossSigning}
-                     <CryptographyPanel />
+-                    {eventIndex}
+-                    {crossSigning}
+-                    <CryptographyPanel />
                  </div>
-+                {/* :TCHAP: */}{devicesSection}{/* end :TCHAP: */}
++                {/* {eventIndex} :TCHAP: remove section */}
++                {devicesSection}
++                <div className="mx_SettingsTab_heading">{_t("Encryption")}</div>
++                {crossSigning}
++                <CryptographyPanel />
                  {privacySection}
                  {advancedSection}
              </div>
