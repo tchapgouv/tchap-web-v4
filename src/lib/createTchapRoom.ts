@@ -48,7 +48,10 @@ export default class TchapCreateRoom {
 
                 opts.joinRule = JoinRule.Public;
                 opts.encryption = false;
-                opts.historyVisibility = HistoryVisibility.Shared;
+                // :TCHAP: change to anyone being able to see history in forum
+                // opts.historyVisibility = HistoryVisibility.Shared;
+                opts.historyVisibility = HistoryVisibility.WorldReadable;
+                // end :TCHAP:
                 break;
             }
             case TchapRoomType.Private: {
