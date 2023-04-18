@@ -193,11 +193,12 @@
             "src/components/views/right_panel/RoomHeaderButtons.tsx"
         ]
     },
-    "change-confusing-chiffrement-sub-session-in-parameters": {
+    "change-sections-order-in-security-privacy-settings": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/465",
         "package": "matrix-react-sdk",
         "files": [
-            "src/components/views/settings/CryptographyPanel.tsx"
+            "src/components/views/settings/CryptographyPanel.tsx",
+            "src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx"
         ]
     },
     "add-translations-for-server-errors": {
