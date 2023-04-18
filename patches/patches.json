@@ -150,7 +150,7 @@
     },
     "activate-cross-signing-and-secure-storage-react": {
         "comments": "introduce a feature flag for activating cross signing and secure storage (unify previous patches)",
-        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/433",
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/433, https://github.com/tchapgouv/tchap-web-v4/issues/540",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/settings/SecureBackupPanel.tsx",
@@ -193,11 +193,12 @@
             "src/components/views/right_panel/RoomHeaderButtons.tsx"
         ]
     },
-    "change-confusing-chiffrement-sub-session-in-parameters": {
+    "change-sections-order-in-security-privacy-settings": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/465",
         "package": "matrix-react-sdk",
         "files": [
-            "src/components/views/settings/CryptographyPanel.tsx"
+            "src/components/views/settings/CryptographyPanel.tsx",
+            "src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx"
         ]
     },
     "add-translations-for-server-errors": {
@@ -206,5 +207,13 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
-    }
+    },
+    "room-avatars-default-colors": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/282",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/Avatar.ts"
+        ]
+    }	
+    
 }

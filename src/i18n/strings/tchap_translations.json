@@ -878,5 +878,13 @@
   "Fetching keys from server…": {
     "fr": "Récupération des messages depuis le serveur…",
     "en": "Fetching messages from server…"
+  },
+  "Generate a new password. Note that your locked messages will remain locked.": {
+    "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
+    "en": "Generate a new password. Note that your locked messages will remain locked."
+  },
+  "Where you're signed in": {
+    "fr": "Appareils connectés",
+    "en": "Connected devices"
   }
 }

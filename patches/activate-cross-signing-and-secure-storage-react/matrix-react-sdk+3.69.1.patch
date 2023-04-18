@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 00a05b1..2009120 100644
+index 00a05b1..af9a5b6 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 @@ -32,6 +32,8 @@ import { throttle } from "lodash";
@@ -43,6 +43,22 @@ index 00a05b1..2009120 100644
          cli.on(ClientEvent.Room, (room) => {
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
+@@ -1710,6 +1730,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+             return;
+         }
+ 
++        //:tchap:
++        if (screen === "sauvegarde-automatique") {
++            //open the security tab
++            //there is no anchor to sauvegarde-automatique subection
++            const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Security };
++            dis.dispatch(payload);
++        } else
++        //:tchap: end
++
+         if (screen === "register") {
+             dis.dispatch({
+                 action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 index 0ba8f58..0c202a6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
