@@ -64,7 +64,10 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                             {},
                             {
                                 a: (sub) => (
-                                    <TchapAnchor href="https://aide.tchap.beta.gouv.fr/fr/article/comment-importer-manuellement-mes-cles-tchap-cles-de-chiffrement-web-xh376r" openInNewTab>
+                                    <TchapAnchor
+                                        href="https://aide.tchap.beta.gouv.fr/fr/article/comment-importer-manuellement-mes-cles-tchap-cles-de-chiffrement-web-xh376r"
+                                        openInNewTab
+                                    >
                                         {sub}
                                     </TchapAnchor>
                                 ),
