@@ -25,7 +25,7 @@ import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pc
 
 interface IProps {
     allowLogout: boolean;
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 export default class TchapExportE2eKeysSuccessDialog extends React.Component<IProps> {
@@ -43,7 +43,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
         }
     };
 
-    render() {
+    public render() {
         return (
             <BaseDialog
                 className="tc_exportE2eKeysSuccessDialog"
@@ -64,7 +64,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                             {},
                             {
                                 a: (sub) => (
-                                    <TchapAnchor href="https://tchap.beta.gouv.fr/faq#tcq07_003" openInNewTab>
+                                    <TchapAnchor href="https://aide.tchap.beta.gouv.fr/fr/article/comment-importer-manuellement-mes-cles-tchap-cles-de-chiffrement-web-xh376r" openInNewTab>
                                         {sub}
                                     </TchapAnchor>
                                 ),
