@@ -58,7 +58,7 @@ describe("Create room options", () => {
             guestAccess: false,
             joinRule: "public",
             encryption: false,
-            historyVisibility: "shared",
+            historyVisibility: "world_readable",
         };
         expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, false)).toStrictEqual(
             publicRoomWithoutFederationExpectedOpts,
@@ -88,7 +88,7 @@ describe("Create room options", () => {
             guestAccess: false,
             joinRule: "public",
             encryption: false,
-            historyVisibility: "shared",
+            historyVisibility: "world_readable",
         };
         expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.Forum, true)).toStrictEqual(
             publicRoomWithFederationExpectedOpts,

@@ -197,7 +197,7 @@ describe("TchapCreateRoomDialog", () => {
             guestAccess: false,
             joinRule: "public",
             encryption: false,
-            historyVisibility: "shared",
+            historyVisibility: "world_readable",
         };
         const wrapper = getComponent({ onFinished });
 
@@ -240,7 +240,7 @@ describe("TchapCreateRoomDialog", () => {
             guestAccess: false,
             joinRule: "public",
             encryption: false,
-            historyVisibility: "shared",
+            historyVisibility: "world_readable",
         };
         const wrapper = getComponent({ onFinished });
 
@@ -283,7 +283,7 @@ describe("TchapCreateRoomDialog", () => {
             guestAccess: false,
             joinRule: "public",
             encryption: false,
-            historyVisibility: "shared",
+            historyVisibility: "world_readable",
         };
         const wrapper = getComponent({ onFinished });
 
