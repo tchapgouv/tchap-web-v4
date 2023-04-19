@@ -14,7 +14,7 @@ index 9c9e1ce..6fe1939 100644
          mask-image: url("$(res)/img/element-icons/feedback.svg");
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-index ec6477a..18bb91d 100644
+index ec6477a..4d94484 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 @@ -244,6 +244,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
@@ -22,7 +22,7 @@ index ec6477a..18bb91d 100644
      };
  
 +    private onOpenFAQPage = () => {
-+        window.open("https://aide.tchap.beta.gouv.fr/fr", '_blank');
++        window.open("https://www.tchap.gouv.fr/faq", '_blank');
 +    };
 +
      private onProvideFeedback = (ev: ButtonEvent): void => {

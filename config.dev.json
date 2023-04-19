@@ -76,7 +76,7 @@
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },
             { "text": "beta.gouv.fr", "url": "https://beta.gouv.fr" },
             { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
-            { "text": "FAQ", "url": "https://aide.tchap.beta.gouv.fr/fr" }
+            { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
