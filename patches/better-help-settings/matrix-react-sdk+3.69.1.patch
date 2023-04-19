@@ -12,7 +12,7 @@ index 4bceab5..b7dad05 100644
  
  export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
-index 7ad495e..fa16f8c 100644
+index 7ad495e..bb75b58 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 @@ -98,6 +98,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
@@ -120,7 +120,7 @@ index 7ad495e..fa16f8c 100644
 +            </div>
 +        );
 +
-+        const faqUrl = "https://tchap.beta.gouv.fr/faq";
++        const faqUrl = "https://aide.tchap.beta.gouv.fr/fr";
 +        const faqSection = (
 +            <div className='mx_SettingsTab_section'>
 +                <span className='mx_SettingsTab_subheading'>{ _t("Frequently Asked Questions (FAQ)") }</span>
