@@ -886,5 +886,9 @@
   "Where you're signed in": {
     "fr": "Appareils connectés",
     "en": "Connected devices"
+  },
+  "Activate on this device": {
+    "fr": "Activer sur cet appareil",
+    "en": "Activate on this device"
   }
 }
