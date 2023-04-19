@@ -29,13 +29,13 @@ interface IProps {
 }
 
 export default class TchapExportE2eKeysSuccessDialog extends React.Component<IProps> {
-    constructor(props: IProps) {
+    private constructor(props: IProps) {
         super(props);
 
         this.onClick = this.onClick.bind(this);
     }
 
-    private onClick = () => {
+    private onClick = (): void => {
         this.props.onFinished(true);
 
         if (this.props.allowLogout) {
@@ -43,7 +43,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
         }
     };
 
-    public render() {
+    public render(): React.ReactElement {
         return (
             <BaseDialog
                 className="tc_exportE2eKeysSuccessDialog"
@@ -64,7 +64,10 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                             {},
                             {
                                 a: (sub) => (
-                                    <TchapAnchor href="https://aide.tchap.beta.gouv.fr/fr/article/comment-importer-manuellement-mes-cles-tchap-cles-de-chiffrement-web-xh376r" openInNewTab>
+                                    <TchapAnchor
+                                        href="https://aide.tchap.beta.gouv.fr/fr/article/comment-importer-manuellement-mes-cles-tchap-cles-de-chiffrement-web-xh376r"
+                                        openInNewTab
+                                    >
                                         {sub}
                                     </TchapAnchor>
                                 ),
