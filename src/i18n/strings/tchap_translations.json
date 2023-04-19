@@ -856,8 +856,28 @@
     "en": "Your messages are now automatically backed up on this device."
   },
   "Wrong Security Key": {
-    "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent et qu’il comprend des espaces.",
-    "en": "The Recovery Code is not valid. Check that it is the latest one and that it includes spaces."
+    "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent.",
+    "en": "The Recovery Code is not valid. Check that it is the latest one."
+  },
+  "Keys restored": {
+    "fr": "Messages récupérés",
+    "en": "Messages restored"
+  },
+  "Successfully restored %(sessionCount)s keys": {
+    "fr": "%(sessionCount)s messages ont été récupérés avec succès.",
+    "en": "%(sessionCount)s messages have been successfully restored."
+  },
+  "Setting up keys": {
+    "fr": "Configuration du Code de Récupération",
+    "en": "Setting up your Recovery Code"
+  },
+  "Restoring keys from backup": {
+    "fr": "Restauration des messages depuis la sauvegarde",
+    "en": "Restoring messages from backup"
+  },
+  "Fetching keys from server…": {
+    "fr": "Récupération des messages depuis le serveur…",
+    "en": "Fetching messages from server…"
   },
   "Generate a new password. Note that your locked messages will remain locked.": {
     "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
@@ -866,5 +886,9 @@
   "Where you're signed in": {
     "fr": "Appareils connectés",
     "en": "Connected devices"
+  },
+  "Activate on this device": {
+    "fr": "Activer sur cet appareil",
+    "en": "Activate on this device"
   }
 }
