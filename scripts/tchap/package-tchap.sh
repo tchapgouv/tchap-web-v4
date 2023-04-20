@@ -36,8 +36,8 @@ fi
 cp -r tchap-$version/* dist/
 
 # Also make a tar file. Useful for releases.
-#tar chvzf tchap-$version-$CONFIG-$today.tar.gz dist
+tar chvzf tchap-$version-$CONFIG-$today.tar.gz dist
 rm -r tchap-$version
 
 echo
-echo "Packaged tchap-$version-$CONFIG"
+echo "Packaged `pwd`/tchap-$version-$CONFIG-$today.tar.gz"
