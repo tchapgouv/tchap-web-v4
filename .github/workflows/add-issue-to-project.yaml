@@ -1,4 +1,4 @@
-name: Move new issues into Triage
+name: Move new issues into "Tchap all issues" > Backlog
 
 on:
   issues:
