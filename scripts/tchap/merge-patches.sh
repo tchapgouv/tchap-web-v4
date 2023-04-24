@@ -25,7 +25,7 @@ function merge_patches() {
       local PATCH_DIR=$(basename "$(dirname "$PATCH_PATH")")
       local PATCH_FILE=$(basename $PATCH_PATH)    
       local PACKAGE_NAME=$(echo "$PATCH_FILE" | cut -d'+' -f1)
-      local PACKAGE_VERSION=$(jq -r ".dependencies.\"$PACKAGE_NAME\"" "$PACKAGE_JSON")
+      local PACKAGE_VERSION=$(python -c "import json; f = open('$PACKAGE_JSON'); data = json.load(f); f.close(); print(data['dependencies'].get('$PACKAGE_NAME', 'null'))")
       echo "# Manage $PATCH_PATH"
 
       # Check if the package version exists and if the patch needs to be updated
