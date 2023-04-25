@@ -30,7 +30,7 @@ index 12f42a3..3b298de 100644
              !this.tempClient &&
              !doesAccountDataHaveIdentityServer() &&
 diff --git a/node_modules/matrix-react-sdk/src/Terms.ts b/node_modules/matrix-react-sdk/src/Terms.ts
-index ad4386d..2d89e7b 100644
+index b986a5e..116027b 100644
 --- a/node_modules/matrix-react-sdk/src/Terms.ts
 +++ b/node_modules/matrix-react-sdk/src/Terms.ts
 @@ -21,6 +21,11 @@ import { logger } from "matrix-js-sdk/src/logger";

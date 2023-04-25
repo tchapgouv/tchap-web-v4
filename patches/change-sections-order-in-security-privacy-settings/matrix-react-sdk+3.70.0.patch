@@ -52,7 +52,7 @@ index 34b52e4..8085f20 100644
              </div>
          );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 9697af8..00fcc04 100644
+index 9697af8..efc52f7 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 @@ -287,7 +287,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
