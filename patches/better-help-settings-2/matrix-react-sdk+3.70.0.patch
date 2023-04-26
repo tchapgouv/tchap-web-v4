@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 4074db6..dc057bc 100644
+index ed706f9..8b14d80 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -10,7 +10,7 @@ index 4074db6..dc057bc 100644
  
  interface IProps {
      onFinished: (success: boolean) => void;
-@@ -88,12 +89,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -96,12 +97,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
      };
  
      private onSubmit = (): void => {
@@ -32,7 +32,7 @@ index 4074db6..dc057bc 100644
  
          const userText =
              (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
-@@ -103,11 +113,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -111,11 +121,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
          this.setState({ busy: true, progress: null, err: null });
          this.sendProgressCallback(_t("Preparing to send logs"));
  
@@ -62,7 +62,7 @@ index 4074db6..dc057bc 100644
          }).then(
              () => {
                  if (!this.unmounted) {
-@@ -142,6 +165,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -150,6 +173,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  sendLogs: true,
                  progressCallback: this.downloadProgressCallback,
                  labels: this.props.label ? [this.props.label] : [],
@@ -70,7 +70,7 @@ index 4074db6..dc057bc 100644
              });
  
              this.setState({
-@@ -209,7 +233,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -217,7 +241,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              <BaseDialog
                  className="mx_BugReportDialog"
                  onFinished={this.onCancel}
@@ -79,7 +79,7 @@ index 4074db6..dc057bc 100644
                  contentId="mx_Dialog_content"
              >
                  <div className="mx_Dialog_content" id="mx_Dialog_content">
-@@ -222,6 +246,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -230,6 +254,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                                  "and the usernames of other users. They do not contain messages.",
                          )}
                      </p>
@@ -87,7 +87,7 @@ index 4074db6..dc057bc 100644
                      <p>
                          <b>
                              {_t(
-@@ -231,7 +256,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -239,7 +264,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                                      a: (sub) => (
                                          <a
                                              target="_blank"
@@ -98,7 +98,7 @@ index 4074db6..dc057bc 100644
                                          >
                                              {sub}
                                          </a>
-@@ -240,22 +267,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -248,23 +275,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                              )}
                          </b>
                      </p>
@@ -121,6 +121,7 @@ index 4074db6..dc057bc 100644
                          onChange={this.onIssueUrlChange}
                          value={this.state.issueUrl}
 -                        placeholder="https://github.com/vector-im/element-web/issues/..."
+-                        ref={this.issueRef}
 -                    />
 +                        // :TCHAP: placeholder="https://github.com/vector-im/element-web/issues/..."
 +                        placeholder="https://github.com/tchapgouv/tchap-web-v4/issues/..."
@@ -129,7 +130,7 @@ index 4074db6..dc057bc 100644
                      <Field
                          className="mx_BugReportDialog_field_input"
                          element="textarea"
-@@ -272,14 +305,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -281,14 +313,29 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                      />
                      {progress}
                      {error}
@@ -167,7 +168,7 @@ index 4074db6..dc057bc 100644
          );
      }
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index dce8799..d34353d 100644
+index f1926b6..c9c2297 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 @@ -295,12 +295,13 @@ export async function submitFeedback(
@@ -183,12 +184,12 @@ index dce8799..d34353d 100644
 -    body.append("app", "element-web");
 +    body.append("app", "tchap-web");
      body.append("version", version || "UNKNOWN");
-     body.append("platform", PlatformPeg.get().getHumanReadableName());
-     body.append("user_id", MatrixClientPeg.get()?.getUserId());
-@@ -309,6 +310,15 @@ export async function submitFeedback(
-         body.append(k, JSON.stringify(extraData[k]));
+     body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
+     body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
+@@ -310,11 +311,19 @@ export async function submitFeedback(
      }
  
+     const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;
 +    //:tchap: add email in body
 +    const client = MatrixClientPeg.get();
 +    const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
@@ -196,8 +197,12 @@ index dce8799..d34353d 100644
 +        body.append(threepid.medium, threepid.address);
 +    });
 +    //:tchap: end
-+    
-+
-     await submitReport(SdkConfig.get().bug_report_endpoint_url, body, () => {});
+         
+     if (bugReportEndpointUrl) {
+         await submitReport(bugReportEndpointUrl, body, () => {});
+     }
  }
++}
  
+ function submitReport(endpoint: string, body: FormData, progressCallback: (str: string) => void): Promise<string> {
+     return new Promise<string>((resolve, reject) => {

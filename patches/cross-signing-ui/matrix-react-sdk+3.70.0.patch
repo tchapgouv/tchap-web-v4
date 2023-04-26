@@ -155,7 +155,7 @@ index 3171a0e..8751e6b 100644
                      aria-label={_t("Skip verification for now")}
                  />
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
-index fe8a24a..c82ea3a 100644
+index 2cbfbf8..79e31f5 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
 @@ -28,6 +28,10 @@ import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStor
@@ -183,7 +183,7 @@ index fe8a24a..c82ea3a 100644
      private onUsePassphraseClick = async (): Promise<void> => {
          const store = SetupEncryptionStore.sharedInstance();
          store.usePassPhrase();
-@@ -159,18 +170,39 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
+@@ -160,18 +171,39 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                  return (
                      <div>
                          <p>
@@ -224,16 +224,18 @@ index fe8a24a..c82ea3a 100644
                      </div>
                  );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-index 7849f63..b393746 100644
+index 94cf02d..6ef0e41 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-@@ -180,27 +180,37 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
+@@ -193,6 +193,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                      )}
                  </React.Fragment>
              );
 +            /* :tchap: replace reset button by open-security button
              button = (
-                 <AccessibleButton kind="primary" onClick={onResetClick}>
+                 <AccessibleButton
+                     className="mx_DecryptionFailureBar_end_button"
+@@ -203,28 +204,37 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                      {_t("Reset")}
                  </AccessibleButton>
              );
@@ -246,8 +248,9 @@ index 7849f63..b393746 100644
 +            /* :tchap: end */ 
          }
      } else if (hasOtherVerifiedDevices) {
+         className = "mx_DecryptionFailureBar mx_DecryptionFailureBar--withEnd";
          headline = <React.Fragment>{_t("Open another device to load encrypted messages")}</React.Fragment>;
--        body = (
+-        message = (
 -            <React.Fragment>
 -                {_t(
 -                    "This device is requesting decryption keys from your other devices. " +
@@ -256,12 +259,17 @@ index 7849f63..b393746 100644
 -            </React.Fragment>
 -        );
 -        button = (
--            <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
+-            <AccessibleButton
+-                className="mx_DecryptionFailureBar_end_button"
+-                kind="primary_outline"
+-                onClick={onDeviceListClick}
+-                data-testid="decryption-failure-bar-button"
+-            >
 -                {_t("View your device list")}
 -            </AccessibleButton>
 -        );
 +        // :TCHAP: shrink long banner
-+        // body = (
++        // message = (
 +        //     <React.Fragment>
 +        //         {_t(
 +        //             "This device is requesting decryption keys from your other devices. " +
@@ -270,14 +278,19 @@ index 7849f63..b393746 100644
 +        //     </React.Fragment>
 +        // );
 +        // button = (
-+        //     <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
++        //     <AccessibleButton
++        //         className="mx_DecryptionFailureBar_end_button"
++        //         kind="primary_outline"
++        //         onClick={onDeviceListClick}
++        //         data-testid="decryption-failure-bar-button"
++        //     >
 +        //         {_t("View your device list")}
 +        //     </AccessibleButton>
 +        // );
 +        // end :TCHAP:
      } else {
+         className = "mx_DecryptionFailureBar";
          headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
-         body = (
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 index 3b60705..aeeaee0 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
