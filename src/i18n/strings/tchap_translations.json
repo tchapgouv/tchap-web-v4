@@ -715,7 +715,7 @@
     "en": "Verify with Recovery Code or Phrase"
   },
   "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>" : {
-    "fr": "<p>Ce nouvel appareil n'est pas vérifié au niveau de votre compte Tchap et vous ne possédez pas d'autre appareil connecté à Tchap.</p><p> Vous pouvez avoir des difficultés à accéder à vos messages</p><p>Pour récupérer vos messages en toutes circonstances, activer votre Code de Récupération</p>",
+    "fr": "<p>Ce nouvel appareil n'est pas vérifié au niveau de votre compte Tchap et vous ne possédez pas d'autre appareil connecté à Tchap.</p><p> Vous pouvez avoir des difficultés à accéder à vos messages</p><p>Pour récupérer vos messages en toutes circonstances, activez votre Code de Récupération</p>",
     "en": "<p>This new device is not verified in your Tchap account and you do not have another device connected to Tchap.</p><p>You may have difficulty accessing your messages</p ><p>To recover your messages in all circumstances, activate your Recovery Code</p>"
 
   },
