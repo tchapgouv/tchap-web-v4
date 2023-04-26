@@ -427,8 +427,8 @@
     "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
   },
   "Set up Secure Backup": {
-    "en": "Activate",
-    "fr": "Activer"
+    "en": "Activate message Secure Backup",
+    "fr": "Activer la sauvegarde automatique des messages"
   },
   "Email": {
     "en": "Email",
