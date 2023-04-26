@@ -168,7 +168,7 @@ index ed706f9..8b14d80 100644
          );
      }
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index f1926b6..c9c2297 100644
+index f1926b6..5fa6920 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 @@ -295,12 +295,13 @@ export async function submitFeedback(
@@ -186,7 +186,7 @@ index f1926b6..c9c2297 100644
      body.append("version", version || "UNKNOWN");
      body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
      body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
-@@ -310,11 +311,19 @@ export async function submitFeedback(
+@@ -310,6 +311,13 @@ export async function submitFeedback(
      }
  
      const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;
@@ -197,12 +197,6 @@ index f1926b6..c9c2297 100644
 +        body.append(threepid.medium, threepid.address);
 +    });
 +    //:tchap: end
-         
+ 
      if (bugReportEndpointUrl) {
          await submitReport(bugReportEndpointUrl, body, () => {});
-     }
- }
-+}
- 
- function submitReport(endpoint: string, body: FormData, progressCallback: (str: string) => void): Promise<string> {
-     return new Promise<string>((resolve, reject) => {
