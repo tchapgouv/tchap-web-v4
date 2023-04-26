@@ -155,7 +155,7 @@ index 3171a0e..8751e6b 100644
                      aria-label={_t("Skip verification for now")}
                  />
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
-index fe8a24a..c82ea3a 100644
+index fe8a24a..f216efe 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SetupEncryptionBody.tsx
 @@ -28,6 +28,10 @@ import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStor
@@ -183,17 +183,17 @@ index fe8a24a..c82ea3a 100644
      private onUsePassphraseClick = async (): Promise<void> => {
          const store = SetupEncryptionStore.sharedInstance();
          store.usePassPhrase();
-@@ -159,18 +170,39 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
+@@ -159,17 +170,28 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                  return (
                      <div>
                          <p>
-+                            {/* :tchap: change message to announce secure backup feature
++                            {/* :tchap: change message format by adding <p>
                              {_t(
                                  "It looks like you don't have a Security Key or any other devices you can " +
                                      "verify against.  This device will not be able to access old encrypted messages. " +
                                      "In order to verify your identity on this device, you'll need to reset " +
                                      "your verification keys.",
-                             )} 
+                             )}
 +                             :tchap: end
 +                            */}
 +
@@ -206,23 +206,13 @@ index fe8a24a..c82ea3a 100644
 +                            )}
                          </p>
  
-+                        {/* :tchap: replace button of proceed with reset by a no-effect Continue button */}
                          <div className="mx_CompleteSecurity_actionRow">
-+                            <AccessibleButton kind="primary" onClick={this.openDeviceTab}>
-+                            {/* <AccessibleButton kind="primary" onClick={this.onSkipConfirmClick}> */}
-+                                {_t("Security & Privacy")}
-+                            </AccessibleButton>
-+
-+                        {/* 
                              <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
-                                 {_t("Proceed with reset")}
+-                                {_t("Proceed with reset")}
++                                {_t("Set up")}
                              </AccessibleButton>
-+                            :tchap: end
-+                            */
-+                        }
                          </div>
                      </div>
-                 );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 index 7849f63..b393746 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
