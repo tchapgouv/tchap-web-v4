@@ -715,8 +715,8 @@
     "en": "Verify with Recovery Code or Phrase"
   },
   "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>" : {
-    "fr": "<p>Ce nouvel appareil n'est pas vérifié au niveau de votre compte Tchap et vous ne possédez pas d'autre appareil connecté à Tchap.</p><p> Vous pouvez avoir des difficultés à accéder à vos messages</p><p>Pour récupérer vos messages en toutes circonstances, activez votre Code de Récupération</p>",
-    "en": "<p>This new device is not verified in your Tchap account and you do not have another device connected to Tchap.</p><p>You may have difficulty accessing your messages</p ><p>To recover your messages in all circumstances, activate your Recovery Code</p>"
+    "fr": "<p>Cet appareil n'est pas vérifié.</p><p>Pour que cet appareil soit toujours vérifié et que vous puissiez toujours récupérer vos messages, activez la Sauvegarde Automatique des messages.</p>",
+    "en": "<p>This device is not verified.</p><p>To ensure this device is always verified and you can always retrieve your messages, turn on Automatic Message Backup</p>"
 
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
@@ -892,11 +892,11 @@
     "en": "Activate on this device"
   },
   "Verify this session": {
-    "fr": "Verifier cet appareil",
+    "fr": "Vérifier cet appareil",
     "en": "Verify this device"
   },
   "Other users may not trust it": {
-    "fr": "Vous pouvez avoir des difficultés à lire vos messages",
-    "en": "You might face difficulties to read your messages"
+    "fr": "Vous risquez de ne pas pouvoir récupérer vos messages.",
+    "en": "You may not be able to recover your messages."
   }
 }
