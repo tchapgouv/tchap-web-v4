@@ -26,7 +26,6 @@ or
 
 `yarn cypress open` to open the cypress console
 
-
 TODO :
 
 -   make all this run in CI ! Will need running a tchap-web server at http://localhost:8080. Cypress does not recommend that the server be started by cypress itself (https://docs.cypress.io/guides/references/best-practices#Web-Servers)

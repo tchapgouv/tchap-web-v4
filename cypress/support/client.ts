@@ -150,7 +150,6 @@ Cypress.Commands.add("getDmRooms", (userId: string): Chainable<string[]> => {
         .then((dmRoomMap) => dmRoomMap[userId] ?? []);
 });
 
-
 //:tchap: added this createRoom
 Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
     return cy.window({ log: false }).then(async (win) => {
