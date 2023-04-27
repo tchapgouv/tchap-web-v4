@@ -34,7 +34,7 @@
         "feature_video_rooms": false,
         "feature_new_device_manager": false,
         "tchap_activate_cross_signing_and_secure_storage": true,
-        "tchap_disable_cross_signing_setup_toast": true
+        "tchap_disable_cross_signing_setup_toast": false
     },
     "default_federate": true,
     "default_theme": "light",
