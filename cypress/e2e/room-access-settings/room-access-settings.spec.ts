@@ -25,7 +25,7 @@ describe("Check room access settings", () => {
 
             //assert
             cy.get("#joinRule-invite-description").should("not.exist");
-            cy.get("#joinRule-restricted-description").should("not.exist");
+            cy.get("#joinRule-restricted-description").should("exist");
             cy.get("#joinRule-public-description").should("exist");
 
             //encryption switch should be off and disabled
@@ -50,7 +50,7 @@ describe("Check room access settings", () => {
 
             //assert
             cy.get("#joinRule-invite-description").should("exist");
-            cy.get("#joinRule-restricted-description").should("not.exist");
+            cy.get("#joinRule-restricted-description").should("exist");
             cy.get("#joinRule-public-description").should("not.exist");
 
             //encryption switch should be on
@@ -77,7 +77,7 @@ describe("Check room access settings", () => {
 
             //assert
             cy.get("#joinRule-invite-description").should("exist");
-            cy.get("#joinRule-restricted-description").should("not.exist");
+            cy.get("#joinRule-restricted-description").should("exist");
             cy.get("#joinRule-public-description").should("not.exist");
 
             //encryption switch should be on
