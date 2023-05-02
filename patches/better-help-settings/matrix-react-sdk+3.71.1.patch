@@ -12,7 +12,7 @@ index 10f18f1..8d18769 100644
  
  export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
-index 7ad495e..6b21e41 100644
+index cb15fdf..c2ab6f0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 @@ -98,6 +98,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>

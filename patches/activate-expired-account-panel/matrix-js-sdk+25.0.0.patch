@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/http-api/fetch.ts b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
-index ecb0908..70804d3 100644
+index e1c266c..31a12b4 100644
 --- a/node_modules/matrix-js-sdk/src/http-api/fetch.ts
 +++ b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
 @@ -161,6 +161,12 @@ export class FetchHttpApi<O extends IHttpOpts> {
@@ -41,7 +41,7 @@ index 9946aa3..8cf51ed 100644
  
  export interface UploadProgress {
 diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index dc5217c..58c7ffc 100644
+index 2088131..bb10372 100644
 --- a/node_modules/matrix-js-sdk/src/sync.ts
 +++ b/node_modules/matrix-js-sdk/src/sync.ts
 @@ -610,6 +610,14 @@ export class SyncApi {

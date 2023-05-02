@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index dd9be19..144efa3 100644
+index 15dcda4..e712e98 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 @@ -39,8 +39,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";

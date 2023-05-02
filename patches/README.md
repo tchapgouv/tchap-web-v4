@@ -13,7 +13,7 @@ Note : if you are making a patch while your local env has yarn links, patch-pack
 First run the merge command, it takes long if you have multiple patches
 
 ```
-bash ./scripts/merge-patches.sh merge
+bash ./scripts/tchap/merge-patches.sh merge
 ```
 
 If some patches are in conflict, a folder is created in patches_temp/
@@ -21,13 +21,13 @@ If some patches are in conflict, a folder is created in patches_temp/
 To see the conflicted files run :
 
 ```
-bash ./scripts/merge-patches.sh continue <absolute_path>/tchap-web-v4/patches_temp/PATCH_NAME
+bash ./scripts/tchap/merge-patches.sh continue <absolute_path>/tchap-web-v4/patches_temp/PATCH_NAME
 ```
 
 Fix the conlicts inside the <absolute_path>/tchap-web-v4/patches_temp/PATCH_NAME/node_modules/....
 
 After the conflict is solved, run again
-bash ./scripts/merge-patches.sh continue <absolute_path>/tchap-web-v4/patches_temp/PATCH_NAME
+bash ./scripts/tchap/merge-patches.sh continue <absolute_path>/tchap-web-v4/patches_temp/PATCH_NAME
 
 A notice should be in the log that a new patch has been created in folder : absolute_path>/tchap-web-v4/patches/
 
@@ -36,7 +36,7 @@ Compare the old patch and the new patch, if it looks ok to you then delete manua
 NB : merge command can be used with only one patch also
 
 ```
-bash ./scripts/merge-patches.sh merge <absolute_path>/tchap-web-v4/patches/PATCH_NAME/PATCH_FILE.patch
+bash ./scripts/tchap/merge-patches.sh merge <absolute_path>/tchap-web-v4/patches/PATCH_NAME/PATCH_FILE.patch
 ```
 
 ## How to deal with patch conflicts
