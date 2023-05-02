@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
-index 5175de6..9ed1fe0 100644
+index 1050e8f..2c9ef8a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 @@ -22,6 +22,7 @@ import SdkConfig from "../../../SdkConfig";
@@ -8,7 +8,7 @@ index 5175de6..9ed1fe0 100644
  import Field, { IInputProps } from "../elements/Field";
 +import TchapStrongPassword from "../../../../../../src/util/TchapStrongPassword";
  
- interface IProps extends Omit<IInputProps, "onValidate"> {
+ interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
      autoFocus?: boolean;
 @@ -95,7 +96,10 @@ class PassphraseField extends PureComponent<IProps> {
      });

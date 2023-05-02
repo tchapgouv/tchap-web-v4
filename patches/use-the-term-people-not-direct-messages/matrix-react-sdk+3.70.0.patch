@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-index 03914b3..04cdcd0 100644
+index 5c2b0c3..9e66542 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-@@ -222,7 +222,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
+@@ -224,7 +224,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                      onFinished();
                      PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
                  }}
@@ -13,10 +13,10 @@ index 03914b3..04cdcd0 100644
              >
                  <span className="mx_IconizedContextMenu_sublabel">{room.getJoinedMemberCount()}</span>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-index a66d0aa..96d8a54 100644
+index 3042405..2123c91 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-@@ -52,7 +52,9 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space
+@@ -53,7 +53,9 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space
                          );
                      }}
                  >
@@ -28,10 +28,10 @@ index a66d0aa..96d8a54 100644
                  <p>
                      {_t(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-index 7e2bd9d..d7fbc74 100644
+index 98a3260..deed0b6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-@@ -396,7 +396,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
+@@ -404,7 +404,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
          defaultHidden: false,
      },
      [DefaultTagID.DM]: {

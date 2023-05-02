@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
-index e6a5c67..600c0fd 100644
+index a261e44..e6eec36 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
-@@ -407,13 +407,15 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -413,13 +413,15 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                      autoComplete="off"
                                  />
                              </div>
@@ -19,7 +19,7 @@ index e6a5c67..600c0fd 100644
                                  <input
                                      type="file"
                                      className="mx_AccessSecretStorageDialog_recoveryKeyEntry_fileInput"
-@@ -424,7 +426,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -430,7 +432,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                  <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
                                      {_t("Upload")}
                                  </AccessibleButton>

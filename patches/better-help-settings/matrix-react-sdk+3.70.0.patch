@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
-index 4bceab5..b7dad05 100644
+index 10f18f1..8d18769 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
 @@ -75,7 +75,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T>

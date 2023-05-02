@@ -52,9 +52,10 @@ let avatarUrl: string;
 let userId: string;
 let jitsiAuth: string;
 let roomId: string;
-let openIdToken: IOpenIDCredentials;
 let roomName: string;
 let startAudioOnly: boolean;
+let startWithAudioMuted: boolean | undefined;
+let startWithVideoMuted: boolean | undefined;
 let isVideoChannel: boolean;
 let supportsScreensharing: boolean;
 let language: string;
@@ -79,6 +80,13 @@ const setupCompleted = (async (): Promise<string | void> => {
                 throw new Error(`Expected singular ${name} in query string`);
             }
             return vals[0];
+        };
+        const parseBooleanOrUndefined = (value: string | undefined): boolean | undefined => {
+            if (value === undefined) {
+                return undefined;
+            }
+
+            return value === "true";
         };
 
         // If we have these params, expect a widget API to be available (ie. to be in an iframe
@@ -197,6 +205,8 @@ const setupCompleted = (async (): Promise<string | void> => {
         roomId = qsParam("roomId", true);
         roomName = qsParam("roomName", true);
         startAudioOnly = qsParam("isAudioOnly", true) === "true";
+        startWithAudioMuted = parseBooleanOrUndefined(qsParam("startWithAudioMuted", true));
+        startWithVideoMuted = parseBooleanOrUndefined(qsParam("startWithVideoMuted", true));
         isVideoChannel = qsParam("isVideoChannel", true) === "true";
         supportsScreensharing = qsParam("supportsScreensharing", true) === "true";
 
@@ -212,13 +222,6 @@ const setupCompleted = (async (): Promise<string | void> => {
 
         if (widgetApi) {
             await widgetApiReady;
-
-            // See https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
-            if (jitsiAuth === JITSI_OPENIDTOKEN_JWT_AUTH) {
-                // Request credentials, give callback to continue when received
-                openIdToken = await widgetApi.requestOpenIDConnectToken();
-                logger.log("Got OpenID Connect token");
-            }
         }
 
         // Now that everything should be set up, skip to the Jitsi splash screen if needed
@@ -234,7 +237,7 @@ const setupCompleted = (async (): Promise<string | void> => {
 })();
 
 function enableJoinButton(): void {
-    document.getElementById("joinButton").onclick = (): void => joinConference();
+    document.getElementById("joinButton").onclick = (): Promise<void> => joinConference();
 }
 
 function switchVisibleContainers(): void {
@@ -260,11 +263,11 @@ function skipToJitsiSplashScreen(): void {
 }
 
 /**
- * Create a JWT token fot jitsi openidtoken-jwt auth
+ * Create a JWT token for jitsi openidtoken-jwt auth
  *
  * See https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
  */
-function createJWTToken(): string {
+function createJWTToken(openIdToken: IOpenIDCredentials): string {
     // Header
     const header = { alg: "HS256", typ: "JWT" };
     // Payload
@@ -345,17 +348,21 @@ function mapLanguage(language: string): string {
 // audio input it can find, while an input of null instructs it to start muted,
 // and a non-nullish input specifies the label of a specific device to use.
 // Same for video inputs.
-function joinConference(audioInput?: string | null, videoInput?: string | null): void {
+async function joinConference(audioInput?: string | null, videoInput?: string | null): Promise<void> {
     let jwt;
     if (jitsiAuth === JITSI_OPENIDTOKEN_JWT_AUTH) {
-        if (!openIdToken?.access_token) {
+        // See https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
+        const openIdToken: IOpenIDCredentials = await widgetApi.requestOpenIDConnectToken();
+        logger.log("Got OpenID Connect token");
+
+        if (!openIdToken.access_token) {
             // eslint-disable-line camelcase
             // We've failing to get a token, don't try to init conference
             logger.warn("Expected to have an OpenID credential, cannot initialize widget.");
             document.getElementById("widgetActionContainer").innerText = "Failed to load Jitsi widget";
             return;
         }
-        jwt = createJWTToken();
+        jwt = createJWTToken(openIdToken);
     }
 
     switchVisibleContainers();
@@ -388,8 +395,8 @@ function joinConference(audioInput?: string | null, videoInput?: string | null):
         configOverwrite: {
             subject: roomName,
             startAudioOnly,
-            startWithAudioMuted: audioInput === null,
-            startWithVideoMuted: videoInput === null,
+            startWithAudioMuted: audioInput === null ? true : startWithAudioMuted,
+            startWithVideoMuted: videoInput === null ? true : startWithVideoMuted,
             // Request some log levels for inclusion in rageshakes
             // Ideally we would capture all possible log levels, but this can
             // cause Jitsi Meet to try to post various circular data structures
