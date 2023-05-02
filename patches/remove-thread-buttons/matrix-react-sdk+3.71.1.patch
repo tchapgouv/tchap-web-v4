@@ -13,7 +13,7 @@ index 3ffe63a..c317e33 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 6ac1e74..d298798 100644
+index 3a85406..597ecea 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 @@ -367,18 +367,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
