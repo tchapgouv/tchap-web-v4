@@ -168,10 +168,10 @@ index ed706f9..8b14d80 100644
          );
      }
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index f1926b6..5fa6920 100644
+index 9027e28..791c1c6 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-@@ -295,12 +295,13 @@ export async function submitFeedback(
+@@ -291,12 +291,13 @@ export async function submitFeedback(
          version = await PlatformPeg.get()?.getAppVersion();
      } catch (err) {} // PlatformPeg already logs this.
  
@@ -186,7 +186,7 @@ index f1926b6..5fa6920 100644
      body.append("version", version || "UNKNOWN");
      body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
      body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
-@@ -310,6 +311,13 @@ export async function submitFeedback(
+@@ -306,6 +307,13 @@ export async function submitFeedback(
      }
  
      const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;

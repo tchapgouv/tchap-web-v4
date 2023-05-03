@@ -14,10 +14,10 @@ index 9c9e1ce..6fe1939 100644
          mask-image: url("$(res)/img/element-icons/feedback.svg");
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-index 0f9569d..0b6290e 100644
+index 5d2ba89..76f4a34 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-@@ -245,6 +245,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
+@@ -246,6 +246,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
          this.setState({ contextMenuPosition: null }); // also close the menu
      };
  
@@ -28,7 +28,7 @@ index 0f9569d..0b6290e 100644
      private onProvideFeedback = (ev: ButtonEvent): void => {
          ev.preventDefault();
          ev.stopPropagation();
-@@ -362,6 +366,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
+@@ -363,6 +367,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
                      onClick={(e) => this.onSettingsOpen(e)}
                  />
                  {feedbackButton}
