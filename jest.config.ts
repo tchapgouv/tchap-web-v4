@@ -30,19 +30,14 @@ import type { Config } from "jest";
 }
 */
 const config: Config = {
-    snapshotSerializers: [
-        "enzyme-to-json/serializer"
-    ],
+    snapshotSerializers: ["enzyme-to-json/serializer"],
     testEnvironment: "jsdom",
     testEnvironmentOptions: {
         url: "http://localhost/",
     },
     testMatch: ["<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"],
     setupFiles: ["jest-canvas-mock"],
-    setupFilesAfterEnv: [
-        "<rootDir>/test/setupTests.js",
-        "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"
-    ],
+    setupFilesAfterEnv: ["<rootDir>/test/setupTests.js", "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"],
     moduleNameMapper: {
         "\\.(css|scss|pcss)$": "<rootDir>/__mocks__/cssMock.js",
         "\\.(gif|png|ttf|woff2)$": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/imageMock.js",
@@ -61,10 +56,12 @@ const config: Config = {
         "^!!raw-loader!.*": "jest-raw-loader",
         "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
         "MImageBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningImageBody.tsx",
-        "../../../../../../src/components/views/messages/OriginalFileBody": "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx",
+        "../../../../../../src/components/views/messages/OriginalFileBody":
+            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx",
         "MAudioBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningAudioBody.tsx",
-        "../../../../../../src/components/views/messages/OriginalAudioBody": "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
-        "MStickerBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningStickerBody.tsx"
+        "../../../../../../src/components/views/messages/OriginalAudioBody":
+            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
+        "MStickerBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningStickerBody.tsx",
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
     coverageReporters: ["text-summary", "lcov"],
