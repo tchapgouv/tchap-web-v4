@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
-index 6d517fb..5df216c 100644
+index 3e833b3..1304681 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
-@@ -651,6 +651,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+@@ -653,6 +653,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
              return masterSwitch;
          }
  
@@ -10,7 +10,7 @@ index 6d517fb..5df216c 100644
          const emailSwitches = (this.state.threepids || [])
              .filter((t) => t.medium === ThreepidMedium.Email)
              .map((e) => (
-@@ -663,6 +664,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+@@ -665,6 +666,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                      disabled={this.state.phase === Phase.Persisting}
                  />
              ));
@@ -18,7 +18,7 @@ index 6d517fb..5df216c 100644
  
          return (
              <>
-@@ -702,7 +704,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+@@ -704,7 +706,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                      </>
                  )}
  
