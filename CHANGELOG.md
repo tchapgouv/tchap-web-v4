@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 Changes in [1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11.30) (2023-04-25)
 =================================================================================================
 
@@ -44,7 +42,6 @@ Changes in [1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Highlight event when any version triggered a highlight ([\#10502](https://github.com/matrix-org/matrix-react-sdk/pull/10502)). Fixes #24923 and #24970. Contributed by @kerryarchibald.
  * Fix spacing of headings of integration manager on General settings tab ([\#10232](https://github.com/matrix-org/matrix-react-sdk/pull/10232)). Fixes #24085. Contributed by @luixxiul.
 
->>>>>>> v1.11.30
 Changes in [1.11.29](https://github.com/vector-im/element-web/releases/tag/v1.11.29) (2023-04-11)
 =================================================================================================
 
