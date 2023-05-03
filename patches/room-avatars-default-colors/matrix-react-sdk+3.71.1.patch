@@ -1,13 +1,12 @@
 diff --git a/node_modules/matrix-react-sdk/src/Avatar.ts b/node_modules/matrix-react-sdk/src/Avatar.ts
-index 88c80ef..a023ba0 100644
+index a023ba0..13432df 100644
 --- a/node_modules/matrix-react-sdk/src/Avatar.ts
 +++ b/node_modules/matrix-react-sdk/src/Avatar.ts
-@@ -96,7 +96,7 @@ export function defaultAvatarUrlForString(s: string): string {
-     const colorIndex = total % defaultColors.length;
-     // overwritten color value in custom themes
+@@ -98,6 +98,7 @@ export function defaultAvatarUrlForString(s: string): string {
      const cssVariable = `--avatar-background-colors_${colorIndex}`;
--    const cssValue = document.body.style.getPropertyValue(cssVariable);
-+    const cssValue = getComputedStyle(document.body).getPropertyValue(cssVariable);
+     const cssValue = getComputedStyle(document.body).getPropertyValue(cssVariable);
      const color = cssValue || defaultColors[colorIndex];
++
      let dataUrl = colorToDataURLCache.get(color);
      if (!dataUrl) {
+         // validate color as this can come from account_data
