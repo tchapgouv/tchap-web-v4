@@ -6,7 +6,7 @@ index 12f42a3..3b298de 100644
  } from "./utils/IdentityServerUtils";
  import QuestionDialog from "./components/views/dialogs/QuestionDialog";
  import { abbreviateUrl } from "./utils/UrlUtils";
-+import TchapUIFeature from "../../../src/util/TchapUIFeature";
++import TchapUIFeature from "../../../src/tchap/util/TchapUIFeature";
  
  export class AbortedIdentityActionError extends Error {}
  
@@ -41,7 +41,7 @@ index b986a5e..116027b 100644
 +    doesAccountDataHaveIdentityServer,
 +    setToDefaultIdentityServer,
 +} from './utils/IdentityServerUtils';
-+import TchapUIFeature from "../../../src/util/TchapUIFeature";
++import TchapUIFeature from "../../../src/tchap/util/TchapUIFeature";
  
  export class TermsNotSignedError extends Error {}
  

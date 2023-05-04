@@ -5,7 +5,7 @@
 import { Room } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../tchap/@types/tchap";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31

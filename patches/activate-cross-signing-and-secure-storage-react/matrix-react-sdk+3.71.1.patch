@@ -15,7 +15,7 @@ index 575ff07..3424e04 100644
  import { Linkify } from "../../HtmlUtils";
  import { NotificationColor } from "../../stores/notifications/NotificationColor";
  import { UserTab } from "../views/dialogs/UserTab";
-+import TchapUIFeature from "../../../../../src/util/TchapUIFeature";
++import TchapUIFeature from "../../../../../src/tchap/util/TchapUIFeature";
  
  // legacy export
  export { default as Views } from "../../Views";
@@ -67,7 +67,7 @@ index e3f62d4..aba3ef4 100644
  import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
  import { accessSecretStorage } from "../../../SecurityManager";
  import AccessibleButton from "../elements/AccessibleButton";
-+import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP:
  
  interface IState {
      error?: Error;
@@ -136,7 +136,7 @@ index 603438e..2766f19 100644
  import { deleteDevicesWithInteractiveAuth } from "./devices/deleteDevices";
  import MatrixClientContext from "../../../contexts/MatrixClientContext";
  import { isDeviceVerified } from "../../../utils/device/isDeviceVerified";
-+import TchapUtils from '../../../../../../src/util/TchapUtils';
++import TchapUtils from '../../../../../../src/tchap/util/TchapUtils';
  
  interface IProps {
      className?: string;
@@ -183,7 +183,7 @@ index 7473786..293ab8e 100644
  import QuestionDialog from "../dialogs/QuestionDialog";
  import RestoreKeyBackupDialog from "../dialogs/security/RestoreKeyBackupDialog";
  import { accessSecretStorage } from "../../../SecurityManager";
-+import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP:
  
  interface IState {
      loading: boolean;

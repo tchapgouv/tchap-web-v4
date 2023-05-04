@@ -6,7 +6,7 @@ index 953ffc2..d5ccdf4 100644
  import DMRoomMap from "../../../utils/DMRoomMap";
  import { IOOBData } from "../../../stores/ThreepidInviteStore";
  import TooltipTarget from "../elements/TooltipTarget";
-+import TchapRoomUtils from "../../../../../../src/util/TchapRoomUtils";
++import TchapRoomUtils from "../../../../../../src/tchap/util/TchapRoomUtils";
 +import "../../../../../../res/css/views/avatars/_TchapDecoratedRoomAvatar.pcss";
 +import { TchapRoomType } from "../../../../../../src/tchap/@types/tchap";
  

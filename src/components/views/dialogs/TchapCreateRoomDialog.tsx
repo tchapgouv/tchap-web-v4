@@ -23,7 +23,7 @@ import Field from "matrix-react-sdk/src/components/views/elements/Field";
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 
-import TchapUtils from "../../../util/TchapUtils";
+import TchapUtils from "../../../tchap/util/TchapUtils";
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../tchap/@types/tchap";
 import TchapCreateRoom from "../../../tchap/lib/createTchapRoom";

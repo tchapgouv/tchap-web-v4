@@ -33,7 +33,7 @@ index b90d225..b1010be 100644
  import TextInputDialog from "../dialogs/TextInputDialog";
  import AccessibleButton from "../elements/AccessibleButton";
  import withValidation from "../elements/Validation";
-+import TchapUtils from "../../../../../../src/util/TchapUtils";
++import TchapUtils from "../../../../../../src/tchap/util/TchapUtils";
  
  const SETTING_NAME = "room_directory_servers";
  

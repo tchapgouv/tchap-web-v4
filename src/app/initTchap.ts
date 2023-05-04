@@ -2,9 +2,9 @@ import defaultDispatcher from "matrix-react-sdk/src/dispatcher/dispatcher";
 import { ActionPayload } from "matrix-react-sdk/src/dispatcher/payloads";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 
-import TchapVersionManagement from "../util/TchapVersionManagement";
-import TchapUserSettings from "../util/TchapUserSettings";
-import TchapUIFeature from "../util/TchapUIFeature";
+import TchapVersionManagement from "../tchap/util/TchapVersionManagement";
+import TchapUserSettings from "../tchap/util/TchapUserSettings";
+import TchapUIFeature from "../tchap/util/TchapUIFeature";
 import ExpiredAccountHandler from "../tchap/lib/ExpiredAccountHandler";
 /**
  * Determine weither the app needs a clearCacheAndReload after loading. We do it when upgrading from v2 to v4, to avoid weird keys bugs.

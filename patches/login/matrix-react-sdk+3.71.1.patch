@@ -6,7 +6,7 @@ index 4314726..0a34f0e 100644
  import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
  import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
  import { filterBoolean } from "../../../utils/arrays";
-+import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
++import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
  
  // These are used in several places, and come from the js-sdk's autodiscovery
  // stuff. We define them here so that they'll be picked up by i18n.

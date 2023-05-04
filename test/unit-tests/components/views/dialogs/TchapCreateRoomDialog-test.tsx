@@ -8,7 +8,7 @@ import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import { EventEmitter } from "events";
 
 import { TchapRoomType } from "../../../../../src/tchap/@types/tchap";
-import TchapUtils from "../../../../../src/util/TchapUtils";
+import TchapUtils from "../../../../../src/tchap/util/TchapUtils";
 import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
 
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.

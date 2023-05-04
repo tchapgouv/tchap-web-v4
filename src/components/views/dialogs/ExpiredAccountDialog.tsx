@@ -4,7 +4,7 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
 
-import TchapUtils from "../../../util/TchapUtils";
+import TchapUtils from "../../../tchap/util/TchapUtils";
 
 interface IProps {
     onFinished(): void;
