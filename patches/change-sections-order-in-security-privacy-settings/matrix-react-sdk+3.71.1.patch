@@ -52,10 +52,10 @@ index 34b52e4..8085f20 100644
              </div>
          );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 9697af8..efc52f7 100644
+index 9fe4528..df362fa 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-@@ -287,7 +287,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+@@ -292,7 +292,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
      public render(): React.ReactNode {
          const secureBackup = (
              <div className="mx_SettingsTab_section">
@@ -64,7 +64,7 @@ index 9697af8..efc52f7 100644
                  <div className="mx_SettingsTab_subsectionText">
                      <SecureBackupPanel />
                  </div>
-@@ -414,14 +414,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+@@ -423,14 +423,16 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
          return (
              <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                  {warning}

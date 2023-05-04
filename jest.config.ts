@@ -18,14 +18,26 @@ import { env } from "process";
 
 import type { Config } from "jest";
 
+/*
+"jest-comments": {
+    "README": "For the tests to work, you need matrix-react-sdk to be git-cloned and yarn linked into this project.",
+    "snapshotSerializers": "used for jest snapshot",
+    "testEnvironment": "switch to jsdom like in matrix-react-sdk",
+    "testMatch": "execute only tests in unit-tests directory",
+    "setupFilesAfterEnv": "duplicate enzyme configuration in our own setup file '<rootDir>/test/setupTests.js'",
+    "moduleNameMapper": "use mapper from element-web, helps at mocking {module, ressources} directly with regexp",
+    "transformIgnorePatterns": "make regexp inline {matrix-js-sdk|matrix-react-sdk} else it does not work"
+}
+*/
 const config: Config = {
+    snapshotSerializers: ["enzyme-to-json/serializer"],
     testEnvironment: "jsdom",
     testEnvironmentOptions: {
         url: "http://localhost/",
     },
-    testMatch: ["<rootDir>/test/**/*-test.[tj]s?(x)"],
+    testMatch: ["<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"],
     setupFiles: ["jest-canvas-mock"],
-    setupFilesAfterEnv: ["<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"],
+    setupFilesAfterEnv: ["<rootDir>/test/setupTests.js", "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"],
     moduleNameMapper: {
         "\\.(css|scss|pcss)$": "<rootDir>/__mocks__/cssMock.js",
         "\\.(gif|png|ttf|woff2)$": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/imageMock.js",
@@ -43,8 +55,15 @@ const config: Config = {
         "workers/(.+)\\.worker\\.ts": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/workerMock.js",
         "^!!raw-loader!.*": "jest-raw-loader",
         "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
+        "MImageBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningImageBody.tsx",
+        "../../../../../../src/components/views/messages/OriginalFileBody":
+            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx",
+        "MAudioBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningAudioBody.tsx",
+        "../../../../../../src/components/views/messages/OriginalAudioBody":
+            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
+        "MStickerBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningStickerBody.tsx",
     },
-    transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk).+$", "/node_modules/(?!matrix-react-sdk).+$"],
+    transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
     coverageReporters: ["text-summary", "lcov"],
     testResultsProcessor: "@casualbot/jest-sonar-reporter",
 };
