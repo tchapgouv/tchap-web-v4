@@ -1,4 +1,4 @@
-import { TchapRoomAccessRule, TchapRoomType } from "../../../src/@types/tchap";
+import { TchapRoomAccessRule, TchapRoomType } from "../../../src/tchap/@types/tchap";
 import TchapRoomUtils from "../../../src/util/TchapRoomUtils";
 
 describe("Provides utils method to get room type and state", () => {

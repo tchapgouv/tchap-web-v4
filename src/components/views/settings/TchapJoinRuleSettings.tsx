@@ -42,7 +42,7 @@ import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements
 import QuestionDialog from "matrix-react-sdk/src/components/views/dialogs/QuestionDialog";
 
 import TchapUIFeature from "../../../util/TchapUIFeature";
-import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../@types/tchap";
+import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../tchap/@types/tchap";
 
 interface IProps {
     room: Room;

@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 953ffc2..7d12841 100644
+index 953ffc2..d5ccdf4 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -34,6 +34,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -8,7 +8,7 @@ index 953ffc2..7d12841 100644
  import TooltipTarget from "../elements/TooltipTarget";
 +import TchapRoomUtils from "../../../../../../src/util/TchapRoomUtils";
 +import "../../../../../../res/css/views/avatars/_TchapDecoratedRoomAvatar.pcss";
-+import { TchapRoomType } from "../../../../../../src/@types/tchap";
++import { TchapRoomType } from "../../../../../../src/tchap/@types/tchap";
  
  interface IProps {
      room: Room;

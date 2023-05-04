@@ -25,7 +25,7 @@ import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog
 
 import TchapUtils from "../../../util/TchapUtils";
 import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
-import { TchapRoomType } from "../../../@types/tchap";
+import { TchapRoomType } from "../../../tchap/@types/tchap";
 import TchapCreateRoom from "../../../tchap/lib/createTchapRoom";
 
 // We leave the same props as Element's version, to avoid unknown props warnings.

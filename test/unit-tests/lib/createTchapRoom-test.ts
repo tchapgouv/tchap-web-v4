@@ -1,4 +1,4 @@
-import { TchapRoomType } from "../../../src/@types/tchap";
+import { TchapRoomType } from "../../../src/tchap/@types/tchap";
 import TchapCreateRoom from "../../../src/tchap/lib/createTchapRoom";
 
 // todo(estellecomment) : these tests are redundant with TchapCreateRoomDialog-test. Either remove them or modify TchapCreateRoomDialog
