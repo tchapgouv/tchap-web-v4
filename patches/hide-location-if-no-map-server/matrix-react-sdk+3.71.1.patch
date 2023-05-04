@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
-index 2e4be00..8be4526 100644
+index bf5f6b4..170136e 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MessageComposer.tsx
 @@ -60,6 +60,7 @@ import { setUpVoiceBroadcastPreRecording } from "../../../voice-broadcast/utils/
@@ -10,7 +10,7 @@ index 2e4be00..8be4526 100644
  
  let instanceCount = 0;
  
-@@ -613,7 +614,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
+@@ -614,7 +615,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                      relation={this.props.relation}
                                      onRecordStartEndClick={this.onRecordStartEndClick}
                                      setStickerPickerOpen={this.setStickerPickerOpen}

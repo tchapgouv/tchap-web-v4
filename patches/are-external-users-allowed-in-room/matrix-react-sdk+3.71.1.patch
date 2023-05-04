@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-index 75f2ee3..cafad8b 100644
+index 38e8124..fc570bc 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-@@ -157,6 +157,21 @@ limitations under the License.
+@@ -153,6 +153,21 @@ limitations under the License.
      cursor: pointer;
  }
  

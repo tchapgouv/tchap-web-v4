@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index 0e47ff6..a4883e6 100644
+index cb8df7a..1ca2f21 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
 @@ -20,6 +20,7 @@ limitations under the License.
@@ -10,9 +10,9 @@ index 0e47ff6..a4883e6 100644
  import type { IDeviceKeys, IMegolmSessionData, IOneTimeKey } from "./@types/crypto";
  import { ISyncStateData, SyncApi, SyncApiOptions, SyncState } from "./sync";
  import {
-@@ -209,6 +210,9 @@ import { CryptoApi } from "./crypto-api";
- import { DeviceInfoMap } from "./crypto/DeviceList";
- import { SecretStorageKeyDescription } from "./secret-storage";
+@@ -214,6 +215,9 @@ import {
+     ServerSideSecretStorageImpl,
+ } from "./secret-storage";
  
 +import TchapUIFeature from '../../../src/util/TchapUIFeature'; // :TCHAP:
 +
@@ -20,7 +20,7 @@ index 0e47ff6..a4883e6 100644
  export type Store = IStore;
  
  export type ResetTimelineCallback = (roomId: string) => boolean;
-@@ -7242,6 +7246,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -7284,6 +7288,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];
