@@ -41,8 +41,8 @@ import { doesRoomVersionSupport, PreferredRoomVersions } from "matrix-react-sdk/
 import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements/LabelledToggleSwitch";
 import QuestionDialog from "matrix-react-sdk/src/components/views/dialogs/QuestionDialog";
 
-import TchapUIFeature from "../../../tchap/util/TchapUIFeature";
-import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../tchap/@types/tchap";
+import TchapUIFeature from "../../../util/TchapUIFeature";
+import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../@types/tchap";
 
 interface IProps {
     room: Room;

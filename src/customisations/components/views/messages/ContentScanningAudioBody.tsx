@@ -19,8 +19,8 @@ import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBody
 
 import { Media } from "../../../ContentScanningMedia";
 import ContentScanningFileBody from "./ContentScanningFileBody";
-import OriginalAudioBody from "../../../../components/views/messages/OriginalAudioBody";
-import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
+import OriginalAudioBody from "../../../../tchap/components/views/messages/OriginalAudioBody";
+import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
 
 interface State {
     isScanning: boolean;

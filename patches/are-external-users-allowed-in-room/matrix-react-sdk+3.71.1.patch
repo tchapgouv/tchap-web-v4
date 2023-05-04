@@ -32,7 +32,7 @@ index 46a4221..fd0ecce 100644
  import { GroupCallDuration } from "../voip/CallDuration";
  import { Alignment } from "../elements/Tooltip";
  import RoomCallBanner from "../beacon/RoomCallBanner";
-+import TchapExternalRoomHeader from "../../../../../../src/components/views/rooms/TchapExternalRoomHeader";
++import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader";
  
  class DisabledWithReason {
      public constructor(public readonly reason: string) {}

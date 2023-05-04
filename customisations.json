@@ -1,9 +1,8 @@
 {
-    "src/@types/tchap.ts": "src/@types/tchap.ts",
-    "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
-    "src/components/views/dialogs/CreateRoomDialog.tsx": "src/components/views/dialogs/TchapCreateRoomDialog.tsx",
-    "src/components/views/verification/VerificationComplete.tsx": "src/components/views/verification/TchapVerificationComplete.tsx",
-    "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/components/views/elements/TchapRoomTypeSelector.tsx",
+    "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
+    "src/components/views/dialogs/CreateRoomDialog.tsx": "src/tchap/components/views/dialogs/TchapCreateRoomDialog.tsx",
+    "src/components/views/verification/VerificationComplete.tsx": "src/tchap/components/views/verification/TchapVerificationComplete.tsx",
+    "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/tchap/components/views/elements/TchapRoomTypeSelector.tsx",
     "src/customisations/ComponentVisibility.ts": "src/customisations/TchapComponentVisibility.ts",
     "src/customisations/Media.ts": "src/customisations/ContentScanningMedia.ts",
     "src/components/views/messages/DownloadActionButton.tsx": "src/customisations/components/views/messages/ContentScanningDownloadActionButton.tsx",
@@ -21,6 +20,6 @@
     "src/components/views/messages/OriginalStickerBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx",
     "src/components/views/messages/OriginalVideoBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx",
     "src/components/views/messages/OriginalVoiceMessageBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx",
-    "src/components/views/messages/UnknownBody.tsx": "src/components/views/messages/TchapUnknownBody.tsx",
-    "src/components/views/settings/JoinRuleSettings.tsx": "src/components/views/settings/TchapJoinRuleSettings.tsx"
+    "src/components/views/messages/UnknownBody.tsx": "src/tchap/components/views/messages/TchapUnknownBody.tsx",
+    "src/components/views/settings/JoinRuleSettings.tsx": "src/tchap/components/views/settings/TchapJoinRuleSettings.tsx"
 }

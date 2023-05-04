@@ -9,7 +9,7 @@ import { EventEmitter } from "events";
 
 import { TchapRoomType } from "../../../../../src/tchap/@types/tchap";
 import TchapUtils from "../../../../../src/tchap/util/TchapUtils";
-import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
+import TchapCreateRoomDialog from "../../../../../src/tchap/components/views/dialogs/TchapCreateRoomDialog";
 
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
 //I could not make a mock of TchapCreateRoomDialog, the real implementation was taken each time. Then I used jest spyOn

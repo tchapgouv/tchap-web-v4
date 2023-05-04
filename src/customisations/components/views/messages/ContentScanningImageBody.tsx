@@ -25,10 +25,10 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 import SettingsStore from "matrix-react-sdk/src/settings/SettingsStore";
 import { ImageSize, suggestedSize as suggestedImageSize } from "matrix-react-sdk/src/settings/enums/ImageSize";
 
-import OriginalImageBody from "../../../../components/views/messages/OriginalImageBody";
+import OriginalImageBody from "../../../../tchap/components/views/messages/OriginalImageBody";
 import { Media } from "../../../ContentScanningMedia";
-import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
-import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
+import { BlockedIcon } from "../../../../tchap/components/views/elements/BlockedIcon";
+import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
 
 interface State {
     isScanning: boolean;

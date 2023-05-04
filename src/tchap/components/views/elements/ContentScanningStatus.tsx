@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../../../../res/css/views/elements/ContentScanningStatus.pcss";
+import "../../../../../res/css/views/elements/ContentScanningStatus.pcss";
 
 import React, { useState } from "react";
 import TextWithTooltip from "matrix-react-sdk/src/components/views/elements/TextWithTooltip";

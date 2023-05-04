@@ -19,9 +19,9 @@ import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog
 import dis from "matrix-react-sdk/src/dispatcher/dispatcher";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 
-import { TchapAnchor } from "../../../../components/common/TchapAnchor";
-import KeySavedImage from "../../../../../res/img/tchap/key-saved.svg";
-import "../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pcss";
+import { TchapAnchor } from "../../../../components/views/common/TchapAnchor";
+import KeySavedImage from "../../../../../../res/img/tchap/key-saved.svg";
+import "../../../../../../res/css/views/dialogs/_TchapExportE2eKeysSuccessDialog.pcss";
 
 interface IProps {
     allowLogout: boolean;

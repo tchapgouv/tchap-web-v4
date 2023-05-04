@@ -3,8 +3,8 @@ import { useTypedEventEmitter } from "matrix-react-sdk/src/hooks/useEventEmitter
 import React, { useState } from "react";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../tchap/@types/tchap";
-import TchapRoomUtils from "../../../tchap/util/TchapRoomUtils";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../@types/tchap";
+import TchapRoomUtils from "../../../util/TchapRoomUtils";
 
 export interface IProps {
     room?: Room;

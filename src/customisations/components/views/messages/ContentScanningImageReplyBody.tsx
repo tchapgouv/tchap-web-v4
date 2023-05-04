@@ -21,9 +21,9 @@ import { IMediaEventContent } from "matrix-react-sdk/src/customisations/models/I
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 
-import OriginalImageReplyBody from "../../../../components/views/messages/OriginalImageReplyBody";
-import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
-import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
+import OriginalImageReplyBody from "../../../../tchap/components/views/messages/OriginalImageReplyBody";
+import { BlockedIcon } from "../../../../tchap/components/views/elements/BlockedIcon";
+import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
 import { Media } from "../../../ContentScanningMedia";
 
 const FORCED_IMAGE_HEIGHT = 44;
