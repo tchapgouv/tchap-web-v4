@@ -6,8 +6,8 @@ import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import Modal from "matrix-react-sdk/src/Modal";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 
-import ExpiredAccountDialog from "../components/views/dialogs/ExpiredAccountDialog";
-import TchapUtils from "../util/TchapUtils";
+import ExpiredAccountDialog from "../../components/views/dialogs/ExpiredAccountDialog";
+import TchapUtils from "../../util/TchapUtils";
 
 /*
  * Listens for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events and opens the panel ExpiredAccountDialog.

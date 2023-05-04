@@ -102,8 +102,7 @@ module.exports = {
             files: [
                 "src/**/*Tchap*.{ts,tsx}",
                 "src/**/*ContentScan*.{ts,tsx}",
-                "src/lib/ExpiredAccountHandler.ts",
-                "src/lib/IncomingKeyRequestHandler.ts",
+                "src/tchap/*.{ts,tsx}",
                 "src/components/views/dialogs/ExpiredAccountDialog.tsx",
             ],
             rules: {
