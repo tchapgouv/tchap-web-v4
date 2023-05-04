@@ -8,7 +8,7 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 import StyledRadioButton from "matrix-react-sdk/src/components/views/elements/StyledRadioButton";
 import LabelledToggleSwitch from "matrix-react-sdk/src/components/views/elements/LabelledToggleSwitch";
 
-import { TchapRoomType } from "../../../@types/tchap";
+import { TchapRoomType } from "../../../tchap/@types/tchap";
 
 import "../../../../res/css/views/elements/_TchapRoomTypeSelector.pcss";
 

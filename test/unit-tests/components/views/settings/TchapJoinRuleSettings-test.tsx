@@ -10,7 +10,7 @@ import {
 import { JoinRule, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import TchapJoinRuleSettings from "../../../../../src/components/views/settings/TchapJoinRuleSettings";
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../../../src/@types/tchap";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../../../src/tchap/@types/tchap";
 
 function mkStubRoomWithInviteRule(roomId: string, name: string, client: MatrixClient, joinRule: JoinRule): Room {
     const stubRoom: Room = mkStubRoom(roomId, name, client);

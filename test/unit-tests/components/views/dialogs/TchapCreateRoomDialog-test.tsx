@@ -7,7 +7,7 @@ import toJson from "enzyme-to-json";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import { EventEmitter } from "events";
 
-import { TchapRoomType } from "../../../../../src/@types/tchap";
+import { TchapRoomType } from "../../../../../src/tchap/@types/tchap";
 import TchapUtils from "../../../../../src/util/TchapUtils";
 import TchapCreateRoomDialog from "../../../../../src/components/views/dialogs/TchapCreateRoomDialog";
 
