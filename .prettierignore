@@ -32,4 +32,4 @@ yarn-linked-dependencies/
 .github/
 res/
 scripts/tchap
-src/tchap
+src/tchap/
