@@ -207,5 +207,13 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
+    },
+    "add-eye-in-page-login-for-password-input": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/563",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/auth/PasswordLogin.tsx",
+            "res/css/_common.pcss"
+        ] 
     }
 }

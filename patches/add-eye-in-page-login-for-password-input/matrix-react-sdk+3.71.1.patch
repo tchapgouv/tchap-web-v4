@@ -1,0 +1,95 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/_common.pcss b/node_modules/matrix-react-sdk/res/css/_common.pcss
+index 77ffe81..8f9a261 100644
+--- a/node_modules/matrix-react-sdk/res/css/_common.pcss
++++ b/node_modules/matrix-react-sdk/res/css/_common.pcss
+@@ -724,6 +724,14 @@ legend {
+     color: $username-variant8-color;
+ }
+ 
++.mx_textInput_postfixComponent {
++    align-items: center;
++    display: flex;
++    height: 100%;
++    justify-content: center;
++    padding: 0 3px;
++}
++
+ @define-mixin mx_Tooltip_dark {
+     box-shadow: none;
+     background-color: $tooltip-timeline-bg-color;
+diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+index 7275055..1f57277 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+@@ -50,6 +50,7 @@ interface IProps {
+ }
+ 
+ interface IState {
++    displayPassword: boolean;
+     fieldValid: Partial<Record<LoginField, boolean>>;
+     loginType: LoginField.Email | LoginField.MatrixId | LoginField.Phone;
+     password: string;
+@@ -83,13 +84,21 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+     public constructor(props: IProps) {
+         super(props);
+         this.state = {
++            displayPassword: false,
+             // Field error codes by field ID
+             fieldValid: {},
+-            loginType: LoginField.MatrixId,
++            // :TCHAP: force email login
++            // loginType: LoginField.MatrixId,
++            loginType: LoginField.Email,
++            //
+             password: "",
+         };
+     }
+ 
++    private setDisplayPassword = (value: boolean): void => {
++        this.setState({ displayPassword: value });
++    };
++
+     private onForgotPasswordClick = (ev: ButtonEvent): void => {
+         ev.preventDefault();
+         ev.stopPropagation();
+@@ -420,13 +429,17 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+         return (
+             <div>
+                 <form onSubmit={this.onSubmitForm}>
+-                    {loginType}
++                    {
++                        /* :TCHAP: remove loginType selector, we only want Email loginType
++                        loginType
++                        */
++                    }
+                     {loginField}
+                     <Field
+                         id="mx_LoginForm_password"
+                         className={pwFieldClass}
+                         autoComplete="current-password"
+-                        type="password"
++                        type={this.state.displayPassword ? "text": "password"}
+                         name="password"
+                         label={_t("Password")}
+                         value={this.state.password}
+@@ -435,6 +448,20 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+                         autoFocus={autoFocusPassword}
+                         onValidate={this.onPasswordValidate}
+                         ref={(field) => (this[LoginField.Password] = field)}
++                        postfixComponent={(
++                            <div
++                                className="mx_textInput_postfixComponent"
++                                onMouseDown={() => this.setDisplayPassword(true)}
++                                onMouseUp={() => this.setDisplayPassword(false)}
++                            >
++                                <img
++                                    src={require("../../../../../../res/img/grey-eye.svg").default}
++                                    width="24"
++                                    height="24"
++                                    alt={_t("Eye")}
++                                />
++                            </div>
++                        )}
+                     />
+                     {forgotPasswordJsx}
+                     {!this.props.busy && (
