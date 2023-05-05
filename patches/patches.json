@@ -213,7 +213,8 @@
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/dialogs/security/AccessSecretStorageDialog.tsx",
-            "res/css/views/dialogs/security/_AccessSecretStorageDialog.pcss"
+            "res/css/views/dialogs/security/_AccessSecretStorageDialog.pcss",
+            "res/img/feather-customised/grey-eye.svg"
         ]
     }
 }
