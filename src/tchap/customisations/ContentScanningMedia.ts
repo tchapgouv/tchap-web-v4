@@ -22,7 +22,7 @@ import {
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 
-import { ContentScanner } from "../tchap/content-scanner/ContentScanner";
+import { ContentScanner } from "../content-scanner/ContentScanner";
 
 /**
  * A media object is a representation of a "source media" and an optional

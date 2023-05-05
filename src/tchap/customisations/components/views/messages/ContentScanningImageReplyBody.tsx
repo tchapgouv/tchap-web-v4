@@ -1,34 +1,32 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
-import "../../../../../res/css/views/messages/ContentScanningImageBody.pcss";
+ * Copyright 2022 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import React from "react";
-import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
 import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
+import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
 import { IMediaEventContent } from "matrix-react-sdk/src/customisations/models/IMediaEventContent";
-import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 import { _t } from "matrix-react-sdk/src/languageHandler";
-import SettingsStore from "matrix-react-sdk/src/settings/SettingsStore";
-import { ImageSize, suggestedSize as suggestedImageSize } from "matrix-react-sdk/src/settings/enums/ImageSize";
+import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 
-import OriginalImageBody from "../../../../tchap/components/views/messages/OriginalImageBody";
+import OriginalImageReplyBody from "../../../../components/views/messages/OriginalImageReplyBody";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
+import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 import { Media } from "../../../ContentScanningMedia";
-import { BlockedIcon } from "../../../../tchap/components/views/elements/BlockedIcon";
-import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
+
+const FORCED_IMAGE_HEIGHT = 44;
 
 interface State {
     isScanning: boolean;
@@ -36,11 +34,7 @@ interface State {
     hasError: boolean;
 }
 
-/**
- * Content scanning component, that wraps MImageBody from react-sdk.
- * On success it displays the original component (of which a copy exists in this repo).
- */
-export default class ContentScanningImageBody extends React.Component<IBodyProps, State> {
+export default class ContentScanningImageReplyBody extends React.PureComponent<IBodyProps, State> {
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
@@ -66,25 +60,10 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
     }
 
     public render() {
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        let infoWidth = 342;
-        let infoHeight = 342;
-
-        if (content?.info) {
-            infoWidth = Math.min(content.info.w || 9999, infoWidth);
-            infoHeight = Math.min(content.info.h || 9999, infoHeight);
-        }
-
-        const { w: width, h: height } = suggestedImageSize(
-            SettingsStore.getValue("Images.size") as ImageSize,
-            { w: infoWidth, h: infoHeight },
-            this.props.maxImageHeight,
-        );
-
         if (this.state.isScanning) {
             return (
                 <>
-                    <div className="mx_MImageBody mx_MImageBody_pending" style={{ width, height }}>
+                    <div className="mx_MImageBody mx_MImageBody_pending" style={{ height: FORCED_IMAGE_HEIGHT }}>
                         <Spinner />
                     </div>
                     <ContentScanningStatus fileName={this.fileName} status="scanning" />
@@ -93,7 +72,7 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
         } else if (this.state.hasError) {
             return (
                 <>
-                    <div className="mx_MImageBody mx_MImageBody_error" style={{ width, height }}>
+                    <div className="mx_MImageBody mx_MImageBody_error" style={{ height: FORCED_IMAGE_HEIGHT }}>
                         <BlockedIcon className="mx_MImageBody_BlockedIcon" />
                     </div>
                     <ContentScanningStatus fileName={this.fileName} status="error" />
@@ -102,7 +81,7 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
         } else if (!this.state.isSafe) {
             return (
                 <>
-                    <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ width, height }}>
+                    <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ height: FORCED_IMAGE_HEIGHT }}>
                         <BlockedIcon className="mx_MImageBody_BlockedIcon" />
                     </div>
                     <ContentScanningStatus fileName={this.fileName} status="unsafe" />
@@ -119,7 +98,7 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
     }
 
     protected renderOriginal() {
-        return <OriginalImageBody {...this.props} />;
+        return <OriginalImageReplyBody {...this.props} />;
     }
 
     private get media(): Media {

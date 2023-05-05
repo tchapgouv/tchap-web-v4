@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import "../../../../../res/css/views/messages/ContentScanningFileBody.pcss";
+import "../../../../../../res/css/views/messages/ContentScanningFileBody.pcss";
 
 import React from "react";
 import InlineSpinner from "matrix-react-sdk/src/components/views/elements/InlineSpinner";
@@ -25,8 +25,8 @@ import { _t } from "matrix-react-sdk/src/languageHandler";
 import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 
 import { Media } from "../../../ContentScanningMedia";
-import OriginalFileBody from "../../../../tchap/components/views/messages/OriginalFileBody";
-import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
+import OriginalFileBody from "../../../../components/views/messages/OriginalFileBody";
+import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 
 interface Props extends IBodyProps {
     /* whether or not to show the default placeholder for the file. Defaults to true. */

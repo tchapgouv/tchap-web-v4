@@ -25,7 +25,7 @@ import { RovingAccessibleTooltipButton } from "matrix-react-sdk/src/accessibilit
 import { Icon as DownloadIcon } from "matrix-react-sdk/res/img/download.svg";
 
 import { Media } from "../../../ContentScanningMedia";
-import { BlockedIcon } from "../../../../tchap/components/views/elements/BlockedIcon";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 
 enum DownloadState {
     Pristine, // button not cliked, yet

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../../../../../res/css/views/messages/ContentScanningVideoBody.pcss";
+import "../../../../../../res/css/views/messages/ContentScanningVideoBody.pcss";
 
 import React from "react";
 import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
@@ -23,10 +23,10 @@ import { IMediaEventContent } from "matrix-react-sdk/src/customisations/models/I
 import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 
-import OriginalVideoBody from "../../../../tchap/components/views/messages/OriginalVideoBody";
+import OriginalVideoBody from "../../../../components/views/messages/OriginalVideoBody";
 import { Media } from "../../../ContentScanningMedia";
-import { BlockedIcon } from "../../../../tchap/components/views/elements/BlockedIcon";
-import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
+import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 
 interface State {
     isScanning: boolean;

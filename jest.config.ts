@@ -55,13 +55,13 @@ const config: Config = {
         "workers/(.+)\\.worker\\.ts": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/workerMock.js",
         "^!!raw-loader!.*": "jest-raw-loader",
         "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
-        "MImageBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningImageBody.tsx",
-        "../../../../../../src/components/views/messages/OriginalFileBody":
+        "MImageBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageBody.tsx",
+        "../../../../../../src/tchap/components/views/messages/OriginalFileBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx",
-        "MAudioBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningAudioBody.tsx",
-        "../../../../../../src/components/views/messages/OriginalAudioBody":
+        "MAudioBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningAudioBody.tsx",
+        "../../../../../../src/tchap/components/views/messages/OriginalAudioBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
-        "MStickerBody": "<rootDir>/src/customisations/components/views/messages/ContentScanningStickerBody.tsx",
+        "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
     coverageReporters: ["text-summary", "lcov"],

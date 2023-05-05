@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../../../../../res/css/views/messages/ContentScanningImageBody.pcss";
+import "../../../../../../res/css/views/messages/ContentScanningImageBody.pcss";
 
 import React from "react";
 import { IBodyProps } from "matrix-react-sdk/src/components/views/messages/IBodyProps";
@@ -22,11 +22,13 @@ import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import { IMediaEventContent } from "matrix-react-sdk/src/customisations/models/IMediaEventContent";
 import { presentableTextForFile } from "matrix-react-sdk/src/utils/FileUtils";
 import { _t } from "matrix-react-sdk/src/languageHandler";
+import SettingsStore from "matrix-react-sdk/src/settings/SettingsStore";
+import { ImageSize, suggestedSize as suggestedImageSize } from "matrix-react-sdk/src/settings/enums/ImageSize";
 
-import OriginalImageBody from "../../../../tchap/components/views/messages/OriginalImageBody";
+import OriginalImageBody from "../../../../components/views/messages/OriginalImageBody";
 import { Media } from "../../../ContentScanningMedia";
-import { BlockedIcon } from "../../../../tchap/components/views/elements/BlockedIcon";
-import { ContentScanningStatus } from "../../../../tchap/components/views/elements/ContentScanningStatus";
+import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
+import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 
 interface State {
     isScanning: boolean;
@@ -35,10 +37,10 @@ interface State {
 }
 
 /**
- * Content scanning component, that wraps MStickerBody from react-sdk.
+ * Content scanning component, that wraps MImageBody from react-sdk.
  * On success it displays the original component (of which a copy exists in this repo).
  */
-export default class ContentScanningStickerBody extends React.Component<IBodyProps, State> {
+export default class ContentScanningImageBody extends React.Component<IBodyProps, State> {
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
@@ -65,13 +67,19 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
 
     public render() {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        let width = 342;
-        let height = 342;
+        let infoWidth = 342;
+        let infoHeight = 342;
 
         if (content?.info) {
-            width = Math.min(content.info.w || 9999, width);
-            height = Math.min(content.info.h || 9999, height);
+            infoWidth = Math.min(content.info.w || 9999, infoWidth);
+            infoHeight = Math.min(content.info.h || 9999, infoHeight);
         }
+
+        const { w: width, h: height } = suggestedImageSize(
+            SettingsStore.getValue("Images.size") as ImageSize,
+            { w: infoWidth, h: infoHeight },
+            this.props.maxImageHeight,
+        );
 
         if (this.state.isScanning) {
             return (
@@ -119,7 +127,7 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
     }
 
     private get fileName() {
-        return presentableTextForFile(this.content, _t("Sticker"), true, false);
+        return presentableTextForFile(this.content, _t("Image"), true, false);
     }
 
     private get content(): IMediaEventContent {
