@@ -207,12 +207,5 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
-    },
-    "add-eye-to-press-on-input-to-show-wrong-password": {
-        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/548",
-        "package": "matrix-react-sdk",
-        "files": [
-            "res/css/_common.pcss"
-        ]
     }
 }
