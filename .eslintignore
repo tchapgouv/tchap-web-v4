@@ -8,3 +8,4 @@ src/modules.ts
 test/.eslintrc.js
 test/setupTests.js
 patches/patches.json
+src/tchap
