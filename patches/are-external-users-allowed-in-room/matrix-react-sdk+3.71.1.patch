@@ -1,0 +1,46 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
+index 38e8124..fc570bc 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
+@@ -153,6 +153,21 @@ limitations under the License.
+     cursor: pointer;
+ }
+ 
++/*:tchap: largely inspired from ;mx_RoomHeader_topic but I couldn't get this add-on to work with $variable*/
++.tc_RoomHeader_external {
++    color: var(--external-color);
++    width: 80px;
++    font-weight: 400;
++    font-size: 1.3rem;
++    line-height: 1.3rem;
++    max-height: calc(1.3rem * 2);
++    overflow: hidden;
++    -webkit-line-clamp: 2;
++    -webkit-box-orient: vertical;
++    display: -webkit-box;        
++}
++
++
+ .mx_RoomHeader_topic {
+     $lineHeight: $font-16px;
+     $lines: 2;
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
+index 46a4221..fd0ecce 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
+@@ -69,6 +69,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+ import { GroupCallDuration } from "../voip/CallDuration";
+ import { Alignment } from "../elements/Tooltip";
+ import RoomCallBanner from "../beacon/RoomCallBanner";
++import TchapExternalRoomHeader from "../../../../../../src/components/views/rooms/TchapExternalRoomHeader";
+ 
+ class DisabledWithReason {
+     public constructor(public readonly reason: string) {}
+@@ -803,6 +804,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
+                     <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
+                     {icon}
+                     {name}
++                    <TchapExternalRoomHeader room={this.props.room}></TchapExternalRoomHeader>
+                     {searchStatus}
+                     {topicElement}
+                     {betaPill}

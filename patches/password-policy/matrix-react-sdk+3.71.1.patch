@@ -1,0 +1,24 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
+index 1050e8f..2c9ef8a 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
+@@ -22,6 +22,7 @@ import SdkConfig from "../../../SdkConfig";
+ import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
+ import { _t, _td } from "../../../languageHandler";
+ import Field, { IInputProps } from "../elements/Field";
++import TchapStrongPassword from "../../../../../../src/util/TchapStrongPassword";
+ 
+ interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
+     autoFocus?: boolean;
+@@ -95,7 +96,10 @@ class PassphraseField extends PureComponent<IProps> {
+     });
+ 
+     public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
+-        const result = await this.validate(fieldState);
++        // :TCHAP: use home-made validation
++        // const result = await this.validate(fieldState);
++        const result = await TchapStrongPassword.validate(fieldState);
++        // end :TCHAP:
+         if (this.props.onValidate) {
+             this.props.onValidate(result);
+         }

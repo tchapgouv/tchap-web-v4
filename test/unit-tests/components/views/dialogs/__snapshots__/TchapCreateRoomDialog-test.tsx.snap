@@ -27,7 +27,6 @@ exports[`TchapCreateRoomDialog should render the whole component with with the a
         aria-disabled={false}
         aria-label="Allow access to this room to all users, even outside "AGENT" domain"
         className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
-        element="div"
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}

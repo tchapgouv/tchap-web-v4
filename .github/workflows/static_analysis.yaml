@@ -31,10 +31,58 @@ jobs:
     #      - name: Typecheck
     #        run: "yarn run lint:types"
 
+    #         - uses: actions/setup-node@v3
+    #           with:
+    #               cache: "yarn"
+
+    #         - name: Install Dependencies
+    #           run: "./scripts/layered.sh"
+
+    #         - name: Typecheck
+    #           run: "yarn run lint:types"
+
+    # tsc-strict:
+    #     name: Typescript Strict Error Checker
+    #     if: github.event_name == 'pull_request'
+    #     runs-on: ubuntu-latest
+    #     permissions:
+    #         pull-requests: read
+    #         checks: write
+    #     steps:
+    #         - uses: actions/checkout@v3
+
+    #         - name: Install Deps
+    #           run: "scripts/layered.sh"
+
+    #         - name: Get diff lines
+    #           id: diff
+    #           uses: Equip-Collaboration/diff-line-numbers@df70b4b83e05105c15f20dc6cc61f1463411b2a6 # v1.0.0
+    #           with:
+    #               include: '["\\.tsx?$"]'
+
+    #         - name: Detecting files changed
+    #           id: files
+    #           uses: futuratrepadeira/changed-files@96d5fd702a6479d573287ef07381ad59acc390ed # v4.0.0
+    #           with:
+    #               repo-token: ${{ secrets.GITHUB_TOKEN }}
+    #               pattern: '^.*\.tsx?$'
+
+    #         - uses: t3chguy/typescript-check-action@main
+    #           with:
+    #               repo-token: ${{ secrets.GITHUB_TOKEN }}
+    #               use-check: false
+    #               check-fail-mode: added
+    #               output-behaviour: annotate
+    #               ts-extra-args: "--strict --noImplicitAny"
+    #               files-changed: ${{ steps.files.outputs.files_updated }}
+    #               files-added: ${{ steps.files.outputs.files_created }}
+    #               files-deleted: ${{ steps.files.outputs.files_deleted }}
+    #               line-numbers: ${{ steps.diff.outputs.lineNumbers }}
+
     # tchap : tchap does not use extensively i18n
     # i18n_lint:
-    #    name: "i18n Check"
-    #    uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+    #     name: "i18n Check"
+    #     uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
 
     js_lint:
         name: "ESLint"
@@ -49,7 +97,7 @@ jobs:
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
-              run: "yarn install --pure-lockfile"
+              run: "yarn install --frozen-lockfile"
 
             - name: Run Linter
               run: "yarn run lint:js"

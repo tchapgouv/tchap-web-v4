@@ -28,6 +28,10 @@ jobs:
             - name: Install Dependencies
               run: "./scripts/tchap/install-yarn-linked-repositories.sh"
 
+            - name: Get number of CPU cores
+              id: cpu-cores
+              uses: SimenB/github-actions-cpu-cores@410541432439795d30db6501fb1d8178eb41e502 # v1
+
             - name: Run tests with coverage
               run: "yarn coverage --ci"
 

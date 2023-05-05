@@ -3,12 +3,19 @@
 set -e
 # it is better to run this script with docker image
 # docker run -ti -v "$(pwd):/home/node" node:16 /bin/bash
-# in this docker image, jq if needed 
-# apt-get update && apt-get install jq  -y
-
-# enhancement : add the name of the patch to apply script only on this one
-
 # yarn install must be executed to have yarn patch-package working
+
+# usage
+
+# try to merge all patches
+# bash ./scripts/merge-patches.sh merge
+
+# fix conflicts on one patch, After the conflict is solved, run again
+# bash ./scripts/merge-patches.sh continue <absolute_path>/tchap-web-v4/patches_temp/PATCH_NAME
+
+# Alternatively you can try to merge only one patch
+# bash ./scripts/merge-patches.sh merge <absolute_path>/tchap-web-v4/patches/PATCH_NAME/PATCH_FILE.patch
+
 
 # Variables
 PROJECT_DIR=$(pwd)
@@ -25,7 +32,7 @@ function merge_patches() {
       local PATCH_DIR=$(basename "$(dirname "$PATCH_PATH")")
       local PATCH_FILE=$(basename $PATCH_PATH)    
       local PACKAGE_NAME=$(echo "$PATCH_FILE" | cut -d'+' -f1)
-      local PACKAGE_VERSION=$(jq -r ".dependencies.\"$PACKAGE_NAME\"" "$PACKAGE_JSON")
+      local PACKAGE_VERSION=$(python -c "import json; f = open('$PACKAGE_JSON'); data = json.load(f); f.close(); print(data['dependencies'].get('$PACKAGE_NAME', 'null'))")
       echo "# Manage $PATCH_PATH"
 
       # Check if the package version exists and if the patch needs to be updated

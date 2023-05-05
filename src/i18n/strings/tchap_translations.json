@@ -427,8 +427,8 @@
     "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
   },
   "Set up Secure Backup": {
-    "en": "Activate",
-    "fr": "Activer"
+    "en": "Activate message Secure Backup",
+    "fr": "Activer la sauvegarde automatique des messages"
   },
   "Email": {
     "en": "Email",
@@ -715,8 +715,8 @@
     "en": "Verify with Recovery Code or Phrase"
   },
   "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>" : {
-    "fr": "<p>L'équipe de Tchap travaille au déploiement d'une nouvelle fonctionnalité permettant d'éviter la perte de clef de chiffrements.</p><p>Vous pouvez y accéder depuis les Paramètres : </p><p>Securité et vie privée > Sauvegarde automatique des messages</p>",
-    "en": "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access from the settings :</p><p>Security and privacy > Secure Backup</p>"
+    "fr": "<p>Cet appareil n'est pas vérifié.</p><p>Pour que cet appareil soit toujours vérifié et que vous puissiez toujours récupérer vos messages, activez la Sauvegarde Automatique des messages.</p>",
+    "en": "<p>This device is not verified.</p><p>To ensure this device is always verified and you can always retrieve your messages, turn on Automatic Message Backup</p>"
 
   },
   "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
@@ -856,8 +856,28 @@
     "en": "Your messages are now automatically backed up on this device."
   },
   "Wrong Security Key": {
-    "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent et qu’il comprend des espaces.",
-    "en": "The Recovery Code is not valid. Check that it is the latest one and that it includes spaces."
+    "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent.",
+    "en": "The Recovery Code is not valid. Check that it is the latest one."
+  },
+  "Keys restored": {
+    "fr": "Messages récupérés",
+    "en": "Messages restored"
+  },
+  "Successfully restored %(sessionCount)s keys": {
+    "fr": "%(sessionCount)s messages ont été récupérés avec succès.",
+    "en": "%(sessionCount)s messages have been successfully restored."
+  },
+  "Setting up keys": {
+    "fr": "Configuration du Code de Récupération",
+    "en": "Setting up your Recovery Code"
+  },
+  "Restoring keys from backup": {
+    "fr": "Restauration des messages depuis la sauvegarde",
+    "en": "Restoring messages from backup"
+  },
+  "Fetching keys from server…": {
+    "fr": "Récupération des messages depuis le serveur…",
+    "en": "Fetching messages from server…"
   },
   "Generate a new password. Note that your locked messages will remain locked.": {
     "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
@@ -866,5 +886,17 @@
   "Where you're signed in": {
     "fr": "Appareils connectés",
     "en": "Connected devices"
+  },
+  "Activate on this device": {
+    "fr": "Activer sur cet appareil",
+    "en": "Activate on this device"
+  },
+  "Verify this session": {
+    "fr": "Vérifier cet appareil",
+    "en": "Verify this device"
+  },
+  "Other users may not trust it": {
+    "fr": "Vous risquez de ne pas pouvoir récupérer vos messages.",
+    "en": "You may not be able to recover your messages."
   }
 }

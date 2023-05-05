@@ -3,6 +3,9 @@
         "apps": [],
         "details": [
             {
+                // This is normally used to redirect web access to the applications mentioned in appIDs.
+                // But our iOS app does not use these appIds or web credentials.
+                // This file is not useful to us, and we don't need to update it.
                 "appID": "7J4U792NQT.im.vector.app",
                 "paths": [
                     "*"
@@ -12,7 +15,10 @@
     },
     "webcredentials": {
         "apps": [
-            "7J4U792NQT.im.vector.app"
+            "7J4U792NQT.im.vector.app",
+            "7J4U792NQT.io.element.elementx",
+            "7J4U792NQT.io.element.elementx.nightly",
+            "7J4U792NQT.io.element.elementx.pr"
         ]
     }
 }

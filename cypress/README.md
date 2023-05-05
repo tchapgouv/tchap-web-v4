@@ -4,7 +4,7 @@ Files in 'support' folder are automatically imported by Cypress
 
 # Run cypress
 
--   run a local instance
+-   run a local instance of tchap in your environment
 
 ```
 yarn start
@@ -20,7 +20,11 @@ E2E_TEST_USER_SECURITY_KEY=''
 E2E_TEST_USER_HOMESERVER_URL=''
 E2E_TEST_USER_HOMESERVER_SHORT=''
 
-`yarn run cypress`
+`yarn run cypress` to run the tests
+
+or
+
+`yarn cypress open` to open the cypress console
 
 TODO :
 
