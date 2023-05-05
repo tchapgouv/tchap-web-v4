@@ -212,7 +212,6 @@
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/548",
         "package": "matrix-react-sdk",
         "files": [
-            "src/components/views/dialogs/security/AccessSecretStorageDialog.tsx",
             "res/css/_common.pcss"
         ]
     }
