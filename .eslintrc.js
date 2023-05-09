@@ -99,12 +99,7 @@ module.exports = {
             },
         },
         {
-            files: [
-                "src/**/*Tchap*.{ts,tsx}",
-                "src/**/*ContentScan*.{ts,tsx}",
-                "src/tchap/*.{ts,tsx}",
-                "src/components/views/dialogs/ExpiredAccountDialog.tsx",
-            ],
+            files: ["src/tchap/*.{ts,tsx}"],
             rules: {
                 // Tchap files are not up to date yet in proper typescript style. Use warnings instead of errors to unbreak the CI.
                 "@typescript-eslint/explicit-function-return-type": "warn",
