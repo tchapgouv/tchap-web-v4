@@ -167,3 +167,54 @@ index ed706f9..8b14d80 100644
              </BaseDialog>
          );
      }
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/FeedbackDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/FeedbackDialog.tsx
+index 7ee24e0..6a9d898 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/FeedbackDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/FeedbackDialog.tsx
+@@ -28,9 +28,13 @@ import { submitFeedback } from "../../../rageshake/submit-rageshake";
+ import { useStateToggle } from "../../../hooks/useStateToggle";
+ import StyledCheckbox from "../elements/StyledCheckbox";
+ 
+-const existingIssuesUrl =
+-    "https://github.com/vector-im/element-web/issues" + "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
+-const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
++// :TCHAP: change github urls
++// const existingIssuesUrl =
++//     "https://github.com/vector-im/element-web/issues" + "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
++// const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
++const existingIssuesUrl = "https://github.com/tchapgouv/tchap-web-v4/issues" + "?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc";
++const newIssueUrl = "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose";
++// end :TCHAP:
+ 
+ interface IProps {
+     feature?: string;
+diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
+index a230ab8..5a9a2a2 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
+@@ -77,7 +77,9 @@ export default class ErrorBoundary extends React.PureComponent<Props, IState> {
+ 
+     public render(): ReactNode {
+         if (this.state.error) {
+-            const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
++            // :TCHAP: change github url
++            // const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
++            const newIssueUrl = "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose";
+ 
+             let bugReportSection;
+             if (SdkConfig.get().bug_report_endpoint_url) {
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
+index c3f75c1..9019ff1 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
+@@ -563,7 +563,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
+                         {
+                             issueLink: (label) => (
+                                 <a
+-                                    href="https://github.com/vector-im/element-web/issues/new/choose"
++                                    // :TCHAP: change github url
++                                    // href="https://github.com/vector-im/element-web/issues/new/choose"
++                                    href="https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
+                                     target="_blank"
+                                     rel="noreferrer noopener"
+                                 >
