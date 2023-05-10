@@ -60,7 +60,7 @@ index 575ff07..782cdd1 100644
              dis.dispatch({
                  action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index e3f62d4..aba3ef4 100644
+index e3f62d4..8186df9 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -71,7 +71,7 @@ index e3f62d4..aba3ef4 100644
  
  interface IState {
      error?: Error;
-@@ -210,10 +211,16 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -210,22 +211,46 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              userSigningPrivateKeyCached;
  
          const actions: JSX.Element[] = [];
@@ -82,14 +82,41 @@ index e3f62d4..aba3ef4 100644
          // TODO: determine how better to expose this to users in addition to prompts at login/toast
          if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
 -            let buttonCaption = _t("Set up Secure Backup");
-+            // :TCHAP: change > let buttonCaption = _t("Set up Secure Backup");
-+            let buttonCaption = _t("Activate on this device");
-+            // end :TCHAP:
-+            
-             if (crossSigningPrivateKeysInStorage) {
-                 buttonCaption = _t("Verify this session");
+-            if (crossSigningPrivateKeysInStorage) {
+-                buttonCaption = _t("Verify this session");
++            // :TCHAP:
++            if (!crossSigningPrivateKeysInStorage) {
++                advancedActions.push(
++                    <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
++                        {_t("Activate on this device")}
++                    </AccessibleButton>,
++                );
              }
-@@ -225,7 +232,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+-            actions.push(
+-                <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
+-                    {buttonCaption}
+-                </AccessibleButton>,
+-            );
++
++            // Remove Element code:
++            // let buttonCaption = _t("Set up Secure Backup");
++            // if (crossSigningPrivateKeysInStorage) {
++            //     buttonCaption = _t("Verify this session");
++            // }
++            // actions.push(
++            //     <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
++            //         {buttonCaption}
++            //     </AccessibleButton>,
++            // );
++
++            else {
++                actions.push(
++                    <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
++                        {_t("Verify this session")}
++                    </AccessibleButton>,
++                );
++            }
++            // end :TCHAP:
          }
  
          if (keysExistAnywhere) {
@@ -100,7 +127,7 @@ index e3f62d4..aba3ef4 100644
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
                      {_t("Reset")}
                  </AccessibleButton>,
-@@ -237,6 +246,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -237,6 +262,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
@@ -120,7 +147,7 @@ index e3f62d4..aba3ef4 100644
          return (
              <div>
                  {summarisedStatus}
-@@ -274,6 +296,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -274,6 +312,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                              </tr>
                          </tbody>
                      </table>

@@ -888,8 +888,8 @@
     "en": "Connected devices"
   },
   "Activate on this device": {
-    "fr": "Activer la sauvegarde des messages",
-    "en": "Activate message backup"
+    "fr": "Activer sur cet appareil",
+    "en": "Activate on this device"
   },
   "Verify this session": {
     "fr": "Vérifier cet appareil",
