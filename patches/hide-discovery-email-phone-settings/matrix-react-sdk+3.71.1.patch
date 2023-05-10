@@ -6,7 +6,7 @@ index dc3bf9f..52f191b 100644
  import SetIntegrationManager from "../../SetIntegrationManager";
  import ToggleSwitch from "../../../elements/ToggleSwitch";
  import { IS_MAC } from "../../../../../Keyboard";
-+import TchapUIFeature from '../../../../../../../../src/util/TchapUIFeature';
++import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature';
  
  interface IProps {
      closeSettingsFn: () => void;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import "../../../../res/css/views/elements/BlockedIcon.pcss";
+import "../../../../../res/css/views/elements/BlockedIcon.pcss";
 
 import React from "react";
 import classNames from "classnames";

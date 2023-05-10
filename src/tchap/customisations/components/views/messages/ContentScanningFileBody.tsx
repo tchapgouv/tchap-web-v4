@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import "../../../../../res/css/views/messages/ContentScanningFileBody.pcss";
+import "../../../../../../res/css/views/messages/ContentScanningFileBody.pcss";
 
 import React from "react";
 import InlineSpinner from "matrix-react-sdk/src/components/views/elements/InlineSpinner";

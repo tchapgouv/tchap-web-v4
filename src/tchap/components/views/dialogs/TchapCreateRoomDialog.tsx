@@ -24,7 +24,7 @@ import DialogButtons from "matrix-react-sdk/src/components/views/elements/Dialog
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 
 import TchapUtils from "../../../util/TchapUtils";
-import TchapRoomTypeSelector from "./../elements/TchapRoomTypeSelector";
+import TchapRoomTypeSelector from "../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../@types/tchap";
 import TchapCreateRoom from "../../../lib/createTchapRoom";
 

@@ -6,7 +6,7 @@ index 1050e8f..2c9ef8a 100644
  import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
  import { _t, _td } from "../../../languageHandler";
  import Field, { IInputProps } from "../elements/Field";
-+import TchapStrongPassword from "../../../../../../src/util/TchapStrongPassword";
++import TchapStrongPassword from "../../../../../../src/tchap/util/TchapStrongPassword";
  
  interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
      autoFocus?: boolean;

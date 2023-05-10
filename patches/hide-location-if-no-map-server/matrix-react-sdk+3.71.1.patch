@@ -6,7 +6,7 @@ index bf5f6b4..170136e 100644
  import { SdkContextClass } from "../../../contexts/SDKContext";
  import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
  import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
-+import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
++import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
  
  let instanceCount = 0;
  

@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 575ff07..782cdd1 100644
+index 575ff07..3424e04 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 @@ -32,6 +32,8 @@ import { throttle } from "lodash";
@@ -7,7 +7,7 @@ index 575ff07..782cdd1 100644
  import { RoomType } from "matrix-js-sdk/src/@types/event";
  import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 +//:tchap: import incoming key request handler from tchap project
-+import KeyRequestHandler from '../../../../../src/lib/IncomingKeyRequestHandler';
++import KeyRequestHandler from '../../../../../src/tchap/lib/IncomingKeyRequestHandler';
  
  // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
  import "focus-visible";
@@ -15,7 +15,7 @@ index 575ff07..782cdd1 100644
  import { Linkify } from "../../HtmlUtils";
  import { NotificationColor } from "../../stores/notifications/NotificationColor";
  import { UserTab } from "../views/dialogs/UserTab";
-+import TchapUIFeature from "../../../../../src/util/TchapUIFeature";
++import TchapUIFeature from "../../../../../src/tchap/util/TchapUIFeature";
  
  // legacy export
  export { default as Views } from "../../Views";
@@ -67,7 +67,7 @@ index e3f62d4..d3967a0 100644
  import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
  import { accessSecretStorage } from "../../../SecurityManager";
  import AccessibleButton from "../elements/AccessibleButton";
-+import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP:
  
  interface IState {
      error?: Error;
@@ -142,7 +142,7 @@ index 603438e..2766f19 100644
  import { deleteDevicesWithInteractiveAuth } from "./devices/deleteDevices";
  import MatrixClientContext from "../../../contexts/MatrixClientContext";
  import { isDeviceVerified } from "../../../utils/device/isDeviceVerified";
-+import TchapUtils from '../../../../../../src/util/TchapUtils';
++import TchapUtils from '../../../../../../src/tchap/util/TchapUtils';
  
  interface IProps {
      className?: string;
@@ -189,7 +189,7 @@ index 7473786..293ab8e 100644
  import QuestionDialog from "../dialogs/QuestionDialog";
  import RestoreKeyBackupDialog from "../dialogs/security/RestoreKeyBackupDialog";
  import { accessSecretStorage } from "../../../SecurityManager";
-+import TchapUIFeature from "../../../../../../src/util/TchapUIFeature"; // :TCHAP:
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP:
  
  interface IState {
      loading: boolean;

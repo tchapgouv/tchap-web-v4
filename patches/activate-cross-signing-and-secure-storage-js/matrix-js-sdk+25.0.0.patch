@@ -14,7 +14,7 @@ index cb8df7a..1ca2f21 100644
      ServerSideSecretStorageImpl,
  } from "./secret-storage";
  
-+import TchapUIFeature from '../../../src/util/TchapUIFeature'; // :TCHAP:
++import TchapUIFeature from '../../../src/tchap/util/TchapUIFeature'; // :TCHAP:
 +
 +
  export type Store = IStore;

@@ -6,7 +6,7 @@ index c4c0834..27e9f28 100644
  import Spinner from "../../views/elements/Spinner";
  import { formatSeconds } from "../../../DateUtils";
  import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
-+import TchapUtils from "../../../../../../src/util/TchapUtils"; // :TCHAP:
++import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP:
  
  const emailCheckInterval = 2000;
  

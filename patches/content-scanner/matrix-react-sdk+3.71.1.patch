@@ -7,7 +7,7 @@ index 86736d4..f5831df 100644
  import AudioPlayer from "../audio_messages/AudioPlayer";
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 -import MFileBody from "./MFileBody";
-+import MFileBody from "../../../../../../src/components/views/messages/OriginalFileBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
  import { IBodyProps } from "./IBodyProps";
  import { PlaybackManager } from "../../../audio/PlaybackManager";
  import { isVoiceMessage } from "../../../utils/EventUtils";
@@ -20,7 +20,7 @@ index 84e4e76..26b7f3c 100644
  import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
  
 -import MFileBody from "./MFileBody";
-+import MFileBody from "../../../../../../src/components/views/messages/OriginalFileBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
  import Modal from "../../../Modal";
  import { _t } from "../../../languageHandler";
  import SettingsStore from "../../../settings/SettingsStore";
@@ -33,7 +33,7 @@ index 68a39d2..802c58b 100644
  import React from "react";
  
 -import MImageBody from "./MImageBody";
-+import MImageBody from "../../../../../../src/components/views/messages/OriginalImageBody";
++import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
  
  const FORCED_IMAGE_HEIGHT = 44;
@@ -46,7 +46,7 @@ index 092b948..5cb68d0 100644
  import React, { ReactNode } from "react";
  
 -import MImageBody from "./MImageBody";
-+import MImageBody from "../../../../../../src/components/views/messages/OriginalImageBody";
++import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
  import { BLURHASH_FIELD } from "../../../utils/image-media";
  import Tooltip from "../elements/Tooltip";
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
@@ -59,7 +59,7 @@ index 6be311e..ae6011a 100644
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
  import { IBodyProps } from "./IBodyProps";
 -import MFileBody from "./MFileBody";
-+import MFileBody from "../../../../../../src/components/views/messages/OriginalFileBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
  import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
  import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
  import MediaProcessingError from "./shared/MediaProcessingError";
@@ -73,8 +73,8 @@ index 83f26e1..e49c59b 100644
  import RecordingPlayback from "../audio_messages/RecordingPlayback";
 -import MAudioBody from "./MAudioBody";
 -import MFileBody from "./MFileBody";
-+import MAudioBody from "../../../../../../src/components/views/messages/OriginalAudioBody";
-+import MFileBody from "../../../../../../src/components/views/messages/OriginalFileBody";
++import MAudioBody from "../../../../../../src/tchap/components/views/messages/OriginalAudioBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
  import MediaProcessingError from "./shared/MediaProcessingError";
  
  export default class MVoiceMessageBody extends MAudioBody {

@@ -9,8 +9,8 @@ index 15dcda4..e712e98 100644
 +import { AuthHeaderModifier } from './header/AuthHeaderModifier'; // :TCHAP:
  import SettingsStore from "../../../settings/SettingsStore";
  import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
-+import TchapUtils from '../../../../../../src/util/TchapUtils'; // :TCHAP:
-+import TchapUrls from "../../../../../../src/util/TchapUrls";
++import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
++import TchapUrls from "../../../../../../src/tchap/util/TchapUrls";
  
  const debuglog = (...args: any[]): void => {
      if (SettingsStore.getValue("debug_registration")) {

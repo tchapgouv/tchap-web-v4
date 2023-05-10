@@ -115,7 +115,7 @@ index 3171a0e..8751e6b 100644
  import AccessibleButton from "../../views/elements/AccessibleButton";
  import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
  import AuthPage from "../../views/auth/AuthPage";
-+import TchapUIFeature from "../../../../../../src/util/TchapUIFeature";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
  
  interface IProps {
      onFinished: () => void;
@@ -282,7 +282,7 @@ index 3b60705..aeeaee0 100644
  limitations under the License.
  */
  
-+import TchapUIFeature from "../../../../src/util/TchapUIFeature";
++import TchapUIFeature from "../../../../src/tchap/util/TchapUIFeature";
  import Modal from "../Modal";
  import { _t } from "../languageHandler";
  import DeviceListener from "../DeviceListener";
