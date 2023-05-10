@@ -89,11 +89,22 @@ index 4314726..0a34f0e 100644
                      {footer}
                  </AuthBody>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index 7275055..bb8f0ad 100644
+index 7275055..93c08bb 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-@@ -85,7 +85,10 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+@@ -50,6 +50,7 @@ interface IProps {
+ }
+ 
+ interface IState {
++    displayPassword: boolean;
+     fieldValid: Partial<Record<LoginField, boolean>>;
+     loginType: LoginField.Email | LoginField.MatrixId | LoginField.Phone;
+     password: string;
+@@ -83,13 +84,21 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+     public constructor(props: IProps) {
+         super(props);
          this.state = {
++            displayPassword: false,
              // Field error codes by field ID
              fieldValid: {},
 -            loginType: LoginField.MatrixId,
@@ -104,7 +115,15 @@ index 7275055..bb8f0ad 100644
              password: "",
          };
      }
-@@ -420,7 +423,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+ 
++    private setDisplayPassword = (value: boolean): void => {
++        this.setState({ displayPassword: value });
++    };
++
+     private onForgotPasswordClick = (ev: ButtonEvent): void => {
+         ev.preventDefault();
+         ev.stopPropagation();
+@@ -420,13 +429,17 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
          return (
              <div>
                  <form onSubmit={this.onSubmitForm}>
@@ -117,3 +136,31 @@ index 7275055..bb8f0ad 100644
                      {loginField}
                      <Field
                          id="mx_LoginForm_password"
+                         className={pwFieldClass}
+                         autoComplete="current-password"
+-                        type="password"
++                        type={this.state.displayPassword ? "text": "password"}
+                         name="password"
+                         label={_t("Password")}
+                         value={this.state.password}
+@@ -435,6 +448,20 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+                         autoFocus={autoFocusPassword}
+                         onValidate={this.onPasswordValidate}
+                         ref={(field) => (this[LoginField.Password] = field)}
++                        postfixComponent={(
++                            <div
++                                className="tc_textInput_postfixComponent"
++                                onMouseDown={() => this.setDisplayPassword(true)}
++                                onMouseUp={() => this.setDisplayPassword(false)}
++                            >
++                                <img
++                                    src={require("../../../../../../res/img/grey-eye.svg").default}
++                                    width="24"
++                                    height="24"
++                                    alt={_t("Eye")}
++                                />
++                            </div>
++                        )}
+                     />
+                     {forgotPasswordJsx}
+                     {!this.props.busy && (
