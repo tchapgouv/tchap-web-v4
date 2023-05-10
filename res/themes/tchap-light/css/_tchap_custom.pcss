@@ -52,18 +52,19 @@ $border-color_1: #7e7ec4;
     }
 }
 .mx_Pill {
-    background-color: $background-color_3;
+    background-color: $background-color_3 !important;
     &:hover {
-        background-color: $background-color_1;
+        background-color: $background-color_1 !important;
         color: $color_2;
     }
 }
-.mx_Pill.mx_UserPill_me {
+.mx_Pill.mx_UserPill_me, .mx_Pill.mx_AtRoomPill {
     &:hover {
-        background-color: $background-color_1;
+        background-color: $background-color_1 !important;
         color: $color_2;
+
     }
-    background-color: $background-color_1;
+    background-color: $background-color_1 !important;
     color: $color_2;
 }
 .mx_RoomView_body[data-layout="bubble"] {
@@ -102,4 +103,19 @@ $border-color_1: #7e7ec4;
     .markdown-body {
         color: $color_3;
     }
+}
+.mx_EventTile.mx_EventTile_highlight .markdown-body, .mx_EventTile.mx_EventTile_highlight .mx_EventTile_edited {
+    color: var(--timeline-text-color);
+    font-weight: 400;
+}
+
+.mx_EventTile.mx_EventTile_highlight {
+  color: $background-color_1;
+  font-weight: 500;
+}
+.mx_BaseAvatar.mx_RoomAvatar_isSpaceRoom .mx_BaseAvatar_image, .mx_BaseAvatar.mx_RoomAvatar_isSpaceRoom.mx_BaseAvatar_image, .mx_SpaceButton_avatarWrapper .mx_BaseAvatar span.mx_BaseAvatar_initial, .mx_SpaceButton_icon {
+    border: 1px solid #c1c9d6;
+}
+.mx_AccessibleButton.mx_NotificationBadge.mx_NotificationBadge_visible.mx_NotificationBadge_dot {
+    background: $color_2;
 }
