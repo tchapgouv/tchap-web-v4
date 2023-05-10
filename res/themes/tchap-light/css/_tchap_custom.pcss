@@ -7,3 +7,99 @@
     font-weight: 600;
     color: red; //<- new attribute
 } */
+
+$color_1: #2e2f32;
+$color_2: white;
+$color_3: #68707d;
+$background-color_1: #000091;
+$background-color_2: transparent;
+$background-color_3: rgba(125, 125, 150, 0.65);
+$background-color_4: #c7d5e4;
+$border-color_1: #7e7ec4;
+
+.mx_SpacePanel {
+    .mx_SpaceButton.mx_SpaceButton_home {
+        .mx_SpaceButton_icon {
+            &:before {
+                background-color: $background-color_1;
+            }
+        }
+    }
+    .mx_SpacePanel_toggleCollapse {
+        background: #7e7ec4;
+    }
+    .mx_SpaceButton.mx_SpaceButton_active.mx_SpaceButton_narrow {
+        .mx_SpaceButton_selectionWrapper {
+            border-color: $border-color_1;
+        }
+    }
+}
+.mx_EventTile_highlight {
+    color: $color_1;
+}
+.mx_QuickSettingsButton {
+    color: $color_2;
+    &:before {
+        background: white;
+    }
+}
+.mx_UserMenu_name {
+    color: $color_2;
+}
+.mx_EventTile[data-layout="bubble"].mx_EventTile_highlight {
+    &:before {
+        background-color: $background-color_2;
+    }
+}
+.mx_Pill {
+    background-color: $background-color_3;
+    &:hover {
+        background-color: $background-color_1;
+        color: $color_2;
+    }
+}
+.mx_Pill.mx_UserPill_me {
+    &:hover {
+        background-color: $background-color_1;
+        color: $color_2;
+    }
+    background-color: $background-color_1;
+    color: $color_2;
+}
+.mx_RoomView_body[data-layout="bubble"] {
+    .mx_MessageComposer {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .mx_RoomView_statusArea {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+    .mx_RoomView_timeline {
+        width: 100%;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+}
+.mx_RoomListHeader {
+    .mx_RoomListHeader_contextMenuButton {
+        &:hover {
+            background-color: $background-color_4;
+        }
+    }
+}
+.mx_RoomHeader_name {
+    &:hover {
+        background-color: $background-color_4;
+    }
+}
+.mx_EventTile.mx_EventTile_highlight {
+    .markdown-body {
+        color: $color_3;
+    }
+}
