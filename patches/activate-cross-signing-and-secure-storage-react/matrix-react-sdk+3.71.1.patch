@@ -60,7 +60,7 @@ index 575ff07..3424e04 100644
              dis.dispatch({
                  action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index e3f62d4..aba3ef4 100644
+index e3f62d4..d3967a0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -71,7 +71,7 @@ index e3f62d4..aba3ef4 100644
  
  interface IState {
      error?: Error;
-@@ -210,10 +211,16 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -210,14 +211,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              userSigningPrivateKeyCached;
  
          const actions: JSX.Element[] = [];
@@ -89,7 +89,13 @@ index e3f62d4..aba3ef4 100644
              if (crossSigningPrivateKeysInStorage) {
                  buttonCaption = _t("Verify this session");
              }
-@@ -225,7 +232,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+-            actions.push(
++            // TCHAP: change actions.push(
++            advancedActions.push(
+                 <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
+                     {buttonCaption}
+                 </AccessibleButton>,
+@@ -225,7 +233,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
          }
  
          if (keysExistAnywhere) {
@@ -100,7 +106,7 @@ index e3f62d4..aba3ef4 100644
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
                      {_t("Reset")}
                  </AccessibleButton>,
-@@ -237,6 +246,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -237,6 +247,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
@@ -120,7 +126,7 @@ index e3f62d4..aba3ef4 100644
          return (
              <div>
                  {summarisedStatus}
-@@ -274,6 +296,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -274,6 +297,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                              </tr>
                          </tbody>
                      </table>
