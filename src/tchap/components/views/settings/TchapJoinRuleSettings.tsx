@@ -287,7 +287,11 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                 label: (
                     <>
                         {_t("Space members")}
-                        {upgradeRequiredPill}
+                         
+                        {/* :tchap: do not show the pill upgrade room as it is not user friendly
+                        https://github.com/tchapgouv/tchap-web-v4/issues/578
+                         {upgradeRequiredPill} */}
+                        
                     </>
                 ),
                 description,
