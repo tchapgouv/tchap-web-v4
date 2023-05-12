@@ -908,7 +908,11 @@
     "en" : "This room will be updated"
   },
   "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room":{
-    "fr" : "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon",
-    "en" : "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room"
+    "fr" : "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon.",
+    "en" : "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room."
+  },
+  "Upgrade room":{
+    "fr" : "Mettre à jour le salon",
+    "en" : "Upgrade room"
   }
 }

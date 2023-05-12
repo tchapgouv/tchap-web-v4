@@ -29,7 +29,6 @@ import DialogButtons from "matrix-react-sdk/src/components/views/elements/Dialog
 import ProgressBar from "matrix-react-sdk/src/components/views/elements/ProgressBar";
 import AccessibleButton from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 import { TchapRoomType } from "../../../@types/tchap";
-import TchapUtils from "../../../util/TchapUtils";
 import TchapRoomUtils from "../../../util/TchapRoomUtils";
 
 export interface IFinishedOpts {
@@ -131,11 +130,10 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         
         if (this.tchapRoomType === TchapRoomType.External) {
             externalNotice = (
-                <p><b>
+                <p className="text-warning">
                     {_t(
                         "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room"
                     )}
-                    </b>
                 </p>
             );
         }
@@ -190,7 +188,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         } else {
             footer = (
                 <DialogButtons
-                    primaryButton={_t("Upgrade")}
+                    primaryButton={_t("Upgrade room")}
                     onPrimaryButtonClick={this.onContinue}
                     cancelButton={_t("Cancel")}
                     onCancel={this.onCancel}
