@@ -108,7 +108,7 @@ index 3e48739..926d18b 100644
                                  kind="primary"
                                  className="mx_Dialog_primary mx_CreateSecretStorageDialog_recoveryKeyButtons_copyBtn"
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
-index 3171a0e..8751e6b 100644
+index 3171a0e..0c8555a 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/CompleteSecurity.tsx
 @@ -22,6 +22,7 @@ import SetupEncryptionBody from "./SetupEncryptionBody";
@@ -207,7 +207,7 @@ index 2cbfbf8..efe6b26 100644
                          </div>
                      </div>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-index 94cf02d..56447d7 100644
+index 94cf02d..7cb2e7f 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 @@ -193,6 +193,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
@@ -218,7 +218,7 @@ index 94cf02d..56447d7 100644
              button = (
                  <AccessibleButton
                      className="mx_DecryptionFailureBar_end_button"
-@@ -203,28 +204,37 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
+@@ -203,28 +204,43 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                      {_t("Reset")}
                  </AccessibleButton>
              );
@@ -251,6 +251,12 @@ index 94cf02d..56447d7 100644
 -                {_t("View your device list")}
 -            </AccessibleButton>
 -        );
++        /* :TCHAP: Add for N bug */ message = <React.Fragment>{_t(
++            "Or if that doesn't work, please clear your cache by following these steps <a>here</a>.",
++            {},
++            {a: (sub)=><a href="https://aide.tchap.beta.gouv.fr/fr/article/que-faire-si-le-message-dun-interlocuteur-nest-pas-dechiffre-web-1ezes9e/?bust=1684163497280" target="_blank">{sub}</a>}
++        )}</React.Fragment>;
++        
 +        // :TCHAP: shrink long banner
 +        // message = (
 +        //     <React.Fragment>
@@ -275,7 +281,7 @@ index 94cf02d..56447d7 100644
          className = "mx_DecryptionFailureBar";
          headline = <React.Fragment>{_t("Some messages could not be decrypted")}</React.Fragment>;
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 3b60705..aeeaee0 100644
+index 3b60705..a11711d 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 @@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
