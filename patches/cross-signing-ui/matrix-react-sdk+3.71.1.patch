@@ -207,7 +207,7 @@ index 2cbfbf8..efe6b26 100644
                          </div>
                      </div>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-index 94cf02d..c774ccb 100644
+index 94cf02d..f1d8fbe 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 @@ -193,6 +193,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
@@ -252,9 +252,9 @@ index 94cf02d..c774ccb 100644
 -            </AccessibleButton>
 -        );
 +        /* :TCHAP: Add for N bug */ message = <React.Fragment>{_t(
-+            "Or if that doesn't work, please clear your cache by following these steps <a>here</a>.",
++            "Or if that doesn't work, please follow <a>these steps</a>.",
 +            {},
-+            {a: (sub)=><a href="https://aide.tchap.beta.gouv.fr/fr/article/que-faire-si-le-message-dun-interlocuteur-nest-pas-dechiffre-web-1ezes9e" target="_blank">{sub}</a>}
++            {a: (sub)=><a href="https://aide.tchap.beta.gouv.fr/fr/article/je-ne-parviens-pas-a-lire-les-messages-provenant-dune-personne-en-particulier-hgbwun" target="_blank">{sub}</a>}
 +        )}</React.Fragment>;
 +        
 +        // :TCHAP: shrink long banner

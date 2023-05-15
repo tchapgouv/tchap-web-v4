@@ -771,9 +771,9 @@
     "fr": "Utiliser un autre appareil pour déverrouiller vos messages.",
     "en": "Use another device to unlock your messages."
   },
-  "Or if that doesn't work, please clear your cache by following these steps <a>here</a>.": {
-    "fr": "Ou si cela ne fonctionne pas, veuillez veuillez vider votre cache en suivant ces étapes <a>ici</a>.",
-    "en": "Or if that doesn't work, please clear your cache by following these steps <a>here</a>."
+  "Or if that doesn't work, please follow <a>these steps</a>.": {
+    "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
+    "en": "Or if that doesn't work, please follow <a>these steps</a>."
   },
     "Unable to decrypt message": {
     "fr": "Impossible de déverrouiller le message",
