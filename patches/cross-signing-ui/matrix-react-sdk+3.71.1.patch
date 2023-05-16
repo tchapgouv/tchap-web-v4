@@ -1,3 +1,4 @@
+
 diff --git a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss b/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
 index c23f53b..7aa9f25 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
@@ -207,7 +208,7 @@ index 2cbfbf8..efe6b26 100644
                          </div>
                      </div>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-index 94cf02d..2dfec0d 100644
+index 94cf02d..52b9e53 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 @@ -193,6 +193,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
@@ -254,7 +255,7 @@ index 94cf02d..2dfec0d 100644
 +        /* :TCHAP: Add for N bug */ message = <React.Fragment>{_t(
 +            "Or if that doesn't work, please follow <a>these steps</a>.",
 +            {},
-+            {a: (sub)=><a href="https://beta.tchap.beta.gouv.fr/faq/messages-verrouilles" target="_blank">{sub}</a>}
++            {a: (sub)=><a href="https://tchap.beta.gouv.fr/faq/messages-verrouilles" target="_blank">{sub}</a>}
 +        )}</React.Fragment>;
 +        
 +        // :TCHAP: shrink long banner
