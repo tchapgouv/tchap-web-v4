@@ -768,8 +768,12 @@
     "en": "Resend key requests"
   },
   "Open another device to load encrypted messages": {
-    "fr": "Utiliser un autre appareil pour déverrouiller vos messages",
-    "en": "Open another device to unlock messages"
+    "fr": "Utiliser un autre appareil pour déverrouiller vos messages.",
+    "en": "Use another device to unlock your messages."
+  },
+  "Or if that doesn't work, please follow <a>these steps</a>.": {
+    "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
+    "en": "Or if that doesn't work, please follow <a>these steps</a>."
   },
     "Unable to decrypt message": {
     "fr": "Impossible de déverrouiller le message",
