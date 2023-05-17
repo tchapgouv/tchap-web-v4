@@ -924,8 +924,8 @@
     "en": "Really reset Recovery Code?"
   },
   "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": {
-    "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulé. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés, et tous les amis que vous aviez précédemment vérifiés verront des avertissement de sécurité jusqu'à ce vous les vérifiiez à nouveau.",
-    "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages, and all friends you had previously verified will see security warnings until you verify them again."
+    "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulée. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés.",
+    "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages."
   },
   "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": {
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
