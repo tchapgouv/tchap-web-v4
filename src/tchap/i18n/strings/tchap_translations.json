@@ -710,10 +710,6 @@
     "fr": "Merci d'essayer à nouveau avec votre code de récupération.",
     "en": "Please try again with your recovery code."
   },
-  "Please only proceed if you're sure you've lost all of your other devices and your security key.": {
-    "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
-    "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
-  },
   "Verify with Security Key or Phrase": {
     "fr": "Vérifier avec un Code de Récupération ou une phrase",
     "en": "Verify with Recovery Code or Phrase"
@@ -922,5 +918,21 @@
   "Upgrade room":{
     "fr" : "Mettre à jour le salon",
     "en" : "Upgrade room"
+  },
+  "Verify your identity to access encrypted messages and prove your identity to others.": {
+    "fr": "Vérifiez votre identité pour accéder aux messages verrouillés et prouver votre identité aux autres.",
+    "en": "Verify your identity to access locked messages and prove your identity to others."
+  },
+  "Really reset verification keys?": {
+    "fr": "Réinitialiser le Code de Récupération, c’est certain ?",
+    "en": "Really reset Recovery Code?"
+  },
+  "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": {
+    "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulée. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés.",
+    "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages."
+  },
+  "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": {
+    "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
+    "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
   }
 }
