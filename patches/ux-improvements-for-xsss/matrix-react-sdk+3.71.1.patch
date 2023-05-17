@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
-index a261e44..88c0b33 100644
+index a261e44..38eecb0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 @@ -48,6 +48,7 @@ interface IProps {
@@ -18,18 +18,24 @@ index a261e44..88c0b33 100644
              recoveryKey: "",
              recoveryKeyValid: null,
              recoveryKeyCorrect: null,
-@@ -80,6 +82,10 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -80,6 +82,16 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
          };
      }
  
-+    private setDisplayPassword = (value: boolean): void => {
-+        this.setState({ displayPassword: value });
++    // :TCHAP: add functionality that displays the Recovery Code for 2mn when clicking on the input eye icon 
++    private setDisplayPassword = (): void => {
++        this.setState({ displayPassword: true });
++    
++        setTimeout(() => {
++          this.setState({ displayPassword: false });
++        }, 120 * 1000);
 +    };
++    // end :TCHAP:
 +
      private onCancel = (): void => {
          if (this.state.resetting) {
              this.setState({ resetting: false });
-@@ -403,7 +409,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -403,7 +415,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                          <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry">
                              <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                                  <Field
@@ -38,15 +44,14 @@ index a261e44..88c0b33 100644
                                      id="mx_securityKey"
                                      label={_t("Security Key")}
                                      value={this.state.recoveryKey}
-@@ -411,15 +417,31 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -411,15 +423,30 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                      autoFocus={true}
                                      forceValidity={this.state.recoveryKeyCorrect ?? undefined}
                                      autoComplete="off"
 +                                    postfixComponent={(
 +                                        <div
 +                                            className="tc_textInput_postfixComponent"
-+                                            onMouseDown={() => this.setDisplayPassword(true)}
-+                                            onMouseUp={() => this.setDisplayPassword(false)}
++                                            onClick={() => this.setDisplayPassword()}
 +                                        >
 +                                            <img
 +                                                src={require("../../../../../../../res/img/grey-eye.svg").default}
@@ -71,7 +76,7 @@ index a261e44..88c0b33 100644
                                  <input
                                      type="file"
                                      className="mx_AccessSecretStorageDialog_recoveryKeyEntry_fileInput"
-@@ -430,7 +452,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -430,7 +457,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                  <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
                                      {_t("Upload")}
                                  </AccessibleButton>
