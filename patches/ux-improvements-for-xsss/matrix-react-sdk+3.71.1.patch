@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
-index a261e44..046b574 100644
+index a261e44..38eecb0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 @@ -48,6 +48,7 @@ interface IProps {
@@ -28,7 +28,7 @@ index a261e44..046b574 100644
 +    
 +        setTimeout(() => {
 +          this.setState({ displayPassword: false });
-+        }, 60 * 2000);
++        }, 120 * 1000);
 +    };
 +    // end :TCHAP:
 +
