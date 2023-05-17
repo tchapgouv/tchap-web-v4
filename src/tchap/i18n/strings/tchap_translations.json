@@ -702,9 +702,13 @@
     "fr": "Si vous avez oublié votre phrase secrète vous pouvez <button1>utiliser votre Code de Récupération</button1> ou <button2>définir de nouvelles options de récupération</button2>",
     "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery Code</button1> or <button2>set up new recovery options</button2>"
   },
+  "Incorrect Security Phrase": {
+    "fr": "Code de récupération non reconnu",
+    "en": "Recovery code not recognized"
+  },
   "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
-    "fr": "La sauvegarde n’a pas pu être déchiffrée avec cette clé de sécurité : merci de vérifier que vous avez saisi le bon Code de Récupération.",
-    "en": "Backup could not be decrypted with this Recovery Key: please verify that you entered the correct Recovery Code."
+    "fr": "Merci d'essayer à nouveau avec votre code de récupération.",
+    "en": "Please try again with your recovery code."
   },
   "Please only proceed if you're sure you've lost all of your other devices and your security key.": {
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
