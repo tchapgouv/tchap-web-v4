@@ -934,5 +934,9 @@
   "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": {
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
     "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
+  },
+  "Export room members (csv)": {
+    "fr": "Exporter les membres du salon (csv)",
+    "en": "Export room members (csv)"
   }
 }

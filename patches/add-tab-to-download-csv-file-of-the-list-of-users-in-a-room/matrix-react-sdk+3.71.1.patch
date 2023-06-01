@@ -1,0 +1,66 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+index a32d8da..583c82f 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+@@ -17,7 +17,9 @@ limitations under the License.
+ import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+ import classNames from "classnames";
+ import { Room } from "matrix-js-sdk/src/models/room";
++import { keys } from "lodash"; // :TCHAP: add import
+ 
++import { useRoomContext } from "../../../contexts/RoomContext";
+ import MatrixClientContext from "../../../contexts/MatrixClientContext";
+ import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
+ import BaseCard, { Group } from "./BaseCard";
+@@ -274,6 +276,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
+ 
+ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
+     const cli = useContext(MatrixClientContext);
++    const context = useRoomContext();
+ 
+     const onShareRoomClick = (): void => {
+         Modal.createDialog(ShareDialog, {
+@@ -287,6 +290,23 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+         });
+     };
+ 
++    /* :TCHAP:
++        add a tab to download the list of users in current room
++        so that they can create new rooms with the same users
++    */ 
++    const onRoomExportMemberEmailsClick = async (): Promise<void> => {
++        const members = keys(context?.room?.currentState?.members);
++        const csvContent = "data:text/csv;charset=utf-8," + members.join(",");
++        const encodedUri = encodeURI(csvContent);
++        const link = document.createElement("a");
++
++        link.setAttribute("href", encodedUri);
++        link.setAttribute("download", "emails.csv");
++        document.body.appendChild(link); // Required for firefox
++        link.click(); // download the data file named "emails.csv"
++    }
++    /* end :TCHAP: */ 
++    
+     const onRoomPollHistoryClick = (): void => {
+         Modal.createDialog(PollHistoryDialog, {
+             room,
+@@ -295,6 +315,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+         });
+     };
+ 
++
+     const isRoomEncrypted = useIsEncrypted(cli, room);
+     const roomContext = useContext(RoomContext);
+     const e2eStatus = roomContext.e2eStatus;
+@@ -357,6 +378,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+                         {_t("Export chat")}
+                     </Button>
+                 )}
++                {/* :TCHAP: */ !isVideoRoom && (
++                    <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportMemberEmailsClick}>
++                        {_t("Export room members (csv)")}
++                    </Button>
++                ) /* end :TCHAP */}
+                 <Button
+                     data-testid="shareRoomButton"
+                     className="mx_RoomSummaryCard_icon_share"
