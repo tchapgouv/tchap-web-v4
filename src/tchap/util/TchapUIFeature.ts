@@ -60,5 +60,5 @@ export default class TchapUIFeature {
     /**
      * This flag controls whether to force incoming key legacy verification (usefull for older mobile device than android 2.6, ios 2.2.3)
      */
-    public static forceLegacyIncomingRoomKeyVerification = true;
+    public static forceLegacyIncomingRoomKeyVerification = false;
 }
