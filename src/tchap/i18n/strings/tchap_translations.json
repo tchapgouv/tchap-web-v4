@@ -934,5 +934,17 @@
   "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": {
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
     "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
+  },
+  "Destroy cross-signing keys?": {
+    "fr": "Réinitialiser les clés de signature croisée ?",
+    "en": "Reset cross-signing keys?"
+  },
+  "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": {
+    "fr": "Réinitialiser les clés de signature croisée est permanent. Utiliser cette procédure uniquement si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
+    "en": "Resetting your Recovery Code is permanent. Please use this procedure only if you have lost all devices that allow you to perform cross-signing."
+  },
+  "Clear cross-signing keys": {
+    "fr": "Réinitialiser les clés de signature croisée",
+    "en": "Reset Recovery Code"
   }
 }
