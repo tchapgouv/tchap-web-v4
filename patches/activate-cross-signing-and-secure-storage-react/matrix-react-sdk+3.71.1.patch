@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 575ff07..3424e04 100644
+index 575ff07..dae15dd 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 @@ -32,6 +32,8 @@ import { throttle } from "lodash";
@@ -19,7 +19,7 @@ index 575ff07..3424e04 100644
  
  // legacy export
  export { default as Views } from "../../Views";
-@@ -1587,6 +1590,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+@@ -1587,6 +1590,24 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
          cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
          cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
  
@@ -29,6 +29,7 @@ index 575ff07..3424e04 100644
 +        //or is added only if the xs is not active
 +        if(TchapUIFeature.forceLegacyIncomingRoomKeyVerification || 
 +            !TchapUIFeature.isCrossSigningAndSecureStorageActive()){
++            console.log('>>>> Enters forceLegacyIncomingRoomKeyVerification === true condition')
 +            const krh = new KeyRequestHandler(cli);
 +            cli.on(CryptoEvent.RoomKeyRequest, (req) => {
 +                krh.handleKeyRequest(req);
@@ -43,7 +44,7 @@ index 575ff07..3424e04 100644
          cli.on(ClientEvent.Room, (room) => {
              if (MatrixClientPeg.get().isCryptoEnabled()) {
                  const blacklistEnabled = SettingsStore.getValueAt(
-@@ -1716,6 +1736,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+@@ -1716,6 +1737,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
              return;
          }
  
@@ -60,7 +61,7 @@ index 575ff07..3424e04 100644
              dis.dispatch({
                  action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index e3f62d4..d3967a0 100644
+index e3f62d4..24c7f46 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -28,6 +28,7 @@ import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroy
@@ -135,7 +136,7 @@ index e3f62d4..d3967a0 100644
                  {errorSection}
                  {actionRow}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
-index 603438e..2766f19 100644
+index 603438e..ea4d47c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/DevicesPanel.tsx
 @@ -27,6 +27,7 @@ import AccessibleButton from "../elements/AccessibleButton";
@@ -182,7 +183,7 @@ index 603438e..2766f19 100644
      }
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 7473786..293ab8e 100644
+index 7473786..af8b424 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -31,6 +31,7 @@ import AccessibleButton from "../elements/AccessibleButton";
