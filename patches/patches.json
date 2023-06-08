@@ -129,12 +129,6 @@
             "src/components/views/rooms/DecryptionFailureBar.tsx"
         ]
     },
-    "temp-settings-remove-enable-email-notifications-option": {
-        "comments": "Notifications by email is currently not activated on Tchap backend. So we must remove this option.",
-        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/405",
-        "package": "matrix-react-sdk",
-        "files": ["src/components/views/settings/Notifications.tsx"]
-    },
     "in-invite-dialog-add-text-indicating-that-we-can-invite-multiple-people": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/342",
         "package": "matrix-react-sdk",
