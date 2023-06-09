@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-index 9c47a74..4e70ccd 100644
+index 9c47a74..3f97389 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 @@ -15,7 +15,12 @@ limitations under the License.
@@ -39,12 +39,12 @@ index 9c47a74..4e70ccd 100644
              isRoomPublished: false, // loaded async
          };
      }
-@@ -56,10 +70,37 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+@@ -56,6 +70,35 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
          PosthogTrackers.trackInteraction("WebRoomSettingsLeaveButton", ev);
      };
  
 +    /* :TCHAP: Add button to change forum to private room if user is admin */
-+    private onChangeToPrivateRoom  = async () => {
++    private onChangeToPrivateRoom = async () => {
 +        const cli = MatrixClientPeg.get();
 +        const room = this.context.getRoom(this.props.roomId);
 +        const roomId = room?.roomId;
@@ -61,29 +61,27 @@ index 9c47a74..4e70ccd 100644
 +            this.setState({ changePublicToPrivateRoomError: true, changePublicToPrivateRoomLoader: false });
 +        }
 +    };
++
++    private isRoomAdmin = () => {
++        const room = this.context.getRoom(this.props.roomId);
++        const userMatrixID = _.get(room, 'myUserId');
++        const roomMembers = _.get(room, 'currentState.members');
++        const { powerLevel: userPowerLevelInRoom } = _.get(roomMembers, userMatrixID);
++
++        return userPowerLevelInRoom === 100;
++    };
 +    /* end :TCHAP: */
 +
      public render(): React.ReactNode {
          const client = this.context;
          const room = client.getRoom(this.props.roomId);
- 
-+        /* :TCHAP: Add button to change forum to private room if user is admin */
-+        const userMatrixID = _.get(room, 'myUserId');
-+        const roomMembers = _.get(room, 'currentState.members');
-+        const { powerLevel: userPowerLevelInRoom } = _.get(roomMembers, userMatrixID);
-+        const isRoomAdmin = userPowerLevelInRoom === 100;
-+        /* end :TCHAP: */
-+
-         const canSetAliases = true; // Previously, we arbitrarily only allowed admins to do this
-         const canSetCanonical = room?.currentState.mayClientSendStateEvent("m.room.canonical_alias", client);
-         const canonicalAliasEv = room?.currentState.getStateEvents("m.room.canonical_alias", "") ?? undefined;
-@@ -81,6 +122,27 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+@@ -81,6 +124,27 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
              );
          }
  
 +        /* :TCHAP: Add button to change forum to private room if user is admin */
 +        let changePublicToPrivateRoomSection;
-+        if (this.state.isRoomPublic && isRoomAdmin) {
++        if (this.state.isRoomPublic && this.isRoomAdmin()) {
 +            changePublicToPrivateRoomSection = (
 +                <>
 +                    <span className="mx_SettingsTab_subheading">{_t("Change to private room")}</span>
@@ -105,7 +103,7 @@ index 9c47a74..4e70ccd 100644
          return (
              <div className="mx_SettingsTab mx_GeneralRoomSettingsTab">
                  <div className="mx_SettingsTab_heading">{_t("General")}</div>
-@@ -88,6 +150,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+@@ -88,6 +152,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                      <RoomProfileSettings roomId={this.props.roomId} />
                  </div>
  
@@ -113,7 +111,7 @@ index 9c47a74..4e70ccd 100644
                  <div className="mx_SettingsTab_heading">{_t("Room Addresses")}</div>
                  <AliasSettings
                      roomId={this.props.roomId}
-@@ -95,8 +158,13 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+@@ -95,8 +160,13 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                      canSetAliases={canSetAliases}
                      canonicalAliasEvent={canonicalAliasEv}
                  />
