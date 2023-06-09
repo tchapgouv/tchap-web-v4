@@ -946,5 +946,13 @@
   "Clear cross-signing keys": {
     "fr": "Réinitialiser les clés de signature croisée",
     "en": "Reset Recovery Code"
+  },
+  "Change to private room": {
+    "fr": "Convertir en salon privé",
+    "en": "Change to private room"
+  },
+  "Failure in converting this forum into a private room.": {
+    "fr": "Échec dans la conversion de ce forum en salon privé.",
+    "en": "Failure in converting this forum into a private room."
   }
 }
