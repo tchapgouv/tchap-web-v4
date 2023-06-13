@@ -30,7 +30,7 @@ index 575ff07..ec8c98b 100644
 +        if(TchapUIFeature.forceLegacyIncomingRoomKeyVerification || 
 +            !TchapUIFeature.isCrossSigningAndSecureStorageActive()){
 +            /* :TCHAP: Désactiver le partage legacy de clefs avec les appareils mobiles */
-+            console.log('>>>> Enters forceLegacyIncomingRoomKeyVerification === true condition')
++            console.log(':tchap: activate the legacy incoming key verification')
 +            /* end :TCHAP: */
 +            const krh = new KeyRequestHandler(cli);
 +            cli.on(CryptoEvent.RoomKeyRequest, (req) => {
