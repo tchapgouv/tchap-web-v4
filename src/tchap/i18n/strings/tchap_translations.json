@@ -938,5 +938,9 @@
   "Export room members (txt)": {
     "fr": "Exporter les membres du salon (txt)",
     "en": "Export room members (txt)"
+  },
+  "By clicking, you will download the list of participants from this room in the form of Tchap identifiers, which you can then copy and paste into another room to have the same participants as in this room.": {
+    "fr": "En cliquant vous téléchargerez la liste des participants de ce salon sous la forme d'indentifiants Tchap, que vous pourrez ensuite copier-coller dans un autre salon pour avoir les mêmes participants que dans ce salon",
+    "en": "By clicking, you will download the list of participants from this room in the form of Tchap identifiers, which you can then copy and paste into another room to have the same participants as in this room."
   }
 }

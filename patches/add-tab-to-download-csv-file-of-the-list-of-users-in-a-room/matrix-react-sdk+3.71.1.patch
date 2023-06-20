@@ -1,21 +1,24 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-index a32d8da..d3d704f 100644
+index a32d8da..416e678 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-@@ -17,7 +17,12 @@ limitations under the License.
+@@ -17,7 +17,14 @@ limitations under the License.
  import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
  import classNames from "classnames";
  import { Room } from "matrix-js-sdk/src/models/room";
-+import { keys } from "lodash"; // :TCHAP:
- 
-+// /src/tchap/util/TchapExportFiles.ts
-+// /yarn-linked-dependencies/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-+import { generateAndDownloadTextFile } from "../../../../../../src/tchap/util/TchapExportFiles";  // :TCHAP:
+-
++import { keys } from "lodash"; /* :TCHAP: */
++
++// src/components/views/right_panel/RoomSummaryCard.tsx
++// src/components/views/elements/Tooltip.tsx
++import Tooltip, { Alignment } from "../elements/Tooltip"; /* :TCHAP: */
++import { useTimeoutToggle } from "../../../hooks/useTimeoutToggle"; /* :TCHAP: */
++import { generateAndDownloadTextFile } from "../../../../../../src/tchap/util/TchapExportFiles"; /* :TCHAP: */
 +import { useRoomContext } from "../../../contexts/RoomContext";
  import MatrixClientContext from "../../../contexts/MatrixClientContext";
  import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
  import BaseCard, { Group } from "./BaseCard";
-@@ -274,6 +279,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
+@@ -274,6 +281,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
  
  const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
      const cli = useContext(MatrixClientContext);
@@ -23,7 +26,7 @@ index a32d8da..d3d704f 100644
  
      const onShareRoomClick = (): void => {
          Modal.createDialog(ShareDialog, {
-@@ -287,6 +293,21 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -287,6 +295,20 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
          });
      };
  
@@ -33,7 +36,6 @@ index a32d8da..d3d704f 100644
 +    */ 
 +    const onRoomExportMemberEmailsClick = async (): Promise<void> => {
 +        const members = keys(context?.room?.currentState?.members);
-+        
 +        generateAndDownloadTextFile({
 +            fileName: "members",
 +            format: "txt",
@@ -45,7 +47,7 @@ index a32d8da..d3d704f 100644
      const onRoomPollHistoryClick = (): void => {
          Modal.createDialog(PollHistoryDialog, {
              room,
-@@ -295,6 +316,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -295,6 +317,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
          });
      };
  
@@ -53,13 +55,35 @@ index a32d8da..d3d704f 100644
      const isRoomEncrypted = useIsEncrypted(cli, room);
      const roomContext = useContext(RoomContext);
      const e2eStatus = roomContext.e2eStatus;
-@@ -357,6 +379,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -328,6 +351,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+     const memberCount = useRoomMemberCount(room);
+     const pinningEnabled = useFeatureEnabled("feature_pinning");
+     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
++    /* :TCHAP: add tooltip for export room member list button */
++    const [exportRoomMembersYooltipVisible, setExportRoomMembersYooltipVisible] = useState(false);
++    const onExportRoomMembersEnter = () => setExportRoomMembersYooltipVisible(true);
++    const onExportRoomMembersLeave = () => setExportRoomMembersYooltipVisible(false);
++    /* end :TCHAP: */
+ 
+     return (
+         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
+@@ -357,6 +385,21 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
                          {_t("Export chat")}
                      </Button>
                  )}
 +                {/* :TCHAP: */ !isVideoRoom && (
-+                    <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportMemberEmailsClick}>
++                    <Button
++                        className="mx_RoomSummaryCard_icon_export"
++                        onClick={onRoomExportMemberEmailsClick}
++                        onMouseEnter={onExportRoomMembersEnter}
++                        onMouseLeave={onExportRoomMembersLeave}
++                    >
 +                        {_t("Export room members (txt)")}
++                        <Tooltip
++                            label={_t("By clicking, you will download the list of participants from this room in the form of Tchap identifiers, which you can then copy and paste into another room to have the same participants as in this room.")}
++                            alignment={Alignment.Top}
++                            visible={exportRoomMembersYooltipVisible}
++                        />
 +                    </Button>
 +                ) /* end :TCHAP */}
                  <Button
