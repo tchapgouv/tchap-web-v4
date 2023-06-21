@@ -939,8 +939,21 @@
     "fr": "Exporter les membres du salon (txt)",
     "en": "Export room members (txt)"
   },
-  "By clicking, you will download the list of participants from this room in the form of Tchap identifiers, which you can then copy and paste into another room to have the same participants as in this room.": {
-    "fr": "En cliquant vous téléchargerez la liste des participants de ce salon sous la forme d'indentifiants Tchap, que vous pourrez ensuite copier-coller dans un autre salon pour avoir les mêmes participants que dans ce salon",
-    "en": "By clicking, you will download the list of participants from this room in the form of Tchap identifiers, which you can then copy and paste into another room to have the same participants as in this room."
+  "By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room.": {
+    "fr": "En exportant les membres du salon, vous obtenez les identifiants des participants que vous pourrez copier/coller pour les inviter dans un autre salon.",
+    "en": "By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room."
+  },
+    
+  "Destroy cross-signing keys?": {
+    "fr": "Réinitialiser les clés de signature croisée ?",
+    "en": "Reset cross-signing keys?"
+  },
+  "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": {
+    "fr": "Réinitialiser les clés de signature croisée est permanent. Utiliser cette procédure uniquement si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
+    "en": "Resetting your Recovery Code is permanent. Please use this procedure only if you have lost all devices that allow you to perform cross-signing."
+  },
+  "Clear cross-signing keys": {
+    "fr": "Réinitialiser les clés de signature croisée",
+    "en": "Reset Recovery Code"
   }
 }
