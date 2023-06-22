@@ -211,5 +211,12 @@
         "files": [
             "src/stores/RoomViewStore.tsx"
         ]
+    },
+    "add-tab-to-download-csv-file-of-the-list-of-users-in-a-room": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/593",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/right_panel/RoomSummaryCard.tsx"
+        ]
     }
 }
