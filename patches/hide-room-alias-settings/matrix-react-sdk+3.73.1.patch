@@ -1,0 +1,23 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
+index fa5c65a..7741408 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
+@@ -89,6 +89,9 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+                     <RoomProfileSettings roomId={room.roomId} />
+                 </SettingsSection>
+ 
++                
++                {/* :tchap: hide room aliases
++                
+                 <SettingsSection heading={_t("Room Addresses")}>
+                     <AliasSettings
+                         roomId={room.roomId}
+@@ -96,7 +99,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+                         canSetAliases={canSetAliases}
+                         canonicalAliasEvent={canonicalAliasEv}
+                     />
+-                </SettingsSection>
++                </SettingsSection> */}
+ 
+                 <SettingsSection heading={_t("Other")}>
+                     {urlPreviewSettings}
