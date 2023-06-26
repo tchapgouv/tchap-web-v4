@@ -17,10 +17,10 @@ limitations under the License.
 import * as React from "react";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import SdkConfig from "matrix-react-sdk/src/SdkConfig";
-
 // directly import the style here as this layer does not support rethemedex at this time so no matrix-react-sdk
 // PostCSS variables will be accessible.
 import "../../../res/css/structures/ErrorView.pcss";
+import { ReactNode } from "react";
 
 interface IProps {
     onAccept(): void;
@@ -30,7 +30,7 @@ const CompatibilityView: React.FC<IProps> = ({ onAccept }) => {
     const brand = SdkConfig.get("brand");
     const mobileBuilds = SdkConfig.get("mobile_builds");
 
-    let ios = null;
+    let ios: JSX.Element | undefined;
     const iosCustomUrl = mobileBuilds?.ios;
     if (iosCustomUrl !== null) {
         // could be undefined or a string
@@ -91,7 +91,7 @@ const CompatibilityView: React.FC<IProps> = ({ onAccept }) => {
         android = [];
     }
 
-    let mobileHeader = <h2 id="step2_heading">{_t("Use %(brand)s on mobile", { brand })}</h2>;
+    let mobileHeader: ReactNode = <h2 id="step2_heading">{_t("Use %(brand)s on mobile", { brand })}</h2>;
     if (!android.length && !ios) {
         mobileHeader = null;
     }

@@ -1,8 +1,12 @@
 {
     "name": "element-web",
+<<<<<<< HEAD
     "productName": "Tchap",
     "version": "4.3.3",
     "version-element-web": "1.11.30",
+=======
+    "version": "1.11.33",
+>>>>>>> v1.11.33
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
     "repository": {
@@ -71,19 +75,27 @@
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage",
         "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
+<<<<<<< HEAD
         "postinstall": "./scripts/tchap/apply_patches.sh",
         "patch-package": "patch-package",
         "patches-reapply": "rm -rf node_modules/matrix-react-sdk; rm -rf node_modules/matrix-js-sdk; yarn install --force",
         "patch-make": "node scripts/tchap/makePatch.ts"
+=======
+        "analyse:webpack-bundles": "webpack-bundle-analyzer webpack-stats.json webapp"
+    },
+    "resolutions": {
+        "@types/react-dom": "17.0.19",
+        "@types/react": "17.0.58"
+>>>>>>> v1.11.33
     },
     "dependencies": {
-        "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.12.tgz",
-        "@matrix-org/react-sdk-module-api": "^0.0.4",
+        "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz",
+        "@matrix-org/react-sdk-module-api": "^0.0.5",
         "gfm.css": "^1.1.2",
         "jsrsasign": "^10.5.25",
         "katex": "^0.16.0",
-        "matrix-js-sdk": "25.0.0",
-        "matrix-react-sdk": "3.71.1",
+        "matrix-js-sdk": "26.0.1",
+        "matrix-react-sdk": "3.73.1",
         "matrix-widget-api": "^1.3.1",
         "react": "17.0.2",
         "react-dom": "17.0.2",
@@ -126,10 +138,11 @@
         "@svgr/webpack": "^5.5.0",
         "@testing-library/react": "^12.1.5",
         "@types/jest": "^29.0.0",
+        "@types/jitsi-meet": "^2.0.2",
         "@types/jsrsasign": "^10.5.4",
         "@types/modernizr": "^3.5.3",
         "@types/node": "^16",
-        "@types/react": "17.0.55",
+        "@types/react": "17.0.58",
         "@types/react-dom": "17.0.19",
         "@types/sanitize-html": "^2.3.1",
         "@types/ua-parser-js": "^0.7.36",
@@ -149,9 +162,13 @@
         "cypress-axe": "^1.0.0",
         "cypress-real-events": "^1.7.1",
         "dotenv": "^16.0.2",
+<<<<<<< HEAD
         "enzyme": "^3.11.0",
         "enzyme-to-json": "^3.6.2",
         "eslint": "8.35.0",
+=======
+        "eslint": "8.40.0",
+>>>>>>> v1.11.33
         "eslint-config-google": "^0.14.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-deprecate": "^0.7.0",
@@ -159,7 +176,7 @@
         "eslint-plugin-matrix-org": "^1.0.0",
         "eslint-plugin-react": "^7.28.0",
         "eslint-plugin-react-hooks": "^4.3.0",
-        "eslint-plugin-unicorn": "^46.0.0",
+        "eslint-plugin-unicorn": "^47.0.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "fake-indexeddb": "^4.0.0",
         "fetch-mock-jest": "^1.5.1",
@@ -178,7 +195,7 @@
         "matrix-web-i18n": "^1.4.0",
         "mini-css-extract-plugin": "^1",
         "minimist": "^1.2.6",
-        "mkdirp": "^2.0.0",
+        "mkdirp": "^3.0.0",
         "modernizr": "^3.12.0",
         "node-fetch": "^2.6.7",
         "optimize-css-assets-webpack-plugin": "^6.0.0",
@@ -193,23 +210,28 @@
         "postcss-preset-env": "^6.7.0",
         "postcss-scss": "^4.0.4",
         "postcss-simple-vars": "^5.0.2",
+<<<<<<< HEAD
         "postinstall-postinstall": "^2.1.0",
         "prettier": "2.8.4",
+=======
+        "prettier": "2.8.8",
+>>>>>>> v1.11.33
         "raw-loader": "^4.0.2",
-        "rimraf": "^3.0.2",
+        "rimraf": "^5.0.0",
         "semver": "^7.3.7",
         "shell-escape": "^0.2.0",
         "simple-proxy-agent": "^1.1.0",
         "string-replace-loader": "3",
         "style-loader": "2",
         "stylelint": "^15.3.0",
-        "stylelint-config-standard": "^32.0.0",
-        "stylelint-scss": "^4.2.0",
+        "stylelint-config-standard": "^33.0.0",
+        "stylelint-scss": "^5.0.0",
         "terser-webpack-plugin": "^4.0.0",
         "ts-node": "^10.9.1",
         "ts-prune": "^0.10.3",
-        "typescript": "5.0.3",
+        "typescript": "5.0.4",
         "webpack": "^4.46.0",
+        "webpack-bundle-analyzer": "^4.8.0",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.2",
         "worker-loader": "^3.0.0",
