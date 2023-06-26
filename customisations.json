@@ -22,5 +22,7 @@
     "src/tchap/components/views/messages/OriginalVoiceMessageBody.tsx": "node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx",
     "src/components/views/messages/UnknownBody.tsx": "src/tchap/components/views/messages/TchapUnknownBody.tsx",
     "src/components/views/settings/JoinRuleSettings.tsx": "src/tchap/components/views/settings/TchapJoinRuleSettings.tsx",
-    "src/components/views/dialogs/RoomUpgradeWarningDialog.tsx": "src/tchap/components/views/dialogs/TchapRoomUpgradeWarningDialog.tsx"
+    "src/components/views/dialogs/RoomUpgradeWarningDialog.tsx": "src/tchap/components/views/dialogs/TchapRoomUpgradeWarningDialog.tsx",
+    "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx": "src/tchap/components/views/settings/tabs/user/TchapHelpUserSettingsTab.tsx"
+
 }
