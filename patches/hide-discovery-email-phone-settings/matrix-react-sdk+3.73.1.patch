@@ -1,16 +1,17 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index dc3bf9f..52f191b 100644
+index 13a44fc..5d275e5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-@@ -54,6 +54,7 @@ import SetIdServer from "../../SetIdServer";
+@@ -55,6 +55,8 @@ import SetIdServer from "../../SetIdServer";
  import SetIntegrationManager from "../../SetIntegrationManager";
  import ToggleSwitch from "../../../elements/ToggleSwitch";
  import { IS_MAC } from "../../../../../Keyboard";
 +import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature';
- 
- interface IProps {
-     closeSettingsFn: () => void;
-@@ -315,7 +316,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
++
+ import SettingsTab from "../SettingsTab";
+ import { SettingsSection } from "../../shared/SettingsSection";
+ import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+@@ -333,7 +335,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          // validate 3PID ownership even if we're just adding to the homeserver only.
          // For newer homeservers with separate 3PID add and bind methods (MSC2290),
          // there is no such concern, so we can always show the HS account 3PIDs.
@@ -20,13 +21,13 @@ index dc3bf9f..52f191b 100644
              SettingsStore.getValue(UIFeature.ThirdPartyID) &&
              (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
          ) {
-@@ -516,7 +518,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -529,7 +532,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;
 -        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
 +        // :TCHAP: no need for users to edit the discovery section (TchapUIFeature.showEmailPhoneDiscoverySettings)
 +        if (TchapUIFeature.showEmailPhoneDiscoverySettings && SettingsStore.getValue(UIFeature.IdentityServer)) {
-             discoverySection = (
-                 <>
-                     <div className="mx_SettingsTab_heading">
+             const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
+                 <WarningIcon
+                     className="mx_GeneralUserSettingsTab_warningIcon"
