@@ -5,6 +5,7 @@ import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServe
 import { findMapStyleUrl } from "matrix-react-sdk/src/utils/location";
 
 import TchapApi from "./TchapApi";
+import { deprecate } from "util";
 
 /**
  * Tchap utils.
@@ -150,9 +151,10 @@ export default class TchapUtils {
     }
 
     /**
-     *
+     * @deprecated use native UIFeature.locationSharing
      * @returns true is a map tile server is present in config or wellknown.
      */
+    
     static isMapConfigured(): boolean {
         try {
             findMapStyleUrl();

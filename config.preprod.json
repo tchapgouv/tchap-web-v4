@@ -56,6 +56,7 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
+        "UIFeature.locationSharing" : false,
         "MessageComposerInput.showPollsButton": false,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
