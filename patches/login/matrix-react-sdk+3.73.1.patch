@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index 4314726..0a34f0e 100644
+index 3299cae..04d9e75 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-@@ -40,6 +40,7 @@ import AuthHeader from "../../views/auth/AuthHeader";
+@@ -38,6 +38,7 @@ import AuthHeader from "../../views/auth/AuthHeader";
  import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
  import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
  import { filterBoolean } from "../../../utils/arrays";
@@ -10,7 +10,7 @@ index 4314726..0a34f0e 100644
  
  // These are used in several places, and come from the js-sdk's autodiscovery
  // stuff. We define them here so that they'll be picked up by i18n.
-@@ -167,12 +168,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -165,12 +166,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
  
      public isBusy = (): boolean => !!this.state.busy || !!this.props.busy;
  
@@ -33,7 +33,7 @@ index 4314726..0a34f0e 100644
          if (!this.state.serverIsAlive) {
              this.setState({ busy: true });
              // Do a quick liveliness check on the URLs
-@@ -198,6 +209,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -196,6 +207,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                  return;
              }
          }
@@ -41,7 +41,7 @@ index 4314726..0a34f0e 100644
  
          this.setState({
              busy: true,
-@@ -206,6 +218,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+@@ -204,6 +216,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
              loginIncorrect: false,
          });
  
@@ -64,18 +64,17 @@ index 4314726..0a34f0e 100644
          this.loginLogic.loginViaPassword(username, phoneCountry, phoneNumber, password).then(
              (data) => {
                  this.setState({ serverIsAlive: true }); // it must be, we logged in.
-@@ -253,6 +281,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
-                     } else {
-                         errorText = _t("Incorrect username and/or password.");
-                     }
-+                // :TCHAP: display proper message for TOO_MANY_REQUESTS
-+                } else if (error.httpStatus === 429) {
+@@ -216,6 +244,9 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                 // Some error strings only apply for logging in
+                 if (error.httpStatus === 400 && username && username.indexOf("@") > 0) {
+                     errorText = _t("This homeserver does not support login using email address.");
++                } else if (error.httpStatus === 429) {  // :TCHAP: customize error message for TOO_MANY_REQUESTS, TODO : can be moved into messageForLoginError method
 +                    errorText = _t("Your last three login attempts have failed. Please try again in a few minutes.");
-+                // end :TCHAP:
++                    // end :TCHAP:
                  } else {
-                     // other errors, not specific to doing a password login
-                     errorText = this.errorTextFromError(error);
-@@ -629,10 +661,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                     errorText = messageForLoginError(error, this.props.serverConfig);
+                 }
+@@ -531,10 +562,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
                      </h1>
                      {errorTextSection}
                      {serverDeadSection}
@@ -89,7 +88,7 @@ index 4314726..0a34f0e 100644
                      {footer}
                  </AuthBody>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index 7275055..93c08bb 100644
+index bbab224..4c581e7 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 @@ -50,6 +50,7 @@ interface IProps {
