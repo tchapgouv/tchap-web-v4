@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-index a32d8da..45b1307 100644
+index acc4662..7c3a317 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 @@ -17,7 +17,14 @@ limitations under the License.
@@ -55,7 +55,7 @@ index a32d8da..45b1307 100644
      const isRoomEncrypted = useIsEncrypted(cli, room);
      const roomContext = useContext(RoomContext);
      const e2eStatus = roomContext.e2eStatus;
-@@ -328,6 +351,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -334,6 +357,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
      const memberCount = useRoomMemberCount(room);
      const pinningEnabled = useFeatureEnabled("feature_pinning");
      const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
@@ -67,7 +67,7 @@ index a32d8da..45b1307 100644
  
      return (
          <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
-@@ -357,6 +385,21 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -363,6 +391,21 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
                          {_t("Export chat")}
                      </Button>
                  )}

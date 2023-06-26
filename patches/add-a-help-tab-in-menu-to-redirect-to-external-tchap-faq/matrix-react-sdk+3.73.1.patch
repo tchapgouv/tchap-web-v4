@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
-index 9c9e1ce..6fe1939 100644
+index 4c23bf2..c3ba328 100644
 --- a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
 @@ -198,6 +198,10 @@ limitations under the License.
@@ -14,7 +14,7 @@ index 9c9e1ce..6fe1939 100644
          mask-image: url("$(res)/img/element-icons/feedback.svg");
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-index 5d2ba89..76f4a34 100644
+index 99325da..efbb699 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 @@ -246,6 +246,10 @@ export default class UserMenu extends React.Component<IProps, IState> {

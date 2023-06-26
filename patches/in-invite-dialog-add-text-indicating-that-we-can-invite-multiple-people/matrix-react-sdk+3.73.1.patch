@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss b/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
-index 86de19b..aa40280 100644
+index a7c1346..60d0e31 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/dialogs/_InviteDialog.pcss
 @@ -37,8 +37,7 @@ limitations under the License.

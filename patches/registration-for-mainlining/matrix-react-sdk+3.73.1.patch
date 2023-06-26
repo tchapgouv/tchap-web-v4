@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index 15dcda4..e712e98 100644
+index d8fd848..d14b6b8 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 @@ -39,8 +39,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
@@ -49,7 +49,7 @@ index 15dcda4..e712e98 100644
                  client_secret: clientSecret,
                  hs_url: this.state.matrixClient.getHomeserverUrl(),
                  is_url: this.state.matrixClient.getIdentityServerUrl(),
-@@ -341,6 +358,8 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -339,6 +356,8 @@ export default class Registration extends React.Component<IProps, IState> {
                  errorText = _t("Someone already has that username, please try another.");
              } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
                  errorText = _t("That e-mail address or phone number is already in use.");
@@ -58,7 +58,7 @@ index 15dcda4..e712e98 100644
              }
  
              this.setState({
-@@ -476,6 +495,11 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -474,6 +493,11 @@ export default class Registration extends React.Component<IProps, IState> {
              inhibit_login: undefined,
          };
          if (auth) registerParams.auth = auth;
@@ -70,7 +70,7 @@ index 15dcda4..e712e98 100644
          debuglog("Registration: sending registration request:", auth);
          return this.state.matrixClient.registerRequest(registerParams);
      };
-@@ -515,7 +539,7 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -513,7 +537,7 @@ export default class Registration extends React.Component<IProps, IState> {
                      sessionId={this.props.sessionId}
                      clientSecret={this.props.clientSecret}
                      emailSid={this.props.idSid}
@@ -79,7 +79,7 @@ index 15dcda4..e712e98 100644
                  />
              );
          } else if (!this.state.matrixClient && !this.state.busy) {
-@@ -711,6 +735,12 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -709,6 +733,12 @@ export default class Registration extends React.Component<IProps, IState> {
                              {errorText}
                              {serverDeadSection}
                          </AuthHeaderDisplay>
@@ -93,7 +93,7 @@ index 15dcda4..e712e98 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index 17d540b..9b6e012 100644
+index 1906365..97c352f 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -268,7 +268,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState

@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index cb8df7a..1ca2f21 100644
+index 4937494..e5c8d60 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
 @@ -20,6 +20,7 @@ limitations under the License.
@@ -10,7 +10,7 @@ index cb8df7a..1ca2f21 100644
  import type { IDeviceKeys, IMegolmSessionData, IOneTimeKey } from "./@types/crypto";
  import { ISyncStateData, SyncApi, SyncApiOptions, SyncState } from "./sync";
  import {
-@@ -214,6 +215,9 @@ import {
+@@ -216,6 +217,9 @@ import {
      ServerSideSecretStorageImpl,
  } from "./secret-storage";
  
@@ -20,7 +20,7 @@ index cb8df7a..1ca2f21 100644
  export type Store = IStore;
  
  export type ResetTimelineCallback = (roomId: string) => boolean;
-@@ -7284,6 +7288,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -7298,6 +7302,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];

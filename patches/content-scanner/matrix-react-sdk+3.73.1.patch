@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
-index 86736d4..f5831df 100644
+index 86736d4..d404e75 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
 @@ -23,7 +23,7 @@ import InlineSpinner from "../elements/InlineSpinner";
@@ -12,7 +12,7 @@ index 86736d4..f5831df 100644
  import { PlaybackManager } from "../../../audio/PlaybackManager";
  import { isVoiceMessage } from "../../../utils/EventUtils";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
-index 84e4e76..26b7f3c 100644
+index acfe2e2..542176d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 @@ -22,7 +22,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
@@ -25,7 +25,7 @@ index 84e4e76..26b7f3c 100644
  import { _t } from "../../../languageHandler";
  import SettingsStore from "../../../settings/SettingsStore";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx
-index 68a39d2..802c58b 100644
+index 68a39d2..a239e90 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx
 @@ -16,7 +16,7 @@ limitations under the License.
@@ -38,7 +38,7 @@ index 68a39d2..802c58b 100644
  
  const FORCED_IMAGE_HEIGHT = 44;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
-index 092b948..5cb68d0 100644
+index 092b948..5908036 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
 @@ -16,7 +16,7 @@ limitations under the License.
@@ -51,7 +51,7 @@ index 092b948..5cb68d0 100644
  import Tooltip from "../elements/Tooltip";
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
-index 6be311e..ae6011a 100644
+index 5ecf74a..14ae2c5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
 @@ -25,7 +25,7 @@ import { mediaFromContent } from "../../../customisations/Media";
@@ -64,7 +64,7 @@ index 6be311e..ae6011a 100644
  import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
  import MediaProcessingError from "./shared/MediaProcessingError";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
-index 83f26e1..e49c59b 100644
+index 83f26e1..b0db4ea 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
 @@ -19,8 +19,8 @@ import React from "react";

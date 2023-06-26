@@ -1,12 +1,8 @@
 {
     "name": "element-web",
-<<<<<<< HEAD
     "productName": "Tchap",
     "version": "4.3.3",
-    "version-element-web": "1.11.30",
-=======
-    "version": "1.11.33",
->>>>>>> v1.11.33
+    "version-element-web": "1.11.33",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
     "repository": {
@@ -75,18 +71,10 @@
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage",
         "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
-<<<<<<< HEAD
         "postinstall": "./scripts/tchap/apply_patches.sh",
         "patch-package": "patch-package",
         "patches-reapply": "rm -rf node_modules/matrix-react-sdk; rm -rf node_modules/matrix-js-sdk; yarn install --force",
         "patch-make": "node scripts/tchap/makePatch.ts"
-=======
-        "analyse:webpack-bundles": "webpack-bundle-analyzer webpack-stats.json webapp"
-    },
-    "resolutions": {
-        "@types/react-dom": "17.0.19",
-        "@types/react": "17.0.58"
->>>>>>> v1.11.33
     },
     "dependencies": {
         "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz",
@@ -104,7 +92,7 @@
     },
     "resolutions": {
         "@types/react-dom": "17.0.19",
-        "@types/react": "17.0.53"
+        "@types/react": "17.0.58"
     },
     "devDependencies-comments": {
         "tchap-added": {
@@ -162,13 +150,9 @@
         "cypress-axe": "^1.0.0",
         "cypress-real-events": "^1.7.1",
         "dotenv": "^16.0.2",
-<<<<<<< HEAD
         "enzyme": "^3.11.0",
         "enzyme-to-json": "^3.6.2",
-        "eslint": "8.35.0",
-=======
         "eslint": "8.40.0",
->>>>>>> v1.11.33
         "eslint-config-google": "^0.14.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-deprecate": "^0.7.0",
@@ -210,12 +194,8 @@
         "postcss-preset-env": "^6.7.0",
         "postcss-scss": "^4.0.4",
         "postcss-simple-vars": "^5.0.2",
-<<<<<<< HEAD
         "postinstall-postinstall": "^2.1.0",
-        "prettier": "2.8.4",
-=======
         "prettier": "2.8.8",
->>>>>>> v1.11.33
         "raw-loader": "^4.0.2",
         "rimraf": "^5.0.0",
         "semver": "^7.3.7",

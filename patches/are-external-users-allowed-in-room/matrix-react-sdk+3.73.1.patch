@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-index 38e8124..fc570bc 100644
+index b12cb38..0829eba 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
-@@ -153,6 +153,21 @@ limitations under the License.
+@@ -134,6 +134,21 @@ limitations under the License.
      cursor: pointer;
  }
  
@@ -25,7 +25,7 @@ index 38e8124..fc570bc 100644
      $lineHeight: $font-16px;
      $lines: 2;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 46a4221..fd0ecce 100644
+index 1e1f0ce..f1ce1f2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 @@ -69,6 +69,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -36,7 +36,7 @@ index 46a4221..fd0ecce 100644
  
  class DisabledWithReason {
      public constructor(public readonly reason: string) {}
-@@ -803,6 +804,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
+@@ -804,6 +805,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                      <div className="mx_RoomHeader_avatar">{roomAvatar}</div>
                      {icon}
                      {name}
