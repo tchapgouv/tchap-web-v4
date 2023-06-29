@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../yarn-linked-dependencies/matrix-react-sdk/src/languageHandler";
@@ -25,7 +24,10 @@ import DMRoomMap from "../../../../../yarn-linked-dependencies/matrix-react-sdk/
 import RoomSummaryCard from "../../../../../yarn-linked-dependencies/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard";
 import MatrixClientContext from "../../../../../yarn-linked-dependencies/matrix-react-sdk/src/contexts/MatrixClientContext";
 import * as settingsHooks from "../../../../../yarn-linked-dependencies/matrix-react-sdk/src/hooks/useSettings";
-import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../../yarn-linked-dependencies/matrix-react-sdk/test/test-utils";
+import {
+    getMockClientWithEventEmitter,
+    mockClientMethodsUser,
+} from "../../../../../yarn-linked-dependencies/matrix-react-sdk/test/test-utils";
 import { RoomPermalinkCreator } from "../../../../../yarn-linked-dependencies/matrix-react-sdk/src/utils/permalinks/Permalinks";
 
 jest.mock("../../../../../src/tchap/util/TchapExportFiles", () => ({
@@ -79,21 +81,33 @@ describe("<RoomSummaryCard />", () => {
     describe("Export room members feature", () => {
         it("should display the export button", () => {
             const { getByText } = getComponent();
-        
+
             expect(getByText(_t("Export room members (txt)"))).toBeInTheDocument();
         });
-        
+
         it("should display the tooltip on button click", () => {
             const { getByText } = getComponent();
-        
+
             // NB: We simulate clicking and not hovering (although we should since it is a tooltip), because the fireEvent doesn't handle hovering
             // Before clicking, tooltip is hidden
-            expect(getByText(_t("By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room."))).not.toBeVisible();
+            expect(
+                getByText(
+                    _t(
+                        "By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room.",
+                    ),
+                ),
+            ).not.toBeVisible();
 
             fireEvent.click(getByText("Export room members (txt)"));
-        
+
             // After clicking, tooltip must be visible
-            expect(getByText(_t("By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room."))).toBeVisible();
+            expect(
+                getByText(
+                    _t(
+                        "By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room.",
+                    ),
+                ),
+            ).toBeVisible();
         });
 
         it("calls generateAndDownloadTextFile function on button click", () => {
@@ -105,4 +119,3 @@ describe("<RoomSummaryCard />", () => {
         });
     });
 });
-
