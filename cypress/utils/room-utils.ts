@@ -4,13 +4,13 @@ import { TchapRoomType } from "../../src/tchap/@types/tchap";
 
 export default class RoomUtils {
     public static createPublicRoom(roomName: string): Chainable<string> {
-        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Forum).createOpts);
+        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Forum, false).createOpts);
     }
     public static createPrivateRoom(roomName: string): Chainable<string> {
-        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Private).createOpts);
+        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Private, false).createOpts);
     }
     public static createPrivateWithExternalRoom(roomName: string): Chainable<string> {
-        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.External).createOpts);
+        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.External, false).createOpts);
     }
     public static openRoom(roomName: string): Chainable<JQuery<HTMLElement>> {
         return cy.get('[aria-label="' + roomName + '"]').click();
