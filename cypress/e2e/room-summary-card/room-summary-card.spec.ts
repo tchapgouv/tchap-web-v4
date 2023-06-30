@@ -3,7 +3,7 @@
 import RoomUtils from "../../utils/room-utils";
 import RandomUtils from "../../utils/random-utils";
 
-describe('Export room members feature', () => {
+describe("Export room members feature", () => {
     const homeserverUrl = Cypress.env("E2E_TEST_USER_HOMESERVER_URL");
     const email = Cypress.env("E2E_TEST_USER_EMAIL");
     const password = Cypress.env("E2E_TEST_USER_PASSWORD");
@@ -28,14 +28,13 @@ describe('Export room members feature', () => {
     //     });
     // });
 
-    it('calls generateAndDownloadTextFile function on button click and downloads the file', () => {
+    it("calls generateAndDownloadTextFile function on button click and downloads the file", () => {
         RoomUtils.createPublicRoom(roomName).then((roomId) => {
             RoomUtils.openRoomInformation(roomName);
             cy.get('[id="exportRoomMembersButton"]')
                 .click()
                 .then(() => {
-                    cy.readFile('cypress/downloads/members.txt')
-                        .should('exist');
+                    cy.readFile("cypress/downloads/members.txt").should("exist");
                 });
         });
     });
