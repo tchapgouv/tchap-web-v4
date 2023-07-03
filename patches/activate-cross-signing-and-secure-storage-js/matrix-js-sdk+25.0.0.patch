@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index cb8df7a..1ca2f21 100644
+index cb8df7a..7749564 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
 @@ -20,6 +20,7 @@ limitations under the License.
@@ -20,7 +20,15 @@ index cb8df7a..1ca2f21 100644
  export type Store = IStore;
  
  export type ResetTimelineCallback = (roomId: string) => boolean;
-@@ -7284,6 +7288,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -5951,6 +5955,7 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+         if (filter) {
+             params.filter = JSON.stringify(filter);
+         }
++
+         return this.http.authedRequest(Method.Get, path, params);
+     }
+ 
+@@ -7284,6 +7289,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];

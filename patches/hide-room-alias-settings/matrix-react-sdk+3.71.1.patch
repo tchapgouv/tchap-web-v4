@@ -1,8 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-index 9c47a74..1a8fa6c 100644
+index 9c47a74..107b140 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-@@ -88,6 +88,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+@@ -26,6 +26,7 @@ import { UIFeature } from "../../../../../settings/UIFeature";
+ import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
+ import AliasSettings from "../../../room_settings/AliasSettings";
+ import PosthogTrackers from "../../../../../PosthogTrackers";
++import TchapChangePublicToPrivateRoomSection from "../../../../../../../../src/tchap/components/views/rooms/TchapChangePublicToPrivateRoomSection"; // :TCHAP:
+ 
+ interface IProps {
+     roomId: string;
+@@ -88,6 +89,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                      <RoomProfileSettings roomId={this.props.roomId} />
                  </div>
  
@@ -10,11 +18,14 @@ index 9c47a74..1a8fa6c 100644
                  <div className="mx_SettingsTab_heading">{_t("Room Addresses")}</div>
                  <AliasSettings
                      roomId={this.props.roomId}
-@@ -95,6 +96,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+@@ -95,8 +97,10 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                      canSetAliases={canSetAliases}
                      canonicalAliasEvent={canonicalAliasEv}
                  />
 +                end :TCHAP: */}
                  <div className="mx_SettingsTab_heading">{_t("Other")}</div>
                  {urlPreviewSettings}
++                <TchapChangePublicToPrivateRoomSection room={room} /> {/* :TCHAP: Add button to change forum to private room if user is admin */}
                  {leaveSection}
+             </div>
+         );
