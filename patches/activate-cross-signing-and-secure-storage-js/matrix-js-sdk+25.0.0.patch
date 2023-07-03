@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/client.ts b/node_modules/matrix-js-sdk/src/client.ts
-index cb8df7a..36eb9e6 100644
+index cb8df7a..7749564 100644
 --- a/node_modules/matrix-js-sdk/src/client.ts
 +++ b/node_modules/matrix-js-sdk/src/client.ts
 @@ -20,6 +20,7 @@ limitations under the License.
@@ -20,68 +20,7 @@ index cb8df7a..36eb9e6 100644
  export type Store = IStore;
  
  export type ResetTimelineCallback = (roomId: string) => boolean;
-@@ -4252,6 +4256,60 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
-         return this.http.authedRequest(Method.Put, path, undefined, content);
-     }
- 
-+    /**
-+     * :TCHAP:
-+     * Update public room join rule to "invite" state (so that the room be private).
-+     * @returns Promise which resolves: to an ISendEventResponse object
-+     * @returns Rejects: with an error response.
-+     */
-+    public updateRoomJoinRuleToInvite(
-+        roomId: string,
-+    ): Promise<ISendEventResponse> {
-+        const content = { join_rule: 'invite' };
-+        const path = utils.encodeUri("/rooms/$roomId/state/m.room.join_rules", {
-+            $roomId: roomId,
-+        });
-+
-+        return this.http.authedRequest(Method.Put, path, undefined, content);
-+    }
-+    // end :TCHAP:
-+
-+    /**
-+     * :TCHAP:
-+     * Turn on the encryption in a room (if this is not already done).
-+     * @returns Promise which resolves: to an ISendEventResponse object
-+     * @returns Rejects: with an error response.
-+     */
-+    public turnOnEncryptionInThisRoom(
-+        roomId: string,
-+    ): Promise<ISendEventResponse> {
-+        const content = { algorithm: 'm.megolm.v1.aes-sha2' };
-+        const path = utils.encodeUri("/rooms/$roomId/state/m.room.encryption", {
-+            $roomId: roomId,
-+        });
-+
-+        return this.http.authedRequest(Method.Put, path, undefined, content);
-+    }
-+    // end :TCHAP:
-+
-+    /**
-+     * :TCHAP:
-+     * Remove a room from the room directory.
-+     * @returns Promise which resolves: to an ISendEventResponse object
-+     * @returns Rejects: with an error response.
-+     */
-+    public removeRoomFromRoomDirectory(
-+        roomId: string,
-+    ): Promise<ISendEventResponse> {
-+        const content = { visibility: 'private' };
-+        const path = utils.encodeUri("/rooms/$roomId/state/m.room.history_visibility", {
-+            $roomId: roomId,
-+        });
-+
-+        return this.http.authedRequest(Method.Put, path, undefined, content);
-+    }
-+    // end :TCHAP:
-+
-     /**
-      * Create an m.beacon_info event
-      * @returns
-@@ -5951,6 +6009,7 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -5951,6 +5955,7 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          if (filter) {
              params.filter = JSON.stringify(filter);
          }
@@ -89,7 +28,7 @@ index cb8df7a..36eb9e6 100644
          return this.http.authedRequest(Method.Get, path, params);
      }
  
-@@ -7284,6 +7343,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
+@@ -7284,6 +7289,17 @@ export class MatrixClient extends TypedEventEmitter<EmittedEvents, ClientEventHa
          const response = await this.getVersions();
          if (!response) return false;
          const unstableFeatures = response["unstable_features"];
