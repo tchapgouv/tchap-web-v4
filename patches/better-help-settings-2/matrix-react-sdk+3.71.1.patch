@@ -188,6 +188,19 @@ index 7ee24e0..6a9d898 100644
  
  interface IProps {
      feature?: string;
+diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
+index 10f18f1..8d18769 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
+@@ -75,7 +75,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T>
+     disabled?: boolean;
+     className?: string;
+     triggerOnMouseDown?: boolean;
+-    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
++    onClick?: ((e: ButtonEvent) => void | Promise<void>) | null;
+ };
+ 
+ export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
 index a230ab8..5a9a2a2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
