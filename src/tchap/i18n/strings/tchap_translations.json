@@ -946,5 +946,21 @@
   "Clear cross-signing keys": {
     "fr": "Réinitialiser les clés de signature croisée",
     "en": "Reset Recovery Code"
+  },
+  "General Conditions of Use (CGU)": {
+    "en": "General Conditions of Use (CGU)",
+    "fr": "Conditions Générales d'Utilisation (CGU)"
+  },
+  "Read the CGU": {
+    "en": "Read the CGU",
+    "fr": "Consultez les CGU"
+  },
+  "Privacy Policy": {
+    "en": "Privacy Policy",
+    "fr": "Politique de Confidentialité"
+  },
+  "Read the Privacy Policy": {
+    "en": "Read the Privacy Policy",
+    "fr": "Consultez la Politique de Confidentialité"
   }
 }

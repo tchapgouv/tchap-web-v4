@@ -20,13 +20,6 @@
             "src/components/views/verification/VerificationComplete.tsx"
         ]
     },
-    "better-help-settings": {
-        "package": "matrix-react-sdk",
-        "files": [
-            "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx",
-            "src/components/views/elements/AccessibleButton.tsx"
-        ]
-    },
     "better-help-settings-2": {
         "package": "matrix-react-sdk",
         "github-issue":"https://github.com/tchapgouv/tchap-web-v4/issues/527, https://github.com/tchapgouv/tchap-web-v4/issues/526",
@@ -36,7 +29,8 @@
             "src/components/views/elements/ErrorBoundary.tsx",
             "src/components/views/rooms/RoomPreviewBar.tsx",
             "src/components/views/dialogs/FeedbackDialog.tsx",
-            "src/rageshake/submit-rageshake.ts"
+            "src/rageshake/submit-rageshake.ts",
+            "src/components/views/elements/AccessibleButton.tsx"
         ]
     },
     "content-scanner": {
