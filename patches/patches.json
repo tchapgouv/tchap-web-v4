@@ -206,4 +206,13 @@
             "src/stores/RoomViewStore.tsx"
         ]
     }
+    ,
+    "remove-chat-export": {
+        "github-issue": "https://github.com/tchapgouv/tchap-internal/issues/31",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/right_panel/RoomSummaryCard.tsx",
+            "src/components/views/context_menus/RoomContextMenu.tsx"
+        ]
+    }
 }

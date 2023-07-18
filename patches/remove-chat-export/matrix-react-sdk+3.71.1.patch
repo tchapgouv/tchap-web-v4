@@ -1,0 +1,41 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
+index 5c2b0c3..fc09835 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
+@@ -224,7 +224,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
+                     onFinished();
+                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
+                 }}
+-                label={_t("People")}
++                // label={TCHAP: change label _t("People")}
++                label={_t("Direct Messages") /* end TCHAP */}
+                 iconClassName="mx_RoomTile_iconPeople"
+             >
+                 <span className="mx_IconizedContextMenu_sublabel">{room.getJoinedMemberCount()}</span>
+@@ -390,7 +391,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
+                     iconClassName="mx_RoomTile_iconSettings"
+                 />
+ 
+-                {exportChatOption}
++                {/* {exportChatOption} */}
+ 
+                 {SettingsStore.getValue("developerMode") && (
+                     <IconizedContextMenuOption
+diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+index a32d8da..d47cd91 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+@@ -352,11 +352,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+                         {pinCount > 0 && <span className="mx_BaseCard_Button_sublabel">{pinCount}</span>}
+                     </Button>
+                 )}
+-                {!isVideoRoom && (
++                {/* {!isVideoRoom && (
+                     <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
+                         {_t("Export chat")}
+                     </Button>
+-                )}
++                )} */}
+                 <Button
+                     data-testid="shareRoomButton"
+                     className="mx_RoomSummaryCard_icon_share"
