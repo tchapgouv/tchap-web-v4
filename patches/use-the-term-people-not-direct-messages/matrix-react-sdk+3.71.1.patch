@@ -1,17 +1,3 @@
-diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-index 5c2b0c3..9e66542 100644
---- a/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/RoomContextMenu.tsx
-@@ -224,7 +224,8 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
-                     onFinished();
-                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
-                 }}
--                label={_t("People")}
-+                // label={TCHAP: change label _t("People")}
-+                label={_t("Direct Messages") /* end TCHAP */}
-                 iconClassName="mx_RoomTile_iconPeople"
-             >
-                 <span className="mx_IconizedContextMenu_sublabel">{room.getJoinedMemberCount()}</span>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
 index 3042405..2123c91 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
