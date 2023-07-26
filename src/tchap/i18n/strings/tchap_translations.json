@@ -962,5 +962,41 @@
   "Read the Privacy Policy": {
     "en": "Read the Privacy Policy",
     "fr": "Consultez la Politique de Confidentialité"
+  },
+  "Your %(brand)s is misconfigured": {
+    "fr": "",
+    "en": ""
+  },
+  "You can also ask your homeserver admin to upgrade the server to change this behaviour.":{
+    "fr" : "",
+    "en" : ""
+  },
+  "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.":{
+    "fr" : "",
+    "en" : ""
+  },
+  "Server may be unavailable, overloaded, or search timed out :(" : {
+    "fr" :  "Tchap n'est pas accessible pour le moment. Merci de consulter l'état des services Tchap: https://status.tchap.numerique.gouv.fr (err:01)",
+    "en" : "View the status of Tchape services at this url: https://status.tchap.numerique.gouv.fr (err:01)"
+  },
+  "Server may be unavailable, overloaded, or you hit a bug." : {
+    "fr" : "Tchap n'est pas accessible pour le moment. Merci de consulter l'état des services Tchap: https://status.tchap.numerique.gouv.fr (err:02) " ,
+    "en" : "View the status of Tchape services at this url: https://status.tchap.numerique.gouv.fr  (err:02)"
+  },
+  "Server unavailable, overloaded, or something else went wrong." : {
+    "fr" : "Tchap n'est pas accessible pour le moment. Merci de consulter l'état des services Tchap: https://status.tchap.numerique.gouv.fr (err:03)",
+    "en" : "View the status of Tchape services at this url: https://status.tchap.numerique.gouv.fr (err:03) "
+  },
+  "Connectivity to the server has been lost.": {
+    "fr": "Tchap n'est pas accessible pour le moment, consulter <a>l'état des services</a>. %(errCode)s",
+    "en" : "Tchap is not available at the moment"
+  },
+  "Review Tchap services status : url": {
+    "fr": "Tchap n'est pas accessible pour le moment, consulter <a>l'état des services</a>. %(errCode)s",
+    "en" : "Review Tchap services status : <a>url</a>"
+  },
+  "Sent messages will be stored until your connection has returned.": {
+    "fr": "Les messages envoyés seront stockés jusqu’à ce que la connexion soit établie.",
+    "en" : "Sent messages will be stored until your connection has returned."
   }
 }

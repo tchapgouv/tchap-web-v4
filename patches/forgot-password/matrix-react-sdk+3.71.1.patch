@@ -1,16 +1,17 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index c4c0834..27e9f28 100644
+index c4c0834..6486c91 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-@@ -43,6 +43,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
+@@ -43,6 +43,8 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
  import Spinner from "../../views/elements/Spinner";
  import { formatSeconds } from "../../../DateUtils";
  import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 +import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP:
++import Tchapi18nUtils from "../../../../../../src/tchap/i18n/Tchapi18nUtils";
  
  const emailCheckInterval = 2000;
  
-@@ -62,7 +63,7 @@ enum Phase {
+@@ -62,7 +64,7 @@ enum Phase {
  }
  
  interface Props {
@@ -19,7 +20,7 @@ index c4c0834..27e9f28 100644
      onLoginClick: () => void;
      onComplete: () => void;
  }
-@@ -107,14 +108,17 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -107,14 +109,17 @@ export default class ForgotPassword extends React.Component<Props, State> {
              serverSupportsControlOfDevicesLogout: false,
              logoutDevices: false,
          };
@@ -38,7 +39,7 @@ index c4c0834..27e9f28 100644
          if (
              prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
              prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
-@@ -125,6 +129,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -125,6 +130,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
              // Do capabilities check on new URLs
              this.checkServerCapabilities(this.props.serverConfig);
          }
@@ -46,7 +47,7 @@ index c4c0834..27e9f28 100644
      }
  
      private async checkServerLiveliness(serverConfig: ValidatedServerConfig): Promise<void> {
-@@ -159,9 +164,38 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -159,9 +165,38 @@ export default class ForgotPassword extends React.Component<Props, State> {
          });
      }
  
@@ -73,7 +74,7 @@ index c4c0834..27e9f28 100644
 +        if (!serverResult) {
 +            this.setState({
 +                serverIsAlive: false,
-+                errorText: _t('Server unavailable, overloaded, or something else went wrong.'), // reuse existing string
++                errorText: Tchapi18nUtils.getServerDownMessage("err-01"),
 +                phase: Phase.EnterEmail, // return to original phase, to remove the loding spinner from the submit button.
 +            });
 +            return;
@@ -85,7 +86,7 @@ index c4c0834..27e9f28 100644
          if (await this.sendVerificationMail()) {
              this.phase = Phase.EmailSent;
              return;
-@@ -326,8 +360,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -326,8 +361,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
              errorText: "",
          });
  
@@ -96,7 +97,7 @@ index c4c0834..27e9f28 100644
  
          // Server error
          if (!this.state.serverIsAlive) return;
-@@ -358,7 +394,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -358,7 +395,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
              <EnterEmail
                  email={this.state.email}
                  errorText={this.state.errorText}
@@ -105,7 +106,7 @@ index c4c0834..27e9f28 100644
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
-@@ -449,7 +485,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -449,7 +486,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
                                      onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
                                      checked={this.state.logoutDevices}
                                  >
