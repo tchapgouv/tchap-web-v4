@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index 4314726..fb1ed2c 100644
+index 4314726..a74c9af 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -40,6 +40,8 @@ import AuthHeader from "../../views/auth/AuthHeader";
@@ -88,7 +88,7 @@ index 4314726..fb1ed2c 100644
 +        //     _t("There was a problem communicating with the homeserver, please try again later.") +
 +        //     (errCode ? " (" + errCode + ")" : "");
 +
-+        let errorText: ReactNode = Tchapi18nUtils.getServerDownMessage(errCode);
++        let errorText: ReactNode = Tchapi18nUtils.getServerDownMessage("("+errCode+")");
  
          if (err instanceof ConnectionError) {
              if (

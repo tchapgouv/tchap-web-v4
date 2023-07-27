@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
-index 00b9284..74a7e23 100644
+index 00b9284..e55da17 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
 @@ -34,6 +34,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -15,12 +15,12 @@ index 00b9284..74a7e23 100644
                                  description:
                                      error?.message ??
 -                                    _t("Server may be unavailable, overloaded, or search timed out :("),
-+                                    Tchapi18nUtils.getServerDownMessage("err-02"),
++                                    Tchapi18nUtils.getServerDownMessage(),
                              });
                              return false;
                          },
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
-index 24530d4..9ee7a92 100644
+index 24530d4..2f8f555 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
 @@ -30,6 +30,7 @@ import AccessibleButton from "../views/elements/AccessibleButton";
@@ -31,16 +31,12 @@ index 24530d4..9ee7a92 100644
  
  const STATUS_BAR_HIDDEN = 0;
  const STATUS_BAR_EXPANDED = 1;
-@@ -286,10 +287,10 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
+@@ -286,7 +287,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                              />
                              <div>
                                  <div className="mx_RoomStatusBar_connectionLostBar_title">
 -                                    {_t("Connectivity to the server has been lost.")}
-+                                    {Tchapi18nUtils.getServerDownMessage("err-00")}
++                                    {Tchapi18nUtils.getServerDownMessage()}
                                  </div>
                                  <div className="mx_RoomStatusBar_connectionLostBar_desc">
--                                    {_t("Sent messages will be stored until your connection has returned.")}
-+                                    {Tchapi18nUtils.getServerDownMessage("err-00")}
-                                 </div>
-                             </div>
-                         </div>
+                                     {_t("Sent messages will be stored until your connection has returned.")}
