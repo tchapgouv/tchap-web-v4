@@ -8,7 +8,7 @@ export default class Tchapi18nUtils {
     public static getServerDownMessage(errCode? : string){
         return _t(
             "Review Tchap services status : url",
-            errCode ? {errCode} : {"errCode": ""},
+            errCode ? {"errCode": " "+errCode} : {"errCode": ""},
             {
                 a: (sub) => (
                     <a target="_blank" rel="noreferrer noopener" href={TchapUrls.statusPage}>

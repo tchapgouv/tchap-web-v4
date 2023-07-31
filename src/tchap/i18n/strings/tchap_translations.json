@@ -988,8 +988,8 @@
     "en" : "Tchap is not available at the moment. <a>View the status of services</a>."
   },
   "Review Tchap services status : url": {
-    "fr": "La connexion à Tchap n'est pas possible pour le moment %(errCode)s. <a>Voir l'état du service</a>",
-    "en": "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
+    "fr": "La connexion à Tchap n'est pas possible pour le moment%(errCode)s. <a>Voir l'état du service</a>",
+    "en": "Tchap is not available at the moment%(errCode)s. <a>View the status of services</a>."
   },
   "Sent messages will be stored until your connection has returned.": {
     "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
