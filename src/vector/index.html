@@ -3,6 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>Tchap - la messagerie instantanée des agents de la fonction publique</title>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": ["MobileApplication", "WebApplication"],
+          "url": "https://tchap.gouv.fr",
+          "applicationCategory": "CommunicationApplication",
+          "logo": "https://tchap.gouv.fr/<%= require('../../res/vector-icons/apple-touch-icon-180.png') %>"
+        }
+    </script>
     <link rel="apple-touch-icon" sizes="57x57" href="<%= require('../../res/vector-icons/apple-touch-icon-57.png') %>">
     <link rel="apple-touch-icon" sizes="60x60" href="<%= require('../../res/vector-icons/apple-touch-icon-60.png') %>">
     <link rel="apple-touch-icon" sizes="72x72" href="<%= require('../../res/vector-icons/apple-touch-icon-72.png') %>">
