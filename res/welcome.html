@@ -3,6 +3,10 @@
  * voodoo where we have to set display: none by default
  */
 
+    h1::after {
+        content: "!";
+    }
+
     .mx_Parent {
         display: -webkit-box;
         display: -webkit-flex;
@@ -51,11 +55,6 @@
         margin: 12px 0 0;
     }
 
-    .mx_Center_content {
-        justify-content:center;
-        -webkit-justify-content:center;
-    }
-    
     .mx_ButtonRow > * {
         margin: 0 10px;
     }
@@ -105,10 +104,6 @@
         margin: 20px 0 0;
     }
 
-    .mx_Header_title_no_bold {
-        font-weight: normal;
-    }
-
     .mx_Header_subtitle {
         font-size: 12px;
         font-weight: normal;
@@ -116,7 +111,7 @@
     }
 
     .mx_ButtonSignIn {
-        background-color: #000091;
+        background-color: #368bd6;
         color: white !important;
     }
 
@@ -127,9 +122,9 @@
 
     .mx_SecondaryButton {
         background-color: #ffffff;
-        outline: 1px solid #2e2f32;
-        outline-offset: -2px;
-        margin-top: 28px;
+        color: #2e2f32;
+        border: #2e2f32;
+
     }
 
     .mx_Button_iconSignIn {
@@ -176,11 +171,11 @@ we don't have an account and should hide them. No account == no guest account ei
     <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" target="_blank" rel="noopener">
         <img src="themes/tchap/img/logos/tchap-logo.svg" alt="" class="mx_Logo" />
     </a>
-    <h1 class="mx_Header_title">_t("Welcome to Tchap")<br/><span class="mx_Header_title_no_bold">la messagerie instantanée de l'Administration</span></h1>
+    <h1 class="mx_Header_title">_t("Welcome to Tchap")<br/>la messagerie instantanée de l'Administration</h1>
     <!-- XXX: Our translations system isn't smart enough to recognize variables in the HTML, so we manually do it -->
-    <h2 >Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, <br/>pour communiquer facilement en toute sécurité.
+    <h3 >Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, <br/>pour communiquer facilement en toute sécurité.
         Utilisée par plus de 400 000 agents publics.
-    </h2>
+    </h3>
     <div class="mx_ButtonGroup">
         <div class="mx_ButtonRow">
             <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
@@ -189,9 +184,8 @@ we don't have an account and should hide them. No account == no guest account ei
             <a href="#/register" class="mx_ButtonParent mx_ButtonCreateAccount mx_Button_iconCreateAccount">
                 <div class="mx_ButtonLabel">_t("Create Account")</div>
             </a>
-        </div>
-        <div class="mx_ButtonRow mx_Center_content">
-            <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" class="mx_ButtonParent mx_SecondaryButton "><div>En savoir plus</div>
+            <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" class="mx_ButtonParent mx_SecondaryButton">
+                <div class="mx_ButtonLabel">En savoir plus</div>
             </a>
         </div>
         <!-- The comments below are meant to be used by Ansible as a quick way
@@ -204,8 +198,12 @@ we don't have an account and should hide them. No account == no guest account ei
                 <a href="#/directory" class="mx_ButtonParent mx_SecondaryButton mx_Button_iconRoomDirectory">
                     <div class="mx_ButtonLabel">_t("Explore rooms")</div>
                 </a>
+                <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" class="mx_ButtonParent mx_SecondaryButton">
+                <div class="mx_ButtonLabel">En savoir plus</div>
+            </a>
             </div>
         </div>
         <!-- END Ansible: Remove these lines when guest access is disabled -->
     </div>
 </div>
+
