@@ -26,13 +26,21 @@
         color: #2e2f32;
     }
 
+    
+        .mx_AuthPage_modal {
+            margin-top: 25px
+        }
+    
+    h2 {
+        font-size: 1.6rem;
+    }
     .mx_Logo {
-        height: 54px;
+        height: 109px;
         margin-top: 2px;
     }
 
     .mx_ButtonGroup {
-        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     .mx_ButtonRow {
@@ -129,7 +137,7 @@
         background-color: #ffffff;
         outline: 1px solid #2e2f32;
         outline-offset: -2px;
-        margin-top: 28px;
+        margin-bottom: 18px;
     }
 
     .mx_Button_iconSignIn {
@@ -174,7 +182,7 @@ we don't have an account and should hide them. No account == no guest account ei
 
 <div class="mx_Parent">
     <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" target="_blank" rel="noopener">
-        <img src="themes/tchap/img/logos/tchap-logo.svg" alt="" class="mx_Logo" />
+        <img src="themes/tchap/img/logos/tchap-logo.png" alt="Logo Tchap" class="mx_Logo" />
     </a>
     <h1 class="mx_Header_title">_t("Welcome to Tchap")<br/><span class="mx_Header_title_no_bold">la messagerie instantanée de l'Administration</span></h1>
     <!-- XXX: Our translations system isn't smart enough to recognize variables in the HTML, so we manually do it -->
@@ -182,6 +190,10 @@ we don't have an account and should hide them. No account == no guest account ei
         Utilisée par plus de 400 000 agents publics.
     </h2>
     <div class="mx_ButtonGroup">
+        <div class="mx_ButtonRow mx_Center_content">
+            <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" class="mx_ButtonParent mx_SecondaryButton "><div>En savoir plus</div>
+            </a>
+        </div>
         <div class="mx_ButtonRow">
             <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
                 <div class="mx_ButtonLabel">_t("Sign In")</div>
@@ -190,10 +202,7 @@ we don't have an account and should hide them. No account == no guest account ei
                 <div class="mx_ButtonLabel">_t("Create Account")</div>
             </a>
         </div>
-        <div class="mx_ButtonRow mx_Center_content">
-            <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" class="mx_ButtonParent mx_SecondaryButton "><div>En savoir plus</div>
-            </a>
-        </div>
+       
         <!-- The comments below are meant to be used by Ansible as a quick way
              to strip out the marked content when desired.
              See https://github.com/vector-im/element-web/issues/8622.
