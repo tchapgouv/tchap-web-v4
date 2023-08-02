@@ -970,5 +970,37 @@
   "En savoir plus" : {
     "en": "Learn more",
     "fr": "En savoir plus"
+  },
+  "Your %(brand)s is misconfigured": {
+    "fr": "",
+    "en": ""
+  },
+  "You can also ask your homeserver admin to upgrade the server to change this behaviour.":{
+    "fr" : "",
+    "en" : ""
+  },
+  "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.":{
+    "fr" : "",
+    "en" : ""
+  },
+  "Server may be unavailable, overloaded, or you hit a bug." : {
+    "fr" : "La connexion à Tchap n'est pas possible pour le moment (err:04). Voir l'état du service: https://status.tchap.numerique.gouv.fr" ,
+    "en" : "Tchap is not available at the moment (err:04). View the status of services: https://status.tchap.numerique.gouv.fr"
+  },
+  "Server unavailable, overloaded, or something else went wrong." : {
+    "fr" : "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr",
+    "en" : "Tchap is not available at the moment (err:03). View the status of services: https://status.tchap.numerique.gouv.fr"
+  },
+  "Connectivity to the server has been lost.": {
+    "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>",
+    "en" : "Tchap is not available at the moment. <a>View the status of services</a>."
+  },
+  "Review Tchap services status : url": {
+    "fr": "La connexion à Tchap n'est pas possible pour le moment %(errCode)s. <a>Voir l'état du service</a>",
+    "en": "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
+  },
+  "Sent messages will be stored until your connection has returned.": {
+    "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
+    "en": "Messages will be sent when your connection returns."
   }
 }
