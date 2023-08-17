@@ -141,6 +141,7 @@ export default class TchapUtils {
     };
 
     /**
+     * @deprecated
      * Ask the homeserver is cross signing is supported (async)
      * @returns Promise<true> is cross signing is supported by home server or false
      */
