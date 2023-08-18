@@ -1,4 +1,3 @@
-
 diff --git a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss b/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
 index c23f53b..7aa9f25 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/auth/_CompleteSecurityBody.pcss
@@ -208,10 +207,18 @@ index 2cbfbf8..efe6b26 100644
                          </div>
                      </div>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-index 94cf02d..52b9e53 100644
+index 94cf02d..8deef31 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/DecryptionFailureBar.tsx
-@@ -193,6 +193,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
+@@ -29,6 +29,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
+ import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
+ import { SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";
+ import Spinner from "../elements/Spinner";
++import TchapUrls from "../../../../../../src/tchap/util/TchapUrls";
+ 
+ interface IProps {
+     failures: MatrixEvent[];
+@@ -193,6 +194,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                      )}
                  </React.Fragment>
              );
@@ -219,7 +226,7 @@ index 94cf02d..52b9e53 100644
              button = (
                  <AccessibleButton
                      className="mx_DecryptionFailureBar_end_button"
-@@ -203,28 +204,43 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
+@@ -203,28 +205,43 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures }) => {
                      {_t("Reset")}
                  </AccessibleButton>
              );
@@ -255,7 +262,7 @@ index 94cf02d..52b9e53 100644
 +        /* :TCHAP: Add for N bug */ message = <React.Fragment>{_t(
 +            "Or if that doesn't work, please follow <a>these steps</a>.",
 +            {},
-+            {a: (sub)=><a href="https://tchap.beta.gouv.fr/faq/messages-verrouilles" target="_blank">{sub}</a>}
++            {a: (sub)=><a href={TchapUrls.lockedMessagesPage} target="_blank">{sub}</a>}
 +        )}</React.Fragment>;
 +        
 +        // :TCHAP: shrink long banner
