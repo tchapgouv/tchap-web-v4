@@ -8,4 +8,8 @@ export default class TchapUrls {
     //tchap status page
     public static statusPage =  "https://status.tchap.numerique.gouv.fr"
 
+    //tchap FAQ page on locked messages
+    public static lockedMessagesPage = "https://tchap.beta.gouv.fr/faq/messages-verrouilles"
+
+
 }
