@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..c8ffab3 100644
+index 44dba2e..333ba22 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -33,7 +33,7 @@ index 44dba2e..c8ffab3 100644
  
 +        /* TCHAP */
 +        let downloadMembersButton;
-+        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountInvited() > 0) {
++        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountJoined() > 0) {
 +            downloadMembersButton = (
 +                <AccessibleTooltipButton
 +                    className="tc_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
