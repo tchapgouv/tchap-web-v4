@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..c785ee5 100644
+index 44dba2e..7be2f25 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -65,7 +65,7 @@ index 44dba2e..c785ee5 100644
 +    /* TCHAP */
 +    private onExportButtonClick = (ev: ButtonEvent): void => {
 +        const members = this.state.filteredJoinedMembers.map(roomMember => roomMember.userId);
-+        const blob = new Blob(members, { type : 'plain/text' })
++        const blob = new Blob([members.join()], { type : 'plain/text' })
 +
 +        const cli = MatrixClientPeg.get();
 +        const room = cli.getRoom(this.props.roomId);
