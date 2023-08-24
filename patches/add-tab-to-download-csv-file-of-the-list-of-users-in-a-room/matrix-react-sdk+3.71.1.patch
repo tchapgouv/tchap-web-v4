@@ -78,7 +78,7 @@ index a32d8da..e8fdaf4 100644
                      data-testid="shareRoomButton"
                      className="mx_RoomSummaryCard_icon_share"
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..607e565 100644
+index 44dba2e..c6b6d59 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -119,29 +119,15 @@ index 44dba2e..607e565 100644
          let invitedHeader;
          let invitedSection;
          if (this.getChildCountInvited() > 0) {
-@@ -384,12 +401,15 @@ export default class MemberList extends React.Component<IProps, IState> {
-         }
- 
-         const footer = (
--            <SearchBox
--                className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
--                placeholder={_t("Filter room members")}
--                onSearch={this.onSearchQueryChanged}
--                initialValue={this.props.searchQuery}
--            />
-+            <div>
-+                {downloadMembersButton}
-+                <SearchBox
-+                    className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
-+                    placeholder={_t("Filter room members")}
-+                    onSearch={this.onSearchQueryChanged}
-+                    initialValue={this.props.searchQuery}
-+                />
-+            </div>
-         );
- 
-         let scopeHeader;
-@@ -443,4 +463,15 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -409,6 +426,7 @@ export default class MemberList extends React.Component<IProps, IState> {
+                     <React.Fragment>
+                         {scopeHeader}
+                         {inviteButton}
++                        {downloadMembersButton /* TCHAP */}
+                     </React.Fragment>
+                 }
+                 footer={footer}
+@@ -443,4 +461,15 @@ export default class MemberList extends React.Component<IProps, IState> {
              roomId: this.props.roomId,
          });
      };
