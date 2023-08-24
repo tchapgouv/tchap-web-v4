@@ -2,7 +2,20 @@
 * Copyright DINUM 2023
 */
 
-.mx_MemberList_export {
+.mx_AccessibleButton.mx_AccessibleButton_hasKind.tc_MemberList_export {
+  /* Copy the style from mx_MemberList_invite button just above. For some reason it doesn't follow the standard style. */
+  display: flex;
+  justify-content: center;
+  margin: 5px 9px 9px;
+  padding: 0px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.tc_MemberList_export span {
+  padding: 8px 0;
+  display: inline-flex;
+
   &::before {
     content: "";
     display: inline-block;

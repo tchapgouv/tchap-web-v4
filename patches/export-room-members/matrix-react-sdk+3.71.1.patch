@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..0b2e092 100644
+index 44dba2e..c8ffab3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -36,7 +36,7 @@ index 44dba2e..0b2e092 100644
 +        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountInvited() > 0) {
 +            downloadMembersButton = (
 +                <AccessibleTooltipButton
-+                    className="mx_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary"
++                    className="tc_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
 +                    onClick={this.onDownloadButtonClick}
 +                    tooltip={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
 +                >
