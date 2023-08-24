@@ -78,7 +78,7 @@ index a32d8da..e8fdaf4 100644
                      data-testid="shareRoomButton"
                      className="mx_RoomSummaryCard_icon_share"
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..c6b6d59 100644
+index 44dba2e..cdee1f5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -93,11 +93,19 @@ index 44dba2e..c6b6d59 100644
  import { UIComponent } from "../../../settings/UIFeature";
  import PosthogTrackers from "../../../PosthogTrackers";
  import { SDKContext } from "../../../contexts/SDKContext";
-+import { generateAndDownloadTextFile } from "../../../../../../src/tchap/util/TchapExportFiles"; /* :TCHAP: */
++import { FileDownloader } from "../../../utils/FileDownloader";
  
  const INITIAL_LOAD_NUM_MEMBERS = 30;
  const INITIAL_LOAD_NUM_INVITED = 5;
-@@ -368,6 +370,21 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -73,6 +75,7 @@ export default class MemberList extends React.Component<IProps, IState> {
+ 
+     public static contextType = SDKContext;
+     public context!: React.ContextType<typeof SDKContext>;
++    private downloader = new FileDownloader(); // TCHAP
+ 
+     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+         super(props);
+@@ -368,6 +371,21 @@ export default class MemberList extends React.Component<IProps, IState> {
              );
          }
  
@@ -119,7 +127,7 @@ index 44dba2e..c6b6d59 100644
          let invitedHeader;
          let invitedSection;
          if (this.getChildCountInvited() > 0) {
-@@ -409,6 +426,7 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -409,6 +427,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                      <React.Fragment>
                          {scopeHeader}
                          {inviteButton}
@@ -127,7 +135,7 @@ index 44dba2e..c6b6d59 100644
                      </React.Fragment>
                  }
                  footer={footer}
-@@ -443,4 +461,15 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -443,4 +462,18 @@ export default class MemberList extends React.Component<IProps, IState> {
              roomId: this.props.roomId,
          });
      };
@@ -135,11 +143,14 @@ index 44dba2e..c6b6d59 100644
 +    /* TCHAP */
 +    private onDownloadButtonClick = (ev: ButtonEvent): void => {
 +        const members = this.state.filteredJoinedMembers.map(roomMember => roomMember.userId);
-+        generateAndDownloadTextFile({
-+            fileName: "membres",
-+            format: "txt",
-+            content: members.join(",")
++        const blob = new Blob(members, { type : 'plain/text' })
++
++        this.downloader.download({
++            blob: blob,
++            name: "membressss.txt", // todo add room name
 +        });
++
++        return;
 +    };
 +    /* end TCHAP */
  }
