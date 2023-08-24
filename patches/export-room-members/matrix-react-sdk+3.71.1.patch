@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..5232af5 100644
+index 44dba2e..0b2e092 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -10,15 +10,16 @@ index 44dba2e..5232af5 100644
  import EntityTile from "./EntityTile";
  import MemberTile from "./MemberTile";
  import BaseAvatar from "../avatars/BaseAvatar";
-@@ -46,6 +47,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
+@@ -46,6 +47,8 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
  import { UIComponent } from "../../../settings/UIFeature";
  import PosthogTrackers from "../../../PosthogTrackers";
  import { SDKContext } from "../../../contexts/SDKContext";
-+import { FileDownloader } from "../../../utils/FileDownloader";
++import { FileDownloader } from "../../../utils/FileDownloader"; // TCHAP
++import "../../../../../../res/css/views/rooms/MemberListExport.pcss"; // TCHAP
  
  const INITIAL_LOAD_NUM_MEMBERS = 30;
  const INITIAL_LOAD_NUM_INVITED = 5;
-@@ -73,6 +75,7 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -73,6 +76,7 @@ export default class MemberList extends React.Component<IProps, IState> {
  
      public static contextType = SDKContext;
      public context!: React.ContextType<typeof SDKContext>;
@@ -26,7 +27,7 @@ index 44dba2e..5232af5 100644
  
      public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
          super(props);
-@@ -368,6 +371,21 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -368,6 +372,21 @@ export default class MemberList extends React.Component<IProps, IState> {
              );
          }
  
@@ -35,7 +36,7 @@ index 44dba2e..5232af5 100644
 +        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountInvited() > 0) {
 +            downloadMembersButton = (
 +                <AccessibleTooltipButton
-+                    className="mx_MemberList_download mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary"
++                    className="mx_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary"
 +                    onClick={this.onDownloadButtonClick}
 +                    tooltip={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
 +                >
@@ -48,7 +49,7 @@ index 44dba2e..5232af5 100644
          let invitedHeader;
          let invitedSection;
          if (this.getChildCountInvited() > 0) {
-@@ -409,6 +427,7 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -409,6 +428,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                      <React.Fragment>
                          {scopeHeader}
                          {inviteButton}
@@ -56,7 +57,7 @@ index 44dba2e..5232af5 100644
                      </React.Fragment>
                  }
                  footer={footer}
-@@ -443,4 +462,24 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -443,4 +463,24 @@ export default class MemberList extends React.Component<IProps, IState> {
              roomId: this.props.roomId,
          });
      };
