@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..333ba22 100644
+index 44dba2e..c785ee5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -15,7 +15,7 @@ index 44dba2e..333ba22 100644
  import PosthogTrackers from "../../../PosthogTrackers";
  import { SDKContext } from "../../../contexts/SDKContext";
 +import { FileDownloader } from "../../../utils/FileDownloader"; // TCHAP
-+import "../../../../../../res/css/views/rooms/MemberListExport.pcss"; // TCHAP
++import "../../../../../../res/css/views/rooms/TchapMemberListExport.pcss"; // TCHAP
  
  const INITIAL_LOAD_NUM_MEMBERS = 30;
  const INITIAL_LOAD_NUM_INVITED = 5;
@@ -32,12 +32,12 @@ index 44dba2e..333ba22 100644
          }
  
 +        /* TCHAP */
-+        let downloadMembersButton;
++        let exportMembersButton;
 +        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountJoined() > 0) {
-+            downloadMembersButton = (
++            exportMembersButton = (
 +                <AccessibleTooltipButton
 +                    className="tc_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
-+                    onClick={this.onDownloadButtonClick}
++                    onClick={this.onExportButtonClick}
 +                    tooltip={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
 +                >
 +                    <span>{_t("Export room members")}</span>
@@ -53,7 +53,7 @@ index 44dba2e..333ba22 100644
                      <React.Fragment>
                          {scopeHeader}
                          {inviteButton}
-+                        {downloadMembersButton /* TCHAP */}
++                        {exportMembersButton /* TCHAP */}
                      </React.Fragment>
                  }
                  footer={footer}
@@ -63,7 +63,7 @@ index 44dba2e..333ba22 100644
      };
 +
 +    /* TCHAP */
-+    private onDownloadButtonClick = (ev: ButtonEvent): void => {
++    private onExportButtonClick = (ev: ButtonEvent): void => {
 +        const members = this.state.filteredJoinedMembers.map(roomMember => roomMember.userId);
 +        const blob = new Blob(members, { type : 'plain/text' })
 +
