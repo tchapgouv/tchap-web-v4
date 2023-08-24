@@ -3,10 +3,6 @@
  * voodoo where we have to set display: none by default
  */
 
-    h1::after {
-        content: "!";
-    }
-
     .mx_Parent {
         display: -webkit-box;
         display: -webkit-flex;
@@ -30,13 +26,21 @@
         color: #2e2f32;
     }
 
+    
+        .mx_AuthPage_modal {
+            margin-top: 25px
+        }
+    
+    h2 {
+        font-size: 1.6rem;
+    }
     .mx_Logo {
         height: 54px;
         margin-top: 2px;
     }
 
     .mx_ButtonGroup {
-        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     .mx_ButtonRow {
@@ -55,6 +59,11 @@
         margin: 12px 0 0;
     }
 
+    .mx_Center_content {
+        justify-content:center;
+        -webkit-justify-content:center;
+    }
+    
     .mx_ButtonRow > * {
         margin: 0 10px;
     }
@@ -104,6 +113,11 @@
         margin: 20px 0 0;
     }
 
+    .mx_Header_title_no_bold {
+        font-weight: normal;
+        font-size: 18px;
+    }
+
     .mx_Header_subtitle {
         font-size: 12px;
         font-weight: normal;
@@ -111,7 +125,7 @@
     }
 
     .mx_ButtonSignIn {
-        background-color: #368bd6;
+        background-color: #000091;
         color: white !important;
     }
 
@@ -122,7 +136,9 @@
 
     .mx_SecondaryButton {
         background-color: #ffffff;
-        color: #2e2f32;
+        outline: 1px solid #2e2f32;
+        outline-offset: -2px;
+        margin-bottom: 18px;
     }
 
     .mx_Button_iconSignIn {
@@ -166,13 +182,18 @@ we don't have an account and should hide them. No account == no guest account ei
 </style>
 
 <div class="mx_Parent">
-    <a href="https://element.io" target="_blank" rel="noopener">
-        <img src="themes/tchap/img/logos/tchap-logo.svg" alt="" class="mx_Logo" />
+    <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" target="_blank" rel="noopener">
+        <img src="themes/tchap/img/logos/tchap-logo.svg" alt="Logo Tchap" class="mx_Logo" />
     </a>
-    <h1 class="mx_Header_title">_t("Welcome to Tchap")</h1>
+    <h1 class="mx_Header_title">_t("Welcome to Tchap")<br/><span class="mx_Header_title_no_bold">_t("la messagerie instantanée de l'Administration")</span></h1>
     <!-- XXX: Our translations system isn't smart enough to recognize variables in the HTML, so we manually do it -->
-    <h4 class="mx_Header_subtitle">_t("Decentralised, encrypted chat &amp; collaboration powered by $matrixLogo")</h4>
+    <h2>_t("Conçue et gérée par l'Administration française")
+    </h2>
     <div class="mx_ButtonGroup">
+        <div class="mx_ButtonRow mx_Center_content">
+            <a href="https://tchap.beta.gouv.fr?mtm_campaign=TchapWebConnectLogo" class="mx_ButtonParent mx_SecondaryButton "><div>_t("En savoir plus")</div>
+            </a>
+        </div>
         <div class="mx_ButtonRow">
             <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
                 <div class="mx_ButtonLabel">_t("Sign In")</div>
@@ -181,6 +202,7 @@ we don't have an account and should hide them. No account == no guest account ei
                 <div class="mx_ButtonLabel">_t("Create Account")</div>
             </a>
         </div>
+       
         <!-- The comments below are meant to be used by Ansible as a quick way
              to strip out the marked content when desired.
              See https://github.com/vector-im/element-web/issues/8622.
