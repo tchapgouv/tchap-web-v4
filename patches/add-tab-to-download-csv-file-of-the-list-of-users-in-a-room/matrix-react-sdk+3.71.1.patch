@@ -77,3 +77,75 @@ index a32d8da..e8fdaf4 100644
                  <Button
                      data-testid="shareRoomButton"
                      className="mx_RoomSummaryCard_icon_share"
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
+index 44dba2e..bf2e1c3 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
+@@ -46,6 +46,8 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
+ import { UIComponent } from "../../../settings/UIFeature";
+ import PosthogTrackers from "../../../PosthogTrackers";
+ import { SDKContext } from "../../../contexts/SDKContext";
++import { generateAndDownloadTextFile } from "../../../../../../src/tchap/util/TchapExportFiles"; /* :TCHAP: */
++
+ 
+ const INITIAL_LOAD_NUM_MEMBERS = 30;
+ const INITIAL_LOAD_NUM_INVITED = 5;
+@@ -368,6 +370,20 @@ export default class MemberList extends React.Component<IProps, IState> {
+             );
+         }
+ 
++        /* TCHAP */
++        let downloadMembersButton;
++        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountInvited() > 0) {
++            downloadMembersButton = (
++                <AccessibleButton
++                    className="mx_MemberList_download mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary"
++                    onClick={this.onDownloadButtonClick}
++                >
++                    <span>Télécharger les membres</span>
++                </AccessibleButton>
++            );
++        }
++        /* end TCHAP */
++
+         let invitedHeader;
+         let invitedSection;
+         if (this.getChildCountInvited() > 0) {
+@@ -384,12 +400,15 @@ export default class MemberList extends React.Component<IProps, IState> {
+         }
+ 
+         const footer = (
+-            <SearchBox
+-                className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
+-                placeholder={_t("Filter room members")}
+-                onSearch={this.onSearchQueryChanged}
+-                initialValue={this.props.searchQuery}
+-            />
++            <div>
++                {downloadMembersButton}
++                <SearchBox
++                    className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
++                    placeholder={_t("Filter room members")}
++                    onSearch={this.onSearchQueryChanged}
++                    initialValue={this.props.searchQuery}
++                />
++            </div>
+         );
+ 
+         let scopeHeader;
+@@ -443,4 +462,15 @@ export default class MemberList extends React.Component<IProps, IState> {
+             roomId: this.props.roomId,
+         });
+     };
++
++    /* TCHAP */
++    private onDownloadButtonClick = (ev: ButtonEvent): void => {
++        const members = this.state.filteredJoinedMembers.map(roomMember => roomMember.userId);
++        generateAndDownloadTextFile({
++            fileName: "membres",
++            format: "txt",
++            content: members.join(",")
++        });
++    };
++    /* end TCHAP */
+ }
