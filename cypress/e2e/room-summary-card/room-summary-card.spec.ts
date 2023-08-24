@@ -28,7 +28,7 @@ describe("Export room members feature", () => {
     //     });
     // });
 
-    it("calls generateAndDownloadTextFile function on button click and downloads the file", () => {
+    it("downloads the file when button is clicked", () => {
         RoomUtils.createPublicRoom(roomName).then((roomId) => {
             RoomUtils.openRoomInformation(roomName);
             cy.get('[id="exportRoomMembersButton"]')

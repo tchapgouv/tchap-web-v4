@@ -1,84 +1,5 @@
-diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-index a32d8da..e8fdaf4 100644
---- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-@@ -17,7 +17,11 @@ limitations under the License.
- import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
- import classNames from "classnames";
- import { Room } from "matrix-js-sdk/src/models/room";
-+import { keys } from "lodash"; /* :TCHAP: */
- 
-+import Tooltip, { Alignment } from "../elements/Tooltip"; /* :TCHAP: */
-+import { generateAndDownloadTextFile } from "../../../../../../src/tchap/util/TchapExportFiles"; /* :TCHAP: */
-+import { useRoomContext } from "../../../contexts/RoomContext"; /* :TCHAP: */
- import MatrixClientContext from "../../../contexts/MatrixClientContext";
- import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
- import BaseCard, { Group } from "./BaseCard";
-@@ -274,6 +278,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
- 
- const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
-     const cli = useContext(MatrixClientContext);
-+    const context = useRoomContext();
- 
-     const onShareRoomClick = (): void => {
-         Modal.createDialog(ShareDialog, {
-@@ -287,6 +292,20 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
-         });
-     };
- 
-+    /* :TCHAP:
-+        add a tab to download the list of users in current room
-+        so that they can create new rooms with the same users
-+    */
-+    const onRoomExportMemberEmailsClick = async (): Promise<void> => {
-+        const members = keys(context?.room?.currentState?.members);
-+        generateAndDownloadTextFile({
-+            fileName: "members",
-+            format: "txt",
-+            content: members.join(",")
-+        });
-+    }
-+    /* end :TCHAP: */
-+
-     const onRoomPollHistoryClick = (): void => {
-         Modal.createDialog(PollHistoryDialog, {
-             room,
-@@ -328,6 +347,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
-     const memberCount = useRoomMemberCount(room);
-     const pinningEnabled = useFeatureEnabled("feature_pinning");
-     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
-+    /* :TCHAP: add tooltip for export room member list button */
-+    const [exportRoomMembersTooltipVisible, setExportRoomMembersTooltipVisible] = useState(false);
-+    const onExportRoomMembersEnter = () => setExportRoomMembersTooltipVisible(true);
-+    const onExportRoomMembersLeave = () => setExportRoomMembersTooltipVisible(false);
-+    /* end :TCHAP: */
- 
-     return (
-         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
-@@ -357,6 +381,21 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
-                         {_t("Export chat")}
-                     </Button>
-                 )}
-+                {/* :TCHAP: */ !isVideoRoom && (
-+                    <Button
-+                        className="mx_RoomSummaryCard_icon_export"
-+                        onClick={onRoomExportMemberEmailsClick}
-+                        onMouseEnter={onExportRoomMembersEnter}
-+                        onMouseLeave={onExportRoomMembersLeave}
-+                    >
-+                        {_t("Export room members (txt)")}
-+                        <Tooltip
-+                            label={_t("By exporting the members of the room, you obtain the identifiers of the participants that you can copy/paste to invite them into another room.")}
-+                            alignment={Alignment.Top}
-+                            visible={exportRoomMembersTooltipVisible}
-+                        />
-+                    </Button>
-+                ) /* end :TCHAP */}
-                 <Button
-                     data-testid="shareRoomButton"
-                     className="mx_RoomSummaryCard_icon_share"
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..cdee1f5 100644
+index 44dba2e..e0521de 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -147,7 +68,7 @@ index 44dba2e..cdee1f5 100644
 +
 +        this.downloader.download({
 +            blob: blob,
-+            name: "membressss.txt", // todo add room name
++            name: "membres.txt", // todo add room name
 +        });
 +
 +        return;
