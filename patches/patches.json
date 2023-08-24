@@ -223,7 +223,7 @@
             "src/components/structures/RoomStatusBar.tsx"
         ]
     },
-    "add-tab-to-download-csv-file-of-the-list-of-users-in-a-room": {
+    "export-room-members": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/593",
         "package": "matrix-react-sdk",
         "files": [
