@@ -222,7 +222,9 @@
         "relativePaths": true
     },
     "engines": {
-        "comment-2022-11-07": "matrix-js-sdk requires >=16.0.0. SSL librairies do not work with 18 and 19. 17 has incompatibilities with some deps.",
         "node": "^16"
+    },
+    "engines-comment": {
+        "2022-11-07": "matrix-js-sdk requires >=16.0.0. SSL librairies do not work with 18 and 19. 17 has incompatibilities with some deps."
     }
 }
