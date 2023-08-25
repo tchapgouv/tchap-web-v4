@@ -22,21 +22,20 @@ describe("Export room members feature", () => {
         // todo delete room, otherwise the test user will end up with a million identical rooms after a while.
     });
 
-    // it('should display the tooltip on button hover', () => {
-    //     RoomUtils.createPublicRoom(roomName).then((roomId) => {
-    //         RoomUtils.openRoomInformation(roomName);
-    //         cy.get('[aria-label="Information du salon"]').click(); // open room information side panel
-    //         cy.get('[id="exportRoomMembersButton"]')
-    //             .trigger('mouseover')
-    //             .get('[id="exportRoomMembersTooltip"]') // // tooltip should show
-    //     });
-    // });
+    it('should display the tooltip on button hover', () => {
+        RoomUtils.createPublicRoom(roomName).then(() => {
+            RoomUtils.openPeopleMenu(roomName);
+            cy.get('[data-testid="tc_exportRoomMembersButton"]')
+                .trigger('mouseover')
+                .get('.tc_exportRoomMembersTooltip') // tooltip should show
+        });
+     });
 
     it("downloads the file when button is clicked", () => {
         const normalizedRoomName = normalize(roomName);
-        RoomUtils.createPublicRoom(roomName).then((roomId) => {
+        RoomUtils.createPublicRoom(roomName).then(() => {
             RoomUtils.openPeopleMenu(roomName);
-            cy.get('[data-testid="exportRoomMembersButton"]')
+            cy.get('[data-testid="tc_exportRoomMembersButton"]')
                 .click()
                 .then(() => {
                     cy.readFile("cypress/downloads/membres_de_" + normalizedRoomName + ".txt")

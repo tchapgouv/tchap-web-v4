@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
-index 44dba2e..7be2f25 100644
+index 44dba2e..370224e 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
 @@ -39,6 +39,7 @@ import TruncatedList from "../elements/TruncatedList";
@@ -27,7 +27,7 @@ index 44dba2e..7be2f25 100644
  
      public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
          super(props);
-@@ -368,6 +372,21 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -368,6 +372,23 @@ export default class MemberList extends React.Component<IProps, IState> {
              );
          }
  
@@ -36,9 +36,11 @@ index 44dba2e..7be2f25 100644
 +        if (room?.getMyMembership() === "join" && !room.isSpaceRoom() && this.getChildCountJoined() > 0) {
 +            exportMembersButton = (
 +                <AccessibleTooltipButton
++                    data-testid="tc_exportRoomMembersButton"
 +                    className="tc_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
 +                    onClick={this.onExportButtonClick}
 +                    tooltip={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
++                    tooltipClassName="tc_exportRoomMembersTooltip"
 +                >
 +                    <span>{_t("Export room members")}</span>
 +                </AccessibleTooltipButton>
@@ -49,7 +51,7 @@ index 44dba2e..7be2f25 100644
          let invitedHeader;
          let invitedSection;
          if (this.getChildCountInvited() > 0) {
-@@ -409,6 +428,7 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -409,6 +430,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                      <React.Fragment>
                          {scopeHeader}
                          {inviteButton}
@@ -57,7 +59,7 @@ index 44dba2e..7be2f25 100644
                      </React.Fragment>
                  }
                  footer={footer}
-@@ -443,4 +463,24 @@ export default class MemberList extends React.Component<IProps, IState> {
+@@ -443,4 +465,24 @@ export default class MemberList extends React.Component<IProps, IState> {
              roomId: this.props.roomId,
          });
      };
