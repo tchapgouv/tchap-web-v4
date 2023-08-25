@@ -35,8 +35,8 @@
         font-size: 1.6rem;
     }
     .mx_Logo {
-        height: 54px;
-        margin-top: 2px;
+        height: 95px;
+        margin-top: 20px;
     }
 
     .mx_ButtonGroup {
@@ -138,7 +138,7 @@
         background-color: #ffffff;
         outline: 1px solid #2e2f32;
         outline-offset: -2px;
-        margin-bottom: 18px;
+        margin-bottom: 40px;
     }
 
     .mx_Button_iconSignIn {
@@ -153,7 +153,16 @@
     .mx_Button_iconRoomDirectory {
         background-image: url("welcome/images/icon-room-directory.svg");
     }
+    footer.mx_AuthFooter {
+    background: rgba(255, 255, 255, 1) !important;
+    padding: 30px 0 20px;
+    }
 
+    .mx_AuthFooter a:hover, .mx_AuthFooter a:link, .mx_AuthFooter a:visited {
+    color: #000;
+    margin: 0 22px;
+    font-weight: 500;
+    }
     /*
 .mx_WelcomePage_loggedIn is applied by EmbeddedPage from the Welcome component
 If it is set on the page, we should show the buttons. Otherwise, we have to assume
@@ -169,6 +178,7 @@ we don't have an account and should hide them. No account == no guest account ei
     .mx_ButtonRow.mx_WelcomePage_guestFunctions > div {
         margin: 0 auto;
     }
+    
 
     @media only screen and (max-width: 480px) {
         .mx_ButtonRow {
@@ -183,7 +193,7 @@ we don't have an account and should hide them. No account == no guest account ei
 
 <div class="mx_Parent">
     <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" target="_blank" rel="noopener">
-        <img src="themes/tchap/img/logos/tchap-logo.svg" alt="Logo Tchap" class="mx_Logo" />
+        <img src="themes/tchap/img/logos/tchap-logos.svg" alt="Logo Tchap" class="mx_Logo" />
     </a>
     <h1 class="mx_Header_title">_t("Welcome to Tchap")<br/><span class="mx_Header_title_no_bold">_t("la messagerie instantanée de l'Administration")</span></h1>
     <!-- XXX: Our translations system isn't smart enough to recognize variables in the HTML, so we manually do it -->
