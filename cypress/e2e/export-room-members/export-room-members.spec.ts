@@ -11,25 +11,24 @@ describe("Export room members feature", () => {
     const password = Cypress.env("E2E_TEST_USER_PASSWORD");
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     // This will fail if email has special characters.
-    const userId = "@" + email.replace('@', '-') + ":" + homeserverShort;
+    const userId = "@" + email.replace("@", "-") + ":" + homeserverShort;
 
     beforeEach(() => {
         cy.loginUser(homeserverUrl, email, password);
     });
 
-    afterEach(() => {
-    });
+    afterEach(() => {});
 
-    it('should display the tooltip on button hover', () => {
+    it("should display the tooltip on button hover", () => {
         const roomName = "test/" + today + "/export_room_members/" + RandomUtils.generateRandom(4);
         RoomUtils.createPublicRoom(roomName).then((roomId) => {
             RoomUtils.openPeopleMenu(roomName);
             cy.get('[data-testid="tc_exportRoomMembersButton"]')
-                .trigger('mouseover')
-                .get('.tc_exportRoomMembersTooltip') // tooltip should show
+                .trigger("mouseover")
+                .get(".tc_exportRoomMembersTooltip"); // tooltip should show
             cy.leaveRoom(roomId);
         });
-     });
+    });
 
     it("downloads the file when button is clicked", () => {
         const roomName = "test/" + today + "/export_room_members/" + RandomUtils.generateRandom(4);
@@ -39,8 +38,7 @@ describe("Export room members feature", () => {
             cy.get('[data-testid="tc_exportRoomMembersButton"]')
                 .click()
                 .then(() => {
-                    cy.readFile("cypress/downloads/membres_de_" + normalizedRoomName + ".txt")
-                        .should("eq", userId);
+                    cy.readFile("cypress/downloads/membres_de_" + normalizedRoomName + ".txt").should("eq", userId);
                 });
             cy.leaveRoom(roomId);
         });

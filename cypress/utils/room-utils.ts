@@ -27,6 +27,6 @@ export default class RoomUtils {
     }
     public static openPeopleMenu(roomName: string): Chainable<JQuery<HTMLElement>> {
         this.openRoomInformation(roomName);
-        return cy.get('.mx_RoomSummaryCard_icon_people').click();
+        return cy.get(".mx_RoomSummaryCard_icon_people").click();
     }
 }
