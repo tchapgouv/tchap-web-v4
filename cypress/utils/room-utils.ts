@@ -25,4 +25,8 @@ export default class RoomUtils {
         cy.get('[aria-label="' + roomName + '"]').click(); //open room
         return cy.get('[aria-label="Information du salon"]').click();
     }
+    public static openPeopleMenu(roomName: string): Chainable<JQuery<HTMLElement>> {
+        this.openRoomInformation(roomName);
+        return cy.get('.mx_RoomSummaryCard_icon_people').click();
+    }
 }

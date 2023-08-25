@@ -5,10 +5,14 @@ import RandomUtils from "../../utils/random-utils";
 
 describe("Export room members feature", () => {
     const homeserverUrl = Cypress.env("E2E_TEST_USER_HOMESERVER_URL");
+    const homeserverShort = Cypress.env("E2E_TEST_USER_HOMESERVER_SHORT");
     const email = Cypress.env("E2E_TEST_USER_EMAIL");
     const password = Cypress.env("E2E_TEST_USER_PASSWORD");
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-    const roomName = "test/" + today + "/public_room_check_access_settings" + RandomUtils.generateRandom(4);
+    // todo normalize name
+    const roomName = "test" + /*today + "exportroommembers" + */ RandomUtils.generateRandom(4);
+    // This will fail if email has special characters.
+    const userId = "@" + email.replace('@', '-') + ":" + homeserverShort;
 
     beforeEach(() => {
         cy.loginUser(homeserverUrl, email, password);
@@ -30,11 +34,12 @@ describe("Export room members feature", () => {
 
     it("downloads the file when button is clicked", () => {
         RoomUtils.createPublicRoom(roomName).then((roomId) => {
-            RoomUtils.openRoomInformation(roomName);
-            cy.get('[id="exportRoomMembersButton"]')
+            RoomUtils.openPeopleMenu(roomName);
+            cy.get('[data-testid="exportRoomMembersButton"]')
                 .click()
                 .then(() => {
-                    cy.readFile("cypress/downloads/members.txt").should("exist");
+                    cy.readFile("cypress/downloads/membres_de_" + roomName + ".txt")
+                        .should("eq", userId);
                 });
         });
     });
