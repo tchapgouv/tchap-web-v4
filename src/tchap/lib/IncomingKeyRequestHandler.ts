@@ -4,9 +4,39 @@ import Modal from "matrix-react-sdk/src/Modal";
 import { hideToast as hideUnverifiedSessionsToast } from "matrix-react-sdk/src/toasts/UnverifiedSessionToast";
 
 /**
- * :tchap: inspired from
+@deprecated
+* :tchap: inspired from
  * https://github.com/matrix-org/matrix-react-sdk/blob/515304d32ebcfee403791c6f4f11a5ecc29e9e65/src/KeyRequestHandler.js
- */
+ 
+
+This class was used in MatrixChat 
+// legacy export
+ export { default as Views } from "../../Views";
+@@ -1587,6 +1590,26 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
+         cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
+ 
++        //:tchap: add listener to handle incomingKeyRequest and trigger legacy verification process
++        //the one with the emoji
++        //this listener can be forced with forceLegacyIncomingRoomKeyVerification
++        //or is added only if the xs is not active
++        if(TchapUIFeature.forceLegacyIncomingRoomKeyVerification || 
++            !TchapUIFeature.isCrossSigningAndSecureStorageActive()){
++            //TCHAP: Désactiver le partage legacy de clefs avec les appareils mobiles
++            console.log(':tchap: activate the legacy incoming key verification')
++            const krh = new KeyRequestHandler(cli);
++            cli.on(CryptoEvent.RoomKeyRequest, (req) => {
++                krh.handleKeyRequest(req);
++            });
++    
++             cli.on(CryptoEvent.RoomKeyRequestCancellation, (req) => {
++                krh.handleKeyRequestCancellation(req);
++            });
++        }
++        //:tchap: end of tchap
++        
+
+*/
 export default class KeyRequestHandler {
     private _matrixClient;
     private _currentUser: string;
