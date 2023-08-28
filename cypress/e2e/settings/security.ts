@@ -16,10 +16,10 @@ describe("Check settings customization", () => {
          * https://github.com/tchapgouv/tchap-web-v4/issues/466
          * see res/themes/tchap-common/css/_tchap_custom.pcss
          */
-        cy.get(".mx_SecurityUserSettingsTab").get("[data-testid='tc_SettingsTab_SecureBackupPanel']")
+        cy.get(".mx_SecurityUserSettingsTab").get("[data-testid='tc_SettingsTab_SecureBackupPanel']");
+        cy.get(".mx_SecurityUserSettingsTab").get(".mx_SettingsTab_subheading").contains("Signature croisée");
         cy.get(".mx_SecurityUserSettingsTab")
-          .get(".mx_SettingsTab_subheading").contains("Signature croisée");
-        cy.get(".mx_SecurityUserSettingsTab")
-          .get(".mx_SettingsTab_subheading").should("not.contain", "Recherche de message");
+            .get(".mx_SettingsTab_subheading")
+            .should("not.contain", "Recherche de message");
     });
 });
