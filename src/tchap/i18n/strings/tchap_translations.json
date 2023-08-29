@@ -935,6 +935,18 @@
     "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
     "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
   },
+  "Export room members": {
+    "fr": "Exporter les membres du salon",
+    "en": "Export room members"
+  },
+  "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
+    "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon.",
+    "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room."
+  },
+  "members_of_%(roomName)s.txt": {
+    "fr": "membres_de_%(roomName)s.txt",
+    "en": "members_of_%(roomName)s.txt"
+  },
   "Destroy cross-signing keys?": {
     "fr": "Réinitialiser les clés de signature croisée ?",
     "en": "Reset cross-signing keys?"

@@ -210,5 +210,12 @@
             "src/components/structures/RoomSearchView.tsx",
             "src/components/structures/RoomStatusBar.tsx"
         ]
+    },
+    "export-room-members": {
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/593",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/rooms/MemberList.tsx"
+        ]
     }
 }

@@ -1,0 +1,25 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
+index 44dba2e..69ffbed 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/MemberList.tsx
+@@ -46,6 +46,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
+ import { UIComponent } from "../../../settings/UIFeature";
+ import PosthogTrackers from "../../../PosthogTrackers";
+ import { SDKContext } from "../../../contexts/SDKContext";
++import TchapExportMembersButton from "../../../../../../src/tchap/components/views/rooms/TchapExportMembersButton"; // TCHAP
+ 
+ const INITIAL_LOAD_NUM_MEMBERS = 30;
+ const INITIAL_LOAD_NUM_INVITED = 5;
+@@ -409,6 +410,12 @@ export default class MemberList extends React.Component<IProps, IState> {
+                     <React.Fragment>
+                         {scopeHeader}
+                         {inviteButton}
++                        {/** TCHAP */}
++                        <TchapExportMembersButton
++                            room={room}
++                            roomMembersIds={this.state.filteredJoinedMembers.map(roomMember => roomMember.userId)}>
++                        </TchapExportMembersButton>
++                        {/** end TCHAP */}
+                     </React.Fragment>
+                 }
+                 footer={footer}
