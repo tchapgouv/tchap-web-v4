@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-js-sdk/src/http-api/fetch.ts b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
-index e1c266c..31a12b4 100644
+index 38d9b4a..d4bc0a0 100644
 --- a/node_modules/matrix-js-sdk/src/http-api/fetch.ts
 +++ b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
-@@ -161,6 +161,12 @@ export class FetchHttpApi<O extends IHttpOpts> {
+@@ -160,6 +160,12 @@ export class FetchHttpApi<O extends IHttpOpts> {
              } else if (err.errcode == "M_CONSENT_NOT_GIVEN") {
                  this.eventEmitter.emit(HttpApiEvent.NoConsent, err.message, err.data.consent_uri);
              }
@@ -16,10 +16,10 @@ index e1c266c..31a12b4 100644
  
          // return the original promise, otherwise tests break due to it having to
 diff --git a/node_modules/matrix-js-sdk/src/http-api/interface.ts b/node_modules/matrix-js-sdk/src/http-api/interface.ts
-index 9946aa3..8cf51ed 100644
+index 57e8a18..525860d 100644
 --- a/node_modules/matrix-js-sdk/src/http-api/interface.ts
 +++ b/node_modules/matrix-js-sdk/src/http-api/interface.ts
-@@ -73,6 +73,10 @@ export interface IContentUri {
+@@ -75,6 +75,10 @@ export interface IContentUri {
  export enum HttpApiEvent {
      SessionLoggedOut = "Session.logged_out",
      NoConsent = "no_consent",
@@ -30,7 +30,7 @@ index 9946aa3..8cf51ed 100644
  }
  
  export type HttpApiEventHandlerMap = {
-@@ -100,6 +104,9 @@ export type HttpApiEventHandlerMap = {
+@@ -102,6 +106,9 @@ export type HttpApiEventHandlerMap = {
       * ```
       */
      [HttpApiEvent.NoConsent]: (message: string, consentUri: string) => void;
@@ -41,10 +41,10 @@ index 9946aa3..8cf51ed 100644
  
  export interface UploadProgress {
 diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index 2088131..bb10372 100644
+index 8e8fde2..55b0acd 100644
 --- a/node_modules/matrix-js-sdk/src/sync.ts
 +++ b/node_modules/matrix-js-sdk/src/sync.ts
-@@ -610,6 +610,14 @@ export class SyncApi {
+@@ -614,6 +614,14 @@ export class SyncApi {
              this.updateSyncState(SyncState.Error, { error });
              return true;
          }

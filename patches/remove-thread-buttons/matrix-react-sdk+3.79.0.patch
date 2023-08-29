@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-index 3ffe63a..c317e33 100644
+index 012119c..ee7774a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-@@ -682,7 +682,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
+@@ -698,7 +698,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
                  <IconizedContextMenuOptionList>
                      {reactButton}
                      {replyButton}
@@ -13,10 +13,10 @@ index 3ffe63a..c317e33 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 3a85406..597ecea 100644
+index 1485b1c..d41a58d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-@@ -367,18 +367,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
+@@ -332,18 +332,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
      private readonly forbiddenThreadHeadMsgType = [MsgType.KeyVerificationRequest];
  
      private get showReplyInThreadAction(): boolean {
@@ -50,23 +50,3 @@ index 3a85406..597ecea 100644
      }
  
      /**
-diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx
-index 79bc575..43dde74 100644
---- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx
-@@ -292,6 +292,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
-                 onClick={this.onTimelineCardClicked}
-             />,
-         );
-+        /* :TCHAP: Remove Thread from Header Buttons
-         rightPanelPhaseButtons.set(
-             RightPanelPhases.ThreadPanel,
-             <HeaderButton
-@@ -306,6 +307,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
-                 <UnreadIndicator color={this.state.threadNotificationColor} />
-             </HeaderButton>,
-         );
-+        end :TCHAP: */
-         rightPanelPhaseButtons.set(
-             RightPanelPhases.NotificationPanel,
-             <HeaderButton

@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 953ffc2..d5ccdf4 100644
+index fffb643..1034d9c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-@@ -34,6 +34,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
+@@ -30,6 +30,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
  import DMRoomMap from "../../../utils/DMRoomMap";
  import { IOOBData } from "../../../stores/ThreepidInviteStore";
  import TooltipTarget from "../elements/TooltipTarget";
@@ -12,7 +12,7 @@ index 953ffc2..d5ccdf4 100644
  
  interface IProps {
      room: Room;
-@@ -56,6 +59,11 @@ enum Icon {
+@@ -52,6 +55,11 @@ enum Icon {
      // Note: the names here are used in CSS class names
      None = "NONE", // ... except this one
      Globe = "GLOBE",
@@ -24,7 +24,7 @@ index 953ffc2..d5ccdf4 100644
      PresenceOnline = "ONLINE",
      PresenceAway = "AWAY",
      PresenceOffline = "OFFLINE",
-@@ -66,6 +74,14 @@ function tooltipText(variant: Icon): string | undefined {
+@@ -62,6 +70,14 @@ function tooltipText(variant: Icon): string | undefined {
      switch (variant) {
          case Icon.Globe:
              return _t("This room is public");
@@ -39,7 +39,7 @@ index 953ffc2..d5ccdf4 100644
          case Icon.PresenceOnline:
              return _t("Online");
          case Icon.PresenceAway:
-@@ -171,7 +187,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -167,7 +183,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
          } else {
              // Track publicity
