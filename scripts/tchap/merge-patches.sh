@@ -62,6 +62,7 @@ function merge_patches() {
       yarn add patch-package <> $LOG_FILE 2>&1
 
       # Apply the patch with --merge option
+      # if this fails on macos, use GNU patch instead of macos patch : brew install gpatch
       patch -p1 --no-backup-if-mismatch --input="$PATCH_PATH" --forward --merge 2>&1 >> $LOG_FILE || true
 
       # Check for conflicts
