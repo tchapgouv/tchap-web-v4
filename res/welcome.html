@@ -26,11 +26,11 @@
         color: #2e2f32;
     }
 
-    
+
         .mx_AuthPage_modal {
             margin-top: 25px
         }
-    
+
     h2 {
         font-size: 1.6rem;
     }
@@ -63,7 +63,7 @@
         justify-content:center;
         -webkit-justify-content:center;
     }
-    
+
     .mx_ButtonRow > * {
         margin: 0 10px;
     }
@@ -178,7 +178,7 @@ we don't have an account and should hide them. No account == no guest account ei
     .mx_ButtonRow.mx_WelcomePage_guestFunctions > div {
         margin: 0 auto;
     }
-    
+
 
     @media only screen and (max-width: 480px) {
         .mx_ButtonRow {
@@ -193,7 +193,7 @@ we don't have an account and should hide them. No account == no guest account ei
 
 <div class="mx_Parent">
     <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" target="_blank" rel="noopener">
-        <img src="themes/tchap/img/logos/tchap-logos.svg" alt="Logo Tchap" class="mx_Logo" />
+        <img src="$logoUrl" alt="Logo Tchap" class="mx_Logo" />
     </a>
     <h1 class="mx_Header_title">_t("Welcome to Tchap")<br/><span class="mx_Header_title_no_bold">_t("la messagerie instantanée de l'Administration")</span></h1>
     <!-- XXX: Our translations system isn't smart enough to recognize variables in the HTML, so we manually do it -->
@@ -212,12 +212,6 @@ we don't have an account and should hide them. No account == no guest account ei
                 <div class="mx_ButtonLabel">_t("Create Account")</div>
             </a>
         </div>
-       
-        <!-- The comments below are meant to be used by Ansible as a quick way
-             to strip out the marked content when desired.
-             See https://github.com/vector-im/element-web/issues/8622.
-             TODO: Strip out these comments and rely on the guest flag -->
-        <!-- BEGIN Ansible: Remove these lines when guest access is disabled -->
         <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">
             <div>
                 <a href="#/directory" class="mx_ButtonParent mx_SecondaryButton mx_Button_iconRoomDirectory">
@@ -225,6 +219,5 @@ we don't have an account and should hide them. No account == no guest account ei
                 </a>
             </div>
         </div>
-        <!-- END Ansible: Remove these lines when guest access is disabled -->
     </div>
 </div>
