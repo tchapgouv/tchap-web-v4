@@ -41,6 +41,7 @@ describe("Login", () => {
         // Will be replaced by a generated random user when we have a full docker setup
         const username = Cypress.env("E2E_TEST_USER_EMAIL");
         const password = Cypress.env("E2E_TEST_USER_PASSWORD");
+        const securityKey = Cypress.env("E2E_TEST_USER_SECURITY_KEY");
 
         beforeEach(() => {
             // We use a pre-existing user on dev backend. If random user was created each time, we would use :
@@ -57,12 +58,18 @@ describe("Login", () => {
 
             cy.get("#mx_LoginForm_email").type(username);
             cy.get("#mx_LoginForm_password").type(password);
-            cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
-            //TODO: does not work if account has cross signing because the screen is /#/login "Vérifier cet appareil"
+            // Enter security key
+            cy.get(".mx_CompleteSecurityBody .mx_AccessibleButton").contains("Vérifier avec un Code de Récupération").click();
+            cy.get("#mx_securityKey").type(securityKey);
+            cy.get(".mx_AccessSecretStorageDialog .mx_Dialog_primary").click();
+
+            // Success page displays. Click to continue.
+            cy.get(".mx_E2EIcon_verified"); // check for presence of success icon
+            cy.get(".mx_CompleteSecurityBody .mx_AccessibleButton_kind_primary").click();
+
             cy.url().should("contain", "/#/home");
-            cy.stopMeasuring("from-submit-to-home");
         });
     });
 });
