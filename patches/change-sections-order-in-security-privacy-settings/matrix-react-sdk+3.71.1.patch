@@ -52,7 +52,7 @@ index 34b52e4..8085f20 100644
              </div>
          );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 9fe4528..df362fa 100644
+index 9fe4528..d8e8040 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 @@ -292,7 +292,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
@@ -60,7 +60,7 @@ index 9fe4528..df362fa 100644
          const secureBackup = (
              <div className="mx_SettingsTab_section">
 -                <span className="mx_SettingsTab_subheading">{_t("Secure Backup")}</span>
-+                <span className="mx_SettingsTab_heading">{_t("Secure Backup")}</span>
++                <span className="mx_SettingsTab_heading" data-testid="tc_SettingsTab_SecureBackupPanel">{_t("Secure Backup")}</span>
                  <div className="mx_SettingsTab_subsectionText">
                      <SecureBackupPanel />
                  </div>
