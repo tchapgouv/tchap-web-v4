@@ -73,7 +73,7 @@
         "analyse:unused-exports": "node ./scripts/analyse_unused_exports.js",
         "postinstall": "./scripts/tchap/apply_patches.sh",
         "patch-package": "patch-package",
-        "patches-reapply": "rm -rf node_modules/matrix-react-sdk; rm -rf node_modules/matrix-js-sdk; yarn link matrix-js-sdk; yarn link matrix-react-sdk; yarn install --force",
+        "patches-reapply": "cd yarn-linked-dependencies/matrix-react-sdk; git checkout .; cd ../matrix-js-sdk; git checkout .; cd ../..; ./scripts/tchap/apply_patches.sh",
         "patch-make": "node scripts/tchap/makePatch.ts"
     },
     "dependencies": {
