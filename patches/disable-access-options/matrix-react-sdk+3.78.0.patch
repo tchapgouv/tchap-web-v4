@@ -1,56 +1,42 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-index 78bb1fe..d286db9 100644
+index 354d2ab..2de13b8 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-@@ -251,14 +251,16 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
-         const room = client.getRoom(this.props.roomId);
+@@ -262,6 +262,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const room = this.props.room;
  
          let aliasWarning: JSX.Element | undefined;
--        if (room?.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
--            aliasWarning = (
--                <div className="mx_SecurityRoomSettingsTab_warning">
--                    <WarningIcon width={15} height={15} />
--                    <span>{_t("To link to this room, please add an address.")}</span>
--                </div>
--            );
--        }
-+        // :TCHAP: remove
-+        // if (room?.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
-+        //     aliasWarning = (
-+        //         <div className="mx_SecurityRoomSettingsTab_warning">
-+        //             <WarningIcon width={15} height={15} />
-+        //             <span>{_t("To link to this room, please add an address.")}</span>
-+        //         </div>
-+        //     );
-+        // }
-+        // end :TCHAP:
-         const description = _t("Decide who can join %(roomName)s.", {
-             roomName: room?.name,
-         });
-@@ -415,11 +417,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
-     }
- 
-     public render(): React.ReactNode {
-+        const isEncrypted = this.state.encrypted;
-+        /* :TCHAP: does not allow to change encryption
-         const client = this.context;
-         const room = client.getRoom(this.props.roomId);
--        const isEncrypted = this.state.encrypted;
-         const hasEncryptionPermission = room?.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
-         const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
++        /* :TCHAP: remove
+         if (room.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
+             aliasWarning = (
+                 <div className="mx_SecurityRoomSettingsTab_warning">
+@@ -270,12 +271,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+                 </div>
+             );
+         }
 +        end :TCHAP: */
+         const description = _t("Decide who can join %(roomName)s.", {
+             roomName: room.name,
+         });
+ 
+         let advanced: JSX.Element | undefined;
+-        if (room.getJoinRule() === JoinRule.Public) {
++        if (false) { // :TCHAP: no guest access - if(room.getJoinRule() === JoinRule.Public) {
+             advanced = (
+                 <div>
+                     <AccessibleButton
+@@ -447,9 +449,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const client = this.context;
+         const room = this.props.room;
+         const isEncrypted = this.state.encrypted;
++        /* :TCHAP: does not allow changing encryption
+         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
+         const isEncryptionForceDisabled = shouldForceDisableEncryption(client);
+         const canEnableEncryption = !isEncrypted && !isEncryptionForceDisabled && hasEncryptionPermission;
++        */
++        const isEncryptionForceDisabled = false;
 +        const canEnableEncryption = false;
++        // end :TCHAP:
  
          let encryptionSettings: JSX.Element | undefined;
          if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
-@@ -436,7 +441,10 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
-         const historySection = this.renderHistory();
- 
-         let advanced: JSX.Element | undefined;
-+        /* :TCHAP: does not show any advanced options for public room (guest access switch)
-         if (room?.getJoinRule() === JoinRule.Public) {
-+        end :TCHAP: */
-+        if (false) {
-             advanced = (
-                 <div className="mx_SettingsTab_section">
-                     <AccessibleButton
