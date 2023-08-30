@@ -28,7 +28,7 @@ export default class TchapUIFeature {
     public static activateClearCacheAndReloadAtVersion4 = true;
 
     /** 
-        get list of homeserver where the feature should be activated from config.json
+        get list of homeservers where the feature should be activated from config.json
         example
          for feature : feature_email_notification 
          add this in config.json
