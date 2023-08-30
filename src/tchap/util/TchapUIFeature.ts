@@ -41,7 +41,7 @@ export default class TchapUIFeature {
     */
     public static isFeatureActiveForHomeserver(feature:string):boolean {        
         
-        const homeserversWithFeature:[string] = SdkConfig.get("tchap")?.[feature] || [];
+        const homeserversWithFeature:[string] = SdkConfig.get("tchap_features")?.[feature] || [];
         const userHomeServer = MatrixClientPeg.getHomeserverName();
         return homeserversWithFeature.includes(userHomeServer);
     }

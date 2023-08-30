@@ -218,7 +218,7 @@
             "src/components/views/rooms/MemberList.tsx"
         ]
     },
-    "add-feature-flag-based-on-homeserver": {
+    "tchap-features-from-config": {
         "github-issue": "",
         "package": "matrix-react-sdk",
         "files": [
