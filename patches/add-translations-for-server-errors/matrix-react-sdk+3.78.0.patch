@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx b/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
-index 53d4f07..1c4d8fa 100644
+index 30f01bd..3c1c49b 100644
 --- a/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
 +++ b/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
-@@ -602,6 +602,12 @@ export class RoomViewStore extends EventEmitter {
+@@ -603,6 +603,12 @@ export class RoomViewStore extends EventEmitter {
          let description: ReactNode = err.message ? err.message : JSON.stringify(err);
          logger.log("Failed to join room:", description);
  

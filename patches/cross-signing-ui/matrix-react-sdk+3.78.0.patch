@@ -16,10 +16,10 @@ index 53d5988..9b8ad77 100644
      background-color: $background;
      border-radius: 4px;
 diff --git a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-index 2a0cf58..0ea7031 100644
+index ba53b61..330ee36 100644
 --- a/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/async-components/views/dialogs/security/CreateSecretStorageDialog.tsx
-@@ -186,13 +186,38 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -187,13 +187,38 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                  backupInfo && cli.isCryptoEnabled() ? await cli.isKeyBackupTrusted(backupInfo) : null;
  
              const { forceReset } = this.props;
@@ -59,7 +59,7 @@ index 2a0cf58..0ea7031 100644
  
              return {
                  backupInfo: backupInfo ?? undefined,
-@@ -734,10 +759,17 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -735,10 +760,17 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
          if (this.state.phase === Phase.ShowKey) {
              continueButton = (
                  <DialogButtons
@@ -80,7 +80,7 @@ index 2a0cf58..0ea7031 100644
                  />
              );
          } else {
-@@ -750,6 +782,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -751,6 +783,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
  
          return (
              <div>
@@ -91,7 +91,7 @@ index 2a0cf58..0ea7031 100644
                  <p>
                      {_t(
                          "Store your Security Key somewhere safe, like a password manager or a safe, " +
-@@ -762,6 +798,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -763,6 +799,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                              <code ref={this.recoveryKeyNode}>{this.recoveryKey?.encodedPrivateKey}</code>
                          </div>
                          <div className="mx_CreateSecretStorageDialog_recoveryKeyButtons">
@@ -99,7 +99,7 @@ index 2a0cf58..0ea7031 100644
                              <AccessibleButton
                                  kind="primary"
                                  className="mx_Dialog_primary"
-@@ -776,6 +813,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
+@@ -777,6 +814,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                                      copyButton: "",
                                  })}
                              </span>

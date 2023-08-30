@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-index 012119c..ee7774a 100644
+index ffe35fa..aff8c9b 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 @@ -698,7 +698,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
@@ -13,7 +13,7 @@ index 012119c..ee7774a 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 1485b1c..d41a58d 100644
+index 6b727c5..aa71892 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 @@ -332,18 +332,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction

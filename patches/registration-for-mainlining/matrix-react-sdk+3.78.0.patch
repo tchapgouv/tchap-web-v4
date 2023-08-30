@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index 15dcda4..e712e98 100644
+index eeca4a9..a9033ca 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-@@ -39,8 +39,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
+@@ -40,8 +40,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
  import Spinner from "../../views/elements/Spinner";
  import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
  import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
@@ -14,7 +14,7 @@ index 15dcda4..e712e98 100644
  
  const debuglog = (...args: any[]): void => {
      if (SettingsStore.getValue("debug_registration")) {
-@@ -277,11 +280,22 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -278,11 +281,22 @@ export default class Registration extends React.Component<IProps, IState> {
      }
  
      private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
@@ -37,7 +37,7 @@ index 15dcda4..e712e98 100644
          });
      };
  
-@@ -296,7 +310,10 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -297,7 +311,10 @@ export default class Registration extends React.Component<IProps, IState> {
              emailAddress,
              clientSecret,
              sendAttempt,
@@ -49,7 +49,7 @@ index 15dcda4..e712e98 100644
                  client_secret: clientSecret,
                  hs_url: this.state.matrixClient.getHomeserverUrl(),
                  is_url: this.state.matrixClient.getIdentityServerUrl(),
-@@ -341,6 +358,8 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -340,6 +357,8 @@ export default class Registration extends React.Component<IProps, IState> {
                  errorText = _t("Someone already has that username, please try another.");
              } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
                  errorText = _t("That e-mail address or phone number is already in use.");
@@ -58,7 +58,7 @@ index 15dcda4..e712e98 100644
              }
  
              this.setState({
-@@ -476,6 +495,11 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -473,6 +492,11 @@ export default class Registration extends React.Component<IProps, IState> {
              inhibit_login: undefined,
          };
          if (auth) registerParams.auth = auth;
@@ -70,7 +70,7 @@ index 15dcda4..e712e98 100644
          debuglog("Registration: sending registration request:", auth);
          return this.state.matrixClient.registerRequest(registerParams);
      };
-@@ -515,7 +539,7 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -512,7 +536,7 @@ export default class Registration extends React.Component<IProps, IState> {
                      sessionId={this.props.sessionId}
                      clientSecret={this.props.clientSecret}
                      emailSid={this.props.idSid}
@@ -79,7 +79,7 @@ index 15dcda4..e712e98 100644
                  />
              );
          } else if (!this.state.matrixClient && !this.state.busy) {
-@@ -711,6 +735,12 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -708,6 +732,12 @@ export default class Registration extends React.Component<IProps, IState> {
                              {errorText}
                              {serverDeadSection}
                          </AuthHeaderDisplay>
@@ -93,7 +93,7 @@ index 15dcda4..e712e98 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index 17d540b..9b6e012 100644
+index 5f2a5c4..44a95e2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -268,7 +268,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
@@ -117,7 +117,7 @@ index 17d540b..9b6e012 100644
              },
              {
                  key: "email",
-@@ -560,16 +563,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -562,16 +565,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>

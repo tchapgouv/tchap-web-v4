@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index c4c0834..880f18e 100644
+index 311fb37..b4610e2 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -43,6 +43,8 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -97,7 +97,7 @@ index c4c0834..880f18e 100644
  
          // Server error
          if (!this.state.serverIsAlive) return;
-@@ -358,7 +395,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -361,7 +398,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
              <EnterEmail
                  email={this.state.email}
                  errorText={this.state.errorText}
@@ -106,7 +106,7 @@ index c4c0834..880f18e 100644
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
-@@ -449,7 +486,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -452,7 +489,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
                                      onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
                                      checked={this.state.logoutDevices}
                                  >
@@ -118,7 +118,7 @@ index c4c0834..880f18e 100644
                              </div>
                          ) : null}
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-index 653aaef..3fd5b9a 100644
+index 7b82121..f770298 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 @@ -64,6 +64,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
