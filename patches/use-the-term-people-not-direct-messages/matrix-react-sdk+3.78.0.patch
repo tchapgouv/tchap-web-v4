@@ -1,51 +1,47 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-index 3042405..2123c91 100644
+index 45f60d1..1844ae7 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
-@@ -53,7 +53,9 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space
-                         );
-                     }}
-                 >
--                    {_t("People")}
-+                    {/* TCHAP: change label {_t("People")} */}
-+                    {_t("Direct Messages")}
-+                    {/* end TCHAP */}
-                 </StyledCheckbox>
-                 <p>
-                     {_t(
+@@ -55,7 +55,7 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space
+                             );
+                         }}
+                     >
+-                        {_t("People")}
++                        {_t("Direct Messages") /* TCHAP: change label _t("People") */}
+                     </StyledCheckbox>
+                     <SettingsSubsectionText>
+                         {_t(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-index 98a3260..deed0b6 100644
+index 64d2c73..4453a0a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-@@ -404,7 +404,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
+@@ -402,7 +402,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
          defaultHidden: false,
      },
      [DefaultTagID.DM]: {
 -        sectionLabel: _td("People"),
-+        sectionLabel: _td("Direct Messages"),
++        sectionLabel: _td("Direct Messages"), /* TCHAP: change label _td("People"), */
          isInvite: false,
          defaultHidden: false,
          AuxButtonComponent: DmAuxButton,
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
-index 1a11e0d..b4800b3 100644
+index 3c9aaff..da2c9ad 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
-@@ -105,7 +105,9 @@ const SidebarUserSettingsTab: React.FC = () => {
-                     onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebSettingsSidebarTabSpacesCheckbox")}
-                     className="mx_SidebarUserSettingsTab_peopleCheckbox"
-                 >
--                    {_t("People")}
-+                    {/* TCHAP: change label {_t("People")} */}
-+                    {_t("Direct Messages")}
-+                    {/* end TCHAP */}
-                 </StyledCheckbox>
-                 <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
-                     {_t("Group all your people in one place.")}
+@@ -121,7 +121,7 @@ const SidebarUserSettingsTab: React.FC = () => {
+                     >
+                         <SettingsSubsectionText>
+                             <MembersIcon />
+-                            {_t("People")}
++                            {_t("Direct Messages") /* TCHAP: change label _t("People") */}
+                         </SettingsSubsectionText>
+                         <SettingsSubsectionText>{_t("Group all your people in one place.")}</SettingsSubsectionText>
+                     </StyledCheckbox>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
-index 1adcd41..2054ab9 100644
+index 3966b04..68238e5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
-@@ -105,7 +105,9 @@ const QuickSettingsButton: React.FC<{
+@@ -107,7 +107,9 @@ const QuickSettingsButton: React.FC<{
                      onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
                  >
                      <MembersIcon className="mx_QuickSettingsButton_icon" />
@@ -57,7 +53,7 @@ index 1adcd41..2054ab9 100644
                  <AccessibleButton
                      className="mx_QuickSettingsButton_moreOptionsButton"
 diff --git a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
-index 0cc4bba..165e2bb 100644
+index 6e5f325..5cb8cb9 100644
 --- a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 +++ b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 @@ -42,7 +42,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
