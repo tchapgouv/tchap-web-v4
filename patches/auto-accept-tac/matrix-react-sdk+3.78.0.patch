@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-index 12f42a3..3b298de 100644
+index c27640c..d137782 100644
 --- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 +++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 @@ -30,6 +30,7 @@ import {
@@ -10,7 +10,7 @@ index 12f42a3..3b298de 100644
  
  export class AbortedIdentityActionError extends Error {}
  
-@@ -131,6 +132,18 @@ export default class IdentityAuthClient {
+@@ -135,6 +136,18 @@ export default class IdentityAuthClient {
              throw e;
          }
  
@@ -28,13 +28,13 @@ index 12f42a3..3b298de 100644
 +
          if (
              !this.tempClient &&
-             !doesAccountDataHaveIdentityServer() &&
+             !doesAccountDataHaveIdentityServer(this.matrixClient) &&
 diff --git a/node_modules/matrix-react-sdk/src/Terms.ts b/node_modules/matrix-react-sdk/src/Terms.ts
-index b986a5e..116027b 100644
+index d31b635..9b250b1 100644
 --- a/node_modules/matrix-react-sdk/src/Terms.ts
 +++ b/node_modules/matrix-react-sdk/src/Terms.ts
-@@ -21,6 +21,11 @@ import { logger } from "matrix-js-sdk/src/logger";
- import { MatrixClientPeg } from "./MatrixClientPeg";
+@@ -21,6 +21,11 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
+ 
  import Modal from "./Modal";
  import TermsDialog from "./components/views/dialogs/TermsDialog";
 +import {
@@ -45,19 +45,19 @@ index b986a5e..116027b 100644
  
  export class TermsNotSignedError extends Error {}
  
-@@ -78,6 +83,15 @@ export async function startTermsFlow(
+@@ -80,6 +85,15 @@ export async function startTermsFlow(
      services: Service[],
      interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
  ): Promise<void> {
-+    // :TCHAP: no need to go through Terms flow as we trust our backend servers 
++    // :TCHAP: no need to go through Terms flow as we trust our backend servers
 +    if (TchapUIFeature.autoAcceptTermsAndConditions){
-+        if (!doesAccountDataHaveIdentityServer()) {
-+            setToDefaultIdentityServer();
++        if (!doesAccountDataHaveIdentityServer(client)) {
++            setToDefaultIdentityServer(client);
 +        }
 +        return;
 +    }
 +    // end :TCHAP:
-+    
-     const termsPromises = services.map((s) => MatrixClientPeg.get().getTerms(s.serviceType, s.baseUrl));
++
+     const termsPromises = services.map((s) => client.getTerms(s.serviceType, s.baseUrl));
  
      /*
