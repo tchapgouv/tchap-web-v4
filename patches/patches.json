@@ -98,10 +98,6 @@
         "package": "matrix-react-sdk",
         "files": ["src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"]
     },
-    "hide-location-if-no-map-server": {
-        "package": "matrix-react-sdk",
-        "files": ["src/components/views/rooms/MessageComposer.tsx"]
-    },
     "activate-expired-account-panel": {
         "package": "matrix-js-sdk",
         "files": [
