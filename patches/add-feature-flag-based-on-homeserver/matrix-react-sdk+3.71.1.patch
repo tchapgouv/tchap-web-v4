@@ -17,7 +17,7 @@ index b2e44f2..28ff388 100644
 +//end :tchap: 
 \ No newline at end of file
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
-index 3e833b3..37c34fb 100644
+index 3e833b3..9010378 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
 @@ -48,6 +48,7 @@ import {
@@ -28,12 +28,15 @@ index 3e833b3..37c34fb 100644
  
  // TODO: this "view" component still has far too much application logic in it,
  // which should be factored out to other files.
-@@ -704,7 +705,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+@@ -703,8 +704,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+                         />
                      </>
                  )}
- 
+-
 -                {emailSwitches}
++                {/* :TCHAP: show button if feature is active on homeserver */}
 +                { TchapUIFeature.isFeatureActiveForHomeserver("feature_email_notification") ? emailSwitches : null}
++                {/* :TCHAP: end */}
              </>
          );
      }
