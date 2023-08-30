@@ -1,20 +1,20 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-index 9c47a74..1a8fa6c 100644
+index a79a3fe..51cb9f5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-@@ -88,6 +88,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
-                     <RoomProfileSettings roomId={this.props.roomId} />
-                 </div>
+@@ -89,6 +89,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+                     <RoomProfileSettings roomId={room.roomId} />
+                 </SettingsSection>
  
 +                {/* :TCHAP: no aliases for rooms
-                 <div className="mx_SettingsTab_heading">{_t("Room Addresses")}</div>
-                 <AliasSettings
-                     roomId={this.props.roomId}
-@@ -95,6 +96,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
-                     canSetAliases={canSetAliases}
-                     canonicalAliasEvent={canonicalAliasEv}
-                 />
+                 <SettingsSection heading={_t("Room Addresses")}>
+                     <AliasSettings
+                         roomId={room.roomId}
+@@ -97,6 +98,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
+                         canonicalAliasEvent={canonicalAliasEv}
+                     />
+                 </SettingsSection>
 +                end :TCHAP: */}
-                 <div className="mx_SettingsTab_heading">{_t("Other")}</div>
-                 {urlPreviewSettings}
-                 {leaveSection}
+ 
+                 <SettingsSection heading={_t("Other")}>
+                     {urlPreviewSettings}
