@@ -204,5 +204,13 @@
         "files": [
             "src/components/views/rooms/MemberList.tsx"
         ]
+    },
+    "tchap-features-from-config": {
+        "github-issue": "",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/IConfigOptions.ts",
+            "src/components/views/settings/Notifications.tsx"
+        ]
     }
 }

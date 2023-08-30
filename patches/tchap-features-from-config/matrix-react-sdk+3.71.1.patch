@@ -1,0 +1,46 @@
+diff --git a/node_modules/matrix-react-sdk/src/IConfigOptions.ts b/node_modules/matrix-react-sdk/src/IConfigOptions.ts
+index b2e44f2..c37340d 100644
+--- a/node_modules/matrix-react-sdk/src/IConfigOptions.ts
++++ b/node_modules/matrix-react-sdk/src/IConfigOptions.ts
+@@ -192,3 +192,15 @@ export interface ISsoRedirectOptions {
+     immediate?: boolean;
+     on_welcome_page?: boolean;
+ }
++
++
++/* :tchap: 
++* Add tchap specific options to IConfigOptions. Both interfaces get merged in compilation. https://www.typescriptlang.org/docs/handbook/declaration-merging.html#merging-interfaces
++* IConfigOptions declares which options can get retrieved with SdkConfig, if not declared SdkConfig complains it does not know the parameter.
++*/
++export interface IConfigOptions {
++    tchap_features?: {
++        feature_email_notification?:[string]//activate email notification on a list of home servers, ie : "agent1.tchap.incubateur.net"
++    }
++}
++//end :tchap: 
+\ No newline at end of file
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
+index 3e833b3..d8bf9c5 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
+@@ -48,6 +48,7 @@ import {
+     updatePushRuleActions,
+ } from "../../../utils/pushRules/updatePushRuleActions";
+ import { Caption } from "../typography/Caption";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ // TODO: this "view" component still has far too much application logic in it,
+ // which should be factored out to other files.
+@@ -703,8 +704,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+                         />
+                     </>
+                 )}
+-
++                {/* :TCHAP: show button only if feature is active on homeserver
+                 {emailSwitches}
++                */}
++                { TchapUIFeature.isFeatureActiveForHomeserver("feature_email_notification") ? emailSwitches : null}
++                {/* :TCHAP: end */}
+             </>
+         );
+     }

@@ -2,6 +2,9 @@
  * Tchap UI Feature flags
  */
 
+import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
+import SdkConfig from "matrix-react-sdk/src/SdkConfig";
+
 export default class TchapUIFeature {
     /**
      * This flag controls weither space related settings should be displayed or not. It differs from the flag UIComponent.CreateSpaces.
@@ -23,5 +26,25 @@ export default class TchapUIFeature {
      * This flag controls weither clearCacheAndReload can be queued at application start at V4 upgrade
      */
     public static activateClearCacheAndReloadAtVersion4 = true;
+
+    /** 
+        get list of homeservers where the feature should be activated from config.json
+        example
+         for feature : feature_email_notification 
+         add this in config.json
+         {..
+         "tchap":{
+                "feature_email_notification": ["agent1.tchap.incubateur.net"]
+            }
+            ..
+        }
+    */
+    public static isFeatureActiveForHomeserver(feature:string):boolean {        
+        
+        const homeserversWithFeature:[string] = SdkConfig.get("tchap_features")?.[feature] || [];
+        const userHomeServer = MatrixClientPeg.getHomeserverName();
+        return homeserversWithFeature.includes(userHomeServer);
+    }
+
 
 }
