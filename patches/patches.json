@@ -195,14 +195,6 @@
             "src/stores/RoomViewStore.tsx"
         ]
     },
-    "backport-html-export-security-fix": {
-        "github-issue": "https://github.com/matrix-org/matrix-react-sdk/security/advisories/GHSA-c9vx-2g7w-rp65",
-        "package": "matrix-react-sdk",
-        "files": [
-            "src/utils/exportUtils/HtmlExport.tsx",
-            "test/utils/exportUtils/HTMLExport-test.ts"
-        ]
-    },
     "error-tchap-is-down": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/507",
         "package": "matrix-react-sdk",
