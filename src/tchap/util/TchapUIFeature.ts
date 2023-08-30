@@ -41,8 +41,7 @@ export default class TchapUIFeature {
     */
     public static isFeatureActiveForHomeserver(feature:string):boolean {        
         
-        const activatedHomeserver:[string] = SdkConfig.get("tchap")[feature];
-        if(!activatedHomeserver) return false;
+        const activatedHomeserver:[string] = SdkConfig.get("tchap")?.[feature] || [];
         
         //compare if user is on a listed homeserver
         const userHomeServer = MatrixClientPeg.getHomeserverName();
