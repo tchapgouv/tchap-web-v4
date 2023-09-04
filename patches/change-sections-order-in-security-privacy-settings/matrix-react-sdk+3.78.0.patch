@@ -52,14 +52,14 @@ index 5a5e424..8e2044d 100644
      }
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 8f085a7..b3e241d 100644
+index 8f085a7..f59b432 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 @@ -42,6 +42,8 @@ import SettingsTab from "../SettingsTab";
  import { SettingsSection } from "../../shared/SettingsSection";
  import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
  
-+import DevicesPanel from "../../../../../src/tchap/components/views/settings/DevicesPanel";
++import DevicesPanel from "../../../../../../../../src/tchap/components/views/settings/TchapDevicesPanel";
 +
  interface IIgnoredUserProps {
      userId: string;

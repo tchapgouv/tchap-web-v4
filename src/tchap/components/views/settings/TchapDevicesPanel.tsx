@@ -21,7 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { _t } from "matrix-react-sdk/src/languageHandler";
-import DevicesPanelEntry from "./DevicesPanelEntry";
+import DevicesPanelEntry from "./TchapDevicesPanelEntry";
 import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
 import AccessibleButton from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 import { deleteDevicesWithInteractiveAuth } from "matrix-react-sdk/src/components/views/settings/devices/deleteDevices";
