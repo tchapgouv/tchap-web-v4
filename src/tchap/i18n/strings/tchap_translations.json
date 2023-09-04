@@ -1014,5 +1014,41 @@
   "Sent messages will be stored until your connection has returned.": {
     "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
     "en": "Messages will be sent when your connection returns."
+  },
+  "Manage your signed-in devices below. A device's name is visible to people you communicate with.": {
+    "fr": "Gérer vos appareils connectés ci-dessous. Le nom d’un appareil est visible aux gens avec lesquels vous communiquez.",
+    "en": "Manage your signed-in devices below. A device's name is visible to people you communicate with."
+  },
+  "This device":{
+    "fr": "Cet appareil",
+    "en": "This device"
+  },
+  "You aren't signed into any other devices.":{
+    "fr": "Vous n’êtes connecté depuis aucun autre appareil.",
+    "en": "You aren't signed into any other devices."
+  },
+  "Devices without encryption support":{
+    "fr": "Appareils non vérifiés",
+    "en": "Devices without encryption support"
+  },
+  "Verified devices":{
+    "fr": "Appareils vérifiés",
+    "en": "Verified devices"
+  },
+  "Unverified devices":{
+    "fr": "Appareils non vérifiés",
+    "en": "Unverified devices"
+  },
+  "Sign out %(count)s selected devices": {
+    "fr": "Déconnecter %(count)s appareil sélectionné",
+    "en": "Sign out %(count)s selected devices"
+  },
+  "Unable to load device list": {
+    "fr": "Impossible de lister les appareils connectés",
+    "en": "Unable to load device list"
+  },
+  "Sign Out":{
+    "fr": "Déconnecter",
+    "en": "Sign out"
   }
 }
