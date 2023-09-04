@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index 241c2dc..b322e33 100644
+index 241c2dc..4f028ea 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -40,6 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
@@ -156,14 +156,14 @@ index bbab224..4c581e7 100644
                      {forgotPasswordJsx}
                      {!this.props.busy && (
 diff --git a/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx b/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
-index bd37ed4..7e7eabf 100644
+index bd37ed4..9128119 100644
 --- a/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
 +++ b/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
 @@ -22,6 +22,8 @@ import SdkConfig from "../SdkConfig";
  import { ValidatedServerConfig } from "./ValidatedServerConfig";
  import ExternalLink from "../components/views/elements/ExternalLink";
  
-+import Tchapi18nUtils from '../../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
++import Tchapi18nUtils from '../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
 +
  export const resourceLimitStrings = {
      "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),

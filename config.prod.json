@@ -110,7 +110,7 @@
         "feature_new_device_manager": false
     },
     "feedback": {
-        "existing_issues_url":  "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
+        "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
         "new_issue_url": "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
     },
     "default_federate": true,
