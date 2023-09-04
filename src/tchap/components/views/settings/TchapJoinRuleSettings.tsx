@@ -34,7 +34,7 @@ import { upgradeRoom } from "matrix-react-sdk/src/utils/RoomUpgrade";
 import { arrayHasDiff } from "matrix-react-sdk/src/utils/arrays";
 import { useLocalEcho } from "matrix-react-sdk/src/hooks/useLocalEcho";
 import dis from "matrix-react-sdk/src/dispatcher/dispatcher";
-import { ROOM_SECURITY_TAB } from "matrix-react-sdk/src/components/views/dialogs/RoomSettingsDialog";
+import {RoomSettingsTab } from "matrix-react-sdk/src/components/views/dialogs/RoomSettingsDialog";
 import { Action } from "matrix-react-sdk/src/dispatcher/actions";
 import { ViewRoomPayload } from "matrix-react-sdk/src/dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "matrix-react-sdk/src/utils/PreferredRoomVersions";
@@ -393,7 +393,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         // open new settings on this tab
                         dis.dispatch({
                             action: "open_room_settings",
-                            initial_tab_id: ROOM_SECURITY_TAB,
+                            initial_tab_id: RoomSettingsTab.Security,
                         });
                     },
                 });
