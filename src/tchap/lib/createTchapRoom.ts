@@ -106,9 +106,6 @@ export default class TchapCreateRoom {
                 break;
             }
         }
-
-      
-
         return opts;
     }
 }
