@@ -31,7 +31,9 @@ export default class TchapCreateRoom {
         createRoomOpts.creation_content = { "m.federate": federate };
         createRoomOpts.initial_state = createRoomOpts.initial_state || [];
 
-        opts.parentSpace = parentSpace;
+        if(parentSpace) {
+            opts.parentSpace = parentSpace;
+        }
 
         switch (tchapRoomType) {
             case TchapRoomType.Forum: {
