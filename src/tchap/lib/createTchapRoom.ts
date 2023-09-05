@@ -18,6 +18,7 @@ export default class TchapCreateRoom {
         name: string,
         tchapRoomType: TchapRoomType,
         federate: boolean = DEFAULT_FEDERATE_VALUE,
+        parentSpace?: Room
     ): IOpts {
         const opts: IOpts = {};
         const createRoomOpts: ICreateRoomOpts = {};
@@ -30,12 +31,12 @@ export default class TchapCreateRoom {
         createRoomOpts.creation_content = { "m.federate": federate };
         createRoomOpts.initial_state = createRoomOpts.initial_state || [];
 
-        opts.parentSpace = this.props.parentSpace;
+        opts.parentSpace = parentSpace;
 
         switch (tchapRoomType) {
             case TchapRoomType.Forum: {
                 // Space "Forum" only for  members and not encrypted
-                if (this.props.parentSpace) {
+                if (parentSpace) {
                     createRoomOpts.visibility = Visibility.PrivateChat;
                 } else {      //"Forum" only for tchap members and not encrypted
                     createRoomOpts.visibility = Visibility.Public;
@@ -53,7 +54,7 @@ export default class TchapCreateRoom {
                 });
 
                 //Open to space by default
-                if (this.props.parentSpace) {
+                if (parentSpace) {
                     opts.joinRule = JoinRule.Restricted;
                 } else {
                     opts.joinRule = JoinRule.Public;
@@ -74,7 +75,7 @@ export default class TchapCreateRoom {
                     state_key: "",
                 });
                 //Open to space by default
-                if (this.props.parentSpace) {
+                if (parentSpace) {
                     opts.joinRule = JoinRule.Restricted;
                 } else {
                     opts.joinRule = JoinRule.Invite;
@@ -95,7 +96,7 @@ export default class TchapCreateRoom {
                     state_key: "",
                 });
                 //Open to space by default
-                if (this.props.parentSpace) {
+                if (parentSpace) {
                     opts.joinRule = JoinRule.Restricted;
                 } else {
                     opts.joinRule = JoinRule.Invite;
