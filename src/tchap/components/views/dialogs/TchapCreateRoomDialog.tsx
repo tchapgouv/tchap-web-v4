@@ -32,7 +32,7 @@ import TchapCreateRoom from "../../../lib/createTchapRoom";
 interface IProps {
     defaultPublic?: boolean; // unused for Tchap version
     defaultName?: string;
-    parentSpace?: Room; // unused for Tchap version
+    parentSpace?: Room; 
     defaultEncrypted?: boolean; // unused for Tchap version
     onFinished(proceed: boolean, opts?: IOpts): void;
 }
@@ -43,13 +43,16 @@ interface IState {
     tchapRoomType: TchapRoomType;
     forumFederationSwitchValue: boolean;
     showFederateSwitch: boolean;
+    createRoomInSpace: boolean;
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
     private nameField = createRef<Field>();
+    private readonly createRoomInSpace: boolean;
 
     public constructor(props) {
         super(props);
+        this.createRoomInSpace = !!this.props.parentSpace;
 
         const federationOptions = TchapUtils.getRoomFederationOptions();
 
@@ -59,6 +62,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             tchapRoomType: TchapRoomType.Private,
             forumFederationSwitchValue: federationOptions.forumFederationSwitchDefaultValue,
             showFederateSwitch: federationOptions.showForumFederationSwitch,
+            createRoomInSpace: createRoomInSpace,
         };
     }
 
@@ -149,7 +153,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     public render() {
         const shortDomain: string = TchapUtils.getShortDomain();
 
-        const title = _t("Create a room");
+        const title = this.createRoomInSpace ? _t("Create a room in this space") : _t("Create a room");
 
         return (
             <BaseDialog
@@ -176,6 +180,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                             forumFederationSwitchValue={this.state.forumFederationSwitchValue}
                             setForumFederationSwitchValue={this.onForumFederatedChange}
                             setRoomType={this.onTchapRoomTypeChange}
+                            createRoomInSpace={this.createRoomInSpace}
                         />
                     </div>
                 </form>
