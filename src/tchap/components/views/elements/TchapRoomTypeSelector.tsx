@@ -21,7 +21,6 @@ interface IProps {
     forumFederationSwitchValue?: boolean;
     setRoomType(value: TchapRoomType): void;
     setForumFederationSwitchValue(forumFederationSwitchValue: boolean): void;
-    createRoomInSpace: boolean;
 }
 
 interface IState {
@@ -84,7 +83,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         onChange={this.onRoomTypeChange}
                     >
                         <div className="tc_TchapRoomTypeSelector_RadioButton_title">{_t("Private room")}</div>
-                        <div>{this.createRoomInSpace ? _t("Private discussions accessible to all users of this space.")  : _t("Accessible to all users by invitation from an administrator.")}</div>
+                        <div>{_t("Accessible to all users by invitation from an administrator.")}</div>
                     </StyledRadioButton>
                 </label>
                 <label className={externalClasses}>
@@ -98,7 +97,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                             {_t("Private room open to external users")}
                         </div>
                         <div>
-                            {this.createRoomInSpace ? _t("Accessible to all users of this space and to external guests by invitation of an administrator.") : _t("Accessible to all users and to external guests by invitation of an administrator.")}
+                            {_t("Accessible to all users and to external guests by invitation of an administrator.")}
                         </div>
                     </StyledRadioButton>
                 </label>
@@ -110,7 +109,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         onChange={this.onRoomTypeChange}
                     >
                         <div className="tc_TchapRoomTypeSelector_RadioButton_title">{_t("Forum room")}</div>
-                        <div>{this.createRoomInSpace ? _t("Public discussion accessible to all users of this space or from a shared link.") : _t("Accessible to all users from the forum directory or from a shared link.")}</div>
+                        <div>{_t("Accessible to all users from the forum directory or from a shared link.")}</div>
                         {roomFederateOpt}
                     </StyledRadioButton>
                 </label>
