@@ -62,7 +62,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             tchapRoomType: TchapRoomType.Private,
             forumFederationSwitchValue: federationOptions.forumFederationSwitchDefaultValue,
             showFederateSwitch: federationOptions.showForumFederationSwitch,
-            createRoomInSpace: createRoomInSpace,
+            createRoomInSpace: this.createRoomInSpace,
         };
     }
 
