@@ -57,6 +57,22 @@
     "en":"Allow access to this room to all users, even outside \"%(domain)s\" domain",
     "fr":"Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
   },
+  "Create a room in this space": {
+    "en": "Create a room in this space",
+    "fr": "Créer un salon dans cette espace"
+  },
+  "Private discussions accessible to all users of this space.": {
+    "en": "Private discussions accessible to all users of this space.",
+    "fr": "Discussions privés accessible à tous les membres de cette espace"
+  },
+  "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.": {
+    "en": "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.",
+    "fr": "Discussions privés accessible à tous les membres de cette espace et aux utilisateurs externes sur invitation d'un administrateur."
+  },
+  "Public discussion accessible to all users of this space or from a shared link.": {
+    "en": "Public discussion accessible to all users of this space or from a shared link.",
+    "fr": "Discussions publiques accessible à tous les membres de cette espace ou depuis un lien de partage."
+  },
   "Scanning": {
     "en": "Scanning",
     "fr": "Scanning"

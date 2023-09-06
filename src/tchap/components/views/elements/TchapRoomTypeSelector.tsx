@@ -98,7 +98,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                             {_t("Private room open to external users")}
                         </div>
                         <div>
-                            {this.props.createRoomInSpace ? _t("Accessible to all users of this space and to external guests by invitation of an administrator.") : _t("Accessible to all users and to external guests by invitation of an administrator.")}
+                            {this.props.createRoomInSpace ? _t("Private discussions accessible to all users of this space and to external guests by invitation of an administrator.") : _t("Accessible to all users and to external guests by invitation of an administrator.")}
                         </div>
                     </StyledRadioButton>
                 </label>
