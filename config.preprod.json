@@ -25,7 +25,7 @@
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
     "brand": "Tchap",
-    "bug_report_endpoint_url": "/bugreports/submit",
+    "bug_report_endpoint_url": "https://matrix.i.tchap.gouv.fr/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
     "defaultCountryCode": "FR",
     "showLabsSettings": false,
