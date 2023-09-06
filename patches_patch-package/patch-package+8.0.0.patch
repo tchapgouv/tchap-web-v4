@@ -1,0 +1,30 @@
+diff --git a/node_modules/patch-package/dist/applyPatches.js b/node_modules/patch-package/dist/applyPatches.js
+index 2d6344b..71720a6 100644
+--- a/node_modules/patch-package/dist/applyPatches.js
++++ b/node_modules/patch-package/dist/applyPatches.js
+@@ -213,6 +213,7 @@ function applyPatchesForPackage({ patches, appPath, patchDir, reverse, warnings,
+                     patchFilename,
+                     path,
+                     pathSpecifier,
++                    patchDir,
+                 }));
+                 // in case the package has multiple patches, we need to break out of this inner loop
+                 // because we don't want to apply more patches on top of the broken state
+@@ -375,7 +376,7 @@ ${chalk_1.default.red.bold("**ERROR**")} ${chalk_1.default.red(`Failed to apply
+ 
+ `;
+ }
+-function createPatchApplicationFailureError({ packageName, actualVersion, originalVersion, patchFilename, path, pathSpecifier, }) {
++function createPatchApplicationFailureError({ packageName, actualVersion, originalVersion, patchFilename, path, pathSpecifier, patchDir, }) {
+     return `
+ ${chalk_1.default.red.bold("**ERROR**")} ${chalk_1.default.red(`Failed to apply patch for package ${chalk_1.default.bold(packageName)} at path`)}
+ 
+@@ -399,7 +400,7 @@ ${chalk_1.default.red.bold("**ERROR**")} ${chalk_1.default.red(`Failed to apply
+     patch-package ${pathSpecifier}
+ 
+   Info:
+-    Patch file: patches/${patchFilename}
++    Patch file: ${patchDir}${patchFilename}
+     Patch was made for version: ${chalk_1.default.green.bold(originalVersion)}
+     Installed version: ${chalk_1.default.red.bold(actualVersion)}
+ `;
