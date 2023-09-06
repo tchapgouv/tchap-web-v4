@@ -43,7 +43,6 @@ interface IState {
     tchapRoomType: TchapRoomType;
     forumFederationSwitchValue: boolean;
     showFederateSwitch: boolean;
-    createRoomInSpace: boolean;
 }
 
 export default class TchapCreateRoomDialog extends React.Component<IProps, IState> {
@@ -62,7 +61,6 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             tchapRoomType: TchapRoomType.Private,
             forumFederationSwitchValue: federationOptions.forumFederationSwitchDefaultValue,
             showFederateSwitch: federationOptions.showForumFederationSwitch,
-            createRoomInSpace: this.createRoomInSpace,
         };
     }
 
