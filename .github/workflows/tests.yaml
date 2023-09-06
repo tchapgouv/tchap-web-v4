@@ -18,14 +18,13 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+
             - name: Yarn cache
               uses: actions/setup-node@v3
               with:
                   cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  node-version: 16
+
             - name: Install Dependencies
               run: "./scripts/tchap/install-yarn-linked-repositories.sh"
 

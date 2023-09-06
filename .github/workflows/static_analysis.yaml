@@ -23,7 +23,7 @@ jobs:
     #      - uses: actions/setup-node@v3
     #        with:
     #          cache: 'yarn'
-    #          node-version: 18
+    #          node-version: 16
     #
     #      - name: Install Dependencies
     #        run: "./scripts/tchap/install-yarn-linked-repositories.sh"
@@ -89,13 +89,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+
             - uses: actions/setup-node@v3
               with:
                   cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  node-version: 16
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
@@ -109,13 +107,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+
             - uses: actions/setup-node@v3
               with:
                   cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  node-version: 16
 
             # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
             - name: Install Dependencies

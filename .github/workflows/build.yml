@@ -15,13 +15,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+
             - uses: actions/setup-node@v3
               with:
                   cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  node-version: 16
+
             - name: Install Dependencies
               run: "yarn install"
 
