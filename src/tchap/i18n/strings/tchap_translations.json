@@ -1014,5 +1014,63 @@
   "Sent messages will be stored until your connection has returned.": {
     "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
     "en": "Messages will be sent when your connection returns."
+  },
+  "Sessions": {
+    "fr": "Mes appareils",
+    "en": "My devices"
+  },
+  "Current session": {
+    "fr": "Cet appareil",
+    "en": "This device"
+  },
+  "Verified session": {
+    "fr": "Appareil vérifié",
+    "en": "Verified device"
+  },
+  "Other sessions":{
+    "fr": "Autres appareils",
+    "en": "Other devices"
+  },
+  "Verify your current session for enhanced secure messaging.":{
+    "fr": "Verifier cet appareil afin de visualiser vos messages",
+    "en": "Verify your current device to get your messages."
+  },
+  "Verify session": {
+    "fr": "Vérfier l'appareil",
+    "en": "Verify device"
+  },
+  "Sign out of this session" :{
+    "fr": "Se déconnecter de cet appareil",
+    "en": "Sign out of this device"
+  },
+  "Receive push notifications on this session.":{
+    "fr": "Recevoir les notifications push sur cet appareil",
+    "en": "Receive push notifications on this device."
+  },
+  "Unverified":{
+    "fr": "Non vérifiée",
+    "en": "Unverified"
+  },
+  "Verified":{
+    "fr": "Vérifiée",
+    "en": "Verified "
+  },
+  "Your current session is ready for secure messaging.":{
+    "fr": "",
+    "en": ""
+  },
+  "%(count)s sessions selected|one":{
+    "fr": "%(count)s appareil sélectionné",
+    "en": "%(count)s device selected"
+  },
+  "%(count)s sessions selected|other":{
+    "fr": "%(count)s appareils sélectionnés",
+    "en": "%(count)s devices selected"
+  },
+  "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.":{
+    "fr": "Vérifier tous vos appareils pour dévérouiller tous vos messages",
+    "en": "Verify your devices to unlock your messages"
   }
+
+
 }
