@@ -1048,11 +1048,11 @@
     "en": "Receive push notifications on this device."
   },
   "Unverified":{
-    "fr": "Non vérifiée",
+    "fr": "Non vérifié",
     "en": "Unverified"
   },
   "Verified":{
-    "fr": "Vérifiée",
+    "fr": "Vérifié",
     "en": "Verified "
   },
   "Your current session is ready for secure messaging.":{
@@ -1065,12 +1065,34 @@
   },
   "%(count)s sessions selected|other":{
     "fr": "%(count)s appareils sélectionnés",
-    "en": "%(count)s devices selected"
+    "en": "%(count)s devices selected"  
   },
   "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.":{
-    "fr": "Vérifier tous vos appareils pour dévérouiller tous vos messages",
+    "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages",
     "en": "Verify your devices to unlock your messages"
+  },
+  "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.":{
+    "fr" : "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil.",
+    "en" : "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device."
+  },
+  "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.":{
+    "fr" : "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisie la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié.",
+    "en" :  "Verified devices are anywhere you are using this account after entering your passphrase or confirming your identity with another verified device."
+  },
+  "Verified sessions": {
+    "fr": "Appareils vérifiés",
+    "en": "Verified devices"
+  },
+  "Unverified sessions": {
+    "fr": "Appareils non vérifiés",
+    "en": "Unverified devices"
+  },
+  "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": {
+    "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car elles peuvent représenter un usage frauduleux de votre compte.",
+    "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account."
+  },
+  "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
+    "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée.",
+    "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified."
   }
-
-
 }
