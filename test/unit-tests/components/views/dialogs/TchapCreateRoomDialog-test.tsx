@@ -76,26 +76,46 @@ describe("TchapCreateRoomDialog", () => {
         });
     });
 
-    it("should render the whole component with with the allow access switch", () => {
-        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
-            showForumFederationSwitch: true,
-            forumFederationSwitchDefaultValue: false,
+    describe("forum federation switch", () => {
+        it("should be present", () => {
+            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+                showForumFederationSwitch: true,
+                forumFederationSwitchDefaultValue: false,
+            });
+            const component = getComponent();
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            expect(forumFederationSwitch.exists()).toEqual(true);
         });
-        const component = getComponent();
-        const allowAccessSwitch = component.find(".mx_SettingsFlag");
-        expect(toJson(allowAccessSwitch)).toMatchSnapshot(
-            "allow access switch is present, allows other domain than AGENT",
-        );
-    });
 
-    it("should render the room dialog without the allow access switch", () => {
-        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
-            showForumFederationSwitch: false,
-            forumFederationSwitchDefaultValue: false,
+        it("should be absent", () => {
+            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+                showForumFederationSwitch: false,
+                forumFederationSwitchDefaultValue: false,
+            });
+            const component = getComponent();
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            expect(forumFederationSwitch.exists()).toEqual(false);
         });
-        const component = getComponent();
-        const allowAccessSwitch = component.find(".mx_SettingsFlag");
-        expect(allowAccessSwitch).toEqual({});
+
+        it("should be true by default", () => {
+            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+                showForumFederationSwitch: true,
+                forumFederationSwitchDefaultValue: true,
+            });
+            const component = getComponent();
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            expect(forumFederationSwitch.prop("aria-checked")).toBeTruthy();
+        });
+
+        it("should be false by default", () => {
+            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+                showForumFederationSwitch: true,
+                forumFederationSwitchDefaultValue: false,
+            });
+            const component = getComponent();
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            expect(forumFederationSwitch.prop("aria-checked")).toBeFalsy();
+        });
     });
 
     it("Should not create any room wihout a name", async () => {

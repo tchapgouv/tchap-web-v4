@@ -145,6 +145,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     <div>{_t("Only invited people can join.")}</div>
                     <span>
                         <LabelledToggleSwitch
+                            className="tc_JoinRuleSettings_externs_switch"
                             value={openedToExternalUsers}
                             onChange={onExternalAccessChange}
                             label={_t("Allow external users to join this room")}
@@ -287,11 +288,11 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                 label: (
                     <>
                         {_t("Space members")}
-                         
+
                         {/* :tchap: do not show the pill upgrade room as it is not user friendly
                         https://github.com/tchapgouv/tchap-web-v4/issues/578
                          {upgradeRequiredPill} */}
-                        
+
                     </>
                 ),
                 description,
