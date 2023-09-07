@@ -76,16 +76,14 @@ describe("TchapCreateRoomDialog", () => {
         });
     });
 
-    it("should render the whole component with with the allow access switch", () => {
+    it("should render the whole component with the allow access switch", () => {
         jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
             showForumFederationSwitch: true,
             forumFederationSwitchDefaultValue: false,
         });
         const component = getComponent();
-        const allowAccessSwitch = component.find(".mx_SettingsFlag");
-        expect(toJson(allowAccessSwitch)).toMatchSnapshot(
-            "allow access switch is present, allows other domain than AGENT",
-        );
+        const allowAccessSwitch = component.find(".tc_TchapRoomTypeSelector_forum .mx_ToggleSwitch")
+        expect(allowAccessSwitch.exists()).toEqual(true);
     });
 
     it("should render the room dialog without the allow access switch", () => {
@@ -94,8 +92,8 @@ describe("TchapCreateRoomDialog", () => {
             forumFederationSwitchDefaultValue: false,
         });
         const component = getComponent();
-        const allowAccessSwitch = component.find(".mx_SettingsFlag");
-        expect(allowAccessSwitch).toEqual({});
+        const allowAccessSwitch = component.find(".tc_TchapRoomTypeSelector_forum .mx_ToggleSwitch")
+        expect(allowAccessSwitch.exists()).toEqual(false);
     });
 
     it("Should not create any room wihout a name", async () => {
