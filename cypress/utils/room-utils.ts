@@ -17,7 +17,7 @@ export default class RoomUtils {
     }
     public static openRoomAccessSettings(roomName: string): Chainable<JQuery<HTMLElement>> {
         cy.get('[aria-label="' + roomName + '"]').click(); //open room
-        cy.get(".mx_RoomHeader_chevron").click();
+        cy.get(".mx_LegacyRoomHeader_chevron").click();
         cy.get('[aria-label="Paramètres"] > .mx_IconizedContextMenu_label').click();
         return cy.get('[data-testid="settings-tab-ROOM_SECURITY_TAB"] > .mx_TabbedView_tabLabel_text').click();
     }
