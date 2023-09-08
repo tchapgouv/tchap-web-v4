@@ -1076,7 +1076,7 @@
     "en" : "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device."
   },
   "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.":{
-    "fr" : "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisie la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié.",
+    "fr" : "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisi la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié.",
     "en" :  "Verified devices are anywhere you are using this account after entering your passphrase or confirming your identity with another verified device."
   },
   "Verified sessions": {
