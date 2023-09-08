@@ -1065,7 +1065,7 @@
   },
   "%(count)s sessions selected|other":{
     "fr": "%(count)s appareils sélectionnés",
-    "en": "%(count)s devices selected"  
+    "en": "%(count)s devices selected"
   },
   "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.":{
     "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages",
@@ -1092,7 +1092,7 @@
     "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account."
   },
   "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
-    "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée.",
-    "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified."
+    "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération).",
+    "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code)."
   }
 }
