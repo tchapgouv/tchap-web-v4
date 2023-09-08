@@ -394,7 +394,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         // open new settings on this tab
                         dis.dispatch({
                             action: "open_room_settings",
-                            initial_tab_id: ROOM_SECURITY_TAB,
+                            initial_tab_id: RoomSettingsTab.Security,
                         });
                     },
                 });
