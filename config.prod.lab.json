@@ -192,6 +192,7 @@
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
     "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
-        "feature_email_notification": []
+        "feature_email_notification": [],
+        "feature_space": ["https://matrix.agent.dinum.tchap.gouv.fr"]
     }
 }
