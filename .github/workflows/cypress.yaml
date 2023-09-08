@@ -43,8 +43,8 @@ jobs:
               run: "echo 'PWD' && pwd && echo 'LS' && ls . && echo 'LS ./webapp' && ls ./webapp"
 
             # not sure what these two are for, but element uses them
-            - uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
-            - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
+            #- uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
+            #- run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
             - name: Run Cypress tests
               #uses: cypress-io/github-action@v6.5.0
@@ -52,9 +52,9 @@ jobs:
               with:
                   # The built-in Electron runner seems to grind to a halt trying
                   # to run the tests, so use chrome.
-                  #browser: chrome
-                  browser: ${{ steps.setup-chrome.outputs.chrome-path }}
-                  headed: true
+                  browser: chrome
+                  #browser: ${{ steps.setup-chrome.outputs.chrome-path }}
+                  #headed: true
                   install: false # disable the default install, we already installed and built.
                   #start: yarn start
                   start: "npx serve -p 8080 -L webapp" # If you have downloaded a build artifact, it will be in webapp dir.
