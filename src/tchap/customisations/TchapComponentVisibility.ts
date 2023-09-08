@@ -25,7 +25,7 @@ import TchapUIFeature from "../util/TchapUIFeature";
  */
 function shouldShowComponent(component: UIComponent): boolean {
     if (component === UIComponent.CreateSpaces) {
-        return  TchapUIFeature.isFeatureActiveForHomeserver("feature_thread");
+        return  TchapUIFeature.isFeatureActiveForHomeserver("feature_space");
     }
     return true; // default to visible
 }
