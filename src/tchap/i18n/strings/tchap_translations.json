@@ -1088,7 +1088,7 @@
     "en": "Unverified devices"
   },
   "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": {
-    "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car elles peuvent représenter un usage frauduleux de votre compte.",
+    "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car ils pourraient représenter un usage frauduleux de votre compte.",
     "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account."
   },
   "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
