@@ -17,6 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
+import RandomUtils from "../../utils/random-utils";
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     const addRoomLabel = "Ajouter un salon";
@@ -28,6 +29,7 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
 
 describe("Create Room", () => {
     const homeserverShortname = Cypress.env("E2E_TEST_USER_HOMESERVER_SHORT");
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
         cy.loginUser();
@@ -53,7 +55,7 @@ describe("Create Room", () => {
     });
 
     it("should allow us to create a private room with name", () => {
-        const name = "Test room 1 private";
+        const name = "test/" + today + "/create_room_private/" + RandomUtils.generateRandom(4);
 
         openCreateRoomDialog().within(() => {
             // Fill name
@@ -69,13 +71,13 @@ describe("Create Room", () => {
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
         cy.get(".tc_RoomHeader_external").should("not.exist");
     });
 
     //check that the mention "open to external users" is displayed
     it("should allow us to create a private room with name and externs allowed", () => {
-        const name = "Test room 1 externes";
+        const name = "test/" + today + "/create_room_externs/" + RandomUtils.generateRandom(4);
 
         openCreateRoomDialog().within(() => {
             // Fill name
@@ -93,12 +95,12 @@ describe("Create Room", () => {
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
         cy.get(".tc_RoomHeader_external").should("exist");
     });
 
     it("should allow us to create a public room with name", () => {
-        const name = "Test room 1 public";
+        const name = "test/" + today + "/create_room_public/" + RandomUtils.generateRandom(4);
 
         openCreateRoomDialog().within(() => {
             // Fill name
@@ -116,7 +118,7 @@ describe("Create Room", () => {
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
     });
 
     // Note : DM creation is not tested here, because Tchap has no custom implementation for DMs. (2023-01-30)

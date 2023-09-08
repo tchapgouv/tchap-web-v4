@@ -1,0 +1,52 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
+index ffe35fa..aff8c9b 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
+@@ -698,7 +698,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
+                 <IconizedContextMenuOptionList>
+                     {reactButton}
+                     {replyButton}
++                    {/* :TCHAP: Remove Reply In Thread Button
+                     {replyInThreadButton}
++                    end :TCHAP: */}
+                     {editButton}
+                 </IconizedContextMenuOptionList>
+             );
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
+index 6b727c5..aa71892 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
+@@ -332,18 +332,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
+     private readonly forbiddenThreadHeadMsgType = [MsgType.KeyVerificationRequest];
+ 
+     private get showReplyInThreadAction(): boolean {
+-        const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
+-
+-        const isAllowedMessageType =
+-            !this.forbiddenThreadHeadMsgType.includes(this.props.mxEvent.getContent().msgtype as MsgType) &&
+-            /** forbid threads from live location shares
+-             * until cross-platform support
+-             * (PSF-1041)
+-             */
+-            !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
+-            !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
+-
+-        return inNotThreadTimeline && isAllowedMessageType;
++        // :TCHAP: hide thread button
++        return false;
++        // const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
++
++        // const isAllowedMessageType =
++        //     !this.forbiddenThreadHeadMsgType.includes(this.props.mxEvent.getContent().msgtype as MsgType) &&
++        //     /** forbid threads from live location shares
++        //      * until cross-platform support
++        //      * (PSF-1041)
++        //      */
++        //     !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
++        //     !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
++
++        // return inNotThreadTimeline && isAllowedMessageType;
++        // end :TCHAP
+     }
+ 
+     /**

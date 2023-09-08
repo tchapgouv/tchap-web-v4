@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
-const SentryCliPlugin = require("@sentry/webpack-plugin");
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
 const crypto = require("crypto");
 
 // XXX: mangle Crypto::createHash to replace md4 with sha256, output.hashFunction is insufficient as multiple bits
@@ -68,6 +68,15 @@ try {
     // stringify the output so it appears in logs correctly, as large files can sometimes get
     // represented as `<Object>` which is less than helpful.
     console.log("Using customisations.json : " + JSON.stringify(fileOverrides, null, 4));
+
+    process.on("exit", () => {
+        console.log(""); // blank line
+        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        console.warn("!! Customisations have been deprecated and will be removed in a future release      !!");
+        console.warn("!! See https://github.com/vector-im/element-web/blob/develop/docs/customisations.md !!");
+        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        console.log(""); // blank line
+    });
 } catch (e) {
     // ignore - not important
 }
@@ -106,8 +115,8 @@ module.exports = (env, argv) => {
 
     const development = {};
     if (devMode) {
-        // High quality, embedded source maps for dev builds
-        development["devtool"] = "eval-source-map";
+        // Embedded source maps for dev builds, can't use eval-source-map due to CSP
+        development["devtool"] = "inline-source-map";
     } else {
         if (process.env.CI_PACKAGE) {
             // High quality source maps in separate .map files which include the source. This doesn't bulk up the .js
@@ -220,8 +229,9 @@ module.exports = (env, argv) => {
                 // Same goes for js/react-sdk - we don't need two copies.
                 "matrix-js-sdk": path.resolve(__dirname, "node_modules/matrix-js-sdk"),
                 "matrix-react-sdk": path.resolve(__dirname, "node_modules/matrix-react-sdk"),
-                // and sanitize-html
-                "sanitize-html": path.resolve(__dirname, "node_modules/sanitize-html"),
+                // and matrix-events-sdk & matrix-widget-api
+                "matrix-events-sdk": path.resolve(__dirname, "node_modules/matrix-events-sdk"),
+                "matrix-widget-api": path.resolve(__dirname, "node_modules/matrix-widget-api"),
 
                 // Define a variable so the i18n stuff can load
                 "$webapp": path.resolve(__dirname, "webapp"),
@@ -273,6 +283,12 @@ module.exports = (env, argv) => {
                         // include node modules inside these modules, so we add 'src'.
                         if (f.startsWith(reactSdkSrcDir)) return true;
                         if (f.startsWith(jsSdkSrcDir)) return true;
+
+                        // Some of the syntax in this package is not understood by
+                        // either webpack or our babel setup.
+                        // When we do get to upgrade our current setup, this should
+                        // probably be removed.
+                        if (f.includes("@vector-im/compound-web")) return true;
 
                         // but we can't run all of our dependencies through babel (many of them still
                         // use module.exports which breaks if babel injects an 'include' for its
@@ -671,9 +687,11 @@ module.exports = (env, argv) => {
 
             // upload to sentry if sentry env is present
             process.env.SENTRY_DSN &&
-                new SentryCliPlugin({
+                sentryWebpackPlugin({
                     release: process.env.VERSION,
-                    include: "./webapp/bundles",
+                    sourcemaps: {
+                        paths: "./webapp/bundles/**",
+                    },
                     errorHandler: (err, invokeErr, compilation) => {
                         compilation.warnings.push("Sentry CLI Plugin: " + err.message);
                         console.log(`::warning title=Sentry error::${err.message}`);

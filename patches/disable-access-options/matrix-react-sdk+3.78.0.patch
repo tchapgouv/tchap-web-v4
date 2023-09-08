@@ -1,0 +1,42 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
+index 354d2ab..2de13b8 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
+@@ -262,6 +262,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const room = this.props.room;
+ 
+         let aliasWarning: JSX.Element | undefined;
++        /* :TCHAP: remove
+         if (room.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
+             aliasWarning = (
+                 <div className="mx_SecurityRoomSettingsTab_warning">
+@@ -270,12 +271,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+                 </div>
+             );
+         }
++        end :TCHAP: */
+         const description = _t("Decide who can join %(roomName)s.", {
+             roomName: room.name,
+         });
+ 
+         let advanced: JSX.Element | undefined;
+-        if (room.getJoinRule() === JoinRule.Public) {
++        if (false) { // :TCHAP: no guest access - if(room.getJoinRule() === JoinRule.Public) {
+             advanced = (
+                 <div>
+                     <AccessibleButton
+@@ -447,9 +449,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+         const client = this.context;
+         const room = this.props.room;
+         const isEncrypted = this.state.encrypted;
++        /* :TCHAP: does not allow changing encryption
+         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
+         const isEncryptionForceDisabled = shouldForceDisableEncryption(client);
+         const canEnableEncryption = !isEncrypted && !isEncryptionForceDisabled && hasEncryptionPermission;
++        */
++        const isEncryptionForceDisabled = false;
++        const canEnableEncryption = false;
++        // end :TCHAP:
+ 
+         let encryptionSettings: JSX.Element | undefined;
+         if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {

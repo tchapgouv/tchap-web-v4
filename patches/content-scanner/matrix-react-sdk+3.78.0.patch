@@ -1,0 +1,80 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
+index 4427716..12f9dc5 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
+@@ -23,7 +23,7 @@ import InlineSpinner from "../elements/InlineSpinner";
+ import { _t } from "../../../languageHandler";
+ import AudioPlayer from "../audio_messages/AudioPlayer";
+ import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+-import MFileBody from "./MFileBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
+ import { IBodyProps } from "./IBodyProps";
+ import { PlaybackManager } from "../../../audio/PlaybackManager";
+ import { isVoiceMessage } from "../../../utils/EventUtils";
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
+index 3a4c230..e44df65 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
+@@ -22,7 +22,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
+ import { logger } from "matrix-js-sdk/src/logger";
+ import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
+ 
+-import MFileBody from "./MFileBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
+ import Modal from "../../../Modal";
+ import { _t } from "../../../languageHandler";
+ import SettingsStore from "../../../settings/SettingsStore";
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx
+index c6d61a7..0d16a14 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageReplyBody.tsx
+@@ -16,7 +16,7 @@ limitations under the License.
+ 
+ import React from "react";
+ 
+-import MImageBody from "./MImageBody";
++import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
+ import { ImageContent } from "../../../customisations/models/IMediaEventContent";
+ 
+ const FORCED_IMAGE_HEIGHT = 44;
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
+index 092b948..5908036 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
+@@ -16,7 +16,7 @@ limitations under the License.
+ 
+ import React, { ReactNode } from "react";
+ 
+-import MImageBody from "./MImageBody";
++import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
+ import { BLURHASH_FIELD } from "../../../utils/image-media";
+ import Tooltip from "../elements/Tooltip";
+ import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
+index 2d34c90..91a1e5d 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
+@@ -25,7 +25,7 @@ import { mediaFromContent } from "../../../customisations/Media";
+ import { BLURHASH_FIELD } from "../../../utils/image-media";
+ import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+ import { IBodyProps } from "./IBodyProps";
+-import MFileBody from "./MFileBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
+ import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
+ import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+ import MediaProcessingError from "./shared/MediaProcessingError";
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
+index 83f26e1..b0db4ea 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
+@@ -19,8 +19,8 @@ import React from "react";
+ import InlineSpinner from "../elements/InlineSpinner";
+ import { _t } from "../../../languageHandler";
+ import RecordingPlayback from "../audio_messages/RecordingPlayback";
+-import MAudioBody from "./MAudioBody";
+-import MFileBody from "./MFileBody";
++import MAudioBody from "../../../../../../src/tchap/components/views/messages/OriginalAudioBody";
++import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
+ import MediaProcessingError from "./shared/MediaProcessingError";
+ 
+ export default class MVoiceMessageBody extends MAudioBody {
