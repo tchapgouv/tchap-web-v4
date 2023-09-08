@@ -38,15 +38,22 @@ jobs:
             - name: "Build the app" #todo : fetch build from an artifact to avoid rebuilding for nothing
               run: "yarn install && yarn build && echo 'PWD' && pwd && echo 'LS' && ls . && ls ./webapp" # or only yarn build:genfiles && yarn build:bundle" ?
 
+            # not sure what these two are for, but element uses them
+            - uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
+            - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
+
             - name: Run Cypress tests
-              uses: cypress-io/github-action@v6.5.0
+              #uses: cypress-io/github-action@v6.5.0
+              uses: cypress-io/github-action@2558ee6af05072a19de2ce92cb68b38616132726
               with:
                   # The built-in Electron runner seems to grind to a halt trying
                   # to run the tests, so use chrome.
-                  browser: chrome
+                  #browser: chrome
+                  browser: ${{ steps.setup-chrome.outputs.chrome-path }}
+                  headed: true
                   install: false # disable the default install, we already installed and built.
                   #start: yarn start
-                  start: "echo 'PWD' && pwd && echo 'LS .' && ls . && echo 'LS ./webapp' && ls ./webapp && npx serve -p 8080 -L webapp" # If you have downloaded a build artifact, it will be in webapp dir.
+                  start: "npx serve -p 8080 -L webapp" # If you have downloaded a build artifact, it will be in webapp dir.
                   # this is not necessary and causes issues where cypress does not find the server. But element-web uses it.
                   wait-on: "http://localhost:8000"
                   # wait for 3min, the build is long
