@@ -3,7 +3,6 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 // eslint-disable-next-line deprecate/import
 import { act } from "react-dom/test-utils";
-import toJson from "enzyme-to-json";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import { EventEmitter } from "events";
 
@@ -83,7 +82,7 @@ describe("TchapCreateRoomDialog", () => {
                 forumFederationSwitchDefaultValue: false,
             });
             const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
             expect(forumFederationSwitch.exists()).toEqual(true);
         });
 
@@ -93,7 +92,7 @@ describe("TchapCreateRoomDialog", () => {
                 forumFederationSwitchDefaultValue: false,
             });
             const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
             expect(forumFederationSwitch.exists()).toEqual(false);
         });
 
@@ -103,7 +102,7 @@ describe("TchapCreateRoomDialog", () => {
                 forumFederationSwitchDefaultValue: true,
             });
             const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
             expect(forumFederationSwitch.prop("aria-checked")).toBeTruthy();
         });
 
@@ -113,7 +112,7 @@ describe("TchapCreateRoomDialog", () => {
                 forumFederationSwitchDefaultValue: false,
             });
             const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch")
+            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
             expect(forumFederationSwitch.prop("aria-checked")).toBeFalsy();
         });
     });

@@ -104,7 +104,7 @@ describe("Check room access settings", () => {
             RoomUtils.openRoomAccessSettings(roomName);
 
             // click on 'Allow the externals to join' this room
-            cy.get('.tc_JoinRuleSettings_externs_switch .mx_ToggleSwitch').click();
+            cy.get(".tc_JoinRuleSettings_externs_switch .mx_ToggleSwitch").click();
             // click on the confirmation popup box
             cy.get('[data-testid="dialog-primary-button"]').click();
 
