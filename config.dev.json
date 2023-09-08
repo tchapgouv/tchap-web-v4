@@ -95,10 +95,6 @@
             "agent2.tchap.incubateur.net",
             "externe.tchap.incubateur.net"
         ],
-        "feature_space": [
-            "agent1.tchap.incubateur.net",
-            "agent2.tchap.incubateur.net",
-            "externe.tchap.incubateur.net"
-        ]
+        "feature_space": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"]
     }
 }
