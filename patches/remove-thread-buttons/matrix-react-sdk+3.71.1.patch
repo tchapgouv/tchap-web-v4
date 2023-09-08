@@ -1,72 +1,85 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-index 3ffe63a..c317e33 100644
+index 3ffe63a..1bd533f 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-@@ -682,7 +682,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
+@@ -56,6 +56,7 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
+ import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
+ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+ import { CardContext } from "../right_panel/context";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ interface IReplyInThreadButton {
+     mxEvent: MatrixEvent;
+@@ -682,7 +683,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
                  <IconizedContextMenuOptionList>
                      {reactButton}
                      {replyButton}
-+                    {/* :TCHAP: Remove Reply In Thread Button
-                     {replyInThreadButton}
-+                    end :TCHAP: */}
+-                    {replyInThreadButton}
++                    /* :TCHAP: active Thread based on homeserver*/
++                    {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? replyInThreadButton : null}
++                    /*:TCHAP: end */
                      {editButton}
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 3a85406..597ecea 100644
+index 3a85406..b55ca3a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-@@ -367,18 +367,21 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
+@@ -58,6 +58,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
+ import useFavouriteMessages from "../../../hooks/useFavouriteMessages";
+ import { GetRelationsForEvent } from "../rooms/EventTile";
+ import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ interface IOptionsButtonProps {
+     mxEvent: MatrixEvent;
+@@ -367,6 +368,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
      private readonly forbiddenThreadHeadMsgType = [MsgType.KeyVerificationRequest];
  
      private get showReplyInThreadAction(): boolean {
--        const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
--
--        const isAllowedMessageType =
--            !this.forbiddenThreadHeadMsgType.includes(this.props.mxEvent.getContent().msgtype as MsgType) &&
--            /** forbid threads from live location shares
--             * until cross-platform support
--             * (PSF-1041)
--             */
--            !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
--            !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
--
++        
+         const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
+ 
+         const isAllowedMessageType =
+@@ -378,7 +380,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
+             !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
+             !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
+ 
 -        return inNotThreadTimeline && isAllowedMessageType;
-+        // :TCHAP: hide thread button
-+        return false;
-+        // const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
-+
-+        // const isAllowedMessageType =
-+        //     !this.forbiddenThreadHeadMsgType.includes(this.props.mxEvent.getContent().msgtype as MsgType) &&
-+        //     /** forbid threads from live location shares
-+        //      * until cross-platform support
-+        //      * (PSF-1041)
-+        //      */
-+        //     !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
-+        //     !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
-+
-+        // return inNotThreadTimeline && isAllowedMessageType;
-+        // end :TCHAP
++        //:TCHAP: active Thread based on homeserver
++        //return inNotThreadTimeline && isAllowedMessageType;
++        return TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") && inNotThreadTimeline && isAllowedMessageType;
++        //:TCHAP: end
      }
  
      /**
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx
-index 79bc575..43dde74 100644
+index 79bc575..37fe361 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomHeaderButtons.tsx
-@@ -292,6 +292,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
+@@ -42,6 +42,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
+ import PosthogTrackers from "../../../PosthogTrackers";
+ import { ButtonEvent } from "../elements/AccessibleButton";
+ import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ const ROOM_INFO_PHASES = [
+     RightPanelPhases.RoomSummary,
+@@ -292,6 +293,8 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                  onClick={this.onTimelineCardClicked}
              />,
          );
-+        /* :TCHAP: Remove Thread from Header Buttons
++        /* :TCHAP: active Thread based on homeserver */
++        if(TchapUIFeature.isFeatureActiveForHomeserver("feature_thread")){
          rightPanelPhaseButtons.set(
              RightPanelPhases.ThreadPanel,
              <HeaderButton
-@@ -306,6 +307,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
+@@ -306,6 +309,8 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                  <UnreadIndicator color={this.state.threadNotificationColor} />
              </HeaderButton>,
          );
-+        end :TCHAP: */
++        }
++        /*end :TCHAP: */
          rightPanelPhaseButtons.set(
              RightPanelPhases.NotificationPanel,
              <HeaderButton
