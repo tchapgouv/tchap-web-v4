@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-index 5a5e424..bf64091 100644
+index 5a5e424..fd629ca 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 @@ -73,25 +73,30 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
@@ -25,7 +25,7 @@ index 5a5e424..bf64091 100644
 -                        </tr>
 -                    </table>
 -                </SettingsSubsectionText>
-+            <SettingsSubsection heading={_t("Tchap keys")}>
++            <SettingsSubsection heading={_t("Tchap keys")}> {/* :TCHAP: change vocabulary and layout */}
 +                <div className="mx_SettingsTab_subsectionText">{_t("These keys only apply to the current session.")}</div>
 +                <div className="mx_SettingsTab_subsectionText"><b>{_t("Please note this is not your recovery code for your automatic backup.")}</b></div>
 +                <details>
@@ -48,20 +48,21 @@ index 5a5e424..bf64091 100644
 +                            </tr>
 +                        </table>
 +                    </SettingsSubsectionText>
-+                </details>
++                </details> {/** end :TCHAP: */}
                  {importExportButtons}
                  {noSendUnverifiedSetting}
              </SettingsSubsection>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 8f085a7..ec766e5 100644
+index 8f085a7..f5b9908 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-@@ -359,13 +359,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+@@ -359,13 +359,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
          return (
              <SettingsTab>
                  {warning}
++                { /* :TCHAP: move secureBackup and privacySection, and remove eventIndex */ }
 +                {secureBackup}
-                 <SettingsSection heading={_t("Encryption")}>                
+                 <SettingsSection heading={_t("Encryption")}>
 -                    {secureBackup}
 -                    {eventIndex}
                      {crossSigning}
@@ -69,6 +70,7 @@ index 8f085a7..ec766e5 100644
 +                    {privacySection}
                  </SettingsSection>
 -                {privacySection}
++                { /* end :TCHAP: */ }
                  {advancedSection}
              </SettingsTab>
          );
