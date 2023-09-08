@@ -31,8 +31,7 @@ jobs:
               run: "yarn install && yarn build"
 
             - name: Run Cypress tests
-              #uses: cypress-io/github-action@v6.5.0
-              uses: cypress-io/github-action@2558ee6af05072a19de2ce92cb68b38616132726
+              uses: cypress-io/github-action@v6.5.0
               with:
                   install: false # disable the default install, we already installed and built.
 
