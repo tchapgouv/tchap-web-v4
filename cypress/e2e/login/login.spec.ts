@@ -61,7 +61,9 @@ describe("Login", () => {
             cy.get(".mx_Login_submit").click();
 
             // Enter security key
-            cy.get(".mx_CompleteSecurityBody .mx_AccessibleButton").contains("Vérifier avec un Code de Récupération").click();
+            cy.get(".mx_CompleteSecurityBody .mx_AccessibleButton")
+                .contains("Vérifier avec un Code de Récupération")
+                .click();
             cy.get("#mx_securityKey").type(securityKey);
             cy.get(".mx_AccessSecretStorageDialog .mx_Dialog_primary").click();
 
