@@ -5,8 +5,7 @@ on:
     push:
         branches: [develop_tchap, master_tchap]
 env:
-    # :TCHAP: not needed for fetchdep.with.version.sh but leaving them otherwise it breaks.
-    # These must be set for fetchdep.sh to get the right branch
+    # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
