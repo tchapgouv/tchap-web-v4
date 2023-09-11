@@ -18,6 +18,7 @@ export default class TchapCreateRoom {
         name: string,
         tchapRoomType: TchapRoomType,
         federate: boolean = DEFAULT_FEDERATE_VALUE,
+        parentSpace?: Room
     ): IOpts {
         const opts: IOpts = {};
         const createRoomOpts: ICreateRoomOpts = {};
@@ -30,10 +31,18 @@ export default class TchapCreateRoom {
         createRoomOpts.creation_content = { "m.federate": federate };
         createRoomOpts.initial_state = createRoomOpts.initial_state || [];
 
+        if(parentSpace) {
+            opts.parentSpace = parentSpace;
+        }
+
         switch (tchapRoomType) {
             case TchapRoomType.Forum: {
-                //"Forum" only for tchap members and not encrypted
-                createRoomOpts.visibility = Visibility.Public;
+                // Space "Forum" only for space members and not encrypted
+                if (parentSpace) {
+                    createRoomOpts.visibility = Visibility.PrivateChat;
+                } else {      //"Forum" only for tchap members and not encrypted
+                    createRoomOpts.visibility = Visibility.Public;
+                }
                 createRoomOpts.preset = Preset.PublicChat;
                 // Here we could have used createRoomOpts.accessRule directly,
                 // but since accessRules are a custom Tchap event, it is ignored by later code.
@@ -46,7 +55,12 @@ export default class TchapCreateRoom {
                     state_key: "",
                 });
 
-                opts.joinRule = JoinRule.Public;
+                //Open to space by default
+                if (parentSpace) {
+                    opts.joinRule = JoinRule.Restricted;
+                } else {
+                    opts.joinRule = JoinRule.Public;
+                }
                 opts.encryption = false;
                 opts.historyVisibility = HistoryVisibility.Shared;
                 break;
@@ -62,7 +76,12 @@ export default class TchapCreateRoom {
                     type: TchapRoomAccessRulesEventId,
                     state_key: "",
                 });
-                opts.joinRule = JoinRule.Invite;
+                //Open to space by default
+                if (parentSpace) {
+                    opts.joinRule = JoinRule.Restricted;
+                } else {
+                    opts.joinRule = JoinRule.Invite;
+                }
                 opts.encryption = true;
                 opts.historyVisibility = HistoryVisibility.Invited;
                 break;
@@ -78,7 +97,12 @@ export default class TchapCreateRoom {
                     type: TchapRoomAccessRulesEventId,
                     state_key: "",
                 });
-                opts.joinRule = JoinRule.Invite;
+                //Open to space by default
+                if (parentSpace) {
+                    opts.joinRule = JoinRule.Restricted;
+                } else {
+                    opts.joinRule = JoinRule.Invite;
+                }
                 opts.encryption = true;
                 opts.historyVisibility = HistoryVisibility.Invited;
                 break;
