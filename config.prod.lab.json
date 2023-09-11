@@ -193,6 +193,6 @@
     "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
         "feature_email_notification": [],
-        "feature_space": ["https://matrix.agent.dinum.tchap.gouv.fr"]
+        "feature_space": ["agent.dinum.tchap.gouv.fr"]
     }
 }
