@@ -37,7 +37,7 @@ export default class TchapCreateRoom {
 
         switch (tchapRoomType) {
             case TchapRoomType.Forum: {
-                // Space "Forum" only for  members and not encrypted
+                // Space "Forum" only for space members and not encrypted
                 if (parentSpace) {
                     createRoomOpts.visibility = Visibility.PrivateChat;
                 } else {      //"Forum" only for tchap members and not encrypted
