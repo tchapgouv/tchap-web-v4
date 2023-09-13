@@ -2,10 +2,10 @@
     "are-external-users-allowed-in-room": {
         "package": "matrix-react-sdk",
         "files": [
-            "src/components/views/rooms/RoomHeader.tsx",
-            "res/css/views/rooms/_RoomHeader.pcss"
+            "src/components/views/rooms/LegacyRoomHeader.tsx",
+            "res/css/views/rooms/_LegacyRoomHeader.pcss"
         ],
-        "description": "TODO: Remplir ici"
+        "description": "Adds 'External users allowed' in room header, if necessary. LegacyRoomHeader will be replaced by RoomHeader, initially as a lab feature. Track issue: https://github.com/vector-im/element-web/issues/25883"
     },
     "show-icon-on-public-room": {
         "package": "matrix-react-sdk",
@@ -28,7 +28,6 @@
             "src/components/views/dialogs/BugReportDialog.tsx",
             "src/components/views/elements/ErrorBoundary.tsx",
             "src/components/views/rooms/RoomPreviewBar.tsx",
-            "src/components/views/dialogs/FeedbackDialog.tsx",
             "src/rageshake/submit-rageshake.ts",
             "src/components/views/elements/AccessibleButton.tsx"
         ]
@@ -65,7 +64,8 @@
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/507",
         "files": [
             "src/components/structures/auth/Login.tsx",
-            "src/components/views/auth/PasswordLogin.tsx"
+            "src/components/views/auth/PasswordLogin.tsx",
+            "src/utils/ErrorUtils.tsx"
         ]
     },
     "registration-for-mainlining": {
@@ -98,10 +98,6 @@
     "hide-discovery-email-phone-settings": {
         "package": "matrix-react-sdk",
         "files": ["src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"]
-    },
-    "hide-location-if-no-map-server": {
-        "package": "matrix-react-sdk",
-        "files": ["src/components/views/rooms/MessageComposer.tsx"]
     },
     "activate-expired-account-panel": {
         "package": "matrix-js-sdk",
@@ -193,14 +189,6 @@
         "package": "matrix-react-sdk",
         "files": [
             "src/stores/RoomViewStore.tsx"
-        ]
-    },
-    "backport-html-export-security-fix": {
-        "github-issue": "https://github.com/matrix-org/matrix-react-sdk/security/advisories/GHSA-c9vx-2g7w-rp65",
-        "package": "matrix-react-sdk",
-        "files": [
-            "src/utils/exportUtils/HtmlExport.tsx",
-            "test/utils/exportUtils/HTMLExport-test.ts"
         ]
     },
     "error-tchap-is-down": {

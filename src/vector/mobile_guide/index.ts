@@ -31,36 +31,36 @@ function renderConfigError(message: string): void {
 }
 
 async function initPage(): Promise<void> {
-    document.getElementById("back_to_element_button").onclick = onBackToElementClick;
+    document.getElementById("back_to_element_button")!.onclick = onBackToElementClick;
 
     const config = await getVectorConfig("..");
 
     // We manually parse the config similar to how validateServerConfig works because
     // calling that function pulls in roughly 4mb of JS we don't use.
 
-    const wkConfig = config["default_server_config"]; // overwritten later under some conditions
-    const serverName = config["default_server_name"];
-    const defaultHsUrl = config["default_hs_url"];
-    const defaultIsUrl = config["default_is_url"];
+    const wkConfig = config?.["default_server_config"]; // overwritten later under some conditions
+    const serverName = config?.["default_server_name"];
+    const defaultHsUrl = config?.["default_hs_url"];
+    const defaultIsUrl = config?.["default_is_url"];
 
     const incompatibleOptions = [wkConfig, serverName, defaultHsUrl].filter((i) => !!i);
-    if (incompatibleOptions.length > 1) {
+    if (defaultHsUrl && (wkConfig || serverName)) {
         return renderConfigError(
-            "Invalid configuration: can only specify one of default_server_config, default_server_name, " +
-                "or default_hs_url.",
+            "Invalid configuration: a default_hs_url can't be specified along with default_server_name " +
+                "or default_server_config",
         );
     }
     if (incompatibleOptions.length < 1) {
         return renderConfigError("Invalid configuration: no default server specified.");
     }
 
-    let hsUrl = "";
-    let isUrl = "";
+    let hsUrl: string | undefined;
+    let isUrl: string | undefined;
 
-    if (wkConfig && wkConfig["m.homeserver"]) {
+    if (!serverName && typeof wkConfig?.["m.homeserver"]?.["base_url"] === "string") {
         hsUrl = wkConfig["m.homeserver"]["base_url"];
 
-        if (wkConfig["m.identity_server"]) {
+        if (typeof wkConfig["m.identity_server"]?.["base_url"] === "string") {
             isUrl = wkConfig["m.identity_server"]["base_url"];
         }
     }
@@ -78,8 +78,16 @@ async function initPage(): Promise<void> {
                 }
             }
         } catch (e) {
-            logger.error(e);
-            return renderConfigError("Unable to fetch homeserver configuration");
+            if (wkConfig && wkConfig["m.homeserver"]) {
+                hsUrl = wkConfig["m.homeserver"]["base_url"] || undefined;
+
+                if (wkConfig["m.identity_server"]) {
+                    isUrl = wkConfig["m.identity_server"]["base_url"] || undefined;
+                }
+            } else {
+                logger.error(e);
+                return renderConfigError("Unable to fetch homeserver configuration");
+            }
         }
     }
 
@@ -96,17 +104,19 @@ async function initPage(): Promise<void> {
     if (isUrl && !isUrl.endsWith("/")) isUrl += "/";
 
     if (hsUrl !== "https://matrix.org/") {
-        (document.getElementById("configure_element_button") as HTMLAnchorElement).href =
-            "https://mobile.element.io?hs_url=" + encodeURIComponent(hsUrl) + "&is_url=" + encodeURIComponent(isUrl);
-        document.getElementById("step1_heading").innerHTML = "1: Install the app";
-        document.getElementById("step2_container").style.display = "block";
-        document.getElementById("hs_url").innerText = hsUrl;
+        let url = "https://mobile.element.io?hs_url=" + encodeURIComponent(hsUrl);
 
         if (isUrl) {
-            document.getElementById("custom_is").style.display = "block";
-            document.getElementById("is_url").style.display = "block";
-            document.getElementById("is_url").innerText = isUrl;
+            document.getElementById("custom_is")!.style.display = "block";
+            document.getElementById("is_url")!.style.display = "block";
+            document.getElementById("is_url")!.innerText = isUrl;
+            url += "&is_url=" + encodeURIComponent(isUrl ?? "");
         }
+
+        (document.getElementById("configure_element_button") as HTMLAnchorElement).href = url;
+        document.getElementById("step1_heading")!.innerHTML = "1: Install the app";
+        document.getElementById("step2_container")!.style.display = "block";
+        document.getElementById("hs_url")!.innerText = hsUrl;
     }
 }
 

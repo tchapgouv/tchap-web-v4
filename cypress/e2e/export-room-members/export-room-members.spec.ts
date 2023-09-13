@@ -2,7 +2,7 @@
 
 import RoomUtils from "../../utils/room-utils";
 import RandomUtils from "../../utils/random-utils";
-import { normalize } from "../../../yarn-linked-dependencies/matrix-js-sdk/src/utils";
+import { normalize } from "matrix-js-sdk/src/utils";
 
 describe("Export room members feature", () => {
     const homeserverUrl = Cypress.env("E2E_TEST_USER_HOMESERVER_URL");

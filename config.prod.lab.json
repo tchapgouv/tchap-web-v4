@@ -109,6 +109,10 @@
         "feature_video_rooms": false,
         "feature_new_device_manager": true
     },
+    "feedback": {
+        "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
+        "new_issue_url": "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
+    },
     "default_federate": true,
     "default_theme": "light",
     "roomDirectory": {
@@ -162,6 +166,7 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
+        "UIFeature.LocationSharing": false,
         "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
@@ -188,6 +193,7 @@
     "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
         "feature_email_notification": [],
-        "feature_thread": ["https://matrix.agent.dinum.tchap.gouv.fr"]
+        "feature_thread": ["agent.dinum.tchap.gouv.fr"],
+        "feature_space": ["agent.dinum.tchap.gouv.fr"]
     }
 }

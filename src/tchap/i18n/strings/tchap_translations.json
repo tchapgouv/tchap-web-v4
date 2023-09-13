@@ -57,6 +57,22 @@
     "en":"Allow access to this room to all users, even outside \"%(domain)s\" domain",
     "fr":"Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
   },
+  "Create a room in this space": {
+    "en": "Create a room in this space",
+    "fr": "Créer un salon dans cet espace"
+  },
+  "Private discussions accessible to all users of this space.": {
+    "en": "Private discussions accessible to all users of this space.",
+    "fr": "Discussions privées accessibles à tous les membres de cet espace"
+  },
+  "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.": {
+    "en": "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.",
+    "fr": "Discussions privées accessibles à tous les membres de cet espace et aux utilisateurs externes sur invitation d'un administrateur."
+  },
+  "Public discussion accessible to all users of this space or from a shared link.": {
+    "en": "Public discussion accessible to all users of this space or from a shared link.",
+    "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
+  },
   "Scanning": {
     "en": "Scanning",
     "fr": "Scanning"
@@ -1014,5 +1030,109 @@
   "Sent messages will be stored until your connection has returned.": {
     "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
     "en": "Messages will be sent when your connection returns."
+  },
+  "Sessions": {
+    "fr": "Mes appareils",
+    "en": "My devices"
+  },
+  "Current session": {
+    "fr": "Cet appareil",
+    "en": "This device"
+  },
+  "Verified session": {
+    "fr": "Appareil vérifié",
+    "en": "Verified device"
+  },
+  "Other sessions":{
+    "fr": "Autres appareils",
+    "en": "Other devices"
+  },
+  "Verify your current session for enhanced secure messaging.":{
+    "fr": "Vérifier cet appareil afin de visualiser vos messages",
+    "en": "Verify your current device to get your messages."
+  },
+  "Verify session": {
+    "fr": "Vérifier l'appareil",
+    "en": "Verify device"
+  },
+  "Sign out of this session" :{
+    "fr": "Se déconnecter de cet appareil",
+    "en": "Sign out of this device"
+  },
+  "Receive push notifications on this session.":{
+    "fr": "Recevoir les notifications push sur cet appareil",
+    "en": "Receive push notifications on this device."
+  },
+  "Unverified":{
+    "fr": "Non vérifié",
+    "en": "Unverified"
+  },
+  "Verified":{
+    "fr": "Vérifié",
+    "en": "Verified "
+  },
+  "Your current session is ready for secure messaging.":{
+    "fr": "",
+    "en": ""
+  },
+  "%(count)s sessions selected|one":{
+    "fr": "%(count)s appareil sélectionné",
+    "en": "%(count)s device selected"
+  },
+  "%(count)s sessions selected|other":{
+    "fr": "%(count)s appareils sélectionnés",
+    "en": "%(count)s devices selected"
+  },
+  "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.":{
+    "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages",
+    "en": "Verify your devices to unlock your messages"
+  },
+  "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.":{
+    "fr" : "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil.",
+    "en" : "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device."
+  },
+  "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.":{
+    "fr" : "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisi la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié.",
+    "en" :  "Verified devices are anywhere you are using this account after entering your passphrase or confirming your identity with another verified device."
+  },
+  "Verified sessions": {
+    "fr": "Appareils vérifiés",
+    "en": "Verified devices"
+  },
+  "Unverified sessions": {
+    "fr": "Appareils non vérifiés",
+    "en": "Unverified devices"
+  },
+  "Unverified session": {
+    "fr": "Appareil non vérifié",
+    "en": "Unverified device"
+  },
+  "Sign out of %(count)s sessions|one": {
+    "fr": "Déconnecter %(count)s appareil",
+    "en": "Sign out of %(count)s device"
+  },
+  "Sign out of %(count)s sessions|other": {
+    "fr": "Déconnecter %(count)s appareils",
+    "en": "Sign out of %(count)s devices"
+  },
+  "Sign out of all other sessions (%(otherSessionsCount)s)": {
+    "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)",
+    "en": "Sign out of all other devices (%(otherSessionsCount)s)"
+  },
+  "Are you sure you want to sign out of %(count)s sessions?|one": {
+    "fr": "Voulez-vous vraiment déconnecter %(count)s appareil ?",
+    "en": "Are you sure you want to sign out of %(count)s device?"
+  },
+  "Are you sure you want to sign out of %(count)s sessions?|other": {
+    "fr": "Voulez-vous vraiment déconnecter %(count)s de vos appareils ?",
+    "en": "Are you sure you want to sign out of %(count)s devices?"
+  },
+  "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": {
+    "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car ils pourraient représenter un usage frauduleux de votre compte.",
+    "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account."
+  },
+  "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
+    "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération).",
+    "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code)."
   }
 }

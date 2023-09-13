@@ -11,6 +11,7 @@ File copied from ComponentVisibility.ts in matrix-react-sdk v3.46.0
 // Populate this class with the details of your customisations when copying it.
 
 import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
+import TchapUIFeature from "../util/TchapUIFeature";
 
 /**
  * Determines whether or not the active MatrixClient user should be able to use
@@ -24,7 +25,7 @@ import { UIComponent } from "matrix-react-sdk/src/settings/UIFeature";
  */
 function shouldShowComponent(component: UIComponent): boolean {
     if (component === UIComponent.CreateSpaces) {
-        return false;
+        return  TchapUIFeature.isFeatureActiveForHomeserver("feature_space");
     }
     return true; // default to visible
 }
