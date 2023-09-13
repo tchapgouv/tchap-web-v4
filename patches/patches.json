@@ -173,7 +173,7 @@
         "files": [
             "src/components/views/context_menus/MessageContextMenu.tsx",
             "src/components/views/messages/MessageActionBar.tsx",
-            "src/components/views/right_panel/RoomHeaderButtons.tsx"
+            "src/components/views/right_panel/LegacyRoomHeaderButtons.tsx"
         ]
     },
     "change-sections-order-in-security-privacy-settings": {
