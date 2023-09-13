@@ -85,6 +85,7 @@
     "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
         "feature_email_notification": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
+        "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_space": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"]
     }
 }
