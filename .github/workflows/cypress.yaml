@@ -1,16 +1,11 @@
-# Run the tests
-# Todo : reuse a build from another action, instead of rebuilding for nothing.
-# tchap modification : use "./scripts/tchap/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
+# This is a tchap-specific file, inspired from the one in matrix-react-sdk
 name: Cypress End to End Tests
 on:
     pull_request: {}
     push:
         branches: [develop_tchap, master_tchap]
-    #repository_dispatch: # :TCHAP: we don't use this
-    #  types: [ element-web-notify ]
 env:
-    # :TCHAP: not needed for fetchdep.with.version.sh but leaving them otherwise it breaks.
-    # These must be set for fetchdep.sh to get the right branch
+    # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
@@ -29,28 +24,32 @@ jobs:
                   cache: "yarn"
                   node-version: ${{ steps.node_version.outputs.node_version }}
 
-            - name: Install Dependencies
-              run: "./scripts/tchap/install-yarn-linked-repositories.sh"
+            - name: "Copy the config file at the right place"
+              run: "cp config.dev.json config.json" # todo we could make the choice of backend configurable.
+
+            - name: "Build the app, so that we can serve it from static files" #todo : fetch build from an artifact to avoid rebuilding for nothing
+              run: "yarn install && yarn build"
 
             - name: Run Cypress tests
-              uses: cypress-io/github-action@v4.1.1
+              uses: cypress-io/github-action@v6.5.0
               with:
-                  # The built-in Electron runner seems to grind to a halt trying
+                  install: false # disable the default install, we already installed and built.
+
+                  # Serve with 'npx serve', a simple static webserver, so that it starts quickly. The dev server is slow and messy to start.
+                  start: "npx serve -p 8080 -L webapp"
+                  # Note : 'wait-on' caused issues where localhost was not found by cypress. Be careful if you want to use it.
+
+                  # From matrix-react-sdk : The built-in Electron runner seems to grind to a halt trying
                   # to run the tests, so use chrome.
                   browser: chrome
-                  #install: false # disable the default install, we used layered.with.version already.
-                  start: yarn start
-                  #start: npx serve -p 8080 webapp # If you have downloaded a build artifact, it will be in webapp dir.
-                  wait-on: "http://localhost:8080"
-                  # wait for 3min, the build is long
-                  wait-on-timeout: 180
-                  # record: true # todo record to dashboard, see action's doc
+                  # headed: true # tchap uses headless, since we don't record videos.
+
                   command: "yarn test:cypress"
+                  # Note : 'working-directory' changes pwd, for everything. If you use it you need to change relative paths for everything, it's tricky.
               env:
                   E2E_TEST_USER_EMAIL: ${{ secrets.E2E_TEST_USER_EMAIL }}
                   E2E_TEST_USER_PASSWORD: ${{ secrets.E2E_TEST_USER_PASSWORD }}
                   E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY }}
                   E2E_TEST_USER_HOMESERVER_URL: "https://matrix.agent1.tchap.incubateur.net"
                   E2E_TEST_USER_HOMESERVER_SHORT: "agent1.tchap.incubateur.net"
-                  # todo pass the Dashboard record key as an environment variable
-                  # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # don't remember what this is for, can't hurt
