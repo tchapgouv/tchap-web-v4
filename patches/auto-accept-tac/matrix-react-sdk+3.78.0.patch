@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-index c27640c..d137782 100644
+index c27640c..b945877 100644
 --- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 +++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 @@ -30,6 +30,7 @@ import {
@@ -18,9 +18,9 @@ index c27640c..d137782 100644
 +        if (TchapUIFeature.autoAcceptTermsAndConditions){
 +            if (
 +                !this.tempClient &&
-+                !doesAccountDataHaveIdentityServer() 
++                !doesAccountDataHaveIdentityServer(this.matrixClient) 
 +            ) {
-+                setToDefaultIdentityServer();
++                setToDefaultIdentityServer(this.matrixClient);
 +            }
 +            return;
 +        }
