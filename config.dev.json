@@ -72,8 +72,8 @@
         "custom_themes": []
     },
     "branding": {
-        "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": [
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_footer_links": [
             { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
             { "text": "OpenData", "url": "https://www.data.gouv.fr" },
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },

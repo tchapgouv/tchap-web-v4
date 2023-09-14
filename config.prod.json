@@ -174,8 +174,8 @@
         "custom_themes": []
     },
     "branding": {
-        "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": [
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_footer_links": [
             { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
             { "text": "OpenData", "url": "https://www.data.gouv.fr" },
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },
@@ -185,7 +185,7 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
-    "desktopBuilds": {
+    "desktop_builds": {
         "available": false
     },
     "permalink_prefix": "https://tchap.gouv.fr",
