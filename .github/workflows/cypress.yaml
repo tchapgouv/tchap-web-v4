@@ -27,10 +27,12 @@ jobs:
                   node-version: ${{ steps.node_version.outputs.node_version }}
 
             - name: Download build from artifact
-              uses: actions/download-artifact@v3
+              # use this action instead of actions/download-artifact because we need the "workflow" param
+              uses: dawidd6/action-download-artifact@v2
               with:
                   name: devbuild
                   path: webapp
+                  workflow: build.yml
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
