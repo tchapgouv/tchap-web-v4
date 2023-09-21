@@ -1,15 +1,18 @@
 # This is a tchap-specific file, inspired from the one in matrix-react-sdk
 name: Cypress End to End Tests
+
 # Run this job when the "Build" job completes
 on:
     workflow_run:
         workflows: ["Build"]
         types:
             - completed
+
 env:
     # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
+
 jobs:
     cypress:
         name: Cypress
@@ -17,9 +20,11 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+
             - name: Get Node Version
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+
             - name: Yarn cache
               uses: actions/setup-node@v3
               with:
