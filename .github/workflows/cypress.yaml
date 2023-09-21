@@ -1,9 +1,11 @@
 # This is a tchap-specific file, inspired from the one in matrix-react-sdk
 name: Cypress End to End Tests
+# Run this job when the "Build" job completes
 on:
-    pull_request: {}
-    push:
-        branches: [develop_tchap, master_tchap]
+    workflow_run:
+        workflows: ["Build"]
+        types:
+            - completed
 env:
     # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
@@ -11,7 +13,6 @@ env:
 jobs:
     cypress:
         name: Cypress
-        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
