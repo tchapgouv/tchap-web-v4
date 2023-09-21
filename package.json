@@ -1,7 +1,7 @@
 {
     "name": "element-web",
     "productName": "Tchap",
-    "version": "4.3.7",
+    "version": "4.3.8",
     "version-element-web": "1.11.39",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
