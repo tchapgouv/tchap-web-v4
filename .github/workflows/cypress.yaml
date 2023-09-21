@@ -11,6 +11,7 @@ env:
 jobs:
     cypress:
         name: Cypress
+        needs: build
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
