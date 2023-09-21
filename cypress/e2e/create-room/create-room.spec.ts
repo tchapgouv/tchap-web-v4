@@ -17,6 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
+import RandomUtils from "../../utils/random-utils";
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     const addRoomLabel = "Ajouter un salon";
@@ -26,14 +27,9 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     return cy.get(".mx_Dialog");
 }
 
-// TODO: starter implementation for DMs, for now it just open the dialog
-function openCreateDMDialog(): Chainable<JQuery<HTMLElement>> {
-    cy.get('.mx_RoomSublist_auxButton').first().click();
-    return cy.get(".mx_Dialog");
-}
-
 describe("Create Room", () => {
-    const homeserverShortname = Cypress.env('E2E_TEST_USER_HOMESERVER_SHORT');
+    const homeserverShortname = Cypress.env("E2E_TEST_USER_HOMESERVER_SHORT");
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
         cy.loginUser();
@@ -44,22 +40,22 @@ describe("Create Room", () => {
         // Note : This is simple and works, so good enough for now. But if we want to store the roomId at the end of the test instead, we could use “as”
         // for passing the value around : https://docs.cypress.io/guides/core-concepts/variables-and-aliases#Sharing-Context
         // Do NOT use a describe-level variable (like "let roomIdToCleanup") like we do in unit tests, cypress does not work like that.
-        cy.url().then(urlString => {
-            console.log('roomId url string', urlString);
-            console.log('roomId url string split', urlString.split('/#/room/'));
-            console.log('roomIdToCleanup', urlString.split('/#/room/')[1]);
-            const roomId = urlString.split('/#/room/')[1];
+        cy.url().then((urlString) => {
+            console.log("roomId url string", urlString);
+            console.log("roomId url string split", urlString.split("/#/room/"));
+            console.log("roomIdToCleanup", urlString.split("/#/room/")[1]);
+            const roomId = urlString.split("/#/room/")[1];
             if (roomId) {
                 cy.leaveRoom(roomId);
                 // todo also forgetRoom to save resources.
             } else {
-                console.error('Did not find roomId in url. Not cleaning up.');
+                console.error("Did not find roomId in url. Not cleaning up.");
             }
         });
     });
 
     it("should allow us to create a private room with name", () => {
-        const name = "Test room 1 private";
+        const name = "test/" + today + "/create_room_private/" + RandomUtils.generateRandom(4);
 
         openCreateRoomDialog().within(() => {
             // Fill name
@@ -75,13 +71,13 @@ describe("Create Room", () => {
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
-        cy.get(".tc_RoomHeader_external").should('not.exist');
+        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
+        cy.get(".tc_RoomHeader_external").should("not.exist");
     });
 
     //check that the mention "open to external users" is displayed
     it("should allow us to create a private room with name and externs allowed", () => {
-        const name = "Test room 1 externes";
+        const name = "test/" + today + "/create_room_externs/" + RandomUtils.generateRandom(4);
 
         openCreateRoomDialog().within(() => {
             // Fill name
@@ -99,12 +95,12 @@ describe("Create Room", () => {
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
-        cy.get(".tc_RoomHeader_external").contains("ouvert aux externes");
+        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
+        cy.get(".tc_RoomHeader_external").should("exist");
     });
 
     it("should allow us to create a public room with name", () => {
-        const name = "Test room 1 public";
+        const name = "test/" + today + "/create_room_public/" + RandomUtils.generateRandom(4);
 
         openCreateRoomDialog().within(() => {
             // Fill name
@@ -122,48 +118,8 @@ describe("Create Room", () => {
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(name);
+        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
     });
 
-    it("should allow us to create a DM with another user", () => {
-        const invitee = "E2e-Test-1-Summer [Beta]";
-
-        openCreateDMDialog().within(() => {
-            // Fill name & topic
-            cy.get('[data-testid="invite-dialog-input"]').type(invitee);
-            // TODO check if invitee is in list
-            cy.get('.mx_InviteDialog_buttonAndSpinner').click();
-            // Submit
-            cy.startMeasuring("from-submit-to-room");
-            // Click on the suggestion matching the invitee
-            cy.contains(invitee).click();
-            // Click on the Go button
-            cy.get(".mx_InviteDialog_goButton").click();
-        });
-
-        cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(invitee);
-        cy.get('.mx_BasicMessageComposer_input').type("hello{enter}");
-        cy.get('.mx_EventTile_body').contains("hello");
-    });
-
-    it("should allow us to create a DM by inviting user with email", () => {
-        const email = "test@tchap.beta.gouv.fr";
-
-        openCreateDMDialog().within(() => {
-            // Fill name & topic
-            cy.get('[data-testid="invite-dialog-input"]').type(email);
-            // Submit
-            cy.startMeasuring("from-submit-to-room");
-            // Click on the suggestion matching the invitee
-            cy.contains(email).click();
-            // Click on the Go button
-            cy.get(".mx_InviteDialog_goButton").click();
-        });
-
-        cy.stopMeasuring("from-submit-to-room");
-        cy.get(".mx_RoomHeader_nametext").contains(email);
-        cy.get('.mx_BasicMessageComposer_input').type("hello{enter}");
-        cy.get('.mx_EventTile_body').contains("hello");
-    });
+    // Note : DM creation is not tested here, because Tchap has no custom implementation for DMs. (2023-01-30)
 });

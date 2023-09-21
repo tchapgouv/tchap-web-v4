@@ -33,7 +33,7 @@ const COPY_LIST = [
     ["./config.json", "webapp", { directwatch: 1 }],
     ["contribute.json", "webapp"],
     // :TCHAP: copy tchap-specific translations to the translations dir, ready to be served. See custom_translations_url in config.json.
-    ["src/i18n/strings/tchap_translations.json", "webapp/i18n"],
+    ["src/tchap/i18n/strings/tchap_translations.json", "webapp/i18n"],
 ];
 
 const parseArgs = require("minimist");

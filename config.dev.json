@@ -32,28 +32,28 @@
     "brand": "Tchap",
     "bug_report_endpoint_url": "/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
-    "defaultCountryCode": "FR",
-    "showLabsSettings": false,
+    "default_country_code": "FR",
+    "show_labs_settings": false,
     "features": {
         "feature_thread": true,
-        "feature_video_rooms" : false,
-        "feature_new_device_manager" : false
+        "feature_video_rooms": false,
+        "feature_new_device_manager": false
+    },
+    "feedback": {
+        "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
+        "new_issue_url": "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
     },
     "default_federate": true,
     "default_theme": "light",
-    "roomDirectory": {
-        "servers": [
-            "agent1.tchap.incubateur.net",
-            "agent2.tchap.incubateur.net",
-            "externe.tchap.incubateur.net"
-        ]
+    "room_directory": {
+        "servers": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"]
     },
     "enable_presence_by_hs_url": {
         "https://matrix.agent1.tchap.incubateur.net": false,
         "https://matrix.agent2.tchap.incubateur.net": false,
         "https://matrix.externe.tchap.incubateur.net": false
     },
-    "settingDefaults": {
+    "setting_defaults": {
         "breadcrumbs": true,
         "UIFeature.voip": false,
         "UIFeature.shareSocial": false,
@@ -64,22 +64,22 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
+        "UIFeature.LocationSharing": false,
         "MessageComposerInput.showPollsButton": false,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
-        "custom_themes": [
-        ]
+        "custom_themes": []
     },
     "branding": {
-        "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": [
-            { "text": "Gouvernement", "url": "https://www.gouvernement.fr"},
-            {"text": "OpenData", "url": "https://www.data.gouv.fr"},
-            {"text": "DINUM", "url": "https://numerique.gouv.fr"},
-            {"text": "beta.gouv.fr", "url": "https://beta.gouv.fr"},
-            {"text": "CGU", "url": "https://www.tchap.gouv.fr/cgu"},
-            {"text": "FAQ", "url": "https://www.tchap.gouv.fr/faq"}
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_footer_links": [
+            { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
+            { "text": "OpenData", "url": "https://www.data.gouv.fr" },
+            { "text": "DINUM", "url": "https://numerique.gouv.fr" },
+            { "text": "beta.gouv.fr", "url": "https://beta.gouv.fr" },
+            { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
+            { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
@@ -88,5 +88,14 @@
     },
     "permalink_prefix": "https://www.tchap.incubateur.net",
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
-    "custom_translations_url": "/i18n/tchap_translations.json"
+    "custom_translations_url": "/i18n/tchap_translations.json",
+    "tchap_features": {
+        "feature_email_notification": [
+            "agent1.tchap.incubateur.net",
+            "agent2.tchap.incubateur.net",
+            "externe.tchap.incubateur.net"
+        ],
+        "feature_space": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"],
+        "feature_thread": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"]
+    }
 }

@@ -86,11 +86,6 @@ present in the room. The Bridge info tab pulls information from the `m.bridge` s
 bridges are not expected to be compatible, and users should not rely on this
 tab as the single source of truth just yet.
 
-## Presence indicator in room list (`feature_presence_in_room_list`)
-
-This adds a presence indicator in the room list next to DM rooms where the other
-person is online.
-
 ## Custom themes (`feature_custom_themes`)
 
 Custom themes are possible through Element's [theme support](./theming.md), though
@@ -100,66 +95,14 @@ theme definition.
 
 For some sample themes, check out [aaronraimist/element-themes](https://github.com/aaronraimist/element-themes).
 
-## Message preview tweaks
-
-To enable message previews in the left panel for reactions in all rooms, enable `feature_roomlist_preview_reactions_all`.
-
-To enable message previews for reactions in DMs only, enable `feature_roomlist_preview_reactions_dms`. This is ignored when it is enabled for all rooms.
-
 ## Dehydrated devices (`feature_dehydration`)
 
 Allows users to receive encrypted messages by creating a device that is stored
 encrypted on the server, as described in [MSC2697](https://github.com/matrix-org/matrix-doc/pull/2697).
 
-## Breadcrumbs v2 (`feature_breadcrumbs_v2`)
-
-Instead of showing the horizontal list of breadcrumbs under the filter field, the new UX is an interactive context menu
-triggered by the button to the right of the filter field.
-
-## Spotlight search (`feature_spotlight`) [In Development]
-
-Switches to a new room search experience.
-
-## Extensible events rendering (`feature_extensible_events`) [In Development]
-
-_Intended for developer use only at the moment._
-
-Extensible Events are a [new event format](https://github.com/matrix-org/matrix-doc/pull/1767) which
-supports graceful fallback in unknown event types. Instead of rendering nothing or a blank space, events
-can define a series of other events which represent the event's information but in different ways. The
-base of these fallbacks being text.
-
-Turning this flag on indicates that, when possible, the extensible events structure should be parsed on
-supported event types. This should lead to zero perceptual change in the timeline except in cases where
-the sender is using unknown/unrecognised event types.
-
-Sending events with extensible events structure is always enabled - this should not affect any downstream
-client.
-
-## Right panel stays open (`feature_right_panel_default_open`)
-
-This is an experimental default open right panel mode as a quick fix for those
-who prefer to have the right panel open consistently across rooms.
-
-If no right panel state is known for the room or it was closed on the last room
-visit, it will default to the room member list. Otherwise, the saved card last
-used in that room is shown.
-
-## Pin drop location sharing (`feature_location_share_pin_drop`) [In Development]
-
-Enables sharing a pin drop location to the timeline.
-
 ## Live location sharing (`feature_location_share_live`) [In Development]
 
 Enables sharing your current location to the timeline, with live updates.
-
-## Threaded Messaging (`feature_thread`)
-
-Threading allows users to branch out a new conversation from the main timeline of a room. This is particularly useful in high traffic rooms where multiple conversations can happen in parallel or when a single discussion might stretch over a very long period of time.
-
-Threads can be access by clicking their summary below the root event on the room timeline. Users can find a comprehensive list of threads by click the icon on the room header button.
-
-This feature might work in degraded mode if the homeserver a user is connected to does not advertise support for the unstable feature `org.matrix.msc3440` when calling the `/versions` API endpoint.
 
 ## Video rooms (`feature_video_rooms`)
 
@@ -186,6 +129,16 @@ Enables rendering of MD / HTML in room topics.
 Enables exploring public spaces in the new search dialog. Requires the server to
 have [MSC3827](https://github.com/matrix-org/matrix-spec-proposals/pull/3827) enabled.
 
-## Favourite Messages (`feature_favourite_messages`) [In Development]
+## Use the Rust cryptography implementation (`feature_rust_crypto`) [In Development]
 
-Enables users to bookmark a message or content for a later reference.
+Configures Element to use a new cryptography implementation based on the [matrix-rust-sdk](https://github.com/matrix-org/matrix-rust-sdk).
+
+This setting is (currently) _sticky_ to a user's session: it only takes effect when the user logs in to a new session. Likewise, even after disabling the setting in `config.json`, the Rust implemention will remain in use until users log out.
+
+## New room header & details (`feature_new_room_decoration_ui`) [In Development]
+
+Refactors visually the room header and room sidebar
+
+## Knock rooms (`feature_ask_to_join`) [In Development]
+
+Enables knock feature for rooms. This allows users to ask to join a room.

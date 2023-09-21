@@ -9,7 +9,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
-const SentryCliPlugin = require("@sentry/webpack-plugin");
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
+const crypto = require("crypto");
+
+// XXX: mangle Crypto::createHash to replace md4 with sha256, output.hashFunction is insufficient as multiple bits
+// of webpack hardcode md4. The proper fix it to upgrade to webpack 5.
+const createHash = crypto.createHash;
+crypto.createHash = (algorithm, options) => createHash(algorithm === "md4" ? "sha256" : algorithm, options);
 
 // Environment variables
 // RIOT_OG_IMAGE_URL: specifies the URL to the image which should be used for the opengraph logo.
@@ -30,7 +36,8 @@ const cssThemes = {
     //"theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
     //"theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
     //"theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
-    "theme-light-high-contrast": "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    "theme-light-high-contrast":
+        "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
     //"theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
     //"theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
     //"theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
@@ -44,8 +51,11 @@ function getActiveThemes() {
     // :old: :TCHAP: being thrown on login page.
     // :old: :TCHAP: Browsers recover, but e2e tests crash, so we add both themes in default here.
     // Default to `light,dark` theme when the MATRIX_THEMES environment variable is not defined.
-    const theme = process.env.MATRIX_THEMES ?? 'light,dark';
-    return theme.split(',').map(x => x.trim()).filter(Boolean);
+    const theme = process.env.MATRIX_THEMES ?? "light,dark";
+    return theme
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean);
 }
 
 // See docs/customisations.md
@@ -58,6 +68,15 @@ try {
     // stringify the output so it appears in logs correctly, as large files can sometimes get
     // represented as `<Object>` which is less than helpful.
     console.log("Using customisations.json : " + JSON.stringify(fileOverrides, null, 4));
+
+    process.on("exit", () => {
+        console.log(""); // blank line
+        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        console.warn("!! Customisations have been deprecated and will be removed in a future release      !!");
+        console.warn("!! See https://github.com/vector-im/element-web/blob/develop/docs/customisations.md !!");
+        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        console.log(""); // blank line
+    });
 } catch (e) {
     // ignore - not important
 }
@@ -96,8 +115,8 @@ module.exports = (env, argv) => {
 
     const development = {};
     if (devMode) {
-        // High quality, embedded source maps for dev builds
-        development["devtool"] = "eval-source-map";
+        // Embedded source maps for dev builds, can't use eval-source-map due to CSP
+        development["devtool"] = "inline-source-map";
     } else {
         if (process.env.CI_PACKAGE) {
             // High quality source maps in separate .map files which include the source. This doesn't bulk up the .js
@@ -121,11 +140,11 @@ module.exports = (env, argv) => {
         const imports = ACTIVE_THEMES.map((t) => {
             if (useHMR) {
                 //:tchap: path is taken from src/vector/devcss.ts more info -> search "use theming"
-                return cssThemes[`theme-${ t }`].replace(".", "../../");
+                return cssThemes[`theme-${t}`].replace(".", "../../");
             }
 
             // return cssThemes[`theme-${t}`].replace("./node_modules/", ""); // theme import path
-            return cssThemes[`theme-${ t }`];
+            return cssThemes[`theme-${t}`];
         });
         const s = JSON.stringify(ACTIVE_THEMES);
         return `
@@ -210,8 +229,9 @@ module.exports = (env, argv) => {
                 // Same goes for js/react-sdk - we don't need two copies.
                 "matrix-js-sdk": path.resolve(__dirname, "node_modules/matrix-js-sdk"),
                 "matrix-react-sdk": path.resolve(__dirname, "node_modules/matrix-react-sdk"),
-                // and sanitize-html
-                "sanitize-html": path.resolve(__dirname, "node_modules/sanitize-html"),
+                // and matrix-events-sdk & matrix-widget-api
+                "matrix-events-sdk": path.resolve(__dirname, "node_modules/matrix-events-sdk"),
+                "matrix-widget-api": path.resolve(__dirname, "node_modules/matrix-widget-api"),
 
                 // Define a variable so the i18n stuff can load
                 "$webapp": path.resolve(__dirname, "webapp"),
@@ -245,6 +265,11 @@ module.exports = (env, argv) => {
                 {
                     test: /\.worker\.ts$/,
                     loader: "worker-loader",
+                    options: {
+                        // Prevent bundling workers since CSP forbids loading them
+                        // from another origin.
+                        filename: "[hash].worker.js",
+                    },
                 },
                 {
                     test: /\.(ts|js)x?$/,
@@ -258,6 +283,12 @@ module.exports = (env, argv) => {
                         // include node modules inside these modules, so we add 'src'.
                         if (f.startsWith(reactSdkSrcDir)) return true;
                         if (f.startsWith(jsSdkSrcDir)) return true;
+
+                        // Some of the syntax in this package is not understood by
+                        // either webpack or our babel setup.
+                        // When we do get to upgrade our current setup, this should
+                        // probably be removed.
+                        if (f.includes("@vector-im/compound-web")) return true;
 
                         // but we can't run all of our dependencies through babel (many of them still
                         // use module.exports which breaks if babel injects an 'include' for its
@@ -328,34 +359,34 @@ module.exports = (env, argv) => {
                          */
                         useHMR
                             ? {
-                                loader: "style-loader",
-                                /**
+                                  loader: "style-loader",
+                                  /**
                                    * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
                                    * we could try using `lazyStyleTag` here to add and remove styles on demand,
                                    * that would nicely resolve issues of race conditions for themes,
                                    * at least for development purposes.
                                    */
-                                options: {
-                                    insert: function insertBeforeAt(element) {
-                                        const parent = document.querySelector("head");
-                                        // We're in iframe
-                                        if (!window.MX_DEV_ACTIVE_THEMES) {
-                                            parent.appendChild(element);
-                                            return;
-                                        }
-                                        // Properly disable all other instances of themes
-                                        element.disabled = true;
-                                        element.onload = () => {
-                                            element.disabled = true;
-                                        };
-                                        const theme =
+                                  options: {
+                                      insert: function insertBeforeAt(element) {
+                                          const parent = document.querySelector("head");
+                                          // We're in iframe
+                                          if (!window.MX_DEV_ACTIVE_THEMES) {
+                                              parent.appendChild(element);
+                                              return;
+                                          }
+                                          // Properly disable all other instances of themes
+                                          element.disabled = true;
+                                          element.onload = () => {
+                                              element.disabled = true;
+                                          };
+                                          const theme =
                                               window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
-                                        element.setAttribute("data-mx-theme", theme);
-                                        window.MX_insertedThemeStylesCounter++;
-                                        parent.appendChild(element);
-                                    },
-                                },
-                            }
+                                          element.setAttribute("data-mx-theme", theme);
+                                          window.MX_insertedThemeStylesCounter++;
+                                          parent.appendChild(element);
+                                      },
+                                  },
+                              }
                             : MiniCssExtractPlugin.loader,
                         {
                             loader: "css-loader",
@@ -505,7 +536,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     const outputPath = getAssetOutputPath(url, resourcePath);
                                     return toPublicPath(outputPath);
                                 },
@@ -517,7 +548,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     const outputPath = getAssetOutputPath(url, resourcePath);
                                     return toPublicPath(outputPath);
                                 },
@@ -535,7 +566,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     // CSS image usages end up in the `bundles/[hash]` output
                                     // directory, so we adjust the final path to navigate up
                                     // twice.
@@ -559,7 +590,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     // CSS image usages end up in the `bundles/[hash]` output
                                     // directory, so we adjust the final path to navigate up
                                     // twice.
@@ -575,7 +606,7 @@ module.exports = (env, argv) => {
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
-                                publicPath: function(url, resourcePath) {
+                                publicPath: function (url, resourcePath) {
                                     const outputPath = getAssetOutputPath(url, resourcePath);
                                     return toPublicPath(outputPath);
                                 },
@@ -656,9 +687,11 @@ module.exports = (env, argv) => {
 
             // upload to sentry if sentry env is present
             process.env.SENTRY_DSN &&
-                new SentryCliPlugin({
+                sentryWebpackPlugin({
                     release: process.env.VERSION,
-                    include: "./webapp/bundles",
+                    sourcemaps: {
+                        paths: "./webapp/bundles/**",
+                    },
                     errorHandler: (err, invokeErr, compilation) => {
                         compilation.warnings.push("Sentry CLI Plugin: " + err.message);
                         console.log(`::warning title=Sentry error::${err.message}`);

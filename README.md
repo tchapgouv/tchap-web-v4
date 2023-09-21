@@ -18,13 +18,14 @@ Element has several tiers of support for different environments:
 
 -   Supported
     -   Definition: Issues **actively triaged**, regressions **block** the release
-    -   Last 2 major versions of Chrome, Firefox, Safari, and Edge on desktop OSes
+    -   Last 2 major versions of Chrome, Firefox, and Edge on desktop OSes
+    -   Last 2 versions of Safari
     -   Latest release of official Element Desktop app on desktop OSes
     -   Desktop OSes means macOS, Windows, and Linux versions for desktop devices
         that are actively supported by the OS vendor and receive security updates
 -   Experimental
     -   Definition: Issues **accepted**, regressions **do not block** the release
-    -   Element as an installed PWA via current stable version of Chrome, Firefox, and Safari
+    -   Element as an installed PWA via current stable version of Chrome
     -   Mobile web for current stable version of Chrome, Firefox, and Safari on Android, iOS, and iPadOS
 -   Not supported
     -   Definition: Issues only affecting unsupported environments are **closed**
@@ -85,7 +86,7 @@ your web server configuration when hosting Element Web:
 
 -   The `X-Frame-Options: SAMEORIGIN` header, to prevent Element Web from being
     framed and protect from [clickjacking][owasp-clickjacking].
--   The `frame-ancestors 'none'` directive to your `Content-Security-Policy`
+-   The `frame-ancestors 'self'` directive to your `Content-Security-Policy`
     header, as the modern replacement for `X-Frame-Options` (though both should be
     included since not all browsers support it yet, see
     [this][owasp-clickjacking-csp]).
@@ -104,7 +105,7 @@ If you are using nginx, this would look something like the following:
 add_header X-Frame-Options SAMEORIGIN;
 add_header X-Content-Type-Options nosniff;
 add_header X-XSS-Protection "1; mode=block";
-add_header Content-Security-Policy "frame-ancestors 'none'";
+add_header Content-Security-Policy "frame-ancestors 'self'";
 ```
 
 For Apache, the configuration looks like:
@@ -113,7 +114,7 @@ For Apache, the configuration looks like:
 Header set X-Frame-Options SAMEORIGIN
 Header set X-Content-Type-Options nosniff
 Header set X-XSS-Protection "1; mode=block"
-Header set Content-Security-Policy "frame-ancestors 'none'"
+Header set Content-Security-Policy "frame-ancestors 'self'"
 ```
 
 Note: In case you are already setting a `Content-Security-Policy` header
@@ -320,10 +321,10 @@ yarn install
 yarn start
 ```
 
-Alternatively, you can skip the above commands and only run the command below. The only difference is that both 'matrix-react-sdk and 'matrix-js-sdk' will be cloned inside the root project folder. 
+Alternatively, you can skip the above commands and only run the command below. The only difference is that both 'matrix-react-sdk and 'matrix-js-sdk' will be cloned inside the root project folder.
 
 ```bash
-./scripts/install-yarn-linked-repositories.sh
+./scripts/tchap/install-yarn-linked-repositories.sh
 yarn install
 yarn start
 ```

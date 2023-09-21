@@ -1,40 +1,45 @@
 #Run the tests
-#tchap modification : use "./scripts/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
+#tchap modification : use "./scripts/tchap/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
 name: Tests
 on:
-  pull_request: { }
-  push:
-    branches: [ develop, master ]
-  repository_dispatch:
-    types: [ element-web-notify ]
+    pull_request: {}
+    push:
+        branches: [develop, master]
+    repository_dispatch:
+        types: [element-web-notify]
 env:
-  # These must be set for fetchdep.sh to get the right branch
-  REPOSITORY: ${{ github.repository }}
-  PR_NUMBER: ${{ github.event.pull_request.number }}
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
-  jest:
-    name: Jest
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    jest:
+        name: Jest
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Get Node Version
+              id: node_version
+              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+            - name: Yarn cache
+              uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: ${{ steps.node_version.outputs.node_version }}
+            - name: Install Dependencies
+              run: "./scripts/tchap/install-yarn-linked-repositories.sh"
 
-      - name: Yarn cache
-        uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version: 16
+            - name: Get number of CPU cores
+              id: cpu-cores
+              uses: SimenB/github-actions-cpu-cores@410541432439795d30db6501fb1d8178eb41e502 # v1
 
-      - name: Install Dependencies
-        run: "./scripts/install-yarn-linked-repositories.sh"
+            - name: Run tests with coverage
+              run: "yarn coverage --ci"
 
-      - name: Run tests with coverage
-        run: "yarn coverage --ci"
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage
-          path: |
-            coverage
-            !coverage/lcov-report
+            - name: Upload Artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: coverage
+                  path: |
+                      coverage
+                      !coverage/lcov-report

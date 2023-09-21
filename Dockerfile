@@ -1,5 +1,5 @@
 # Builder
-FROM --platform=$BUILDPLATFORM node:16-buster as builder
+FROM --platform=$BUILDPLATFORM node:20-bullseye as builder
 
 # Support custom branches of the react-sdk and js-sdk. This also helps us build
 # images of element-web develop.
@@ -15,7 +15,7 @@ WORKDIR /src
 
 COPY . /src
 RUN dos2unix /src/scripts/docker-link-repos.sh && bash /src/scripts/docker-link-repos.sh
-RUN yarn --network-timeout=100000 install
+RUN yarn --network-timeout=200000 install
 
 RUN dos2unix /src/scripts/docker-package.sh && bash /src/scripts/docker-package.sh
 
@@ -23,7 +23,7 @@ RUN dos2unix /src/scripts/docker-package.sh && bash /src/scripts/docker-package.
 RUN cp /src/config.sample.json /src/webapp/config.json
 
 # App
-FROM nginx:alpine
+FROM nginx:alpine-slim
 
 COPY --from=builder /src/webapp /app
 

@@ -1,49 +1,54 @@
-name: Create tag and release for tchap-web
+name: Build archives and create release for tchap-web on tag "tchap-"
 
-on: 
-  push:
-    tags:
-    - 'tchap-*'
+on:
+    push:
+        tags:
+            - "tchap-*"
 
 jobs:
-  build-archive:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v3
-      - name: Get Node Version
-        id: node_version
-        run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
-      - name: Use Node.js ${{ steps.node_version.outputs.node_version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.node_version.outputs.node_version }}
-      - name: Get Tchap Web Version
-        id: version
-        run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
-      - name: Build the archive ${{ steps.version.outputs.version }} for dev
-        run: scripts/package-github.sh
-        env:
-          CONFIG: dev
-      - name: Build the archive ${{ steps.version.outputs.version }} for preprod
-        run: scripts/package-github.sh
-        env:
-          CONFIG: preprod
-      - name: Build the archive ${{ steps.version.outputs.version }} for prod
-        run: scripts/package-github.sh
-        env:
-          CONFIG: prod
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y%m%d')"
-      - name: Create tchap-web release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: "tchap-${{ steps.version.outputs.version }}"
-          generateReleaseNotes: true
-          artifacts: >
-            /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-dev-${{ steps.date.outputs.date }}.tar.gz,
-            /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-preprod-${{ steps.date.outputs.date }}.tar.gz,
-            /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod-${{ steps.date.outputs.date }}.tar.gz
-          token: ${{ secrets.GITHUB_TOKEN }}
+    build-archive:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            #Build artifacts for dev, preprod and prod
+            - uses: actions/checkout@v3
+            - name: Get Node Version
+              id: node_version
+              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+            - name: Use Node.js ${{ steps.node_version.outputs.node_version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ steps.node_version.outputs.node_version }}
+            - name: Install Dependencies
+              run: "yarn install"
+            - name: Get Tchap Web Version
+              id: version
+              run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
+            - name: Build the archive ${{ steps.version.outputs.version }} for dev
+              run: scripts/tchap/package-tchap.sh
+              env:
+                  CONFIG: dev
+            - name: Build the archive ${{ steps.version.outputs.version }} for preprod
+              run: scripts/tchap/package-tchap.sh
+              env:
+                  CONFIG: preprod
+            - name: Build the archive ${{ steps.version.outputs.version }} for prod
+              run: scripts/tchap/package-tchap.sh
+              env:
+                  CONFIG: prod
+            - name: Get current date
+              id: date
+              run: echo "::set-output name=date::$(date +'%Y%m%d')"
+
+            #create release
+            - name: Create tchap-web release
+              uses: ncipollo/release-action@v1
+              with:
+                  tag: "tchap-${{ steps.version.outputs.version }}"
+                  generateReleaseNotes: true
+                  artifacts: >
+                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-dev-${{ steps.date.outputs.date }}.tar.gz,
+                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-preprod-${{ steps.date.outputs.date }}.tar.gz,
+                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod-${{ steps.date.outputs.date }}.tar.gz
+                  token: ${{ secrets.GITHUB_TOKEN }}

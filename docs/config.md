@@ -1,5 +1,13 @@
 # Configuration
 
+### 🦖 Deprecation notice
+
+Configuration keys were previously a mix of camelCase and snake_case.
+We standardised to snake_case but added compatibility for camelCase to all settings.
+This backwards compatibility will be getting removed in a future release so please ensure you are using snake_case.
+
+---
+
 You can configure the app by copying `config.sample.json` to `config.json` or `config.$domain.json` and customising it.
 Element will attempt to load first `config.$domain.json` and if it fails `config.json`. This mechanism allows different
 configuration options depending on if you're hitting e.g. `app1.example.com` or `app2.example.com`. Configs are not mixed
@@ -45,8 +53,9 @@ One of the following options **must** be supplied:
    information. These are the same values seen as `base_url` in the `default_server_config` example, with `default_is_url`
    being optional.
 
-If a combination of these three methods is used then Element will fail to load. This is because it is unclear which
-should be considered "first".
+If both `default_server_config` and `default_server_name` are used, Element will try to look up the connection
+infomation using `.well-known`, and if that fails, take `default_server_config` as the homeserver connection
+infomation.
 
 ## Labs flags
 
@@ -144,6 +153,8 @@ complete re-branding/private labeling, a more personalised experience can be ach
     1. `title`: Required. Title to show at the top of the notice.
     2. `description`: Required. The description to use for the notice.
     3. `show_once`: Optional. If true then the notice will only be shown once per device.
+18. `help_url`: The URL to point users to for help with the app, defaults to `https://element.io/help`.
+19. `help_encrption_url`: The URL to point users to for help with encryption, defaults to `https://element.io/help#encryption`.
 
 ### `desktop_builds` and `mobile_builds`
 
@@ -320,7 +331,8 @@ The VoIP and Jitsi options are:
     }
     ```
     The `widget` is the `content` of a normal widget state event. The `layout` is the layout specifier for the widget being created,
-    as defined by the `io.element.widgets.layout` state event.
+    as defined by the `io.element.widgets.layout` state event. By default this applies to all rooms, but the behaviour can be skipped for DMs
+    by setting the option `widget_build_url_ignore_dm` to `true`.
 5. `audio_stream_url`: Optional URL to pass to Jitsi to enable live streaming. This option is considered experimental and may be removed
    at any time without notice.
 6. `element_call`: Optional configuration for native group calls using Element Call, with the following subkeys:
@@ -341,10 +353,8 @@ If you run your own rageshake server to collect bug reports, the following optio
    not present in the config, the app will disable all rageshake functionality. Set to `https://element.io/bugreports/submit` to submit
    rageshakes to us, or use your own rageshake server.
 2. `uisi_autorageshake_app`: If a user has enabled the "automatically send debug logs on decryption errors" flag, this option will be sent
-   alongside the rageshake so the rageshake server can filter them by app name. By default, this will be `element-web`, as with any other
-   rageshake submitted by the app.
-
-    If you are using the element.io rageshake server, please set this to `element-auto-uisi` so we can better filter them.
+   alongside the rageshake so the rageshake server can filter them by app name. By default, this will be `element-auto-uisi`
+   (in contrast to other rageshakes submitted by the app, which use `element-web`).
 
 If you would like to use [Sentry](https://sentry.io/) for rageshake data, add a `sentry` object to your config with the following values:
 
@@ -423,39 +433,6 @@ There are additional root-level options which can be specified:
    and is useful when the provider of analytics is different from the provider of the Element instance.
 2. `privacy_policy_url`: URL to the privacy policy including the analytics collection policy.
 
-## Server hosting links
-
-If you would like to encourage matrix.org users to sign up for a service like [Element Matrix Services](https://element.io/matrix-services/server-hosting),
-the following configuration options can be set. Note that if the options are missing from the configuration then the hosting prompts
-will not be shown to the user.
-
-1. `hosting_signup_link`: Optional URL to link the user to when talking about "Upgrading your account". Will contain a query parameter
-   of `utm_campaign` to denote which link the user clicked on within the app. Only ever applies to matrix.org users specifically.
-2. `host_signup`: Optional configuration for an account importer to your hosting platform. The API surface of this is not documented
-   at the moment, but can be configured with the following subproperties:
-    1. `brand`: The brand name to use.
-    2. `url`: The iframe URL for the importer.
-    3. `domains`: The homeserver domains to show the importer to.
-    4. `cookie_policy_url`: The URL to the cookie policy for the importer.
-    5. `privacy_policy_url`: The URL to the privacy policy for the importer.
-    6. `terms_of_service_url`: The URL to the terms of service for the importer.
-
-If you're looking to mirror a setup from our production/development environments, the following config should be used:
-
-```json
-{
-    "hosting_signup_link": "https://element.io/matrix-services?utm_source=element-web&utm_medium=web",
-    "host_signup": {
-        "brand": "Element Home",
-        "domains": ["matrix.org"],
-        "url": "https://ems.element.io/element-home/in-app-loader",
-        "cookie_policy_url": "https://element.io/cookie-policy",
-        "privacy_policy_url": "https://element.io/privacy",
-        "terms_of_service_url": "https://element.io/terms-of-service"
-    }
-}
-```
-
 ## Miscellaneous
 
 Element supports other options which don't quite fit into other sections of this document.
@@ -517,9 +494,6 @@ Currently, the following UI feature flags are supported:
 -   `UIFeature.voip` - Whether or not VoIP is shown readily to the user. When disabled,
     Jitsi widgets will still work though they cannot easily be added.
 -   `UIFeature.widgets` - Whether or not widgets will be shown.
--   `UIFeature.flair` - Whether or not community flair is shown in rooms.
--   `UIFeature.communities` - Whether or not to show any UI related to communities. Implicitly
-    disables `UIFeature.flair` when disabled.
 -   `UIFeature.advancedSettings` - Whether or not sections titled "advanced" in room and
     user settings are shown to the user.
 -   `UIFeature.shareQrCode` - Whether or not the QR code on the share room/event dialog
@@ -546,6 +520,7 @@ Currently, the following UI feature flags are supported:
     timeline for recent messages. When false day dates will be used.
 -   `UIFeature.BulkUnverifiedSessionsReminder` - Display popup reminders to verify or remove unverified sessions. Defaults
     to true.
+-   `UIFeature.locationSharing` - Whether or not location sharing menus will be shown.
 
 ## Undocumented / developer options
 

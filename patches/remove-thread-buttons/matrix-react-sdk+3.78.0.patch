@@ -1,0 +1,90 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
+index ffe35fa..02d0430 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
+@@ -61,6 +61,8 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
+ import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
+ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+ import { CardContext } from "../right_panel/context";
++//:tchap: add feature flags
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ interface IReplyInThreadButton {
+     mxEvent: MatrixEvent;
+@@ -698,7 +700,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
+                 <IconizedContextMenuOptionList>
+                     {reactButton}
+                     {replyButton}
+-                    {replyInThreadButton}
++                    {/* :TCHAP: activate Thread based on homeserver feature flag
++                    {replyInThreadButton} */}
++                    {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? replyInThreadButton : null}
++                    {/*:TCHAP: end */}
+                     {editButton}
+                 </IconizedContextMenuOptionList>
+             );
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
+index 6b727c5..e1ae7ec 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
+@@ -55,6 +55,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
+ import { GetRelationsForEvent, IEventTileType } from "../rooms/EventTile";
+ import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
+ import { ButtonEvent } from "../elements/AccessibleButton";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ interface IOptionsButtonProps {
+     mxEvent: MatrixEvent;
+@@ -343,7 +344,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
+             !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
+             !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
+ 
+-        return inNotThreadTimeline && isAllowedMessageType;
++        //:TCHAP: activate Thread based on homeserver feature flag
++        //return inNotThreadTimeline && isAllowedMessageType;
++        return TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") && inNotThreadTimeline && isAllowedMessageType;
++        //:TCHAP: end
+     }
+ 
+     /**
+diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
+index fa9afb1..f71f2bb 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
+@@ -42,6 +42,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
+ import PosthogTrackers from "../../../PosthogTrackers";
+ import { ButtonEvent } from "../elements/AccessibleButton";
+ import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+ 
+ const ROOM_INFO_PHASES = [
+     RightPanelPhases.RoomSummary,
+@@ -295,9 +296,11 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+                 onClick={this.onTimelineCardClicked}
+             />,
+         );
+-        rightPanelPhaseButtons.set(
+-            RightPanelPhases.ThreadPanel,
+-            <HeaderButton
++        //:tchap: activate Thread based on homeserver feature flag
++        if(TchapUIFeature.isFeatureActiveForHomeserver("feature_thread")){
++            rightPanelPhaseButtons.set(
++                RightPanelPhases.ThreadPanel,
++                <HeaderButton
+                 key={RightPanelPhases.ThreadPanel}
+                 name="threadsButton"
+                 data-testid="threadsButton"
+@@ -305,10 +308,12 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+                 onClick={this.onThreadsPanelClicked}
+                 isHighlighted={this.isPhase(LegacyRoomHeaderButtons.THREAD_PHASES)}
+                 isUnread={this.state.threadNotificationColor > NotificationColor.None}
+-            >
++                >
+                 <UnreadIndicator color={this.state.threadNotificationColor} />
+             </HeaderButton>,
+         );
++        }
++        //:tchap: end
+         rightPanelPhaseButtons.set(
+             RightPanelPhases.NotificationPanel,
+             <HeaderButton

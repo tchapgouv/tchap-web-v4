@@ -1,8 +1,17 @@
 <!doctype html>
-<html lang="en" style="height: 100%;">
+<html lang="fr" style="height: 100%;">
   <head>
     <meta charset="utf-8">
-    <title>Tchap</title>
+    <title>Tchap - la messagerie instantanée des agents de la fonction publique</title>
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": ["MobileApplication", "WebApplication"],
+          "url": "https://tchap.gouv.fr",
+          "applicationCategory": "CommunicationApplication",
+          "logo": "https://tchap.gouv.fr/<%= require('../../res/vector-icons/apple-touch-icon-180.png') %>"
+        }
+    </script>
     <link rel="apple-touch-icon" sizes="57x57" href="<%= require('../../res/vector-icons/apple-touch-icon-57.png') %>">
     <link rel="apple-touch-icon" sizes="60x60" href="<%= require('../../res/vector-icons/apple-touch-icon-60.png') %>">
     <link rel="apple-touch-icon" sizes="72x72" href="<%= require('../../res/vector-icons/apple-touch-icon-72.png') %>">
@@ -15,6 +24,8 @@
     <link rel="manifest" href="manifest.json">
     <meta name="referrer" content="no-referrer">
     <link rel="shortcut icon" href="<%= require('../../res/vector-icons/favicon.ico') %>">
+    <meta name="description" content="Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, pour communiquer facilement en toute sécurité.
+    Utilisée par plus de 400 000 agents publics.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-title" content="Tchap">
     <meta name="application-name" content="Tchap">
@@ -26,9 +37,9 @@
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
         style-src 'self' 'unsafe-inline' <%= csp_extra_source %>;
-        script-src 'self' 'unsafe-eval' https://www.recaptcha.net https://www.gstatic.com;
+        script-src 'self' 'wasm-unsafe-eval' https://www.recaptcha.net/recaptcha/ https://www.gstatic.com/recaptcha/ <%= csp_extra_source %>;
         img-src * blob: data:;
-        connect-src *;
+        connect-src * blob:;
         font-src 'self' data: <%= csp_extra_source %>;
         media-src * blob: data:;
         child-src * blob: data:;
@@ -92,6 +103,10 @@
     <audio id="busyAudio">
         <source src="media/busy.ogg" type="audio/ogg" />
         <source src="media/busy.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="errorAudio">
+        <source src="media/error.ogg" type="audio/ogg" />
+        <source src="media/error.mp3" type="audio/mpeg" />
     </audio>
     <audio id="remoteAudio"></audio>
     <!-- let CSS themes pass constants to the app -->

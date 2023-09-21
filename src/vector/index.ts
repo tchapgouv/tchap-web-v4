@@ -19,12 +19,19 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { extractErrorMessageFromError } from "matrix-react-sdk/src/components/views/dialogs/ErrorDialog";
 
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
-import './modernizr';
+import "./modernizr";
 // eslint-disable-next-line max-len
-import { queueClearCacheAndReload, queueOverideUserSettings, needsRefreshForVersion4, saveAppVersionInLocalStorage, registerExpiredAccountListener } from "../app/initTchap";
+import {
+    queueClearCacheAndReload,
+    queueOverideUserSettings,
+    needsRefreshForVersion4,
+    saveAppVersionInLocalStorage,
+    registerExpiredAccountListener,
+} from "../tchap/app/initTchap";
 
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
@@ -73,7 +80,7 @@ function checkBrowserFeatures(): boolean {
     // ES2019: http://262.ecma-international.org/10.0/#sec-object.fromentries
     window.Modernizr.addTest("objectfromentries", () => typeof window.Object?.fromEntries === "function");
 
-    const featureList = Object.keys(window.Modernizr);
+    const featureList = Object.keys(window.Modernizr) as Array<keyof ModernizrStatic>;
 
     let featureComplete = true;
     for (const feature of featureList) {
@@ -203,7 +210,7 @@ async function start(): Promise<void> {
             await loadConfigPromise;
         } catch (error) {
             // Now that we've loaded the theme (CSS), display the config syntax error if needed.
-            if (error.err && error.err instanceof SyntaxError) {
+            if (error instanceof SyntaxError) {
                 // This uses the default brand since the app config is unavailable.
                 return showError(_t("Your Element is misconfigured"), [
                     _t(
@@ -211,7 +218,7 @@ async function start(): Promise<void> {
                             "Please correct the problem and reload the page.",
                     ),
                     _t("The message from the parser is: %(message)s", {
-                        message: error.err.message || _t("Invalid JSON"),
+                        message: error.message || _t("Invalid JSON"),
                     }),
                 ]);
             }
@@ -250,7 +257,7 @@ async function start(): Promise<void> {
         // Like the compatibility page, AWOOOOOGA at the user
         // This uses the default brand since the app config is unavailable.
         await showError(_t("Your Element is misconfigured"), [
-            err.translatedMessage || _t("Unexpected error preparing the app. See console for details."),
+            extractErrorMessageFromError(err, _t("Unexpected error preparing the app. See console for details.")),
         ]);
     }
 }
@@ -259,7 +266,7 @@ start().catch((err) => {
     logger.error(err);
     // show the static error in an iframe to not lose any context / console data
     // with some basic styling to make the iframe full page
-    delete document.body.style.height;
+    document.body.style.removeProperty("height");
     const iframe = document.createElement("iframe");
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore - typescript seems to only like the IE syntax for iframe sandboxing
@@ -273,5 +280,5 @@ start().catch((err) => {
     iframe.style.right = "0";
     iframe.style.bottom = "0";
     iframe.style.border = "0";
-    document.getElementById("matrixchat").appendChild(iframe);
+    document.getElementById("matrixchat")?.appendChild(iframe);
 });

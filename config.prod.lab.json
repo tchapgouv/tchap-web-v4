@@ -1,0 +1,199 @@
+{
+    "default_server_config": {
+        "m.homeserver": {
+            "base_url": "https://matrix.agent.tchap.gouv.fr",
+            "server_name": "Agents"
+        },
+        "m.identity_server": {
+            "base_url": "https://matrix.agent.tchap.gouv.fr"
+        }
+    },
+    "homeserver_list": [
+        {
+            "base_url": "https://matrix.agent.tchap.gouv.fr",
+            "server_name": "Agents ?",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.agriculture.tchap.gouv.fr",
+            "server_name": "Agriculture",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.collectivites.tchap.gouv.fr",
+            "server_name": "Collectivites",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.culture.tchap.gouv.fr",
+            "server_name": "Culture",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.dev-durable.tchap.gouv.fr",
+            "server_name": "Développement durable",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.diplomatie.tchap.gouv.fr",
+            "server_name": "Diplomatie",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.dinum.tchap.gouv.fr",
+            "server_name": "DINUM",
+            "email_examples": "hakim@beta.gouv.fr, alice@modernisation.gouv.fr, ..."
+        },
+        {
+            "base_url": "https://matrix.agent.education.tchap.gouv.fr",
+            "server_name": "Education",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.elysee.tchap.gouv.fr",
+            "server_name": "Elysée",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.externe.tchap.gouv.fr",
+            "server_name": "Externes",
+            "email_examples": "nina@soprasteria.com, paul@athos.fr, ..."
+        },
+        {
+            "base_url": "https://matrix.agent.finances.tchap.gouv.fr",
+            "server_name": "Finances",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.interieur.tchap.gouv.fr",
+            "server_name": "Interieur",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.intradef.tchap.gouv.fr",
+            "server_name": "Intradef",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.justice.tchap.gouv.fr",
+            "server_name": "Justice",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.pm.tchap.gouv.fr",
+            "server_name": "Premier Ministre",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.social.tchap.gouv.fr",
+            "server_name": "Social",
+            "email_examples": "? ..."
+        },
+        {
+            "base_url": "https://matrix.agent.ssi.tchap.gouv.fr",
+            "server_name": "SSI",
+            "email_examples": "? ..."
+        }
+    ],
+    "disable_custom_urls": false,
+    "disable_guests": true,
+    "disable_login_language_selector": false,
+    "disable_3pid_login": false,
+    "brand": "Tchap",
+    "bug_report_endpoint_url": "https://matrix.agent.dinum.tchap.gouv.fr/bugreports/submit",
+    "uisi_autorageshake_app": "element-auto-uisi",
+    "default_country_code": "FR",
+    "show_labs_settings": false,
+    "features": {
+        "feature_thread": true,
+        "feature_video_rooms": false,
+        "feature_new_device_manager": true
+    },
+    "feedback": {
+        "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
+        "new_issue_url": "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
+    },
+    "default_federate": true,
+    "default_theme": "light",
+    "room_directory": {
+        "servers": [
+            "agent.tchap.gouv.fr",
+            "agent.agriculture.tchap.gouv.fr",
+            "agent.collectivites.tchap.gouv.fr",
+            "agent.culture.tchap.gouv.fr",
+            "agent.dev-durable.tchap.gouv.fr",
+            "agent.diplomatie.tchap.gouv.fr",
+            "agent.dinum.tchap.gouv.fr",
+            "agent.education.tchap.gouv.fr",
+            "agent.elysee.tchap.gouv.fr",
+            "agent.externe.tchap.gouv.fr",
+            "agent.finances.tchap.gouv.fr",
+            "agent.interieur.tchap.gouv.fr",
+            "agent.intradef.tchap.gouv.fr",
+            "agent.justice.tchap.gouv.fr",
+            "agent.pm.tchap.gouv.fr",
+            "agent.social.tchap.gouv.fr",
+            "agent.ssi.tchap.gouv.fr"
+        ]
+    },
+    "enable_presence_by_hs_url": {
+        "https://matrix.agent.tchap.gouv.fr": false,
+        "https://matrix.agent.agriculture.tchap.gouv.fr": false,
+        "https://matrix.agent.collectivites.tchap.gouv.fr": false,
+        "https://matrix.agent.culture.tchap.gouv.fr": false,
+        "https://matrix.agent.dev-durable.tchap.gouv.fr": false,
+        "https://matrix.agent.diplomatie.tchap.gouv.fr": false,
+        "https://matrix.agent.dinum.tchap.gouv.fr": false,
+        "https://matrix.agent.education.tchap.gouv.fr": false,
+        "https://matrix.agent.elysee.tchap.gouv.fr": false,
+        "https://matrix.agent.externe.tchap.gouv.fr": false,
+        "https://matrix.agent.finances.tchap.gouv.fr": false,
+        "https://matrix.agent.interieur.tchap.gouv.fr": false,
+        "https://matrix.agent.intradef.tchap.gouv.fr": false,
+        "https://matrix.agent.justice.tchap.gouv.fr": false,
+        "https://matrix.agent.pm.tchap.gouv.fr": false,
+        "https://matrix.agent.social.tchap.gouv.fr": false,
+        "https://matrix.agent.ssi.tchap.gouv.fr": false
+    },
+    "setting_defaults": {
+        "breadcrumbs": true,
+        "UIFeature.voip": true,
+        "UIFeature.shareSocial": false,
+        "UIFeature.registration": true,
+        "UIFeature.urlPreviews": false,
+        "UIFeature.widgets": false,
+        "UIFeature.shareQrCode": false,
+        "UIFeature.thirdPartyId": true,
+        "UIFeature.identityServer": true,
+        "UIFeature.advancedEncryption": false,
+        "UIFeature.LocationSharing": false,
+        "MessageComposerInput.showPollsButton": true,
+        "RoomList.orderAlphabetically": false,
+        "Spaces.allRoomsInHome": true,
+        "layout": "bubble",
+        "custom_themes": []
+    },
+    "branding": {
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_footer_links": [
+            { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
+            { "text": "OpenData", "url": "https://www.data.gouv.fr" },
+            { "text": "DINUM", "url": "https://numerique.gouv.fr" },
+            { "text": "beta.gouv.fr", "url": "https://beta.gouv.fr" },
+            { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
+            { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
+        ],
+        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
+    },
+    "desktop_builds": {
+        "available": false
+    },
+    "permalink_prefix": "https://tchap.gouv.fr",
+    "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
+    "custom_translations_url": "/i18n/tchap_translations.json",
+    "tchap_features": {
+        "feature_email_notification": [],
+        "feature_thread": ["agent.dinum.tchap.gouv.fr"],
+        "feature_space": ["agent.dinum.tchap.gouv.fr"]
+    }
+}

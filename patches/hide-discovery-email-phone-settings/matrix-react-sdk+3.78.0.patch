@@ -1,0 +1,32 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+index be6d8dd..77f558e 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+@@ -61,6 +61,7 @@ import Heading from "../../../typography/Heading";
+ import InlineSpinner from "../../../elements/InlineSpinner";
+ import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+ import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
++import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP:
+ 
+ interface IProps {
+     closeSettingsFn: () => void;
+@@ -333,7 +334,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         // validate 3PID ownership even if we're just adding to the homeserver only.
+         // For newer homeservers with separate 3PID add and bind methods (MSC2290),
+         // there is no such concern, so we can always show the HS account 3PIDs.
+-        if (
++        // :TCHAP: no need for users to view/edit their email or phone (TchapUIFeature.showEmailPhoneDiscoverySettings)
++        if (TchapUIFeature.showEmailPhoneDiscoverySettings &&
+             SettingsStore.getValue(UIFeature.ThirdPartyID) &&
+             (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
+         ) {
+@@ -529,7 +531,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         }
+ 
+         let discoverySection;
+-        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
++        // :TCHAP: no need for users to edit the discovery section (TchapUIFeature.showEmailPhoneDiscoverySettings)
++        if (TchapUIFeature.showEmailPhoneDiscoverySettings && SettingsStore.getValue(UIFeature.IdentityServer)) {
+             const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
+                 <WarningIcon
+                     className="mx_GeneralUserSettingsTab_warningIcon"

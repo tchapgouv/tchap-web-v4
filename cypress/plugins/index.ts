@@ -27,7 +27,7 @@ import { log } from "./log";
 /**
  * @type {Cypress.PluginConfig}
  */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
+export default function (on: PluginEvents, config: PluginConfigOptions) {
     docker(on, config);
     performance(on, config);
     synapseDocker(on, config);

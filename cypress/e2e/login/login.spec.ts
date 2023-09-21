@@ -20,13 +20,13 @@ describe("Login", () => {
     // Set language for browser.
     // This is only needed before login, since the login function sets language setting for user. Most tests don't need this.
     const frenchLanguageBrowserOpts = {
-        onBeforeLoad(win) {
-            Object.defineProperty(win.navigator, 'language', { value: 'fr-FR' });
-            Object.defineProperty(win.navigator, 'languages', { value: ['fr'] });
-            Object.defineProperty(win.navigator, 'accept_languages', { value: ['fr'] });
+        onBeforeLoad(win): void {
+            Object.defineProperty(win.navigator, "language", { value: "fr-FR" });
+            Object.defineProperty(win.navigator, "languages", { value: ["fr"] });
+            Object.defineProperty(win.navigator, "accept_languages", { value: ["fr"] });
         },
         headers: {
-            'Accept-Language': 'fr',
+            "Accept-Language": "fr",
         },
     };
 
@@ -34,15 +34,13 @@ describe("Login", () => {
         cy.visit("/#/login", frenchLanguageBrowserOpts);
     });
 
-    afterEach(() => {
-    });
+    afterEach(() => {});
 
     describe("m.login.password", () => {
         // Specify these values in env vars. You can use the .env file. See .env.example.
         // Will be replaced by a generated random user when we have a full docker setup
-        const username = Cypress.env('E2E_TEST_USER_EMAIL');
-        const password = Cypress.env('E2E_TEST_USER_PASSWORD');
-        const key = Cypress.env('E2E_TEST_USER_SECURITY_KEY');
+        const username = Cypress.env("E2E_TEST_USER_EMAIL");
+        const password = Cypress.env("E2E_TEST_USER_PASSWORD");
 
         beforeEach(() => {
             // We use a pre-existing user on dev backend. If random user was created each time, we would use :
@@ -62,14 +60,9 @@ describe("Login", () => {
             cy.startMeasuring("from-submit-to-home");
             cy.get(".mx_Login_submit").click();
 
-            cy.url().should('contain', '/#/home');
+            //TODO: does not work if account has cross signing because the screen is /#/login "Vérifier cet appareil"
+            cy.url().should("contain", "/#/home");
             cy.stopMeasuring("from-submit-to-home");
-        });
-
-        it.skip("logs in as external user", () => {
-        });
-
-        it.skip("logs in as external user on agent homeserver", () => {
         });
     });
 });
