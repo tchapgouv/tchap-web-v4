@@ -14,7 +14,7 @@ jobs:
         name: "Build"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Get Node Version
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
@@ -25,5 +25,16 @@ jobs:
             - name: Install Dependencies
               run: "yarn install"
 
+            - name: "Copy the config file at the right place"
+              run: "cp config.dev.json config.json" # todo we could make the choice of backend configurable.
+
             - name: Build
               run: "yarn build"
+
+            - name: Upload build in artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: devbuild # because we used the dev config file
+                  path: webapp
+                  # We'll only use this in a triggered job, then we're done with it
+                  retention-days: 1

@@ -1,9 +1,11 @@
 # This is a tchap-specific file, inspired from the one in matrix-react-sdk
 name: Cypress End to End Tests
+# Run this job when the "Build" job completes
 on:
-    pull_request: {}
-    push:
-        branches: [develop_tchap, master_tchap]
+    workflow_run:
+        workflows: ["Build"]
+        types:
+            - completed
 env:
     # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
@@ -24,11 +26,11 @@ jobs:
                   cache: "yarn"
                   node-version: ${{ steps.node_version.outputs.node_version }}
 
-            - name: "Copy the config file at the right place"
-              run: "cp config.dev.json config.json" # todo we could make the choice of backend configurable.
-
-            - name: "Build the app, so that we can serve it from static files" #todo : fetch build from an artifact to avoid rebuilding for nothing
-              run: "yarn install && yarn build"
+            - name: Download build from artifact
+              uses: actions/download-artifact@v3
+              with:
+                  name: devbuild
+                  path: webapp
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
