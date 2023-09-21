@@ -16,7 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
             - name: Get Node Version
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
@@ -27,10 +27,12 @@ jobs:
                   node-version: ${{ steps.node_version.outputs.node_version }}
 
             - name: Download build from artifact
-              uses: actions/download-artifact@v3
+              # use this action instead of actions/download-artifact because we need the "workflow" param
+              uses: dawidd6/action-download-artifact@v2
               with:
                   name: devbuild
                   path: webapp
+                  run_id: ${{ github.event.workflow_run.id }} # I think this is the run_id of the workflow that triggered this workflow
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
