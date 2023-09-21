@@ -40,7 +40,7 @@ jobs:
                   run_id: ${{ github.event.workflow_run.id }} # I think this is the run_id of the workflow that triggered this workflow
 
             - name: Install Dependencies
-              run: "yarn install" # this is needed otherwise "cypress: not found". Can we do just yarn install cypress to go faster ?
+              run: "yarn install" # this is needed otherwise "cypress: not found". Can we do just yarn add cypress to go faster ?
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
