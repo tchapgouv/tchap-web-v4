@@ -102,8 +102,8 @@
     "brand": "Tchap",
     "bug_report_endpoint_url": "https://matrix.agent.dinum.tchap.gouv.fr/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
-    "defaultCountryCode": "FR",
-    "showLabsSettings": false,
+    "default_country_code": "FR",
+    "show_labs_settings": false,
     "features": {
         "feature_thread": true,
         "feature_video_rooms": false,
@@ -115,7 +115,7 @@
     },
     "default_federate": true,
     "default_theme": "light",
-    "roomDirectory": {
+    "room_directory": {
         "servers": [
             "agent.tchap.gouv.fr",
             "agent.agriculture.tchap.gouv.fr",
@@ -155,7 +155,7 @@
         "https://matrix.agent.social.tchap.gouv.fr": false,
         "https://matrix.agent.ssi.tchap.gouv.fr": false
     },
-    "settingDefaults": {
+    "setting_defaults": {
         "breadcrumbs": true,
         "UIFeature.voip": true,
         "UIFeature.shareSocial": false,
@@ -174,8 +174,8 @@
         "custom_themes": []
     },
     "branding": {
-        "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",
-        "authFooterLinks": [
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_footer_links": [
             { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
             { "text": "OpenData", "url": "https://www.data.gouv.fr" },
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },
@@ -185,7 +185,7 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
-    "desktopBuilds": {
+    "desktop_builds": {
         "available": false
     },
     "permalink_prefix": "https://tchap.gouv.fr",
