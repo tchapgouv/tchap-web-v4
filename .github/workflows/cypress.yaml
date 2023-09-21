@@ -32,7 +32,7 @@ jobs:
               with:
                   name: devbuild
                   path: webapp
-                  workflow: build.yml
+                  run_id: ${{ github.event.workflow_run.id }} # I think this is the run_id of the workflow that triggered this workflow
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
