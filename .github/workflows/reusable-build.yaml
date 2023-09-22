@@ -39,10 +39,10 @@ jobs:
             - name: Cache build files
               uses: actions/cache@v3
               with:
-              path: |
-                  ./webapp
-                  ./node_modules
-              key: ${{ inputs.CACHE_KEY }}
+                  path: |
+                      ./webapp
+                      ./node_modules
+                  key: ${{ inputs.CACHE_KEY }}
 
             - name: Upload build in artifact
               uses: actions/upload-artifact@v3

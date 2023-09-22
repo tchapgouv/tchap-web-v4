@@ -57,10 +57,10 @@ jobs:
             - name: Get build from cache
               uses: actions/cache@v3
               with:
-              path: |
-                  ./webapp
-                  ./node_modules
-              key: $CACHE_KEY
+                  path: |
+                      ./webapp
+                      ./node_modules
+                  key: $CACHE_KEY
 
             - name: Check presence of cache
               run: ls ./webapp && ls ./node_modules
