@@ -1,12 +1,13 @@
 # This is a tchap-specific file, inspired from the one in matrix-react-sdk
 name: Cypress End to End Tests
 
-# Run this job when the "Build" job completes
 on:
-    workflow_run:
-        workflows: ["Build"]
-        types:
-            - completed
+    # Run this job when the "Build" job completes
+    #workflow_run:
+    #    workflows: ["Build"]
+    #    types:
+    #        - completed
+    pull_request: {} # run for commits in PRs
     workflow_dispatch: # for running action manually
 
 env:
