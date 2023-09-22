@@ -1,0 +1,44 @@
+# Build the application. This job is reusable : it has to be called by another workflow.
+name: Reusable Build
+
+on:
+  # setup of the reusable job.
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
+  workflow_dispatch: # for running workflow manually. (I don't see why you would but it doesn't hust either)
+
+jobs:
+    build:
+        name: "Build"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Get Node Version
+              id: node_version
+              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+            - uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: ${{ steps.node_version.outputs.node_version }}
+            - name: Install Dependencies
+              run: "yarn install"
+
+            - name: "Copy the config file at the right place"
+              run: "cp config.dev.json config.json" # todo we could make the choice of backend configurable.
+
+            - name: Build
+              run: "yarn build"
+
+            - name: Upload build in artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: devbuild # because we used the dev config file
+                  path: webapp
+                  # We'll only use this in a triggered job, then we're done with it
+                  retention-days: 1
