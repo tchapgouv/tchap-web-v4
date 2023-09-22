@@ -20,7 +20,7 @@ describe("Style of external rooms", () => {
             //open room
             cy.get('[aria-label="' + roomName + '"]').click();
 
-            cy.get(".mx_LegacyRoomHeader light-panel").within(() => {
+            cy.get(".mx_LegacyRoomHeader").within(() => {
                 cy.get(".tc_RoomHeader_external"); // "ouvert aux externes"
                 cy.get(".mx_DecoratedRoomAvatar_icon_external"); // lock icon on room avatar
             });
