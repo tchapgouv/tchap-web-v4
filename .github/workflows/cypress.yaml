@@ -14,13 +14,14 @@ env:
     # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
+    CACHE_KEY: $(git rev-parse --short=12 HEAD)-${{ github.event.pull_request.number }}-${{ hashFiles('**/package-lock.json') }}
 
 jobs:
     call-build-job:
         name: Build
         uses: ./.github/workflows/reusable-build.yaml
         with:
-            CACHE_KEY: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+            CACHE_KEY: $CACHE_KEY
 
     cypress:
         name: Cypress
@@ -59,7 +60,7 @@ jobs:
               path: |
                   ./webapp
                   ./node_modules
-              key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+              key: $CACHE_KEY
 
             - name: Check presence of cache
               run: ls ./webapp && ls ./node_modules
