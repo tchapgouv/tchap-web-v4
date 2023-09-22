@@ -4,13 +4,7 @@ name: Reusable Build
 on:
   # setup of the reusable job.
   workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: true
+
   workflow_dispatch: # for running workflow manually. (I don't see why you would but it doesn't hust either)
 
 jobs:
