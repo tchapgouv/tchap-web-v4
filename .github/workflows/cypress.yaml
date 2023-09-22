@@ -17,10 +17,12 @@ env:
 
 jobs:
     call-build-job:
+        name: Build
         uses: ./.github/workflows/reusable-build.yaml
 
     cypress:
         name: Cypress
+        needs: call-build-job
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
