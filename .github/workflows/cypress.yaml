@@ -14,7 +14,7 @@ env:
     # Removing this makes the job break.
     REPOSITORY: ${{ github.repository }}
     PR_NUMBER: ${{ github.event.pull_request.number }}
-    CACHE_KEY: $(git rev-parse --short=12 HEAD)-${{ github.event.pull_request.number }}-${{ hashFiles('**/package-lock.json') }}
+    CACHE_KEY: $(git rev-parse --short=12 HEAD)-${{ github.event.pull_request.number }}-${{ github.job }}
 
 jobs:
     call-build-job:
