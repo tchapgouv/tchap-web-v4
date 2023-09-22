@@ -37,7 +37,6 @@ jobs:
               run: echo 'CACHE_KEY' && echo ${{ inputs.CACHE_KEY }}
 
             - name: Cache build files
-                id: cache-build-files
                 uses: actions/cache@v3
                 with:
                 path: |
