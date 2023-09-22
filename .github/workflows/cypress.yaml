@@ -38,16 +38,18 @@ jobs:
                   cache: "yarn"
                   node-version: ${{ steps.node_version.outputs.node_version }}
 
-            - name: Download build from artifact
-              # use this action instead of actions/download-artifact because we need the "workflow" param
-              uses: dawidd6/action-download-artifact@v2
-              with:
-                  name: devbuild
-                  path: webapp
-                  run_id: ${{ github.event.workflow_run.id }} # I think this is the run_id of the workflow that triggered this workflow
+            #####
+            # Get build from artifact. Not needed since we called reusable-build.yml in the same workflow, we can reuse the files.
+            #- name: Download build from artifact
+            #  # use this action instead of actions/download-artifact because we need the "workflow" param
+            #  uses: dawidd6/action-download-artifact@v2
+            #  with:
+            #      name: devbuild
+            #      path: webapp
+            #      run_id: ${{ github.event.workflow_run.id }} # I think this is the run_id of the workflow that triggered this workflow
 
-            - name: Install Dependencies
-              run: "yarn install" # this is needed otherwise "cypress: not found". Can we do just yarn install cypress to go faster ?
+            #- name: Install Dependencies
+            #  run: "yarn install" # this is needed otherwise "cypress: not found". Can we do just yarn install cypress to go faster ?
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
