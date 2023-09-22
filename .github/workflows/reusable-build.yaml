@@ -40,7 +40,9 @@ jobs:
             - name: Cache build files
               uses: actions/cache@v3
               with:
-                  path: ./webapp
+                  path: |
+                      ./webapp
+                      ./node_modules
                   key: ${{ inputs.CACHE_KEY }}
 
             # We are not using this for now, so remove to make job faster.
