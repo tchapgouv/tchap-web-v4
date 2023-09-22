@@ -17,7 +17,7 @@ env:
 
 jobs:
     call-build-job:
-        uses: estellecomment/tchap-web-v4/.github/workflows/reusable-build.yml
+        uses: ./.github/workflows/reusable-build.yaml
 
     cypress:
         name: Cypress
