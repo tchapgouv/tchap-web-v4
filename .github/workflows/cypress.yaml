@@ -18,7 +18,7 @@ env:
 
 jobs:
     call-build-job:
-        name: Build
+        name: Build app for cypress test
         uses: ./.github/workflows/reusable-build.yaml
         with:
             CACHE_KEY: "$CACHE_KEY"

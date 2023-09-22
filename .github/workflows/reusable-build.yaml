@@ -43,10 +43,11 @@ jobs:
                   path: ./webapp
                   key: ${{ inputs.CACHE_KEY }}
 
-            - name: Upload build in artifact
-              uses: actions/upload-artifact@v3
-              with:
-                  name: devbuild # because we used the dev config file
-                  path: webapp
-                  # We'll only use this in a triggered job, then we're done with it
-                  retention-days: 1
+            # We are not using this for now, so remove to make job faster.
+            #- name: Upload build in artifact
+            #  uses: actions/upload-artifact@v3
+            #  with:
+            #      name: devbuild # because we used the dev config file
+            #      path: webapp
+            #      # We'll only use this in a triggered job, then we're done with it
+            #      retention-days: 1
