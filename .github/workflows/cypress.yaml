@@ -54,15 +54,15 @@ jobs:
             #  run: "yarn install" # this is needed otherwise "cypress: not found". Can we do just yarn install cypress to go faster ?
 
             - name: Get build from cache
-                uses: actions/cache@v3
-                with:
-                path: |
-                    ./webapp
-                    ./node_modules
-                key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+              uses: actions/cache@v3
+              with:
+              path: |
+                  ./webapp
+                  ./node_modules
+              key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
             - name: Check presence of cache
-                run: ls ./webapp && ls ./node_modules
+              run: ls ./webapp && ls ./node_modules
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
