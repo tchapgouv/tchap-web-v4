@@ -21,7 +21,7 @@ jobs:
         name: Build
         uses: ./.github/workflows/reusable-build.yaml
         with:
-            CACHE_KEY: $CACHE_KEY
+            CACHE_KEY: ${{ env.CACHE_KEY }}
 
     cypress:
         name: Cypress
@@ -57,13 +57,14 @@ jobs:
             - name: Get build from cache
               uses: actions/cache@v3
               with:
-                  path: |
-                      ./webapp
-                      ./node_modules
-                  key: $CACHE_KEY
+                  path: ./webapp
+                  key: ${{ env.CACHE_KEY }}
 
             - name: Check presence of cache
-              run: ls ./webapp && ls ./node_modules
+              run: ls ./webapp
+
+            - name: Install cypress
+              run: yarn add cypress --dev --ignore-scripts # ignore-scripts to avoid running postinstall
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0

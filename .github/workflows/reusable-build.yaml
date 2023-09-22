@@ -30,18 +30,16 @@ jobs:
             - name: "Copy the config file at the right place"
               run: "cp config.dev.json config.json" # todo we could make the choice of backend configurable.
 
-            - name: Build
-              run: "yarn build"
-
             - name: Echo CACHE_KEY
               run: echo 'CACHE_KEY' && echo ${{ inputs.CACHE_KEY }}
+
+            - name: Build
+              run: "yarn build"
 
             - name: Cache build files
               uses: actions/cache@v3
               with:
-                  path: |
-                      ./webapp
-                      ./node_modules
+                  path: ./webapp
                   key: ${{ inputs.CACHE_KEY }}
 
             - name: Upload build in artifact
