@@ -21,7 +21,7 @@ jobs:
         name: Build
         uses: ./.github/workflows/reusable-build.yaml
         with:
-            CACHE_KEY: ${{ env.CACHE_KEY }}
+            CACHE_KEY: "$CACHE_KEY"
 
     cypress:
         name: Cypress
@@ -58,7 +58,7 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: ./webapp
-                  key: ${{ env.CACHE_KEY }}
+                  key: "$CACHE_KEY"
 
             - name: Check presence of cache
               run: ls ./webapp
