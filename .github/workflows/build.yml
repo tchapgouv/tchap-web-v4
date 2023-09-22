@@ -4,7 +4,8 @@ on:
     pull_request: {}
     push:
         branches: [master]
-# develop pushes and repository_dispatch handled in build_develop.yaml
+    workflow_dispatch: # for running action manually
+
 env:
     # These must be set for fetchdep.sh to get the right branch
     REPOSITORY: ${{ github.repository }}
