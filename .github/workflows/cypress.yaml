@@ -15,6 +15,9 @@ env:
     PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
+    call-build-job:
+        uses: ./.github/workflows/reusable-build.yml
+
     cypress:
         name: Cypress
         runs-on: ubuntu-latest
