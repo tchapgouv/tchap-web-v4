@@ -60,7 +60,7 @@ jobs:
                 path: |
                     ./webapp
                     ./node_modules
-                key: ${{ inputs.CACHE_KEY }}
+                key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
             - name: Check presence of cache
                 run: ls ./webapp && ls ./node_modules
