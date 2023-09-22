@@ -25,7 +25,7 @@ jobs:
 
     cypress:
         name: Cypress
-        needs: call-build-job # run after call-build-job has succeeded
+        #needs: call-build-job # run after call-build-job has succeeded
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -64,7 +64,7 @@ jobs:
               run: ls ./webapp
 
             - name: Install cypress
-              run: yarn add cypress --dev --ignore-scripts # ignore-scripts to avoid running postinstall
+              run: yarn add cypress --dev #--ignore-scripts # ignore-scripts to avoid running postinstall
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0

@@ -17,6 +17,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+
+            - name: Echo CACHE_KEY
+              run: echo 'CACHE_KEY' && echo ${{ inputs.CACHE_KEY }}
+
             - name: Get Node Version
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
@@ -29,9 +33,6 @@ jobs:
 
             - name: "Copy the config file at the right place"
               run: "cp config.dev.json config.json" # todo we could make the choice of backend configurable.
-
-            - name: Echo CACHE_KEY
-              run: echo 'CACHE_KEY' && echo ${{ inputs.CACHE_KEY }}
 
             - name: Build
               run: "yarn build"
