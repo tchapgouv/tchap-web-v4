@@ -20,4 +20,13 @@ describe("Check settings customization", () => {
         cy.get("#mx_tabpanel_USER_SECURITY_TAB").contains("Signature croisée");
         cy.get("#mx_tabpanel_USER_SECURITY_TAB").should("not.contain", "Recherche de message");
     });
+
+    it("does not show Labs section", () => {
+        cy.get(".mx_UserMenu_userAvatar").click();
+        cy.get('[aria-label="Tous les paramètres"]').click();
+
+        // General
+        cy.get(".mx_UserSettingsDialog").get("[data-testid='settings-tab-USER_GENERAL_TAB']");
+        cy.get(".mx_UserSettingsDialog").get("[data-testid='settings-tab-USER_LABS_TAB']").should("not.exist");
+    });
 });
