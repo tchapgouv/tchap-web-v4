@@ -6,6 +6,9 @@ on:
     pull_request: {}
 
 env:
+    # Removing this makes the job break.
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
     cypress:
@@ -58,4 +61,3 @@ jobs:
                   E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY }}
                   E2E_TEST_USER_HOMESERVER_URL: "https://matrix.agent1.tchap.incubateur.net"
                   E2E_TEST_USER_HOMESERVER_SHORT: "agent1.tchap.incubateur.net"
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # don't remember what this is for, can't hurt
