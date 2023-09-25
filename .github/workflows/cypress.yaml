@@ -6,9 +6,6 @@ on:
     pull_request: {}
 
 env:
-    # Removing this makes the job break.
-    REPOSITORY: ${{ github.repository }}
-    PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
     cypress:
