@@ -3,7 +3,8 @@ name: Build + E2E Tests
 
 on:
     workflow_dispatch: # for running action manually
-    pull_request: {}
+    pull_request:
+        types: [ready_for_review]
 
 env:
 
