@@ -18,7 +18,6 @@ limitations under the License.
 
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { performance } from "./performance";
 import { webserver } from "./webserver";
 import { log } from "./log";
 
@@ -26,7 +25,6 @@ import { log } from "./log";
  * @type {Cypress.PluginConfig}
  */
 export default function (on: PluginEvents, config: PluginConfigOptions) {
-    performance(on, config);
     webserver(on, config);
     log(on, config);
 }
