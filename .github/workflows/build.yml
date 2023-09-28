@@ -1,7 +1,8 @@
 #Build the application
 name: Build
 on:
-    pull_request: {}
+    pull_request:
+        types: [converted_to_draft]
     push:
         branches: [master]
     workflow_dispatch: # for running action manually
