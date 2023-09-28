@@ -395,15 +395,15 @@
     "fr": "Discussion"
   },
   "Join public room": {
-    "en": "Join a room",
+    "en": "Join a public room",
     "fr": "Rejoindre un forum"
   },
   "Explore rooms": {
-    "en": "Explore rooms",
-    "fr": "Rejoindre un forum"
+    "en": "Explore space rooms",
+    "fr": "Explorer les salons"
   },
   "Explore public rooms": {
-    "en": "Join a room",
+    "en": "Explore public rooms",
     "fr": "Rejoindre un forum"
   },
   "Start chat": {
