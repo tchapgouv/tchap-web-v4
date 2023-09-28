@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="@testing-library/cypress" />
 
 import RoomUtils from "../utils/room-utils";
 import RandomUtils from "../utils/random-utils";

@@ -16,13 +16,20 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { FileType, UploadContentResponseType } from "matrix-js-sdk/src/http-api";
-import type { IAbortablePromise } from "matrix-js-sdk/src/@types/partials";
-import type { ICreateRoomOpts, ISendEventResponse, IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { IContent } from "matrix-js-sdk/src/models/event";
+import type {
+    MatrixClient,
+    Room,
+    MatrixEvent,
+    IContent,
+    FileType,
+    Upload,
+    UploadOpts,
+    ICreateRoomOpts,
+    ISendEventResponse,
+} from "matrix-js-sdk/src/matrix";
+import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import Chainable = Cypress.Chainable;
+import { UserCredentials } from "./login";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -70,6 +77,13 @@ declare global {
                 content: IContent,
             ): Chainable<ISendEventResponse>;
             /**
+             * @param {MatrixEvent} event
+             * @param {ReceiptType} receiptType
+             * @param {boolean} unthreaded
+             * @return {module:http-api.MatrixError} Rejects: with an error response.
+             */
+            sendReadReceipt(event: MatrixEvent, receiptType?: ReceiptType, unthreaded?: boolean): Chainable<{}>;
+            /**
              * @param {string} name
              * @param {module:client.callback} callback Optional.
              * @return {Promise} Resolves: {} an empty object.
@@ -90,10 +104,7 @@ declare global {
              *   can be sent to XMLHttpRequest.send (typically a File).  Under node.js,
              *   a a Buffer, String or ReadStream.
              */
-            uploadContent<O extends IUploadOpts>(
-                file: FileType,
-                opts?: O,
-            ): IAbortablePromise<UploadContentResponseType<O>>;
+            uploadContent(file: FileType, opts?: UploadOpts): Chainable<Awaited<Upload["promise"]>>;
             /**
              * Turn an MXC URL into an HTTP one. <strong>This method is experimental and
              * may change.</strong>
@@ -123,18 +134,12 @@ declare global {
             /**
              * Boostraps cross-signing.
              */
-            bootstrapCrossSigning(): Chainable<void>;
+            bootstrapCrossSigning(credendtials: UserCredentials): Chainable<void>;
             /**
              * Joins the given room by alias or ID
              * @param roomIdOrAlias the id or alias of the room to join
              */
             joinRoom(roomIdOrAlias: string): Chainable<Room>;
-            /**
-             * :TCHAP: added this function
-             * Leave a room.
-             * @param roomId the id of the room to invite to
-             */
-            leaveRoom(roomId: string): Chainable<{}>;
         }
     }
 }
@@ -150,7 +155,6 @@ Cypress.Commands.add("getDmRooms", (userId: string): Chainable<string[]> => {
         .then((dmRoomMap) => dmRoomMap[userId] ?? []);
 });
 
-//:tchap: added this createRoom
 Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
     return cy.window({ log: false }).then(async (win) => {
         const cli = win.mxMatrixClientPeg.matrixClient;
@@ -172,7 +176,6 @@ Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string>
         return roomId;
     });
 });
-//:tchap: end
 
 Cypress.Commands.add("createSpace", (options: ICreateRoomOpts): Chainable<string> => {
     return cy.createRoom({
@@ -185,7 +188,9 @@ Cypress.Commands.add("createSpace", (options: ICreateRoomOpts): Chainable<string
 
 Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.invite(roomId, userId);
+        const res = await cli.invite(roomId, userId);
+        Cypress.log({ name: "inviteUser", message: `sent invite in ${roomId} for ${userId}` });
+        return res;
     });
 });
 
@@ -204,15 +209,24 @@ Cypress.Commands.add(
     },
 );
 
+Cypress.Commands.add(
+    "sendReadReceipt",
+    (event: MatrixEvent, receiptType?: ReceiptType, unthreaded?: boolean): Chainable<{}> => {
+        return cy.getClient().then(async (cli: MatrixClient) => {
+            return cli.sendReadReceipt(event, receiptType, unthreaded);
+        });
+    },
+);
+
 Cypress.Commands.add("setDisplayName", (name: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setDisplayName(name);
     });
 });
 
-Cypress.Commands.add("uploadContent", (file: FileType): Chainable<{}> => {
+Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chainable<Awaited<Upload["promise"]>> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.uploadContent(file);
+        return cli.uploadContent(file, opts);
     });
 });
 
@@ -222,11 +236,18 @@ Cypress.Commands.add("setAvatarUrl", (url: string): Chainable<{}> => {
     });
 });
 
-Cypress.Commands.add("bootstrapCrossSigning", () => {
+Cypress.Commands.add("bootstrapCrossSigning", (credentials: UserCredentials) => {
     cy.window({ log: false }).then((win) => {
         win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
             authUploadDeviceSigningKeys: async (func) => {
-                await func({});
+                await func({
+                    type: "m.login.password",
+                    identifier: {
+                        type: "m.id.user",
+                        user: credentials.userId,
+                    },
+                    password: credentials.password,
+                });
             },
         });
     });
@@ -234,8 +255,4 @@ Cypress.Commands.add("bootstrapCrossSigning", () => {
 
 Cypress.Commands.add("joinRoom", (roomIdOrAlias: string): Chainable<Room> => {
     return cy.getClient().then((cli) => cli.joinRoom(roomIdOrAlias));
-});
-
-Cypress.Commands.add("leaveRoom", (roomId: string): Chainable<{}> => {
-    return cy.getClient().then((cli) => cli.leave(roomId));
 });

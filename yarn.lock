@@ -1130,6 +1130,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.14.6":
+  version "7.23.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
+  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/template@^7.22.15", "@babel/template@^7.22.5", "@babel/template@^7.3.3":
   version "7.22.15"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.22.15.tgz#09576efc3830f0430f4548ef971dde1350ef2f38"
@@ -2455,10 +2462,32 @@
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
 
+"@testing-library/cypress@^10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/cypress/-/cypress-10.0.1.tgz#15abae0edb83237316ec6d07e152b71a50b38387"
+  integrity sha512-e8uswjTZIBhaIXjzEcrQQ8nHRWHgZH7XBxKuIWxZ/T7FxfWhCR48nFhUX5nfPizjVOKSThEfOSv67jquc1ASkw==
+  dependencies:
+    "@babel/runtime" "^7.14.6"
+    "@testing-library/dom" "^9.0.0"
+
 "@testing-library/dom@^8.0.0":
   version "8.20.1"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.20.1.tgz#2e52a32e46fc88369eef7eef634ac2a192decd9f"
   integrity sha512-/DiOQ5xBxgdYRC8LNk7U+RWat0S3qRLeIw3ZIkMQ9kkVlRmwD/Eg8k8CqIpD6GW7u20JIUOfMKbxtiLutpjQ4g==
+  dependencies:
+    "@babel/code-frame" "^7.10.4"
+    "@babel/runtime" "^7.12.5"
+    "@types/aria-query" "^5.0.1"
+    aria-query "5.1.3"
+    chalk "^4.1.0"
+    dom-accessibility-api "^0.5.9"
+    lz-string "^1.5.0"
+    pretty-format "^27.0.2"
+
+"@testing-library/dom@^9.0.0":
+  version "9.3.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-9.3.3.tgz#108c23a5b0ef51121c26ae92eb3179416b0434f5"
+  integrity sha512-fB0R+fa3AUqbLHWyxXa2kGVtf1Fe1ZZFr0Zp6AIbIAzXb2mKbEXl+PCQNUOaq5lbTab5tfctfXRNsWXxa2f7Aw==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
@@ -5169,6 +5198,17 @@ cypress-real-events@^1.7.1:
   resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.10.1.tgz#289f2cb4a1d452e54a19e1ecd02931016b41b8ff"
   integrity sha512-l4WvEymhup8EAheXVPqEi5gofBTCvhyYL/i3fOcJtL32prfpZ6jhnnXSLJsxOAl/RlmygIEP1ZeRpqrrDPgGIA==
 
+cypress-terminal-report@^5.3.6:
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/cypress-terminal-report/-/cypress-terminal-report-5.3.6.tgz#0d3b6128448f7648ad9cc384dd7d396cf140b425"
+  integrity sha512-peKFSqxL9CDh/DHqahtbpF+vUZNiBW1N2HhlovpE8VGthuz7fM7hOyk5Bu/3llCP6PkQvvbIs/G0gxMfG5XKmA==
+  dependencies:
+    chalk "^4.0.0"
+    fs-extra "^10.1.0"
+    process "^0.11.10"
+    semver "^7.3.5"
+    tv4 "^1.3.0"
+
 cypress@^10.3.0:
   version "10.11.0"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.11.0.tgz#e9fbdd7638bae3d8fb7619fd75a6330d11ebb4e8"
@@ -6971,6 +7011,15 @@ from2@^2.1.0:
   dependencies:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
+
+fs-extra@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
+  integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
 
 fs-extra@^11.0.0:
   version "11.1.1"
@@ -13915,6 +13964,11 @@ tunnel@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
   integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
+
+tv4@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/tv4/-/tv4-1.3.0.tgz#d020c846fadd50c855abb25ebaecc68fc10f7963"
+  integrity sha512-afizzfpJgvPr+eDkREK4MxJ/+r8nEEHcmitwgnPUqpaP+FpwQyadnxNoSACbgc/b1LsZYtODGoPiFxQrgJgjvw==
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
