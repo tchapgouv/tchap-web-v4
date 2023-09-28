@@ -1,7 +1,7 @@
 #Build the application
 name: Build without E2E tests
 on:
-    pull_request: {}
+    pull_request: {} # only on draft PRs, see "if:" below
     push:
         branches: [master]
     workflow_dispatch: # for running action manually
