@@ -67,6 +67,8 @@
         "lint:types:module_system": "tsc --noEmit --project ./tsconfig.module_system.json",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "jest",
+        "test:copy-cypress-files-to-react-sdk": "rm -rf node_modules/matrix-react-sdk/cypress/e2e/*; cp -r cypress/e2e/* node_modules/matrix-react-sdk/cypress/e2e",
+        "test:cypress-in-react-sdk": "yarn test:copy-cypress-files-to-react-sdk; cd node_modules/matrix-react-sdk/; cypress run",
         "test:cypress": "cypress run",
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage",
