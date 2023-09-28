@@ -14,7 +14,7 @@ describe("Export room members feature", () => {
     const userId = "@" + email.replace("@", "-") + ":" + homeserverShort;
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginUserByEmail(homeserverUrl, email, password);
     });
 
     afterEach(() => {});

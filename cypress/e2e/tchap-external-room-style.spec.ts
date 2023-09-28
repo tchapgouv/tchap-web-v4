@@ -10,7 +10,7 @@ describe("Style of external rooms", () => {
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginUserByEmail(homeserverUrl, email, password);
     });
 
     it("displays special header in external private room", () => {

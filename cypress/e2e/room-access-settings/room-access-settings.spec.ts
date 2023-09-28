@@ -10,7 +10,7 @@ describe("Check room access settings", () => {
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginUserByEmail(homeserverUrl, email, password);
     });
 
     afterEach(() => {

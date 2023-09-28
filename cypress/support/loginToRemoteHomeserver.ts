@@ -37,13 +37,13 @@ declare global {
              * @param password Optional. The password of an existing user in this homeserver
              * @return UserCredentials for the logged in user.
              */
-            loginUser(homeserverUrl?: string, email?: string, password?: string): Chainable<UserCredentials>;
+            loginUserByEmail(homeserverUrl?: string, email?: string, password?: string): Chainable<UserCredentials>;
         }
     }
 }
 
 Cypress.Commands.add(
-    "loginUser",
+    "loginUserByEmail",
     (homeserverUrl?: string, email?: string, password?: string): Chainable<UserCredentials> => {
         homeserverUrl = homeserverUrl ?? Cypress.env("E2E_TEST_USER_HOMESERVER_URL");
         email = email ?? Cypress.env("E2E_TEST_USER_EMAIL");

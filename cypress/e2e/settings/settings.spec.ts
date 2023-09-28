@@ -4,7 +4,7 @@ describe("Check settings customization", () => {
     const password = Cypress.env("E2E_TEST_USER_PASSWORD");
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginUserByEmail(homeserverUrl, email, password);
     });
 
     it("show security configs without the things we dont like", () => {

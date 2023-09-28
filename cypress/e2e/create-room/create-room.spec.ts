@@ -29,10 +29,13 @@ function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
 
 describe("Create Room", () => {
     const homeserverShortname = Cypress.env("E2E_TEST_USER_HOMESERVER_SHORT");
+    const homeserverUrl = Cypress.env("E2E_TEST_USER_HOMESERVER_URL");
+    const email = Cypress.env("E2E_TEST_USER_EMAIL");
+    const password = Cypress.env("E2E_TEST_USER_PASSWORD");
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
-        cy.loginUser();
+        cy.loginUserByEmail(homeserverUrl, email, password);
     });
 
     afterEach(() => {
