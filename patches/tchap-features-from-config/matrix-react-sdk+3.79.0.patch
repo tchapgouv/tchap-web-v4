@@ -19,7 +19,7 @@ index 2df5e7f..daa8874 100644
 +//end :tchap:
 \ No newline at end of file
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
-index 61ff474..00309e4 100644
+index be0ad07..52eab09 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
 @@ -51,6 +51,8 @@ import { Caption } from "../typography/Caption";

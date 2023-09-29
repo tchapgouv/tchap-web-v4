@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index 241c2dc..4f028ea 100644
+index 7307521..90c9601 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -40,6 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
@@ -156,7 +156,7 @@ index bbab224..4c581e7 100644
                      {forgotPasswordJsx}
                      {!this.props.busy && (
 diff --git a/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx b/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
-index bd37ed4..9128119 100644
+index 2fe8e1d..137d6c1 100644
 --- a/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
 +++ b/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
 @@ -22,6 +22,8 @@ import SdkConfig from "../SdkConfig";

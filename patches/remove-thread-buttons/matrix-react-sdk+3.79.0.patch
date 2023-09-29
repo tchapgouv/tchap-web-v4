@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-index ffe35fa..02d0430 100644
+index 012119c..d48e168 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 @@ -61,6 +61,8 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
@@ -24,7 +24,7 @@ index ffe35fa..02d0430 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 6b727c5..e1ae7ec 100644
+index 1485b1c..7466294 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 @@ -55,6 +55,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
@@ -48,10 +48,10 @@ index 6b727c5..e1ae7ec 100644
  
      /**
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
-index fa9afb1..f71f2bb 100644
+index 1256f40..70adb39 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
-@@ -42,6 +42,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
+@@ -41,6 +41,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
  import PosthogTrackers from "../../../PosthogTrackers";
  import { ButtonEvent } from "../elements/AccessibleButton";
  import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
@@ -59,7 +59,7 @@ index fa9afb1..f71f2bb 100644
  
  const ROOM_INFO_PHASES = [
      RightPanelPhases.RoomSummary,
-@@ -295,9 +296,11 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+@@ -294,9 +295,11 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                  onClick={this.onTimelineCardClicked}
              />,
          );
@@ -74,7 +74,7 @@ index fa9afb1..f71f2bb 100644
                  key={RightPanelPhases.ThreadPanel}
                  name="threadsButton"
                  data-testid="threadsButton"
-@@ -305,10 +308,12 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+@@ -304,10 +307,12 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                  onClick={this.onThreadsPanelClicked}
                  isHighlighted={this.isPhase(LegacyRoomHeaderButtons.THREAD_PHASES)}
                  isUnread={this.state.threadNotificationColor > NotificationColor.None}

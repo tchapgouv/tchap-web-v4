@@ -53,10 +53,10 @@ index 3966b04..68238e5 100644
                  <AccessibleButton
                      className="mx_QuickSettingsButton_moreOptionsButton"
 diff --git a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
-index 6e5f325..5cb8cb9 100644
+index fc4a3c0..bbfbfc6 100644
 --- a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 +++ b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
-@@ -42,7 +42,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
+@@ -41,7 +41,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
          case MetaSpace.Favourites:
              return _t("Favourites");
          case MetaSpace.People:

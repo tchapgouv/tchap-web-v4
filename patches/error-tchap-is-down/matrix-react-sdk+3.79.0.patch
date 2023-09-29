@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
-index a08071e..0bfbafa 100644
+index 1b3d865..757a505 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
-@@ -33,6 +33,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
+@@ -36,6 +36,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
  import MatrixClientContext from "../../contexts/MatrixClientContext";
  import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
  import RoomContext from "../../contexts/RoomContext";
@@ -10,7 +10,7 @@ index a08071e..0bfbafa 100644
  
  const DEBUG = false;
  let debuglog = function (msg: string): void {};
-@@ -135,7 +136,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
+@@ -138,7 +139,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                  title: _t("Search failed"),
                                  description:
                                      error?.message ??
@@ -20,10 +20,10 @@ index a08071e..0bfbafa 100644
                              return false;
                          },
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
-index 8ff18eb..06cab55 100644
+index 98039b1..42bb691 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
-@@ -30,6 +30,7 @@ import InlineSpinner from "../views/elements/InlineSpinner";
+@@ -29,6 +29,7 @@ import InlineSpinner from "../views/elements/InlineSpinner";
  import MatrixClientContext from "../../contexts/MatrixClientContext";
  import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
  import ExternalLink from "../views/elements/ExternalLink";
@@ -31,7 +31,7 @@ index 8ff18eb..06cab55 100644
  
  const STATUS_BAR_HIDDEN = 0;
  const STATUS_BAR_EXPANDED = 1;
-@@ -281,7 +282,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
+@@ -280,7 +281,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                              <WarningIcon width="24" height="24" />
                              <div>
                                  <div className="mx_RoomStatusBar_connectionLostBar_title">

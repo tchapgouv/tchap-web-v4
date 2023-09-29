@@ -24,10 +24,10 @@ index 17f1dfe..d9f5729 100644
      $lines: 2;
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx
-index 315332f..5d1380f 100644
+index 2bf56dc..a4749ff 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx
-@@ -70,6 +70,7 @@ import { Alignment } from "../elements/Tooltip";
+@@ -69,6 +69,7 @@ import { Alignment } from "../elements/Tooltip";
  import RoomCallBanner from "../beacon/RoomCallBanner";
  import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
  import { UIComponent } from "../../../settings/UIFeature";
@@ -35,7 +35,7 @@ index 315332f..5d1380f 100644
  
  class DisabledWithReason {
      public constructor(public readonly reason: string) {}
-@@ -814,6 +815,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
+@@ -813,6 +814,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                      <div className="mx_LegacyRoomHeader_avatar">{roomAvatar}</div>
                      {icon}
                      {name}

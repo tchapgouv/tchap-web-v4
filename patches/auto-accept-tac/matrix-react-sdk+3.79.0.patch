@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-index c27640c..b945877 100644
+index 44f0aaf..94d6136 100644
 --- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 +++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-@@ -30,6 +30,7 @@ import {
+@@ -29,6 +29,7 @@ import {
  } from "./utils/IdentityServerUtils";
  import QuestionDialog from "./components/views/dialogs/QuestionDialog";
  import { abbreviateUrl } from "./utils/UrlUtils";
@@ -10,7 +10,7 @@ index c27640c..b945877 100644
  
  export class AbortedIdentityActionError extends Error {}
  
-@@ -135,6 +136,18 @@ export default class IdentityAuthClient {
+@@ -130,6 +131,18 @@ export default class IdentityAuthClient {
              throw e;
          }
  
@@ -30,10 +30,10 @@ index c27640c..b945877 100644
              !this.tempClient &&
              !doesAccountDataHaveIdentityServer(this.matrixClient) &&
 diff --git a/node_modules/matrix-react-sdk/src/Terms.ts b/node_modules/matrix-react-sdk/src/Terms.ts
-index d31b635..9b250b1 100644
+index 41400ef..f703430 100644
 --- a/node_modules/matrix-react-sdk/src/Terms.ts
 +++ b/node_modules/matrix-react-sdk/src/Terms.ts
-@@ -21,6 +21,11 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
+@@ -20,6 +20,11 @@ import { logger } from "matrix-js-sdk/src/logger";
  
  import Modal from "./Modal";
  import TermsDialog from "./components/views/dialogs/TermsDialog";
@@ -45,7 +45,7 @@ index d31b635..9b250b1 100644
  
  export class TermsNotSignedError extends Error {}
  
-@@ -80,6 +85,15 @@ export async function startTermsFlow(
+@@ -79,6 +84,15 @@ export async function startTermsFlow(
      services: Service[],
      interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
  ): Promise<void> {

@@ -12,12 +12,12 @@ index 4427716..12f9dc5 100644
  import { PlaybackManager } from "../../../audio/PlaybackManager";
  import { isVoiceMessage } from "../../../utils/EventUtils";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
-index 3a4c230..e44df65 100644
+index 6833a53..1e4fbc6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 @@ -22,7 +22,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
  import { logger } from "matrix-js-sdk/src/logger";
- import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
+ import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
  
 -import MFileBody from "./MFileBody";
 +import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
