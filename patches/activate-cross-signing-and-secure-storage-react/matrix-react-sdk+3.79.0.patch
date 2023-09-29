@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index c5298dc..544bc07 100644
+index 9002bea..d692a87 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-@@ -145,6 +145,7 @@ import { Linkify } from "../../HtmlUtils";
- import { NotificationColor } from "../../stores/notifications/NotificationColor";
+@@ -147,6 +147,7 @@ import { NotificationColor } from "../../stores/notifications/NotificationColor"
  import { UserTab } from "../views/dialogs/UserTab";
  import { shouldSkipSetupEncryption } from "../../utils/crypto/shouldSkipSetupEncryption";
+ import { Filter } from "../views/dialogs/spotlight/Filter";
 +import TchapUrls from "../../../../../src/tchap/util/TchapUrls";
  
  // legacy export
  export { default as Views } from "../../Views";
-@@ -1726,6 +1727,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+@@ -1755,6 +1756,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
              return;
          }
  
