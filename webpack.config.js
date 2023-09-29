@@ -363,34 +363,34 @@ module.exports = (env, argv) => {
                          */
                         useHMR
                             ? {
-                                loader: "style-loader",
-                                /**
-                                 * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
-                                 * we could try using `lazyStyleTag` here to add and remove styles on demand,
-                                 * that would nicely resolve issues of race conditions for themes,
-                                 * at least for development purposes.
-                                 */
-                                options: {
-                                    insert: function insertBeforeAt(element) {
-                                        const parent = document.querySelector("head");
-                                        // We're in iframe
-                                        if (!window.MX_DEV_ACTIVE_THEMES) {
-                                            parent.appendChild(element);
-                                            return;
-                                        }
-                                        // Properly disable all other instances of themes
-                                        element.disabled = true;
-                                        element.onload = () => {
-                                            element.disabled = true;
-                                        };
-                                        const theme =
-                                            window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
-                                        element.setAttribute("data-mx-theme", theme);
-                                        window.MX_insertedThemeStylesCounter++;
-                                        parent.appendChild(element);
-                                    },
-                                },
-                            }
+                                  loader: "style-loader",
+                                  /**
+                                   * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
+                                   * we could try using `lazyStyleTag` here to add and remove styles on demand,
+                                   * that would nicely resolve issues of race conditions for themes,
+                                   * at least for development purposes.
+                                   */
+                                  options: {
+                                      insert: function insertBeforeAt(element) {
+                                          const parent = document.querySelector("head");
+                                          // We're in iframe
+                                          if (!window.MX_DEV_ACTIVE_THEMES) {
+                                              parent.appendChild(element);
+                                              return;
+                                          }
+                                          // Properly disable all other instances of themes
+                                          element.disabled = true;
+                                          element.onload = () => {
+                                              element.disabled = true;
+                                          };
+                                          const theme =
+                                              window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
+                                          element.setAttribute("data-mx-theme", theme);
+                                          window.MX_insertedThemeStylesCounter++;
+                                          parent.appendChild(element);
+                                      },
+                                  },
+                              }
                             : MiniCssExtractPlugin.loader,
                         {
                             loader: "css-loader",
@@ -691,16 +691,16 @@ module.exports = (env, argv) => {
 
             // upload to sentry if sentry env is present
             process.env.SENTRY_DSN &&
-            sentryWebpackPlugin({
-                release: process.env.VERSION,
-                sourcemaps: {
-                    paths: "./webapp/bundles/**",
-                },
-                errorHandler: (err, invokeErr, compilation) => {
-                    compilation.warnings.push("Sentry CLI Plugin: " + err.message);
-                    console.log(`::warning title=Sentry error::${err.message}`);
-                },
-            }),
+                sentryWebpackPlugin({
+                    release: process.env.VERSION,
+                    sourcemaps: {
+                        paths: "./webapp/bundles/**",
+                    },
+                    errorHandler: (err, invokeErr, compilation) => {
+                        compilation.warnings.push("Sentry CLI Plugin: " + err.message);
+                        console.log(`::warning title=Sentry error::${err.message}`);
+                    },
+                }),
             new webpack.EnvironmentPlugin(["VERSION"]),
         ].filter(Boolean),
 
