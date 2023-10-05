@@ -208,5 +208,12 @@
             "src/IConfigOptions.ts",
             "src/components/views/settings/Notifications.tsx"
         ]
+    },
+    "remove-fdroid": {
+        "comments" : "remove when issue is fixed in element-web : https://github.com/vector-im/element-web/issues/26309",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/dialogs/AppDownloadDialog.tsx"
+        ]
     }
 }
