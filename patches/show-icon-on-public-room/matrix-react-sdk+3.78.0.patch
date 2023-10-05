@@ -64,3 +64,36 @@ index fffb643..1034d9c 100644
              if (!this.isWatchingTimeline) {
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                  this.isWatchingTimeline = true;
+diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+index d87c556..0c423b4 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
+@@ -22,7 +22,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
+ import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
+ import BaseCard, { Group } from "./BaseCard";
+ import { _t } from "../../../languageHandler";
+-import RoomAvatar from "../avatars/RoomAvatar";
++import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
+ import AccessibleButton, { ButtonEvent, IAccessibleButtonProps } from "../elements/AccessibleButton";
+ import defaultDispatcher from "../../../dispatcher/dispatcher";
+ import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+@@ -307,7 +307,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+     const header = (
+         <React.Fragment>
+             <div className="mx_RoomSummaryCard_avatar" role="presentation">
++                {/** :TCHAP: decorate the avatar with the tchap lock icons
+                 <RoomAvatar room={room} height={54} width={54} viewAvatarOnClick />
++                */}
++                <DecoratedRoomAvatar room={room} avatarSize={54} viewAvatarOnClick />
++                {/** remove the extra badge
+                 <TextWithTooltip
+                     tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
+                     class={classNames("mx_RoomSummaryCard_e2ee", {
+@@ -316,6 +320,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+                         mx_RoomSummaryCard_e2ee_verified: isRoomEncrypted && e2eStatus === E2EStatus.Verified,
+                     })}
+                 />
++                end :TCHAP: */}
+             </div>
+ 
+             <RoomName room={room}>
