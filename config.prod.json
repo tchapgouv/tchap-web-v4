@@ -170,7 +170,8 @@
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
-        "custom_themes": []
+        "custom_themes": [],
+        "FTUE.useCaseSelection": "WorkMessaging"
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
