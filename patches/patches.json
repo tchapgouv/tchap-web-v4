@@ -9,7 +9,10 @@
     },
     "show-icon-on-public-room": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/views/avatars/DecoratedRoomAvatar.tsx"]
+        "files": [
+            "src/components/views/avatars/DecoratedRoomAvatar.tsx",
+            "src/components/views/right_panel/RoomSummaryCard.tsx"
+        ]
     },
     "simplify-exchange-key-message": {
         "package": "matrix-react-sdk",
