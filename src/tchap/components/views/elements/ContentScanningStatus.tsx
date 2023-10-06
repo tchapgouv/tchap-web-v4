@@ -49,7 +49,7 @@ export const ContentScanningStatus: React.FC<ContentScanningStatusProps> = (prop
     if (props.status === "unsafe") {
         return (
             <div>
-                <TextWithTooltip class="mx_ContentScanningStatus mx_ContentScanningStatus_unsafe mx_ContentScanningStatus_unsafe" tooltip={props.fileName}>
+                <TextWithTooltip class="mx_ContentScanningStatus mx_ContentScanningStatus_unsafe" tooltip={props.fileName}>
                     {_t("Content blocked")}
                 </TextWithTooltip>
             </div>
