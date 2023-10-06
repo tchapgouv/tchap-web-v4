@@ -21,7 +21,7 @@ describe("Content Scanner", () => {
         cy.get(".mx_Dialog").get('[data-testid="dialog-primary-button"]').click();
 
         // Wait until the file is sent
-        cy.get(".mx_RoomView_statusArea_expanded", { timeout: 100000 }).should("not.exist");
+        cy.get(".mx_RoomView_statusArea_expanded").should("not.exist");
         cy.get(".mx_EventTile.mx_EventTile_ last .mx_EventTile_receiptSent").should("exist");
     };
 
@@ -32,7 +32,7 @@ describe("Content Scanner", () => {
             //open room
             cy.get('[aria-label="' + roomName + '"]').click();
 
-            uploadFile("cypress/fixtures/riot.png");
+            uploadFile("cypress/fixtures/chicken.gif");
 
             // A status should display once scanning is finished (success or not)
             cy.get(".mx_EventTile_image").get(".mx_ContentScanningStatus");
