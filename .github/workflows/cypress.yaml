@@ -1,22 +1,19 @@
 # This is a tchap-specific file, inspired from the one in matrix-react-sdk
-name: Cypress End to End Tests
+name: Build + E2E Tests
 
-# Run this job when the "Build" job completes
 on:
-    workflow_run:
-        workflows: ["Build"]
-        types:
-            - completed
-
-env:
-    # Removing this makes the job break.
-    REPOSITORY: ${{ github.repository }}
-    PR_NUMBER: ${{ github.event.pull_request.number }}
+    workflow_dispatch: # for running action manually
+    pull_request:
+        types: [ready_for_review]
 
 jobs:
     cypress:
         name: Cypress
-        runs-on: ubuntu-latest
+        runs-on: macos-latest
+
+        # Only run on non-draft PRs. On draft PRs, we already have the Build job
+        if: github.event.pull_request.draft == false
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -25,29 +22,29 @@ jobs:
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
 
-            - name: Yarn cache
+            - name: Setup node with yarn cache
               uses: actions/setup-node@v3
               with:
                   cache: "yarn"
                   node-version: ${{ steps.node_version.outputs.node_version }}
 
-            - name: Download build from artifact
-              # use this action instead of actions/download-artifact because we need the "workflow" param
-              uses: dawidd6/action-download-artifact@v2
-              with:
-                  name: devbuild
-                  path: webapp
-                  run_id: ${{ github.event.workflow_run.id }} # I think this is the run_id of the workflow that triggered this workflow
-
             - name: Install Dependencies
-              run: "yarn install" # this is needed otherwise "cypress: not found". Can we do just yarn install cypress to go faster ?
+              run: "yarn install"
+
+            - name: "Copy the dev config file at the right place"
+              run: "cp config.dev.json config.json"
+              # todo we could make the choice of backend configurable.
+              # But then the test user, password, server, should be changed too, see cypress env vars below.
+
+            - name: Build
+              run: "yarn build"
 
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6.5.0
               with:
                   install: false # disable the default install, we already installed and built.
 
-                  # Serve with 'npx serve', a simple static webserver, so that it starts quickly. The dev server is slow and messy to start.
+                  # Serve with 'npx serve', a simple static webserver, so that it starts quickly. The webpack dev server is slow and messy to start.
                   start: "npx serve -p 8080 -L webapp"
                   # Note : 'wait-on' caused issues where localhost was not found by cypress. Be careful if you want to use it.
 

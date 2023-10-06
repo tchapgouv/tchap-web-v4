@@ -105,9 +105,8 @@
     "default_country_code": "FR",
     "show_labs_settings": false,
     "features": {
-        "feature_thread": true,
         "feature_video_rooms": false,
-        "feature_new_device_manager": false
+        "feature_notification_settings2": false
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -166,12 +165,13 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
-        "UIFeature.LocationSharing": false,
+        "UIFeature.locationSharing": false,
         "MessageComposerInput.showPollsButton": false,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
-        "custom_themes": []
+        "custom_themes": [],
+        "FTUE.useCaseSelection": "WorkMessaging"
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
@@ -188,11 +188,16 @@
     "desktop_builds": {
         "available": false
     },
+    "mobile_builds": {
+        "ios": "https://apps.apple.com/us/app/tchap/id1446253779",
+        "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.a",
+        "fdroid": null
+    },
     "permalink_prefix": "https://tchap.gouv.fr",
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
     "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
-        "feature_email_notification": [],
+        "feature_email_notification": ["agent.dinum.tchap.gouv.fr"],
         "feature_thread": ["agent.dinum.tchap.gouv.fr"],
         "feature_space": []
     }

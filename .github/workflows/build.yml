@@ -1,10 +1,12 @@
 #Build the application
-name: Build
+name: Build without E2E tests
 on:
-    pull_request: {}
+    pull_request:
+        types: [converted_to_draft]
     push:
         branches: [master]
-# develop pushes and repository_dispatch handled in build_develop.yaml
+    workflow_dispatch: # for running action manually
+
 env:
     # These must be set for fetchdep.sh to get the right branch
     REPOSITORY: ${{ github.repository }}
@@ -13,6 +15,10 @@ jobs:
     build:
         name: "Build"
         runs-on: ubuntu-latest
+
+        # Only run on draft PRs. On ready_for_review PRs, we already have the Cypress job which runs the build
+        if: github.event.pull_request.draft == true
+
         steps:
             - uses: actions/checkout@v4
             - name: Get Node Version

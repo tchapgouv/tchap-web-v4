@@ -9,7 +9,10 @@
     },
     "show-icon-on-public-room": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/views/avatars/DecoratedRoomAvatar.tsx"]
+        "files": [
+            "src/components/views/avatars/DecoratedRoomAvatar.tsx",
+            "src/components/views/right_panel/RoomSummaryCard.tsx"
+        ]
     },
     "simplify-exchange-key-message": {
         "package": "matrix-react-sdk",
@@ -120,11 +123,6 @@
             "src/components/views/rooms/DecryptionFailureBar.tsx"
         ]
     },
-    "in-invite-dialog-add-text-indicating-that-we-can-invite-multiple-people": {
-        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/342",
-        "package": "matrix-react-sdk",
-        "files": ["res/css/views/dialogs/_InviteDialog.pcss"]
-    },
     "fix-inviting-a-person-already-present-in-the-room": {
         "comments": "When inviting by its email adress someone already in the room, the error message was wrong and break the invitation process",
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/394",
@@ -212,6 +210,13 @@
         "files": [
             "src/IConfigOptions.ts",
             "src/components/views/settings/Notifications.tsx"
+        ]
+    },
+    "remove-fdroid": {
+        "comments" : "remove when issue is fixed in element-web : https://github.com/vector-im/element-web/issues/26309",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/dialogs/AppDownloadDialog.tsx"
         ]
     }
 }
