@@ -11,7 +11,7 @@ describe("Content Scanner", () => {
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginByEmail(homeserverUrl, email, password);
     });
 
     const uploadFile = (file: string) => {

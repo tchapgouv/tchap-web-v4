@@ -24,6 +24,7 @@ import installLogsCollector from "cypress-terminal-report/src/installLogsCollect
 import "./config.json";
 import "./homeserver";
 import "./login";
+import "./loginToRemoteHomeserver";
 import "./labs";
 import "./client";
 import "./settings";
