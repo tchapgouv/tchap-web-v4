@@ -68,7 +68,8 @@
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
-        "custom_themes": []
+        "custom_themes": [],
+        "FTUE.useCaseSelection": "WorkMessaging"
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
@@ -84,6 +85,11 @@
     },
     "desktopBuilds": {
         "available": false
+    },
+    "mobile_builds": {
+        "ios": "https://apps.apple.com/us/app/tchap/id1446253779",
+        "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.a",
+        "fdroid": null
     },
     "permalink_prefix": "https://www.tchap.incubateur.net",
     "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
