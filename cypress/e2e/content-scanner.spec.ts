@@ -22,10 +22,10 @@ describe("Content Scanner", () => {
 
         // Wait until the file is sent
         cy.get(".mx_RoomView_statusArea_expanded").should("not.exist");
-        cy.get(".mx_EventTile.mx_EventTile_ last .mx_EventTile_receiptSent").should("exist");
+        cy.get(".mx_EventTile.mx_EventTile_last .mx_EventTile_receiptSent").should("exist");
     };
 
-    it("displays a status after an image is uploaded", () => {
+    it("displays a status after an image is uploaded (any status)", () => {
         const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
 
         RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
@@ -36,6 +36,22 @@ describe("Content Scanner", () => {
 
             // A status should display once scanning is finished (success or not)
             cy.get(".mx_EventTile_image").get(".mx_ContentScanningStatus");
+
+            cy.leaveRoom(roomId);
+        });
+    });
+
+    it("displays a success status after an image is successfully uploaded", () => {
+        const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
+
+        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
+            //open room
+            cy.get('[aria-label="' + roomName + '"]').click();
+
+            uploadFile("cypress/fixtures/chicken.gif");
+
+            // A status should display once scanning is finished (success or not)
+            cy.get(".mx_EventTile_image").get(".mx_ContentScanningStatus_done");
 
             cy.leaveRoom(roomId);
         });

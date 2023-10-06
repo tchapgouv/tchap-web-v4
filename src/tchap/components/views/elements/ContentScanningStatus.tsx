@@ -39,7 +39,7 @@ export const ContentScanningStatus: React.FC<ContentScanningStatusProps> = (prop
     if (props.status === "scanning") {
         return (
             <div>
-                <TextWithTooltip class={`mx_ContentScanningStatus mx_ContentScanningStatus_scanning--${theme}`} tooltip={props.fileName}>
+                <TextWithTooltip class={`mx_ContentScanningStatus mx_ContentScanningStatus_scanning mx_ContentScanningStatus_scanning--${theme}`} tooltip={props.fileName}>
                     {_t("Scanning")}
                 </TextWithTooltip>
             </div>
@@ -49,7 +49,7 @@ export const ContentScanningStatus: React.FC<ContentScanningStatusProps> = (prop
     if (props.status === "unsafe") {
         return (
             <div>
-                <TextWithTooltip class="mx_ContentScanningStatus mx_ContentScanningStatus_unsafe" tooltip={props.fileName}>
+                <TextWithTooltip class="mx_ContentScanningStatus mx_ContentScanningStatus_unsafe mx_ContentScanningStatus_unsafe" tooltip={props.fileName}>
                     {_t("Content blocked")}
                 </TextWithTooltip>
             </div>
@@ -66,5 +66,5 @@ export const ContentScanningStatus: React.FC<ContentScanningStatusProps> = (prop
         );
     }
 
-    return <div className={`mx_ContentScanningStatus_done--${theme}`}>{_t("Trusted")}</div>;
+    return <div className={`mx_ContentScanningStatus mx_ContentScanningStatus_done mx_ContentScanningStatus_done--${theme}`}>{_t("Trusted")}</div>;
 };
