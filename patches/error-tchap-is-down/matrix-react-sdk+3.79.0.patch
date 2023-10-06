@@ -1,0 +1,42 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
+index 1b3d865..757a505 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/RoomSearchView.tsx
+@@ -36,6 +36,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
+ import MatrixClientContext from "../../contexts/MatrixClientContext";
+ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+ import RoomContext from "../../contexts/RoomContext";
++import Tchapi18nUtils from "../../../../../src/tchap/i18n/Tchapi18nUtils";
+ 
+ const DEBUG = false;
+ let debuglog = function (msg: string): void {};
+@@ -138,7 +139,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
+                                 title: _t("Search failed"),
+                                 description:
+                                     error?.message ??
+-                                    _t("Server may be unavailable, overloaded, or search timed out :("),
++                                    Tchapi18nUtils.getServerDownMessage(),
+                             });
+                             return false;
+                         },
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
+index 98039b1..42bb691 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
+@@ -29,6 +29,7 @@ import InlineSpinner from "../views/elements/InlineSpinner";
+ import MatrixClientContext from "../../contexts/MatrixClientContext";
+ import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
+ import ExternalLink from "../views/elements/ExternalLink";
++import Tchapi18nUtils from '../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
+ 
+ const STATUS_BAR_HIDDEN = 0;
+ const STATUS_BAR_EXPANDED = 1;
+@@ -280,7 +281,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
+                             <WarningIcon width="24" height="24" />
+                             <div>
+                                 <div className="mx_RoomStatusBar_connectionLostBar_title">
+-                                    {_t("Connectivity to the server has been lost.")}
++                                    {Tchapi18nUtils.getServerDownMessage()}
+                                 </div>
+                                 <div className="mx_RoomStatusBar_connectionLostBar_desc">
+                                     {_t("Sent messages will be stored until your connection has returned.")}

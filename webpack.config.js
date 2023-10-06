@@ -229,6 +229,10 @@ module.exports = (env, argv) => {
                 // Same goes for js/react-sdk - we don't need two copies.
                 "matrix-js-sdk": path.resolve(__dirname, "node_modules/matrix-js-sdk"),
                 "matrix-react-sdk": path.resolve(__dirname, "node_modules/matrix-react-sdk"),
+                "@matrix-org/react-sdk-module-api": path.resolve(
+                    __dirname,
+                    "node_modules/@matrix-org/react-sdk-module-api",
+                ),
                 // and matrix-events-sdk & matrix-widget-api
                 "matrix-events-sdk": path.resolve(__dirname, "node_modules/matrix-events-sdk"),
                 "matrix-widget-api": path.resolve(__dirname, "node_modules/matrix-widget-api"),
@@ -288,7 +292,7 @@ module.exports = (env, argv) => {
                         // either webpack or our babel setup.
                         // When we do get to upgrade our current setup, this should
                         // probably be removed.
-                        if (f.includes("@vector-im/compound-web")) return true;
+                        if (f.includes(path.join("@vector-im", "compound-web"))) return true;
 
                         // but we can't run all of our dependencies through babel (many of them still
                         // use module.exports which breaks if babel injects an 'include' for its
@@ -738,14 +742,20 @@ module.exports = (env, argv) => {
  * @return {string} The returned paths will look like `img/warning.1234567.svg`.
  */
 function getAssetOutputPath(url, resourcePath) {
+    const isKaTeX = resourcePath.includes("KaTeX");
     // `res` is the parent dir for our own assets in various layers
     // `dist` is the parent dir for KaTeX assets
     const prefix = /^.*[/\\](dist|res)[/\\]/;
-    if (!resourcePath.match(prefix)) {
+    /**
+     * Only needed for https://github.com/vector-im/element-web/pull/15939
+     * If keeping this, we are not able to load external assets such as SVG
+     * images coming from @vector-im/compound-web.
+     */
+    if (isKaTeX && !resourcePath.match(prefix)) {
         throw new Error(`Unexpected asset path: ${resourcePath}`);
     }
     let outputDir = path.dirname(resourcePath).replace(prefix, "");
-    if (resourcePath.includes("KaTeX")) {
+    if (isKaTeX) {
         // Add a clearly named directory segment, rather than leaving the KaTeX
         // assets loose in each asset type directory.
         outputDir = path.join(outputDir, "KaTeX");
