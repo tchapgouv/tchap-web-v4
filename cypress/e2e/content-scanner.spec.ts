@@ -35,7 +35,7 @@ describe("Content Scanner", () => {
             uploadFile("cypress/fixtures/chicken.gif");
 
             // A status should display once scanning is finished (success or not)
-            cy.get(".mx_EventTile_image").get(".mx_ContentScanningStatus");
+            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
 
             cy.leaveRoom(roomId);
         });
@@ -50,8 +50,22 @@ describe("Content Scanner", () => {
 
             uploadFile("cypress/fixtures/chicken.gif");
 
-            // A status should display once scanning is finished (success or not)
-            cy.get(".mx_EventTile_image").get(".mx_ContentScanningStatus_done");
+            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_done");
+
+            cy.leaveRoom(roomId);
+        });
+    });
+
+    it("displays an error status after an evil file is blocked", () => {
+        const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
+
+        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
+            //open room
+            cy.get('[aria-label="' + roomName + '"]').click();
+
+            uploadFile("cypress/fixtures/evil_eicar_chicken.com");
+
+            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_unsafe");
 
             cy.leaveRoom(roomId);
         });
