@@ -36,7 +36,7 @@ getVar("E2E_TEST_USER_HOMESERVER_SHORT");
 export default defineConfig({
     watchForFileChanges: false,
     videoUploadOnPasses: false,
-    projectId: "ppvnzg",
+    projectId: 'x8og2r',
     experimentalInteractiveRunEvents: true,
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
