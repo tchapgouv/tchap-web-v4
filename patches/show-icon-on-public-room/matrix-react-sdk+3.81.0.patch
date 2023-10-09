@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index fffb643..1034d9c 100644
+index 23b065d..a3208fa 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -30,6 +30,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -37,7 +37,7 @@ index fffb643..1034d9c 100644
 +            return _t("This room is private and open to external users");
 +        // end :TCHAP:
          case Icon.PresenceOnline:
-             return _t("Online");
+             return _t("presence|online");
          case Icon.PresenceAway:
 @@ -167,7 +183,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
@@ -65,7 +65,7 @@ index fffb643..1034d9c 100644
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                  this.isWatchingTimeline = true;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-index d87c556..0c423b4 100644
+index 982f04b..1be1e65 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 @@ -22,7 +22,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -77,19 +77,19 @@ index d87c556..0c423b4 100644
  import AccessibleButton, { ButtonEvent, IAccessibleButtonProps } from "../elements/AccessibleButton";
  import defaultDispatcher from "../../../dispatcher/dispatcher";
  import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
-@@ -307,7 +307,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -308,7 +308,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
      const header = (
          <React.Fragment>
              <div className="mx_RoomSummaryCard_avatar" role="presentation">
 +                {/** :TCHAP: decorate the avatar with the tchap lock icons
-                 <RoomAvatar room={room} height={54} width={54} viewAvatarOnClick />
+                 <RoomAvatar room={room} size="54px" viewAvatarOnClick />
 +                */}
-+                <DecoratedRoomAvatar room={room} avatarSize={54} viewAvatarOnClick />
++                <DecoratedRoomAvatar room={room} size="54px" viewAvatarOnClick />
 +                {/** remove the extra badge
                  <TextWithTooltip
-                     tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
+                     tooltip={isRoomEncrypted ? _t("common|encrypted") : _t("Not encrypted")}
                      class={classNames("mx_RoomSummaryCard_e2ee", {
-@@ -316,6 +320,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose })
+@@ -317,6 +321,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                          mx_RoomSummaryCard_e2ee_verified: isRoomEncrypted && e2eStatus === E2EStatus.Verified,
                      })}
                  />
