@@ -19,13 +19,8 @@ module.exports = {
     },
     overrides: [
         {
-            files: [
-                // :TCHAP: Lint our cypress files, copied from react-sdk. React-sdk lints them too, so we keep up !
-                "cypress/**/*.ts",
-                "src/**/*.{ts,tsx}",
-                "test/**/*.{ts,tsx}",
-                "scripts/*.ts"
-            ],
+            // :TCHAP: also lint our cypress files, copied from react-sdk, because react-sdk lints them.
+            files: ["cypress/**/*.ts", "src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "scripts/*.ts"],
             extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
             // NOTE: These rules are frozen and new rules should not be added here.
             // New changes belong in https://github.com/matrix-org/eslint-plugin-matrix-org/
@@ -39,8 +34,6 @@ module.exports = {
                 // We're okay with assertion errors when we ask for them
                 "@typescript-eslint/no-non-null-assertion": "off",
 
-                // TCHAP: for cypress only
-                "@typescript-eslint/no-empty-interface": "off",
                 // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
                 "no-restricted-imports": [
                     "error",
@@ -96,14 +89,6 @@ module.exports = {
                 "@typescript-eslint/explicit-function-return-type": "off",
                 "@typescript-eslint/explicit-member-accessibility": "off",
                 "@typescript-eslint/ban-ts-comment": "off",
-            },
-        },
-        {
-            files: ["src/tchap/*.{ts,tsx}"],
-            rules: {
-                // Tchap files are not up to date yet in proper typescript style. Use warnings instead of errors to unbreak the CI.
-                "@typescript-eslint/explicit-function-return-type": "warn",
-                "@typescript-eslint/explicit-member-accessibility": "warn",
             },
         },
     ],
