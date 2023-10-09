@@ -184,6 +184,17 @@ module.exports = (env, argv) => {
                         enforce: true,
                         // Do not add `chunks: 'all'` here because you'll break the app entry point.
                     },
+
+                    // put the unhomoglyph data in its own file. It contains
+                    // magic characters which mess up line numbers in the
+                    // javascript debugger.
+                    unhomoglyph_data: {
+                        name: "unhomoglyph_data",
+                        test: /unhomoglyph\/data\.json$/,
+                        enforce: true,
+                        chunks: "all",
+                    },
+
                     default: {
                         reuseExistingChunk: true,
                     },
@@ -363,34 +374,34 @@ module.exports = (env, argv) => {
                          */
                         useHMR
                             ? {
-                                  loader: "style-loader",
-                                  /**
-                                   * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
-                                   * we could try using `lazyStyleTag` here to add and remove styles on demand,
-                                   * that would nicely resolve issues of race conditions for themes,
-                                   * at least for development purposes.
-                                   */
-                                  options: {
-                                      insert: function insertBeforeAt(element) {
-                                          const parent = document.querySelector("head");
-                                          // We're in iframe
-                                          if (!window.MX_DEV_ACTIVE_THEMES) {
-                                              parent.appendChild(element);
-                                              return;
-                                          }
-                                          // Properly disable all other instances of themes
-                                          element.disabled = true;
-                                          element.onload = () => {
-                                              element.disabled = true;
-                                          };
-                                          const theme =
-                                              window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
-                                          element.setAttribute("data-mx-theme", theme);
-                                          window.MX_insertedThemeStylesCounter++;
-                                          parent.appendChild(element);
-                                      },
-                                  },
-                              }
+                                loader: "style-loader",
+                                /**
+                                 * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
+                                 * we could try using `lazyStyleTag` here to add and remove styles on demand,
+                                 * that would nicely resolve issues of race conditions for themes,
+                                 * at least for development purposes.
+                                 */
+                                options: {
+                                    insert: function insertBeforeAt(element) {
+                                        const parent = document.querySelector("head");
+                                        // We're in iframe
+                                        if (!window.MX_DEV_ACTIVE_THEMES) {
+                                            parent.appendChild(element);
+                                            return;
+                                        }
+                                        // Properly disable all other instances of themes
+                                        element.disabled = true;
+                                        element.onload = () => {
+                                            element.disabled = true;
+                                        };
+                                        const theme =
+                                            window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
+                                        element.setAttribute("data-mx-theme", theme);
+                                        window.MX_insertedThemeStylesCounter++;
+                                        parent.appendChild(element);
+                                    },
+                                },
+                            }
                             : MiniCssExtractPlugin.loader,
                         {
                             loader: "css-loader",
@@ -509,7 +520,7 @@ module.exports = (env, argv) => {
                 },
                 {
                     // cache-bust languages.json file placed in
-                    // element-web/webapp/i18n during build by copy-res.js
+                    // element-web/webapp/i18n during build by copy-res.ts
                     test: /\.*languages.json$/,
                     type: "javascript/auto",
                     loader: "file-loader",
@@ -537,6 +548,12 @@ module.exports = (env, argv) => {
                                         removeDimensions: true,
                                     },
                                 },
+                                /**
+                                 * Forwards the React ref to the root SVG element
+                                 * Useful when using things like `asChild` in
+                                 * radix-ui
+                                 */
+                                ref: true,
                                 esModule: false,
                                 name: "[name].[hash:7].[ext]",
                                 outputPath: getAssetOutputPath,
@@ -691,16 +708,16 @@ module.exports = (env, argv) => {
 
             // upload to sentry if sentry env is present
             process.env.SENTRY_DSN &&
-                sentryWebpackPlugin({
-                    release: process.env.VERSION,
-                    sourcemaps: {
-                        paths: "./webapp/bundles/**",
-                    },
-                    errorHandler: (err, invokeErr, compilation) => {
-                        compilation.warnings.push("Sentry CLI Plugin: " + err.message);
-                        console.log(`::warning title=Sentry error::${err.message}`);
-                    },
-                }),
+            sentryWebpackPlugin({
+                release: process.env.VERSION,
+                sourcemaps: {
+                    paths: "./webapp/bundles/**",
+                },
+                errorHandler: (err, invokeErr, compilation) => {
+                    compilation.warnings.push("Sentry CLI Plugin: " + err.message);
+                    console.log(`::warning title=Sentry error::${err.message}`);
+                },
+            }),
             new webpack.EnvironmentPlugin(["VERSION"]),
         ].filter(Boolean),
 
@@ -755,6 +772,21 @@ function getAssetOutputPath(url, resourcePath) {
         throw new Error(`Unexpected asset path: ${resourcePath}`);
     }
     let outputDir = path.dirname(resourcePath).replace(prefix, "");
+
+    /**
+     * Imports from Compound are "absolute", we need to strip out the prefix
+     * coming before the npm package name.
+     *
+     * This logic is scoped to compound packages for now as they are the only
+     * package that imports external assets. This might need to be made more
+     * generic in the future
+     */
+    const compoundImportsPrefix = /@vector-im(?:\\|\/)compound-(.*?)(?:\\|\/)/;
+    const compoundMatch = outputDir.match(compoundImportsPrefix);
+    if (compoundMatch) {
+        outputDir = outputDir.substring(compoundMatch.index + compoundMatch[0].length);
+    }
+
     if (isKaTeX) {
         // Add a clearly named directory segment, rather than leaving the KaTeX
         // assets loose in each asset type directory.
