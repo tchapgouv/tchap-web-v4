@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 9002bea..d692a87 100644
+index cf08ffa..3f3210f 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-@@ -147,6 +147,7 @@ import { NotificationColor } from "../../stores/notifications/NotificationColor"
- import { UserTab } from "../views/dialogs/UserTab";
- import { shouldSkipSetupEncryption } from "../../utils/crypto/shouldSkipSetupEncryption";
- import { Filter } from "../views/dialogs/spotlight/Filter";
+@@ -150,6 +150,7 @@ import { Filter } from "../views/dialogs/spotlight/Filter";
+ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
+ import { SessionLockStolenView } from "./auth/SessionLockStolenView";
+ import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 +import TchapUrls from "../../../../../src/tchap/util/TchapUrls";
  
  // legacy export
  export { default as Views } from "../../Views";
-@@ -1755,6 +1756,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+@@ -1784,6 +1785,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
              return;
          }
  
@@ -27,10 +27,10 @@ index 9002bea..d692a87 100644
              dis.dispatch({
                  action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index 217f4a4..acea5fe 100644
+index 933cfcc..365e76a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-@@ -230,14 +230,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -229,14 +229,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              userSigningPrivateKeyCached;
  
          const actions: JSX.Element[] = [];
@@ -54,7 +54,7 @@ index 217f4a4..acea5fe 100644
                  <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
                      {buttonCaption}
                  </AccessibleButton>,
-@@ -245,7 +252,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -244,7 +251,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
          }
  
          if (keysExistAnywhere) {
@@ -63,9 +63,9 @@ index 217f4a4..acea5fe 100644
 +            advancedActions.push(
 +            // end :TCHAP:
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
-                     {_t("Reset")}
+                     {_t("action|reset")}
                  </AccessibleButton>,
-@@ -257,6 +266,12 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -256,6 +265,12 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
@@ -78,7 +78,7 @@ index 217f4a4..acea5fe 100644
          return (
              <>
                  {summarisedStatus}
-@@ -292,6 +307,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -291,6 +306,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                              <td>{homeserverSupportsCrossSigning ? _t("exists") : _t("not found")}</td>
                          </tr>
                      </table>
@@ -87,7 +87,7 @@ index 217f4a4..acea5fe 100644
                  {errorSection}
                  {actionRow}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
-index 2f866aa..5dccb31 100644
+index a556799..5cde33c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
 @@ -257,6 +257,16 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
@@ -106,16 +106,16 @@ index 2f866aa..5dccb31 100644
 +                        {/* :TCHAP remove element text
                          <SettingsSubsectionText>
                              {_t(
-                                 "This session is <b>not backing up your keys</b>, " +
-@@ -272,6 +282,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
-                                     "losing any keys that may only be on this session.",
+                                 "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.",
+@@ -269,6 +279,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+                                 "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.",
                              )}
                          </SettingsSubsectionText>
 +                        end TCHAP */}
                      </>
                  );
                  restoreButtonCaption = _t("Connect this session to Key Backup");
-@@ -326,13 +337,15 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -323,13 +334,15 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                  </AccessibleButton>,
              );
  
@@ -138,7 +138,7 @@ index 2f866aa..5dccb31 100644
          } else {
              statusDescription = (
                  <>
-@@ -343,9 +356,11 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -340,9 +353,11 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                              { b: (sub) => <b>{sub}</b> },
                          )}
                      </SettingsSubsectionText>
@@ -150,11 +150,11 @@ index 2f866aa..5dccb31 100644
                  </>
              );
              actions.push(
-@@ -358,7 +373,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+@@ -355,7 +370,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
          if (secretStorageKeyInAccount) {
              actions.push(
                  <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
--                    {_t("Reset")}
+-                    {_t("action|reset")}
 +                    {/* :TCHAP: change {_t("Reset")} into */}
 +                    {_t("Generate a new code")}
 +                    {/* end :TCHAP */}
