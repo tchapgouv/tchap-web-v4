@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index 37edecd..4368773 100644
+index 7a19848..d7ddd55 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 @@ -50,8 +50,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
@@ -14,14 +14,16 @@ index 37edecd..4368773 100644
  
  const debuglog = (...args: any[]): void => {
      if (SettingsStore.getValue("debug_registration")) {
-@@ -280,11 +283,22 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -280,11 +283,24 @@ export default class Registration extends React.Component<IProps, IState> {
      }
  
      private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
++        // :TCHAP: find the server corresponding to the entered email
 +        const server = await TchapUtils.fetchHomeserverForEmail(formVals.email);
 +        const validatedServerConfig = TchapUtils.makeValidatedServerConfig(server);
 +        // Note : onServerConfigChange triggers a state change at the matrixChat level. All the children are rerendered.
 +        this.props.onServerConfigChange(validatedServerConfig);
++        // end :TCHAP:
 +
          this.setState({
              errorText: "",
@@ -37,16 +39,18 @@ index 37edecd..4368773 100644
          });
      };
  
-@@ -332,6 +346,8 @@ export default class Registration extends React.Component<IProps, IState> {
-                 errorText = _t("Someone already has that username, please try another.");
+@@ -332,6 +348,10 @@ export default class Registration extends React.Component<IProps, IState> {
+                 errorText = _t("auth|username_in_use");
              } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
-                 errorText = _t("That e-mail address or phone number is already in use.");
+                 errorText = _t("auth|3pid_in_use");
++            // :TCHAP: add error message for common case
 +            } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_DENIED") {
 +                errorText = _t("That email is not allowed on Tchap", {}, {a: (sub)=><a href={TchapUrls.requestDomainUrl}>{sub}</a>});
++            // end :TCHAP:
              }
  
              this.setState({
-@@ -463,6 +479,11 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -463,6 +483,11 @@ export default class Registration extends React.Component<IProps, IState> {
              inhibit_login: undefined,
          };
          if (auth) registerParams.auth = auth;
@@ -58,7 +62,7 @@ index 37edecd..4368773 100644
          debuglog("Registration: sending registration request:", auth);
          return this.state.matrixClient.registerRequest(registerParams);
      };
-@@ -698,6 +719,12 @@ export default class Registration extends React.Component<IProps, IState> {
+@@ -694,6 +719,12 @@ export default class Registration extends React.Component<IProps, IState> {
                              {errorText}
                              {serverDeadSection}
                          </AuthHeaderDisplay>
@@ -72,7 +76,7 @@ index 37edecd..4368773 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index dc0f383..2cd6c02 100644
+index e12ac19..2cd6c02 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -267,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
@@ -96,21 +100,46 @@ index dc0f383..2cd6c02 100644
              },
              {
                  key: "email",
-@@ -561,16 +564,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -525,8 +528,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+                 ref={(field) => (this[RegistrationField.Username] = field)}
+                 type="text"
+                 autoFocus={true}
+-                label={_t("common|username")}
+-                placeholder={_t("common|username").toLocaleLowerCase()}
++                label={_t("Username")}
++                placeholder={_t("Username").toLocaleLowerCase()}
+                 value={this.state.username}
+                 onChange={this.onUsernameChange}
+                 onValidate={this.onUsernameValidate}
+@@ -536,12 +539,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+ 
+     public render(): ReactNode {
+         const registerButton = (
+-            <input
+-                className="mx_Login_submit"
+-                type="submit"
+-                value={_t("action|register")}
+-                disabled={!this.props.canSubmit}
+-            />
++            <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
+         );
+ 
+         let emailHelperText: JSX.Element | undefined;
+@@ -566,16 +564,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>
 -                    <div className="mx_AuthBody_fieldRow">{this.renderUsername()}</div>
 +                    { /* :TCHAP: remove username field, the server will generate it from email.
-                     <div className="mx_AuthBody_fieldRow">
--                        {this.renderPassword()}
--                        {this.renderPasswordConfirm()}
++                    <div className="mx_AuthBody_fieldRow">
 +                        { this.renderUsername() }
 +                    </div>
 +                    end :TCHAP: */}
 +
 +                    { /** :TCHAP: switch fields : email first, password under */}
-+                    <div className="mx_AuthBody_fieldRow">
+                     <div className="mx_AuthBody_fieldRow">
+-                        {this.renderPassword()}
+-                        {this.renderPasswordConfirm()}
 +                        { this.renderEmail() }
 +                        { this.renderPhoneNumber() }
                      </div>
