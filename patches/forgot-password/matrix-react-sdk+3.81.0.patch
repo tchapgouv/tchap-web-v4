@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 14d58f3..87e5506 100644
+index 86d9656..5dea419 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -42,6 +42,8 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -102,7 +102,7 @@ index 14d58f3..87e5506 100644
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
-@@ -422,7 +459,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -420,7 +457,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
                                  onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
                                  checked={this.state.logoutDevices}
                              >
@@ -114,22 +114,18 @@ index 14d58f3..87e5506 100644
                          </div>
                          {this.state.errorText && <ErrorMessage message={this.state.errorText} />}
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-index 7b82121..f770298 100644
+index 7756571..81bc742 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-@@ -64,6 +64,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
+@@ -64,9 +64,11 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
          <>
              <EmailIcon className="mx_AuthBody_icon" />
-             <h1>{_t("Enter your email to reset password")}</h1>
+             <h1>{_t("auth|enter_email_heading")}</h1>
 +            { /* :TCHAP: we don't display homeservers to users
              <p className="mx_AuthBody_text">
-                 {_t(
-                     "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.",
-@@ -71,6 +72,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
-                     { b: (t) => <b>{t}</b> },
-                 )}
+                 {_t("auth|enter_email_explainer", { homeserver }, { b: (t) => <b>{t}</b> })}
              </p>
-+                end :TCHAP: */ }
++            end :TCHAP: */ }
              <form onSubmit={onSubmit}>
                  <fieldset disabled={loading}>
                      <div className="mx_AuthBody_fieldRow">
