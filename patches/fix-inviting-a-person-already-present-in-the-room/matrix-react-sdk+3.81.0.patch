@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/utils/MultiInviter.ts b/node_modules/matrix-react-sdk/src/utils/MultiInviter.ts
-index edbe6c0..4be9502 100644
+index 05e2b06..cbd64d0 100644
 --- a/node_modules/matrix-react-sdk/src/utils/MultiInviter.ts
 +++ b/node_modules/matrix-react-sdk/src/utils/MultiInviter.ts
 @@ -244,6 +244,14 @@ export default class MultiInviter {

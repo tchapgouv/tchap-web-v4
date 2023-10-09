@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-index a79a3fe..51cb9f5 100644
+index 8dc361b..3a5e10d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 @@ -89,6 +89,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta

@@ -14,7 +14,7 @@ index f25c15e..3d37fa7 100644
          mask-image: url("$(res)/img/element-icons/feedback.svg");
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-index 4004661..4676622 100644
+index 12e80d7..f24c618 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 @@ -246,6 +246,10 @@ export default class UserMenu extends React.Component<IProps, IState> {

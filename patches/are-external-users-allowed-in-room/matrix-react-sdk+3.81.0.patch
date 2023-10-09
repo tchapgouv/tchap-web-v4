@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_LegacyRoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_LegacyRoomHeader.pcss
-index 17f1dfe..d9f5729 100644
+index 1e36e08..06ae13c 100644
 --- a/node_modules/matrix-react-sdk/res/css/views/rooms/_LegacyRoomHeader.pcss
 +++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_LegacyRoomHeader.pcss
 @@ -135,6 +135,20 @@ limitations under the License.
@@ -24,10 +24,10 @@ index 17f1dfe..d9f5729 100644
      $lines: 2;
  
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx
-index 2bf56dc..a4749ff 100644
+index 9cbcb9f..e8c7e54 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/LegacyRoomHeader.tsx
-@@ -69,6 +69,7 @@ import { Alignment } from "../elements/Tooltip";
+@@ -70,6 +70,7 @@ import { Alignment } from "../elements/Tooltip";
  import RoomCallBanner from "../beacon/RoomCallBanner";
  import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
  import { UIComponent } from "../../../settings/UIFeature";
@@ -35,7 +35,7 @@ index 2bf56dc..a4749ff 100644
  
  class DisabledWithReason {
      public constructor(public readonly reason: string) {}
-@@ -813,6 +814,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
+@@ -825,6 +826,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                      <div className="mx_LegacyRoomHeader_avatar">{roomAvatar}</div>
                      {icon}
                      {name}

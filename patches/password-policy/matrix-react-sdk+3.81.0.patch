@@ -1,9 +1,9 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
-index a40ba0b..d0b9745 100644
+index 4efd06e..e0ad3cf 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 @@ -23,6 +23,7 @@ import withValidation, { IFieldState, IValidationResult } from "../elements/Vali
- import { _t, _td } from "../../../languageHandler";
+ import { _t, _td, TranslationKey } from "../../../languageHandler";
  import Field, { IInputProps } from "../elements/Field";
  import { MatrixClientPeg } from "../../../MatrixClientPeg";
 +import TchapStrongPassword from "../../../../../../src/tchap/util/TchapStrongPassword";

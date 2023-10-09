@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index 418657d..e8bee7e 100644
+index 7d48460..190caa6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-@@ -60,6 +60,7 @@ import InlineSpinner from "../../../elements/InlineSpinner";
+@@ -59,6 +59,7 @@ import InlineSpinner from "../../../elements/InlineSpinner";
  import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
  import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
  import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
@@ -10,7 +10,7 @@ index 418657d..e8bee7e 100644
  
  interface IProps {
      closeSettingsFn: () => void;
-@@ -325,7 +326,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -324,7 +325,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
      private renderAccountSection(): JSX.Element {
          let threepidSection: ReactNode = null;
  
@@ -21,7 +21,7 @@ index 418657d..e8bee7e 100644
              const emails = this.state.loading3pids ? (
                  <InlineSpinner />
              ) : (
-@@ -533,7 +536,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -531,7 +534,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;

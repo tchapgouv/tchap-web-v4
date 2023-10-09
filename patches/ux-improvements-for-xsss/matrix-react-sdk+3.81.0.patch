@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
-index 2ee052d..df8063e 100644
+index 0bead58..b872ec2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/security/AccessSecretStorageDialog.tsx
 @@ -48,6 +48,7 @@ interface IProps {
@@ -35,7 +35,7 @@ index 2ee052d..df8063e 100644
      private onCancel = (): void => {
          if (this.state.resetting) {
              this.setState({ resetting: false });
-@@ -403,7 +415,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -401,7 +413,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                          <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry">
                              <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                                  <Field
@@ -44,7 +44,7 @@ index 2ee052d..df8063e 100644
                                      id="mx_securityKey"
                                      label={_t("Security Key")}
                                      value={this.state.recoveryKey}
-@@ -411,15 +423,30 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -409,15 +421,30 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                      autoFocus={true}
                                      forceValidity={this.state.recoveryKeyCorrect ?? undefined}
                                      autoComplete="off"
@@ -76,9 +76,9 @@ index 2ee052d..df8063e 100644
                                  <input
                                      type="file"
                                      className="mx_AccessSecretStorageDialog_recoveryKeyEntry_fileInput"
-@@ -430,7 +457,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
+@@ -428,7 +455,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                  <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
-                                     {_t("Upload")}
+                                     {_t("action|upload")}
                                  </AccessibleButton>
 -                            </div>
 +                            :end TCHAP

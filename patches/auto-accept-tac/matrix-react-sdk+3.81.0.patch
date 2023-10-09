@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-index 44f0aaf..94d6136 100644
+index a596156..2cc0f8b 100644
 --- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 +++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 @@ -29,6 +29,7 @@ import {
