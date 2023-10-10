@@ -35,12 +35,12 @@ const config: Config = {
     testEnvironmentOptions: {
         url: "http://localhost/",
     },
-    testMatch: ["<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"],
+    testMatch: ["<rootDir>/test/unit-tests/**/*Tchap*.[tj]s?(x)"],
     setupFiles: ["jest-canvas-mock"],
     setupFilesAfterEnv: [
         "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.ts",
         "<rootDir>/test/setup/setupLanguage.ts",
-        // "<rootDir>/test/setupTests.ts", TCHAP had this, still needed ?
+        "<rootDir>/test/setupTests.ts",
     ],
     moduleNameMapper: {
         "\\.(css|scss|pcss)$": "<rootDir>/__mocks__/cssMock.js",
