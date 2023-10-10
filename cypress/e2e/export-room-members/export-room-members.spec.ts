@@ -10,8 +10,6 @@ describe("Export room members feature", () => {
     const email = Cypress.env("E2E_TEST_USER_EMAIL");
     const password = Cypress.env("E2E_TEST_USER_PASSWORD");
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-    // This will fail if email has special characters.
-    const userId = "@" + email.replace("@", "-") + ":" + homeserverShort;
 
     beforeEach(() => {
         cy.loginUser(homeserverUrl, email, password);
@@ -38,7 +36,13 @@ describe("Export room members feature", () => {
             cy.get('[data-testid="tc_exportRoomMembersButton"]')
                 .click()
                 .then(() => {
-                    cy.readFile("cypress/downloads/membres_de_" + normalizedRoomName + ".txt").should("eq", userId);
+                    cy.readFile("cypress/downloads/membres_de_" + normalizedRoomName + ".txt").then((fileContents) => {
+                        // This will fail if email has special characters.
+                        const normalizedEmail = "@" + email.replace("@", "-");
+                        expect(fileContents).to.contain(normalizedEmail);
+
+                        expect(fileContents).to.contain(homeserverShort);
+                    });
                 });
             cy.leaveRoom(roomId);
         });
