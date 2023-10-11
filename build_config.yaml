@@ -1,0 +1,10 @@
+# copied from build_config.sample.yaml
+modules:
+    # An example of pulling a module from NPM
+    #- "@vector-im/element-web-ilag-module@^0.0.4"
+
+    # An example of pulling a module from github
+    #- "github:vector-im/element-web-ilag-module#main"
+
+    # Pulling from filesystem
+    - "file:./modules/tchap-translations"
