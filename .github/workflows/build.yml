@@ -1,8 +1,7 @@
 #Build the application
 name: Build without E2E tests
 on:
-    pull_request:
-        types: [converted_to_draft]
+    pull_request: {}
     push:
         branches: [master]
     workflow_dispatch: # for running action manually

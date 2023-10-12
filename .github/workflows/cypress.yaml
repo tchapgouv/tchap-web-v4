@@ -3,8 +3,7 @@ name: Build + E2E Tests
 
 on:
     workflow_dispatch: # for running action manually
-    pull_request:
-        types: [ready_for_review]
+    pull_request: {}
 
 jobs:
     cypress:
