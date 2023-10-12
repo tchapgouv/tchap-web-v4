@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index d2074c5..8fe8572 100644
+index d2074c5..7f28b6b 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -70,92 +70,67 @@ index d2074c5..8fe8572 100644
              });
  
              this.setState({
-@@ -217,12 +241,13 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
-             <BaseDialog
-                 className="mx_BugReportDialog"
-                 onFinished={this.onCancel}
--                title={_t("bug_reporting|submit_debug_logs")}
-+                title={_t('Submit debug logs to Tchap support team') /** :TCHAP: more precise title than "Submit debug logs"*/}
-                 contentId="mx_Dialog_content"
-             >
-                 <div className="mx_Dialog_content" id="mx_Dialog_content">
-                     {warning}
-                     <p>{_t("bug_reporting|description")}</p>
-+                    { /* :TCHAP: remove requirement to send github issue, it's too complicated
-                     <p>
-                         <b>
-                             {_t(
-@@ -232,7 +257,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
-                                     a: (sub) => (
-                                         <a
-                                             target="_blank"
--                                            href="https://github.com/vector-im/element-web/issues/new/choose"
-+                                            // :TCHAP: href="https://github.com/vector-im/element-web/issues/new/choose"
-+                                            href="https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
-+                                            // :end TCHAP:
-                                         >
-                                             {sub}
-                                         </a>
-@@ -241,23 +268,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
-                             )}
-                         </b>
-                     </p>
-+                    */}
+@@ -213,6 +237,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+             );
+         }
  
-+                    { /* :TCHAP: move this below, it's not where the user expects it, so it's hard to understand
-                     <div className="mx_BugReportDialog_download">
-                         <AccessibleButton onClick={this.onDownload} kind="link" disabled={this.state.downloadBusy}>
-                             {_t("bug_reporting|download_logs")}
-                         </AccessibleButton>
-                         {this.state.downloadProgress && <span>{this.state.downloadProgress} ...</span>}
-                     </div>
-+                    */ }
- 
-+                    { /* :TCHAP: remove requirement to send github issue, it's too complicated
-                     <Field
-                         type="text"
-                         className="mx_BugReportDialog_field_input"
-                         label={_t("bug_reporting|github_issue")}
-                         onChange={this.onIssueUrlChange}
-                         value={this.state.issueUrl}
--                        placeholder="https://github.com/vector-im/element-web/issues/..."
--                        ref={this.issueRef}
--                    />
-+                        // :TCHAP: placeholder="https://github.com/vector-im/element-web/issues/..."
-+                        placeholder="https://github.com/tchapgouv/tchap-web-v4/issues/..."
-+                        // end :TCHAP:                    />
-+                    */ }
-                     <Field
-                         className="mx_BugReportDialog_field_input"
-                         element="textarea"
-@@ -274,9 +306,26 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
-                     primaryButton={_t("bug_reporting|send_logs")}
-                     onPrimaryButtonClick={this.onSubmit}
-                     focus={true}
--                    onCancel={this.onCancel}
-+                    // :TCHAP: remove cancel button, now that we added more buttons it doesn't make sense
-+                    // onCancel={this.onCancel}
++        { /** :TCHAP: replace with our own dialog */}
++        return (
++            <BaseDialog
++            className="mx_BugReportDialog"
++            onFinished={this.onCancel}
++            title={_t('Submit debug logs to Tchap support team')}
++            contentId="mx_Dialog_content"
++        >
++            <div className="mx_Dialog_content" id="mx_Dialog_content">
++                {warning}
++                <p>{_t("bug_reporting|description")}</p>
++                <Field
++                    className="mx_BugReportDialog_field_input"
++                    element="textarea"
++                    label={_t("Notes")}
++                    rows={5}
++                    onChange={this.onTextChange}
++                    value={this.state.text}
++                    placeholder={_t("bug_reporting|additional_context")}
++                />
++                {progress}
++                {error}
++                <DialogButtons
++                    primaryButton={_t("bug_reporting|send_logs")}
++                    onPrimaryButtonClick={this.onSubmit}
++                    focus={true}
 +                    hasCancel={false}
-+                    // end :TCHAP:
-                     disabled={this.state.busy}
-                 />
++                    disabled={this.state.busy}
++                />
 +
-+                {/** :TCHAP: move the log download here, and add an explanation text */}
-+                <div className="mx_BugReportDialog_download mx_Dialog_content">
++                <div className="mx_BugReportDialog_download">
 +                    <p>
 +                        { _t("Just want to get your own logs, without sharing them with the Tchap team?") }
 +                    </p>
-+                    <div className="mx_BugReportDialog_download">
-+                        <AccessibleButton onClick={this.onDownload} kind="link" disabled={this.state.downloadBusy}>
-+                            {_t("bug_reporting|download_logs")}
-+                        </AccessibleButton>
-+                        {this.state.downloadProgress && <span>{this.state.downloadProgress} ...</span>}
-+                    </div>
++                    <DialogButtons
++                        primaryButton={_t("bug_reporting|download_logs")}
++                        onPrimaryButtonClick={this.onDownload}
++                        focus={true}
++                        hasCancel={false}
++                        disabled={this.state.downloadBusy}
++                    />
++                    {this.state.downloadProgress && <span>{this.state.downloadProgress} ...</span>}
 +                </div>
-+                { /** end :TCHAP: */}
++            </div>
++        </BaseDialog>
++        );
++        {/*
+         return (
+             <BaseDialog
+                 className="mx_BugReportDialog"
+@@ -279,5 +350,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+                 />
              </BaseDialog>
          );
++        end :TCHAP: */}
      }
+ }
 diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
 index e679955..69f9b61 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
