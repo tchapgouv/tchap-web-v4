@@ -57,8 +57,15 @@ export function installer(config: BuildConfig): void {
     const currentOptDeps = getOptionalDepNames(packageDeps.packageJson);
 
     try {
+        // :TCHAP: don't call yarn add if the module is already installed in optionalDependencies.
+        // This is for scalingo : when yarn add runs during the build, it crashes.
+        // https://github.com/tchapgouv/tchap-web-v4/assets/911434/621fda92-311a-429c-8eee-1d9f191625e1
+        const modulesToInstall = config.modules.filter((d) => !currentOptDeps.includes(d));
+        const yarnAddRef = modulesToInstall.join(" ");
         // Install the modules with yarn
-        const yarnAddRef = config.modules.join(" ");
+        //const yarnAddRef = config.modules.join(" ");
+        // end :TCHAP:
+
         callYarnAdd(yarnAddRef); // install them all at once
 
         // Grab the optional dependencies again and exclude what was there already. Everything
