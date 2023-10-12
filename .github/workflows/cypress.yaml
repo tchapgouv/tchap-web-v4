@@ -30,8 +30,9 @@ jobs:
             - name: Install Dependencies
               run: "yarn install"
 
-            - name: "Copy the dev config file at the right place"
-              run: "cp config.dev.json config.json"
+            - name: "Copy the preprod config file at the right place"
+              # We use preprod to get the content scanner.
+              run: "cp config.preprod.json config.json"
               # todo we could make the choice of backend configurable.
               # But then the test user, password, server, should be changed too, see cypress env vars below.
 
@@ -55,8 +56,8 @@ jobs:
                   command: "yarn test:cypress"
                   # Note : 'working-directory' changes pwd, for everything. If you use it you need to change relative paths for everything, it's tricky.
               env:
-                  E2E_TEST_USER_EMAIL: ${{ secrets.E2E_TEST_USER_EMAIL }}
-                  E2E_TEST_USER_PASSWORD: ${{ secrets.E2E_TEST_USER_PASSWORD }}
-                  E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY }}
-                  E2E_TEST_USER_HOMESERVER_URL: "https://matrix.agent1.tchap.incubateur.net"
-                  E2E_TEST_USER_HOMESERVER_SHORT: "agent1.tchap.incubateur.net"
+                  E2E_TEST_USER_EMAIL: ${{ secrets.E2E_TEST_USER_EMAIL_PREPROD }}
+                  E2E_TEST_USER_PASSWORD: ${{ secrets.E2E_TEST_USER_PASSWORD_PREPROD }}
+                  E2E_TEST_USER_SECURITY_KEY: ${{ secrets.E2E_TEST_USER_SECURITY_KEY_PREPROD }}
+                  E2E_TEST_USER_HOMESERVER_URL: "https://matrix.i.tchap.gouv.fr"
+                  E2E_TEST_USER_HOMESERVER_SHORT: "i.tchap.gouv.fr"
