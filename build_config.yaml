@@ -1,4 +1,5 @@
 # copied from build_config.sample.yaml
+# Make sure that the modules added here are ALSO ADDED IN OPTIONALDEPENDENCIES in package.json.
 modules:
     # An example of pulling a module from NPM
     #- "@vector-im/element-web-ilag-module@^0.0.4"
@@ -6,5 +7,5 @@ modules:
     # An example of pulling a module from github
     #- "github:vector-im/element-web-ilag-module#main"
 
-    # Pulling from filesystem
+    # Pulling from filesystem.
     - "file:./modules/tchap-translations"
