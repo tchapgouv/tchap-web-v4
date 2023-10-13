@@ -166,7 +166,7 @@
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
         "UIFeature.locationSharing": false,
-        "MessageComposerInput.showPollsButton": false,
+        "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
