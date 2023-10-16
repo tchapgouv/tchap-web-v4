@@ -630,10 +630,6 @@
     "fr" : "Activez votre Code de Récupération pour ne jamais perdre vos messages",
     "en" : "Activate your Recovery Code to never lose your messages"
   },
-  "Activate": {
-    "fr" : "Activer",
-    "en" : "Activate"
-  },
   "Security Key": {
     "fr": "Code de Récupération",
     "en": "Recovery Code"

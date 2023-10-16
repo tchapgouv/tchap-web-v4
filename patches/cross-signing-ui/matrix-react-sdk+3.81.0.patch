@@ -185,16 +185,18 @@ index f8781cd..b6b538b 100644
                          </div>
                      </div>
 diff --git a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-index 873780b..2f9b28d 100644
+index 873780b..2e6a705 100644
 --- a/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
 +++ b/node_modules/matrix-react-sdk/src/toasts/SetupEncryptionToast.ts
-@@ -50,7 +50,9 @@ const getIcon = (kind: Kind): string => {
+@@ -50,7 +50,11 @@ const getIcon = (kind: Kind): string => {
  const getSetupCaption = (kind: Kind): string => {
      switch (kind) {
          case Kind.SET_UP_ENCRYPTION:
-+            // :tchap: return _t("Continue");
++            /* :TCHAP:
              return _t("action|continue");
-+            // end :tchap:
++            */
++            return _t("action|enable");
++            // end :TCHAP:
          case Kind.UPGRADE_ENCRYPTION:
              return _t("action|upgrade");
          case Kind.VERIFY_THIS_SESSION:
