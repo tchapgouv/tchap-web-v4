@@ -71,7 +71,6 @@
         "test:cypress:open": "cypress open",
         "coverage": "yarn test --coverage",
         "analyse:unused-exports": "ts-node ./scripts/analyse_unused_exports.ts",
-        "postinstall": "./scripts/tchap/apply_patches.sh",
         "patch-package": "patch-package",
         "patches-reapply": "cd yarn-linked-dependencies/matrix-react-sdk; git checkout .; cd ../matrix-js-sdk; git checkout .; cd ../..; ./scripts/tchap/apply_patches.sh",
         "patch-make": "node scripts/tchap/makePatch.ts",
