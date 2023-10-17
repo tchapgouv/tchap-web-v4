@@ -61,6 +61,7 @@ export function installer(config: BuildConfig): void {
         const yarnAddRef = config.modules.join(" ");
         // :TCHAP: don't run the yarn install, scalingo does not like it.
         console.log("The following modules are in build_config: ", config.modules);
+        // eslint-disable-next-line no-constant-condition
         if (false) {
             callYarnAdd(yarnAddRef); // install them all at once
         }
