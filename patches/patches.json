@@ -218,5 +218,12 @@
         "files": [
             "src/components/views/dialogs/AppDownloadDialog.tsx"
         ]
+    },
+    "only-fr-and-en": {
+        "comments" : "Leave all language files where they are to limit the work during upgrades, and instead filter languages in code.",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/languageHandler.tsx"
+        ]
     }
 }
