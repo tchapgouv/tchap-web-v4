@@ -25,7 +25,7 @@ const fetchReleaseDetails = (version) => {
     }).then(res => res.json())
     .then(assetsData => {
       return assetsData.map(asset => {
-        const matches = asset.fileName.match(/^tchap-.*-(dev|preprod|prod)-([0-9]{8})/);
+        const matches = asset.name.match(/^tchap-.*-(dev|preprod|prod)-([0-9]{8})/);
         return {
           url: asset.browser_download_url,
           fileName: asset.name,
