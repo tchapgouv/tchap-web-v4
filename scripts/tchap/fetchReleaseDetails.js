@@ -24,19 +24,15 @@ const fetchReleaseDetails = (version) => {
       return fetch(assetsUrl);
     }).then(res => res.json())
     .then(assetsData => {
-      const assets = assetsData.map(asset => {
-        return { url: asset.browser_download_url, fileName: asset.name };
-      })
-      return assets;
-    }).then(assets => {
-      return assets.map(asset => {
+      return assetsData.map(asset => {
         const matches = asset.fileName.match(/^tchap-.*-(dev|preprod|prod)-([0-9]{8})/);
         return {
-          ...asset,
+          url: asset.browser_download_url,
+          fileName: asset.name,
           date: matches[2],
           env: matches[1]
-        }
-      });
+        };
+      })
     });
 };
 
