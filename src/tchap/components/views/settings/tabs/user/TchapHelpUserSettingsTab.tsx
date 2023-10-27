@@ -72,8 +72,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             : "<not-enabled>";
 
         return {
-            appVersion: `${_t("%(brand)s version:", { brand })} ${appVersion}`,
-            olmVersion: `${_t("Olm version:")} ${olmVersion}`,
+            appVersion: `${_t("setting|help_about|brand_version", { brand })} ${appVersion}`,
+            olmVersion: `${_t("setting|help_about|olm_version")} ${olmVersion}`,
         };
     }
 
@@ -133,7 +133,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         // Also, &nbsp; is ugly but necessary.
         return (
             <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{_t("Credits")}</span>
+                <span className="mx_SettingsTab_subheading">{_t("common|credits")}</span>
                 <ul className="mx_SettingsTab_subsectionText">
                     <li>
                         The{" "}
@@ -260,7 +260,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         if (SdkConfig.get().bug_report_endpoint_url) {
             bugReportingSection = (
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Bug reporting")}</span>
+                    <span className="mx_SettingsTab_subheading">{_t("bug_reporting|title")}</span>
                     <div className="mx_SettingsTab_subsectionText">
                         { /** :TCHAP: add paragraphs, clarify text */ }
                         <p>
@@ -270,17 +270,12 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             ) }
                         </p>
                         <p>
-                            { _t("Debug logs contain application " +
-                                "usage data including your username, the IDs or aliases of " +
-                                "the rooms you have visited, which UI elements you " +
-                                "last interacted with, and the usernames of other users. " +
-                                "They do not contain messages.",
-                            ) }
+                            { _t("bug_reporting|description") }
                         </p>
                         { /** end :TCHAP: */ }
                     </div>
                     <AccessibleButton onClick={this.onBugReport} kind="primary">
-                        {_t("Submit debug logs")}
+                        {_t("bug_reporting|submit_debug_logs")}
                     </AccessibleButton>
                     <div className="mx_SettingsTab_subsectionText">
                         {_t(
@@ -386,7 +381,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         const privacyPolicyUrl = "https://tchap.beta.gouv.fr/politique-de-confidentialite";
         const privacyPolicySection = (
             <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{ _t("Privacy Policy") }</span>
+                <span className='mx_SettingsTab_subheading'>{ _t("Privacy Policy") /** TCHAP string */ }</span>
                 {/* <div className='mx_SettingsTab_subsectionText'>
                     {
                         _t(
@@ -434,7 +429,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
         return (
             <div className="mx_SettingsTab mx_HelpUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Help & About")}</div>
+                <div className="mx_SettingsTab_heading">{_t("setting|help_about|title")}</div>
                 { /* :TCHAP: added */ contactSection }
                 { /* :TCHAP: added */ faqSection }
                 { /* :TCHAP: added */ cguSection }
@@ -451,7 +446,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 { /* :TCHAP: added */ knownIssuesSection }
                 { /* :TCHAP: moved from higher up the page */ bugReportingSection }
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Versions")}</span>
+                    <span className="mx_SettingsTab_subheading">{_t("setting|help_about|versions")}</span>
                     <div className="mx_SettingsTab_subsectionText">
                         <CopyableText getTextToCopy={this.getVersionTextToCopy}>
                             {appVersion}
@@ -469,7 +464,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className="mx_SettingsTab_subsectionText">
                         <div>
                             {_t(
-                                "Homeserver is <code>%(homeserverUrl)s</code>",
+                                "setting|help_about|homeserver",
                                 {
                                     homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
                                 },
@@ -481,7 +476,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         <div>
                             {MatrixClientPeg.get().getIdentityServerUrl() &&
                                 _t(
-                                    "Identity server is <code>%(identityServerUrl)s</code>",
+                                    "setting|help_about|identity_server",
                                     {
                                         identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
                                     },
@@ -491,11 +486,10 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                                 )}
                         </div>
                         <details>
-                            <summary>{_t("Access Token")}</summary>
+                            <summary>{_t("common|access_token")}</summary>
                             <b>
                                 {_t(
-                                    "Your access token gives full access to your account." +
-                                        " Do not share it with anyone.",
+                                    "setting|help_about|access_token_detail",
                                 )}
                             </b>
                             <CopyableText getTextToCopy={() => MatrixClientPeg.get().getAccessToken()}>
@@ -503,7 +497,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             </CopyableText>
                         </details>
                         <AccessibleButton onClick={this.onClearCacheAndReload} kind="danger">
-                            {_t("Clear cache and reload")}
+                            {_t("setting|help_about|clear_cache_reload")}
                         </AccessibleButton>
                     </div>
                 </div>
