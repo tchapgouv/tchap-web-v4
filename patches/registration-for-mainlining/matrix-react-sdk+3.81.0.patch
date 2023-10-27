@@ -76,7 +76,7 @@ index 7a19848..d7ddd55 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index e12ac19..2cd6c02 100644
+index e12ac19..a5222bf 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -267,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
@@ -100,46 +100,21 @@ index e12ac19..2cd6c02 100644
              },
              {
                  key: "email",
-@@ -525,8 +528,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
-                 ref={(field) => (this[RegistrationField.Username] = field)}
-                 type="text"
-                 autoFocus={true}
--                label={_t("common|username")}
--                placeholder={_t("common|username").toLocaleLowerCase()}
-+                label={_t("Username")}
-+                placeholder={_t("Username").toLocaleLowerCase()}
-                 value={this.state.username}
-                 onChange={this.onUsernameChange}
-                 onValidate={this.onUsernameValidate}
-@@ -536,12 +539,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
- 
-     public render(): ReactNode {
-         const registerButton = (
--            <input
--                className="mx_Login_submit"
--                type="submit"
--                value={_t("action|register")}
--                disabled={!this.props.canSubmit}
--            />
-+            <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
-         );
- 
-         let emailHelperText: JSX.Element | undefined;
-@@ -566,16 +564,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -566,16 +569,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>
 -                    <div className="mx_AuthBody_fieldRow">{this.renderUsername()}</div>
 +                    { /* :TCHAP: remove username field, the server will generate it from email.
-+                    <div className="mx_AuthBody_fieldRow">
+                     <div className="mx_AuthBody_fieldRow">
+-                        {this.renderPassword()}
+-                        {this.renderPasswordConfirm()}
 +                        { this.renderUsername() }
 +                    </div>
 +                    end :TCHAP: */}
 +
 +                    { /** :TCHAP: switch fields : email first, password under */}
-                     <div className="mx_AuthBody_fieldRow">
--                        {this.renderPassword()}
--                        {this.renderPasswordConfirm()}
++                    <div className="mx_AuthBody_fieldRow">
 +                        { this.renderEmail() }
 +                        { this.renderPhoneNumber() }
                      </div>
