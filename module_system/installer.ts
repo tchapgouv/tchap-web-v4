@@ -59,7 +59,36 @@ export function installer(config: BuildConfig): void {
     try {
         // Install the modules with yarn
         const yarnAddRef = config.modules.join(" ");
-        callYarnAdd(yarnAddRef); // install them all at once
+        // :TCHAP: don't run the yarn install, scalingo does not like it.
+        // eslint-disable-next-line no-constant-condition
+        if (false) {
+            callYarnAdd(yarnAddRef); // install them all at once
+        }
+        console.log("The following modules are in build_config: ", config.modules);
+        // To make sure the build will work without the yarn add, check that the modules in build_config are present in optionalDependencies.
+        const currentOptDepsValues = Object.values(JSON.parse(packageDeps.packageJson)?.["optionalDependencies"] ?? {});
+        const isAllGood = config.modules.every((configLine) => {
+            // Check only the "file:" modules, it's too complicated to check all yarn allowed formats.
+            // Our modules should be "file:"
+            if (configLine.includes("file:")) {
+                if (!currentOptDepsValues.includes(configLine)) {
+                    console.error(
+                        "build_config.yml contains",
+                        configLine,
+                        "but it is not present in optionalDependencies in package.json.",
+                        "\nYou should run : yarn add -O",
+                        configLine,
+                    );
+                    return false;
+                }
+            }
+            return true;
+        });
+        if (!isAllGood) {
+            exitCode = 1;
+            return;
+        }
+        // end :TCHAP:
 
         // Grab the optional dependencies again and exclude what was there already. Everything
         // else must be a module, we assume.
