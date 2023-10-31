@@ -65,8 +65,15 @@ popd
 # :TCHAP: we are now in linked-dependencies, go back out to tchap-web-v4 dir
 cd ..
 
+# :TCHAP: link tchap-translations
+pushd modules/tchap-translations
+yarn unlink
+yarn link
+popd
+
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
+yarn link tchap-translations # :TCHAP:
 yarn install --pure-lockfile
 
