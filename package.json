@@ -29,7 +29,7 @@
     ],
     "style": "bundle.css",
     "scripts_comments": {
-        "build:jitsi": "tchap don't need that, deactivate?"
+        "build:jitsi": "tchap don't need that, deactivate."
     },
     "matrix_i18n_extra_translation_funcs": [
         "UserFriendlyError"
@@ -41,7 +41,7 @@
         "clean": "rimraf lib webapp",
         "build": "yarn clean && yarn build:genfiles && yarn build:bundle",
         "build-stats": "yarn clean && yarn build:genfiles && yarn build:bundle-stats",
-        "build:jitsi": "ts-node scripts/build-jitsi.ts",
+        "build:jitsi": "echo ':TCHAP: does not use jitsi. No building.'",
         "build:res": "node scripts/copy-res.js",
         "build:genfiles": "yarn build:res && yarn build:jitsi && yarn build:module_system",
         "build:modernizr": "modernizr -c .modernizr.json -d src/vector/modernizr.js",
