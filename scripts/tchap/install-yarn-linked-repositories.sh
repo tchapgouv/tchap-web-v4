@@ -72,12 +72,12 @@ for d in modules/*/ ; do
     yarn unlink
     yarn link
     popd
+    yarn link `basename $d`
     echo "... $d linked."
 done
 
 # Link the layers into element-web
 yarn link matrix-js-sdk
 yarn link matrix-react-sdk
-yarn link tchap-translations # :TCHAP:
 yarn install --pure-lockfile
 
