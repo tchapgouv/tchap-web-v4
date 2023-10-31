@@ -64,7 +64,7 @@
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
         "UIFeature.locationSharing": false,
-        "MessageComposerInput.showPollsButton": false,
+        "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
@@ -92,8 +92,6 @@
         "fdroid": null
     },
     "permalink_prefix": "https://www.tchap.incubateur.net",
-    "custom_translations_url_comments": "To add translations, edit /src/i18n/strings/tchap_translations.json. It gets copied over to webapp/i18n for serving.",
-    "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
         "feature_email_notification": [
             "agent1.tchap.incubateur.net",

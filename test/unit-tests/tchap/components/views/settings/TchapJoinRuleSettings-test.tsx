@@ -9,8 +9,8 @@ import {
 } from "matrix-react-sdk/test/test-utils/test-utils";
 import { JoinRule, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
-import TchapJoinRuleSettings from "../../../../../src/tchap/components/views/settings/TchapJoinRuleSettings";
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../../../src/tchap/@types/tchap";
+import TchapJoinRuleSettings from "../../../../../../src/tchap/components/views/settings/TchapJoinRuleSettings";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "../../../../../../src/tchap/@types/tchap";
 
 function mkStubRoomWithInviteRule(roomId: string, name: string, client: MatrixClient, joinRule: JoinRule): Room {
     const stubRoom: Room = mkStubRoom(roomId, name, client);

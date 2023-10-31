@@ -1,0 +1,11 @@
+{
+    "name": "tchap-translations",
+    "version": "0.0.0",
+    "description": "Custom translations for Tchap",
+    "author": "DINUM",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@matrix-org/react-sdk-module-api": "^1.0.0"
+    },
+    "main": "TchapTranslationsModule.js"
+}

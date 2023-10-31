@@ -1,7 +1,7 @@
 {
     "name": "element-web",
     "productName": "Tchap",
-    "version": "4.3.9",
+    "version": "4.3.10",
     "version-element-web": "1.11.40",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
@@ -29,7 +29,7 @@
     ],
     "style": "bundle.css",
     "scripts_comments": {
-        "build:jitsi": "tchap don't need that, deactivate?"
+        "build:jitsi": "tchap don't need that, deactivate."
     },
     "matrix_i18n_extra_translation_funcs": [
         "UserFriendlyError"
@@ -41,7 +41,7 @@
         "clean": "rimraf lib webapp",
         "build": "yarn clean && yarn build:genfiles && yarn build:bundle",
         "build-stats": "yarn clean && yarn build:genfiles && yarn build:bundle-stats",
-        "build:jitsi": "ts-node scripts/build-jitsi.ts",
+        "build:jitsi": "echo ':TCHAP: does not use jitsi. No building.'",
         "build:res": "node scripts/copy-res.js",
         "build:genfiles": "yarn build:res && yarn build:jitsi && yarn build:module_system",
         "build:modernizr": "modernizr -c .modernizr.json -d src/vector/modernizr.js",
@@ -200,9 +200,9 @@
         "postcss-simple-vars": "^5.0.2",
         "prettier": "2.8.8",
         "proxy-agent": "^6.3.0",
+        "raw-loader": "^4.0.2",
         "rimraf": "^5.0.0",
         "semver": "^7.5.2",
-        "raw-loader": "^4.0.2",
         "string-replace-loader": "3",
         "style-loader": "2",
         "stylelint": "^15.10.1",
@@ -231,5 +231,8 @@
     "engines-comment": {
         "2022-11-07": "matrix-js-sdk requires >=16.0.0. SSL librairies do not work with 18 and 19. 17 has incompatibilities with some deps.",
         "2023-08-29": "matrix-js-sdk requires >=18.0.0"
+    },
+    "optionalDependencies": {
+        "tchap-translations": "file:./modules/tchap-translations"
     }
 }
