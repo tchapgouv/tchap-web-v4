@@ -628,10 +628,6 @@
         "fr": "Activez votre Code de Récupération pour ne jamais perdre vos messages",
         "en": "Activate your Recovery Code to never lose your messages"
     },
-    "Activate": {
-        "fr": "Activer",
-        "en": "Activate"
-    },
     "Security Key": {
         "fr": "Code de Récupération",
         "en": "Recovery Code"
@@ -983,6 +979,10 @@
     "Privacy Policy": {
         "en": "Privacy Policy",
         "fr": "Politique de Confidentialité"
+    },
+    "Read the Privacy Policy": {
+        "en": "Read the Privacy Policy",
+        "fr": "Lire la Politique de Confidentialité"
     },
     "la messagerie instantanée de l'Administration": {
         "en": "The instant messaging app of the French Administration",

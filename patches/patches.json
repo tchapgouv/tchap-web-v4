@@ -176,6 +176,7 @@
     },
     "change-sections-order-in-security-privacy-settings": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/465",
+        "comments": "Fixed in element-web 1.11.48 (?) : Translation of common|secure_backup currently broken, so string is replaces. Goback to element's string when translation system is finished migrating.",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/settings/CryptographyPanel.tsx",
@@ -217,6 +218,13 @@
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/dialogs/AppDownloadDialog.tsx"
+        ]
+    },
+    "only-fr-and-en": {
+        "comments" : "Leave all language files where they are to limit the work during upgrades, and instead filter languages in code.",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/languageHandler.tsx"
         ]
     }
 }

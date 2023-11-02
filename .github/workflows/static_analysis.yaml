@@ -14,22 +14,11 @@ jobs:
     # Removing until we fix the crash :
     # Error: matrix-react-sdk/src/autocomplete/CommandProvider.tsx(38,24): error TS2589:
     # Type instantiation is excessively deep and possibly infinite.
-    #  ts_lint:
-    #    name: "Typescript Syntax Check"
-    #    runs-on: ubuntu-latest
-    #    steps:
-    #      - uses: actions/checkout@v2
-    #
-    #      - uses: actions/setup-node@v3
-    #        with:
-    #          cache: 'yarn'
-    #          node-version: 18
-    #
-    #      - name: Install Dependencies
-    #        run: "./scripts/tchap/install-yarn-linked-repositories.sh"
-    #
-    #      - name: Typecheck
-    #        run: "yarn run lint:types"
+    #ts_lint:
+        #name: "Typescript Syntax Check"
+        #runs-on: ubuntu-latest
+        #steps:
+        #    - uses: actions/checkout@v4
 
     #         - uses: actions/setup-node@v3
     #           with:
@@ -43,14 +32,14 @@ jobs:
 
     # tchap : tchap does not use extensively i18n
     # i18n_lint:
-    #     name: "i18n Check"
-    #     uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+    #    name: "i18n Check"
+    #    uses: matrix-org/matrix-web-i18n/.github/workflows/i18n_check.yml@main
 
     js_lint:
         name: "ESLint"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Get Node Version
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
@@ -70,7 +59,7 @@ jobs:
         name: "Style Lint"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Get Node Version
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
@@ -85,3 +74,20 @@ jobs:
 
             - name: Run Linter
               run: "yarn run lint:style"
+
+    # tchap : fix this https://github.com/tchapgouv/tchap-web-v4/issues/767
+    # analyse_dead_code:
+    #    name: "Analyse Dead Code"
+    #    runs-on: ubuntu-latest
+    #    steps:
+    #        - uses: actions/checkout@v4
+    #
+    #        - uses: actions/setup-node@v3
+    #          with:
+    #              cache: "yarn"
+    #
+    #        - name: Install Deps
+    #          run: "scripts/layered.sh"
+    #
+    #        - name: Dead Code Analysis
+    #          run: "yarn run analyse:unused-exports"

@@ -32,7 +32,7 @@ import TchapCreateRoom from "../../../lib/createTchapRoom";
 interface IProps {
     defaultPublic?: boolean; // unused for Tchap version
     defaultName?: string;
-    parentSpace?: Room; 
+    parentSpace?: Room;
     defaultEncrypted?: boolean; // unused for Tchap version
     onFinished(proceed: boolean, opts?: IOpts): void;
 }
@@ -152,7 +152,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     public render() {
         const shortDomain: string = TchapUtils.getShortDomain();
 
-        const title = this.createRoomInSpace ? _t("Create a room in this space") : _t("Create a room");
+        const title = this.createRoomInSpace ? _t("Create a room in this space") : _t("action|create_a_room");
 
         return (
             <BaseDialog
@@ -165,7 +165,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                     <div className="mx_Dialog_content">
                         <Field
                             ref={this.nameField}
-                            label={_t("Name")}
+                            label={_t("common|name")}
                             onChange={this.onNameChange}
                             onValidate={this.onNameValidate}
                             value={this.state.name}

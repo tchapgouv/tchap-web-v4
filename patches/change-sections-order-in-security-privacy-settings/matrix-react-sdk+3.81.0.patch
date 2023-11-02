@@ -1,0 +1,98 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
+index 5a5e424..dd45888 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
+@@ -73,25 +73,36 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+         }
+ 
+         return (
+-            <SettingsSubsection heading={_t("Cryptography")}>
+-                <SettingsSubsectionText>
+-                    <table className="mx_CryptographyPanel_sessionInfo">
+-                        <tr>
+-                            <th scope="row">{_t("Session ID:")}</th>
+-                            <td>
+-                                <code>{deviceId}</code>
+-                            </td>
+-                        </tr>
+-                        <tr>
+-                            <th scope="row">{_t("Session key:")}</th>
+-                            <td>
+-                                <code>
+-                                    <b>{identityKey}</b>
+-                                </code>
+-                            </td>
+-                        </tr>
+-                    </table>
+-                </SettingsSubsectionText>
++            <SettingsSubsection heading={_t("Tchap keys")}> {/* :TCHAP: change vocabulary and layout */}
++                <div className="mx_SettingsTab_subsectionText">
++                    <div>
++                        {_t("These keys only apply to the current session.")}
++                    </div>
++                    <div>
++                        <b>{_t("Please note this is not your recovery code for your automatic backup.")}</b>
++                    </div>
++                </div>
++                <details>
++                    <summary>{_t("Advanced")}</summary>
++                    <SettingsSubsectionText>
++                        <table className="mx_CryptographyPanel_sessionInfo">
++                            <tr>
++                                <th scope="row">{_t("Session ID:")}</th>
++                                <td>
++                                    <code>{deviceId}</code>
++                                </td>
++                            </tr>
++                            <tr>
++                                <th scope="row">{_t("Session key:")}</th>
++                                <td>
++                                    <code>
++                                        <b>{identityKey}</b>
++                                    </code>
++                                </td>
++                            </tr>
++                        </table>
++                    </SettingsSubsectionText>
++                </details> {/** end :TCHAP: */}
+                 {importExportButtons}
+                 {noSendUnverifiedSetting}
+             </SettingsSubsection>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
+index 89300be..f0a3aeb 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
+@@ -275,11 +275,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+     }
+ 
+     public render(): React.ReactNode {
++        // :TCHAP: we're moving this subsection out, so it's now a section
+         const secureBackup = (
+-            <SettingsSubsection heading={_t("common|secure_backup")}>
++            <SettingsSection heading={_t("Secure Backup")}>
+                 <SecureBackupPanel />
+-            </SettingsSubsection>
++            </SettingsSection>
+         );
++        // end :TCHAP:
+ 
+         const eventIndex = (
+             <SettingsSubsection heading={_t("Message search")}>
+@@ -358,13 +360,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+         return (
+             <SettingsTab>
+                 {warning}
++                { /* :TCHAP: move secureBackup and privacySection, and remove eventIndex */ }
++                {secureBackup}
+                 <SettingsSection heading={_t("Encryption")}>
+-                    {secureBackup}
+-                    {eventIndex}
+                     {crossSigning}
+                     <CryptographyPanel />
++                    {privacySection}
+                 </SettingsSection>
+-                {privacySection}
++                { /* end :TCHAP: */ }
+                 {advancedSection}
+             </SettingsTab>
+         );
