@@ -24,7 +24,7 @@
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
-    "brand": "Tchap",
+    "brand": "TCHAP PREPROD",
     "bug_report_endpoint_url": "https://matrix.i.tchap.gouv.fr/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
