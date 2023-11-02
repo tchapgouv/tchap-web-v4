@@ -228,7 +228,7 @@
         ]
     },
     "no-voip-mentions-in-onboarding": {
-        "comments" : "Remove when translations are finished migrating (1.11.46)",
+        "comments" : "Remove custom string when translations are finished migrating (1.11.46). Custom image stays though.",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/user-onboarding/UserOnboardingHeader.tsx"
