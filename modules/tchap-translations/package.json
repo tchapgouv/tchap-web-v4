@@ -7,5 +7,6 @@
     "dependencies": {
         "@matrix-org/react-sdk-module-api": "^1.0.0"
     },
-    "main": "TchapTranslationsModule.js"
+    "main": "TchapTranslationsModule.js",
+    "types": "types.d.ts"
 }
