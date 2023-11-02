@@ -214,7 +214,7 @@
         ]
     },
     "remove-fdroid": {
-        "comments" : "remove when issue is fixed in element-web : https://github.com/vector-im/element-web/issues/26309",
+        "comments" : "Fixed in 1.11.47 : remove when issue is fixed in element-web : https://github.com/vector-im/element-web/issues/26309",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/dialogs/AppDownloadDialog.tsx"
@@ -225,6 +225,13 @@
         "package": "matrix-react-sdk",
         "files": [
             "src/languageHandler.tsx"
+        ]
+    },
+    "no-voip-mentions-in-onboarding": {
+        "comments" : "Remove when translations are finished migrating (1.11.46)",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/user-onboarding/UserOnboardingHeader.tsx"
         ]
     }
 }

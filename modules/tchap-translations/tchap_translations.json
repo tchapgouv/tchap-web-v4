@@ -1131,5 +1131,9 @@
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
         "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération).",
         "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code)."
+    },
+    "onboarding_free_e2ee_messaging_tchap_limited_voip": {
+        "en": "With free end-to-end encrypted messaging, %(brand)s is a great way to stay in touch.",
+        "fr": "Grâce à la messagerie chiffrée de bout en bout gratuite, %(brand)s est un excellent moyen de rester en contact."
     }
 }

@@ -1,0 +1,13 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx
+index 67e5367..5a58ce6 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx
+@@ -49,7 +49,7 @@ export function UserOnboardingHeader({ useCase }: Props): JSX.Element {
+             break;
+         case UseCase.WorkMessaging:
+             title = _t("onboarding|work_messaging_title");
+-            description = _t("onboarding|free_e2ee_messaging_unlimited_voip", {
++            description = _t("onboarding_free_e2ee_messaging_tchap_limited_voip", {
+                 brand: SdkConfig.get("brand"),
+             });
+             image = require("../../../../res/img/user-onboarding/WorkMessaging.png");
