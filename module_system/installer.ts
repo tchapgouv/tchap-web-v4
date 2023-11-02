@@ -54,7 +54,7 @@ export function installer(config: BuildConfig): void {
 
     // Record which optional dependencies there are currently, if any, so we can exclude
     // them from our "must be a module" assumption later on.
-    const currentOptDeps = getOptionalDepNames(packageDeps.packageJson);
+    // :TCHAP: unused // const currentOptDeps = getOptionalDepNames(packageDeps.packageJson);
 
     try {
         // Install the modules with yarn
@@ -94,7 +94,11 @@ export function installer(config: BuildConfig): void {
         // else must be a module, we assume.
         const pkgJsonStr = fs.readFileSync("./package.json", "utf-8");
         const optionalDepNames = getOptionalDepNames(pkgJsonStr);
+        /** :TCHAP:
         const installedModules = optionalDepNames.filter((d) => !currentOptDeps.includes(d));
+        */
+        const installedModules = optionalDepNames; // this will break if we add non-module optional dependencies.
+        // end :TCHAP:
 
         // Ensure all the modules are compatible. We check them all and report at the end to
         // try and save the user some time debugging this sort of failure.
