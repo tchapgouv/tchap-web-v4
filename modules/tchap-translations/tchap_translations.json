@@ -432,11 +432,9 @@
         "en": "Recents chats",
         "fr": "Messages directs récents"
     },
-    "common": {
-        "secure_backup": {
-            "en": "Secure Backup",
-            "fr": "Sauvegarde automatique des messages"
-        }
+    "Secure Backup": {
+        "en": "Secure Backup",
+        "fr": "Sauvegarde automatique des messages"
     },
     "You can also set up Secure Backup & manage your keys in Settings.": {
         "en": "You can also set up Secure Backup & manage your keys in Settings.",
