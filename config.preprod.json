@@ -11,13 +11,11 @@
     "homeserver_list": [
         {
             "base_url": "https://matrix.i.tchap.gouv.fr",
-            "server_name": "Internes - preprod",
-            "email_examples": "hakim@beta.gouv.fr, alice@interieur.gouv.fr, ..."
+            "server_name": "Internes - preprod"
         },
         {
             "base_url": "https://matrix.e.tchap.gouv.fr",
-            "server_name": "Externes - preprod",
-            "email_examples": "nina@soprasteria.com, paul@athos.fr, ..."
+            "server_name": "Externes - preprod"
         }
     ],
     "disable_custom_urls": false,

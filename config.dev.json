@@ -11,18 +11,15 @@
     "homeserver_list": [
         {
             "base_url": "https://matrix.agent1.tchap.incubateur.net",
-            "server_name": "Agents 1",
-            "email_examples": "? ..."
+            "server_name": "Agents 1"
         },
         {
             "base_url": "https://matrix.agent2.tchap.incubateur.net",
-            "server_name": "Agents 2",
-            "email_examples": "? ..."
+            "server_name": "Agents 2"
         },
         {
             "base_url": "https://matrix.externe.tchap.incubateur.net",
-            "server_name": "Externes",
-            "email_examples": "? ..."
+            "server_name": "Externes"
         }
     ],
     "disable_custom_urls": false,
