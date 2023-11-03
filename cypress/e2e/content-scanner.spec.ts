@@ -14,6 +14,25 @@ describe("Content Scanner", () => {
         cy.loginUser(homeserverUrl, email, password);
     });
 
+    afterEach(() => {
+        // We find the roomId to clean up from the current URL.
+        // Note : This is simple and works, so good enough for now. But if we want to store the roomId at the end of the test instead, we could use “as”
+        // for passing the value around : https://docs.cypress.io/guides/core-concepts/variables-and-aliases#Sharing-Context
+        // Do NOT use a describe-level variable (like "let roomIdToCleanup") like we do in unit tests, cypress does not work like that.
+        cy.url().then((urlString) => {
+            console.log("roomId url string", urlString);
+            console.log("roomId url string split", urlString.split("/#/room/"));
+            console.log("roomIdToCleanup", urlString.split("/#/room/")[1]);
+            const roomId = urlString.split("/#/room/")[1];
+            if (roomId) {
+                cy.leaveRoom(roomId);
+                // todo also forgetRoom to save resources.
+            } else {
+                console.error("Did not find roomId in url. Not cleaning up.");
+            }
+        });
+    });
+
     const uploadFile = (file: string) => {
         // Upload a file from the message composer
         cy.get(".mx_MessageComposer_actions input[type='file']").selectFile(file, { force: true });
@@ -41,8 +60,6 @@ describe("Content Scanner", () => {
             // A status should display once scanning is finished (success or not)
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_done");
-
-            cy.leaveRoom(roomId);
         });
     });
 
@@ -58,8 +75,6 @@ describe("Content Scanner", () => {
             // A status should display once scanning is finished (success or not)
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_unsafe");
-
-            cy.leaveRoom(roomId);
         });
     });
 });
