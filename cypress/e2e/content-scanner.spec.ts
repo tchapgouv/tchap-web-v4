@@ -51,6 +51,8 @@ describe("Content Scanner", () => {
         /*
         // This can take super long in tests, even on prod backend. Not sure why.
         // Disabling it since the test runs fine without it.
+        // It can create popups like "this file could not be sent" because we left the room before the sending was confirmed.
+        // But what we're testing is the content scanner, and that did run.
         cy.get(".mx_RoomView_statusArea_expanded").should("not.exist");
         cy.get(".mx_EventTile.mx_EventTile_last .mx_EventTile_receiptSent").should("exist");
         */
