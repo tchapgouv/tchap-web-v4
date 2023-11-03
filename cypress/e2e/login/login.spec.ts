@@ -51,7 +51,6 @@ describe("Login", () => {
         // For now, the login is run against the default_server_config.m.homeserver.base_url present in config.json.
         it("logs in with an existing account and lands on the home screen", () => {
             cy.get("#mx_LoginForm_email", { timeout: 15000 }).should("be.visible");
-            cy.percySnapshot("Login");
 
             cy.get("#mx_LoginForm_email").type(username);
             cy.get("#mx_LoginForm_password").type(password);

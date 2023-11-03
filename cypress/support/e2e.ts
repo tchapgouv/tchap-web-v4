@@ -16,20 +16,12 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import "@percy/cypress";
 import "cypress-real-events";
 
-import "./performance";
 import "./loginToRemoteHomeserver";
-import "./labs";
 import "./client";
 import "./settings";
-import "./clipboard";
 import "./util";
 import "./app";
-import "./percy";
 import "./views";
-import "./iframes";
 import "./timeline";
-import "./network";
-import "./composer";
