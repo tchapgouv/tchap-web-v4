@@ -10,8 +10,16 @@ describe("Content Scanner", () => {
     const password = Cypress.env("E2E_TEST_USER_PASSWORD");
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
+    // Login and create room only once for all tests. (good practice for e2e tests, it's not a unit test)
     beforeEach(() => {
         cy.loginUser(homeserverUrl, email, password);
+
+        const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
+
+        RoomUtils.createPrivateWithExternalRoom(roomName).then(() => {
+            //open room
+            cy.get('[aria-label="' + roomName + '"]').click();
+        });
     });
 
     afterEach(() => {
@@ -49,32 +57,18 @@ describe("Content Scanner", () => {
     };
 
     it("displays a success status after an image is successfully uploaded", () => {
-        const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
+        uploadFile("cypress/fixtures/chicken.gif");
 
-        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
-            //open room
-            cy.get('[aria-label="' + roomName + '"]').click();
-
-            uploadFile("cypress/fixtures/chicken.gif");
-
-            // A status should display once scanning is finished (success or not)
-            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
-            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_done");
-        });
+        // A status should display once scanning is finished (success or not)
+        cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
+        cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_done");
     });
 
     it("displays an error status after an evil file is blocked", () => {
-        const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
+        uploadFile("cypress/fixtures/evil_eicar_chicken.com");
 
-        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
-            //open room
-            cy.get('[aria-label="' + roomName + '"]').click();
-
-            uploadFile("cypress/fixtures/evil_eicar_chicken.com");
-
-            // A status should display once scanning is finished (success or not)
-            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
-            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_unsafe");
-        });
+        // A status should display once scanning is finished (success or not)
+        cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
+        cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_unsafe");
     });
 });
