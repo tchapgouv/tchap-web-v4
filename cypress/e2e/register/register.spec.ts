@@ -27,12 +27,9 @@ describe("Registration", () => {
     });
 
     it.skip("registers an account and lands on the home screen", () => {
-        cy.injectAxe();
-
         cy.get(".mx_ServerPicker_change", { timeout: 15000 }).click();
         cy.get(".mx_ServerPickerDialog_continue").should("be.visible");
         cy.percySnapshot("Server Picker");
-        cy.checkA11y();
 
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(homeserverUrl);
         cy.get(".mx_ServerPickerDialog_continue").click();
@@ -43,7 +40,6 @@ describe("Registration", () => {
         // Hide the server text as it contains the randomly allocated Synapse port
         const percyCSS = ".mx_ServerPicker_server { visibility: hidden !important; }";
         cy.percySnapshot("Registration", { percyCSS });
-        cy.checkA11y();
 
         cy.get("#mx_RegistrationForm_username").type("alice");
         cy.get("#mx_RegistrationForm_password").type("totally a great password");
@@ -53,13 +49,11 @@ describe("Registration", () => {
 
         cy.get(".mx_RegistrationEmailPromptDialog").should("be.visible");
         cy.percySnapshot("Registration email prompt", { percyCSS });
-        cy.checkA11y();
         cy.get(".mx_RegistrationEmailPromptDialog button.mx_Dialog_primary").click();
 
         cy.stopMeasuring("create-account");
         cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy").should("be.visible");
         cy.percySnapshot("Registration terms prompt", { percyCSS });
-        cy.checkA11y();
 
         cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy input").click();
         cy.startMeasuring("from-submit-to-home");
@@ -67,7 +61,6 @@ describe("Registration", () => {
 
         cy.get(".mx_UseCaseSelection_skip").should("exist");
         cy.percySnapshot("Use-case selection screen");
-        cy.checkA11y();
         cy.get(".mx_UseCaseSelection_skip .mx_AccessibleButton").click();
 
         cy.url().should("contain", "/#/home");

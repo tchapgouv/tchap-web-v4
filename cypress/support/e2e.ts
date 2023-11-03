@@ -20,13 +20,10 @@ import "@percy/cypress";
 import "cypress-real-events";
 
 import "./performance";
-import "./synapse";
-import "./login";
 import "./loginToRemoteHomeserver";
 import "./labs";
 import "./client";
 import "./settings";
-import "./bot";
 import "./clipboard";
 import "./util";
 import "./app";
@@ -36,4 +33,3 @@ import "./iframes";
 import "./timeline";
 import "./network";
 import "./composer";
-import "./axe";
