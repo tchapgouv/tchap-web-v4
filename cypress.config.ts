@@ -35,7 +35,6 @@ getVar("E2E_TEST_USER_HOMESERVER_SHORT");
 
 export default defineConfig({
     watchForFileChanges: false,
-    videoUploadOnPasses: false,
     projectId: "ppvnzg",
     experimentalInteractiveRunEvents: true,
     defaultCommandTimeout: 10000,
@@ -45,7 +44,6 @@ export default defineConfig({
             return require("./cypress/plugins/index.ts").default(on, config);
         },
         baseUrl: "http://localhost:8080",
-        experimentalSessionAndOrigin: true,
         specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
     },
     env: foundEnv,
