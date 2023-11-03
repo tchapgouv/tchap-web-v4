@@ -1,0 +1,15 @@
+diff --git a/node_modules/matrix-react-sdk/src/languageHandler.tsx b/node_modules/matrix-react-sdk/src/languageHandler.tsx
+index 8f77cc4..c5b771f 100644
+--- a/node_modules/matrix-react-sdk/src/languageHandler.tsx
++++ b/node_modules/matrix-react-sdk/src/languageHandler.tsx
+@@ -509,7 +509,9 @@ type Language = {
+ };
+ 
+ export async function getAllLanguagesFromJson(): Promise<string[]> {
+-    return Object.keys(await getLangsJson());
++    // :TCHAP: only en and fr
++    // return Object.keys(await getLangsJson());
++    return ["en", "fr"];
+ }
+ 
+ export async function getAllLanguagesWithLabels(): Promise<Language[]> {

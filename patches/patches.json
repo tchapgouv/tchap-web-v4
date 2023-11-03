@@ -9,7 +9,10 @@
     },
     "show-icon-on-public-room": {
         "package": "matrix-react-sdk",
-        "files": ["src/components/views/avatars/DecoratedRoomAvatar.tsx"]
+        "files": [
+            "src/components/views/avatars/DecoratedRoomAvatar.tsx",
+            "src/components/views/right_panel/RoomSummaryCard.tsx"
+        ]
     },
     "simplify-exchange-key-message": {
         "package": "matrix-react-sdk",
@@ -173,6 +176,7 @@
     },
     "change-sections-order-in-security-privacy-settings": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/465",
+        "comments": "Fixed in element-web 1.11.48 (?) : Translation of common|secure_backup currently broken, so string is replaces. Goback to element's string when translation system is finished migrating.",
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/settings/CryptographyPanel.tsx",
@@ -207,6 +211,20 @@
         "files": [
             "src/IConfigOptions.ts",
             "src/components/views/settings/Notifications.tsx"
+        ]
+    },
+    "remove-fdroid": {
+        "comments" : "remove when issue is fixed in element-web : https://github.com/vector-im/element-web/issues/26309",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/views/dialogs/AppDownloadDialog.tsx"
+        ]
+    },
+    "only-fr-and-en": {
+        "comments" : "Leave all language files where they are to limit the work during upgrades, and instead filter languages in code.",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/languageHandler.tsx"
         ]
     }
 }

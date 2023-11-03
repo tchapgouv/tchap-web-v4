@@ -35,9 +35,13 @@ const config: Config = {
     testEnvironmentOptions: {
         url: "http://localhost/",
     },
-    testMatch: ["<rootDir>/test/unit-tests/**/*-test.[tj]s?(x)"],
+    testMatch: ["<rootDir>/test/unit-tests/tchap/**/*-test.[tj]s?(x)"], // :TCHAP: only tchap tests
     setupFiles: ["jest-canvas-mock"],
-    setupFilesAfterEnv: ["<rootDir>/test/setupTests.js", "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.js"],
+    setupFilesAfterEnv: [
+        "<rootDir>/node_modules/matrix-react-sdk/test/setupTests.ts",
+        "<rootDir>/test/setup/setupLanguage.ts",
+        "<rootDir>/test/setupTests.ts",
+    ],
     moduleNameMapper: {
         "\\.(css|scss|pcss)$": "<rootDir>/__mocks__/cssMock.js",
         "\\.(gif|png|ttf|woff2)$": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/imageMock.js",
@@ -62,6 +66,7 @@ const config: Config = {
         "../../../../../../src/tchap/components/views/messages/OriginalAudioBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
         "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
+        "^fetch-mock$": "<rootDir>/node_modules/fetch-mock",
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
     coverageReporters: ["text-summary", "lcov"],

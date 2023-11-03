@@ -1,0 +1,1135 @@
+{
+    "Welcome to Tchap": {
+        "en": "Welcome to Tchap",
+        "fr": "Bienvenue sur Tchap"
+    },
+    "Examples:": {
+        "en": "Examples:",
+        "fr": "Exemples :"
+    },
+    "Choose a homeserver:": {
+        "en": "Choose a homeserver:",
+        "fr": "Choisissez un serveur d'accueil :"
+    },
+    "Private room": {
+        "en": "Private room",
+        "fr": "Salon"
+    },
+    "Private room open to external users": {
+        "en": "Private room open to external users",
+        "fr": "Salon ouvert aux externes"
+    },
+    "Public room": {
+        "en": "Public room",
+        "fr": "Forum"
+    },
+    "Forum room": {
+        "en": "Public room",
+        "fr": "Forum"
+    },
+    "This room is private": {
+        "en": "This room is private",
+        "fr": "Ce salon est privé"
+    },
+    "This room is private and open to external users": {
+        "en": "This room is private and open to external users",
+        "fr": "Ce salon est privé et ouvert aux externes"
+    },
+    "This room is a public forum": {
+        "en": "This room is a public forum",
+        "fr": "Ce salon est un forum public"
+    },
+    "Accessible to all users by invitation from an administrator.": {
+        "en": "Accessible to all users by invitation from an administrator.",
+        "fr": "Accessible à tous les utilisateurs sur invitation d'un administrateur."
+    },
+    "Accessible to all users and to external guests by invitation of an administrator.": {
+        "en": "Accessible to all users and to external guests by invitation of an administrator.",
+        "fr": "Accessible à tous les utilisateurs et aux invités externes sur invitation d'un administrateur."
+    },
+    "Accessible to all users from the forum directory or from a shared link.": {
+        "en": "Accessible to all users from the forum directory or from a shared link.",
+        "fr": "Accessible à tous les utilisateurs à partir de la liste des forums ou d'un lien partagé."
+    },
+    "Allow access to this room to all users, even outside \"%(domain)s\" domain": {
+        "en": "Allow access to this room to all users, even outside \"%(domain)s\" domain",
+        "fr": "Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
+    },
+    "Create a room in this space": {
+        "en": "Create a room in this space",
+        "fr": "Créer un salon dans cet espace"
+    },
+    "Private discussions accessible to all users of this space.": {
+        "en": "Private discussions accessible to all users of this space.",
+        "fr": "Discussions privées accessibles à tous les membres de cet espace"
+    },
+    "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.": {
+        "en": "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.",
+        "fr": "Discussions privées accessibles à tous les membres de cet espace et aux utilisateurs externes sur invitation d'un administrateur."
+    },
+    "Public discussion accessible to all users of this space or from a shared link.": {
+        "en": "Public discussion accessible to all users of this space or from a shared link.",
+        "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
+    },
+    "Scanning": {
+        "en": "Scanning",
+        "fr": "Scanning"
+    },
+    "Content blocked": {
+        "en": "Content blocked",
+        "fr": "Contenu bloqué"
+    },
+    "Trusted": {
+        "en": "Trusted",
+        "fr": "Vérifié"
+    },
+    "Scan unavailable": {
+        "en": "Scan unavailable",
+        "fr": "Scan unavailable"
+    },
+    "Contact us": {
+        "en": "Contact us",
+        "fr": "Contactez-nous"
+    },
+    "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>": {
+        "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
+        "fr": "Si vous rencontrez des difficultés dans votre utilisation de Tchap, contactez-nous par email à <b>%(supportEmail)s</b>"
+    },
+    "Known issues": {
+        "en": "Known issues",
+        "fr": "Problèmes connus"
+    },
+    "Read the Known Issues": {
+        "en": "Read the Known Issues",
+        "fr": "Consultez les problèmes connus"
+    },
+    "This version of Tchap Web is currently in development. There are known issues that will be solved soon.": {
+        "en": "This version of Tchap Web is currently in development. There are known issues that will be solved soon.",
+        "fr": "Cette version de Tchap Web est en cours de développement. Il y a des problèmes connus qui seront bientôt résolus."
+    },
+    "Frequently Asked Questions (FAQ)": {
+        "en": "Frequently Asked Questions (FAQ)",
+        "fr": "Foire Aux Questions (FAQ)"
+    },
+    "Read the FAQ": {
+        "en": "Read the FAQ",
+        "fr": "Consultez la FAQ"
+    },
+    "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
+        "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
+        "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
+    },
+    "Please tell us what went wrong in the \"Notes\" field.": {
+        "en": "Please tell us what went wrong in the \"Notes\" field.",
+        "fr": "Veuillez nous expliquer le problème dans le champ \"Notes\"."
+    },
+    "Submit debug logs to Tchap support team": {
+        "en": "Submit debug logs to Tchap support team",
+        "fr": "Envoyez les journaux de débogage à l'équipe support de Tchap",
+        "comment": "The title of BugReportDialog is unclear, specify it"
+    },
+    "Just want to get your own logs, without sharing them with the Tchap team?": {
+        "en": "Just want to get your own logs, without sharing them with the Tchap team?",
+        "fr": "Vous voulez juste obtenir vos journaux sans les partager avec l'équipe Tchap ?"
+    },
+    "Download my logs": {
+        "en": "Download my logs",
+        "fr": "Obtenir mes journaux"
+    },
+    "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.": {
+        "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
+        "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
+    },
+    "Allow external users to join this room": {
+        "en": "Allow external users to join this room",
+        "fr": "Autoriser les externes à rejoindre ce salon"
+    },
+    "This action is irreversible.": {
+        "en": "This action is irreversible.",
+        "fr": "Cette action est irréversible."
+    },
+    "Are you sure you want to allow the externals to join this room ?": {
+        "en": "Are you sure you want to allow the externals to join this room ?",
+        "fr": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
+    },
+    "Create Room": {
+        "en": "Create New Room",
+        "fr": "Créer un nouveau salon"
+    },
+    "Your last three login attempts have failed. Please try again in a few minutes.": {
+        "en": "Your last three login attempts have failed. Please try again in a few minutes.",
+        "fr": "Vos trois dernières tentatives de connexion ont échoué. Veuillez réessayer dans quelques minutes."
+    },
+    "Your password must include:": {
+        "en": "Your password must include:",
+        "fr": "Votre mot de passe doit comporter :"
+    },
+    "a minimum of %(number)s characters": {
+        "en": "a minimum of %(number)s characters",
+        "fr": "%(number)s caractères au minimum"
+    },
+    "a number": {
+        "en": "a number",
+        "fr": "un chiffre"
+    },
+    "a symbol": {
+        "en": "a symbol",
+        "fr": "un caractère spécial"
+    },
+    "a lowercase letter": {
+        "en": "a lowercase letter",
+        "fr": "une lettre minuscule"
+    },
+    "an uppercase letter": {
+        "en": "an uppercase letter",
+        "fr": "une lettre majuscule"
+    },
+    "External users allowed": {
+        "en": "external users allowed",
+        "fr": "ouvert aux externes"
+    },
+    "Save your Tchap Keys (encryption keys)": {
+        "en": "Save your Tchap Keys (encryption keys)",
+        "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
+    },
+    "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
+        "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
+        "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
+    },
+    "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
+        "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
+        "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
+    },
+    "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup": {
+        "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup",
+        "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde"
+    },
+    "Create your Tchap Key password (minimum 8 characters)": {
+        "en": "Create your Tchap Key password (minimum 8 characters)",
+        "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
+    },
+    "Passphrase must be at least 8 character long": {
+        "en": "Passphrase must be at least 8 character long",
+        "fr": "Le mot de passe doit minimum faire 8 caractères"
+    },
+    "Your Tchap Key password": {
+        "en": "Your Tchap Key password",
+        "fr": "Votre mot de passe Clés Tchap"
+    },
+    "Confirm your Tchap Key password": {
+        "en": "Confirm your Tchap Key password",
+        "fr": "Confirmer votre mot de passe Clés Tchap"
+    },
+    "Tchap Keys saved!": {
+        "en": "Tchap Keys saved!",
+        "fr": "Clés Tchap sauvegardées !"
+    },
+    "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
+        "en": "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).",
+        "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
+    },
+    "Save your Tchap Keys before logging out": {
+        "en": "Save your Tchap Keys before logging out",
+        "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"
+    },
+    "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.": {
+        "en": "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.",
+        "fr": "<b>Sans vos Clés Tchap, vous ne pourrez pas lire vos messages</b> à votre prochaine connexion parce qu'ils seront verrouillés. C'est une mesure de sécurité Tchap."
+    },
+    "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.": {
+        "en": "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.",
+        "fr": "<b>Vous pouvez actuellement lire vos messages sur un autre appareil ?</b> Vous pouvez vous déconnecter. Cet autre appareil sauvegarde automatiquement vos Clés Tchap et tous vos messages."
+    },
+    "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.": {
+        "en": "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.",
+        "fr": "<b>Vous n'avez pas d'autre appareil connecté à Tchap ?</b> Sauvegardez vos Clés Tchap. Ces clés déverrouilleront les messages actuels, mais pas ceux reçus entre la sauvegarde et votre prochaine connexion."
+    },
+    "Sign me out": {
+        "en": "Sign me out",
+        "fr": "Me déconnecter"
+    },
+    "Save my keys": {
+        "en": "Save my Tchap keys",
+        "fr": "Sauvegarder mes clés Tchap"
+    },
+    "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
+        "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
+        "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
+    },
+    "Please also confirm the emojis on the other device.": {
+        "en": "Please also confirm the emojis on the other device.",
+        "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+    },
+    "Incoming Verification Request": {
+        "en": "Incoming Verification Request",
+        "fr": "Partage de vos Clés Tchap"
+    },
+    "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.": {
+        "en": "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.",
+        "fr": "Le partage de vos Clés Tchap a réussi. Vos messages vont être déverrouillés au fur et à mesure."
+    },
+    "Finish": {
+        "en": "Finish",
+        "fr": "Terminer"
+    },
+    "Please <b>accept the sharing</b> of your Tchap Keys on the other device.": {
+        "en": "Please <b>accept the sharing</b> of your Tchap Keys on the other device.",
+        "fr": "Merci d'<b>accepter la demande</b> de partage de vos Clés Tchap pour déverrouiller vos messages."
+    },
+    "Confirm the emoji below are displayed on both devices, in the same order:": {
+        "en": "Confirm the emoji below are displayed on both devices, in the same order:",
+        "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+    },
+    "Please confirm the objects on the other device.": {
+        "en": "Please confirm the objects on the other device.",
+        "fr": "Veuillez confirmer les objets sur l'autre appareil."
+    },
+    "Please confirm the objects on the other device (loading).": {
+        "en": "Please confirm the objects on the other device (loading).",
+        "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
+    },
+    "The validity period of your account has expired": {
+        "en": "Your Tchap account has expired",
+        "fr": "Votre compte Tchap a expiré"
+    },
+    "An email has been sent to you. Click on the link it contains, click below.": {
+        "en": "An email has been sent to you. Its title is : \"Renew your Tchap account\" Once you’ve followed the link it contains, click on the button \"I renewed my account\".",
+        "fr": "Un email vous a été envoyé pour renouveler votre compte. Il est intitulé : \"Renouvelez votre compte Tchap\". Une fois que vous aurez suivi le lien qu'il contient, cliquez sur le bouton \"J’ai renouvelé mon compte\"."
+    },
+    "I renewed the validity of my account": {
+        "en": "I renewed my account",
+        "fr": "J’ai renouvelé mon compte"
+    },
+    "Request a renewal email": {
+        "en": "Request a renewal email",
+        "fr": "Demander l’envoi d’un nouvel email"
+    },
+    "A new email has been sent": {
+        "en": "A new email has been sent",
+        "fr": "Un nouvel email de renouvellement vous a été adressé"
+    },
+    "Wait for at least %(wait)s seconds between two emails": {
+        "en": "Wait for at least %(wait)s seconds between two emails",
+        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
+    },
+    "The email was not sent sucessfully, please retry in a moment": {
+        "en": "The email was not sent sucessfully, please retry",
+        "fr": "L'email de renouvellement n'a pas pu être envoyé, veuillez réessayer"
+    },
+    "Your account is still expired, please follow the link in the email you have received to renew it": {
+        "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
+        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
+    },
+    "Congratulations, your account has been renewed": {
+        "en": "Congratulations, your account has been renewed",
+        "fr": "Félicitations, votre compte a été renouvelé"
+    },
+    "The app will reload now": {
+        "en": "You can refresh the page to continue your conversations",
+        "fr": "Vous pouvez dorénavant rafraîchir la page pour continuer vos conversations"
+    },
+    "Reload the app": {
+        "en": "Reload page",
+        "fr": "Rafraîchir la page"
+    },
+    "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
+        "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
+        "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
+    },
+    "<requestLink>Re-send a request to your other devices</requestLink>": {
+        "en": "<requestLink>Re-send a request to your other devices</requestLink>",
+        "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
+    },
+    "Request in progress...": {
+        "en": "Request in progress...",
+        "fr": "Demande en cours..."
+    },
+    "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.": {
+        "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
+        "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
+    },
+    "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
+        "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
+        "fr": "Si vos autres appareils n'ont pas la clé pour ce message, vous ne pourrez pas le déchiffrer."
+    },
+    "Your key share request has been sent - please check your other devices for key share requests.": {
+        "en": "Your key share request has been sent - please check your other devices for key share requests.",
+        "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
+    },
+    "<requestLink>Import from saved file</requestLink>": {
+        "en": "<requestLink>Import from saved file</requestLink>",
+        "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
+    },
+    "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)": {
+        "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
+        "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
+    },
+    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": {
+        "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
+        "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
+    },
+    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": {
+        "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté ou si vous avez perdu un de vos appareils.",
+        "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked or a device has been lost."
+    },
+    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": {
+        "fr": "Actuellement %(brand)s ne supporte pas la recherche dans les messages.",
+        "en": "Currently %(brand)s does not support searching into messages."
+    },
+    "Export E2E room keys": {
+        "en": "Save your Tchap keys",
+        "fr": "Sauvegardez vos clés Tchap"
+    },
+    "Import E2E room keys": {
+        "en": "Import your Tchap keys from the downloaded file",
+        "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
+    },
+    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
+        "en": "Automatically back up your messages and retrieve them at any time using the Recovery Code.",
+        "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de Récupération."
+    },
+    "Thread": {
+        "en": "Thread",
+        "fr": "Discussion"
+    },
+    "Join public room": {
+        "en": "Join a public room",
+        "fr": "Rejoindre un forum"
+    },
+    "Explore rooms": {
+        "en": "Explore space rooms",
+        "fr": "Explorer les salons"
+    },
+    "Explore public rooms": {
+        "en": "Explore public rooms",
+        "fr": "Rejoindre un forum"
+    },
+    "Start chat": {
+        "en": "New direct message",
+        "fr": "Nouveau message direct"
+    },
+    "Start new chat": {
+        "en": "New direct message",
+        "fr": "Nouveau message direct"
+    },
+    "Start a new chat": {
+        "en": "New direct message",
+        "fr": "Nouveau message direct"
+    },
+    "Chat": {
+        "en": "New direct message",
+        "fr": "Nouveau message direct"
+    },
+    "Direct Messages": {
+        "en": "Direct Messages",
+        "fr": "Messages directs"
+    },
+    "Recently Direct Messaged": {
+        "en": "Recents chats",
+        "fr": "Messages directs récents"
+    },
+    "Recent Conversations": {
+        "en": "Recents chats",
+        "fr": "Messages directs récents"
+    },
+    "Secure Backup": {
+        "en": "Secure Backup",
+        "fr": "Sauvegarde automatique des messages"
+    },
+    "You can also set up Secure Backup & manage your keys in Settings.": {
+        "en": "You can also set up Secure Backup & manage your keys in Settings.",
+        "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
+    },
+    "Set up Secure Backup": {
+        "en": "Activate message Secure Backup",
+        "fr": "Activer la sauvegarde automatique des messages"
+    },
+    "Email": {
+        "en": "Email",
+        "fr": "Adresse mail"
+    },
+    "Invalid Email Address": {
+        "en": "Invalid Email Address",
+        "fr": "Adresse mail non valide"
+    },
+    "Email address": {
+        "en": "Email address",
+        "fr": "Adresse mail"
+    },
+    "Email Address": {
+        "en": "Email Address",
+        "fr": "Adresse mail"
+    },
+    "Email addresses": {
+        "en": "Email addresses",
+        "fr": "Adresses mail"
+    },
+    "Email (optional)": {
+        "en": "Email (optional)",
+        "fr": "Adresse mail (facultatif)"
+    },
+    "Add Email Address": {
+        "en": "Add Email Address",
+        "fr": "Ajouter une adresse mail"
+    },
+    "Room members": {
+        "en": "Room members",
+        "fr": "Membres du salon"
+    },
+    "Banned users": {
+        "en": "Banned users",
+        "fr": "Membres bannis"
+    },
+    "Privileged Users": {
+        "en": "Privileged Users",
+        "fr": "Membres privilégiés"
+    },
+    "Muted Users": {
+        "en": "Muted Users",
+        "fr": "Membres en sourdine"
+    },
+    "Ignored users": {
+        "en": "Ignored users",
+        "fr": "Membres ignorés"
+    },
+    "Remove from room": {
+        "en": "Remove from room",
+        "fr": "Retirer du salon (réversible)"
+    },
+    "Remove them from specific things I'm able to": {
+        "en": "Remove them from specific things I'm able to",
+        "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
+    },
+    "Remove them from everything I'm able to": {
+        "en": "Remove them from everything I'm able to",
+        "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
+    },
+    "Remove users": {
+        "en": "Remove users",
+        "fr": "Retirer des utilisateurs (réversible)"
+    },
+    "Remove, ban, or invite people to your active room, and make you leave": {
+        "en": "Remove, ban, or invite people to your active room, and make you leave",
+        "fr": "Retirer, interdire l'accès ou inviter des personnes dans votre salon actif et en partir"
+    },
+    "Remove, ban, or invite people to this room, and make you leave": {
+        "en": "Remove, ban, or invite people to this room, and make you leave",
+        "fr": "Retirer, interdire l'accès ou inviter une personne dans ce salon et vous permettre de partir"
+    },
+    "Remove from %(roomName)s": {
+        "en": "Remove from %(roomName)s",
+        "fr": "Retirer de %(roomName)s (réversible)"
+    },
+    "You need to be able to kick users to do that.": {
+        "en": "You need to be able to kick users to do that.",
+        "fr": "Vous devez avoir l’autorisation de retirer des utilisateurs pour faire ceci."
+    },
+    "Ban users": {
+        "en": "Ban users",
+        "fr": "Interdire aux utilisateurs l’accès au salon (définitif)"
+    },
+    "Ban them from specific things I'm able to": {
+        "en": "Ban them from specific things I'm able to",
+        "fr": "Interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
+    },
+    "Ban them from everything I'm able to": {
+        "en": "Ban them from everything I'm able to",
+        "fr": "Interdire l’accès partout où j’ai le droit de le faire (définitif)"
+    },
+    "Ban from %(roomName)s": {
+        "en": "Ban from %(roomName)s",
+        "fr": "Interdire l’accès à %(roomName)s (définitif)"
+    },
+    "Ban from room": {
+        "en": "Ban from room",
+        "fr": "Interdire l’accès au salon (définitif)"
+    },
+    "Ban from space": {
+        "en": "Ban from space",
+        "fr": "Interdire l’accès à l'espace (définitif)"
+    },
+    "Group all your people in one place.": {
+        "en": "Group all your direct message room in one place.",
+        "fr": "Regroupe tous vos salons de message directs au même endroit."
+    },
+    "Group all your favourite rooms and people in one place.": {
+        "en": "Group all your favourite rooms in one place.",
+        "fr": "Regroupe tous vos salons favoris au même endroit."
+    },
+    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": {
+        "en": "Spaces are ways to group rooms and direct messages.",
+        "fr": "Les espaces permettent de regrouper des salons et des messages directs."
+    },
+    "Show all your rooms in Home, even if they're in a space.": {
+        "en": "Show all your rooms in Home",
+        "fr": "Affiche tous vos salons dans l’accueil"
+    },
+    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": {
+        "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
+        "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."
+    },
+    "Sign in instead": {
+        "en": "Sign in instead",
+        "fr": "ou connectez-vous"
+    },
+    "Enter your email to reset password": {
+        "en": "Enter your email to reset password",
+        "fr": "Entrez votre adresse mail pour réinitialiser votre mot de passe"
+    },
+    "Reset your password": {
+        "en": "Reset your password",
+        "fr": "Réinitialisez votre mot de passe"
+    },
+    "Did not receive it?": {
+        "en": "Did not receive it?",
+        "fr": "Pas reçu ?"
+    },
+    "Wrong email address?": {
+        "en": "Wrong email address?",
+        "fr": "Mauvaise adresse mail ?"
+    },
+    "Re-enter email address": {
+        "en": "Re-enter email address",
+        "fr": "Re-saisir l'adresse mail"
+    },
+    "Check your email to continue": {
+        "en": "Check your email to continue",
+        "fr": "Vérifiez vos mails avant de continuer"
+    },
+    "Verify your email to continue": {
+        "en": "Verify your email to continue",
+        "fr": "Vérifiez vos mails avant de continuer"
+    },
+    "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": {
+        "en": "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>",
+        "fr": "Nous avons besoin de savoir que c’est vous avant de réinitialiser votre mot de passe.\n                    Cliquer sur le lien dans le mail que nous venons juste d’envoyer à <b>%(email)s</b>"
+    },
+    "Send email": {
+        "en": "Send email",
+        "fr": "Envoyer le mail"
+    },
+    "This is your recovery key": {
+        "fr": "Ce code vous permettra de toujours récupérer vos messages.",
+        "en": "This code will allow you to always restore your messages."
+    },
+    "Warning: this is the only time this code will be displayed!": {
+        "fr": "Attention: c’est la seule fois que ce code sera affiché !",
+        "en": "Warning: this is the only time this code will be displayed!"
+    },
+    "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
+        "fr": "Conservez-le dans un endroit sûr, comme votre gestionnaire de mot de passe ou un document protégé sur votre ordinateur. Vous aurez à le copier / coller pour récupérer vos messages, donc évitez la capture d’écran.",
+        "en": "Keep it in a safe place, such as your password manager or a protected document on your computer. You will need to copy/paste it to retrieve your messages, so avoid taking screenshots."
+    },
+    "I wrote down my code": {
+        "fr": "J'ai noté mon code",
+        "en": "I wrote down my code"
+    },
+    "Safeguard against losing access to encrypted messages & data": {
+        "fr": "Activez votre Code de Récupération pour ne jamais perdre vos messages",
+        "en": "Activate your Recovery Code to never lose your messages"
+    },
+    "Security Key": {
+        "fr": "Code de Récupération",
+        "en": "Recovery Code"
+    },
+    "Verify with Security Key": {
+        "fr": "Vérifier avec un Code de Récupération",
+        "en": "Verify with Recovery Code"
+    },
+    "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": {
+        "fr": "Votre nouvel appareil est maintenant vérifié. Il a accès à vos messages chiffrés et les autres utilisateurs le verront comme fiable.",
+        "en": "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted."
+    },
+    "I don't want my encrypted messages": {
+        "fr": "Se déconnecter quand-même",
+        "en": "Log out still"
+    },
+    "Start using Key Backup": {
+        "fr": "Utiliser la sauvegarde automatique",
+        "en": "Use automatic Backup"
+    },
+    "Use your Security Key to continue.": {
+        "fr": "Utilisez votre Code de Récupération pour continuer.",
+        "en": "Use your Recovery Code to continue."
+    },
+    "Generate a Security Key": {
+        "fr": "Générer un Code de Récupération",
+        "en": "Generate a Recovery Code"
+    },
+    "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": {
+        "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un Code de Récupération à utiliser pour la sauvegarde.",
+        "en": "Use a secret phrase only you know, and optionally save a Recovery Code to use for backup."
+    },
+    "Save your Security Key": {
+        "fr": "Notez votre Code de Récupération",
+        "en": "Write down your Recovery Code"
+    },
+    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": {
+        "fr": "Cette session a détecté que votre phrase secrète et Code de Récupération pour les messages sécurisés ont été supprimés.",
+        "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed."
+    },
+    "A new Security Phrase and key for Secure Messages have been detected.": {
+        "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté.",
+        "en": "A new Recovery Code for Secure Messages has been detected."
+    },
+    "Make a copy of your Security Key": {
+        "fr": "Faire une copie de votre Code de Récupération",
+        "en": "Make a copy of your Recovery Code"
+    },
+    "Secure your backup with a Security Phrase": {
+        "fr": "Protégez votre sauvegarde avec un Code de Récupération",
+        "en": "Secure your backup with a Recovery Code"
+    },
+    "Your Security Key is in your <b>Downloads</b> folder.": {
+        "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
+        "en": "Your Recovery Code is in your <b>Downloads</b> folder."
+    },
+    "Your Security Key": {
+        "fr": "Votre Code de Récupération",
+        "en": "Your Recovery Code"
+    },
+    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
+        "fr": "Votre Code de Récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
+        "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
+    },
+    "Set up with a Security Key": {
+        "fr": "Configurer avec un Code de Récupération",
+        "en": "Set up with a Recovery Code"
+    },
+    "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
+        "fr": "Si vous avez oublié votre Code de Récupération, vous pouvez <button>définir de nouvelles options de récupération</button>",
+        "en": "If you've forgotten your Recovery Code you can <button>set up new recovery options</button>"
+    },
+    "Access your secure message history and set up secure messaging by entering your Security Key.": {
+        "fr": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre Code de Récupération.",
+        "en": "Access your secure message history and set up secure messaging by entering your Recovery Code."
+    },
+    "Enter Security Key": {
+        "fr": "Saisir le Code de Récupération",
+        "en": "Enter Recovery Code"
+    },
+    "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": {
+        "fr": "Si vous avez oublié votre phrase secrète vous pouvez <button1>utiliser votre Code de Récupération</button1> ou <button2>définir de nouvelles options de récupération</button2>",
+        "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery Code</button1> or <button2>set up new recovery options</button2>"
+    },
+    "Incorrect Security Phrase": {
+        "fr": "Code de récupération non reconnu",
+        "en": "Recovery code not recognized"
+    },
+    "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
+        "fr": "Merci d'essayer à nouveau avec votre code de récupération.",
+        "en": "Please try again with your recovery code."
+    },
+    "Verify with Security Key or Phrase": {
+        "fr": "Vérifier avec un Code de Récupération ou une phrase",
+        "en": "Verify with Recovery Code or Phrase"
+    },
+    "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>": {
+        "fr": "<p>Cet appareil n'est pas vérifié.</p><p>Pour que cet appareil soit toujours vérifié et que vous puissiez toujours récupérer vos messages, activez la Sauvegarde Automatique des messages.</p>",
+        "en": "<p>This device is not verified.</p><p>To ensure this device is always verified and you can always retrieve your messages, turn on Automatic Message Backup</p>"
+    },
+    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
+        "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre Code de Récupération</button> pour continuer.",
+        "en": "Enter your Security Phrase or <button>use your Recovery Code</button> to continue."
+    },
+    "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
+        "fr": "Nous génèrerons votre Code de Récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre.",
+        "en": "We'll generate your unique Recovery Code for you to store somewhere safe, like a password manager or a safe."
+    },
+    "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": {
+        "fr": "Invitez quelqu’un via son nom, mail ou pseudo (p. ex. <userId/>) ou <a>partagez ce salon</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne.",
+        "en": "Invite someone using their name, email or username (like <userId/>) or <a>share this room</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break."
+    },
+    "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": {
+        "fr": "Invitez quelqu’un grâce à son nom, adresse mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne.",
+        "en": "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break."
+    },
+    "User is already in the room": {
+        "fr": "Cette personne est déjà dans le salon.",
+        "en": "User is already in the room."
+    },
+    "Set up": {
+        "fr": "Activer",
+        "en": "Activate"
+    },
+    "Connect this session to Key Backup": {
+        "fr": "Vérifier cet appareil",
+        "en": "Verify this device"
+    },
+    "Forgotten or lost all recovery methods? <a>Reset all</a>": {
+        "fr": "Vous avez perdu votre Code de Récupération ? <a>Générer un nouveau code</a>",
+        "en": "You have lost your Recovery Code? <a>Create a new code</a>"
+    },
+    "Unable to verify this device": {
+        "fr": "Vous vous connectez à un nouvel appareil",
+        "en": "You are logging into a new device"
+    },
+    "Reset your keys to prevent future decryption errors": {
+        "fr": "Activez la sauvegarde automatique des messages",
+        "en": "Enable automatic secure backup"
+    },
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
+        "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
+        "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
+    },
+    "Resend key requests": {
+        "fr": "Renvoyer une demande",
+        "en": "Resend key requests"
+    },
+    "Open another device to load encrypted messages": {
+        "fr": "Utiliser un autre appareil pour déverrouiller vos messages.",
+        "en": "Use another device to unlock your messages."
+    },
+    "Or if that doesn't work, please follow <a>these steps</a>.": {
+        "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
+        "en": "Or if that doesn't work, please follow <a>these steps</a>."
+    },
+    "Unable to decrypt message": {
+        "fr": "Impossible de déverrouiller le message",
+        "en": "Unable to unlock message"
+    },
+    "Decrypting messages…": {
+        "fr": "Déverrouillage des messages…",
+        "end": "Unlocking messages…"
+    },
+    "Please wait as we try to decrypt your messages. This may take a few moments.": {
+        "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",
+        "en": "Please wait as we try to unlock your messages. This may take a few moments."
+    },
+    "Some messages could not be decrypted": {
+        "fr": "Certains messages n’ont pas pu être déverrouillés",
+        "en": "Some messages could not be unlocked"
+    },
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
+        "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
+        "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
+    },
+    "These keys only apply to the current session.": {
+        "fr": "Ces clés ne concernent que la session en cours.",
+        "en": "These keys only apply to the current session."
+    },
+    "Please note this is not your recovery code for your automatic backup.": {
+        "fr": "Attention ceci n’est pas votre Code de Récupération pour votre sauvegarde automatique.",
+        "en": "Please note this is not your Recovery Code for your automatic backup."
+    },
+    "Tchap keys": {
+        "fr": "Clés Tchap",
+        "en": "Tchap keys"
+    },
+    "Tchap keys:": {
+        "fr": "Clés Tchap :",
+        "en": "Tchap keys:"
+    },
+    "That email is not allowed on Tchap": {
+        "fr": "Votre adresse mail n'est pas autorisée sur Tchap. Demandez l'accès à Tchap pour votre administration via <a>ce formulaire</a>",
+        "en": "Your email adress is not allowed on Tchap. Make an autorization request <a>here</a>"
+    },
+    "Generate a new code": {
+        "fr": "Générer un nouveau code",
+        "en": "Generate a new code"
+    },
+    "Failed to join": {
+        "fr": "Impossible de rejoindre ce salon",
+        "en": "Failed to join this room."
+    },
+    "Access possible only by invitation of a member of the room.": {
+        "fr": "Accès possible uniquement sur invitation d'un membre du salon.",
+        "en": "Access possible only by invitation of a member of the room."
+    },
+    "Restore from Backup": {
+        "fr": "Récupérer mes messages",
+        "en": "Retrieve my messages"
+    },
+    "This session is backing up your keys.": {
+        "fr": "Cet appareil sauvegarde automatiquement vos messages.",
+        "en": "This device automatically backs up your messages."
+    },
+    "Cross-signing is not set up.": {
+        "fr": "La signature croisée n’est pas active",
+        "en": "Cross-signing is not active."
+    },
+    "Cross-signing is ready but keys are not backed up.": {
+        "fr": "La signature croisée est activée mais pas la sauvegarde automatique des messages.",
+        "en": "Cross-signing is ready but not the secure backup."
+    },
+    "Cross-signing is ready for use.": {
+        "fr": "La signature croisée est activée sur cet appareil.",
+        "en": "Cross-signing is activated on this device."
+    },
+    "Your keys are <b>not being backed up from this session</b>.": {
+        "fr": "Cet appareil ne sauvegarde pas vos messages.",
+        "en": "This device is not backing up your messages."
+    },
+    "Secure Backup successful": {
+        "fr": "Sauvegarde automatique activée avec succès",
+        "en": "Secure backup successfully enabled."
+    },
+    "Your keys are now being backed up from this device.": {
+        "fr": "Vos messages sont maintenant automatiquement sauvegardés sur cet appareil.",
+        "en": "Your messages are now automatically backed up on this device."
+    },
+    "Wrong Security Key": {
+        "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent.",
+        "en": "The Recovery Code is not valid. Check that it is the latest one."
+    },
+    "Keys restored": {
+        "fr": "Messages récupérés",
+        "en": "Messages restored"
+    },
+    "Successfully restored %(sessionCount)s keys": {
+        "fr": "%(sessionCount)s messages ont été récupérés avec succès.",
+        "en": "%(sessionCount)s messages have been successfully restored."
+    },
+    "Setting up keys": {
+        "fr": "Configuration du Code de Récupération",
+        "en": "Setting up your Recovery Code"
+    },
+    "Restoring keys from backup": {
+        "fr": "Restauration des messages depuis la sauvegarde",
+        "en": "Restoring messages from backup"
+    },
+    "Fetching keys from server…": {
+        "fr": "Récupération des messages depuis le serveur…",
+        "en": "Fetching messages from server…"
+    },
+    "Generate a new password. Note that your locked messages will remain locked.": {
+        "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
+        "en": "Generate a new password. Note that your locked messages will remain locked."
+    },
+    "Where you're signed in": {
+        "fr": "Appareils connectés",
+        "en": "Connected devices"
+    },
+    "Activate on this device": {
+        "fr": "Activer sur cet appareil",
+        "en": "Activate on this device"
+    },
+    "Verify this session": {
+        "fr": "Vérifier cet appareil",
+        "en": "Verify this device"
+    },
+    "Other users may not trust it": {
+        "fr": "Vous risquez de ne pas pouvoir récupérer vos messages.",
+        "en": "You may not be able to recover your messages."
+    },
+    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": {
+        "fr": "<b>Une nouvelle version de ce salon va être créée</b>. Tous les messages actuels resteront accessibles dans ce salon. Tous les membres vont être réinvités.",
+        "en": "<b>A new version of this room will be created</b>. All current messages will remain accessible in this room. All members will be invited back."
+    },
+    "Upgrade private room": {
+        "fr": "Ce salon va être mis à jour",
+        "en": "This room will be updated"
+    },
+    "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room": {
+        "fr": "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon.",
+        "en": "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room."
+    },
+    "Upgrade room": {
+        "fr": "Mettre à jour le salon",
+        "en": "Upgrade room"
+    },
+    "Verify your identity to access encrypted messages and prove your identity to others.": {
+        "fr": "Vérifiez votre identité pour accéder aux messages verrouillés et prouver votre identité aux autres.",
+        "en": "Verify your identity to access locked messages and prove your identity to others."
+    },
+    "Really reset verification keys?": {
+        "fr": "Réinitialiser le Code de Récupération, c’est certain ?",
+        "en": "Really reset Recovery Code?"
+    },
+    "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": {
+        "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulée. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés.",
+        "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages."
+    },
+    "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": {
+        "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
+        "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
+    },
+    "Export room members": {
+        "fr": "Exporter les membres du salon",
+        "en": "Export room members"
+    },
+    "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
+        "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon.",
+        "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room."
+    },
+    "members_of_%(roomName)s.txt": {
+        "fr": "membres_de_%(roomName)s.txt",
+        "en": "members_of_%(roomName)s.txt"
+    },
+    "Destroy cross-signing keys?": {
+        "fr": "Réinitialiser les clés de signature croisée ?",
+        "en": "Reset cross-signing keys?"
+    },
+    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": {
+        "fr": "Réinitialiser les clés de signature croisée est permanent. Utiliser cette procédure uniquement si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
+        "en": "Resetting your Recovery Code is permanent. Please use this procedure only if you have lost all devices that allow you to perform cross-signing."
+    },
+    "Clear cross-signing keys": {
+        "fr": "Réinitialiser les clés de signature croisée",
+        "en": "Reset Recovery Code"
+    },
+    "General Conditions of Use (CGU)": {
+        "en": "General Conditions of Use (CGU)",
+        "fr": "Conditions Générales d'Utilisation (CGU)"
+    },
+    "Read the CGU": {
+        "en": "Read the CGU",
+        "fr": "Consultez les CGU"
+    },
+    "Privacy Policy": {
+        "en": "Privacy Policy",
+        "fr": "Politique de Confidentialité"
+    },
+    "Read the Privacy Policy": {
+        "en": "Read the Privacy Policy",
+        "fr": "Lire la Politique de Confidentialité"
+    },
+    "la messagerie instantanée de l'Administration": {
+        "en": "The instant messaging app of the French Administration",
+        "fr": "la messagerie instantanée de l'Administration"
+    },
+    "Conçue et gérée par l'Administration française": {
+        "en": "Designed and managed by the French Administration, for agents of the three public functions, <br/>to communicate easily with high security standards. Used by over 400,000 public officials.",
+        "fr": "Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, <br/>pour communiquer facilement en toute sécurité. Utilisée par plus de 400 000 agents publics."
+    },
+    "En savoir plus": {
+        "en": "Learn more",
+        "fr": "En savoir plus"
+    },
+    "Your %(brand)s is misconfigured": {
+        "fr": "",
+        "en": ""
+    },
+    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": {
+        "fr": "",
+        "en": ""
+    },
+    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": {
+        "fr": "",
+        "en": ""
+    },
+    "Server may be unavailable, overloaded, or you hit a bug.": {
+        "fr": "La connexion à Tchap n'est pas possible pour le moment (err:04). Voir l'état du service: https://status.tchap.numerique.gouv.fr",
+        "en": "Tchap is not available at the moment (err:04). View the status of services: https://status.tchap.numerique.gouv.fr"
+    },
+    "Server unavailable, overloaded, or something else went wrong.": {
+        "fr": "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr",
+        "en": "Tchap is not available at the moment (err:03). View the status of services: https://status.tchap.numerique.gouv.fr"
+    },
+    "Connectivity to the server has been lost.": {
+        "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>",
+        "en": "Tchap is not available at the moment. <a>View the status of services</a>."
+    },
+    "Review Tchap services status : url": {
+        "fr": "La connexion à Tchap n'est pas possible pour le moment %(errCode)s. <a>Voir l'état du service</a>",
+        "en": "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
+    },
+    "Sent messages will be stored until your connection has returned.": {
+        "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
+        "en": "Messages will be sent when your connection returns."
+    },
+    "Sessions": {
+        "fr": "Mes appareils",
+        "en": "My devices"
+    },
+    "Current session": {
+        "fr": "Cet appareil",
+        "en": "This device"
+    },
+    "Verified session": {
+        "fr": "Appareil vérifié",
+        "en": "Verified device"
+    },
+    "Other sessions": {
+        "fr": "Autres appareils",
+        "en": "Other devices"
+    },
+    "Verify your current session for enhanced secure messaging.": {
+        "fr": "Vérifier cet appareil afin de visualiser vos messages",
+        "en": "Verify your current device to get your messages."
+    },
+    "Verify session": {
+        "fr": "Vérifier l'appareil",
+        "en": "Verify device"
+    },
+    "Sign out of this session": {
+        "fr": "Se déconnecter de cet appareil",
+        "en": "Sign out of this device"
+    },
+    "Receive push notifications on this session.": {
+        "fr": "Recevoir les notifications push sur cet appareil",
+        "en": "Receive push notifications on this device."
+    },
+    "Unverified": {
+        "fr": "Non vérifié",
+        "en": "Unverified"
+    },
+    "Verified": {
+        "fr": "Vérifié",
+        "en": "Verified "
+    },
+    "Your current session is ready for secure messaging.": {
+        "fr": "",
+        "en": ""
+    },
+    "%(count)s sessions selected|one": {
+        "fr": "%(count)s appareil sélectionné",
+        "en": "%(count)s device selected"
+    },
+    "%(count)s sessions selected|other": {
+        "fr": "%(count)s appareils sélectionnés",
+        "en": "%(count)s devices selected"
+    },
+    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": {
+        "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages",
+        "en": "Verify your devices to unlock your messages"
+    },
+    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": {
+        "fr": "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil.",
+        "en": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device."
+    },
+    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": {
+        "fr": "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisi la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié.",
+        "en": "Verified devices are anywhere you are using this account after entering your passphrase or confirming your identity with another verified device."
+    },
+    "Verified sessions": {
+        "fr": "Appareils vérifiés",
+        "en": "Verified devices"
+    },
+    "Unverified sessions": {
+        "fr": "Appareils non vérifiés",
+        "en": "Unverified devices"
+    },
+    "Unverified session": {
+        "fr": "Appareil non vérifié",
+        "en": "Unverified device"
+    },
+    "Sign out of %(count)s sessions|one": {
+        "fr": "Déconnecter %(count)s appareil",
+        "en": "Sign out of %(count)s device"
+    },
+    "Sign out of %(count)s sessions|other": {
+        "fr": "Déconnecter %(count)s appareils",
+        "en": "Sign out of %(count)s devices"
+    },
+    "Sign out of all other sessions (%(otherSessionsCount)s)": {
+        "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)",
+        "en": "Sign out of all other devices (%(otherSessionsCount)s)"
+    },
+    "Are you sure you want to sign out of %(count)s sessions?|one": {
+        "fr": "Voulez-vous vraiment déconnecter %(count)s appareil ?",
+        "en": "Are you sure you want to sign out of %(count)s device?"
+    },
+    "Are you sure you want to sign out of %(count)s sessions?|other": {
+        "fr": "Voulez-vous vraiment déconnecter %(count)s de vos appareils ?",
+        "en": "Are you sure you want to sign out of %(count)s devices?"
+    },
+    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": {
+        "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car ils pourraient représenter un usage frauduleux de votre compte.",
+        "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account."
+    },
+    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
+        "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération).",
+        "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code)."
+    }
+}
