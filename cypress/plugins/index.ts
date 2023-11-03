@@ -18,13 +18,11 @@ limitations under the License.
 
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { webserver } from "./webserver";
 import { log } from "./log";
 
 /**
  * @type {Cypress.PluginConfig}
  */
 export default function (on: PluginEvents, config: PluginConfigOptions) {
-    webserver(on, config);
     log(on, config);
 }
