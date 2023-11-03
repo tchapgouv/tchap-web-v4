@@ -1,0 +1,42 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
+index f25c15e..3d37fa7 100644
+--- a/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
++++ b/node_modules/matrix-react-sdk/res/css/structures/_UserMenu.pcss
+@@ -200,6 +200,10 @@ limitations under the License.
+         mask-image: url("$(res)/img/element-icons/settings.svg");
+     }
+ 
++    .mx_UserMenu_iconInfo::before {
++        mask-image: url("$(res)/img/element-icons/info.svg");
++    }
++
+     .mx_UserMenu_iconMessage::before {
+         mask-image: url("$(res)/img/element-icons/feedback.svg");
+     }
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
+index 12e80d7..26cb131 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
+@@ -246,6 +246,10 @@ export default class UserMenu extends React.Component<IProps, IState> {
+         this.setState({ contextMenuPosition: null }); // also close the menu
+     };
+ 
++    private onOpenFAQPage = () => {
++        window.open("https://www.tchap.gouv.fr/faq", '_blank');
++    };
++
+     private onProvideFeedback = (ev: ButtonEvent): void => {
+         ev.preventDefault();
+         ev.stopPropagation();
+@@ -363,6 +367,11 @@ export default class UserMenu extends React.Component<IProps, IState> {
+                     onClick={(e) => this.onSettingsOpen(e)}
+                 />
+                 {feedbackButton}
++                <IconizedContextMenuOption
++                    iconClassName="mx_UserMenu_iconInfo"
++                    label={_t("common|help")}
++                    onClick={this.onOpenFAQPage}
++                />
+                 <IconizedContextMenuOption
+                     className="mx_IconizedContextMenu_option_red"
+                     iconClassName="mx_UserMenu_iconSignOut"
