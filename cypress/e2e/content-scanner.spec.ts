@@ -29,7 +29,7 @@ describe("Content Scanner", () => {
         */
     };
 
-    it("displays a status after an image is uploaded (any status)", () => {
+    it("displays a success status after an image is successfully uploaded", () => {
         const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
 
         RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
@@ -40,20 +40,6 @@ describe("Content Scanner", () => {
 
             // A status should display once scanning is finished (success or not)
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
-
-            cy.leaveRoom(roomId);
-        });
-    });
-
-    it("displays a success status after an image is successfully uploaded", () => {
-        const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
-
-        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
-            //open room
-            cy.get('[aria-label="' + roomName + '"]').click();
-
-            uploadFile("cypress/fixtures/chicken.gif");
-
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_done");
 
             cy.leaveRoom(roomId);
@@ -69,6 +55,8 @@ describe("Content Scanner", () => {
 
             uploadFile("cypress/fixtures/evil_eicar_chicken.com");
 
+            // A status should display once scanning is finished (success or not)
+            cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus");
             cy.get(".mx_EventTile.mx_EventTile_last").get(".mx_ContentScanningStatus_unsafe");
 
             cy.leaveRoom(roomId);
