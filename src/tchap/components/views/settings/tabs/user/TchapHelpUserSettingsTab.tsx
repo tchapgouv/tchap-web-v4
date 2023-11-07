@@ -28,6 +28,7 @@ import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
 import UpdateCheckButton from "matrix-react-sdk/src/components/views/settings/UpdateCheckButton";
 import BugReportDialog from "matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
 import CopyableText from "matrix-react-sdk/src/components/views/elements/CopyableText";
+import ExternalLink from "matrix-react-sdk/src/components/views/elements/ExternalLink";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -113,16 +114,16 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         for (const tocEntry of tocLinks) {
             legalLinks.push(
                 <div key={tocEntry.url}>
-                    <a href={tocEntry.url} rel="noreferrer noopener" target="_blank">
-                        {tocEntry.text}
-                    </a>
-                </div>,
+                    <ExternalLink href={tocEntry.url} target="_blank" rel="noreferrer noopener">
+                        {_t(tocEntry.text)}
+                    </ExternalLink>
+                </div>
             );
         }
 
         return (
             <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{_t("Legal")}</span>
+                <span className="mx_SettingsTab_subheading">{_t("common|legal")}</span>
                 <div className="mx_SettingsTab_subsectionText">{legalLinks}</div>
             </div>
         );
@@ -354,54 +355,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             </div>
         );
 
-        const cguUrl = "https://www.tchap.beta.gouv.fr/cgu";
-        const cguSection = (
-            <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{ _t("General Conditions of Use (CGU)") }</span>
-                {/* <div className='mx_SettingsTab_subsectionText'>
-                    {
-                        _t(
-                            "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there."
-                        )
-                    }
-                </div> */}
-                <AccessibleButton
-                    kind="primary"
-                    element="a"
-                    href={ cguUrl }
-                    target="_blank"
-                    rel="noreferrer noopener"
-                >
-                    { _t("Read the CGU") }
-                    <i className='mx_ExternalLink_icon' />
-                </AccessibleButton>
-            </div>
-        );
-
-        const privacyPolicyUrl = "https://tchap.beta.gouv.fr/politique-de-confidentialite";
-        const privacyPolicySection = (
-            <div className='mx_SettingsTab_section'>
-                <span className='mx_SettingsTab_subheading'>{ _t("Privacy Policy") /** TCHAP string */ }</span>
-                {/* <div className='mx_SettingsTab_subsectionText'>
-                    {
-                        _t(
-                            "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there."
-                        )
-                    }
-                </div> */}
-                <AccessibleButton
-                    kind="primary"
-                    element="a"
-                    href={ privacyPolicyUrl }
-                    target="_blank"
-                    rel="noreferrer noopener"
-                >
-                    { _t("Read the Privacy Policy") }
-                    <i className='mx_ExternalLink_icon' />
-                </AccessibleButton>
-            </div>
-        );
-
         const knownIssuesUrl = "https://github.com/tchapgouv/tchap-web-v4/wiki/Nouveau-Tchap-Web";
         const knownIssuesSection = (
             <div className='mx_SettingsTab_section'>
@@ -432,8 +385,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 <div className="mx_SettingsTab_heading">{_t("setting|help_about|title")}</div>
                 { /* :TCHAP: added */ contactSection }
                 { /* :TCHAP: added */ faqSection }
-                { /* :TCHAP: added */ cguSection }
-                { /* :TCHAP: added */ privacyPolicySection }
                 { /* :TCHAP: moved down the page - bugReportingSection */}
                 { /* :TCHAP: replaced by custom faqSection
                 <div className="mx_SettingsTab_section">

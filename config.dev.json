@@ -11,25 +11,22 @@
     "homeserver_list": [
         {
             "base_url": "https://matrix.agent1.tchap.incubateur.net",
-            "server_name": "Agents 1",
-            "email_examples": "? ..."
+            "server_name": "Agents 1"
         },
         {
             "base_url": "https://matrix.agent2.tchap.incubateur.net",
-            "server_name": "Agents 2",
-            "email_examples": "? ..."
+            "server_name": "Agents 2"
         },
         {
             "base_url": "https://matrix.externe.tchap.incubateur.net",
-            "server_name": "Externes",
-            "email_examples": "? ..."
+            "server_name": "Externes"
         }
     ],
     "disable_custom_urls": false,
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
-    "brand": "Tchap",
+    "brand": "TCHAP DEV",
     "bug_report_endpoint_url": "/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
@@ -72,8 +69,9 @@
         "FTUE.useCaseSelection": "WorkMessaging"
     },
     "branding": {
-        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo-dev.svg",
         "auth_footer_links": [
+            { "text": "DEV", "url": "https://matrix.agent1.tchap.incubateur.net/_matrix/client/versions" },
             { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
             { "text": "OpenData", "url": "https://www.data.gouv.fr" },
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },
@@ -82,6 +80,11 @@
             { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
+    },
+    "user_notice": {
+        "title": "DEV",
+        "description": "You are on dev env",
+        "show_once": false
     },
     "desktopBuilds": {
         "available": false
@@ -92,6 +95,16 @@
         "fdroid": null
     },
     "permalink_prefix": "https://www.tchap.incubateur.net",
+    "terms_and_conditions_links": [
+        {
+            "url": "https://www.tchap.beta.gouv.fr/cgu",
+            "text": "Read the CGU"
+        },
+        {
+            "url": "https://tchap.beta.gouv.fr/politique-de-confidentialite",
+            "text": "Read the Privacy Policy"
+        }
+    ],
     "tchap_features": {
         "feature_email_notification": [
             "agent1.tchap.incubateur.net",

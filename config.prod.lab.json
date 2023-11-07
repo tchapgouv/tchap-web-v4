@@ -11,88 +11,71 @@
     "homeserver_list": [
         {
             "base_url": "https://matrix.agent.tchap.gouv.fr",
-            "server_name": "Agents ?",
-            "email_examples": "? ..."
+            "server_name": "Agents"
         },
         {
             "base_url": "https://matrix.agent.agriculture.tchap.gouv.fr",
-            "server_name": "Agriculture",
-            "email_examples": "? ..."
+            "server_name": "Agriculture"
         },
         {
             "base_url": "https://matrix.agent.collectivites.tchap.gouv.fr",
-            "server_name": "Collectivites",
-            "email_examples": "? ..."
+            "server_name": "Collectivites"
         },
         {
             "base_url": "https://matrix.agent.culture.tchap.gouv.fr",
-            "server_name": "Culture",
-            "email_examples": "? ..."
+            "server_name": "Culture"
         },
         {
             "base_url": "https://matrix.agent.dev-durable.tchap.gouv.fr",
-            "server_name": "Développement durable",
-            "email_examples": "? ..."
+            "server_name": "Développement durable"
         },
         {
             "base_url": "https://matrix.agent.diplomatie.tchap.gouv.fr",
-            "server_name": "Diplomatie",
-            "email_examples": "? ..."
+            "server_name": "Diplomatie"
         },
         {
             "base_url": "https://matrix.agent.dinum.tchap.gouv.fr",
-            "server_name": "DINUM",
-            "email_examples": "hakim@beta.gouv.fr, alice@modernisation.gouv.fr, ..."
+            "server_name": "DINUM"
         },
         {
             "base_url": "https://matrix.agent.education.tchap.gouv.fr",
-            "server_name": "Education",
-            "email_examples": "? ..."
+            "server_name": "Education"
         },
         {
             "base_url": "https://matrix.agent.elysee.tchap.gouv.fr",
-            "server_name": "Elysée",
-            "email_examples": "? ..."
+            "server_name": "Elysée"
         },
         {
             "base_url": "https://matrix.agent.externe.tchap.gouv.fr",
-            "server_name": "Externes",
-            "email_examples": "nina@soprasteria.com, paul@athos.fr, ..."
+            "server_name": "Externes"
         },
         {
             "base_url": "https://matrix.agent.finances.tchap.gouv.fr",
-            "server_name": "Finances",
-            "email_examples": "? ..."
+            "server_name": "Finances"
         },
         {
             "base_url": "https://matrix.agent.interieur.tchap.gouv.fr",
-            "server_name": "Interieur",
-            "email_examples": "? ..."
+            "server_name": "Interieur"
         },
         {
             "base_url": "https://matrix.agent.intradef.tchap.gouv.fr",
-            "server_name": "Intradef",
-            "email_examples": "? ..."
+            "server_name": "Intradef"
         },
         {
             "base_url": "https://matrix.agent.justice.tchap.gouv.fr",
-            "server_name": "Justice",
-            "email_examples": "? ..."
+            "server_name": "Justice"
         },
         {
             "base_url": "https://matrix.agent.pm.tchap.gouv.fr",
-            "server_name": "Premier Ministre",
-            "email_examples": "? ..."
+            "server_name": "Premier Ministre"
         },
         {
             "base_url": "https://matrix.agent.social.tchap.gouv.fr",
-            "server_name": "Social",
-            "email_examples": "? ..."
+            "server_name": "Social"
         },
         {
             "base_url": "https://matrix.agent.ssi.tchap.gouv.fr",
-            "server_name": "SSI",
-            "email_examples": "? ..."
+            "server_name": "SSI"
         }
     ],
     "disable_custom_urls": false,
@@ -194,6 +177,16 @@
         "fdroid": null
     },
     "permalink_prefix": "https://tchap.gouv.fr",
+    "terms_and_conditions_links": [
+        {
+            "url": "https://www.tchap.beta.gouv.fr/cgu",
+            "text": "Read the CGU"
+        },
+        {
+            "url": "https://tchap.beta.gouv.fr/politique-de-confidentialite",
+            "text": "Read the Privacy Policy"
+        }
+    ],
     "tchap_features": {
         "feature_email_notification": ["agent.dinum.tchap.gouv.fr"],
         "feature_thread": ["agent.dinum.tchap.gouv.fr"],

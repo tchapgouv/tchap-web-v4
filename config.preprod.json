@@ -11,20 +11,18 @@
     "homeserver_list": [
         {
             "base_url": "https://matrix.i.tchap.gouv.fr",
-            "server_name": "Internes - preprod",
-            "email_examples": "hakim@beta.gouv.fr, alice@interieur.gouv.fr, ..."
+            "server_name": "Internes - preprod"
         },
         {
             "base_url": "https://matrix.e.tchap.gouv.fr",
-            "server_name": "Externes - preprod",
-            "email_examples": "nina@soprasteria.com, paul@athos.fr, ..."
+            "server_name": "Externes - preprod"
         }
     ],
     "disable_custom_urls": false,
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
-    "brand": "Tchap",
+    "brand": "TCHAP PREPROD",
     "bug_report_endpoint_url": "https://matrix.i.tchap.gouv.fr/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
@@ -66,8 +64,9 @@
         "FTUE.useCaseSelection": "WorkMessaging"
     },
     "branding": {
-        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
+        "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo-preprod.svg",
         "auth_footer_links": [
+            { "text": "PREPROD", "url": "https://matrix.i.tchap.gouv.fr/_matrix/client/versions" },
             { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
             { "text": "OpenData", "url": "https://www.data.gouv.fr" },
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },
@@ -76,6 +75,11 @@
             { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
+    },
+    "user_notice": {
+        "title": "PREPROD",
+        "description": "You are on preprod env",
+        "show_once": false
     },
     "desktop_builds": {
         "available": false
@@ -86,6 +90,16 @@
         "fdroid": null
     },
     "permalink_prefix": "https://www.beta.tchap.gouv.fr",
+    "terms_and_conditions_links": [
+        {
+            "url": "https://www.tchap.beta.gouv.fr/cgu",
+            "text": "Read the CGU"
+        },
+        {
+            "url": "https://tchap.beta.gouv.fr/politique-de-confidentialite",
+            "text": "Read the Privacy Policy"
+        }
+    ],
     "tchap_features": {
         "feature_email_notification": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
