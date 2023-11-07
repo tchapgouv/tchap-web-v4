@@ -135,6 +135,12 @@ declare global {
              * @param roomId the id of the room to invite to
              */
             leaveRoom(roomId: string): Chainable<{}>;
+            /**
+             * :TCHAP: added this function
+             * Leave a room. If the leaving fails, log and carry on without crashing the test.
+             * @param roomId the id of the room to invite to
+             */
+            leaveRoomWithSilentFail(roomId: string): Chainable<{}>;
         }
     }
 }
@@ -238,4 +244,13 @@ Cypress.Commands.add("joinRoom", (roomIdOrAlias: string): Chainable<Room> => {
 
 Cypress.Commands.add("leaveRoom", (roomId: string): Chainable<{}> => {
     return cy.getClient().then((cli) => cli.leave(roomId));
+});
+
+Cypress.Commands.add("leaveRoomWithSilentFail", (roomId: string): Chainable<{}> => {
+    return cy.getClient().then((cli) => {
+        return cli.leave(roomId).catch((err) => {
+            cy.log("COULD NOT LEAVE ROOM ! Continuing silently.", err);
+            return {};
+        });
+    });
 });
