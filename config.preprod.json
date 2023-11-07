@@ -90,6 +90,16 @@
         "fdroid": null
     },
     "permalink_prefix": "https://www.beta.tchap.gouv.fr",
+    "terms_and_conditions_links": [
+        {
+            "url": "https://www.tchap.beta.gouv.fr/cgu",
+            "text": "Read the CGU"
+        },
+        {
+            "url": "https://tchap.beta.gouv.fr/politique-de-confidentialite",
+            "text": "Read the Privacy Policy"
+        }
+    ],
     "tchap_features": {
         "feature_email_notification": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
