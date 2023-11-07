@@ -20,8 +20,3 @@ import "cypress-real-events";
 
 import "./loginToRemoteHomeserver";
 import "./client";
-import "./settings";
-import "./util";
-import "./app";
-import "./views";
-import "./timeline";
