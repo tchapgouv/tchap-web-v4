@@ -92,7 +92,7 @@ describe("Check room access settings", () => {
                 cy.get(".mx_AccessibleButton").should("have.attr", "aria-disabled", "true");
             });
 
-            cy.leaveRoom(roomId);
+            cy.leaveRoomWithSilentFail(roomId);
         });
     });
 
@@ -116,7 +116,7 @@ describe("Check room access settings", () => {
             //assert room header is updated
             cy.get(".tc_RoomHeader_external").should("exist");
 
-            cy.leaveRoom(roomId);
+            cy.leaveRoomWithSilentFail(roomId);
         });
     });
 });

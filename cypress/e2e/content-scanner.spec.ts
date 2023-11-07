@@ -16,7 +16,7 @@ describe("Content Scanner", () => {
 
         const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPrivateWithExternalRoom(roomName).then(() => {
+        RoomUtils.createPrivateRoom(roomName).then(() => {
             //open room
             cy.get('[aria-label="' + roomName + '"]').click();
         });

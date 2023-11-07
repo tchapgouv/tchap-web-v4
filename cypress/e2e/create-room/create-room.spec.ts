@@ -46,7 +46,7 @@ describe("Create Room", () => {
             console.log("roomIdToCleanup", urlString.split("/#/room/")[1]);
             const roomId = urlString.split("/#/room/")[1];
             if (roomId) {
-                cy.leaveRoom(roomId);
+                cy.leaveRoomWithSilentFail(roomId);
                 // todo also forgetRoom to save resources.
             } else {
                 console.error("Did not find roomId in url. Not cleaning up.");
