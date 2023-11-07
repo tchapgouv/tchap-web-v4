@@ -23,7 +23,7 @@
             "src/components/views/verification/VerificationComplete.tsx"
         ]
     },
-    "better-help-settings-2": {
+    "bug-reporting": {
         "package": "matrix-react-sdk",
         "github-issue":"https://github.com/tchapgouv/tchap-web-v4/issues/527, https://github.com/tchapgouv/tchap-web-v4/issues/526",
         "comments" : "add email in rageshake",
@@ -153,7 +153,7 @@
         "package": "matrix-react-sdk",
         "files": ["src/components/views/dialogs/security/AccessSecretStorageDialog.tsx"]
     },
-    "use-the-term-people-not-direct-messages": {
+    "use-the-term-direct-messages-not-people": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/448",
         "package": "matrix-react-sdk",
         "files": [
