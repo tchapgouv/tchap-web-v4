@@ -1135,5 +1135,10 @@
     "onboarding_free_e2ee_messaging_tchap_limited_voip": {
         "en": "With free end-to-end encrypted messaging, %(brand)s is a great way to stay in touch.",
         "fr": "Grâce à la messagerie chiffrée de bout en bout gratuite, %(brand)s est un excellent moyen de rester en contact."
+    },
+    "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.": {
+        "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
+        "fr": "%(brand)s est ouvert dans une autre fenêtre. Cliquez \"%(label)s\" pour utiliser %(brand)s ici et déconnecter l'autre fenêtre.",
+        "comment": "2023-11-08: remove once the string is translated in element"
     }
 }
