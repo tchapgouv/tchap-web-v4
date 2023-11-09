@@ -1140,5 +1140,13 @@
         "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
         "fr": "%(brand)s est ouvert dans une autre fenêtre. Cliquez \"%(label)s\" pour utiliser %(brand)s ici et déconnecter l'autre fenêtre.",
         "comment": "2023-11-08: remove once the string is translated in element"
+    },
+    "%(brand)s has been connected in another tab": {
+        "en": "%(brand)s has been connected in another tab",
+        "fr": "%(brand)s a été connecté dans un autre onglet"
+    },
+    "You can close this disconnected tab, and go to the other %(brand)s tab.": {
+        "en": "You can close this disconnected tab, and go to the other %(brand)s tab.",
+        "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
     }
 }

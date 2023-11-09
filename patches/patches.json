@@ -233,5 +233,12 @@
         "files": [
             "src/components/views/user-onboarding/UserOnboardingHeader.tsx"
         ]
+    },
+    "better-text-for-tab-switch": {
+        "comments": "Remove when solved in element-web : https://github.com/vector-im/element-web/issues/26537",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/components/structures/auth/SessionLockStolenView.tsx"
+        ]
     }
 }
