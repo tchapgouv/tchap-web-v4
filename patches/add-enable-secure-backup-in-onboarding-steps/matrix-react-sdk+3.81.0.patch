@@ -1,0 +1,33 @@
+diff --git a/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts b/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts
+index 43e819c..82ec3e5 100644
+--- a/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts
++++ b/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts
+@@ -29,6 +29,7 @@ import SdkConfig from "../SdkConfig";
+ import { UseCase } from "../settings/enums/UseCase";
+ import { useSettingValue } from "./useSettings";
+ import { UserOnboardingContext } from "./useUserOnboardingContext";
++import { accessSecretStorage } from "../SecurityManager";
+ 
+ interface UserOnboardingTask {
+     id: string;
+@@ -93,6 +94,20 @@ const tasks: UserOnboardingTask[] = [
+             onClick: onClickStartDm,
+         },
+     },
++    { // :TCHAP:
++        id: "setup-secure-backup",
++        title: _t("Sauvegardez vos messages automatiquement"),
++        description: _t("Vous pourrez les récupérez sur n'importe quel appareil à l'aide du Code de Récupération."),
++        completed: (ctx: UserOnboardingContext) => {
++
++        }, // todo
++        action: {
++            label: _t("Activer la sauvegarde automatique"),
++            onClick: (ev: ButtonEvent) => {
++                accessSecretStorage();
++            },
++        },
++    }, // end :TCHAP:
+     {
+         id: "download-apps",
+         title: () =>

@@ -240,5 +240,13 @@
         "files": [
             "src/components/structures/auth/SessionLockStolenView.tsx"
         ]
+    },
+    "add-enable-secure-backup-in-onboarding-steps": {
+        "comments": "Filed in element-web : https://github.com/vector-im/element-web/issues/26540",
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/hooks/useUserOnboardingTasks.ts",
+            "src/hooks/useUserOnboardingContext.ts"
+        ]
     }
 }

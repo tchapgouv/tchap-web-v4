@@ -1148,5 +1148,17 @@
     "You can close this disconnected tab, and go to the other %(brand)s tab.": {
         "en": "You can close this disconnected tab, and go to the other %(brand)s tab.",
         "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
+    },
+    "Sauvegardez vos messages automatiquement": {
+        "en": "Back up your messages automatically",
+        "fr": "Sauvegardez vos messages automatiquement"
+    },
+    "Activer la sauvegarde automatique": {
+        "en": "Setup Secure Backup",
+        "fr": "Activer la sauvegarde automatique"
+    },
+    "Vous pourrez les récupérez sur n'importe quel appareil à l'aide du Code de Récupération.": {
+        "en": "You will be able to retrieve them on any device using the Recovery Code.",
+        "fr": "Vous pourrez les récupérez sur n'importe quel appareil à l'aide du Code de Récupération."
     }
 }
