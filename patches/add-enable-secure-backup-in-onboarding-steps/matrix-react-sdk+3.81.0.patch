@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts b/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts
-index 43e819c..82ec3e5 100644
+index 43e819c..aa75cef 100644
 --- a/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts
 +++ b/node_modules/matrix-react-sdk/src/hooks/useUserOnboardingTasks.ts
 @@ -29,6 +29,7 @@ import SdkConfig from "../SdkConfig";
@@ -10,13 +10,21 @@ index 43e819c..82ec3e5 100644
  
  interface UserOnboardingTask {
      id: string;
-@@ -93,6 +94,20 @@ const tasks: UserOnboardingTask[] = [
-             onClick: onClickStartDm,
-         },
+@@ -54,12 +55,28 @@ const onClickStartDm = (ev: ButtonEvent): void => {
+ };
+ 
+ const tasks: UserOnboardingTask[] = [
++    /** :TCHAP: delete the first task, we have too many
+     {
+         id: "create-account",
+         title: _t("Create account"),
+         description: _t("onboarding|you_made_it"),
+         completed: () => true,
      },
++    */
 +    { // :TCHAP:
 +        id: "setup-secure-backup",
-+        title: _t("Sauvegardez vos messages automatiquement"),
++        title: _t("Sauvegarder vos messages automatiquement"),
 +        description: _t("Vous pourrez les récupérez sur n'importe quel appareil à l'aide du Code de Récupération."),
 +        completed: (ctx: UserOnboardingContext) => {
 +
@@ -29,5 +37,5 @@ index 43e819c..82ec3e5 100644
 +        },
 +    }, // end :TCHAP:
      {
-         id: "download-apps",
-         title: () =>
+         id: "find-friends",
+         title: _t("onboarding|find_friends"),
