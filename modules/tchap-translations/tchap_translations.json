@@ -785,8 +785,8 @@
         "en": "Or if that doesn't work, please follow <a>these steps</a>."
     },
     "Unable to decrypt message": {
-        "fr": "Impossible de déverrouiller le message",
-        "en": "Unable to unlock message"
+        "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>",
+        "en": "Waiting for this message. This could take a while. <a>Find out more</a>"
     },
     "Decrypting messages…": {
         "fr": "Déverrouillage des messages…",
