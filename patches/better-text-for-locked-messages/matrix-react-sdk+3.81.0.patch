@@ -1,0 +1,31 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
+index c3b615b..7f106a2 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
+@@ -19,11 +19,25 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+ 
+ import { _t } from "../../../languageHandler";
+ import { IBodyProps } from "./IBodyProps";
++import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
++import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
+ 
+ function getErrorMessage(mxEvent?: MatrixEvent): string {
+     return mxEvent?.isEncryptedDisabledForUnverifiedDevices
+         ? _t("The sender has blocked you from receiving this message")
+-        : _t("Unable to decrypt message");
++        // :TCHAP: : _t("Unable to decrypt message");
++        : _t(
++            "Unable to decrypt message",
++            {},
++            {
++                a: (sub) => (
++                    <ExternalLink href={TchapUrls.lockedMessagesPage}>
++                        {sub}
++                    </ExternalLink>
++                ),
++            },
++        );
++        // end :TCHAP:
+ }
+ 
+ // A placeholder element for messages that could not be decrypted
