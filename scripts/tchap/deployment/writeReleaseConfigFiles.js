@@ -1,12 +1,11 @@
 /**
  * Writes the files in tchap-infra that you need to create a deployment.
  *
- * Usage : node scripts/tchap/writeReleaseConfigFiles.js --current=4.3.9 --new=4.3.9 --beta=4.3.10 --tchapInfraDir="../tchap-infra"
+ * Usage : node scripts/tchap/deployment/writeReleaseConfigFiles.js --current=4.3.9 --new=4.3.9 --beta=4.3.10 [--tchapInfraDir="../tchap-infra"]
  *
  * Don't run it too many times because the github api will block you :facepalm: Waiting will get you unblocked.
  *
  * Todo :
- *  - custom location of tchap-infra dir
  *  - use token to avoid being throttled
  *  - create the pr !
  */
