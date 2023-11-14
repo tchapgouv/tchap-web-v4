@@ -29,3 +29,37 @@ index c3b615b..7f106a2 100644
  }
  
  // A placeholder element for messages that could not be decrypted
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
+index 8164511..af55a57 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
+@@ -30,6 +30,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
+ import { Action } from "../../../dispatcher/actions";
+ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+ import defaultDispatcher from "../../../dispatcher/dispatcher";
++import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
++import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
+ 
+ interface IProps {
+     mxEvent: MatrixEvent;
+@@ -111,7 +113,19 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
+             {lastReply.isDecryptionFailure() ? (
+                 <div
+                     className="mx_ThreadSummary_content mx_DecryptionFailureBody"
+-                    title={_t("Unable to decrypt message")}
++                    // :TCHAP: title={_t("Unable to decrypt message")}
++                    title={_t(
++                        "Unable to decrypt message",
++                        {},
++                        {
++                            a: (sub) => (
++                                <ExternalLink href={TchapUrls.lockedMessagesPage}>
++                                    {sub}
++                                </ExternalLink>
++                            ),
++                        },
++                    )}
++                    // end :TCHAP:
+                 >
+                     <span className="mx_ThreadSummary_message-preview">{_t("Unable to decrypt message")}</span>
+                 </div>

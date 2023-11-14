@@ -244,7 +244,8 @@
     "better-text-for-locked-messages": {
         "package": "matrix-react-sdk",
         "files": [
-            "src/components/views/messages/DecryptionFailureBody.tsx"
+            "src/components/views/messages/DecryptionFailureBody.tsx",
+            "src/components/views/rooms/ThreadSummary.tsx"
         ]
     }
 }
