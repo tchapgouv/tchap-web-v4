@@ -20,7 +20,7 @@ describe("Check room access settings", () => {
     it("creates a public room and check access settings", () => {
         const roomName = "test/" + today + "/public_room_check_access_settings" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPublicRoom(roomName).then((roomId) => {
+        cy.createPublicRoom(roomName).then((roomId) => {
             RoomUtils.openRoomAccessSettings(roomName);
 
             //assert
@@ -45,7 +45,7 @@ describe("Check room access settings", () => {
     it("creates a private room and check access settings", () => {
         const roomName = "test/" + today + "/private_room_check_access_settings" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPrivateRoom(roomName).then((roomId) => {
+        cy.createPrivateRoom(roomName).then((roomId) => {
             RoomUtils.openRoomAccessSettings(roomName);
 
             //assert
@@ -72,7 +72,7 @@ describe("Check room access settings", () => {
     it("creates a private room with external and check access settings", () => {
         const roomName = "test/" + today + "/external_room_check_access_settings" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
+        cy.createPrivateWithExternalRoom(roomName).then((roomId) => {
             RoomUtils.openRoomAccessSettings(roomName);
 
             //assert
@@ -100,7 +100,7 @@ describe("Check room access settings", () => {
         const roomName =
             "test/" + today + "/private_room_change_external_access_settings" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPrivateRoom(roomName).then((roomId) => {
+        cy.createPrivateRoom(roomName).then((roomId) => {
             RoomUtils.openRoomAccessSettings(roomName);
 
             // click on 'Allow the externals to join' this room

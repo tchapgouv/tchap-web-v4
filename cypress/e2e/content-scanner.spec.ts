@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
-import RoomUtils from "../utils/room-utils";
 import RandomUtils from "../utils/random-utils";
 
 describe("Content Scanner", () => {
@@ -16,7 +15,7 @@ describe("Content Scanner", () => {
 
         const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPrivateRoom(roomName).then(() => {
+        cy.createPrivateRoom(roomName).then(() => {
             //open room
             cy.get('[aria-label="' + roomName + '"]').click();
         });
