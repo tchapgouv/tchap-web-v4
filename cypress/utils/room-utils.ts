@@ -1,7 +1,8 @@
-import Chainable = Cypress.Chainable;
-import TchapCreateRoom from "../../src/tchap/lib/createTchapRoom";
-import { TchapRoomType } from "../../src/tchap/@types/tchap";
+/**
+ * Copyright DINUM 2023
+ */
 
+import Chainable = Cypress.Chainable;
 export default class RoomUtils {
     public static openRoom(roomName: string): Chainable<JQuery<HTMLElement>> {
         return cy.get('[aria-label="' + roomName + '"]').click();
