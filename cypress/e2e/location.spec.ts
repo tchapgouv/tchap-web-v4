@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import RoomUtils from "../utils/room-utils";
 import RandomUtils from "../utils/random-utils";
 
 describe("Location", () => {
@@ -16,7 +15,7 @@ describe("Location", () => {
     it("does not show Location button in message composer", () => {
         // Create a room
         const roomName = "test/" + today + "/no_location_button/" + RandomUtils.generateRandom(4);
-        RoomUtils.createPublicRoom(roomName).then((roomId) => {
+        cy.createPublicRoom(roomName).then((roomId) => {
             //open room
             cy.get('[aria-label="' + roomName + '"]').click();
             // Open menu in message composer

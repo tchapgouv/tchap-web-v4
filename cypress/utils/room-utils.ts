@@ -1,17 +1,9 @@
-import Chainable = Cypress.Chainable;
-import TchapCreateRoom from "../../src/tchap/lib/createTchapRoom";
-import { TchapRoomType } from "../../src/tchap/@types/tchap";
+/**
+ * Copyright DINUM 2023
+ */
 
+import Chainable = Cypress.Chainable;
 export default class RoomUtils {
-    public static createPublicRoom(roomName: string): Chainable<string> {
-        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Forum, false).createOpts);
-    }
-    public static createPrivateRoom(roomName: string): Chainable<string> {
-        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.Private, false).createOpts);
-    }
-    public static createPrivateWithExternalRoom(roomName: string): Chainable<string> {
-        return cy.createRoom(TchapCreateRoom.roomCreateOptions(roomName, TchapRoomType.External, false).createOpts);
-    }
     public static openRoom(roomName: string): Chainable<JQuery<HTMLElement>> {
         return cy.get('[aria-label="' + roomName + '"]').click();
     }
