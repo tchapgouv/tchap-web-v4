@@ -66,7 +66,7 @@ describe("Create Room", () => {
         });
 
         // Url of room looks like :
-        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
@@ -88,7 +88,7 @@ describe("Create Room", () => {
         });
 
         // Url of room looks like :
-        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
@@ -109,7 +109,7 @@ describe("Create Room", () => {
         });
 
         // Url of room looks like :
-        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
         cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
