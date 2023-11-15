@@ -62,15 +62,13 @@ describe("Create Room", () => {
             const nameLabel = "Nom";
             cy.get(`[label="${nameLabel}"]`).type(name);
             // Submit
-            cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
         });
 
         // Url of room looks like :
-        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
-        cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
         cy.get(".tc_RoomHeader_external").should("not.exist");
     });
@@ -86,15 +84,13 @@ describe("Create Room", () => {
             // Change room to external
             cy.get(".tc_TchapRoomTypeSelector_external").click();
             // Submit
-            cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
         });
 
         // Url of room looks like :
-        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
-        cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
         cy.get(".tc_RoomHeader_external").should("exist");
     });
@@ -109,15 +105,13 @@ describe("Create Room", () => {
             // Change room to public
             cy.get(".tc_TchapRoomTypeSelector_forum").click();
             // Submit
-            cy.startMeasuring("from-submit-to-room");
             cy.get(".mx_Dialog_primary").click();
         });
 
         // Url of room looks like :
-        // http://localhost:8080/#/room/!kshfkshfkKSHJ:agent1.tchap.incubateur.net
+        // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
-        cy.stopMeasuring("from-submit-to-room");
         cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
     });
 
