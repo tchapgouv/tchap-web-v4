@@ -17,7 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import Chainable = Cypress.Chainable;
-import RandomUtils from "../../utils/random-utils";
+import RandomUtils from "../utils/random-utils";
 
 function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
     const addRoomLabel = "Ajouter un salon";
