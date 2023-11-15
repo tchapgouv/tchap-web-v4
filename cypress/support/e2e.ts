@@ -7,5 +7,6 @@ Copyright DINUM 2023
 import "cypress-real-events";
 
 import "./loginByEmail";
-import "./client";
 import "./rooms";
+
+import "matrix-react-sdk/cypress/support/client";
