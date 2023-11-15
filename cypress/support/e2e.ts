@@ -18,5 +18,5 @@ limitations under the License.
 
 import "cypress-real-events";
 
-import "./loginToRemoteHomeserver";
+import "./loginByEmail";
 import "./client";
