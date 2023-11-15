@@ -49,3 +49,6 @@ Cypress.Commands.add("leaveCurrentRoomWithSilentFail", (): Chainable<{}> => {
         }
     });
 });
+
+// Needed to make this file a module
+export {};
