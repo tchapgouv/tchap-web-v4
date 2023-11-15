@@ -25,7 +25,7 @@ describe("Style of external rooms", () => {
                 cy.get(".mx_DecoratedRoomAvatar_icon_external"); // lock icon on room avatar
             });
 
-            cy.leaveRoomWithSilentFail(roomId);
+            cy.leaveRoom(roomId);
         });
     });
 });
