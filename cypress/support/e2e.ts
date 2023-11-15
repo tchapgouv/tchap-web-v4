@@ -20,3 +20,4 @@ import "cypress-real-events";
 
 import "./loginByEmail";
 import "./client";
+import "./rooms";
