@@ -33,12 +33,6 @@ declare global {
              */
             getClient(): Chainable<MatrixClient | undefined>;
             /**
-             * Create a room with given options.
-             * @param options the options to apply when creating the room
-             * @return the ID of the newly created room
-             */
-            createRoom(options: ICreateRoomOpts): Chainable<string>;
-            /**
              * Create a space with given options.
              * @param options the options to apply when creating the space
              * @return the ID of the newly created space (room)
@@ -129,18 +123,6 @@ declare global {
              * @param roomIdOrAlias the id or alias of the room to join
              */
             joinRoom(roomIdOrAlias: string): Chainable<Room>;
-            /**
-             * :TCHAP: added this function
-             * Leave a room.
-             * @param roomId the id of the room to invite to
-             */
-            leaveRoom(roomId: string): Chainable<{}>;
-            /**
-             * :TCHAP: added this function
-             * Leave a room. If the leaving fails, log and carry on without crashing the test.
-             * @param roomId the id of the room to invite to
-             */
-            leaveRoomWithSilentFail(roomId: string): Chainable<{}>;
         }
     }
 }
@@ -155,30 +137,6 @@ Cypress.Commands.add("getDmRooms", (userId: string): Chainable<string[]> => {
         .then((cli) => cli.getAccountData("m.direct")?.getContent<Record<string, string[]>>())
         .then((dmRoomMap) => dmRoomMap[userId] ?? []);
 });
-
-//:tchap: added this createRoom
-Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
-    return cy.window({ log: false }).then(async (win) => {
-        const cli = win.mxMatrixClientPeg.matrixClient;
-        const resp = await cli.createRoom(options);
-        const roomId = resp.room_id;
-
-        if (!cli.getRoom(roomId)) {
-            await new Promise<void>((resolve) => {
-                const onRoom = (room: Room) => {
-                    if (room.roomId === roomId) {
-                        cli.off(win.matrixcs.ClientEvent.Room, onRoom);
-                        resolve();
-                    }
-                };
-                cli.on(win.matrixcs.ClientEvent.Room, onRoom);
-            });
-        }
-
-        return roomId;
-    });
-});
-//:tchap: end
 
 Cypress.Commands.add("createSpace", (options: ICreateRoomOpts): Chainable<string> => {
     return cy.createRoom({
@@ -240,18 +198,4 @@ Cypress.Commands.add("bootstrapCrossSigning", () => {
 
 Cypress.Commands.add("joinRoom", (roomIdOrAlias: string): Chainable<Room> => {
     return cy.getClient().then((cli) => cli.joinRoom(roomIdOrAlias));
-});
-
-Cypress.Commands.add("leaveRoom", (roomId: string): Chainable<{}> => {
-    return cy.getClient().then((cli) => cli.leave(roomId));
-});
-
-// Needed until this is fixed : https://github.com/tchapgouv/synapse-manage-last-admin/issues/11
-Cypress.Commands.add("leaveRoomWithSilentFail", (roomId: string): Chainable<{}> => {
-    return cy.getClient().then((cli) => {
-        return cli.leave(roomId).catch((err) => {
-            cy.log("COULD NOT LEAVE ROOM ! Continuing silently.", err);
-            return {};
-        });
-    });
 });

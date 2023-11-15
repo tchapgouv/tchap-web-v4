@@ -16,7 +16,7 @@ describe("Style of external rooms", () => {
     it("displays special header in external private room", () => {
         const roomName = "test/" + today + "/external_room_header_" + RandomUtils.generateRandom(4);
 
-        RoomUtils.createPrivateWithExternalRoom(roomName).then((roomId) => {
+        cy.createPrivateWithExternalRoom(roomName).then((roomId) => {
             //open room
             cy.get('[aria-label="' + roomName + '"]').click();
 
