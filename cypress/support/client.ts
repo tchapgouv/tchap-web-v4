@@ -138,6 +138,7 @@ declare global {
             /**
              * :TCHAP: added this function
              * Leave a room. If the leaving fails, log and carry on without crashing the test.
+             * Used to workaround a bug on leaving rooms : https://github.com/tchapgouv/synapse-manage-last-admin/issues/11
              * @param roomId the id of the room to invite to
              */
             leaveRoomWithSilentFail(roomId: string): Chainable<{}>;
@@ -246,7 +247,6 @@ Cypress.Commands.add("leaveRoom", (roomId: string): Chainable<{}> => {
     return cy.getClient().then((cli) => cli.leave(roomId));
 });
 
-// Needed until this is fixed : https://github.com/tchapgouv/synapse-manage-last-admin/issues/11
 Cypress.Commands.add("leaveRoomWithSilentFail", (roomId: string): Chainable<{}> => {
     return cy.getClient().then((cli) => {
         return cli.leave(roomId).catch((err) => {
