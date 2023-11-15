@@ -12,7 +12,7 @@ describe("Content Scanner", () => {
 
     // Login and create room only once for all tests. (good practice for e2e tests, it's not a unit test)
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginByEmail(homeserverUrl, email, password);
 
         const roomName = "test/" + today + "/content_scanner_" + RandomUtils.generateRandom(4);
 

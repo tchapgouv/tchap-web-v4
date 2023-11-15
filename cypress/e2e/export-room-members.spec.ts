@@ -12,7 +12,7 @@ describe("Export room members feature", () => {
     const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     beforeEach(() => {
-        cy.loginUser(homeserverUrl, email, password);
+        cy.loginByEmail(homeserverUrl, email, password);
     });
 
     afterEach(() => {});
