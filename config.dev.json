@@ -1,26 +1,26 @@
 {
     "default_server_config": {
         "m.homeserver": {
-            "base_url": "https://matrix.agent1.tchap.incubateur.net",
+            "base_url": "https://matrix.dev01.tchap.incubateur.net",
             "server_name": "Agents 1"
         },
         "m.identity_server": {
-            "base_url": "https://matrix.agent1.tchap.incubateur.net"
+            "base_url": "https://matrix.dev01.tchap.incubateur.net"
         }
     },
     "homeserver_list": [
         {
-            "base_url": "https://matrix.agent1.tchap.incubateur.net",
+            "base_url": "https://matrix.dev01.tchap.incubateur.net",
             "server_name": "Agents 1",
             "email_examples": "? ..."
         },
         {
-            "base_url": "https://matrix.agent2.tchap.incubateur.net",
+            "base_url": "https://matrix.dev02.tchap.incubateur.net",
             "server_name": "Agents 2",
             "email_examples": "? ..."
         },
         {
-            "base_url": "https://matrix.externe.tchap.incubateur.net",
+            "base_url": "https://matrix.ext01.tchap.incubateur.net",
             "server_name": "Externes",
             "email_examples": "? ..."
         }
@@ -45,12 +45,12 @@
     "default_federate": true,
     "default_theme": "light",
     "room_directory": {
-        "servers": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"]
+        "servers": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"]
     },
     "enable_presence_by_hs_url": {
-        "https://matrix.agent1.tchap.incubateur.net": false,
-        "https://matrix.agent2.tchap.incubateur.net": false,
-        "https://matrix.externe.tchap.incubateur.net": false
+        "https://matrix.dev01.tchap.incubateur.net": false,
+        "https://matrix.dev02.tchap.incubateur.net": false,
+        "https://matrix.ext01.tchap.incubateur.net": false
     },
     "setting_defaults": {
         "breadcrumbs": true,
@@ -96,11 +96,15 @@
     "custom_translations_url": "/i18n/tchap_translations.json",
     "tchap_features": {
         "feature_email_notification": [
-            "agent1.tchap.incubateur.net",
-            "agent2.tchap.incubateur.net",
-            "externe.tchap.incubateur.net"
+            "dev01.tchap.incubateur.net",
+            "dev02.tchap.incubateur.net",
+            "ext01.tchap.incubateur.net"
         ],
-        "feature_space": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"],
-        "feature_thread": ["agent1.tchap.incubateur.net", "agent2.tchap.incubateur.net", "externe.tchap.incubateur.net"]
+        "feature_space": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"],
+        "feature_thread": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"]
+    },
+    "user_notice": {
+        "title": "Tchap sera indisponible le 30 nov de 7h30 à 10h30 CET",
+        "description": "Plus d'infos : https://aide.tchap.beta.gouv.fr"
     }
 }

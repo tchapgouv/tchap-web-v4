@@ -92,5 +92,9 @@
         "feature_email_notification": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_space": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"]
+    },
+    "user_notice": {
+        "title": "Tchap sera indisponible le 30 nov de 7h30 à 10h30 CET",
+        "description": "Plus d'infos : https://aide.tchap.beta.gouv.fr"
     }
 }
