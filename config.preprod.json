@@ -76,6 +76,11 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
     },
+    "user_notice": {
+        "title": "PREPROD",
+        "description": "You are on preprod env",
+        "show_once": false
+    },
     "desktop_builds": {
         "available": false
     },
