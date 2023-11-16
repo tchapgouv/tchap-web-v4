@@ -28,7 +28,7 @@ import VectorBasePlatform from "./VectorBasePlatform";
 import { parseQs } from "../url_utils";
 import { _t } from "../../languageHandler";
 
-const POKE_RATE_MS = 10 * 60 * 1000; // 10 min
+const POKE_RATE_MS = 60 * 1000; // 1 min
 
 function getNormalizedAppVersion(version: string): string {
     // if version looks like semver with leading v, strip it (matches scripts/normalize-version.sh)
