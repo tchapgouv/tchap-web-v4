@@ -39,13 +39,6 @@ declare global {
              */
             leaveCurrentRoomWithSilentFail(): Chainable<{}>;
 
-            /**
-             * Create a room with given options.
-             * @param options the options to apply when creating the room
-             * @return the ID of the newly created room
-             */
-            createRoom(options: ICreateRoomOpts): Chainable<string>;
-
             createPublicRoom(roomName: string): Chainable<string>;
 
             createPrivateRoom(roomName: string): Chainable<string>;
@@ -91,28 +84,6 @@ Cypress.Commands.add("leaveCurrentRoomWithSilentFail", (): Chainable<{}> => {
             console.error("Did not find roomId in url. Not cleaning up.");
             return {};
         }
-    });
-});
-
-Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
-    return cy.window({ log: false }).then(async (win) => {
-        const cli = win.mxMatrixClientPeg.matrixClient;
-        const resp = await cli.createRoom(options);
-        const roomId = resp.room_id;
-
-        if (!cli.getRoom(roomId)) {
-            await new Promise<void>((resolve) => {
-                const onRoom = (room: Room) => {
-                    if (room.roomId === roomId) {
-                        cli.off(win.matrixcs.ClientEvent.Room, onRoom);
-                        resolve();
-                    }
-                };
-                cli.on(win.matrixcs.ClientEvent.Room, onRoom);
-            });
-        }
-
-        return roomId;
     });
 });
 
