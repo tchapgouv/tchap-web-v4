@@ -5,7 +5,7 @@
 import Chainable = Cypress.Chainable;
 export default class RoomUtils {
     public static openRoom(roomName: string): Chainable<JQuery<HTMLElement>> {
-        return cy.get('[aria-label="' + roomName + '"]').click();
+        return cy.get('.mx_RoomList .mx_RoomSublist [aria-label="' + roomName + '"]').click();
     }
     public static openRoomAccessSettings(roomName: string): Chainable<JQuery<HTMLElement>> {
         cy.get('[aria-label="' + roomName + '"]').click(); //open room
