@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-index f92f66c..9f54a3b 100644
+index 98e9482..11d563a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 @@ -61,6 +61,8 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
@@ -24,7 +24,7 @@ index f92f66c..9f54a3b 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 2f9719d..233854f 100644
+index c183cdc..6d3738c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 @@ -61,6 +61,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
@@ -35,7 +35,7 @@ index 2f9719d..233854f 100644
  
  interface IOptionsButtonProps {
      mxEvent: MatrixEvent;
-@@ -349,7 +350,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
+@@ -345,7 +346,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
              !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
              !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
  
@@ -48,7 +48,7 @@ index 2f9719d..233854f 100644
  
      /**
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
-index fddb9fd..ece5cc5 100644
+index b5117d7..f9551b0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
 @@ -40,6 +40,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
@@ -59,7 +59,7 @@ index fddb9fd..ece5cc5 100644
  
  const ROOM_INFO_PHASES = [
      RightPanelPhases.RoomSummary,
-@@ -268,20 +269,24 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+@@ -273,20 +274,24 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                  onClick={this.onTimelineCardClicked}
              />,
          );
