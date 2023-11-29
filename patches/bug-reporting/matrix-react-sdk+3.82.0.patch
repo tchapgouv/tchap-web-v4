@@ -145,7 +145,7 @@ index e679955..69f9b61 100644
  
  export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
-index 53bd3d8..97e681c 100644
+index e6341a8..cf7db3c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
 @@ -77,7 +77,9 @@ export default class ErrorBoundary extends React.PureComponent<Props, IState> {
@@ -160,10 +160,10 @@ index 53bd3d8..97e681c 100644
              let bugReportSection;
              if (SdkConfig.get().bug_report_endpoint_url) {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
-index ee1a9a6..1d02755 100644
+index a4f8b4d..e1cc8c3 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
-@@ -608,7 +608,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
+@@ -599,7 +599,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                          {
                              issueLink: (label) => (
                                  <a
@@ -175,7 +175,7 @@ index ee1a9a6..1d02755 100644
                                      rel="noreferrer noopener"
                                  >
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index 820f849..b450149 100644
+index 5cc8449..6f40b11 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 @@ -334,12 +334,13 @@ export async function submitFeedback(
