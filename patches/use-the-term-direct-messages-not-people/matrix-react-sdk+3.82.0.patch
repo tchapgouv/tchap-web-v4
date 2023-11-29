@@ -12,10 +12,10 @@ index fec82bf..1e0c897 100644
                      <SettingsSubsectionText>
                          {_t(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-index 0d1274f..2e9cf2c 100644
+index 374cb38..c13565c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-@@ -388,7 +388,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
+@@ -382,7 +382,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
          defaultHidden: false,
      },
      [DefaultTagID.DM]: {
@@ -25,7 +25,7 @@ index 0d1274f..2e9cf2c 100644
          defaultHidden: false,
          AuxButtonComponent: DmAuxButton,
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
-index b5ad1ea..1b61154 100644
+index 4d6cf9a..9c81549 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
 @@ -120,7 +120,7 @@ const SidebarUserSettingsTab: React.FC = () => {
@@ -35,10 +35,10 @@ index b5ad1ea..1b61154 100644
 -                            {_t("common|people")}
 +                            {_t("Direct Messages") /* TCHAP: change label _t("common|people") */}
                          </SettingsSubsectionText>
-                         <SettingsSubsectionText>{_t("Group all your people in one place.")}</SettingsSubsectionText>
-                     </StyledCheckbox>
+                         <SettingsSubsectionText>
+                             {_t("settings|sidebar|metaspaces_people_description")}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
-index e2c4159..d77f8a0 100644
+index 4750b99..884a146 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
 @@ -107,7 +107,9 @@ const QuickSettingsButton: React.FC<{
@@ -53,7 +53,7 @@ index e2c4159..d77f8a0 100644
                  <AccessibleButton
                      className="mx_QuickSettingsButton_moreOptionsButton"
 diff --git a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
-index 5d9f789..2b7811f 100644
+index 30f6798..6a7b69a 100644
 --- a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 +++ b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
 @@ -41,7 +41,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
@@ -66,5 +66,5 @@ index 5d9f789..2b7811f 100644
 +            return _t("Direct Messages");
 +            // end TCHAP
          case MetaSpace.Orphans:
-             return _t("Other rooms");
+             return _t("common|orphan_rooms");
      }
