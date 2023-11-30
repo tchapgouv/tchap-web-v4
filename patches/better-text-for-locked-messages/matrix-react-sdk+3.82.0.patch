@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
-index 1a68e58..328a441 100644
+index 1a68e58..162588c 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
 @@ -19,11 +19,25 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
@@ -11,10 +11,9 @@ index 1a68e58..328a441 100644
  
  function getErrorMessage(mxEvent?: MatrixEvent): string {
      return mxEvent?.isEncryptedDisabledForUnverifiedDevices
--        ? _t("timeline|decryption_failure_blocked")
+         ? _t("timeline|decryption_failure_blocked")
 -        : _t("threads|unable_to_decrypt");
-+    ? _t("timeline|decryption_failure_blocked")
-+    // :TCHAP: : _t("threads|unable_to_decrypt");
++        // :TCHAP: : _t("threads|unable_to_decrypt");
 +        : _t(
 +            "Waiting for this message. This could take a while. <a>Find out more</a>",
 +            {},
@@ -31,7 +30,7 @@ index 1a68e58..328a441 100644
  
  // A placeholder element for messages that could not be decrypted
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
-index ad79b47..76f7310 100644
+index ad79b47..dc1d79a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
 @@ -30,6 +30,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -49,7 +48,7 @@ index ad79b47..76f7310 100644
  
 +    // :TCHAP:
 +    const undecryptedText = _t(
-+        "Unable to decrypt message",
++        "threads|unable_to_decrypt",
 +        {},
 +        {
 +            a: (sub) => (

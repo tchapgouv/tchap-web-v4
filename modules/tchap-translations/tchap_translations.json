@@ -784,9 +784,16 @@
         "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
         "en": "Or if that doesn't work, please follow <a>these steps</a>."
     },
+    "threads": {
+        "unable_to_decrypt": {
+            "fr": "En attente de ce message. Ceci pourrait prendre un moment.",
+            "en": "Waiting for this message. This could take a while."
+        }
+    },
     "Unable to decrypt message": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment.",
-        "en": "Waiting for this message. This could take a while."
+        "en": "Waiting for this message. This could take a while.",
+        "comment": "replaced by threads|unable_to_decrypt ?"
     },
     "Waiting for this message. This could take a while. <a>Find out more</a>": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>",
