@@ -21,7 +21,7 @@ import WebPlatform from "../../../../src/vector/platform/WebPlatform";
 
 jest.mock("../../../../src/vector/platform/WebPlatform");
 
-describe('PWAPlatform', () => {
+describe("PWAPlatform", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -45,6 +45,7 @@ describe('PWAPlatform', () => {
         });
 
         it("should fall back to WebPlatform::setNotificationCount if no Navigator::setAppBadge", () => {
+            // @ts-ignore
             navigator.setAppBadge = undefined;
             const platform = new PWAPlatform();
             const superMethod = mocked(WebPlatform.prototype.setNotificationCount);
@@ -54,7 +55,7 @@ describe('PWAPlatform', () => {
         });
 
         it("should handle Navigator::setAppBadge rejecting gracefully", () => {
-            navigator.setAppBadge = jest.fn().mockRejectedValue(new Error);
+            navigator.setAppBadge = jest.fn().mockRejectedValue(new Error());
             const platform = new PWAPlatform();
             expect(() => platform.setNotificationCount(123)).not.toThrow();
         });

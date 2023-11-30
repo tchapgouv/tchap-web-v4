@@ -1,0 +1,21 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/AppDownloadDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/AppDownloadDialog.tsx
+index a4acd80..f39db01 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/AppDownloadDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/AppDownloadDialog.tsx
+@@ -107,6 +107,8 @@ export const AppDownloadDialog: FC<Props> = ({ onFinished }) => {
+                         >
+                             <GooglePlayBadge />
+                         </AccessibleButton>
++                        { /** :TCHAP: remove fdroid button.
++                         * Issue filed to element-web : https://github.com/vector-im/element-web/issues/26309
+                         <AccessibleButton
+                             element="a"
+                             href={urlFDroid}
+@@ -116,6 +118,7 @@ export const AppDownloadDialog: FC<Props> = ({ onFinished }) => {
+                         >
+                             <FDroidBadge />
+                         </AccessibleButton>
++                        */}
+                     </div>
+                 </div>
+             </div>

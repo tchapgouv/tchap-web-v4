@@ -19,12 +19,11 @@ limitations under the License.
 */
 
 import { UpdateCheckStatus, UpdateStatus } from "matrix-react-sdk/src/BasePlatform";
-import BaseEventIndexManager from 'matrix-react-sdk/src/indexing/BaseEventIndexManager';
-import dis from 'matrix-react-sdk/src/dispatcher/dispatcher';
-import { _t } from 'matrix-react-sdk/src/languageHandler';
-import SdkConfig from 'matrix-react-sdk/src/SdkConfig';
+import BaseEventIndexManager from "matrix-react-sdk/src/indexing/BaseEventIndexManager";
+import dis from "matrix-react-sdk/src/dispatcher/dispatcher";
+import SdkConfig from "matrix-react-sdk/src/SdkConfig";
 import { IConfigOptions } from "matrix-react-sdk/src/IConfigOptions";
-import * as rageshake from 'matrix-react-sdk/src/rageshake/rageshake';
+import * as rageshake from "matrix-react-sdk/src/rageshake/rageshake";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import Modal from "matrix-react-sdk/src/Modal";
@@ -40,36 +39,48 @@ import ToastStore from "matrix-react-sdk/src/stores/ToastStore";
 import GenericExpiringToast from "matrix-react-sdk/src/components/views/toasts/GenericExpiringToast";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { BreadcrumbsStore } from "matrix-react-sdk/src/stores/BreadcrumbsStore";
+import { UPDATE_EVENT } from "matrix-react-sdk/src/stores/AsyncStore";
+import { avatarUrlForRoom, getInitialLetter } from "matrix-react-sdk/src/Avatar";
+import DesktopCapturerSourcePicker from "matrix-react-sdk/src/components/views/elements/DesktopCapturerSourcePicker";
 
-import VectorBasePlatform from './VectorBasePlatform';
+import VectorBasePlatform from "./VectorBasePlatform";
 import { SeshatIndexManager } from "./SeshatIndexManager";
 import { IPCManager } from "./IPCManager";
+import { _t } from "../../languageHandler";
 
-const isMac = navigator.platform.toUpperCase().includes('MAC');
+interface SquirrelUpdate {
+    releaseNotes: string;
+    releaseName: string;
+    releaseDate: Date;
+    updateURL: string;
+}
+
+const isMac = navigator.platform.toUpperCase().includes("MAC");
 
 function platformFriendlyName(): string {
     // used to use window.process but the same info is available here
-    if (navigator.userAgent.includes('Macintosh')) {
-        return 'macOS';
-    } else if (navigator.userAgent.includes('FreeBSD')) {
-        return 'FreeBSD';
-    } else if (navigator.userAgent.includes('OpenBSD')) {
-        return 'OpenBSD';
-    } else if (navigator.userAgent.includes('SunOS')) {
-        return 'SunOS';
-    } else if (navigator.userAgent.includes('Windows')) {
-        return 'Windows';
-    } else if (navigator.userAgent.includes('Linux')) {
-        return 'Linux';
+    if (navigator.userAgent.includes("Macintosh")) {
+        return "macOS";
+    } else if (navigator.userAgent.includes("FreeBSD")) {
+        return "FreeBSD";
+    } else if (navigator.userAgent.includes("OpenBSD")) {
+        return "OpenBSD";
+    } else if (navigator.userAgent.includes("SunOS")) {
+        return "SunOS";
+    } else if (navigator.userAgent.includes("Windows")) {
+        return "Windows";
+    } else if (navigator.userAgent.includes("Linux")) {
+        return "Linux";
     } else {
-        return 'Unknown';
+        return "Unknown";
     }
 }
 
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
-    if (['call_state'].includes(payload.action)) {
-        window.electron.send('app_onAction', payload);
+    if (["call_state"].includes(payload.action)) {
+        window.electron!.send("app_onAction", payload);
     }
 }
 
@@ -92,8 +103,12 @@ export default class ElectronPlatform extends VectorBasePlatform {
     // this is the opaque token we pass to the HS which when we get it in our callback we can resolve to a profile
     private readonly ssoID: string = randomString(32);
 
-    constructor() {
+    public constructor() {
         super();
+
+        if (!window.electron) {
+            throw new Error("Cannot instantiate ElectronPlatform, window.electron is not set");
+        }
 
         dis.register(onAction);
         /*
@@ -102,7 +117,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
             false if there is not
             or the error if one is encountered
          */
-        window.electron.on('check_updates', (event, status) => {
+        window.electron.on("check_updates", (event, status) => {
             dis.dispatch<CheckUpdatesPayload>({
                 action: Action.CheckUpdates,
                 ...getUpdateCheckStatus(status),
@@ -110,37 +125,37 @@ export default class ElectronPlatform extends VectorBasePlatform {
         });
 
         // try to flush the rageshake logs to indexeddb before quit.
-        window.electron.on('before-quit', function() {
-            logger.log('element-desktop closing');
+        window.electron.on("before-quit", function () {
+            logger.log("element-desktop closing");
             rageshake.flush();
         });
 
-        window.electron.on('update-downloaded', this.onUpdateDownloaded);
+        window.electron.on("update-downloaded", this.onUpdateDownloaded);
 
-        window.electron.on('preferences', () => {
+        window.electron.on("preferences", () => {
             dis.fire(Action.ViewUserSettings);
         });
 
-        window.electron.on('userDownloadCompleted', (ev, { id, name }) => {
+        window.electron.on("userDownloadCompleted", (ev, { id, name }) => {
             const key = `DOWNLOAD_TOAST_${id}`;
 
-            const onAccept = () => {
-                window.electron.send('userDownloadAction', { id, open: true });
+            const onAccept = (): void => {
+                window.electron!.send("userDownloadAction", { id, open: true });
                 ToastStore.sharedInstance().dismissToast(key);
             };
 
-            const onDismiss = () => {
-                window.electron.send('userDownloadAction', { id });
+            const onDismiss = (): void => {
+                window.electron!.send("userDownloadAction", { id });
             };
 
             ToastStore.sharedInstance().addOrReplaceToast({
                 key,
-                title: _t("Download Completed"),
+                title: _t("download_completed"),
                 props: {
                     description: name,
-                    acceptLabel: _t("Open"),
+                    acceptLabel: _t("action|open"),
                     onAccept,
-                    dismissLabel: _t("Dismiss"),
+                    dismissLabel: _t("action|dismiss"),
                     onDismiss,
                     numSeconds: 10,
                 },
@@ -149,14 +164,38 @@ export default class ElectronPlatform extends VectorBasePlatform {
             });
         });
 
+        window.electron.on("openDesktopCapturerSourcePicker", () => {
+            const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
+            finished.then(([source]) => {
+                if (!source) return;
+                this.ipc.call("callDisplayMediaCallback", source);
+            });
+        });
+
         this.ipc.call("startSSOFlow", this.ssoID);
+
+        BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
     }
 
-    public async getConfig(): Promise<IConfigOptions> {
-        return this.ipc.call('getConfig');
+    public async getConfig(): Promise<IConfigOptions | undefined> {
+        return this.ipc.call("getConfig");
     }
 
-    private onUpdateDownloaded = async (ev, { releaseNotes, releaseName }) => {
+    private onBreadcrumbsUpdate = (): void => {
+        const rooms = BreadcrumbsStore.instance.rooms.slice(0, 7).map((r) => ({
+            roomId: r.roomId,
+            avatarUrl: avatarUrlForRoom(
+                r,
+                Math.floor(60 * window.devicePixelRatio),
+                Math.floor(60 * window.devicePixelRatio),
+                "crop",
+            ),
+            initial: getInitialLetter(r.name),
+        }));
+        this.ipc.call("breadcrumbs", rooms);
+    };
+
+    private onUpdateDownloaded = async (ev: Event, { releaseNotes, releaseName }: SquirrelUpdate): Promise<void> => {
         dis.dispatch<CheckUpdatesPayload>({
             action: Action.CheckUpdates,
             status: UpdateCheckStatus.Ready,
@@ -167,7 +206,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
     };
 
     public getHumanReadableName(): string {
-        return 'Electron Platform'; // no translation required: only used for analytics
+        return "Electron Platform"; // no translation required: only used for analytics
     }
 
     /**
@@ -186,7 +225,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
         if (this.notificationCount === count) return;
         super.setNotificationCount(count);
 
-        window.electron.send('setBadgeCount', count);
+        window.electron!.send("setBadgeCount", count);
     }
 
     public supportsNotifications(): boolean {
@@ -210,29 +249,23 @@ export default class ElectronPlatform extends VectorBasePlatform {
         // maybe we should pass basic styling (italics, bold, underline) through from MD
         // we only have to strip out < and > as the spec doesn't include anything about things like &amp;
         // so we shouldn't assume that all implementations will treat those properly. Very basic tag parsing is done.
-        if (navigator.userAgent.includes('Linux')) {
-            msg = msg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        if (navigator.userAgent.includes("Linux")) {
+            msg = msg.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
-        const notification = super.displayNotification(
-            title,
-            msg,
-            avatarUrl,
-            room,
-            ev,
-        );
+        const notification = super.displayNotification(title, msg, avatarUrl, room, ev);
 
         const handler = notification.onclick as Function;
-        notification.onclick = () => {
+        notification.onclick = (): void => {
             handler?.();
-            this.ipc.call('focusWindow');
+            this.ipc.call("focusWindow");
         };
 
         return notification;
     }
 
-    public loudNotification(ev: MatrixEvent, room: Room) {
-        window.electron.send('loudNotification');
+    public loudNotification(ev: MatrixEvent, room: Room): void {
+        window.electron!.send("loudNotification");
     }
 
     public needsUrlTooltips(): boolean {
@@ -240,7 +273,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
     }
 
     public async getAppVersion(): Promise<string> {
-        return this.ipc.call('getAppVersion');
+        return this.ipc.call("getAppVersion");
     }
 
     public supportsSetting(settingName?: string): boolean {
@@ -261,36 +294,36 @@ export default class ElectronPlatform extends VectorBasePlatform {
         return this.ipc.call("setSettingValue", settingName, value);
     }
 
-    async canSelfUpdate(): Promise<boolean> {
-        const feedUrl = await this.ipc.call('getUpdateFeedUrl');
+    public async canSelfUpdate(): Promise<boolean> {
+        const feedUrl = await this.ipc.call("getUpdateFeedUrl");
         return Boolean(feedUrl);
     }
 
-    public startUpdateCheck() {
+    public startUpdateCheck(): void {
         super.startUpdateCheck();
-        window.electron.send('check_updates');
+        window.electron!.send("check_updates");
     }
 
-    public installUpdate() {
+    public installUpdate(): void {
         // IPC to the main process to install the update, since quitAndInstall
         // doesn't fire the before-quit event so the main process needs to know
         // it should exit.
-        window.electron.send('install_update');
+        window.electron!.send("install_update");
     }
 
     public getDefaultDeviceDisplayName(): string {
         const brand = SdkConfig.get().brand;
-        return _t('%(brand)s Desktop: %(platformName)s', {
+        return _t("desktop_default_device_name", {
             brand,
             platformName: platformFriendlyName(),
         });
     }
 
     public requestNotificationPermission(): Promise<string> {
-        return Promise.resolve('granted');
+        return Promise.resolve("granted");
     }
 
-    public reload() {
+    public reload(): void {
         window.location.reload();
     }
 
@@ -298,34 +331,34 @@ export default class ElectronPlatform extends VectorBasePlatform {
         return this.eventIndexManager;
     }
 
-    public async setLanguage(preferredLangs: string[]) {
-        return this.ipc.call('setLanguage', preferredLangs);
+    public async setLanguage(preferredLangs: string[]): Promise<any> {
+        return this.ipc.call("setLanguage", preferredLangs);
     }
 
     public setSpellCheckEnabled(enabled: boolean): void {
-        this.ipc.call('setSpellCheckEnabled', enabled).catch(error => {
+        this.ipc.call("setSpellCheckEnabled", enabled).catch((error) => {
             logger.log("Failed to send setSpellCheckEnabled IPC to Electron");
             logger.error(error);
         });
     }
 
     public async getSpellCheckEnabled(): Promise<boolean> {
-        return this.ipc.call('getSpellCheckEnabled');
+        return this.ipc.call("getSpellCheckEnabled");
     }
 
     public setSpellCheckLanguages(preferredLangs: string[]): void {
-        this.ipc.call('setSpellCheckLanguages', preferredLangs).catch(error => {
+        this.ipc.call("setSpellCheckLanguages", preferredLangs).catch((error) => {
             logger.log("Failed to send setSpellCheckLanguages IPC to Electron");
             logger.error(error);
         });
     }
 
     public async getSpellCheckLanguages(): Promise<string[]> {
-        return this.ipc.call('getSpellCheckLanguages');
+        return this.ipc.call("getSpellCheckLanguages");
     }
 
     public async getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>> {
-        return this.ipc.call('getDesktopCapturerSources', options);
+        return this.ipc.call("getDesktopCapturerSources", options);
     }
 
     public supportsDesktopCapturer(): boolean {
@@ -338,7 +371,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
     }
 
     public async getAvailableSpellCheckLanguages(): Promise<string[]> {
-        return this.ipc.call('getAvailableSpellCheckLanguages');
+        return this.ipc.call("getAvailableSpellCheckLanguages");
     }
 
     public getSSOCallbackUrl(fragmentAfterLogin: string): URL {
@@ -353,11 +386,11 @@ export default class ElectronPlatform extends VectorBasePlatform {
         loginType: "sso" | "cas",
         fragmentAfterLogin: string,
         idpId?: string,
-    ) {
+    ): void {
         // this will get intercepted by electron-main will-navigate
         super.startSingleSignOn(mxClient, loginType, fragmentAfterLogin, idpId);
         Modal.createDialog(InfoDialog, {
-            title: _t("Go to your browser to complete Sign In"),
+            title: _t("auth|sso_complete_in_browser_dialog_title"),
             description: <Spinner />,
         });
     }
@@ -372,7 +405,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
 
     public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
-            return await this.ipc.call('getPickleKey', userId, deviceId);
+            return await this.ipc.call("getPickleKey", userId, deviceId);
         } catch (e) {
             // if we can't connect to the password storage, assume there's no
             // pickle key
@@ -382,7 +415,7 @@ export default class ElectronPlatform extends VectorBasePlatform {
 
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
-            return await this.ipc.call('createPickleKey', userId, deviceId);
+            return await this.ipc.call("createPickleKey", userId, deviceId);
         } catch (e) {
             // if we can't connect to the password storage, assume there's no
             // pickle key
@@ -392,7 +425,14 @@ export default class ElectronPlatform extends VectorBasePlatform {
 
     public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
-            await this.ipc.call('destroyPickleKey', userId, deviceId);
+            await this.ipc.call("destroyPickleKey", userId, deviceId);
+        } catch (e) {}
+    }
+
+    public async clearStorage(): Promise<void> {
+        try {
+            await super.clearStorage();
+            await this.ipc.call("clearStorage");
         } catch (e) {}
     }
 }

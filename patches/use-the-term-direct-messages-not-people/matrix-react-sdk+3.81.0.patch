@@ -1,0 +1,70 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
+index fec82bf..1e0c897 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/SpacePreferencesDialog.tsx
+@@ -55,7 +55,7 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space
+                             );
+                         }}
+                     >
+-                        {_t("common|people")}
++                        {_t("Direct Messages") /* TCHAP: change label _t("common|people") */}
+                     </StyledCheckbox>
+                     <SettingsSubsectionText>
+                         {_t(
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
+index 0d1274f..2e9cf2c 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
+@@ -388,7 +388,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
+         defaultHidden: false,
+     },
+     [DefaultTagID.DM]: {
+-        sectionLabel: _td("common|people"),
++        sectionLabel: _td("Direct Messages"), /* TCHAP: change label _td("common|people"), */
+         isInvite: false,
+         defaultHidden: false,
+         AuxButtonComponent: DmAuxButton,
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
+index b5ad1ea..1b61154 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SidebarUserSettingsTab.tsx
+@@ -120,7 +120,7 @@ const SidebarUserSettingsTab: React.FC = () => {
+                     >
+                         <SettingsSubsectionText>
+                             <MembersIcon />
+-                            {_t("common|people")}
++                            {_t("Direct Messages") /* TCHAP: change label _t("common|people") */}
+                         </SettingsSubsectionText>
+                         <SettingsSubsectionText>{_t("Group all your people in one place.")}</SettingsSubsectionText>
+                     </StyledCheckbox>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
+index e2c4159..d77f8a0 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
+@@ -107,7 +107,9 @@ const QuickSettingsButton: React.FC<{
+                     onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
+                 >
+                     <MembersIcon className="mx_QuickSettingsButton_icon" />
+-                    {_t("common|people")}
++                    {/* TCHAP: change label {_t("common|people")} */}
++                    {_t("Direct Messages")}
++                    {/* end TCHAP */}
+                 </StyledCheckbox>
+                 <AccessibleButton
+                     className="mx_QuickSettingsButton_moreOptionsButton"
+diff --git a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
+index 5d9f789..2b7811f 100644
+--- a/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
++++ b/node_modules/matrix-react-sdk/src/stores/spaces/index.ts
+@@ -41,7 +41,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
+         case MetaSpace.Favourites:
+             return _t("common|favourites");
+         case MetaSpace.People:
+-            return _t("common|people");
++            // TCHAP:
++            // return _t("common|people")
++            return _t("Direct Messages");
++            // end TCHAP
+         case MetaSpace.Orphans:
+             return _t("Other rooms");
+     }

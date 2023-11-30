@@ -15,39 +15,36 @@ limitations under the License.
 */
 
 // TCHAP: copied from matrix-rect-sdk
-import { defineConfig } from 'cypress';
-import 'dotenv/config';
+import { defineConfig } from "cypress";
+import "dotenv/config";
 
 // :TCHAP: Check for the env vars we need and crash if needed.
 const foundEnv = {};
 const getVar = (name) => {
     const value = process.env[name];
     if (!value) {
-        throw Error('Env var not found : cypress needs ' + name +
-            '. Set it in the .env file.');
+        throw Error("Env var not found : cypress needs " + name + ". Set it in the .env file.");
     }
     foundEnv[name] = value;
 };
-getVar('E2E_TEST_USER_EMAIL');
-getVar('E2E_TEST_USER_PASSWORD');
-getVar('E2E_TEST_USER_SECURITY_KEY');
-getVar('E2E_TEST_USER_HOMESERVER_URL');
-getVar('E2E_TEST_USER_HOMESERVER_SHORT');
+getVar("E2E_TEST_USER_EMAIL");
+getVar("E2E_TEST_USER_PASSWORD");
+getVar("E2E_TEST_USER_SECURITY_KEY");
+getVar("E2E_TEST_USER_HOMESERVER_URL");
+getVar("E2E_TEST_USER_HOMESERVER_SHORT");
 
 export default defineConfig({
-    watchForFileChanges : false,
-    videoUploadOnPasses: false,
-    projectId: 'ppvnzg',
+    watchForFileChanges: false,
+    projectId: "ppvnzg",
     experimentalInteractiveRunEvents: true,
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
     e2e: {
         setupNodeEvents(on, config) {
-            return require('./cypress/plugins/index.ts').default(on, config);
+            return require("./cypress/plugins/index.ts").default(on, config);
         },
-        baseUrl: 'http://localhost:8080',
-        experimentalSessionAndOrigin: true,
-        specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+        baseUrl: "http://localhost:8080",
+        specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
     },
     env: foundEnv,
 });

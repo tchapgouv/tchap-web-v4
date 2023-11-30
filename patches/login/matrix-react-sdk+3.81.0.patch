@@ -1,0 +1,231 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
+index 633febe..bb279b2 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
+@@ -40,6 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
+ import { filterBoolean } from "../../../utils/arrays";
+ import { Features } from "../../../settings/Settings";
+ import { startOidcLogin } from "../../../utils/oidc/authorize";
++import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
++import Tchapi18nUtils from '../../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
+ 
+ // These are used in several places, and come from the js-sdk's autodiscovery
+ // stuff. We define them here so that they'll be picked up by i18n.
+@@ -174,12 +176,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+ 
+     public isBusy = (): boolean => !!this.state.busy || !!this.props.busy;
+ 
++    tchap_setServerInMemory = async (serverConfig) => {
++        const validatedServerConf = TchapUtils.makeValidatedServerConfig(serverConfig);
++
++        // Simulate the end of the serverPicker component flow.
++        this.props.onServerConfigChange(validatedServerConf);
++
++        await this.initLoginLogic(validatedServerConf);
++    };
++
+     public onPasswordLogin: OnPasswordLogin = async (
+         username: string | undefined,
+         phoneCountry: string | undefined,
+         phoneNumber: string | undefined,
+         password: string,
+     ): Promise<void> => {
++        /* :TCHAP: remove alive check, we don't know which server to call yet.
+         if (!this.state.serverIsAlive) {
+             this.setState({ busy: true });
+             // Do a quick liveliness check on the URLs
+@@ -205,6 +217,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                 return;
+             }
+         }
++        end :TCHAP: */
+ 
+         this.setState({
+             busy: true,
+@@ -213,6 +226,23 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+             loginIncorrect: false,
+         });
+ 
++        /* :TCHAP: fetch homeserver corresponding to email */
++        const serverResult = await TchapUtils.fetchHomeserverForEmail(username);
++
++        if (!serverResult) {
++            this.setState({
++                busy: false,
++                busyLoggingIn: false,
++                //errorText: _t('Server unavailable, overloaded, or something else went wrong.'), // reuse existing string
++                errorText: Tchapi18nUtils.getServerDownMessage("(err-03)"),
++                loginIncorrect: false,
++            });
++            return;
++        }
++
++        await this.tchap_setServerInMemory(serverResult);
++        /** end :TCHAP: */
++
+         this.loginLogic.loginViaPassword(username, phoneCountry, phoneNumber, password).then(
+             (data) => {
+                 this.setState({ serverIsAlive: true }); // it must be, we logged in.
+@@ -565,10 +595,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState>
+                     </h1>
+                     {errorTextSection}
+                     {serverDeadSection}
++                    { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
+                     <ServerPicker
+                         serverConfig={this.props.serverConfig}
+                         onServerConfigChange={this.props.onServerConfigChange}
+                     />
++                    end :TCHAP :*/}
+                     {this.renderLoginComponentForFlows()}
+                     {footer}
+                 </AuthBody>
+diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+index 33c62a8..f9ed36c 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
+@@ -50,6 +50,7 @@ interface IProps {
+ }
+ 
+ interface IState {
++    displayPassword: boolean;
+     fieldValid: Partial<Record<LoginField, boolean>>;
+     loginType: LoginField.Email | LoginField.MatrixId | LoginField.Phone;
+     password: string;
+@@ -83,13 +84,21 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+     public constructor(props: IProps) {
+         super(props);
+         this.state = {
++            displayPassword: false,
+             // Field error codes by field ID
+             fieldValid: {},
+-            loginType: LoginField.MatrixId,
++            // :TCHAP: force email login
++            // loginType: LoginField.MatrixId,
++            loginType: LoginField.Email,
++            //
+             password: "",
+         };
+     }
+ 
++    private setDisplayPassword = (value: boolean): void => {
++        this.setState({ displayPassword: value });
++    };
++
+     private onForgotPasswordClick = (ev: ButtonEvent): void => {
+         ev.preventDefault();
+         ev.stopPropagation();
+@@ -420,13 +429,17 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+         return (
+             <div>
+                 <form onSubmit={this.onSubmitForm}>
+-                    {loginType}
++                    {
++                        /* :TCHAP: remove loginType selector, we only want Email loginType
++                        loginType
++                        */
++                    }
+                     {loginField}
+                     <Field
+                         id="mx_LoginForm_password"
+                         className={pwFieldClass}
+                         autoComplete="current-password"
+-                        type="password"
++                        type={this.state.displayPassword ? "text": "password"}
+                         name="password"
+                         label={_t("common|password")}
+                         value={this.state.password}
+@@ -435,6 +448,20 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+                         autoFocus={autoFocusPassword}
+                         onValidate={this.onPasswordValidate}
+                         ref={(field) => (this[LoginField.Password] = field)}
++                        postfixComponent={(
++                            <div
++                                className="tc_textInput_postfixComponent"
++                                onMouseDown={() => this.setDisplayPassword(true)}
++                                onMouseUp={() => this.setDisplayPassword(false)}
++                            >
++                                <img
++                                    src={require("../../../../../../res/img/grey-eye.svg").default}
++                                    width="24"
++                                    height="24"
++                                    alt={_t("Eye")}
++                                />
++                            </div>
++                        )}
+                     />
+                     {forgotPasswordJsx}
+                     {!this.props.busy && (
+diff --git a/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx b/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
+index 91fe19b..a7d8963 100644
+--- a/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
++++ b/node_modules/matrix-react-sdk/src/utils/ErrorUtils.tsx
+@@ -22,6 +22,8 @@ import SdkConfig from "../SdkConfig";
+ import { ValidatedServerConfig } from "./ValidatedServerConfig";
+ import ExternalLink from "../components/views/elements/ExternalLink";
+ 
++import Tchapi18nUtils from '../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
++
+ export const resourceLimitStrings = {
+     "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
+     "hs_blocked": _td("This homeserver has been blocked by its administrator."),
+@@ -135,6 +137,10 @@ export function messageForLoginError(
+         } else {
+             return _t("Incorrect username and/or password.");
+         }
++    // :TCHAP: display proper message for TOO_MANY_REQUESTS,
++    }  else if (err.httpStatus === 429) {
++        return _t("Your last three login attempts have failed. Please try again in a few minutes.");
++    // :TCHAP: end
+     } else {
+         return messageForConnectionError(err, serverConfig);
+     }
+@@ -144,7 +150,11 @@ export function messageForConnectionError(
+     err: Error,
+     serverConfig: Pick<ValidatedServerConfig, "hsName" | "hsUrl">,
+ ): ReactNode {
+-    let errorText = _t("There was a problem communicating with the homeserver, please try again later.");
++    /* :TCHAP: change default error text
++    * let errorText = _t("There was a problem communicating with the homeserver, please try again later.");
++    */
++    let errorText: ReactNode = Tchapi18nUtils.getServerDownMessage("");
++    /* end of :TCHAP:*/
+ 
+     if (err instanceof ConnectionError) {
+         if (
+@@ -153,6 +163,7 @@ export function messageForConnectionError(
+         ) {
+             return (
+                 <span>
++                    {/* :TCHAP: customize error message
+                     {_t(
+                         "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
+                         {},
+@@ -169,13 +180,16 @@ export function messageForConnectionError(
+                                 );
+                             },
+                         },
+-                    )}
++                    )} */}
++                    {Tchapi18nUtils.getServerDownMessage("err-01")}
++                    {/* :TCHAP: end   */}
+                 </span>
+             );
+         }
+ 
+         return (
+             <span>
++                {/* :TCHAP: customize error message
+                 {_t(
+                     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
+                     {},
+@@ -186,7 +200,9 @@ export function messageForConnectionError(
+                             </ExternalLink>
+                         ),
+                     },
+-                )}
++                )} */}
++                {Tchapi18nUtils.getServerDownMessage("err-02")}
++                {/* :TCHAP: end */}
+             </span>
+         );
+     } else if (err instanceof MatrixError) {

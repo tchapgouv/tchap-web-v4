@@ -1,0 +1,86 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
+index c3b615b..159cfa2 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/DecryptionFailureBody.tsx
+@@ -19,11 +19,25 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+ 
+ import { _t } from "../../../languageHandler";
+ import { IBodyProps } from "./IBodyProps";
++import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
++import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
+ 
+ function getErrorMessage(mxEvent?: MatrixEvent): string {
+     return mxEvent?.isEncryptedDisabledForUnverifiedDevices
+         ? _t("The sender has blocked you from receiving this message")
+-        : _t("Unable to decrypt message");
++        // :TCHAP: : _t("Unable to decrypt message");
++        : _t(
++            "Waiting for this message. This could take a while. <a>Find out more</a>",
++            {},
++            {
++                a: (sub) => (
++                    <ExternalLink href={TchapUrls.lockedMessagesPage}>
++                        {sub}
++                    </ExternalLink>
++                ),
++            },
++        );
++        // end :TCHAP:
+ }
+ 
+ // A placeholder element for messages that could not be decrypted
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
+index 8164511..2feb0e9 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
+@@ -30,6 +30,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
+ import { Action } from "../../../dispatcher/actions";
+ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+ import defaultDispatcher from "../../../dispatcher/dispatcher";
++import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
++import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
+ 
+ interface IProps {
+     mxEvent: MatrixEvent;
+@@ -96,6 +98,20 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
+         return null;
+     }
+ 
++    // :TCHAP:
++    const undecryptedText = _t(
++        "Unable to decrypt message",
++        {},
++        {
++            a: (sub) => (
++                <ExternalLink href={TchapUrls.lockedMessagesPage}>
++                    {sub}
++                </ExternalLink>
++            ),
++        },
++    );
++    // end :TCHAP:
++
+     return (
+         <>
+             <MemberAvatar
+@@ -113,7 +129,19 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
+                     className="mx_ThreadSummary_content mx_DecryptionFailureBody"
+                     title={_t("Unable to decrypt message")}
+                 >
+-                    <span className="mx_ThreadSummary_message-preview">{_t("Unable to decrypt message")}</span>
++                    { /* :TCHAP: <span className="mx_ThreadSummary_message-preview">{_t("Unable to decrypt message")}</span>*/}
++                    <span className="mx_ThreadSummary_message-preview">
++                        {_t("Waiting for this message. This could take a while. <a>Find out more</a>", {},
++                            {
++                                a: (sub) => (
++                                    <ExternalLink href={TchapUrls.lockedMessagesPage}>
++                                        {sub}
++                                    </ExternalLink>
++                                ),
++                            },
++                        )}
++                    </span>
++                    {/** end :TCHAP: */}
+                 </div>
+             ) : (
+                 <div className="mx_ThreadSummary_content" title={preview}>

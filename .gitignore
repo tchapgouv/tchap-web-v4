@@ -28,13 +28,15 @@ electron/pub
 /matrix-react-sdk
 /matrix-js-sdk
 /matrix-analytics-events
-# yarn links dependencies generated with /scripts/layered.with.version.sh
+# yarn links dependencies generated with /scripts/tchap/install-yarn-linked-repositories.sh
 /yarn-linked-dependencies
 
+# ignore folder for patch merging conflicts
+/patches_temp
 
 # Auto-generated file
 /src/modules.ts
-/build_config.yaml
+#/build_config.yaml # :TCHAP: writes this by hand.
 
 /cypress/videos
 /cypress/downloads

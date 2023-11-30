@@ -19,20 +19,21 @@ import type { Renderer } from "react-dom";
 import type { logger } from "matrix-js-sdk/src/logger";
 
 type ElectronChannel =
-    "app_onAction" |
-    "before-quit" |
-    "check_updates" |
-    "install_update" |
-    "ipcCall" |
-    "ipcReply" |
-    "loudNotification" |
-    "preferences" |
-    "seshat" |
-    "seshatReply" |
-    "setBadgeCount" |
-    "update-downloaded" |
-    "userDownloadCompleted" |
-    "userDownloadAction";
+    | "app_onAction"
+    | "before-quit"
+    | "check_updates"
+    | "install_update"
+    | "ipcCall"
+    | "ipcReply"
+    | "loudNotification"
+    | "preferences"
+    | "seshat"
+    | "seshatReply"
+    | "setBadgeCount"
+    | "update-downloaded"
+    | "userDownloadCompleted"
+    | "userDownloadAction"
+    | "openDesktopCapturerSourcePicker";
 
 declare global {
     interface Window {
@@ -53,12 +54,6 @@ declare global {
     interface Electron {
         on(channel: ElectronChannel, listener: (event: Event, ...args: any[]) => void): void;
         send(channel: ElectronChannel, ...args: any[]): void;
-    }
-
-    interface Navigator {
-        // PWA badging extensions https://w3c.github.io/badging/
-        setAppBadge?(count: number): Promise<void>;
-        clearAppBadge?(): Promise<void>;
     }
 }
 

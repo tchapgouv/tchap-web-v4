@@ -3,3 +3,9 @@ src/vector/modernizr.js
 src/component-index.js
 # Auto-generated file
 src/modules.ts
+
+# remove those files from eslint
+test/.eslintrc.js
+test/setupTests.js
+patches/patches.json
+src/tchap

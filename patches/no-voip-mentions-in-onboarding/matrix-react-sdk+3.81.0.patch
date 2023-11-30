@@ -1,0 +1,18 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx
+index 67e5367..df71ad1 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/user-onboarding/UserOnboardingHeader.tsx
+@@ -49,10 +49,11 @@ export function UserOnboardingHeader({ useCase }: Props): JSX.Element {
+             break;
+         case UseCase.WorkMessaging:
+             title = _t("onboarding|work_messaging_title");
+-            description = _t("onboarding|free_e2ee_messaging_unlimited_voip", {
++            description = _t("onboarding_free_e2ee_messaging_tchap_limited_voip", { // :TCHAP:
+                 brand: SdkConfig.get("brand"),
+             });
+-            image = require("../../../../res/img/user-onboarding/WorkMessaging.png");
++            // :TCHAP: image = require("../../../../res/img/user-onboarding/WorkMessaging.png");
++            image = require("../../../../../../res/img/tchap/multi-device-messaging.png"); // :TCHAP:
+             actionLabel = _t("onboarding|work_messaging_action");
+             break;
+         case UseCase.CommunityMessaging:

@@ -1,0 +1,33 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+index 7d48460..190caa6 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
+@@ -59,6 +59,7 @@ import InlineSpinner from "../../../elements/InlineSpinner";
+ import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+ import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
+ import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
++import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP:
+ 
+ interface IProps {
+     closeSettingsFn: () => void;
+@@ -324,7 +325,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+     private renderAccountSection(): JSX.Element {
+         let threepidSection: ReactNode = null;
+ 
+-        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
++        // :TCHAP: no need for users to view/edit their email or phone (TchapUIFeature.showEmailPhoneDiscoverySettings)
++        if (TchapUIFeature.showEmailPhoneDiscoverySettings &&
++            SettingsStore.getValue(UIFeature.ThirdPartyID)) {
+             const emails = this.state.loading3pids ? (
+                 <InlineSpinner />
+             ) : (
+@@ -531,7 +534,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+         }
+ 
+         let discoverySection;
+-        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
++        // :TCHAP: no need for users to edit the discovery section (TchapUIFeature.showEmailPhoneDiscoverySettings)
++        if (TchapUIFeature.showEmailPhoneDiscoverySettings && SettingsStore.getValue(UIFeature.IdentityServer)) {
+             const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
+                 <WarningIcon
+                     className="mx_GeneralUserSettingsTab_warningIcon"
