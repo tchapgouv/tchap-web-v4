@@ -1,16 +1,18 @@
 #!/bin/bash
+export REPO="web"
+# export REPO="react-sdk"
 
 # Use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
-# TODO: make this work with nested keys (new key format). tchap_translations_web has no nesting for now.
-export TCHAP_TRANSLATION_FILE="modules/tchap-translations/tchap_translations_web.json"
-export TCHAP_TRANSLATION_EN_FILE="modules/tchap-translations/tchap_translations_web_en.json"
+# TODO: make this work with nested keys (new key format). tchap_translations_${REPO} has no nesting for now.
+export TCHAP_TRANSLATION_FILE="modules/tchap-translations/tchap_translations_${REPO}.json"
+export TCHAP_TRANSLATION_EN_FILE="modules/tchap-translations/tchap_translations_${REPO}_en.json"
 cat $TCHAP_TRANSLATION_FILE | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > $TCHAP_TRANSLATION_EN_FILE
 
 # Keys from tchap_translations_web_EN_novalues.json
 # TODO : remove if not used
 #cat modules/tchap-translations/tchap_translations_web_EN_novalues.json| jq 'to_entries[] | .key'
 
-# Merge tchap_translations_web_en.json with en_EN.json -> en_EN_withtchap.json. Tchap values should override element values in case of conflict.
+# Merge tchap_translations_${REPO}.json with en_EN.json -> en_EN_withtchap.json. Tchap values should override element values in case of conflict.
 # Note : this works with nested keys.
 # Note : in command below, tchap values will overwrite because the thcap file is given in second position.
 git checkout src/i18n/strings/en_EN.json # if you just ran this script, en_EN.json will be modified. Reset it.
