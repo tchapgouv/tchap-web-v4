@@ -2,7 +2,9 @@
 
 # Use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
 # TODO: make this work with nested keys (new key format). tchap_translations_web has no nesting for now.
-cat modules/tchap-translations/tchap_translations_web.json | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > modules/tchap-translations/tchap_translations_web_en.json
+export TCHAP_TRANSLATION_FILE="modules/tchap-translations/tchap_translations_web.json"
+export TCHAP_TRANSLATION_EN_FILE="modules/tchap-translations/tchap_translations_web_en.json"
+cat $TCHAP_TRANSLATION_FILE | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > $TCHAP_TRANSLATION_EN_FILE
 
 # Keys from tchap_translations_web_EN_novalues.json
 # TODO : remove if not used
@@ -12,17 +14,18 @@ cat modules/tchap-translations/tchap_translations_web.json | jq  'to_entries[] |
 # Note : this works with nested keys.
 # Note : in command below, tchap values will overwrite because the thcap file is given in second position.
 git checkout src/i18n/strings/en_EN.json # if you just ran this script, en_EN.json will be modified. Reset it.
-jq -s '.[0] * .[1]' src/i18n/strings/en_EN.json modules/tchap-translations/tchap_translations_web_en.json > src/i18n/strings/en_EN_withtchap.json
-export INPUT_FILE="src/i18n/strings/en_EN_withtchap.json"
+export MERGED_TRANSLATION_FILE='src/i18n/strings/en_EN_withtchap.json'
+jq -s '.[0] * .[1]' src/i18n/strings/en_EN.json $TCHAP_TRANSLATION_EN_FILE > $MERGED_TRANSLATION_FILE
 
 # Format the file for clean diffing.
 #"i18n:lint": "prettier --write src/i18n/strings/ --ignore-path /dev/null",
-jq --sort-keys '.' $INPUT_FILE > $INPUT_FILE.tmp && mv $INPUT_FILE.tmp $INPUT_FILE # yarn i18n:sort with customized files
-yarn i18n:lint
+jq --sort-keys '.' $MERGED_TRANSLATION_FILE > $MERGED_TRANSLATION_FILE.tmp && mv $MERGED_TRANSLATION_FILE.tmp $MERGED_TRANSLATION_FILE # yarn i18n:sort with customized files
+yarn i18n:lint # lints the whole src/i18n/strings/ dir, no need to modify
 
 # Run the original gen-i18n script from matrix-web-i18n, with our file as input.
 # gen-i18n crawls through the code files in src and res, looking for translations.
 # For each translation key, it finds the values in INPUT_FILE. If no value found, value=key. It writes key:value in OUTPUT_FILE
+export INPUT_FILE=$MERGED_TRANSLATION_FILE
 export OUTPUT_FILE="src/i18n/strings/en_EN.json" # default value
 yarn matrix-gen-i18n;
 # TODO : fix error throw for "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
