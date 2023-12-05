@@ -11,6 +11,7 @@ cat modules/tchap-translations/tchap_translations_web.json | jq  'to_entries[] |
 # Merge tchap_translations_web_en.json with en_EN.json -> en_EN_withtchap.json. Tchap values should override element values in case of conflict.
 # Note : this works with nested keys.
 # Note : in command below, tchap values will overwrite because the thcap file is given in second position.
+git checkout src/i18n/strings/en_EN.json # if you just ran this script, en_EN.json will be modified. Reset it.
 jq -s '.[0] * .[1]' src/i18n/strings/en_EN.json modules/tchap-translations/tchap_translations_web_en.json > src/i18n/strings/en_EN_withtchap.json
 export INPUT_FILE="src/i18n/strings/en_EN_withtchap.json"
 
@@ -28,8 +29,8 @@ yarn matrix-gen-i18n;
 retVal=$?
 if [ $retVal -ne 0 ]; then
     echo "gen-i18n failed. Aborting."
+    exit $retVal
 fi
-exit $retVal
 
 # Format the file for clean diffing.
 # Note : the file path is hardcoded for these commands. If you change OUTPUT_FILE it will break.
@@ -40,3 +41,5 @@ yarn i18n:sort && yarn i18n:lint
 yarn matrix-compare-i18n-files $INPUT_FILE $OUTPUT_FILE
 # Visualize if you like:
 #diff $INPUT_FILE $OUTPUT_FILE
+
+# Todo : load the 2 translations files in the module.
