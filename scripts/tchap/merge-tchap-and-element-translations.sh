@@ -1,9 +1,9 @@
 #!/bin/bash
-#export REPO="web"; export REFERENCE_FILE=`realpath src/i18n/strings/en_EN.json`
+export REPO="web";
+export REFERENCE_FILE=`realpath src/i18n/strings/en_EN.json`
 
-# Todo : don't write the output in the REFERENCE_FILE, it's error-prone.
-
-export REPO="react-sdk"; export REFERENCE_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN_orig.json`
+#export REPO="react-sdk";
+#export REFERENCE_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN_orig.json`
 # TODO for react-sdk :
 # checkout the ref file doesn't work. And is not necessary.
 # use absolute file paths, so that the change of dir doesn;t break things.
@@ -27,7 +27,6 @@ export MERGED_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN_withtchap_${REPO
 jq -s '.[0] * .[1]' $REFERENCE_FILE $TCHAP_TRANSLATION_EN_FILE > $MERGED_TRANSLATION_FILE
 
 # Format the file for clean diffing.
-#"i18n:lint": "prettier --write src/i18n/strings/ --ignore-path /dev/null",
 jq --sort-keys '.' $MERGED_TRANSLATION_FILE > $MERGED_TRANSLATION_FILE.tmp && mv $MERGED_TRANSLATION_FILE.tmp $MERGED_TRANSLATION_FILE # yarn i18n:sort with customized files
 yarn i18n:lint # lints the whole src/i18n/strings/ dir, no need to modify
 
@@ -35,9 +34,8 @@ yarn i18n:lint # lints the whole src/i18n/strings/ dir, no need to modify
 # gen-i18n crawls through the code files in src and res, looking for translations.
 # For each translation key, it finds the values in INPUT_FILE. If no value found, value=key. It writes key:value in OUTPUT_FILE
 export INPUT_FILE=$MERGED_TRANSLATION_FILE
-export OUTPUT_FILE=$REFERENCE_FILE # default value
+export OUTPUT_FILE=`realpath src/i18n/strings/en_EN_generated_${REPO}.json`
 yarn matrix-gen-i18n;
-# TODO : fix error throw for "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
 retVal=$?
 if [ $retVal -ne 0 ]; then
     echo "gen-i18n failed. Aborting."
@@ -46,7 +44,8 @@ fi
 
 # Format the file for clean diffing.
 # Note : the file path is hardcoded for these commands. If you change OUTPUT_FILE it will break.
-yarn i18n:sort && yarn i18n:lint
+jq --sort-keys '.' $OUTPUT_FILE > $OUTPUT_FILE.tmp && mv $OUTPUT_FILE.tmp $OUTPUT_FILE # yarn i18n:sort with customized files
+yarn i18n:lint # lints the whole src/i18n/strings/ dir, no need to modify
 
 # diff en_EN_withtchap.json en_EN.json, and explode if they are different. (just change the file name from original script)
 yarn matrix-compare-i18n-files $INPUT_FILE $OUTPUT_FILE
