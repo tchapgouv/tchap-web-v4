@@ -1,1 +1,42 @@
-{}
+{
+    "A new email has been sent": {
+        "en": "A new email has been sent",
+        "fr": "Un nouvel email de renouvellement vous a été adressé"
+    },
+    "Accessible to all users and to external guests by invitation of an administrator.": {
+        "en": "Accessible to all users and to external guests by invitation of an administrator.",
+        "fr": "Accessible à tous les utilisateurs et aux invités externes sur invitation d'un administrateur."
+    },
+    "Accessible to all users from the forum directory or from a shared link.": {
+        "en": "Accessible to all users from the forum directory or from a shared link.",
+        "fr": "Accessible à tous les utilisateurs à partir de la liste des forums ou d'un lien partagé."
+    },
+    "Allow access to this room to all users, even outside \"%(domain)s\" domain": {
+        "en": "Allow access to this room to all users, even outside \"%(domain)s\" domain",
+        "fr": "Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
+    },
+    "Allow external users to join this room": {
+        "en": "Allow external users to join this room",
+        "fr": "Autoriser les externes à rejoindre ce salon"
+    },
+    "Accessible to all users by invitation from an administrator.": {
+        "en": "Accessible to all users by invitation from an administrator.",
+        "fr": "Accessible à tous les utilisateurs sur invitation d'un administrateur."
+    },
+    "An email has been sent to you. Click on the link it contains, click below.": {
+        "en": "An email has been sent to you. Its title is : \"Renew your Tchap account\" Once you’ve followed the link it contains, click on the button \"I renewed my account\".",
+        "fr": "Un email vous a été envoyé pour renouveler votre compte. Il est intitulé : \"Renouvelez votre compte Tchap\". Une fois que vous aurez suivi le lien qu'il contient, cliquez sur le bouton \"J’ai renouvelé mon compte\"."
+    },
+    "Are you sure you want to allow the externals to join this room ?": {
+        "en": "Are you sure you want to allow the externals to join this room ?",
+        "fr": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
+    },
+    "Confirm your Tchap Key password": {
+        "en": "Confirm your Tchap Key password",
+        "fr": "Confirmer votre mot de passe Clés Tchap"
+    },
+    "Congratulations, your account has been renewed": {
+        "en": "Congratulations, your account has been renewed",
+        "fr": "Félicitations, votre compte a été renouvelé"
+    }
+}

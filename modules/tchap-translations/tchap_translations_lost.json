@@ -22,5 +22,10 @@
     "<requestLink>Re-send a request to your other devices</requestLink>": {
         "en": "<requestLink>Re-send a request to your other devices</requestLink>",
         "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
+    },
+    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": {
+        "fr": "",
+        "en": "",
+        "comment": "c'est fait expres?"
     }
 }
