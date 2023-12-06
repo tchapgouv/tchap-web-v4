@@ -3,23 +3,11 @@
         "en": "Welcome to Tchap",
         "fr": "Bienvenue sur Tchap"
     },
-    "Examples:": {
-        "en": "Examples:",
-        "fr": "Exemples :"
-    },
     "Private room": {
         "en": "Private room",
         "fr": "Salon"
     },
-    "Private room open to external users": {
-        "en": "Private room open to external users",
-        "fr": "Salon ouvert aux externes"
-    },
     "Public room": {
-        "en": "Public room",
-        "fr": "Forum"
-    },
-    "Forum room": {
         "en": "Public room",
         "fr": "Forum"
     },
@@ -34,42 +22,6 @@
     "This room is a public forum": {
         "en": "This room is a public forum",
         "fr": "Ce salon est un forum public"
-    },
-    "Private discussions accessible to all users of this space.": {
-        "en": "Private discussions accessible to all users of this space.",
-        "fr": "Discussions privées accessibles à tous les membres de cet espace"
-    },
-    "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.": {
-        "en": "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.",
-        "fr": "Discussions privées accessibles à tous les membres de cet espace et aux utilisateurs externes sur invitation d'un administrateur."
-    },
-    "Public discussion accessible to all users of this space or from a shared link.": {
-        "en": "Public discussion accessible to all users of this space or from a shared link.",
-        "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
-    },
-    "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>": {
-        "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
-        "fr": "Si vous rencontrez des difficultés dans votre utilisation de Tchap, contactez-nous par email à <b>%(supportEmail)s</b>"
-    },
-    "Known issues": {
-        "en": "Known issues",
-        "fr": "Problèmes connus"
-    },
-    "Read the Known Issues": {
-        "en": "Read the Known Issues",
-        "fr": "Consultez les problèmes connus"
-    },
-    "This version of Tchap Web is currently in development. There are known issues that will be solved soon.": {
-        "en": "This version of Tchap Web is currently in development. There are known issues that will be solved soon.",
-        "fr": "Cette version de Tchap Web est en cours de développement. Il y a des problèmes connus qui seront bientôt résolus."
-    },
-    "Frequently Asked Questions (FAQ)": {
-        "en": "Frequently Asked Questions (FAQ)",
-        "fr": "Foire Aux Questions (FAQ)"
-    },
-    "Read the FAQ": {
-        "en": "Read the FAQ",
-        "fr": "Consultez la FAQ"
     },
     "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
         "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
@@ -87,10 +39,6 @@
     "Just want to get your own logs, without sharing them with the Tchap team?": {
         "en": "Just want to get your own logs, without sharing them with the Tchap team?",
         "fr": "Vous voulez juste obtenir vos journaux sans les partager avec l'équipe Tchap ?"
-    },
-    "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.": {
-        "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
-        "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
     },
     "This action is irreversible.": {
         "en": "This action is irreversible.",
@@ -124,25 +72,13 @@
         "en": "an uppercase letter",
         "fr": "une lettre majuscule"
     },
-    "External users allowed": {
-        "en": "external users allowed",
-        "fr": "ouvert aux externes"
-    },
     "Save your Tchap Keys (encryption keys)": {
         "en": "Save your Tchap Keys (encryption keys)",
         "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
     },
-    "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
-        "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
-        "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
-    },
     "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
         "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
         "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
-    },
-    "Passphrase must be at least 8 character long": {
-        "en": "Passphrase must be at least 8 character long",
-        "fr": "Le mot de passe doit minimum faire 8 caractères"
     },
     "Your Tchap Key password": {
         "en": "Your Tchap Key password",
@@ -172,10 +108,6 @@
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
         "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
     },
-    "Please also confirm the emojis on the other device.": {
-        "en": "Please also confirm the emojis on the other device.",
-        "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
-    },
     "Incoming Verification Request": {
         "en": "Incoming Verification Request",
         "fr": "Partage de vos Clés Tchap"
@@ -184,21 +116,9 @@
         "en": "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.",
         "fr": "Le partage de vos Clés Tchap a réussi. Vos messages vont être déverrouillés au fur et à mesure."
     },
-    "Finish": {
-        "en": "Finish",
-        "fr": "Terminer"
-    },
-    "Please <b>accept the sharing</b> of your Tchap Keys on the other device.": {
-        "en": "Please <b>accept the sharing</b> of your Tchap Keys on the other device.",
-        "fr": "Merci d'<b>accepter la demande</b> de partage de vos Clés Tchap pour déverrouiller vos messages."
-    },
     "Confirm the emoji below are displayed on both devices, in the same order:": {
         "en": "Confirm the emoji below are displayed on both devices, in the same order:",
         "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
-    },
-    "Please confirm the objects on the other device.": {
-        "en": "Please confirm the objects on the other device.",
-        "fr": "Veuillez confirmer les objets sur l'autre appareil."
     },
     "Please confirm the objects on the other device (loading).": {
         "en": "Please confirm the objects on the other device (loading).",
@@ -207,10 +127,6 @@
     "The validity period of your account has expired": {
         "en": "Your Tchap account has expired",
         "fr": "Votre compte Tchap a expiré"
-    },
-    "I renewed the validity of my account": {
-        "en": "I renewed my account",
-        "fr": "J’ai renouvelé mon compte"
     },
     "Request a renewal email": {
         "en": "Request a renewal email",
@@ -232,10 +148,6 @@
         "en": "You can refresh the page to continue your conversations",
         "fr": "Vous pouvez dorénavant rafraîchir la page pour continuer vos conversations"
     },
-    "Reload the app": {
-        "en": "Reload page",
-        "fr": "Rafraîchir la page"
-    },
     "Request in progress...": {
         "en": "Request in progress...",
         "fr": "Demande en cours..."
@@ -243,10 +155,6 @@
     "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.": {
         "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
         "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
-    },
-    "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
-        "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
-        "fr": "Si vos autres appareils n'ont pas la clé pour ce message, vous ne pourrez pas le déchiffrer."
     },
     "Your key share request has been sent - please check your other devices for key share requests.": {
         "en": "Your key share request has been sent - please check your other devices for key share requests.",
@@ -396,17 +304,17 @@
         "en": "Remove them from everything I'm able to",
         "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
     },
-    "Remove users": {
-        "en": "Remove users",
-        "fr": "Retirer des utilisateurs (réversible)"
-    },
-    "Remove, ban, or invite people to your active room, and make you leave": {
-        "en": "Remove, ban, or invite people to your active room, and make you leave",
-        "fr": "Retirer, interdire l'accès ou inviter des personnes dans votre salon actif et en partir"
-    },
-    "Remove, ban, or invite people to this room, and make you leave": {
-        "en": "Remove, ban, or invite people to this room, and make you leave",
-        "fr": "Retirer, interdire l'accès ou inviter une personne dans ce salon et vous permettre de partir"
+    "widget": {
+        "capability": {
+            "remove_ban_invite_leave_this_room": {
+                "en": "Remove, ban, or invite people to this room, and make you leave",
+                "fr": "Retirer, interdire l'accès ou inviter une personne dans ce salon et vous permettre de partir"
+            },
+            "remove_ban_invite_leave_active_room": {
+                "en": "Remove, ban, or invite people to your active room, and make you leave",
+                "fr": "Retirer, interdire l'accès ou inviter des personnes dans votre salon actif et en partir"
+            }
+        }
     },
     "Remove from %(roomName)s": {
         "en": "Remove from %(roomName)s",
@@ -421,6 +329,10 @@
             "ban": {
                 "en": "Ban users",
                 "fr": "Interdire aux utilisateurs l’accès au salon (définitif)"
+            },
+            "kick": {
+                "en": "Remove users",
+                "fr": "Retirer des utilisateurs (réversible)"
             }
         }
     },
@@ -468,9 +380,15 @@
         "en": "Sign in instead",
         "fr": "ou connectez-vous"
     },
-    "Enter your email to reset password": {
-        "en": "Enter your email to reset password",
-        "fr": "Entrez votre adresse mail pour réinitialiser votre mot de passe"
+    "auth": {
+        "enter_email_heading": {
+            "en": "Enter your email to reset password",
+            "fr": "Entrez votre adresse mail pour réinitialiser votre mot de passe"
+        },
+        "check_email_wrong_email_button": {
+            "en": "Re-enter email address",
+            "fr": "Re-saisir l'adresse mail"
+        }
     },
     "Reset your password": {
         "en": "Reset your password",
@@ -479,10 +397,6 @@
     "Wrong email address?": {
         "en": "Wrong email address?",
         "fr": "Mauvaise adresse mail ?"
-    },
-    "Re-enter email address": {
-        "en": "Re-enter email address",
-        "fr": "Re-saisir l'adresse mail"
     },
     "Check your email to continue": {
         "en": "Check your email to continue",
@@ -563,10 +477,6 @@
     "A new Security Phrase and key for Secure Messages have been detected.": {
         "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté.",
         "en": "A new Recovery Code for Secure Messages has been detected."
-    },
-    "Make a copy of your Security Key": {
-        "fr": "Faire une copie de votre Code de Récupération",
-        "en": "Make a copy of your Recovery Code"
     },
     "Secure your backup with a Security Phrase": {
         "fr": "Protégez votre sauvegarde avec un Code de Récupération",
@@ -668,14 +578,6 @@
         "fr": "Renvoyer une demande",
         "en": "Resend key requests"
     },
-    "Open another device to load encrypted messages": {
-        "fr": "Utiliser un autre appareil pour déverrouiller vos messages.",
-        "en": "Use another device to unlock your messages."
-    },
-    "Or if that doesn't work, please follow <a>these steps</a>.": {
-        "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
-        "en": "Or if that doesn't work, please follow <a>these steps</a>."
-    },
     "Unable to decrypt message": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment.",
         "en": "Waiting for this message. This could take a while."
@@ -683,10 +585,6 @@
     "Waiting for this message. This could take a while. <a>Find out more</a>": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>",
         "en": "Waiting for this message. This could take a while. <a>Find out more</a>"
-    },
-    "Please wait as we try to decrypt your messages. This may take a few moments.": {
-        "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",
-        "en": "Please wait as we try to unlock your messages. This may take a few moments."
     },
     "Some messages could not be decrypted": {
         "fr": "Certains messages n’ont pas pu être déverrouillés",
@@ -784,10 +682,6 @@
         "fr": "Récupération des messages depuis le serveur…",
         "en": "Fetching messages from server…"
     },
-    "Generate a new password. Note that your locked messages will remain locked.": {
-        "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
-        "en": "Generate a new password. Note that your locked messages will remain locked."
-    },
     "Where you're signed in": {
         "fr": "Appareils connectés",
         "en": "Connected devices"
@@ -812,10 +706,6 @@
         "fr": "Ce salon va être mis à jour",
         "en": "This room will be updated"
     },
-    "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room": {
-        "fr": "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon.",
-        "en": "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room."
-    },
     "Upgrade room": {
         "fr": "Mettre à jour le salon",
         "en": "Upgrade room"
@@ -836,10 +726,6 @@
         "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
         "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
     },
-    "Export room members": {
-        "fr": "Exporter les membres du salon",
-        "en": "Export room members"
-    },
     "members_of_%(roomName)s.txt": {
         "fr": "membres_de_%(roomName)s.txt",
         "en": "members_of_%(roomName)s.txt"
@@ -855,22 +741,6 @@
     "Clear cross-signing keys": {
         "fr": "Réinitialiser les clés de signature croisée",
         "en": "Reset Recovery Code"
-    },
-    "General Conditions of Use (CGU)": {
-        "en": "General Conditions of Use (CGU)",
-        "fr": "Conditions Générales d'Utilisation (CGU)"
-    },
-    "Read the CGU": {
-        "en": "Read the CGU",
-        "fr": "Consultez les CGU"
-    },
-    "Privacy Policy": {
-        "en": "Privacy Policy",
-        "fr": "Politique de Confidentialité"
-    },
-    "Read the Privacy Policy": {
-        "en": "Read the Privacy Policy",
-        "fr": "Lire la Politique de Confidentialité"
     },
     "la messagerie instantanée de l'Administration": {
         "en": "The instant messaging app of the French Administration",

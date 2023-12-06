@@ -82,5 +82,93 @@
     "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
         "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon.",
         "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room."
+    },
+    "Export room members": {
+        "fr": "Exporter les membres du salon",
+        "en": "Export room members"
+    },
+    "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room": {
+        "fr": "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon.",
+        "en": "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room."
+    },
+    "External users allowed": {
+        "en": "external users allowed",
+        "fr": "ouvert aux externes"
+    },
+    "Finish": {
+        "en": "Finish",
+        "fr": "Terminer"
+    },
+    "Forum room": {
+        "en": "Public room",
+        "fr": "Forum"
+    },
+    "Frequently Asked Questions (FAQ)": {
+        "en": "Frequently Asked Questions (FAQ)",
+        "fr": "Foire Aux Questions (FAQ)"
+    },
+    "I renewed the validity of my account": {
+        "en": "I renewed my account",
+        "fr": "J’ai renouvelé mon compte"
+    },
+    "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>": {
+        "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
+        "fr": "Si vous rencontrez des difficultés dans votre utilisation de Tchap, contactez-nous par email à <b>%(supportEmail)s</b>"
+    },
+    "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.": {
+        "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
+        "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
+    },
+    "Known issues": {
+        "en": "Known issues",
+        "fr": "Problèmes connus"
+    },
+    "Read the Known Issues": {
+        "en": "Read the Known Issues",
+        "fr": "Consultez les problèmes connus"
+    },
+    "This version of Tchap Web is currently in development. There are known issues that will be solved soon.": {
+        "en": "This version of Tchap Web is currently in development. There are known issues that will be solved soon.",
+        "fr": "Cette version de Tchap Web est en cours de développement. Il y a des problèmes connus qui seront bientôt résolus."
+    },
+    "Passphrase must be at least 8 character long": {
+        "en": "Passphrase must be at least 8 character long",
+        "fr": "Le mot de passe doit minimum faire 8 caractères"
+    },
+    "Privacy Policy": {
+        "en": "Privacy Policy",
+        "fr": "Politique de Confidentialité"
+    },
+    "Private discussions accessible to all users of this space.": {
+        "en": "Private discussions accessible to all users of this space.",
+        "fr": "Discussions privées accessibles à tous les membres de cet espace"
+    },
+    "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.": {
+        "en": "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.",
+        "fr": "Discussions privées accessibles à tous les membres de cet espace et aux utilisateurs externes sur invitation d'un administrateur."
+    },
+    "Public discussion accessible to all users of this space or from a shared link.": {
+        "en": "Public discussion accessible to all users of this space or from a shared link.",
+        "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
+    },
+    "Private room open to external users": {
+        "en": "Private room open to external users",
+        "fr": "Salon ouvert aux externes"
+    },
+    "Read the CGU": {
+        "en": "Read the CGU",
+        "fr": "Consultez les CGU"
+    },
+    "Read the FAQ": {
+        "en": "Read the FAQ",
+        "fr": "Consultez la FAQ"
+    },
+    "Read the Privacy Policy": {
+        "en": "Read the Privacy Policy",
+        "fr": "Lire la Politique de Confidentialité"
+    },
+    "Reload the app": {
+        "en": "Reload page",
+        "fr": "Rafraîchir la page"
     }
 }

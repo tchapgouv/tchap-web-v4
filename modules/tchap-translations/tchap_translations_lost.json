@@ -39,5 +39,46 @@
     "Download my logs": {
         "en": "Download my logs",
         "fr": "Obtenir mes journaux"
+    },
+    "General Conditions of Use (CGU)": {
+        "en": "General Conditions of Use (CGU)",
+        "fr": "Conditions Générales d'Utilisation (CGU)"
+    },
+    "Generate a new password. Note that your locked messages will remain locked.": {
+        "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
+        "en": "Generate a new password. Note that your locked messages will remain locked."
+    },
+    "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
+        "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
+        "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
+    },
+    "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
+        "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
+        "fr": "Si vos autres appareils n'ont pas la clé pour ce message, vous ne pourrez pas le déchiffrer."
+    },
+    "Make a copy of your Security Key": {
+        "fr": "Faire une copie de votre Code de Récupération",
+        "en": "Make a copy of your Recovery Code"
+    },
+    "Open another device to load encrypted messages": {
+        "fr": "Utiliser un autre appareil pour déverrouiller vos messages.",
+        "en": "Use another device to unlock your messages."
+    },
+    "Or if that doesn't work, please follow <a>these steps</a>.": {
+        "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
+        "en": "Or if that doesn't work, please follow <a>these steps</a>."
+    },
+    "Please <b>accept the sharing</b> of your Tchap Keys on the other device.": {
+        "en": "Please <b>accept the sharing</b> of your Tchap Keys on the other device.",
+        "fr": "Merci d'<b>accepter la demande</b> de partage de vos Clés Tchap pour déverrouiller vos messages."
+    },
+    "Please also confirm the emojis on the other device.": {
+        "en": "Please also confirm the emojis on the other device.",
+        "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+    },
+    "Please wait as we try to decrypt your messages. This may take a few moments.": {
+        "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",
+        "en": "Please wait as we try to unlock your messages. This may take a few moments.",
+        "comment": "on s'en sert pas ca ? je viens de faire un patch"
     }
 }
