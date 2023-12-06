@@ -40,10 +40,6 @@
         "en": "Just want to get your own logs, without sharing them with the Tchap team?",
         "fr": "Vous voulez juste obtenir vos journaux sans les partager avec l'équipe Tchap ?"
     },
-    "This action is irreversible.": {
-        "en": "This action is irreversible.",
-        "fr": "Cette action est irréversible."
-    },
     "Your last three login attempts have failed. Please try again in a few minutes.": {
         "en": "Your last three login attempts have failed. Please try again in a few minutes.",
         "fr": "Vos trois dernières tentatives de connexion ont échoué. Veuillez réessayer dans quelques minutes."
@@ -72,37 +68,13 @@
         "en": "an uppercase letter",
         "fr": "une lettre majuscule"
     },
-    "Save your Tchap Keys (encryption keys)": {
-        "en": "Save your Tchap Keys (encryption keys)",
-        "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
-    },
-    "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
-        "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
-        "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
-    },
     "Your Tchap Key password": {
         "en": "Your Tchap Key password",
         "fr": "Votre mot de passe Clés Tchap"
     },
-    "Tchap Keys saved!": {
-        "en": "Tchap Keys saved!",
-        "fr": "Clés Tchap sauvegardées !"
-    },
     "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
         "en": "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).",
         "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
-    },
-    "Save your Tchap Keys before logging out": {
-        "en": "Save your Tchap Keys before logging out",
-        "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"
-    },
-    "Sign me out": {
-        "en": "Sign me out",
-        "fr": "Me déconnecter"
-    },
-    "Save my keys": {
-        "en": "Save my Tchap keys",
-        "fr": "Sauvegarder mes clés Tchap"
     },
     "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
@@ -124,37 +96,13 @@
         "en": "Please confirm the objects on the other device (loading).",
         "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
     },
-    "The validity period of your account has expired": {
-        "en": "Your Tchap account has expired",
-        "fr": "Votre compte Tchap a expiré"
-    },
-    "Request a renewal email": {
-        "en": "Request a renewal email",
-        "fr": "Demander l’envoi d’un nouvel email"
-    },
     "Wait for at least %(wait)s seconds between two emails": {
         "en": "Wait for at least %(wait)s seconds between two emails",
         "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
     },
-    "The email was not sent sucessfully, please retry in a moment": {
-        "en": "The email was not sent sucessfully, please retry",
-        "fr": "L'email de renouvellement n'a pas pu être envoyé, veuillez réessayer"
-    },
     "Your account is still expired, please follow the link in the email you have received to renew it": {
         "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
         "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
-    },
-    "The app will reload now": {
-        "en": "You can refresh the page to continue your conversations",
-        "fr": "Vous pouvez dorénavant rafraîchir la page pour continuer vos conversations"
-    },
-    "Request in progress...": {
-        "en": "Request in progress...",
-        "fr": "Demande en cours..."
-    },
-    "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.": {
-        "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
-        "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
     },
     "Your key share request has been sent - please check your other devices for key share requests.": {
         "en": "Your key share request has been sent - please check your other devices for key share requests.",
@@ -188,10 +136,6 @@
         "en": "Automatically back up your messages and retrieve them at any time using the Recovery Code.",
         "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de Récupération."
     },
-    "Thread": {
-        "en": "Thread",
-        "fr": "Discussion"
-    },
     "Join public room": {
         "en": "Join a public room",
         "fr": "Rejoindre un forum"
@@ -204,17 +148,11 @@
         "en": "Explore public rooms",
         "fr": "Rejoindre un forum"
     },
-    "Start chat": {
-        "en": "New direct message",
-        "fr": "Nouveau message direct"
-    },
-    "Start new chat": {
-        "en": "New direct message",
-        "fr": "Nouveau message direct"
-    },
-    "Start a new chat": {
-        "en": "New direct message",
-        "fr": "Nouveau message direct"
+    "action": {
+        "start_chat": {
+            "en": "New direct message",
+            "fr": "Nouveau message direct"
+        }
     },
     "Chat": {
         "en": "New direct message",
@@ -376,10 +314,6 @@
         "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s.",
         "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s."
     },
-    "Sign in instead": {
-        "en": "Sign in instead",
-        "fr": "ou connectez-vous"
-    },
     "auth": {
         "enter_email_heading": {
             "en": "Enter your email to reset password",
@@ -388,11 +322,17 @@
         "check_email_wrong_email_button": {
             "en": "Re-enter email address",
             "fr": "Re-saisir l'adresse mail"
+        },
+        "reset_password_title": {
+            "en": "Reset your password",
+            "fr": "Réinitialisez votre mot de passe",
+            "comment": "TODO contribute to element translations"
+        },
+        "sign_in_instead": {
+            "en": "Sign in instead",
+            "fr": "ou connectez-vous",
+            "comment": "TODO contribute to element translations"
         }
-    },
-    "Reset your password": {
-        "en": "Reset your password",
-        "fr": "Réinitialisez votre mot de passe"
     },
     "Wrong email address?": {
         "en": "Wrong email address?",
@@ -478,10 +418,6 @@
         "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté.",
         "en": "A new Recovery Code for Secure Messages has been detected."
     },
-    "Secure your backup with a Security Phrase": {
-        "fr": "Protégez votre sauvegarde avec un Code de Récupération",
-        "en": "Secure your backup with a Recovery Code"
-    },
     "Your Security Key is in your <b>Downloads</b> folder.": {
         "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
         "en": "Your Recovery Code is in your <b>Downloads</b> folder."
@@ -493,10 +429,6 @@
     "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
         "fr": "Votre Code de Récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
         "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
-    },
-    "Set up with a Security Key": {
-        "fr": "Configurer avec un Code de Récupération",
-        "en": "Set up with a Recovery Code"
     },
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
         "fr": "Si vous avez oublié votre Code de Récupération, vous pouvez <button>définir de nouvelles options de récupération</button>",
@@ -566,17 +498,9 @@
         "fr": "Vous vous connectez à un nouvel appareil",
         "en": "You are logging into a new device"
     },
-    "Reset your keys to prevent future decryption errors": {
-        "fr": "Activez la sauvegarde automatique des messages",
-        "en": "Enable automatic secure backup"
-    },
     "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
         "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
         "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
-    },
-    "Resend key requests": {
-        "fr": "Renvoyer une demande",
-        "en": "Resend key requests"
     },
     "Unable to decrypt message": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment.",
@@ -585,10 +509,6 @@
     "Waiting for this message. This could take a while. <a>Find out more</a>": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>",
         "en": "Waiting for this message. This could take a while. <a>Find out more</a>"
-    },
-    "Some messages could not be decrypted": {
-        "fr": "Certains messages n’ont pas pu être déverrouillés",
-        "en": "Some messages could not be unlocked"
     },
     "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
         "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
@@ -605,10 +525,6 @@
     "Tchap keys": {
         "fr": "Clés Tchap",
         "en": "Tchap keys"
-    },
-    "Tchap keys:": {
-        "fr": "Clés Tchap :",
-        "en": "Tchap keys:"
     },
     "That email is not allowed on Tchap": {
         "fr": "Votre adresse mail n'est pas autorisée sur Tchap. Demandez l'accès à Tchap pour votre administration via <a>ce formulaire</a>",
@@ -766,10 +682,6 @@
         "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>",
         "en": "Tchap is not available at the moment. <a>View the status of services</a>."
     },
-    "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>.": {
-        "fr": "La connexion à Tchap n'est pas possible pour le moment %(errCode)s. <a>Voir l'état du service</a>",
-        "en": "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
-    },
     "Sent messages will be stored until your connection has returned.": {
         "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie.",
         "en": "Messages will be sent when your connection returns."
@@ -852,13 +764,15 @@
         "fr": "Appareil non vérifié",
         "en": "Unverified device"
     },
-    "Sign out of %(count)s sessions|one": {
-        "fr": "Déconnecter %(count)s appareil",
-        "en": "Sign out of %(count)s device"
-    },
-    "Sign out of %(count)s sessions|other": {
-        "fr": "Déconnecter %(count)s appareils",
-        "en": "Sign out of %(count)s devices"
+    "Sign out of %(count)s sessions": {
+        "one": {
+            "fr": "Déconnecter %(count)s appareil",
+            "en": "Sign out of %(count)s device"
+        },
+        "other": {
+            "fr": "Déconnecter %(count)s appareils",
+            "en": "Sign out of %(count)s devices"
+        }
     },
     "Sign out of all other sessions (%(otherSessionsCount)s)": {
         "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)",

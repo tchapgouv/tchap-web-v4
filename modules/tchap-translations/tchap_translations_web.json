@@ -170,5 +170,41 @@
     "Reload the app": {
         "en": "Reload page",
         "fr": "Rafraîchir la page"
+    },
+    "Request a renewal email": {
+        "en": "Request a renewal email",
+        "fr": "Demander l’envoi d’un nouvel email"
+    },
+    "Save my keys": {
+        "en": "Save my Tchap keys",
+        "fr": "Sauvegarder mes clés Tchap"
+    },
+    "Save your Tchap Keys (encryption keys)": {
+        "en": "Save your Tchap Keys (encryption keys)",
+        "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
+    },
+    "Tchap Keys saved!": {
+        "en": "Tchap Keys saved!",
+        "fr": "Clés Tchap sauvegardées !"
+    },
+    "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>.": {
+        "fr": "La connexion à Tchap n'est pas possible pour le moment %(errCode)s. <a>Voir l'état du service</a>",
+        "en": "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>."
+    },
+    "The app will reload now": {
+        "en": "You can refresh the page to continue your conversations",
+        "fr": "Vous pouvez dorénavant rafraîchir la page pour continuer vos conversations"
+    },
+    "The email was not sent sucessfully, please retry in a moment": {
+        "en": "The email was not sent sucessfully, please retry",
+        "fr": "L'email de renouvellement n'a pas pu être envoyé, veuillez réessayer"
+    },
+    "The validity period of your account has expired": {
+        "en": "Your Tchap account has expired",
+        "fr": "Votre compte Tchap a expiré"
+    },
+    "This action is irreversible.": {
+        "en": "This action is irreversible.",
+        "fr": "Cette action est irréversible."
     }
 }
