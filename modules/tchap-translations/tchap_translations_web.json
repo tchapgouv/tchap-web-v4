@@ -38,5 +38,49 @@
     "Congratulations, your account has been renewed": {
         "en": "Congratulations, your account has been renewed",
         "fr": "Félicitations, votre compte a été renouvelé"
+    },
+    "Contact us": {
+        "en": "Contact us",
+        "fr": "Contactez-nous"
+    },
+    "Scanning": {
+        "en": "Scanning",
+        "fr": "Scanning"
+    },
+    "Content blocked": {
+        "en": "Content blocked",
+        "fr": "Contenu bloqué"
+    },
+    "Trusted": {
+        "en": "Trusted",
+        "fr": "Vérifié"
+    },
+    "Scan unavailable": {
+        "en": "Scan unavailable",
+        "fr": "Scan unavailable"
+    },
+    "Conçue et gérée par l'Administration française": {
+        "en": "Designed and managed by the French Administration, for agents of the three public functions, <br/>to communicate easily with high security standards. Used by over 400,000 public officials.",
+        "fr": "Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, <br/>pour communiquer facilement en toute sécurité. Utilisée par plus de 400 000 agents publics."
+    },
+    "Create Room": {
+        "en": "Create New Room",
+        "fr": "Créer un nouveau salon"
+    },
+    "Create a room in this space": {
+        "en": "Create a room in this space",
+        "fr": "Créer un salon dans cet espace"
+    },
+    "Create your Tchap Key password (minimum 8 characters)": {
+        "en": "Create your Tchap Key password (minimum 8 characters)",
+        "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
+    },
+    "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
+        "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
+        "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
+    },
+    "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
+        "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon.",
+        "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room."
     }
 }

@@ -35,10 +35,6 @@
         "en": "This room is a public forum",
         "fr": "Ce salon est un forum public"
     },
-    "Create a room in this space": {
-        "en": "Create a room in this space",
-        "fr": "Créer un salon dans cet espace"
-    },
     "Private discussions accessible to all users of this space.": {
         "en": "Private discussions accessible to all users of this space.",
         "fr": "Discussions privées accessibles à tous les membres de cet espace"
@@ -50,26 +46,6 @@
     "Public discussion accessible to all users of this space or from a shared link.": {
         "en": "Public discussion accessible to all users of this space or from a shared link.",
         "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
-    },
-    "Scanning": {
-        "en": "Scanning",
-        "fr": "Scanning"
-    },
-    "Content blocked": {
-        "en": "Content blocked",
-        "fr": "Contenu bloqué"
-    },
-    "Trusted": {
-        "en": "Trusted",
-        "fr": "Vérifié"
-    },
-    "Scan unavailable": {
-        "en": "Scan unavailable",
-        "fr": "Scan unavailable"
-    },
-    "Contact us": {
-        "en": "Contact us",
-        "fr": "Contactez-nous"
     },
     "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>": {
         "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
@@ -112,10 +88,6 @@
         "en": "Just want to get your own logs, without sharing them with the Tchap team?",
         "fr": "Vous voulez juste obtenir vos journaux sans les partager avec l'équipe Tchap ?"
     },
-    "Download my logs": {
-        "en": "Download my logs",
-        "fr": "Obtenir mes journaux"
-    },
     "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.": {
         "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
         "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
@@ -123,10 +95,6 @@
     "This action is irreversible.": {
         "en": "This action is irreversible.",
         "fr": "Cette action est irréversible."
-    },
-    "Create Room": {
-        "en": "Create New Room",
-        "fr": "Créer un nouveau salon"
     },
     "Your last three login attempts have failed. Please try again in a few minutes.": {
         "en": "Your last three login attempts have failed. Please try again in a few minutes.",
@@ -171,10 +139,6 @@
     "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
         "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
         "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
-    },
-    "Create your Tchap Key password (minimum 8 characters)": {
-        "en": "Create your Tchap Key password (minimum 8 characters)",
-        "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
     },
     "Passphrase must be at least 8 character long": {
         "en": "Passphrase must be at least 8 character long",
@@ -271,10 +235,6 @@
     "Reload the app": {
         "en": "Reload page",
         "fr": "Rafraîchir la page"
-    },
-    "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
-        "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
-        "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
     },
     "Request in progress...": {
         "en": "Request in progress...",
@@ -516,10 +476,6 @@
         "en": "Reset your password",
         "fr": "Réinitialisez votre mot de passe"
     },
-    "Did not receive it?": {
-        "en": "Did not receive it?",
-        "fr": "Pas reçu ?"
-    },
     "Wrong email address?": {
         "en": "Wrong email address?",
         "fr": "Mauvaise adresse mail ?"
@@ -728,10 +684,6 @@
         "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>",
         "en": "Waiting for this message. This could take a while. <a>Find out more</a>"
     },
-    "Decrypting messages…": {
-        "fr": "Déverrouillage des messages…",
-        "en": "Unlocking messages…"
-    },
     "Please wait as we try to decrypt your messages. This may take a few moments.": {
         "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",
         "en": "Please wait as we try to unlock your messages. This may take a few moments."
@@ -888,10 +840,6 @@
         "fr": "Exporter les membres du salon",
         "en": "Export room members"
     },
-    "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
-        "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon.",
-        "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room."
-    },
     "members_of_%(roomName)s.txt": {
         "fr": "membres_de_%(roomName)s.txt",
         "en": "members_of_%(roomName)s.txt"
@@ -927,14 +875,6 @@
     "la messagerie instantanée de l'Administration": {
         "en": "The instant messaging app of the French Administration",
         "fr": "la messagerie instantanée de l'Administration"
-    },
-    "Conçue et gérée par l'Administration française": {
-        "en": "Designed and managed by the French Administration, for agents of the three public functions, <br/>to communicate easily with high security standards. Used by over 400,000 public officials.",
-        "fr": "Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, <br/>pour communiquer facilement en toute sécurité. Utilisée par plus de 400 000 agents publics."
-    },
-    "En savoir plus": {
-        "en": "Learn more",
-        "fr": "En savoir plus"
     },
     "Your %(brand)s is misconfigured": {
         "fr": "",

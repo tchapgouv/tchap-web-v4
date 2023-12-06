@@ -27,5 +27,17 @@
         "fr": "",
         "en": "",
         "comment": "c'est fait expres?"
+    },
+    "Decrypting messages…": {
+        "fr": "Déverrouillage des messages…",
+        "en": "Unlocking messages…"
+    },
+    "Did not receive it?": {
+        "en": "Did not receive it?",
+        "fr": "Pas reçu ?"
+    },
+    "Download my logs": {
+        "en": "Download my logs",
+        "fr": "Obtenir mes journaux"
     }
 }
