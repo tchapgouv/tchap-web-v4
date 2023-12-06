@@ -206,5 +206,13 @@
     "This action is irreversible.": {
         "en": "This action is irreversible.",
         "fr": "Cette action est irréversible."
+    },
+    "Wait for at least %(wait)s seconds between two emails": {
+        "en": "Wait for at least %(wait)s seconds between two emails",
+        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
+    },
+    "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
+        "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
+        "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
     }
 }

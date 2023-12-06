@@ -23,10 +23,6 @@
         "en": "This room is a public forum",
         "fr": "Ce salon est un forum public"
     },
-    "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
-        "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
-        "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
-    },
     "Please tell us what went wrong in the \"Notes\" field.": {
         "en": "Please tell us what went wrong in the \"Notes\" field.",
         "fr": "Veuillez nous expliquer le problème dans le champ \"Notes\"."
@@ -95,10 +91,6 @@
     "Please confirm the objects on the other device (loading).": {
         "en": "Please confirm the objects on the other device (loading).",
         "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
-    },
-    "Wait for at least %(wait)s seconds between two emails": {
-        "en": "Wait for at least %(wait)s seconds between two emails",
-        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
     },
     "Your account is still expired, please follow the link in the email you have received to renew it": {
         "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
@@ -332,23 +324,26 @@
             "en": "Sign in instead",
             "fr": "ou connectez-vous",
             "comment": "TODO contribute to element translations"
+        },
+        "verify_email_heading": {
+            "Verify your email to continue": {
+                "en": "Verify your email to continue",
+                "fr": "Vérifiez vos mails avant de continuer"
+            }
+        },
+        "verify_email_explainer": {
+            "en": "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>",
+            "fr": "Nous avons besoin de savoir que c’est vous avant de réinitialiser votre mot de passe.\n                    Cliquer sur le lien dans le mail que nous venons juste d’envoyer à <b>%(email)s</b>"
+        },
+        "check_email_wrong_email_prompt": {
+            "en": "Wrong email address?",
+            "fr": "Mauvaise adresse mail ?",
+            "comment": "TODO contribute to element"
         }
-    },
-    "Wrong email address?": {
-        "en": "Wrong email address?",
-        "fr": "Mauvaise adresse mail ?"
     },
     "Check your email to continue": {
         "en": "Check your email to continue",
         "fr": "Vérifiez vos mails avant de continuer"
-    },
-    "Verify your email to continue": {
-        "en": "Verify your email to continue",
-        "fr": "Vérifiez vos mails avant de continuer"
-    },
-    "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>": {
-        "en": "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>",
-        "fr": "Nous avons besoin de savoir que c’est vous avant de réinitialiser votre mot de passe.\n                    Cliquer sur le lien dans le mail que nous venons juste d’envoyer à <b>%(email)s</b>"
     },
     "Send email": {
         "en": "Send email",
@@ -498,10 +493,6 @@
         "fr": "Vous vous connectez à un nouvel appareil",
         "en": "You are logging into a new device"
     },
-    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
-        "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
-        "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
-    },
     "Unable to decrypt message": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment.",
         "en": "Waiting for this message. This could take a while."
@@ -509,10 +500,6 @@
     "Waiting for this message. This could take a while. <a>Find out more</a>": {
         "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>",
         "en": "Waiting for this message. This could take a while. <a>Find out more</a>"
-    },
-    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
-        "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
-        "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
     },
     "These keys only apply to the current session.": {
         "fr": "Ces clés ne concernent que la session en cours.",
@@ -598,10 +585,6 @@
         "fr": "Récupération des messages depuis le serveur…",
         "en": "Fetching messages from server…"
     },
-    "Where you're signed in": {
-        "fr": "Appareils connectés",
-        "en": "Connected devices"
-    },
     "Activate on this device": {
         "fr": "Activer sur cet appareil",
         "en": "Activate on this device"
@@ -666,10 +649,6 @@
         "fr": "",
         "en": ""
     },
-    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": {
-        "fr": "",
-        "en": ""
-    },
     "Server may be unavailable, overloaded, or you hit a bug.": {
         "fr": "La connexion à Tchap n'est pas possible pour le moment (err:04). Voir l'état du service: https://status.tchap.numerique.gouv.fr",
         "en": "Tchap is not available at the moment (err:04). View the status of services: https://status.tchap.numerique.gouv.fr"
@@ -718,13 +697,15 @@
         "fr": "Recevoir les notifications push sur cet appareil",
         "en": "Receive push notifications on this device."
     },
-    "Unverified": {
-        "fr": "Non vérifié",
-        "en": "Unverified"
-    },
-    "Verified": {
-        "fr": "Vérifié",
-        "en": "Verified "
+    "common": {
+        "unverified": {
+            "fr": "Non vérifié",
+            "en": "Unverified"
+        },
+        "verified": {
+            "fr": "Vérifié",
+            "en": "Verified "
+        }
     },
     "Your current session is ready for secure messaging.": {
         "fr": "",

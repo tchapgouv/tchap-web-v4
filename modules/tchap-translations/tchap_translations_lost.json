@@ -124,5 +124,21 @@
     "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
         "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
         "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
+    },
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
+        "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
+        "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
+    },
+    "Where you're signed in": {
+        "fr": "Appareils connectés",
+        "en": "Connected devices"
+    },
+    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": {
+        "fr": "",
+        "en": ""
+    },
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
+        "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
+        "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
     }
 }
