@@ -794,7 +794,7 @@
     },
     "Decrypting messages…": {
         "fr": "Déverrouillage des messages…",
-        "end": "Unlocking messages…"
+        "en": "Unlocking messages…"
     },
     "Please wait as we try to decrypt your messages. This may take a few moments.": {
         "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",

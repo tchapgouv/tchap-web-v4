@@ -1,19 +1,20 @@
 #!/bin/bash
-export REPO="web";
-export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
+#export REPO="web";
+#export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
 
-#export REPO="react-sdk";
-#export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
+export REPO="react-sdk";
+export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
 
 export TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}.json`
-export TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}_en.json`
-export MERGED_TRANSLATION_FILE=`realpath modules/tchap-translations/merged_translations_${REPO}.json`
-export GENERATED_TRANSLATION_FILE=`realpath modules/tchap-translations/generated_translations_${REPO}.json`
+export TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tchap_${REPO}_en.json`
+export MERGED_TRANSLATION_FILE=`realpath modules/tchap-translations/merged_${REPO}.json`
+export GENERATED_TRANSLATION_FILE=`realpath modules/tchap-translations/generated_${REPO}.json`
 
 # Extract EN translations only from tchap. Change format to be compatible with element's.
 # We use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
-# TODO: make this work with nested keys (new key format). tchap_translations_${REPO} has no nesting for now.
-cat $TCHAP_TRANSLATION_FILE | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > $TCHAP_TRANSLATION_EN_FILE
+# Note : this works with nested keys.
+#cat $TCHAP_TRANSLATION_FILE | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > $TCHAP_TRANSLATION_EN_FILE # no nested keys
+node scripts/tchap/reformatTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
 
 # Merge tchap and element translatsions. Tchap values should override element values in case of conflict.
 # Note : this works with nested keys.
