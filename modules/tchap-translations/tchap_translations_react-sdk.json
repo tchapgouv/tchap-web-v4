@@ -200,10 +200,6 @@
         "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
         "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
     },
-    "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup": {
-        "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup",
-        "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde"
-    },
     "Create your Tchap Key password (minimum 8 characters)": {
         "en": "Create your Tchap Key password (minimum 8 characters)",
         "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
@@ -231,18 +227,6 @@
     "Save your Tchap Keys before logging out": {
         "en": "Save your Tchap Keys before logging out",
         "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"
-    },
-    "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.": {
-        "en": "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.",
-        "fr": "<b>Sans vos Clés Tchap, vous ne pourrez pas lire vos messages</b> à votre prochaine connexion parce qu'ils seront verrouillés. C'est une mesure de sécurité Tchap."
-    },
-    "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.": {
-        "en": "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.",
-        "fr": "<b>Vous pouvez actuellement lire vos messages sur un autre appareil ?</b> Vous pouvez vous déconnecter. Cet autre appareil sauvegarde automatiquement vos Clés Tchap et tous vos messages."
-    },
-    "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.": {
-        "en": "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.",
-        "fr": "<b>Vous n'avez pas d'autre appareil connecté à Tchap ?</b> Sauvegardez vos Clés Tchap. Ces clés déverrouilleront les messages actuels, mais pas ceux reçus entre la sauvegarde et votre prochaine connexion."
     },
     "Sign me out": {
         "en": "Sign me out",
@@ -336,10 +320,6 @@
         "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
         "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
     },
-    "<requestLink>Re-send a request to your other devices</requestLink>": {
-        "en": "<requestLink>Re-send a request to your other devices</requestLink>",
-        "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
-    },
     "Request in progress...": {
         "en": "Request in progress...",
         "fr": "Demande en cours..."
@@ -355,10 +335,6 @@
     "Your key share request has been sent - please check your other devices for key share requests.": {
         "en": "Your key share request has been sent - please check your other devices for key share requests.",
         "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
-    },
-    "<requestLink>Import from saved file</requestLink>": {
-        "en": "<requestLink>Import from saved file</requestLink>",
-        "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
     },
     "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)": {
         "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
@@ -1076,13 +1052,15 @@
         "fr": "",
         "en": ""
     },
-    "%(count)s sessions selected|one": {
-        "fr": "%(count)s appareil sélectionné",
-        "en": "%(count)s device selected"
-    },
-    "%(count)s sessions selected|other": {
-        "fr": "%(count)s appareils sélectionnés",
-        "en": "%(count)s devices selected"
+    "%(count)s sessions selected": {
+        "one": {
+            "fr": "%(count)s appareil sélectionné",
+            "en": "%(count)s device selected"
+        },
+        "other": {
+            "fr": "%(count)s appareils sélectionnés",
+            "en": "%(count)s devices selected"
+        }
     },
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": {
         "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages",
