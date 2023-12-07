@@ -18,7 +18,7 @@ index f25c15e..e2d40a3 100644
          mask-image: url("$(res)/img/element-icons/feedback.svg");
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
-index 12e80d7..ad036bb 100644
+index 12e80d7..701dc43 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/UserMenu.tsx
 @@ -246,6 +246,28 @@ export default class UserMenu extends React.Component<IProps, IState> {
@@ -33,7 +33,7 @@ index 12e80d7..ad036bb 100644
 +        ev.preventDefault();
 +        ev.stopPropagation();
 +
-+        const roomId = "!wTLbLygAQTVyDHvXIw:dev01.tchap.incubateur.net";
++        const roomId = "!cDKdQyXHeWBEaKDWWV:agent.dinum.tchap.gouv.fr";
 +
 +        defaultDispatcher.dispatch({
 +            action: Action.ViewRoom,
@@ -50,7 +50,27 @@ index 12e80d7..ad036bb 100644
      private onProvideFeedback = (ev: ButtonEvent): void => {
          ev.preventDefault();
          ev.stopPropagation();
-@@ -363,6 +385,15 @@ export default class UserMenu extends React.Component<IProps, IState> {
+@@ -344,6 +366,19 @@ export default class UserMenu extends React.Component<IProps, IState> {
+             );
+         }
+ 
++        let christmasEggButton: JSX.Element | undefined;
++        let now = new Date().getTime();
++        let endDate = new Date("2024-10-01").getTime();
++
++        if (now < endDate) {
++            christmasEggButton = (
++                <IconizedContextMenuOption
++                    label={"🎄 Joyeuses Fêtes 🎄"}
++                    onClick={this.onOpenChristmasEgg}
++                />
++            );
++        }
++
+         let primaryOptionList = (
+             <IconizedContextMenuOptionList>
+                 {homeButton}
+@@ -363,6 +398,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
                      onClick={(e) => this.onSettingsOpen(e)}
                  />
                  {feedbackButton}
@@ -59,10 +79,7 @@ index 12e80d7..ad036bb 100644
 +                    label={_t("common|help")}
 +                    onClick={this.onOpenFAQPage}
 +                />
-+                <IconizedContextMenuOption
-+                    label={"🎄 Joyeuses Fêtes 🎄"}
-+                    onClick={this.onOpenChristmasEgg}
-+                />
++                {christmasEggButton}
                  <IconizedContextMenuOption
                      className="mx_IconizedContextMenu_option_red"
                      iconClassName="mx_UserMenu_iconSignOut"
