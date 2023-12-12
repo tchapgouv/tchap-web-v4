@@ -250,5 +250,13 @@
     "members_of_%(roomName)s.txt": {
         "fr": "membres_de_%(roomName)s.txt",
         "en": "members_of_%(roomName)s.txt"
+    },
+    "la messagerie instantanée de l'Administration": {
+        "en": "The instant messaging app of the French Administration",
+        "fr": "la messagerie instantanée de l'Administration"
+    },
+    "Welcome to Tchap": {
+        "en": "Welcome to Tchap",
+        "fr": "Bienvenue sur Tchap"
     }
 }

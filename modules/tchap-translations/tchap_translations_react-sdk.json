@@ -1,8 +1,4 @@
 {
-    "Welcome to Tchap": {
-        "en": "Welcome to Tchap",
-        "fr": "Bienvenue sur Tchap"
-    },
     "Private room": {
         "en": "Private room",
         "fr": "Salon"
@@ -580,10 +576,6 @@
     "Clear cross-signing keys": {
         "fr": "Réinitialiser les clés de signature croisée",
         "en": "Reset Recovery Code"
-    },
-    "la messagerie instantanée de l'Administration": {
-        "en": "The instant messaging app of the French Administration",
-        "fr": "la messagerie instantanée de l'Administration"
     },
     "Your %(brand)s is misconfigured": {
         "fr": "",
