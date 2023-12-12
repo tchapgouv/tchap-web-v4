@@ -40,38 +40,6 @@
         "en": "Your last three login attempts have failed. Please try again in a few minutes.",
         "fr": "Vos trois dernières tentatives de connexion ont échoué. Veuillez réessayer dans quelques minutes."
     },
-    "Your password must include:": {
-        "en": "Your password must include:",
-        "fr": "Votre mot de passe doit comporter :"
-    },
-    "a minimum of %(number)s characters": {
-        "en": "a minimum of %(number)s characters",
-        "fr": "%(number)s caractères au minimum"
-    },
-    "a number": {
-        "en": "a number",
-        "fr": "un chiffre"
-    },
-    "a symbol": {
-        "en": "a symbol",
-        "fr": "un caractère spécial"
-    },
-    "a lowercase letter": {
-        "en": "a lowercase letter",
-        "fr": "une lettre minuscule"
-    },
-    "an uppercase letter": {
-        "en": "an uppercase letter",
-        "fr": "une lettre majuscule"
-    },
-    "Your Tchap Key password": {
-        "en": "Your Tchap Key password",
-        "fr": "Votre mot de passe Clés Tchap"
-    },
-    "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
-        "en": "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).",
-        "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
-    },
     "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
         "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
@@ -91,14 +59,6 @@
     "Please confirm the objects on the other device (loading).": {
         "en": "Please confirm the objects on the other device (loading).",
         "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
-    },
-    "Your account is still expired, please follow the link in the email you have received to renew it": {
-        "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
-        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
-    },
-    "Your key share request has been sent - please check your other devices for key share requests.": {
-        "en": "Your key share request has been sent - please check your other devices for key share requests.",
-        "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
     },
     "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)": {
         "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
@@ -412,18 +372,6 @@
     "A new Security Phrase and key for Secure Messages have been detected.": {
         "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté.",
         "en": "A new Recovery Code for Secure Messages has been detected."
-    },
-    "Your Security Key is in your <b>Downloads</b> folder.": {
-        "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
-        "en": "Your Recovery Code is in your <b>Downloads</b> folder."
-    },
-    "Your Security Key": {
-        "fr": "Votre Code de Récupération",
-        "en": "Your Recovery Code"
-    },
-    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
-        "fr": "Votre Code de Récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
-        "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
     },
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
         "fr": "Si vous avez oublié votre Code de Récupération, vous pouvez <button>définir de nouvelles options de récupération</button>",

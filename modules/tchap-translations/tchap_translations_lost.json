@@ -140,5 +140,25 @@
     "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
         "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
         "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
+    },
+    "Your Security Key": {
+        "fr": "Votre Code de Récupération",
+        "en": "Your Recovery Code"
+    },
+    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
+        "fr": "Votre Code de Récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
+        "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
+    },
+    "Your Security Key is in your <b>Downloads</b> folder.": {
+        "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
+        "en": "Your Recovery Code is in your <b>Downloads</b> folder."
+    },
+    "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
+        "en": "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).",
+        "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
+    },
+    "Your key share request has been sent - please check your other devices for key share requests.": {
+        "en": "Your key share request has been sent - please check your other devices for key share requests.",
+        "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
     }
 }

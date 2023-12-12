@@ -214,5 +214,37 @@
     "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.": {
         "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
         "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
+    },
+    "Your Tchap Key password": {
+        "en": "Your Tchap Key password",
+        "fr": "Votre mot de passe Clés Tchap"
+    },
+    "Your account is still expired, please follow the link in the email you have received to renew it": {
+        "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
+        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
+    },
+    "Your password must include:": {
+        "en": "Your password must include:",
+        "fr": "Votre mot de passe doit comporter :"
+    },
+    "a minimum of %(number)s characters": {
+        "en": "a minimum of %(number)s characters",
+        "fr": "%(number)s caractères au minimum"
+    },
+    "a number": {
+        "en": "a number",
+        "fr": "un chiffre"
+    },
+    "a symbol": {
+        "en": "a symbol",
+        "fr": "un caractère spécial"
+    },
+    "a lowercase letter": {
+        "en": "a lowercase letter",
+        "fr": "une lettre minuscule"
+    },
+    "an uppercase letter": {
+        "en": "an uppercase letter",
+        "fr": "une lettre majuscule"
     }
 }
