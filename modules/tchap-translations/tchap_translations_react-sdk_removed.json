@@ -30,5 +30,8 @@
     "auth|enter_email_explainer",
     "bug_reporting|before_submitting",
     "bug_reporting|github_issue",
-    "common|matrix"
+    "common|matrix",
+    "encryption|verification|complete_title",
+    "encryption|verification|complete_description",
+    "onboarding|download_f_droid"
 ]

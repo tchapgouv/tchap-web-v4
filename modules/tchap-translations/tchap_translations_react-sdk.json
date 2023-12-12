@@ -569,10 +569,6 @@
         "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération.",
         "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code."
     },
-    "members_of_%(roomName)s.txt": {
-        "fr": "membres_de_%(roomName)s.txt",
-        "en": "members_of_%(roomName)s.txt"
-    },
     "Destroy cross-signing keys?": {
         "fr": "Réinitialiser les clés de signature croisée ?",
         "en": "Reset cross-signing keys?"
@@ -741,5 +737,9 @@
     "You can close this disconnected tab, and go to the other %(brand)s tab.": {
         "en": "You can close this disconnected tab, and go to the other %(brand)s tab.",
         "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
+    },
+    "Eye": {
+        "en": "Eye",
+        "fr": "OEil"
     }
 }
