@@ -28,5 +28,7 @@
     "Waiting for partner to confirm…",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!",
     "auth|enter_email_explainer",
-    "bug_reporting|before_submitting"
+    "bug_reporting|before_submitting",
+    "bug_reporting|github_issue",
+    "common|matrix"
 ]
