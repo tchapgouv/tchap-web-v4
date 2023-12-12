@@ -26,5 +26,7 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.",
     "Waiting for partner to confirm…",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!"
+    "You've successfully verified %(deviceName)s (%(deviceId)s)!",
+    "auth|enter_email_explainer",
+    "bug_reporting|before_submitting"
 ]
