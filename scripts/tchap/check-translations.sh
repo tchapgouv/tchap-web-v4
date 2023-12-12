@@ -6,6 +6,8 @@ export REPO="react-sdk";
 export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
 
 export TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}.json`
+export REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}_removed.json`
+
 export TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tchap_${REPO}_en.json`
 export MERGED_TRANSLATION_FILE=`realpath modules/tchap-translations/merged_${REPO}.json`
 export GENERATED_TRANSLATION_FILE=`realpath modules/tchap-translations/generated_${REPO}.json`
@@ -20,6 +22,10 @@ node scripts/tchap/reformatTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCH
 # Note : this works with nested keys.
 # Note : in command below, tchap values will overwrite because the thcap file is given in second position.
 jq -s '.[0] * .[1]' $ELEMENT_TRANSLATION_FILE $TCHAP_TRANSLATION_EN_FILE > $MERGED_TRANSLATION_FILE
+
+# Remove the keys which have been commented out in patches.
+node scripts/tchap/deleteRemovedTranslations.js --file=$MERGED_TRANSLATION_FILE --toremove=$REMOVED_TRANSLATION_FILE > $MERGED_TRANSLATION_FILE.tmp
+mv $MERGED_TRANSLATION_FILE.tmp $MERGED_TRANSLATION_FILE
 
 # Format the file for clean diffing.
 jq --sort-keys '.' $MERGED_TRANSLATION_FILE > $MERGED_TRANSLATION_FILE.tmp && mv $MERGED_TRANSLATION_FILE.tmp $MERGED_TRANSLATION_FILE # yarn i18n:sort with customized files
