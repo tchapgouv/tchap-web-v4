@@ -46,7 +46,7 @@
     },
     "setting_defaults": {
         "breadcrumbs": true,
-        "UIFeature.voip": false,
+        "UIFeature.voip": true,
         "UIFeature.shareSocial": false,
         "UIFeature.registration": true,
         "UIFeature.urlPreviews": false,
