@@ -122,10 +122,6 @@
         "en": "Recents chats",
         "fr": "Messages directs récents"
     },
-    "Secure Backup": {
-        "en": "Secure Backup",
-        "fr": "Sauvegarde automatique des messages"
-    },
     "You can also set up Secure Backup & manage your keys in Settings.": {
         "en": "You can also set up Secure Backup & manage your keys in Settings.",
         "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
@@ -653,6 +649,10 @@
         "verified": {
             "fr": "Vérifié",
             "en": "Verified "
+        },
+        "secure_backup": {
+            "en": "Secure Backup",
+            "fr": "Sauvegarde automatique des messages"
         }
     },
     "Your current session is ready for secure messaging.": {
