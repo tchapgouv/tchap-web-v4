@@ -1,0 +1,45 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
+index bb8dd49..7a1a266 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
+@@ -48,6 +48,8 @@ import RoomAvatar from "../avatars/RoomAvatar";
+ import { formatCount } from "../../../utils/FormattingUtils";
+ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+ 
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
++
+ /**
+  * A helper to transform a notification color to the what the Compound Icon Button
+  * expects
+@@ -164,7 +166,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                 )}
+             </Box>
+             <Flex as="nav" align="center" gap="var(--cpd-space-2x)">
+-                {!useElementCallExclusively && (
++                {
++                //:tchap: activate audio call only if directmessage and if feature is activated on homeserver
++                !useElementCallExclusively && isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&  (
++                //:tchap: end
+                     <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
+                         <IconButton
+                             disabled={!!voiceCallDisabledReason}
+@@ -175,6 +180,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                         </IconButton>
+                     </Tooltip>
+                 )}
++                {
++                //:tchap: activate video call only if directmessage and if feature is activated on homeserver
++                isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") && (
++                //:tchap: end
+                 <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
+                     <IconButton
+                         disabled={!!videoCallDisabledReason}
+@@ -183,7 +192,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                     >
+                         <VideoCallIcon />
+                     </IconButton>
+-                </Tooltip>
++                </Tooltip>)}
+                 <Tooltip label={_t("common|threads")}>
+                     <IconButton
+                         indicator={notificationColorToIndicator(threadNotifications)}

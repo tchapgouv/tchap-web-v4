@@ -190,6 +190,8 @@
     "tchap_features": {
         "feature_email_notification": ["agent.dinum.tchap.gouv.fr"],
         "feature_thread": [],
-        "feature_space": []
+        "feature_space": [],
+        "feature_audio_call": ["agent.dinum.tchap.gouv.fr"],
+        "feature_video_call": ["agent.dinum.tchap.gouv.fr"]
     }
 }
