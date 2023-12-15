@@ -25,7 +25,7 @@
     },
     "Forum room": {
         "en": "Public room",
-        "fr": "Forum"
+        "fr": "Forum publique"
     },
     "This room is private": {
         "en": "This room is private",
@@ -40,16 +40,16 @@
         "fr": "Ce salon est un forum public"
     },
     "Accessible to all users by invitation from an administrator.": {
-        "en": "Accessible to all users by invitation from an administrator.",
-        "fr": "Accessible à tous les utilisateurs sur invitation d'un administrateur."
+        "en": "Accessible to all users by invitation from an administrator (guest external from Tchap aren't allowed).",
+        "fr": "Accessible sur invitation d'un administrateur (les invités externes sont interdit)."
     },
     "Accessible to all users and to external guests by invitation of an administrator.": {
-        "en": "Accessible to all users and to external guests by invitation of an administrator.",
-        "fr": "Accessible à tous les utilisateurs et aux invités externes sur invitation d'un administrateur."
+        "en": "Accessible to all users and to external guests by invitation of an administrator (guest external from Tchap are allowed).",
+        "fr": "Accessible sur invitation d'un administrateur (les invités externes à Tchap sont autorisé)."
     },
     "Accessible to all users from the forum directory or from a shared link.": {
-        "en": "Accessible to all users from the forum directory or from a shared link.",
-        "fr": "Accessible à tous les utilisateurs à partir de la liste des forums ou d'un lien partagé."
+        "en": "Accessible to all Tchap users from the forum public directory (guest external from Tchap aren't allowed).",
+        "fr": "Accessible à tous les utilisateurs de Tchap à partir de l'annuaire public de forums (les invités externes à Tchap sont autorisé)."
     },
     "Allow access to this room to all users, even outside \"%(domain)s\" domain": {
         "en": "Allow access to this room to all users, even outside \"%(domain)s\" domain",
