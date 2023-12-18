@@ -140,7 +140,8 @@
             "src/components/views/settings/DevicesPanel.tsx"
         ]
     },
-    "add-a-help-tab-in-menu-to-redirect-to-external-tchap-faq": {
+    "user-menu": {
+        "comments": "Add 'Help' link to external FAQ, and Christmas egg",
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/395",
         "package": "matrix-react-sdk",
         "files": [
