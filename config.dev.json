@@ -33,7 +33,8 @@
     "show_labs_settings": false,
     "features": {
         "feature_video_rooms": false,
-        "feature_notification_settings2": false
+        "feature_notification_settings2": false,
+        "feature_new_room_decoration_ui": true
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -112,6 +113,12 @@
             "ext01.tchap.incubateur.net"
         ],
         "feature_space": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"],
-        "feature_thread": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"]
+        "feature_thread": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"],
+        "feature_audio_call": [
+            "dev01.tchap.incubateur.net",
+            "dev02.tchap.incubateur.net",
+            "ext01.tchap.incubateur.net"
+        ],
+        "feature_video_call": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"]
     }
 }
