@@ -1,9 +1,9 @@
 #!/bin/bash
-#export REPO="web";
-#export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
+export REPO="web";
+export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
 
-export REPO="react-sdk";
-export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
+#export REPO="react-sdk";
+#export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
 
 export TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}.json`
 export REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}_removed.json`
@@ -55,6 +55,8 @@ jq --sort-keys '.' $OUTPUT_FILE > $OUTPUT_FILE.tmp && mv $OUTPUT_FILE.tmp $OUTPU
 yarn i18n:lint # lints the whole src/i18n/strings/ dir, no need to modify
 
 # diff en_EN_withtchap.json en_EN.json, and explode if they are different. (just change the file name from original script)
+echo "Comparing:"
+echo "diff $INPUT_FILE $OUTPUT_FILE"
 yarn matrix-compare-i18n-files $INPUT_FILE $OUTPUT_FILE
 # Visualize if you like:
 #diff $INPUT_FILE $OUTPUT_FILE
