@@ -10,7 +10,7 @@ export REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_trans
 
 export TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tchap_${REPO}_en.json`
 export MERGED_TRANSLATION_FILE=`realpath modules/tchap-translations/merged_${REPO}.json`
-export GENERATED_TRANSLATION_FILE=`realpath modules/tchap-translations/generated_${REPO}.json`
+export CRAWLED_TRANSLATION_FILE=`realpath modules/tchap-translations/crawled_${REPO}.json`
 
 # Extract EN translations only from tchap. Change format to be compatible with element's.
 # We use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
@@ -35,7 +35,7 @@ yarn i18n:lint # lints the whole src/i18n/strings/ dir, no need to modify
 # gen-i18n crawls through the code files in src and res, looking for translations.
 # For each translation key, it finds the values in INPUT_FILE. If no value found, value=key. It writes key:value in OUTPUT_FILE
 export INPUT_FILE=$MERGED_TRANSLATION_FILE # var read by matrix-gen-i18n, don't rename
-export OUTPUT_FILE=$GENERATED_TRANSLATION_FILE # var read by matrix-gen-i18n, don't rename
+export OUTPUT_FILE=$CRAWLED_TRANSLATION_FILE # var read by matrix-gen-i18n, don't rename
 if [[ "$REPO" == "react-sdk" ]]; then
     cd yarn-linked-dependencies/matrix-react-sdk
     yarn matrix-gen-i18n;
