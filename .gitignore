@@ -47,6 +47,7 @@ electron/pub
 /cypress/performance
 
 # File from translations checkin scripts.
-modules/tchap-translations/generated_react-sdk.json
-modules/tchap-translations/merged_react-sdk.json
-modules/tchap-translations/tchap_react-sdk_en.json
+modules/tchap-translations/tmp/*
+#modules/tchap-translations/generated_react-sdk.json
+#modules/tchap-translations/merged_react-sdk.json
+#modules/tchap-translations/tchap_react-sdk_en.json

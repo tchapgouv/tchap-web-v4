@@ -5,12 +5,15 @@ export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
 #export REPO="react-sdk";
 #export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
 
+# Inputs
 export TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}.json`
 export REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}_removed.json`
 
-export TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tchap_${REPO}_en.json`
-export MERGED_TRANSLATION_FILE=`realpath modules/tchap-translations/merged_${REPO}.json`
-export CRAWLED_TRANSLATION_FILE=`realpath modules/tchap-translations/crawled_${REPO}.json`
+# Tmp files output
+mkdir -p `realpath modules/tchap-translations/tmp`
+export TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_${REPO}_en.json`
+export MERGED_TRANSLATION_FILE=`realpath modules/tchap-translations/tmp/merged_${REPO}.json`
+export CRAWLED_TRANSLATION_FILE=`realpath modules/tchap-translations/tmp/crawled_${REPO}.json`
 
 # Extract EN translations only from tchap. Change format to be compatible with element's.
 # We use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
