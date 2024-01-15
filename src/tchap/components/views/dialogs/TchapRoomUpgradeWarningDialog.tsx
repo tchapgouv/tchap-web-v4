@@ -114,7 +114,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         /*
         users are invited by default do not show toogle
         let inviteToggle: JSX.Element | undefined;
-        
+
         if (this.isPrivate) {
             inviteToggle = (
                 <LabelledToggleSwitch
@@ -127,7 +127,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         */
 
         let externalNotice: JSX.Element | undefined;
-        
+
         if (this.tchapRoomType === TchapRoomType.External) {
             externalNotice = (
                 <p className="text-warning">
@@ -190,7 +190,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                 <DialogButtons
                     primaryButton={_t("Upgrade room")}
                     onPrimaryButtonClick={this.onContinue}
-                    cancelButton={_t("Cancel")}
+                    cancelButton={_t("action|cancel")}
                     onCancel={this.onCancel}
                 />
             );
@@ -226,7 +226,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
 
                     {/*
                     do not show bug reports
-                    {bugReports} 
+                    {bugReports}
                     */}
                         {/*
                     <p>
@@ -240,8 +240,8 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                         )}
                     </p>
                          */}
-                    
-                    {/* 
+
+                    {/*
                     do not show toogle, users are invite by default
                     {inviteToggle} */}
                 </div>

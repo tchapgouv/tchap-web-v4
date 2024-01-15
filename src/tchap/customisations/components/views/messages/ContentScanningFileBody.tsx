@@ -93,7 +93,7 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
         let placeholder: React.ReactNode;
 
         if (this.props.showGenericPlaceholder && (this.state.isScanning || !this.state.isSafe)) {
-            const presentableFileName = presentableTextForFile(this.content, _t("Attachment"), true);
+            const presentableFileName = presentableTextForFile(this.content, _t("common|attachment"), true);
             let text: React.ReactNode;
 
             if (this.state.isScanning) {
@@ -110,7 +110,7 @@ export default class ContentScanningFileBody extends React.PureComponent<Props, 
                         {this.icon}
                         <TextWithTooltip tooltip={presentableFileName}>
                             <span className="mx_MFileBody_info_filename">
-                                {presentableTextForFile(this.content, _t("Attachment"), true, true)}
+                                {presentableTextForFile(this.content, _t("common|attachment"), true, true)}
                             </span>
                         </TextWithTooltip>
                     </div>

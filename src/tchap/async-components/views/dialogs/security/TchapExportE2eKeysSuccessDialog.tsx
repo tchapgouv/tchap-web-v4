@@ -78,7 +78,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                 </div>
                 <div className="mx_Dialog_buttons">
                     <button className="mx_Dialog_primary" onClick={this.onClick}>
-                        {_t(this.props.allowLogout ? "Sign out" : "Ok")}
+                        {_t(this.props.allowLogout ? "Sign out" : "action|ok")}
                     </button>
                 </div>
             </BaseDialog>
