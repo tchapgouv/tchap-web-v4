@@ -258,5 +258,9 @@
     "Welcome to Tchap": {
         "en": "Welcome to Tchap",
         "fr": "Bienvenue sur Tchap"
+    },
+    "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
+        "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
+        "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
     }
 }

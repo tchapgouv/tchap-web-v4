@@ -48,10 +48,6 @@
         "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
         "en": "Generate a new password. Note that your locked messages will remain locked."
     },
-    "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
-        "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
-        "fr": "Si vous n'avez pas d'autre appareil connecté, <b>il est conseillé de sauvegarder vos clés sous forme de fichier sur votre appareil</b>."
-    },
     "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
         "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
         "fr": "Si vos autres appareils n'ont pas la clé pour ce message, vous ne pourrez pas le déchiffrer."
