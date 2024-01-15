@@ -19,7 +19,7 @@ export CRAWLED_TRANSLATION_FILE=`realpath modules/tchap-translations/tmp/crawled
 # We use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
 # Note : this works with nested keys.
 #cat $TCHAP_TRANSLATION_FILE | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > $TCHAP_TRANSLATION_EN_FILE # no nested keys
-node scripts/tchap/reformatTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
+node scripts/tchap/translations/reformatTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
 
 # Merge tchap and element translatsions. Tchap values should override element values in case of conflict.
 # Note : this works with nested keys.
@@ -27,7 +27,7 @@ node scripts/tchap/reformatTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCH
 jq -s '.[0] * .[1]' $ELEMENT_TRANSLATION_FILE $TCHAP_TRANSLATION_EN_FILE > $MERGED_TRANSLATION_FILE
 
 # Remove the keys which have been commented out in patches.
-node scripts/tchap/deleteRemovedTranslations.js --file=$MERGED_TRANSLATION_FILE --toremove=$REMOVED_TRANSLATION_FILE > $MERGED_TRANSLATION_FILE.tmp
+node scripts/tchap/translations/deleteRemovedTranslations.js --file=$MERGED_TRANSLATION_FILE --toremove=$REMOVED_TRANSLATION_FILE > $MERGED_TRANSLATION_FILE.tmp
 mv $MERGED_TRANSLATION_FILE.tmp $MERGED_TRANSLATION_FILE
 
 # Format the file for clean diffing.
