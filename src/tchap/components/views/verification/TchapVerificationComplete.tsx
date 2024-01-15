@@ -26,7 +26,7 @@ export default class TchapVerificationComplete extends React.Component<IProps> {
     public render(): React.ReactNode {
         return (
             <div>
-                <h2>{_t("Verified!")}</h2>
+                <h2>{_t("encryption|verification|complete_title")}</h2>
                 <p>{_t("The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.")}</p>
                 <DialogButtons
                     onPrimaryButtonClick={this.props.onDone}

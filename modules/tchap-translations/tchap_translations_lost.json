@@ -117,10 +117,6 @@
         "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
         "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
     },
-    "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
-        "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
-        "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
-    },
     "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
         "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
         "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
@@ -148,10 +144,6 @@
     "Your Security Key is in your <b>Downloads</b> folder.": {
         "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
         "en": "Your Recovery Code is in your <b>Downloads</b> folder."
-    },
-    "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
-        "en": "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).",
-        "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
     },
     "Your key share request has been sent - please check your other devices for key share requests.": {
         "en": "Your key share request has been sent - please check your other devices for key share requests.",

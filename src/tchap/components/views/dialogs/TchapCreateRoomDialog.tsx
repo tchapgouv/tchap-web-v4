@@ -96,7 +96,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             {
                 key: "required",
                 test: async ({ value }) => !!value,
-                invalid: () => _t("Please enter a name for the room"),
+                invalid: () => _t("create_room|name_validation_required"),
             },
         ],
     });
