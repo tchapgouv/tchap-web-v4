@@ -29,6 +29,31 @@ format_json_file () {
     jq --sort-keys '.' $1 > $1.tmp && mv $1.tmp $1 # yarn i18n:sort with customized files
 }
 
+# Usage : crawl repo inputfile outputfile
+crawl () {
+    export repo=$1
+    # Run the original gen-i18n script from matrix-web-i18n.
+    # gen-i18n crawls through the code files in src and res, looking for translations.
+    # For each translation key, it finds the values in INPUT_FILE. If no value found, it uses value=key.
+    # Then it writes key:value in OUTPUT_FILE.
+    export INPUT_FILE=$2 # var read by matrix-gen-i18n, don't rename
+    export OUTPUT_FILE=$3 # var read by matrix-gen-i18n, don't rename
+    if [[ "$repo" == "react-sdk" ]]; then
+        cd yarn-linked-dependencies/matrix-react-sdk
+        yarn matrix-gen-i18n;
+        cd ../../
+    else
+        yarn matrix-gen-i18n;
+    fi
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+        echo "gen-i18n failed. Aborting."
+        exit $retVal
+    fi
+    # Todo we should probably abort in more places, set it in the script's settings
+}
+
+
 # Extract EN translations only from tchap. Change format to be compatible with element's.
 # We use jq magic to convert { "key": { "en": "en value", "fr": "fr value"}} to { "key": "en value"}
 # Note : this works with nested keys.
@@ -45,31 +70,14 @@ mv $MERGED_TRANSLATION_FILE.tmp $MERGED_TRANSLATION_FILE
 # Format the file for clean diffing.
 format_json_file $MERGED_TRANSLATION_FILE
 
-# Run the original gen-i18n script from matrix-web-i18n, with our file as input.
-# gen-i18n crawls through the code files in src and res, looking for translations.
-# For each translation key, it finds the values in INPUT_FILE. If no value found, value=key. It writes key:value in OUTPUT_FILE
-export INPUT_FILE=$MERGED_TRANSLATION_FILE # var read by matrix-gen-i18n, don't rename
-export OUTPUT_FILE=$CRAWLED_TRANSLATION_FILE # var read by matrix-gen-i18n, don't rename
-if [[ "$REPO" == "react-sdk" ]]; then
-    cd yarn-linked-dependencies/matrix-react-sdk
-    yarn matrix-gen-i18n;
-    cd ../../
-else
-    yarn matrix-gen-i18n;
-fi
-retVal=$?
-if [ $retVal -ne 0 ]; then
-    echo "gen-i18n failed. Aborting."
-    exit $retVal
-fi
-# Todo we should probably abort in more places, set it in the script's settings
+crawl $REPO $MERGED_TRANSLATION_FILE $CRAWLED_TRANSLATION_FILE
 
 # Format the file for clean diffing.
-format_json_file $OUTPUT_FILE
+format_json_file $CRAWLED_TRANSLATION_FILE
 
 # diff en_EN_withtchap.json en_EN.json, and explode if they are different. (just change the file name from original script)
 echo "Comparing:"
-echo "diff $INPUT_FILE $OUTPUT_FILE"
-yarn matrix-compare-i18n-files $INPUT_FILE $OUTPUT_FILE
+echo "diff $MERGED_TRANSLATION_FILE $OUTCRAWLED_TRANSLATION_FILEPUT_FILE"
+yarn matrix-compare-i18n-files $MERGED_TRANSLATION_FILE $CRAWLED_TRANSLATION_FILE
 # Visualize if you like:
-#diff $INPUT_FILE $OUTPUT_FILE
+#diff $MERGED_TRANSLATION_FILE $CRAWLED_TRANSLATION_FILE
