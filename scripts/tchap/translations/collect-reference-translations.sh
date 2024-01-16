@@ -2,6 +2,7 @@
 
 # Collect translations from tchap's translation files and element's translation file, in both web and react-sdk repos,
 # and merge them all together.
+# Usage : ./scripts/tchap/translations/collect-reference-translations.sh $REFERENCE_TRANSLATIONS
 
 # Usage : merge_json_files file1 file2 outputfile
 merge_json_files () {
@@ -40,7 +41,7 @@ collect_reference_translations () {
 }
 
 mkdir -p `realpath modules/tchap-translations/tmp`
-export OUTPUT_FILE_BOTH=`realpath modules/tchap-translations/tmp/reference_both.json` # todo pass this as argument
+export OUTPUT_FILE_BOTH=$1
 
 export REPO="web";
 export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`

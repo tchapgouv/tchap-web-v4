@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Crawl through the code, find translation strings, find corresponding translations in reference file, and write everything
+# to the output file.
+# Usage : ./scripts/tchap/translations/crawl-for-translations.sh $REFERENCE_TRANSLATIONS $OUTPUT
+
 # Usage : merge_json_files file1 file2 outputfile
 merge_json_files () {
     # Note : this works with nested keys.
@@ -40,10 +44,9 @@ crawl () {
 
 mkdir -p `realpath modules/tchap-translations/tmp`
 
-# Input # todo pass it as arg
-export REFERENCE_TRANSLATIONS=`realpath modules/tchap-translations/tmp/reference_both.json`
-# Output # todo pass it as arg
-export CRAWLED=`realpath modules/tchap-translations/tmp/crawled_both.json`
+export REFERENCE_TRANSLATIONS=$1
+# Output
+export CRAWLED=$2
 
 # Repo web
 export REPO="web";
