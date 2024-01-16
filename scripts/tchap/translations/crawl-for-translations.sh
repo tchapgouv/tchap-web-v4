@@ -41,7 +41,7 @@ crawl () {
 mkdir -p `realpath modules/tchap-translations/tmp`
 
 # Input # todo pass it as arg
-export REFERENCE_TRANSLATIONS=`realpath modules/tchap-translations/tmp/merged_both.json`
+export REFERENCE_TRANSLATIONS=`realpath modules/tchap-translations/tmp/reference_both.json`
 # Output # todo pass it as arg
 export CRAWLED=`realpath modules/tchap-translations/tmp/crawled_both.json`
 
@@ -59,7 +59,7 @@ merge_json_files $CRAWLED_WEB $CRAWLED_REACT $CRAWLED
 
 # Extra hack : config.json is not crawled by matrix-gen-i18n, so the terms_and_conditions_links are missing. Add them in.
 # Get the terms_and_conditions strings from config.json
-export TOC_TRANSLATIONS=`realpath modules/tchap-translations/tmp/terms_and_conditions.json`
+export TOC_TRANSLATIONS=`realpath modules/tchap-translations/tmp/terms_and_conditions_EN.json`
 jq '.terms_and_conditions_links[] | { (.text): .text} ' config.json | jq -s add > $TOC_TRANSLATIONS
 merge_json_files $TOC_TRANSLATIONS $CRAWLED $CRAWLED
 

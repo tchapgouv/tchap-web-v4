@@ -23,7 +23,7 @@ collect_reference_translations () {
     TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}.json`
     REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}_removed.json`
 
-    TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_${REPO}_en.json`
+    TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_${REPO}_EN.json`
     OUTPUT_FILE=$3
 
     node scripts/tchap/translations/extractENTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
@@ -40,16 +40,16 @@ collect_reference_translations () {
 }
 
 mkdir -p `realpath modules/tchap-translations/tmp`
-export OUTPUT_FILE_BOTH=`realpath modules/tchap-translations/tmp/merged_both.json` # todo pass this as argument
+export OUTPUT_FILE_BOTH=`realpath modules/tchap-translations/tmp/reference_both.json` # todo pass this as argument
 
 export REPO="web";
 export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
-export OUTPUT_FILE_WEB=`realpath modules/tchap-translations/tmp/merged_${REPO}.json`
+export OUTPUT_FILE_WEB=`realpath modules/tchap-translations/tmp/reference_${REPO}.json`
 collect_reference_translations $REPO $ELEMENT_TRANSLATION_FILE $OUTPUT_FILE_WEB
 
 export REPO="react-sdk";
 export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
-export OUTPUT_FILE_REACT=`realpath modules/tchap-translations/tmp/merged_${REPO}.json`
+export OUTPUT_FILE_REACT=`realpath modules/tchap-translations/tmp/reference_${REPO}.json`
 collect_reference_translations $REPO $ELEMENT_TRANSLATION_FILE $OUTPUT_FILE_REACT
 
 merge_json_files $OUTPUT_FILE_WEB $OUTPUT_FILE_REACT $OUTPUT_FILE_BOTH
