@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index 7a19848..d7ddd55 100644
+index f4e8ff1..4f3372e 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 @@ -50,8 +50,11 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
@@ -76,15 +76,15 @@ index 7a19848..d7ddd55 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index e12ac19..a5222bf 100644
+index 41a2aed..d428627 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -267,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
      };
  
      private validateEmailRules = withValidation({
--        description: () => _t("Use an email address to recover your account"),
-+        // :TCHAP: this is confusing because email=username in the Tchap case. // description: () => _t("Use an email address to recover your account"),
+-        description: () => _t("auth|reset_password_email_field_description"),
++        // :TCHAP: this is confusing because email=username in the Tchap case. //description: () => _t("auth|reset_password_email_field_description"),
          hideDescriptionIfValid: true,
          rules: [
              {
@@ -92,15 +92,15 @@ index e12ac19..a5222bf 100644
                  test(this: RegistrationForm, { value, allowEmpty }) {
                      return allowEmpty || !this.authStepIsRequired("m.login.email.identity") || !!value;
                  },
--                invalid: () => _t("Enter email address (required on this homeserver)"),
+-                invalid: () => _t("auth|reset_password_email_field_required_invalid"),
 +                // :TCHAP: don't mention homeserver, Tchap hides the concept from users.
-+                //invalid: () => _t("Enter email address (required on this homeserver)"),
++                //invalid: () => _t("auth|reset_password_email_field_required_invalid"),
 +                invalid: () => _t("Enter email address"),
 +                // end :TCHAP:
              },
              {
                  key: "email",
-@@ -566,16 +569,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
+@@ -568,16 +571,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
          return (
              <div>
                  <form onSubmit={this.onSubmit}>
