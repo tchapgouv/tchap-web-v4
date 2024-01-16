@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 86d9656..5dea419 100644
+index 9487fc5..dd1ca5e 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -42,6 +42,8 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -82,7 +82,7 @@ index 86d9656..5dea419 100644
          if (await this.sendVerificationMail()) {
              this.phase = Phase.EmailSent;
              return;
-@@ -303,8 +338,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -300,8 +335,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
              errorText: "",
          });
  
@@ -93,7 +93,7 @@ index 86d9656..5dea419 100644
  
          // Server error
          if (!this.state.serverIsAlive) return;
-@@ -338,7 +375,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -335,7 +372,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
              <EnterEmail
                  email={this.state.email}
                  errorText={this.state.errorText}
@@ -102,19 +102,19 @@ index 86d9656..5dea419 100644
                  loading={this.state.phase === Phase.SendingEmail}
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
-@@ -420,7 +457,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
+@@ -409,7 +446,9 @@ export default class ForgotPassword extends React.Component<Props, State> {
                                  onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })}
                                  checked={this.state.logoutDevices}
                              >
--                                {_t("Sign out of all devices")}
-+                                { /* :TCHAP: _t("Sign out of all devices") */
+-                                {_t("auth|reset_password|sign_out_other_devices")}
++                                {/* :TCHAP: _t("auth|reset_password|sign_out_other_devices") */
 +                                    _t('Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)')
-+                                /*end :TCHAP: */ }
++                                /*end :TCHAP: */}
                              </StyledCheckbox>
                          </div>
                          {this.state.errorText && <ErrorMessage message={this.state.errorText} />}
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-index 7756571..81bc742 100644
+index fbb08c7..f1a53f2 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 @@ -64,9 +64,11 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
