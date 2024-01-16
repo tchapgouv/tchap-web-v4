@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/SessionLockStolenView.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/SessionLockStolenView.tsx
-index 0c0bc01..1a5ef24 100644
+index de93624..64378b8 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/SessionLockStolenView.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/SessionLockStolenView.tsx
 @@ -28,8 +28,13 @@ export function SessionLockStolenView(): JSX.Element {
@@ -8,11 +8,13 @@ index 0c0bc01..1a5ef24 100644
          <SplashPage className="mx_SessionLockStolenView">
 +            {/** :TCHAP: better messaging
              <h1>{_t("common|error")}</h1>
-             <h2>{_t("%(brand)s has been opened in another tab.", { brand })}</h2>
+             <h2>{_t("error_app_open_in_another_tab", { brand })}</h2>
+-        </SplashPage>
+-    );
 +            */}
-+            <h1>{_t("%(brand)s has been connected in another tab", { brand })}</h1>
++            <h1>{_t("error_app_open_in_another_tab", { brand })}</h1>
 +            <h2>{_t("You can close this disconnected tab, and go to the other %(brand)s tab.", { brand })}</h2>
 +            {/** end :TCHAP: */}
-         </SplashPage>
-     );
++       </SplashPage>
++   );
  }
