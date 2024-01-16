@@ -89,7 +89,8 @@
     "show_labs_settings": false,
     "features": {
         "feature_video_rooms": false,
-        "feature_notification_settings2": false
+        "feature_notification_settings2": false,
+        "feature_new_room_decoration_ui": true
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -190,6 +191,8 @@
     "tchap_features": {
         "feature_email_notification": ["agent.dinum.tchap.gouv.fr"],
         "feature_thread": ["agent.dinum.tchap.gouv.fr"],
-        "feature_space": ["agent.dinum.tchap.gouv.fr"]
+        "feature_space": ["agent.dinum.tchap.gouv.fr"],
+        "feature_audio_call": ["agent.dinum.tchap.gouv.fr"],
+        "feature_video_call": ["agent.dinum.tchap.gouv.fr"]
     }
 }

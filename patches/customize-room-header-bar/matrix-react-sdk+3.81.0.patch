@@ -1,0 +1,108 @@
+diff --git a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
+index 2614e17..79fe37e 100644
+--- a/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
++++ b/node_modules/matrix-react-sdk/res/css/views/rooms/_RoomHeader.pcss
+@@ -68,3 +68,17 @@ limitations under the License.
+         background: var(--cpd-color-bg-subtle-primary);
+     }
+ }
++
++/* :tchap: largely inspired from ;mx_RoomHeader_topic but I couldn't get this add-on to work with $variable */
++.tc_RoomHeader_external {
++    color: var(--external-color);
++    width: 80px;
++    font-weight: 400;
++    font-size: 0.8125rem;
++    line-height: 0.8125rem;
++    max-height: calc(0.8125rem * 2);
++    overflow: hidden;
++    -webkit-line-clamp: 2;
++    -webkit-box-orient: vertical;
++    display: -webkit-box;
++}
+diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
+index bb8dd49..df46713 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
+@@ -48,6 +48,9 @@ import RoomAvatar from "../avatars/RoomAvatar";
+ import { formatCount } from "../../../utils/FormattingUtils";
+ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+ 
++import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
++import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader";
++
+ /**
+  * A helper to transform a notification color to the what the Compound Icon Button
+  * expects
+@@ -111,6 +114,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+             }}
+         >
+             <RoomAvatar room={room} size="40px" />
++            {/* :tchap: Add external caption when room is open to external */}
++            <TchapExternalRoomHeader room={room}></TchapExternalRoomHeader>
++            {/* :tchap: end */}
+             <Box flex="1" className="mx_RoomHeader_info">
+                 <BodyText
+                     as="div"
+@@ -124,7 +130,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                 >
+                     {roomName}
+ 
+-                    {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
++                    {/* :tchap: remove public forum icon */}
++                    {false && !isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
+                         <Tooltip label={_t("Public room")}>
+                             <PublicIcon
+                                 width="16px"
+@@ -135,7 +142,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                         </Tooltip>
+                     )}
+ 
+-                    {isDirectMessage && e2eStatus === E2EStatus.Verified && (
++                    {/* :tchap: do not show e2eStatus */}
++                    {false && isDirectMessage && e2eStatus === E2EStatus.Verified && (
+                         <Tooltip label={_t("common|verified")}>
+                             <VerifiedIcon
+                                 width="16px"
+@@ -146,7 +154,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                         </Tooltip>
+                     )}
+ 
+-                    {isDirectMessage && e2eStatus === E2EStatus.Warning && (
++                    {/* :tchap: do not show E2EStatus.Warning */}
++                    {false && isDirectMessage && e2eStatus === E2EStatus.Warning && (
+                         <Tooltip label={_t("Untrusted")}>
+                             <ErrorIcon
+                                 width="16px"
+@@ -164,7 +173,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                 )}
+             </Box>
+             <Flex as="nav" align="center" gap="var(--cpd-space-2x)">
+-                {!useElementCallExclusively && (
++                {
++                //:tchap: activate audio call only if directmessage and if feature is activated on homeserver
++                !useElementCallExclusively && isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&  (
++                //:tchap: end
+                     <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
+                         <IconButton
+                             disabled={!!voiceCallDisabledReason}
+@@ -175,6 +187,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                         </IconButton>
+                     </Tooltip>
+                 )}
++                {
++                //:tchap: activate video call only if directmessage and if feature is activated on homeserver
++                isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") && (
++                //:tchap: end
+                 <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
+                     <IconButton
+                         disabled={!!videoCallDisabledReason}
+@@ -183,7 +199,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                     >
+                         <VideoCallIcon />
+                     </IconButton>
+-                </Tooltip>
++                </Tooltip>)}
+                 <Tooltip label={_t("common|threads")}>
+                     <IconButton
+                         indicator={notificationColorToIndicator(threadNotifications)}
