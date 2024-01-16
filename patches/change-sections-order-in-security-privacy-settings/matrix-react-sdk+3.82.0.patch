@@ -1,22 +1,22 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-index 5a5e424..dd45888 100644
+index 0cb0485..a7603db 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 @@ -73,25 +73,36 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
          }
  
          return (
--            <SettingsSubsection heading={_t("Cryptography")}>
+-            <SettingsSubsection heading={_t("settings|security|cryptography_section")}>
 -                <SettingsSubsectionText>
 -                    <table className="mx_CryptographyPanel_sessionInfo">
 -                        <tr>
--                            <th scope="row">{_t("Session ID:")}</th>
+-                            <th scope="row">{_t("settings|security|session_id")}</th>
 -                            <td>
 -                                <code>{deviceId}</code>
 -                            </td>
 -                        </tr>
 -                        <tr>
--                            <th scope="row">{_t("Session key:")}</th>
+-                            <th scope="row">{_t("settings|security|session_key")}</th>
 -                            <td>
 -                                <code>
 -                                    <b>{identityKey}</b>
@@ -35,17 +35,17 @@ index 5a5e424..dd45888 100644
 +                    </div>
 +                </div>
 +                <details>
-+                    <summary>{_t("Advanced")}</summary>
++                    <summary>{_t("common|advanced")}</summary>
 +                    <SettingsSubsectionText>
 +                        <table className="mx_CryptographyPanel_sessionInfo">
 +                            <tr>
-+                                <th scope="row">{_t("Session ID:")}</th>
++                                <th scope="row">{_t("settings|security|session_id")}</th>
 +                                <td>
 +                                    <code>{deviceId}</code>
 +                                </td>
 +                            </tr>
 +                            <tr>
-+                                <th scope="row">{_t("Session key:")}</th>
++                                <th scope="row">{_t("settings|security|session_key")}</th>
 +                                <td>
 +                                    <code>
 +                                        <b>{identityKey}</b>
@@ -59,7 +59,7 @@ index 5a5e424..dd45888 100644
                  {noSendUnverifiedSetting}
              </SettingsSubsection>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 89300be..f0a3aeb 100644
+index 74511df..be81e5f 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 @@ -275,11 +275,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
@@ -77,14 +77,14 @@ index 89300be..f0a3aeb 100644
 +        // end :TCHAP:
  
          const eventIndex = (
-             <SettingsSubsection heading={_t("Message search")}>
-@@ -358,13 +360,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+             <SettingsSubsection heading={_t("settings|security|message_search_section")}>
+@@ -354,13 +356,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
          return (
              <SettingsTab>
                  {warning}
 +                { /* :TCHAP: move secureBackup and privacySection, and remove eventIndex */ }
 +                {secureBackup}
-                 <SettingsSection heading={_t("Encryption")}>
+                 <SettingsSection heading={_t("settings|security|encryption_section")}>
 -                    {secureBackup}
 -                    {eventIndex}
                      {crossSigning}
