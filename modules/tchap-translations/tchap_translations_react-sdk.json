@@ -639,7 +639,7 @@
             "en": "Verified "
         },
         "secure_backup": {
-            "en": "Secure Backup",
+            "en": "Automatic Backup of Messages",
             "fr": "Sauvegarde automatique des messages"
         }
     },
