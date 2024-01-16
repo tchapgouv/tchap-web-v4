@@ -1,3 +1,6 @@
+/*
+  Some keys have been removed from the code by patches. Remove these keys from the reference file.
+*/
 
 const parseArgs = require("minimist");
 
@@ -8,7 +11,8 @@ const toRemove = require(argv.toremove);
 for (const key of toRemove) {
   // We could have key = "auth|do_stuff", in which case we should deal with the nesting.
   const keyPieces = key.split("|");
-  // Officially the ugliest piece of script of all tchap. Use some elegant recursive crap or ES6 voodoo.
+  // Officially the ugliest piece of script of all tchap. Use some elegant recursive crap or ES6 voodoo to deal with nesting.
+  // For now this works until 5 levels of nesting. Good enough.
   switch (keyPieces.length) {
     case 1:
       delete tchapTranslations[keyPieces[0]];
