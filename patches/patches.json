@@ -249,5 +249,13 @@
         ],
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/844",
         "comments": "audio feature flag, external room header, hide some icons"
+    },
+    "display-call-button-anyway": {
+        "package": "matrix-react-sdk",
+        "files": [
+            "src/hooks/room/useRoomCall.ts"
+        ],
+        "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/868",
+        "comments": "display call button regardless of widget and room permission"
     }
 }
