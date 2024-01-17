@@ -59,26 +59,31 @@ index 0cb0485..a7603db 100644
                  {noSendUnverifiedSetting}
              </SettingsSubsection>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 74511df..be81e5f 100644
+index 74511df..5b124a1 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-@@ -275,11 +275,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+@@ -275,11 +275,20 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
      }
  
      public render(): React.ReactNode {
 +        // :TCHAP: we're moving this subsection out, so it's now a section
-         const secureBackup = (
--            <SettingsSubsection heading={_t("common|secure_backup")}>
-+            <SettingsSection heading={_t("Secure Backup")}>
-                 <SecureBackupPanel />
--            </SettingsSubsection>
++        const secureBackup = (
++            <SettingsSection heading={_t("common|secure_backup")}>
++                <SecureBackupPanel />
 +            </SettingsSection>
++        );
++        /*
+         const secureBackup = (
+             <SettingsSubsection heading={_t("common|secure_backup")}>
+                 <SecureBackupPanel />
+             </SettingsSubsection>
          );
++        */
 +        // end :TCHAP:
  
          const eventIndex = (
              <SettingsSubsection heading={_t("settings|security|message_search_section")}>
-@@ -354,13 +356,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
+@@ -354,13 +363,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
          return (
              <SettingsTab>
                  {warning}
