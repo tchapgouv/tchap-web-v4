@@ -256,6 +256,7 @@
             "src/hooks/room/useRoomCall.ts"
         ],
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/868",
-        "comments": "display call button regardless of widget and room permission"
+        "comments": "display call button regardless of widget and room permission",
+        "remove_when" : "https://github.com/tchapgouv/tchap-backend/issues/18"
     }
 }
