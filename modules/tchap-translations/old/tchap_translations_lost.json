@@ -1,0 +1,152 @@
+{
+    "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.": {
+        "en": "<b>Can you currently read your messages on another device?</b> You can disconnect. This other device automatically backs up your Tchat Keys and messages.",
+        "fr": "<b>Vous pouvez actuellement lire vos messages sur un autre appareil ?</b> Vous pouvez vous déconnecter. Cet autre appareil sauvegarde automatiquement vos Clés Tchap et tous vos messages."
+    },
+    "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup": {
+        "en": "<b>Warning:</b> these keys cannot be used to unlock the messages received after backup",
+        "fr": "<b>Attention:</b> ces clés ne pourront pas être utilisées pour déverrouiller les messages reçus après la sauvegarde"
+    },
+    "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.": {
+        "en": "<b>Without your Tchap Keys, you won't be able to read your messages</b> at your next login because they will be locked. It's a Tchap safety measure.",
+        "fr": "<b>Sans vos Clés Tchap, vous ne pourrez pas lire vos messages</b> à votre prochaine connexion parce qu'ils seront verrouillés. C'est une mesure de sécurité Tchap."
+    },
+    "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.": {
+        "en": "<b>You don't have another device connected to Tchap?</b> Back up your Tchap Keys. These keys will unlock current messages, but not those received after saving.",
+        "fr": "<b>Vous n'avez pas d'autre appareil connecté à Tchap ?</b> Sauvegardez vos Clés Tchap. Ces clés déverrouilleront les messages actuels, mais pas ceux reçus entre la sauvegarde et votre prochaine connexion."
+    },
+    "<requestLink>Import from saved file</requestLink>": {
+        "en": "<requestLink>Import from saved file</requestLink>",
+        "fr": "<requestLink>Importer depuis le fichier sauvegardé</requestLink>"
+    },
+    "<requestLink>Re-send a request to your other devices</requestLink>": {
+        "en": "<requestLink>Re-send a request to your other devices</requestLink>",
+        "fr": "<requestLink>Renvoyer une demande à un autre appareil</requestLink>"
+    },
+    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": {
+        "fr": "",
+        "en": "",
+        "comment": "c'est fait expres?"
+    },
+    "Decrypting messages…": {
+        "fr": "Déverrouillage des messages…",
+        "en": "Unlocking messages…"
+    },
+    "Did not receive it?": {
+        "en": "Did not receive it?",
+        "fr": "Pas reçu ?"
+    },
+    "Download my logs": {
+        "en": "Download my logs",
+        "fr": "Obtenir mes journaux"
+    },
+    "General Conditions of Use (CGU)": {
+        "en": "General Conditions of Use (CGU)",
+        "fr": "Conditions Générales d'Utilisation (CGU)"
+    },
+    "Generate a new password. Note that your locked messages will remain locked.": {
+        "fr": "Générer un nouveau mot de passe. Attention, vos messages verrouillés le resteront.",
+        "en": "Generate a new password. Note that your locked messages will remain locked."
+    },
+    "If your other devices do not have the key for this message, you will not be able to decrypt them.": {
+        "en": "If your other devices do not have the key for this message, you will not be able to decrypt them.",
+        "fr": "Si vos autres appareils n'ont pas la clé pour ce message, vous ne pourrez pas le déchiffrer."
+    },
+    "Make a copy of your Security Key": {
+        "fr": "Faire une copie de votre Code de Récupération",
+        "en": "Make a copy of your Recovery Code"
+    },
+    "Open another device to load encrypted messages": {
+        "fr": "Utiliser un autre appareil pour déverrouiller vos messages.",
+        "en": "Use another device to unlock your messages."
+    },
+    "Or if that doesn't work, please follow <a>these steps</a>.": {
+        "fr": "Ou si cela ne fonctionne pas, veuillez suivre <a>ces étapes</a>.",
+        "en": "Or if that doesn't work, please follow <a>these steps</a>."
+    },
+    "Please <b>accept the sharing</b> of your Tchap Keys on the other device.": {
+        "en": "Please <b>accept the sharing</b> of your Tchap Keys on the other device.",
+        "fr": "Merci d'<b>accepter la demande</b> de partage de vos Clés Tchap pour déverrouiller vos messages."
+    },
+    "Please also confirm the emojis on the other device.": {
+        "en": "Please also confirm the emojis on the other device.",
+        "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+    },
+    "Please wait as we try to decrypt your messages. This may take a few moments.": {
+        "fr": "Veuillez patienter pendant que nous essayons de déverrouiller vos messages. Cela peut prendre un peu de temps.",
+        "en": "Please wait as we try to unlock your messages. This may take a few moments.",
+        "comment": "on s'en sert pas ca ? je viens de faire un patch"
+    },
+    "Request in progress...": {
+        "en": "Request in progress...",
+        "fr": "Demande en cours..."
+    },
+    "Resend key requests": {
+        "fr": "Renvoyer une demande",
+        "en": "Resend key requests"
+    },
+    "Reset your keys to prevent future decryption errors": {
+        "fr": "Activez la sauvegarde automatique des messages",
+        "en": "Enable automatic secure backup"
+    },
+    "Save your Tchap Keys before logging out": {
+        "en": "Save your Tchap Keys before logging out",
+        "fr": "Sauvegardez vos Clés Tchap avant de vous déconnecter"
+    },
+    "Secure your backup with a Security Phrase": {
+        "fr": "Protégez votre sauvegarde avec un Code de Récupération",
+        "en": "Secure your backup with a Recovery Code"
+    },
+    "Set up with a Security Key": {
+        "fr": "Configurer avec un Code de Récupération",
+        "en": "Set up with a Recovery Code"
+    },
+    "Sign me out": {
+        "en": "Sign me out",
+        "fr": "Me déconnecter"
+    },
+    "Some messages could not be decrypted": {
+        "fr": "Certains messages n’ont pas pu être déverrouillés",
+        "en": "Some messages could not be unlocked"
+    },
+    "Start a new chat": {
+        "en": "New direct message",
+        "fr": "Nouveau message direct"
+    },
+    "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.": {
+        "en": "Tchap Key share requests are sent to your other devices automatically. If you rejected or dismissed the key share request on your other devices, click here to request the Tchap Keys again.",
+        "fr": "Les demandes de partage de vos Clés Tchap sont automatiquement envoyées à vos autres appareils. Si vous rejetez ou supprimez la demande de partage de clé sur vos autres appareils, cliquez ici pour redemander vos Clés Tchap."
+    },
+    "Unfortunately, there are no other verified devices to request decryption keys from. Signing in and verifying other devices may help avoid this situation in the future.": {
+        "fr": "Malheureusement, il n’y a aucun autre appareil vérifié qui puisse déverrouiller vos messages. La connexion et la vérification depuis d’autres appareils pourraient éviter ce genre de souci à l’avenir.",
+        "en": "Unfortunately, there are no other verified devices to unlock your messages. Signing in and verifying other devices may help avoid this situation in the future."
+    },
+    "Where you're signed in": {
+        "fr": "Appareils connectés",
+        "en": "Connected devices"
+    },
+    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": {
+        "fr": "",
+        "en": ""
+    },
+    "You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages.": {
+        "fr": "Pour éviter la perte de vos messages, vous pouvez désormais activer cette nouvelle fonctionnalité Tchap dans les paramètres de sécurité",
+        "en": "To prevent the loss of your messages, you can now activate this new Tchap feature in the security settings"
+    },
+    "Your Security Key": {
+        "fr": "Votre Code de Récupération",
+        "en": "Your Recovery Code"
+    },
+    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": {
+        "fr": "Votre Code de Récupération est un filet de sécurité. Vous pouvez l’utiliser pour retrouver l’accès à vos messages chiffrés si vous oubliez votre phrase secrète.",
+        "en": "Your Recovery Code is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase."
+    },
+    "Your Security Key is in your <b>Downloads</b> folder.": {
+        "fr": "Votre Code de Récupération est dans le répertoire <b>Téléchargements</b>.",
+        "en": "Your Recovery Code is in your <b>Downloads</b> folder."
+    },
+    "Your key share request has been sent - please check your other devices for key share requests.": {
+        "en": "Your key share request has been sent - please check your other devices for key share requests.",
+        "fr": "Votre demande de partage de clé a été envoyée - vérifiez les demandes de partage de clé sur vos autres appareils."
+    }
+}

@@ -119,7 +119,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
             case DownloadState.Pristine:
             case DownloadState.Safe:
                 icon = <DownloadIcon />;
-                tooltip = _t("Download");
+                tooltip = _t("action|download");
                 break;
             case DownloadState.Scanning:
                 icon = this.renderSpinner();

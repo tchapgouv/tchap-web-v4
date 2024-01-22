@@ -54,7 +54,7 @@ describe("Create Room", () => {
         // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
-        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
+        cy.get(".mx_RoomHeader_heading").contains(name);
         cy.get(".tc_RoomHeader_external").should("not.exist");
     });
 
@@ -76,7 +76,7 @@ describe("Create Room", () => {
         // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
-        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
+        cy.get(".mx_RoomHeader_heading").contains(name);
         cy.get(".tc_RoomHeader_external").should("exist");
     });
 
@@ -97,7 +97,7 @@ describe("Create Room", () => {
         // http://localhost:8080/#/room/!kshfkshfkKSHJ:dev01.tchap.incubateur.net
         const roomUrlRegex = new RegExp("/#/room/![A-z0-9]+:" + homeserverShortname);
         cy.url().should("match", roomUrlRegex);
-        cy.get(".mx_LegacyRoomHeader_nametext").contains(name);
+        cy.get(".mx_RoomHeader_heading").contains(name);
     });
 
     // Note : DM creation is not tested here, because Tchap has no custom implementation for DMs. (2023-01-30)

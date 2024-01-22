@@ -21,30 +21,33 @@ index 2614e17..79fe37e 100644
 +    display: -webkit-box;
 +}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 2635366..89e0528 100644
+index 2635366..2cf96e8 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-@@ -49,6 +49,9 @@ import { formatCount } from "../../../utils/FormattingUtils";
+@@ -49,6 +49,10 @@ import { formatCount } from "../../../utils/FormattingUtils";
  import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
  import { Linkify, topicToHtml } from "../../../HtmlUtils";
  
 +import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 +import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader";
++import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP:
 +
  /**
   * A helper to transform a notification color to the what the Compound Icon Button
   * expects
-@@ -117,6 +120,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -116,7 +120,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+                 RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
              }}
          >
-             <RoomAvatar room={room} size="40px" />
+-            <RoomAvatar room={room} size="40px" />
++            <DecoratedRoomAvatar room={room} size="40px" />
 +            {/* :tchap: Add external caption when room is open to external */}
 +            <TchapExternalRoomHeader room={room}></TchapExternalRoomHeader>
 +            {/* :tchap: end */}
              <Box flex="1" className="mx_RoomHeader_info">
                  <BodyText
                      as="div"
-@@ -130,7 +136,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -130,7 +137,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                  >
                      {roomName}
  
@@ -54,7 +57,7 @@ index 2635366..89e0528 100644
                          <Tooltip label={_t("common|public_room")}>
                              <PublicIcon
                                  width="16px"
-@@ -141,7 +148,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -141,7 +149,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                          </Tooltip>
                      )}
  
@@ -64,7 +67,7 @@ index 2635366..89e0528 100644
                          <Tooltip label={_t("common|verified")}>
                              <VerifiedIcon
                                  width="16px"
-@@ -152,7 +160,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -152,7 +161,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                          </Tooltip>
                      )}
  
@@ -74,7 +77,7 @@ index 2635366..89e0528 100644
                          <Tooltip label={_t("room|header_untrusted_label")}>
                              <ErrorIcon
                                  width="16px"
-@@ -170,7 +179,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -170,7 +180,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                  )}
              </Box>
              <Flex as="nav" align="center" gap="var(--cpd-space-2x)">
@@ -86,7 +89,7 @@ index 2635366..89e0528 100644
                      <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                          <IconButton
                              disabled={!!voiceCallDisabledReason}
-@@ -181,6 +193,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -181,6 +194,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                          </IconButton>
                      </Tooltip>
                  )}
@@ -96,7 +99,7 @@ index 2635366..89e0528 100644
                  <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
                      <IconButton
                          disabled={!!videoCallDisabledReason}
-@@ -189,7 +204,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -189,7 +205,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                      >
                          <VideoCallIcon />
                      </IconButton>

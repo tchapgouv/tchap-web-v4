@@ -119,7 +119,7 @@ export default class ContentScanningStickerBody extends React.Component<IBodyPro
     }
 
     private get fileName() {
-        return presentableTextForFile(this.content, _t("Sticker"), true, false);
+        return presentableTextForFile(this.content, _t("common|sticker"), true, false);
     }
 
     private get content(): IMediaEventContent {

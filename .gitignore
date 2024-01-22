@@ -45,3 +45,6 @@ electron/pub
 # These could have files in them but don't currently
 # Cypress will still auto-create them though...
 /cypress/performance
+
+# File from translations checkin scripts.
+modules/tchap-translations/tmp/*

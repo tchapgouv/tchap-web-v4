@@ -280,8 +280,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     </AccessibleButton>
                     <div className="mx_SettingsTab_subsectionText">
                         {_t(
-                            "To report a Matrix-related security issue, please read the Matrix.org " +
-                                "<a>Security Disclosure Policy</a>.",
+                            "bug_reporting|matrix_security_issue",
                             {},
                             {
                                 a: (sub) => (
