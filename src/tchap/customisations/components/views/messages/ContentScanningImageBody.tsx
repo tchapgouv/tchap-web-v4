@@ -127,7 +127,7 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
     }
 
     private get fileName() {
-        return presentableTextForFile(this.content, _t("Image"), true, false);
+        return presentableTextForFile(this.content, _t("common|image"), true, false);
     }
 
     private get content(): IMediaEventContent {

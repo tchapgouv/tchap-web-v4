@@ -211,7 +211,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                     </div>
                     <div className="mx_Dialog_buttons">
                         <button onClick={this.onCancelClick} disabled={disableForm}>
-                            {_t("Cancel")}
+                            {_t("action|cancel")}
                         </button>
                         <input
                             className="mx_Dialog_primary"

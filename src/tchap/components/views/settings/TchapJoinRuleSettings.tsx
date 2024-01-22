@@ -109,7 +109,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         checked: joinRule === JoinRule.Invite || (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length),
     }, {
         value: JoinRule.Public,
-        label: _t("Public"),
+        label: _t("common|public"),
         description: <>
             { _t("Anyone can find and join.") }
             { aliasWarning }
@@ -133,7 +133,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         _t("This action is irreversible.") +
                         " " +
                         _t("Are you sure you want to allow the externals to join this room ?"),
-                    button: _t("OK"),
+                    button: _t("action|ok"),
                     onFinished: (confirmed) => {
                         if (!confirmed) return;
                         setTchapAccessRule({ rule: TchapRoomAccessRule.Unrestricted });
@@ -165,7 +165,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     } else if (joinRule === JoinRule.Public) {
         definitions.push({
             value: JoinRule.Public,
-            label: _t("Public"),
+            label: _t("common|public"),
             description: (
                 <>
                     {_t("Anyone can find and join.")}
