@@ -960,11 +960,12 @@
             }
         }
     },
+    "Secure Backup": {
+        "comment": "move this to common|secure_backup, after upgrade to 1.11.46",
+        "en": "Automatic Backup of Messages",
+        "fr": "Sauvegarde automatique des messages"
+    },
     "common": {
-        "secure_backup": {
-            "en": "Automatic Backup of Messages",
-            "fr": "Sauvegarde automatique des messages"
-        },
         "unverified": {
             "en": "Unverified",
             "fr": "Non vérifié"

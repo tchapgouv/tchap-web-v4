@@ -59,7 +59,7 @@ index 5a5e424..dd45888 100644
                  {noSendUnverifiedSetting}
              </SettingsSubsection>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 89300be..453ad2d 100644
+index 89300be..f0a3aeb 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 @@ -275,11 +275,13 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
@@ -69,7 +69,7 @@ index 89300be..453ad2d 100644
 +        // :TCHAP: we're moving this subsection out, so it's now a section
          const secureBackup = (
 -            <SettingsSubsection heading={_t("common|secure_backup")}>
-+            <SettingsSection heading={_t("common|secure_backup")}>
++            <SettingsSection heading={_t("Secure Backup")}>
                  <SecureBackupPanel />
 -            </SettingsSubsection>
 +            </SettingsSection>
