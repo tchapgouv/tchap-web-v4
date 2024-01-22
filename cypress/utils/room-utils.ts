@@ -8,9 +8,8 @@ export default class RoomUtils {
         return cy.get('.mx_RoomList .mx_RoomSublist [aria-label="' + roomName + '"]').click();
     }
     public static openRoomAccessSettings(roomName: string): Chainable<JQuery<HTMLElement>> {
-        cy.get('[aria-label="' + roomName + '"]').click(); //open room
-        cy.get(".mx_LegacyRoomHeader_chevron").click();
-        cy.get('[aria-label="Paramètres"] > .mx_IconizedContextMenu_label').click();
+        this.openRoomInformation(roomName);
+        cy.get(".mx_RoomSummaryCard_Button.mx_RoomSummaryCard_icon_settings").click();
         return cy.get('[data-testid="settings-tab-ROOM_SECURITY_TAB"] > .mx_TabbedView_tabLabel_text').click();
     }
     public static openRoomInformation(roomName: string): Chainable<JQuery<HTMLElement>> {
