@@ -1,23 +1,4 @@
 {
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": {
-        "en": "Currently %(brand)s does not support searching into messages.",
-        "fr": "Actuellement %(brand)s ne supporte pas la recherche dans les messages."
-    },
-    "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.": {
-        "comment": "2023-11-08: remove once the string is translated in element",
-        "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-        "fr": "%(brand)s est ouvert dans une autre fenêtre. Cliquez \"%(label)s\" pour utiliser %(brand)s ici et déconnecter l'autre fenêtre."
-    },
-    "%(count)s sessions selected": {
-        "one": {
-            "en": "%(count)s device selected",
-            "fr": "%(count)s appareil sélectionné"
-        },
-        "other": {
-            "en": "%(count)s devices selected",
-            "fr": "%(count)s appareils sélectionnés"
-        }
-    },
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": {
         "en": "<b>A new version of this room will be created</b>. All current messages will remain accessible in this room. All members will be invited back.",
         "fr": "<b>Une nouvelle version de ce salon va être créée</b>. Tous les messages actuels resteront accessibles dans ce salon. Tous les membres vont être réinvités."
@@ -25,10 +6,6 @@
     "<p>The Tchap team is working on the deployment of a new feature to prevent encryption key loss.</p><p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>": {
         "en": "<p>This device is not verified.</p><p>To ensure this device is always verified and you can always retrieve your messages, turn on Automatic Message Backup</p>",
         "fr": "<p>Cet appareil n'est pas vérifié.</p><p>Pour que cet appareil soit toujours vérifié et que vous puissiez toujours récupérer vos messages, activez la Sauvegarde Automatique des messages.</p>"
-    },
-    "A new Security Phrase and key for Secure Messages have been detected.": {
-        "en": "A new Recovery Code for Secure Messages has been detected.",
-        "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté."
     },
     "A new email has been sent": {
         "en": "A new email has been sent",
@@ -58,10 +35,6 @@
         "en": "Activate on this device",
         "fr": "Activer sur cet appareil"
     },
-    "Add Email Address": {
-        "en": "Add Email Address",
-        "fr": "Ajouter une adresse mail"
-    },
     "Allow access to this room to all users, even outside \"%(domain)s\" domain": {
         "en": "Allow access to this room to all users, even outside \"%(domain)s\" domain",
         "fr": "Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
@@ -77,20 +50,6 @@
     "Are you sure you want to allow the externals to join this room ?": {
         "en": "Are you sure you want to allow the externals to join this room ?",
         "fr": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
-    },
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": {
-            "en": "Are you sure you want to sign out of %(count)s device?",
-            "fr": "Voulez-vous vraiment déconnecter %(count)s appareil ?"
-        },
-        "other": {
-            "en": "Are you sure you want to sign out of %(count)s devices?",
-            "fr": "Voulez-vous vraiment déconnecter %(count)s de vos appareils ?"
-        }
-    },
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": {
-        "en": "Automatically back up your messages and retrieve them at any time using the Recovery Code.",
-        "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de Récupération."
     },
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
         "en": "Please try again with your recovery code.",
@@ -132,10 +91,6 @@
         "en": "Reset Recovery Code",
         "fr": "Réinitialiser les clés de signature croisée"
     },
-    "Confirm the emoji below are displayed on both devices, in the same order:": {
-        "en": "Confirm the emoji below are displayed on both devices, in the same order:",
-        "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
-    },
     "Confirm your Tchap Key password": {
         "en": "Confirm your Tchap Key password",
         "fr": "Confirmer votre mot de passe Clés Tchap"
@@ -143,10 +98,6 @@
     "Congratulations, your account has been renewed": {
         "en": "Congratulations, your account has been renewed",
         "fr": "Félicitations, votre compte a été renouvelé"
-    },
-    "Connect this session to Key Backup": {
-        "en": "Verify this device",
-        "fr": "Vérifier cet appareil"
     },
     "Connectivity to the server has been lost": {
         "en": "Tchap is not available at the moment. <a>View the status of services</a>.",
@@ -175,22 +126,6 @@
     "Create your Tchap Key password (minimum 8 characters)": {
         "en": "Create your Tchap Key password (minimum 8 characters)",
         "fr": "Créez votre mot de passe Clé Tchap (minimum 8 caractères)"
-    },
-    "Cross-signing is not set up.": {
-        "en": "Cross-signing is not active.",
-        "fr": "La signature croisée n’est pas active"
-    },
-    "Cross-signing is ready but keys are not backed up.": {
-        "en": "Cross-signing is ready but not the secure backup.",
-        "fr": "La signature croisée est activée mais pas la sauvegarde automatique des messages."
-    },
-    "Cross-signing is ready for use.": {
-        "en": "Cross-signing is activated on this device.",
-        "fr": "La signature croisée est activée sur cet appareil."
-    },
-    "Current session": {
-        "en": "This device",
-        "fr": "Cet appareil"
     },
     "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
         "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
@@ -240,18 +175,6 @@
         "en": "Enter your Security Phrase or <button>use your Recovery Code</button> to continue.",
         "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre Code de Récupération</button> pour continuer."
     },
-    "Explore public rooms": {
-        "en": "Explore public rooms",
-        "fr": "Rejoindre un forum"
-    },
-    "Explore rooms": {
-        "en": "Explore space rooms",
-        "fr": "Explorer les salons"
-    },
-    "Export E2E room keys": {
-        "en": "Save your Tchap keys",
-        "fr": "Sauvegardez vos clés Tchap"
-    },
     "Export room members": {
         "en": "Export room members",
         "fr": "Exporter les membres du salon"
@@ -267,10 +190,6 @@
     "Eye": {
         "en": "Eye",
         "fr": "OEil"
-    },
-    "Failed to join": {
-        "en": "Failed to join this room.",
-        "fr": "Impossible de rejoindre ce salon"
     },
     "Fetching keys from server…": {
         "en": "Fetching messages from server…",
@@ -908,6 +827,10 @@
         "fr": "un caractère spécial"
     },
     "action": {
+        "explore_public_rooms": {
+            "en": "Explore public rooms",
+            "fr": "Rejoindre un forum"
+        },
         "start_chat": {
             "en": "New direct message",
             "fr": "Nouveau message direct"
@@ -966,6 +889,31 @@
             "fr": "Vérifié"
         }
     },
+    "encryption": {
+        "cross_signing_not_ready": {
+            "en": "Cross-signing is not active.",
+            "fr": "La signature croisée n’est pas active"
+        },
+        "cross_signing_ready": {
+            "en": "Cross-signing is activated on this device.",
+            "fr": "La signature croisée est activée sur cet appareil."
+        },
+        "cross_signing_ready_no_backup": {
+            "en": "Cross-signing is ready but not the secure backup.",
+            "fr": "La signature croisée est activée mais pas la sauvegarde automatique des messages."
+        },
+        "verification": {
+            "sas_emoji_caption_self": {
+                "en": "Confirm the emoji below are displayed on both devices, in the same order:",
+                "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+            }
+        }
+    },
+    "error_app_opened_in_another_window": {
+        "comment": "2023-11-08: remove once the string is translated in element",
+        "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
+        "fr": "%(brand)s est ouvert dans une autre fenêtre. Cliquez \"%(label)s\" pour utiliser %(brand)s ici et déconnecter l'autre fenêtre."
+    },
     "la messagerie instantanée de l'Administration": {
         "en": "The instant messaging app of the French Administration",
         "fr": "la messagerie instantanée de l'Administration"
@@ -974,9 +922,31 @@
         "en": "members_of_%(roomName)s.txt",
         "fr": "membres_de_%(roomName)s.txt"
     },
+    "n_sessions_selected": {
+        "one": {
+            "en": "%(count)s device selected",
+            "fr": "%(count)s appareil sélectionné"
+        },
+        "other": {
+            "en": "%(count)s devices selected",
+            "fr": "%(count)s appareils sélectionnés"
+        }
+    },
+    "new_recovery_method_detected": {
+        "description_1": {
+            "en": "A new Recovery Code for Secure Messages has been detected.",
+            "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté."
+        }
+    },
     "onboarding_free_e2ee_messaging_tchap_limited_voip": {
         "en": "With free end-to-end encrypted messaging, %(brand)s is a great way to stay in touch.",
         "fr": "Grâce à la messagerie chiffrée de bout en bout gratuite, %(brand)s est un excellent moyen de rester en contact."
+    },
+    "room": {
+        "error_join_title": {
+            "en": "Failed to join this room.",
+            "fr": "Impossible de rejoindre ce salon"
+        }
     },
     "room_settings": {
         "permissions": {
@@ -987,6 +957,50 @@
             "kick": {
                 "en": "Remove users",
                 "fr": "Retirer des utilisateurs (réversible)"
+            }
+        }
+    },
+    "sessions": {
+        "sign_out_confirm_description": {
+            "one": {
+                "en": "Are you sure you want to sign out of %(count)s device?",
+                "fr": "Voulez-vous vraiment déconnecter %(count)s appareil ?"
+            },
+            "other": {
+                "en": "Are you sure you want to sign out of %(count)s devices?",
+                "fr": "Voulez-vous vraiment déconnecter %(count)s de vos appareils ?"
+            }
+        }
+    },
+    "settings": {
+        "general": {
+            "add_email_dialog_title": {
+                "en": "Add Email Address",
+                "fr": "Ajouter une adresse mail"
+            }
+        },
+        "security": {
+            "backup_keys_description": {
+                "en": "Automatically back up your messages and retrieve them at any time using the Recovery Code.",
+                "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de Récupération."
+            },
+            "export_megolm_keys": {
+                "en": "Save your Tchap keys",
+                "fr": "Sauvegardez vos clés Tchap"
+            },
+            "key_backup_connect": {
+                "en": "Verify this device",
+                "fr": "Vérifier cet appareil"
+            },
+            "message_search_unsupported_web": {
+                "en": "Currently %(brand)s does not support searching into messages.",
+                "fr": "Actuellement %(brand)s ne supporte pas la recherche dans les messages."
+            }
+        },
+        "sessions": {
+            "current_session": {
+                "en": "This device",
+                "fr": "Cet appareil"
             }
         }
     },
