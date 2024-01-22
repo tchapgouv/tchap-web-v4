@@ -15,7 +15,7 @@ export default class RoomUtils {
     }
     public static openRoomInformation(roomName: string): Chainable<JQuery<HTMLElement>> {
         cy.get('[aria-label="' + roomName + '"]').click(); //open room
-        return cy.get('[aria-label="Information du salon"]').click();
+        return cy.get('.mx_RoomHeader_info [title="' + roomName + '"]').click();
     }
     public static openPeopleMenu(roomName: string): Chainable<JQuery<HTMLElement>> {
         this.openRoomInformation(roomName);
