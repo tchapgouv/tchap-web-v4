@@ -560,6 +560,11 @@
         "en": "Scanning",
         "fr": "Scanning"
     },
+    "Secure Backup": {
+        "comment": "move this to common|secure_backup, after upgrade to 1.11.46",
+        "en": "Automatic Backup of Messages",
+        "fr": "Sauvegarde automatique des messages"
+    },
     "Secure Backup successful": {
         "en": "Secure backup successfully enabled.",
         "fr": "Sauvegarde automatique activée avec succès"
@@ -959,11 +964,6 @@
                 "fr": "Vérifiez vos mails avant de continuer"
             }
         }
-    },
-    "Secure Backup": {
-        "comment": "move this to common|secure_backup, after upgrade to 1.11.46",
-        "en": "Automatic Backup of Messages",
-        "fr": "Sauvegarde automatique des messages"
     },
     "common": {
         "unverified": {
