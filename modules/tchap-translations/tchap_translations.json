@@ -815,10 +815,6 @@
         "en": "Wait for at least %(wait)s seconds between two emails",
         "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
     },
-    "Waiting for this message. This could take a while. <a>Find out more</a>": {
-        "en": "Waiting for this message. This could take a while. <a>Find out more</a>",
-        "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>"
-    },
     "Warning: this is the only time this code will be displayed!": {
         "en": "Warning: this is the only time this code will be displayed!",
         "fr": "Attention: c’est la seule fois que ce code sera affiché !"
@@ -998,6 +994,10 @@
         "unable_to_decrypt": {
             "fr": "En attente de ce message. Ceci pourrait prendre un moment.",
             "en": "Waiting for this message. This could take a while."
+        },
+        "unable_to_decrypt_with_info_message": {
+            "en": "Waiting for this message. This could take a while. <a>Find out more</a>",
+            "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>"
         }
     },
     "widget": {
