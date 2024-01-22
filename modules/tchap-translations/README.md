@@ -2,16 +2,11 @@
 
 ## What are all these translation files ?
 
--   `tchap_translations_web.json` and `tchap_translations_react-sdk.json` : translations for strings that Tchap code adds to the web and react-sdk repos. Strings added in patch code should be translated in the react-sdk file. The rest in the web file.
+-   `tchap_translations.json` : translations for strings that Tchap code adds to the web and react-sdk repos.
 
-    -   note : the two files end up merged, and I'm not sure it's that useful to separate them.
+-   `tchap_translations_removed.json` : strings that tchap modifications have removed from element code. They are listed explicitly because otherwise the translation-checking script will fail (see below).
 
--   `tchap_translations_web_removed.json` and `tchap_translations_react-sdk_removed.json` : strings that tchap modifications have removed from element code. They are listed explicitly because otherwise the translation-checking script will fail (see below).
-
-    -   when patches remove lines of code containing translations : they should be listed in `tchap_translations_react-sdk_removed.json`
-    -   Modifications to html pages in tchap-web-v4 have removed strings coming from element : they should be listed in `tchap_translations_web_removed.json`.
-
--   `tchap_translations_lost.json` : translations that were present in previous versions, but that don't correspond to any existing code now. Many correspond to customisations made in tchap-web v2. Keeping them around in case they're useful.
+-   `old/tchap_translations_lost.json` : translations that were present in previous versions, but that don't correspond to any existing code now. Many correspond to customisations made in tchap-web v2. Keeping them around in case they're useful.
 
 ## The translation-checking script
 
@@ -33,6 +28,6 @@ If all strings in the code have translations, and all translations correspond to
 
 ### Why do we list removed translations ?
 
-`tchap_translations_web_removed.json` and `tchap_translations_react-sdk_removed.json` contain strings that our code has removed from the codebase.
+`tchap_translations_removed.json` contain strings that our code has removed from the codebase.
 
 If we don't list them, the translation-checking script will fail : it will find translations in element's files, and no corresponding strings in the code. So the script needs to remove them from the reference translation file.
