@@ -4,10 +4,10 @@
 
 mkdir -p `realpath modules/tchap-translations/tmp`
 
-export REFERENCE_TRANSLATIONS=`realpath modules/tchap-translations/tmp/reference_both.json`
+export REFERENCE_TRANSLATIONS=`realpath modules/tchap-translations/tmp/reference.json`
 ./scripts/tchap/translations/collect-reference-translations.sh $REFERENCE_TRANSLATIONS
 
-export CRAWLED=`realpath modules/tchap-translations/tmp/crawled_both.json`
+export CRAWLED=`realpath modules/tchap-translations/tmp/crawled.json`
 ./scripts/tchap/translations/crawl-for-translations.sh $REFERENCE_TRANSLATIONS $CRAWLED
 
 # Diff the two.

@@ -5,46 +5,28 @@
 # Usage : ./scripts/tchap/translations/collect-reference-translations.sh $REFERENCE_TRANSLATIONS
 
 source scripts/tchap/translations/helpers.sh
-
-# Usage : collect_reference_translations repo element_translation_file output_file
-collect_reference_translations () {
-    REPO=$1;
-    ELEMENT_TRANSLATION_FILE=$2
-    TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}.json`
-    REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_${REPO}_removed.json`
-
-    TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_${REPO}_EN.json`
-    OUTPUT_FILE=$3
-
-    node scripts/tchap/translations/extractENTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
-
-    # Merge tchap and element translations. Tchap values should override element values in case of conflict.
-    merge_json_files $ELEMENT_TRANSLATION_FILE $TCHAP_TRANSLATION_EN_FILE $OUTPUT_FILE
-
-    # Some keys have been removed from the code by patches. Remove these keys from the reference file.
-    node scripts/tchap/translations/deleteRemovedTranslations.js --file=$OUTPUT_FILE --toremove=$REMOVED_TRANSLATION_FILE > $OUTPUT_FILE.tmp
-    mv $OUTPUT_FILE.tmp $OUTPUT_FILE
-
-    # Format the file for clean diffing.
-    format_json_file $OUTPUT_FILE
-}
-
 mkdir -p `realpath modules/tchap-translations/tmp`
-export OUTPUT_FILE_BOTH=$1
+export OUTPUT_FILE=$1
 
-export REPO="web";
-export ELEMENT_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
-export OUTPUT_FILE_WEB=`realpath modules/tchap-translations/tmp/reference_${REPO}.json`
-collect_reference_translations $REPO $ELEMENT_TRANSLATION_FILE $OUTPUT_FILE_WEB
+# Extract EN translations from tchap translations.
+TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations.json`
+TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_EN.json`
+node scripts/tchap/translations/extractENTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
 
-export REPO="react-sdk";
-export ELEMENT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
-export OUTPUT_FILE_REACT=`realpath modules/tchap-translations/tmp/reference_${REPO}.json`
-collect_reference_translations $REPO $ELEMENT_TRANSLATION_FILE $OUTPUT_FILE_REACT
+# Merge element translations from both web and react-sdk repos, into OUTPUT_FILE
+export ELEMENT_WEB_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
+export ELEMENT_REACT_TRANSLATION_FILE=`realpath yarn-linked-dependencies/matrix-react-sdk/src/i18n/strings/en_EN.json`
+merge_json_files $ELEMENT_WEB_TRANSLATION_FILE $ELEMENT_REACT_TRANSLATION_FILE $OUTPUT_FILE
 
-merge_json_files $OUTPUT_FILE_WEB $OUTPUT_FILE_REACT $OUTPUT_FILE_BOTH
+# Merge in tchap translations, into OUTPUT_FILE. Tchap values should override element values in case of conflict.
+merge_json_files $OUTPUT_FILE $TCHAP_TRANSLATION_EN_FILE $OUTPUT_FILE
+
+# Some keys have been removed from the code by patches. Remove these keys from the reference file.
+REMOVED_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations_removed.json`
+node scripts/tchap/translations/deleteRemovedTranslations.js --file=$OUTPUT_FILE --toremove=$REMOVED_TRANSLATION_FILE > $OUTPUT_FILE.tmp
+mv $OUTPUT_FILE.tmp $OUTPUT_FILE
 
 # Format the file for clean diffing.
-format_json_file $OUTPUT_FILE_BOTH
+format_json_file $OUTPUT_FILE
 
-echo "Reference translations collected : $OUTPUT_FILE_BOTH"
+echo "Reference translations collected : $OUTPUT_FILE"
