@@ -849,12 +849,13 @@
                 "fr": "Vérifier cet appareil"
             },
             "key_backup_inactive_warning": {
-                "en": "This device is not backing up your messages.",
-                "fr": "Cet appareil ne sauvegarde pas vos messages."
+                "en": "This device is <b>not backing up</b> your messages.",
+                "fr": "Cet appareil <b>ne sauvegarde pas</b> vos messages."
             },
             "message_search_unsupported_web": {
-                "en": "Currently %(brand)s does not support searching into messages.",
-                "fr": "Actuellement %(brand)s ne supporte pas la recherche dans les messages."
+                "comment": "We have to include a <<desktopLink> otherwise the i18n checker crashes. So add an empty one.",
+                "en": "Currently %(brand)s does not support searching into messages.<desktopLink></desktopLink>",
+                "fr": "Actuellement %(brand)s ne supporte pas la recherche dans les messages.<desktopLink></desktopLink>"
             },
             "restore_key_backup": {
                 "en": "Retrieve my messages",
