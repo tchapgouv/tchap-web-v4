@@ -144,7 +144,7 @@
         "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room.",
         "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon."
     },
-    "Email": {
+    "auth|email_field_label": {
         "en": "Email",
         "fr": "Adresse mail"
     },
@@ -152,7 +152,7 @@
         "en": "Email (optional)",
         "fr": "Adresse mail (facultatif)"
     },
-    "Email Address": {
+    "settings|general|email_address_label": {
         "en": "Email Address",
         "fr": "Adresse mail"
     },
@@ -160,7 +160,7 @@
         "en": "Email address",
         "fr": "Adresse mail"
     },
-    "Email addresses": {
+    "settings|general|emails_heading": {
         "en": "Email addresses",
         "fr": "Adresses mail"
     },

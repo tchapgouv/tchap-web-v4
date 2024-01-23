@@ -76,7 +76,7 @@ index f4e8ff1..9ee93e1 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index 41a2aed..d428627 100644
+index 41a2aed..0e19925 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -267,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
@@ -95,7 +95,7 @@ index 41a2aed..d428627 100644
 -                invalid: () => _t("auth|reset_password_email_field_required_invalid"),
 +                // :TCHAP: don't mention homeserver, Tchap hides the concept from users.
 +                //invalid: () => _t("auth|reset_password_email_field_required_invalid"),
-+                invalid: () => _t("Enter email address"),
++                invalid: () => _t("auth|email_field_label_required"),
 +                // end :TCHAP:
              },
              {
