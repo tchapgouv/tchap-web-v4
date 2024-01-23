@@ -520,9 +520,31 @@
             "en": "Wrong email address?",
             "fr": "Mauvaise adresse mail ?"
         },
+        "email_field_label": {
+            "en": "Email",
+            "fr": "Adresse mail"
+        },
         "enter_email_heading": {
             "en": "Enter your email to reset password",
             "fr": "Entrez votre adresse mail pour réinitialiser votre mot de passe"
+        },
+        "forgot_password_send_email": {
+            "en": "Send email",
+            "fr": "Envoyer le mail"
+        },
+        "misconfigured_title": {
+            "en": " ",
+            "fr": " "
+        },
+        "reset_password": {
+            "other_devices_logout_warning_1": {
+                "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked or a device has been lost.",
+                "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté ou si vous avez perdu un de vos appareils."
+            },
+            "other_devices_logout_warning_2": {
+                "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
+                "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
+            }
         },
         "reset_password_title": {
             "comment": "TODO contribute to element translations",
@@ -534,42 +556,26 @@
             "en": "Sign in instead",
             "fr": "ou connectez-vous"
         },
+        "uia": {
+            "email_auth_header": {
+                "en": "Check your email to continue",
+                "fr": "Vérifiez vos mails avant de continuer"
+            }
+        },
         "verify_email_explainer": {
             "en": "We need to know it’s you before resetting your password.\n                    Click the link in the email we just sent to <b>%(email)s</b>",
             "fr": "Nous avons besoin de savoir que c’est vous avant de réinitialiser votre mot de passe.\n                    Cliquer sur le lien dans le mail que nous venons juste d’envoyer à <b>%(email)s</b>"
         },
         "verify_email_heading": {
-            "Verify your email to continue": {
-                "en": "Verify your email to continue",
-                "fr": "Vérifiez vos mails avant de continuer"
-            }
+            "en": "Verify your email to continue",
+            "fr": "Vérifiez vos mails avant de continuer"
         }
     },
-    "auth|email_field_label": {
-        "en": "Email",
-        "fr": "Adresse mail"
-    },
-    "auth|forgot_password_send_email": {
-        "en": "Send email",
-        "fr": "Envoyer le mail"
-    },
-    "auth|misconfigured_title": {
-        "en": " ",
-        "fr": " "
-    },
-    "auth|reset_password|other_devices_logout_warning_1": {
-        "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked or a device has been lost.",
-        "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté ou si vous avez perdu un de vos appareils."
-    },
-    "auth|reset_password|other_devices_logout_warning_2": {
-        "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
-        "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
-    },
-    "auth|uia|email_auth_header": {
-        "en": "Check your email to continue",
-        "fr": "Vérifiez vos mails avant de continuer"
-    },
     "common": {
+        "public_room": {
+            "en": "Public room",
+            "fr": "Forum"
+        },
         "secure_backup": {
             "en": "Automatic Backup of Messages",
             "fr": "Sauvegarde automatique des messages"
@@ -583,15 +589,17 @@
             "fr": "Vérifié"
         }
     },
-    "common|public_room": {
-        "en": "Public room",
-        "fr": "Forum"
-    },
-    "create_room|generic_error": {
-        "en": "Tchap is not available at the moment (err:04). View the status of services: https://status.tchap.numerique.gouv.fr",
-        "fr": "La connexion à Tchap n'est pas possible pour le moment (err:04). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
+    "create_room": {
+        "generic_error": {
+            "en": "Tchap is not available at the moment (err:04). View the status of services: https://status.tchap.numerique.gouv.fr",
+            "fr": "La connexion à Tchap n'est pas possible pour le moment (err:04). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
+        }
     },
     "encryption": {
+        "bootstrap_title": {
+            "en": "Setting up your Recovery Code",
+            "fr": "Configuration du Code de Récupération"
+        },
         "cross_signing_not_ready": {
             "en": "Cross-signing is not active.",
             "fr": "La signature croisée n’est pas active"
@@ -604,15 +612,21 @@
             "en": "Cross-signing is ready but not the secure backup.",
             "fr": "La signature croisée est activée mais pas la sauvegarde automatique des messages."
         },
+        "recovery_method_removed": {
+            "description_1": {
+                "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed.",
+                "fr": "Cette session a détecté que votre phrase secrète et Code de Récupération pour les messages sécurisés ont été supprimés."
+            }
+        },
+        "set_up_toast_description": {
+            "en": "Activate your Recovery Code to never lose your messages",
+            "fr": "Activez votre Code de Récupération pour ne jamais perdre vos messages"
+        },
+        "set_up_toast_title": {
+            "en": "Activate message Secure Backup",
+            "fr": "Activer la sauvegarde automatique des messages"
+        },
         "verification": {
-            "sas_emoji_caption_self": {
-                "en": "Confirm the emoji below are displayed on both devices, in the same order:",
-                "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
-            },
-            "verify_using_key_or_phrase": {
-                "en": "Verify with Recovery Code or Phrase",
-                "fr": "Vérifier avec un Code de Récupération ou une phrase"
-            },
             "after_new_login": {
                 "reset_confirmation": {
                     "en": "Really reset Recovery Code?",
@@ -622,6 +636,10 @@
                     "en": "You are logging into a new device",
                     "fr": "Vous vous connectez à un nouvel appareil"
                 }
+            },
+            "sas_emoji_caption_self": {
+                "en": "Confirm the emoji below are displayed on both devices, in the same order:",
+                "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
             },
             "verification_description": {
                 "en": "Verify your identity to access locked messages and prove your identity to others.",
@@ -642,41 +660,31 @@
             "verify_using_key": {
                 "en": "Verify with Recovery Code",
                 "fr": "Vérifier avec un Code de Récupération"
+            },
+            "verify_using_key_or_phrase": {
+                "en": "Verify with Recovery Code or Phrase",
+                "fr": "Vérifier avec un Code de Récupération ou une phrase"
             }
+        },
+        "verify_toast_description": {
+            "en": "You may not be able to recover your messages.",
+            "fr": "Vous risquez de ne pas pouvoir récupérer vos messages."
         },
         "verify_toast_title": {
             "en": "Verify this device",
             "fr": "Vérifier cet appareil"
         }
     },
-    "encryption|bootstrap_title": {
-        "en": "Setting up your Recovery Code",
-        "fr": "Configuration du Code de Récupération"
-    },
-    "encryption|recovery_method_removed|description_1": {
-        "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed.",
-        "fr": "Cette session a détecté que votre phrase secrète et Code de Récupération pour les messages sécurisés ont été supprimés."
-    },
-    "encryption|set_up_toast_description": {
-        "en": "Activate your Recovery Code to never lose your messages",
-        "fr": "Activez votre Code de Récupération pour ne jamais perdre vos messages"
-    },
-    "encryption|set_up_toast_title": {
-        "en": "Activate message Secure Backup",
-        "fr": "Activer la sauvegarde automatique des messages"
-    },
-    "encryption|verify_toast_description": {
-        "en": "You may not be able to recover your messages.",
-        "fr": "Vous risquez de ne pas pouvoir récupérer vos messages."
-    },
     "error_app_opened_in_another_window": {
         "comment": "2023-11-08: remove once the string is translated in element",
         "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
         "fr": "%(brand)s est ouvert dans une autre fenêtre. Cliquez \"%(label)s\" pour utiliser %(brand)s ici et déconnecter l'autre fenêtre."
     },
-    "invite|error_already_joined_room": {
-        "en": "User is already in the room.",
-        "fr": "Cette personne est déjà dans le salon."
+    "invite": {
+        "error_already_joined_room": {
+            "en": "User is already in the room.",
+            "fr": "Cette personne est déjà dans le salon."
+        }
     },
     "la messagerie instantanée de l'Administration": {
         "en": "The instant messaging app of the French Administration",
