@@ -227,10 +227,6 @@
         "en": "Known issues",
         "fr": "Problèmes connus"
     },
-    "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)": {
-        "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
-        "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
-    },
     "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
         "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
@@ -544,6 +540,10 @@
             "other_devices_logout_warning_2": {
                 "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
                 "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
+            },
+            "sign_out_other_devices": {
+                "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
+                "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
             }
         },
         "reset_password_title": {
