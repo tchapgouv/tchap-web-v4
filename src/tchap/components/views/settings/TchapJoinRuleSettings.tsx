@@ -105,7 +105,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
     const definitions: IDefinition<JoinRule>[] = [{
         value: JoinRule.Invite,
         label: _t("Private (invite only)"),
-        description: _t("Only invited people can join."),
+        description: _t("room_settings|security|join_rule_invite_description"),
         checked: joinRule === JoinRule.Invite || (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length),
     }, {
         value: JoinRule.Public,
@@ -121,7 +121,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
 
     // :TCHAP: do we need to add the following condition as well (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length)?
     if (joinRule === JoinRule.Invite) {
-        let privateRoomDescription = <div>{_t("Only invited people can join.")}</div>;
+        let privateRoomDescription = <div>{_t("room_settings|security|join_rule_invite_description")}</div>;
         // :TCHAP: We could add functions in 'TchapUtils' to determine the type of room and rely on this logic to display components as we did in Android :
         // :TCHAP: https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
         if (accessRule) {
@@ -142,7 +142,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             };
             privateRoomDescription = (
                 <div>
-                    <div>{_t("Only invited people can join.")}</div>
+                    <div>{_t("room_settings|security|join_rule_invite_description")}</div>
                     <span>
                         <LabelledToggleSwitch
                             className="tc_JoinRuleSettings_externs_switch"
@@ -158,7 +158,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
 
         definitions.push({
             value: JoinRule.Invite,
-            label: _t("Private (invite only)"),
+            label: _t("create_room|join_rule_invite"),
             description: privateRoomDescription,
             checked: true,
         });
@@ -168,7 +168,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             label: _t("common|public"),
             description: (
                 <>
-                    {_t("Anyone can find and join.")}
+                    {_t("room_settings|security|join_rule_public_description")}
                     {aliasWarning}
                 </>
             ),
@@ -183,7 +183,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             let upgradeRequiredPill;
             if (preferredRestrictionVersion) {
                 upgradeRequiredPill = (
-                    <span className="mx_JoinRuleSettings_upgradeRequired">{_t("Upgrade required")}</span>
+                    <span className="mx_JoinRuleSettings_upgradeRequired">{_t("room_settings|security|join_rule_upgrade_required")}</span>
                 );
             }
 
@@ -198,11 +198,11 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                 let moreText;
                 if (shownSpaces.length < restrictedAllowRoomIds.length) {
                     if (shownSpaces.length > 0) {
-                        moreText = _t("& %(count)s more", {
+                        moreText = _t("room_settings|security|join_rule_restricted_n_more", {
                             count: restrictedAllowRoomIds.length - shownSpaces.length,
                         });
                     } else {
-                        moreText = _t("Currently, %(count)s spaces have access", {
+                        moreText = _t("room_settings|security|join_rule_restricted_summary", {
                             count: restrictedAllowRoomIds.length,
                         });
                     }
@@ -241,7 +241,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     <div>
                         <span>
                             {_t(
-                                "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>",
+                                "room_settings|security|join_rule_restricted_description",
                                 {},
                                 {
                                     a: (sub) => (
@@ -258,7 +258,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                         </span>
 
                         <div className="mx_JoinRuleSettings_spacesWithAccess">
-                            <h4>{_t("Spaces with access")}</h4>
+                            <h4>{_t("room_settings|security|join_rule_restricted_description_spaces")}</h4>
                             {shownSpaces.map((room) => {
                                 return (
                                     <span key={room.roomId}>
@@ -273,21 +273,21 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                 );
             } else if (SpaceStore.instance.activeSpaceRoom) {
                 description = _t(
-                    "Anyone in <spaceName/> can find and join. You can select other spaces too.",
+                    "room_settings|security|join_rule_restricted_description_active_space",
                     {},
                     {
                         spaceName: () => <b>{SpaceStore.instance.activeSpaceRoom.name}</b>,
                     },
                 );
             } else {
-                description = _t("Anyone in a space can find and join. You can select multiple spaces.");
+                description = _t("room_settings|security|join_rule_restricted_description_prompt");
             }
 
             definitions.splice(1, 0, {
                 value: JoinRule.Restricted,
                 label: (
                     <>
-                        {_t("Space members")}
+                        {_t("room_settings|security|join_rule_restricted")}
 
                         {/* :tchap: do not show the pill upgrade room as it is not user friendly
                         https://github.com/tchapgouv/tchap-web-v4/issues/578
@@ -323,11 +323,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                 if (unableToUpdateSomeParents) {
                     warning = (
                         <b>
-                            {_t(
-                                "This room is in some spaces you're not an admin of. " +
-                                    "In those spaces, the old room will still be shown, " +
-                                    "but people will be prompted to join the new one.",
-                            )}
+                            {_t("room_settings|security|join_rule_restricted_upgrade_warning")}
                         </b>
                     );
                 }
@@ -337,10 +333,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     targetVersion,
                     description: (
                         <>
-                            {_t(
-                                "This upgrade will allow members of selected spaces " +
-                                    "access to this room without an invite.",
-                            )}
+                            {_t("room_settings|security|join_rule_restricted_upgrade_description")}
                             {warning}
                         </>
                     ),
@@ -358,12 +351,12 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                             (progress) => {
                                 const total = 2 + progress.updateSpacesTotal + progress.inviteUsersTotal;
                                 if (!progress.roomUpgraded) {
-                                    fn(_t("Upgrading room"), 0, total);
+                                    fn(_t("room_settings|security|join_rule_upgrade_upgrading_room"), 0, total);
                                 } else if (!progress.roomSynced) {
-                                    fn(_t("Loading new room"), 1, total);
+                                    fn(_t("room_settings|security|join_rule_upgrade_awaiting_room"), 1, total);
                                 } else if (progress.inviteUsersProgress < progress.inviteUsersTotal) {
                                     fn(
-                                        _t("Sending invites... (%(progress)s out of %(count)s)", {
+                                        _t("room_settings|security|join_rule_upgrade_sending_invites", {
                                             progress: progress.inviteUsersProgress,
                                             count: progress.inviteUsersTotal,
                                         }),
@@ -372,7 +365,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                                     );
                                 } else if (progress.updateSpacesProgress < progress.updateSpacesTotal) {
                                     fn(
-                                        _t("Updating spaces... (%(progress)s out of %(count)s)", {
+                                        _t("room_settings|security|join_rule_upgrade_sending_invites", {
                                             progress: progress.updateSpacesProgress,
                                             count: progress.updateSpacesTotal,
                                         }),
