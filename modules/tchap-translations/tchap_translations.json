@@ -196,7 +196,7 @@
         "en": "Finish",
         "fr": "Terminer"
     },
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": {
+    "settings|sessions|best_security_note": {
         "en": "Verify your devices to unlock your messages",
         "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages"
     },
@@ -212,7 +212,7 @@
         "en": "Frequently Asked Questions (FAQ)",
         "fr": "Foire Aux Questions (FAQ)"
     },
-    "Generate a Security Key": {
+    "settings|key_backup|setup_secure_backup|generate_security_key_title": {
         "en": "Generate a Recovery Code",
         "fr": "Générer un Code de Récupération"
     },
@@ -220,11 +220,11 @@
         "en": "Generate a new code",
         "fr": "Générer un nouveau code"
     },
-    "Group all your favourite rooms and people in one place.": {
+    "settings|sidebar|metaspaces_favourites_description": {
         "en": "Group all your favourite rooms in one place.",
         "fr": "Regroupe tous vos salons favoris au même endroit."
     },
-    "Group all your people in one place.": {
+    "settings|sidebar|metaspaces_people_description": {
         "en": "Group all your direct message room in one place.",
         "fr": "Regroupe tous vos salons de message directs au même endroit."
     },
@@ -248,7 +248,7 @@
         "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
         "fr": "Si vous rencontrez des difficultés dans votre utilisation de Tchap, contactez-nous par email à <b>%(supportEmail)s</b>"
     },
-    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": {
+    "auth|reset_password|other_devices_logout_warning_2": {
         "en": "If you want to keep your messages, save your Tchap keys from one of your devices before proceeding. They will help to restore your messages",
         "fr": "Si vous voulez garder un accès à vos messages, sauvegardez vos clés Tchap à partir de l’un de vos appareils avant de continuer. Elles vous permettront de déverrouiller vos messages"
     },
@@ -264,11 +264,11 @@
         "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
         "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
     },
-    "Ignored users": {
+    "settings|security|ignore_users_section": {
         "en": "Ignored users",
         "fr": "Membres ignorés"
     },
-    "Import E2E room keys": {
+    "settings|security|import_megolm_keys": {
         "en": "Import your Tchap keys from the downloaded file",
         "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
     },
@@ -280,7 +280,7 @@
         "en": "Recovery code not recognized",
         "fr": "Code de récupération non reconnu"
     },
-    "Invalid Email Address": {
+    "settings|general|error_invalid_email": {
         "en": "Invalid Email Address",
         "fr": "Adresse mail non valide"
     },
@@ -292,7 +292,7 @@
         "en": "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break.",
         "fr": "Invitez quelqu’un grâce à son nom, adresse mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne."
     },
-    "Join public room": {
+    "room_list|join_public_room_label": {
         "en": "Join a public room",
         "fr": "Rejoindre un forum"
     },
@@ -312,7 +312,7 @@
         "en": "Lock my messages and disconnect me from all my devices (in case your account is hacked or a device loss)",
         "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
     },
-    "Muted Users": {
+    "room_settings|permissions|muted_users_section": {
         "en": "Muted Users",
         "fr": "Membres en sourdine"
     },
@@ -320,11 +320,11 @@
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
         "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
     },
-    "Other sessions": {
+    "settings|sessions|other_sessions_heading": {
         "en": "Other devices",
         "fr": "Autres appareils"
     },
-    "Other users may not trust it": {
+    "encryption|verify_toast_description": {
         "en": "You may not be able to recover your messages.",
         "fr": "Vous risquez de ne pas pouvoir récupérer vos messages."
     },
@@ -340,7 +340,7 @@
         "en": "Please note this is not your Recovery Code for your automatic backup.",
         "fr": "Attention ceci n’est pas votre Code de Récupération pour votre sauvegarde automatique."
     },
-    "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": {
+    "encryption|verification|verify_reset_warning_2": {
         "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code.",
         "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération."
     },
@@ -364,7 +364,7 @@
         "en": "Private room open to external users",
         "fr": "Salon ouvert aux externes"
     },
-    "Privileged Users": {
+    "room_settings|permissions|privileged_users_section": {
         "en": "Privileged Users",
         "fr": "Membres privilégiés"
     },
@@ -372,7 +372,7 @@
         "en": "Public discussion accessible to all users of this space or from a shared link.",
         "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
     },
-    "Public room": {
+    "common|public_room": {
         "en": "Public room",
         "fr": "Forum"
     },
@@ -392,11 +392,11 @@
         "en": "Read the Privacy Policy",
         "fr": "Lire la Politique de Confidentialité"
     },
-    "Really reset verification keys?": {
+    "encryption|verification|after_new_login|reset_confirmation": {
         "en": "Really reset Recovery Code?",
         "fr": "Réinitialiser le Code de Récupération, c’est certain ?"
     },
-    "Receive push notifications on this session.": {
+    "settings|sessions|push_subheading": {
         "en": "Receive push notifications on this device.",
         "fr": "Recevoir les notifications push sur cet appareil"
     },
@@ -412,19 +412,19 @@
         "en": "Reload page",
         "fr": "Rafraîchir la page"
     },
-    "Remove from %(roomName)s": {
+    "user_info|kick_button_room_name": {
         "en": "Remove from %(roomName)s",
         "fr": "Retirer de %(roomName)s (réversible)"
     },
-    "Remove from room": {
+    "user_info|kick_button_room": {
         "en": "Remove from room",
         "fr": "Retirer du salon (réversible)"
     },
-    "Remove them from everything I'm able to": {
+    "user_info|kick_button_space_everything": {
         "en": "Remove them from everything I'm able to",
         "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
     },
-    "Remove them from specific things I'm able to": {
+    "user_info|kick_space_specific": {
         "en": "Remove them from specific things I'm able to",
         "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
     },
@@ -432,11 +432,11 @@
         "en": "Request a renewal email",
         "fr": "Demander l’envoi d’un nouvel email"
     },
-    "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": {
+    "encryption|verification|verify_reset_warning_1": {
         "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages.",
         "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulée. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés."
     },
-    "Restore from Backup": {
+    "settings|security|restore_key_backup": {
         "en": "Retrieve my messages",
         "fr": "Récupérer mes messages"
     },
@@ -444,11 +444,7 @@
         "en": "Restoring messages from backup",
         "fr": "Restauration des messages depuis la sauvegarde"
     },
-    "Room members": {
-        "en": "Room members",
-        "fr": "Membres du salon"
-    },
-    "Safeguard against losing access to encrypted messages & data": {
+    "encryption|set_up_toast_description": {
         "en": "Activate your Recovery Code to never lose your messages",
         "fr": "Activez votre Code de Récupération pour ne jamais perdre vos messages"
     },
@@ -456,7 +452,7 @@
         "en": "Save my Tchap keys",
         "fr": "Sauvegarder mes clés Tchap"
     },
-    "Save your Security Key": {
+    "settings|key_backup|setup_secure_backup|title_save_key": {
         "en": "Write down your Recovery Code",
         "fr": "Notez votre Code de Récupération"
     },
@@ -472,7 +468,7 @@
         "en": "Scanning",
         "fr": "Scanning"
     },
-    "Secure Backup successful": {
+    "settings|key_backup|setup_secure_backup|backup_setup_success_title": {
         "en": "Secure backup successfully enabled.",
         "fr": "Sauvegarde automatique activée avec succès"
     },
@@ -480,23 +476,23 @@
         "en": "Recovery Code",
         "fr": "Code de Récupération"
     },
-    "Send email": {
+    "auth|forgot_password_send_email": {
         "en": "Send email",
         "fr": "Envoyer le mail"
     },
-    "Sent messages will be stored until your connection has returned.": {
+    "room|status_bar|server_connectivity_lost_description": {
         "en": "Messages will be sent when your connection returns.",
         "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie."
     },
-    "Server may be unavailable, overloaded, or you hit a bug.": {
+    "create_room|generic_error": {
         "en": "Tchap is not available at the moment (err:04). View the status of services: https://status.tchap.numerique.gouv.fr",
         "fr": "La connexion à Tchap n'est pas possible pour le moment (err:04). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
     },
-    "Server unavailable, overloaded, or something else went wrong.": {
+    "slash_command|server_error_detail": {
         "en": "Tchap is not available at the moment (err:03). View the status of services: https://status.tchap.numerique.gouv.fr",
         "fr": "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
     },
-    "Sessions": {
+    "settings|sessions|title": {
         "en": "My devices",
         "fr": "Mes appareils"
     },
@@ -504,19 +500,19 @@
         "en": "Activate",
         "fr": "Activer"
     },
-    "Set up Secure Backup": {
+    "encryption|set_up_toast_title": {
         "en": "Activate message Secure Backup",
         "fr": "Activer la sauvegarde automatique des messages"
     },
-    "Setting up keys": {
+    "encryption|bootstrap_title": {
         "en": "Setting up your Recovery Code",
         "fr": "Configuration du Code de Récupération"
     },
-    "Show all your rooms in Home, even if they're in a space.": {
+    "settings|sidebar|metaspaces_home_all_rooms_description": {
         "en": "Show all your rooms in Home",
         "fr": "Affiche tous vos salons dans l’accueil"
     },
-    "Sign out of %(count)s sessions": {
+    "settings|sessions|sign_out_n_sessions": {
         "one": {
             "en": "Sign out of %(count)s device",
             "fr": "Déconnecter %(count)s appareil"
@@ -526,19 +522,19 @@
             "fr": "Déconnecter %(count)s appareils"
         }
     },
-    "Sign out of all other sessions (%(otherSessionsCount)s)": {
+    "settings|sessions|sign_out_all_other_sessions": {
         "en": "Sign out of all other devices (%(otherSessionsCount)s)",
         "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)"
     },
-    "Sign out of this session": {
+    "settings|sessions|sign_out": {
         "en": "Sign out of this device",
         "fr": "Se déconnecter de cet appareil"
     },
-    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": {
+    "auth|reset_password|other_devices_logout_warning_1": {
         "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked or a device has been lost.",
         "fr": "Nous allons vous déconnecter de vos appareils afin de verrouiller les messages qu'ils contiennent. Cette option est utile si vous pensez que votre compte a été piraté ou si vous avez perdu un de vos appareils."
     },
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": {
+    "settings|sidebar|spaces_explainer": {
         "en": "Spaces are ways to group rooms and direct messages.",
         "fr": "Les espaces permettent de regrouper des salons et des messages directs."
     },
@@ -546,7 +542,7 @@
         "en": "Use automatic Backup",
         "fr": "Utiliser la sauvegarde automatique"
     },
-    "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": {
+    "settings|key_backup|setup_secure_backup|security_key_safety_reminder": {
         "en": "Keep it in a safe place, such as your password manager or a protected document on your computer. You will need to copy/paste it to retrieve your messages, so avoid taking screenshots.",
         "fr": "Conservez-le dans un endroit sûr, comme votre gestionnaire de mot de passe ou un document protégé sur votre ordinateur. Vous aurez à le copier / coller pour récupérer vos messages, donc évitez la capture d’écran."
     },
@@ -611,7 +607,7 @@
         "en": "This code will allow you to always restore your messages.",
         "fr": "Ce code vous permettra de toujours récupérer vos messages."
     },
-    "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.": {
+    "settings|sessions|verified_sessions_explainer_2": {
         "en": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device.",
         "fr": "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil."
     },
@@ -627,11 +623,11 @@
         "en": "This room is private and open to external users",
         "fr": "Ce salon est privé et ouvert aux externes"
     },
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": {
+    "encryption|recovery_method_removed|description_1": {
         "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed.",
         "fr": "Cette session a détecté que votre phrase secrète et Code de Récupération pour les messages sécurisés ont été supprimés."
     },
-    "This session is backing up your keys.": {
+    "settings|security|key_backup_active": {
         "en": "This device automatically backs up your messages.",
         "fr": "Cet appareil sauvegarde automatiquement vos messages."
     },
@@ -647,11 +643,7 @@
         "en": "Type of room",
         "fr": "Type de salon"
     },
-    "Unable to decrypt message": {
-        "en": "Waiting for this message. This could take a while.",
-        "fr": "En attente de ce message. Ceci pourrait prendre un moment."
-    },
-    "Unable to verify this device": {
+    "encryption|verification|after_new_login|unable_to_verify": {
         "en": "You are logging into a new device",
         "fr": "Vous vous connectez à un nouvel appareil"
     },
