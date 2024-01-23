@@ -716,11 +716,19 @@
         "error_join_title": {
             "en": "Failed to join this room.",
             "fr": "Impossible de rejoindre ce salon"
+        },
+        "status_bar": {
+            "server_connectivity_lost_description": {
+                "en": "Messages will be sent when your connection returns.",
+                "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie."
+            }
         }
     },
-    "room_list|join_public_room_label": {
-        "en": "Join a public room",
-        "fr": "Rejoindre un forum"
+    "room_list": {
+        "join_public_room_label": {
+            "en": "Join a public room",
+            "fr": "Rejoindre un forum"
+        }
     },
     "room_settings": {
         "permissions": {
@@ -728,27 +736,23 @@
                 "en": "Ban users",
                 "fr": "Interdire aux utilisateurs l’accès au salon (définitif)"
             },
+            "banned_users_section": {
+                "en": "Banned users",
+                "fr": "Membres bannis"
+            },
             "kick": {
                 "en": "Remove users",
                 "fr": "Retirer des utilisateurs (réversible)"
+            },
+            "muted_users_section": {
+                "en": "Muted Users",
+                "fr": "Membres en sourdine"
+            },
+            "privileged_users_section": {
+                "en": "Privileged Users",
+                "fr": "Membres privilégiés"
             }
         }
-    },
-    "room_settings|permissions|banned_users_section": {
-        "en": "Banned users",
-        "fr": "Membres bannis"
-    },
-    "room_settings|permissions|muted_users_section": {
-        "en": "Muted Users",
-        "fr": "Membres en sourdine"
-    },
-    "room_settings|permissions|privileged_users_section": {
-        "en": "Privileged Users",
-        "fr": "Membres privilégiés"
-    },
-    "room|status_bar|server_connectivity_lost_description": {
-        "en": "Messages will be sent when your connection returns.",
-        "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie."
     },
     "sessions": {
         "sign_out_confirm_description": {
@@ -767,6 +771,54 @@
             "add_email_dialog_title": {
                 "en": "Add Email Address",
                 "fr": "Ajouter une adresse mail"
+            },
+            "email_address_label": {
+                "en": "Email Address",
+                "fr": "Adresse mail"
+            },
+            "emails_heading": {
+                "en": "Email addresses",
+                "fr": "Adresses mail"
+            },
+            "error_invalid_email": {
+                "en": "Invalid Email Address",
+                "fr": "Adresse mail non valide"
+            }
+        },
+        "key_backup": {
+            "setup_secure_backup": {
+                "backup_setup_success_description": {
+                    "en": "Your messages are now automatically backed up on this device.",
+                    "fr": "Vos messages sont maintenant automatiquement sauvegardés sur cet appareil."
+                },
+                "backup_setup_success_title": {
+                    "en": "Secure backup successfully enabled.",
+                    "fr": "Sauvegarde automatique activée avec succès"
+                },
+                "generate_security_key_description": {
+                    "en": "We'll generate your unique Recovery Code for you to store somewhere safe, like a password manager or a safe.",
+                    "fr": "Nous génèrerons votre Code de Récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre."
+                },
+                "generate_security_key_title": {
+                    "en": "Generate a Recovery Code",
+                    "fr": "Générer un Code de Récupération"
+                },
+                "security_key_safety_reminder": {
+                    "en": "Keep it in a safe place, such as your password manager or a protected document on your computer. You will need to copy/paste it to retrieve your messages, so avoid taking screenshots.",
+                    "fr": "Conservez-le dans un endroit sûr, comme votre gestionnaire de mot de passe ou un document protégé sur votre ordinateur. Vous aurez à le copier / coller pour récupérer vos messages, donc évitez la capture d’écran."
+                },
+                "settings_reminder": {
+                    "en": "You can also set up Secure Backup & manage your keys in Settings.",
+                    "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
+                },
+                "title_save_key": {
+                    "en": "Write down your Recovery Code",
+                    "fr": "Notez votre Code de Récupération"
+                },
+                "use_phrase_only_you_know": {
+                    "en": "Use a secret phrase only you know, and optionally save a Recovery Code to use for backup.",
+                    "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un Code de Récupération à utiliser pour la sauvegarde."
+                }
             }
         },
         "security": {
@@ -778,175 +830,135 @@
                 "en": "Save your Tchap keys",
                 "fr": "Sauvegardez vos clés Tchap"
             },
+            "ignore_users_section": {
+                "en": "Ignored users",
+                "fr": "Membres ignorés"
+            },
+            "import_megolm_keys": {
+                "en": "Import your Tchap keys from the downloaded file",
+                "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
+            },
+            "key_backup_active": {
+                "en": "This device automatically backs up your messages.",
+                "fr": "Cet appareil sauvegarde automatiquement vos messages."
+            },
             "key_backup_connect": {
                 "en": "Verify this device",
                 "fr": "Vérifier cet appareil"
             },
+            "key_backup_inactive_warning": {
+                "en": "This device is not backing up your messages.",
+                "fr": "Cet appareil ne sauvegarde pas vos messages."
+            },
             "message_search_unsupported_web": {
                 "en": "Currently %(brand)s does not support searching into messages.",
                 "fr": "Actuellement %(brand)s ne supporte pas la recherche dans les messages."
+            },
+            "restore_key_backup": {
+                "en": "Retrieve my messages",
+                "fr": "Récupérer mes messages"
             }
         },
         "sessions": {
+            "best_security_note": {
+                "en": "Verify your devices to unlock your messages",
+                "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages"
+            },
             "current_session": {
                 "en": "This device",
                 "fr": "Cet appareil"
+            },
+            "device_unverified_description_current": {
+                "en": "Verify your current device to get your messages.",
+                "fr": "Vérifier cet appareil afin de visualiser vos messages"
+            },
+            "device_verified_description_current": {
+                "en": "Your device is ready for secure messaging.",
+                "fr": "Votre appareil est prêt à envoyer des messages."
+            },
+            "other_sessions_heading": {
+                "en": "Other devices",
+                "fr": "Autres appareils"
+            },
+            "push_subheading": {
+                "en": "Receive push notifications on this device.",
+                "fr": "Recevoir les notifications push sur cet appareil"
+            },
+            "sign_out": {
+                "en": "Sign out of this device",
+                "fr": "Se déconnecter de cet appareil"
+            },
+            "sign_out_all_other_sessions": {
+                "en": "Sign out of all other devices (%(otherSessionsCount)s)",
+                "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)"
+            },
+            "sign_out_n_sessions": {
+                "one": {
+                    "en": "Sign out of %(count)s device",
+                    "fr": "Déconnecter %(count)s appareil"
+                },
+                "other": {
+                    "en": "Sign out of %(count)s devices",
+                    "fr": "Déconnecter %(count)s appareils"
+                }
+            },
+            "title": {
+                "en": "My devices",
+                "fr": "Mes appareils"
+            },
+            "unverified_session": {
+                "en": "Unverified device",
+                "fr": "Appareil non vérifié"
+            },
+            "unverified_sessions": {
+                "en": "Unverified devices",
+                "fr": "Appareils non vérifiés"
+            },
+            "unverified_sessions_explainer_1": {
+                "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code).",
+                "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération)."
+            },
+            "unverified_sessions_explainer_2": {
+                "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account.",
+                "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car ils pourraient représenter un usage frauduleux de votre compte."
+            },
+            "verified_session": {
+                "en": "Verified device",
+                "fr": "Appareil vérifié"
+            },
+            "verified_sessions": {
+                "en": "Verified devices",
+                "fr": "Appareils vérifiés"
+            },
+            "verified_sessions_explainer_2": {
+                "en": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device.",
+                "fr": "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil."
+            }
+        },
+        "sidebar": {
+            "metaspaces_favourites_description": {
+                "en": "Group all your favourite rooms in one place.",
+                "fr": "Regroupe tous vos salons favoris au même endroit."
+            },
+            "metaspaces_home_all_rooms_description": {
+                "en": "Show all your rooms in Home",
+                "fr": "Affiche tous vos salons dans l’accueil"
+            },
+            "metaspaces_people_description": {
+                "en": "Group all your direct message room in one place.",
+                "fr": "Regroupe tous vos salons de message directs au même endroit."
+            },
+            "spaces_explainer": {
+                "en": "Spaces are ways to group rooms and direct messages.",
+                "fr": "Les espaces permettent de regrouper des salons et des messages directs."
             }
         }
     },
-    "settings|general|email_address_label": {
-        "en": "Email Address",
-        "fr": "Adresse mail"
-    },
-    "settings|general|emails_heading": {
-        "en": "Email addresses",
-        "fr": "Adresses mail"
-    },
-    "settings|general|error_invalid_email": {
-        "en": "Invalid Email Address",
-        "fr": "Adresse mail non valide"
-    },
-    "settings|key_backup|setup_secure_backup|backup_setup_success_description": {
-        "en": "Your messages are now automatically backed up on this device.",
-        "fr": "Vos messages sont maintenant automatiquement sauvegardés sur cet appareil."
-    },
-    "settings|key_backup|setup_secure_backup|backup_setup_success_title": {
-        "en": "Secure backup successfully enabled.",
-        "fr": "Sauvegarde automatique activée avec succès"
-    },
-    "settings|key_backup|setup_secure_backup|generate_security_key_description": {
-        "en": "We'll generate your unique Recovery Code for you to store somewhere safe, like a password manager or a safe.",
-        "fr": "Nous génèrerons votre Code de Récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre."
-    },
-    "settings|key_backup|setup_secure_backup|generate_security_key_title": {
-        "en": "Generate a Recovery Code",
-        "fr": "Générer un Code de Récupération"
-    },
-    "settings|key_backup|setup_secure_backup|security_key_safety_reminder": {
-        "en": "Keep it in a safe place, such as your password manager or a protected document on your computer. You will need to copy/paste it to retrieve your messages, so avoid taking screenshots.",
-        "fr": "Conservez-le dans un endroit sûr, comme votre gestionnaire de mot de passe ou un document protégé sur votre ordinateur. Vous aurez à le copier / coller pour récupérer vos messages, donc évitez la capture d’écran."
-    },
-    "settings|key_backup|setup_secure_backup|settings_reminder": {
-        "en": "You can also set up Secure Backup & manage your keys in Settings.",
-        "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
-    },
-    "settings|key_backup|setup_secure_backup|title_save_key": {
-        "en": "Write down your Recovery Code",
-        "fr": "Notez votre Code de Récupération"
-    },
-    "settings|key_backup|setup_secure_backup|use_phrase_only_you_know": {
-        "en": "Use a secret phrase only you know, and optionally save a Recovery Code to use for backup.",
-        "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un Code de Récupération à utiliser pour la sauvegarde."
-    },
-    "settings|security|ignore_users_section": {
-        "en": "Ignored users",
-        "fr": "Membres ignorés"
-    },
-    "settings|security|import_megolm_keys": {
-        "en": "Import your Tchap keys from the downloaded file",
-        "fr": "Importez vos clés Tchap depuis le fichier sauvegardé"
-    },
-    "settings|security|key_backup_active": {
-        "en": "This device automatically backs up your messages.",
-        "fr": "Cet appareil sauvegarde automatiquement vos messages."
-    },
-    "settings|security|key_backup_inactive_warning": {
-        "en": "This device is not backing up your messages.",
-        "fr": "Cet appareil ne sauvegarde pas vos messages."
-    },
-    "settings|security|restore_key_backup": {
-        "en": "Retrieve my messages",
-        "fr": "Récupérer mes messages"
-    },
-    "settings|sessions|best_security_note": {
-        "en": "Verify your devices to unlock your messages",
-        "fr": "Vérifier tous vos appareils pour déverrouiller tous vos messages"
-    },
-    "settings|sessions|device_unverified_description_current": {
-        "en": "Verify your current device to get your messages.",
-        "fr": "Vérifier cet appareil afin de visualiser vos messages"
-    },
-    "settings|sessions|device_verified_description_current": {
-        "en": "Your device is ready for secure messaging.",
-        "fr": "Votre appareil est prêt à envoyer des messages."
-    },
-    "settings|sessions|other_sessions_heading": {
-        "en": "Other devices",
-        "fr": "Autres appareils"
-    },
-    "settings|sessions|push_subheading": {
-        "en": "Receive push notifications on this device.",
-        "fr": "Recevoir les notifications push sur cet appareil"
-    },
-    "settings|sessions|sign_out": {
-        "en": "Sign out of this device",
-        "fr": "Se déconnecter de cet appareil"
-    },
-    "settings|sessions|sign_out_all_other_sessions": {
-        "en": "Sign out of all other devices (%(otherSessionsCount)s)",
-        "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)"
-    },
-    "settings|sessions|sign_out_n_sessions": {
-        "one": {
-            "en": "Sign out of %(count)s device",
-            "fr": "Déconnecter %(count)s appareil"
-        },
-        "other": {
-            "en": "Sign out of %(count)s devices",
-            "fr": "Déconnecter %(count)s appareils"
+    "slash_command": {
+        "server_error_detail": {
+            "en": "Tchap is not available at the moment (err:03). View the status of services: https://status.tchap.numerique.gouv.fr",
+            "fr": "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
         }
-    },
-    "settings|sessions|title": {
-        "en": "My devices",
-        "fr": "Mes appareils"
-    },
-    "settings|sessions|unverified_session": {
-        "en": "Unverified device",
-        "fr": "Appareil non vérifié"
-    },
-    "settings|sessions|unverified_sessions": {
-        "en": "Unverified devices",
-        "fr": "Appareils non vérifiés"
-    },
-    "settings|sessions|unverified_sessions_explainer_1": {
-        "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code).",
-        "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération)."
-    },
-    "settings|sessions|unverified_sessions_explainer_2": {
-        "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account.",
-        "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car ils pourraient représenter un usage frauduleux de votre compte."
-    },
-    "settings|sessions|verified_session": {
-        "en": "Verified device",
-        "fr": "Appareil vérifié"
-    },
-    "settings|sessions|verified_sessions": {
-        "en": "Verified devices",
-        "fr": "Appareils vérifiés"
-    },
-    "settings|sessions|verified_sessions_explainer_2": {
-        "en": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device.",
-        "fr": "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil."
-    },
-    "settings|sidebar|metaspaces_favourites_description": {
-        "en": "Group all your favourite rooms in one place.",
-        "fr": "Regroupe tous vos salons favoris au même endroit."
-    },
-    "settings|sidebar|metaspaces_home_all_rooms_description": {
-        "en": "Show all your rooms in Home",
-        "fr": "Affiche tous vos salons dans l’accueil"
-    },
-    "settings|sidebar|metaspaces_people_description": {
-        "en": "Group all your direct message room in one place.",
-        "fr": "Regroupe tous vos salons de message directs au même endroit."
-    },
-    "settings|sidebar|spaces_explainer": {
-        "en": "Spaces are ways to group rooms and direct messages.",
-        "fr": "Les espaces permettent de regrouper des salons et des messages directs."
-    },
-    "slash_command|server_error_detail": {
-        "en": "Tchap is not available at the moment (err:03). View the status of services: https://status.tchap.numerique.gouv.fr",
-        "fr": "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
     },
     "threads": {
         "unable_to_decrypt": {
@@ -958,46 +970,50 @@
             "fr": "En attente de ce message. Ceci pourrait prendre un moment. <a>En savoir plus</a>"
         }
     },
-    "user_info|ban_button_room": {
-        "en": "Ban from room",
-        "fr": "Interdire l’accès au salon (définitif)"
+    "user_info": {
+        "ban_button_room": {
+            "en": "Ban from room",
+            "fr": "Interdire l’accès au salon (définitif)"
+        },
+        "ban_button_space": {
+            "en": "Ban from space",
+            "fr": "Interdire l’accès à l'espace (définitif)"
+        },
+        "ban_room_confirm_title": {
+            "en": "Ban from %(roomName)s",
+            "fr": "Interdire l’accès à %(roomName)s (définitif)"
+        },
+        "ban_space_everything": {
+            "en": "Ban them from everything I'm able to",
+            "fr": "Interdire l’accès partout où j’ai le droit de le faire (définitif)"
+        },
+        "ban_space_specific": {
+            "en": "Ban them from specific things I'm able to",
+            "fr": "Interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
+        },
+        "kick_button_room": {
+            "en": "Remove from room",
+            "fr": "Retirer du salon (réversible)"
+        },
+        "kick_button_room_name": {
+            "en": "Remove from %(roomName)s",
+            "fr": "Retirer de %(roomName)s (réversible)"
+        },
+        "kick_button_space_everything": {
+            "en": "Remove them from everything I'm able to",
+            "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
+        },
+        "kick_space_specific": {
+            "en": "Remove them from specific things I'm able to",
+            "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
+        }
     },
-    "user_info|ban_button_space": {
-        "en": "Ban from space",
-        "fr": "Interdire l’accès à l'espace (définitif)"
-    },
-    "user_info|ban_room_confirm_title": {
-        "en": "Ban from %(roomName)s",
-        "fr": "Interdire l’accès à %(roomName)s (définitif)"
-    },
-    "user_info|ban_space_everything": {
-        "en": "Ban them from everything I'm able to",
-        "fr": "Interdire l’accès partout où j’ai le droit de le faire (définitif)"
-    },
-    "user_info|ban_space_specific": {
-        "en": "Ban them from specific things I'm able to",
-        "fr": "Interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
-    },
-    "user_info|kick_button_room": {
-        "en": "Remove from room",
-        "fr": "Retirer du salon (réversible)"
-    },
-    "user_info|kick_button_room_name": {
-        "en": "Remove from %(roomName)s",
-        "fr": "Retirer de %(roomName)s (réversible)"
-    },
-    "user_info|kick_button_space_everything": {
-        "en": "Remove them from everything I'm able to",
-        "fr": "Retirer de partout où j’ai le droit de le faire (réversible)"
-    },
-    "user_info|kick_space_specific": {
-        "en": "Remove them from specific things I'm able to",
-        "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
-    },
-    "voip|connection_lost": {
-        "comment": "the element string does not have <a>. Where is this used?",
-        "en": "Tchap is not available at the moment. <a>View the status of services</a>.",
-        "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>"
+    "voip": {
+        "connection_lost": {
+            "comment": "the element string does not have <a>. Where is this used?",
+            "en": "Tchap is not available at the moment. <a>View the status of services</a>.",
+            "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>"
+        }
     },
     "widget": {
         "capability": {
@@ -1009,10 +1025,10 @@
                 "en": "Remove, ban, or invite people to this room, and make you leave",
                 "fr": "Retirer, interdire l'accès ou inviter une personne dans ce salon et vous permettre de partir"
             }
+        },
+        "error_need_kick_permission": {
+            "en": "You need to be able to kick users to do that.",
+            "fr": "Vous devez avoir l’autorisation de retirer des utilisateurs pour faire ceci."
         }
-    },
-    "widget|error_need_kick_permission": {
-        "en": "You need to be able to kick users to do that.",
-        "fr": "Vous devez avoir l’autorisation de retirer des utilisateurs pour faire ceci."
     }
 }
