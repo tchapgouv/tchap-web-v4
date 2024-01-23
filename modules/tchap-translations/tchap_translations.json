@@ -55,35 +55,31 @@
         "en": "Please try again with your recovery code.",
         "fr": "Merci d'essayer à nouveau avec votre code de récupération."
     },
-    "Ban from %(roomName)s": {
+    "user_info|ban_room_confirm_title": {
         "en": "Ban from %(roomName)s",
         "fr": "Interdire l’accès à %(roomName)s (définitif)"
     },
-    "Ban from room": {
+    "user_info|ban_button_room": {
         "en": "Ban from room",
         "fr": "Interdire l’accès au salon (définitif)"
     },
-    "Ban from space": {
+    "user_info|ban_button_space": {
         "en": "Ban from space",
         "fr": "Interdire l’accès à l'espace (définitif)"
     },
-    "Ban them from everything I'm able to": {
+    "user_info|ban_space_everything": {
         "en": "Ban them from everything I'm able to",
         "fr": "Interdire l’accès partout où j’ai le droit de le faire (définitif)"
     },
-    "Ban them from specific things I'm able to": {
+    "user_info|ban_space_specific": {
         "en": "Ban them from specific things I'm able to",
         "fr": "Interdire l’accès à certains endroits où j’ai le droit de le faire (définitif)"
     },
-    "Banned users": {
+    "room_settings|permissions|banned_users_section": {
         "en": "Banned users",
         "fr": "Membres bannis"
     },
-    "Chat": {
-        "en": "New direct message",
-        "fr": "Nouveau message direct"
-    },
-    "Check your email to continue": {
+    "auth|uia|email_auth_header": {
         "en": "Check your email to continue",
         "fr": "Vérifiez vos mails avant de continuer"
     },
@@ -99,7 +95,8 @@
         "en": "Congratulations, your account has been renewed",
         "fr": "Félicitations, votre compte a été renouvelé"
     },
-    "Connectivity to the server has been lost": {
+    "voip|connection_lost": {
+        "comment": "the element string does not have <a>. Where is this used?",
         "en": "Tchap is not available at the moment. <a>View the status of services</a>.",
         "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>"
     },
