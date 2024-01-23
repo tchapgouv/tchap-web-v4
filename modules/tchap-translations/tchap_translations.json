@@ -432,25 +432,9 @@
         "en": "Use your Recovery Code to continue.",
         "fr": "Utilisez votre Code de Récupération pour continuer."
     },
-    "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": {
-        "en": "Verified devices are anywhere you are using this account after entering your passphrase or confirming your identity with another verified device.",
-        "fr": "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisi la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié."
-    },
     "Verified!": {
         "en": "Verified!",
         "fr": "Vérifié !"
-    },
-    "Verify session": {
-        "en": "Verify device",
-        "fr": "Vérifier l'appareil"
-    },
-    "Verify this session": {
-        "en": "Verify this device",
-        "fr": "Vérifier cet appareil"
-    },
-    "Verify with Security Key or Phrase": {
-        "en": "Verify with Recovery Code or Phrase",
-        "fr": "Vérifier avec un Code de Récupération ou une phrase"
     },
     "Wait for at least %(wait)s seconds between two emails": {
         "en": "Wait for at least %(wait)s seconds between two emails",
@@ -624,7 +608,45 @@
             "sas_emoji_caption_self": {
                 "en": "Confirm the emoji below are displayed on both devices, in the same order:",
                 "fr": "Confirmez si les objets sont les mêmes sur vos 2 appareils."
+            },
+            "verify_using_key_or_phrase": {
+                "en": "Verify with Recovery Code or Phrase",
+                "fr": "Vérifier avec un Code de Récupération ou une phrase"
+            },
+            "after_new_login": {
+                "reset_confirmation": {
+                    "en": "Really reset Recovery Code?",
+                    "fr": "Réinitialiser le Code de Récupération, c’est certain ?"
+                },
+                "unable_to_verify": {
+                    "en": "You are logging into a new device",
+                    "fr": "Vous vous connectez à un nouvel appareil"
+                }
+            },
+            "verification_description": {
+                "en": "Verify your identity to access locked messages and prove your identity to others.",
+                "fr": "Vérifiez votre identité pour accéder aux messages verrouillés et prouver votre identité aux autres."
+            },
+            "verification_success_with_backup": {
+                "en": "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.",
+                "fr": "Votre nouvel appareil est maintenant vérifié. Il a accès à vos messages chiffrés et les autres utilisateurs le verront comme fiable."
+            },
+            "verify_reset_warning_1": {
+                "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages.",
+                "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulée. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés."
+            },
+            "verify_reset_warning_2": {
+                "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code.",
+                "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération."
+            },
+            "verify_using_key": {
+                "en": "Verify with Recovery Code",
+                "fr": "Vérifier avec un Code de Récupération"
             }
+        },
+        "verify_toast_title": {
+            "en": "Verify this device",
+            "fr": "Vérifier cet appareil"
         }
     },
     "encryption|bootstrap_title": {
@@ -642,34 +664,6 @@
     "encryption|set_up_toast_title": {
         "en": "Activate message Secure Backup",
         "fr": "Activer la sauvegarde automatique des messages"
-    },
-    "encryption|verification|after_new_login|reset_confirmation": {
-        "en": "Really reset Recovery Code?",
-        "fr": "Réinitialiser le Code de Récupération, c’est certain ?"
-    },
-    "encryption|verification|after_new_login|unable_to_verify": {
-        "en": "You are logging into a new device",
-        "fr": "Vous vous connectez à un nouvel appareil"
-    },
-    "encryption|verification|verification_description": {
-        "en": "Verify your identity to access locked messages and prove your identity to others.",
-        "fr": "Vérifiez votre identité pour accéder aux messages verrouillés et prouver votre identité aux autres."
-    },
-    "encryption|verification|verification_success_with_backup": {
-        "en": "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.",
-        "fr": "Votre nouvel appareil est maintenant vérifié. Il a accès à vos messages chiffrés et les autres utilisateurs le verront comme fiable."
-    },
-    "encryption|verification|verify_reset_warning_1": {
-        "en": "Resetting your Recovery Code cannot be undone. After resetting, you will no longer have access to your previous locked messages.",
-        "fr": "La réinitialisation de votre Code de Récupération ne peut pas être annulée. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages verrouillés."
-    },
-    "encryption|verification|verify_reset_warning_2": {
-        "en": "Please only proceed if you're sure you've lost all of your other devices and your Recovery Code.",
-        "fr": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Code de Récupération."
-    },
-    "encryption|verification|verify_using_key": {
-        "en": "Verify with Recovery Code",
-        "fr": "Vérifier avec un Code de Récupération"
     },
     "encryption|verify_toast_description": {
         "en": "You may not be able to recover your messages.",
@@ -930,9 +924,17 @@
                 "en": "Verified devices",
                 "fr": "Appareils vérifiés"
             },
+            "verified_sessions_explainer_1": {
+                "en": "Verified devices are anywhere you are using this account after entering your passphrase or confirming your identity with another verified device.",
+                "fr": "Les appareils vérifiés sont ceux qui utilisent ce compte après avoir saisi la phrase de sécurité ou confirmé votre identité à l’aide d’un autre appareil vérifié."
+            },
             "verified_sessions_explainer_2": {
                 "en": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this device.",
                 "fr": "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil."
+            },
+            "verify_session": {
+                "en": "Verify device",
+                "fr": "Vérifier l'appareil"
             }
         },
         "sidebar": {
