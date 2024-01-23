@@ -1,63 +1,60 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-index 0cb0485..a7603db 100644
+index 0cb0485..6dadcf5 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-@@ -73,25 +73,36 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+@@ -72,6 +72,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
+             );
          }
  
++        /* :TCHAP: redesign the returned component
          return (
--            <SettingsSubsection heading={_t("settings|security|cryptography_section")}>
--                <SettingsSubsectionText>
--                    <table className="mx_CryptographyPanel_sessionInfo">
--                        <tr>
--                            <th scope="row">{_t("settings|security|session_id")}</th>
--                            <td>
--                                <code>{deviceId}</code>
--                            </td>
--                        </tr>
--                        <tr>
--                            <th scope="row">{_t("settings|security|session_key")}</th>
--                            <td>
--                                <code>
--                                    <b>{identityKey}</b>
--                                </code>
--                            </td>
--                        </tr>
--                    </table>
--                </SettingsSubsectionText>
-+            <SettingsSubsection heading={_t("Tchap keys")}> {/* :TCHAP: change vocabulary and layout */}
-+                <div className="mx_SettingsTab_subsectionText">
-+                    <div>
-+                        {_t("These keys only apply to the current session.")}
-+                    </div>
-+                    <div>
-+                        <b>{_t("Please note this is not your recovery code for your automatic backup.")}</b>
-+                    </div>
-+                </div>
-+                <details>
-+                    <summary>{_t("common|advanced")}</summary>
-+                    <SettingsSubsectionText>
-+                        <table className="mx_CryptographyPanel_sessionInfo">
-+                            <tr>
-+                                <th scope="row">{_t("settings|security|session_id")}</th>
-+                                <td>
-+                                    <code>{deviceId}</code>
-+                                </td>
-+                            </tr>
-+                            <tr>
-+                                <th scope="row">{_t("settings|security|session_key")}</th>
-+                                <td>
-+                                    <code>
-+                                        <b>{identityKey}</b>
-+                                    </code>
-+                                </td>
-+                            </tr>
-+                        </table>
-+                    </SettingsSubsectionText>
-+                </details> {/** end :TCHAP: */}
-                 {importExportButtons}
+             <SettingsSubsection heading={_t("settings|security|cryptography_section")}>
+                 <SettingsSubsectionText>
+@@ -96,7 +97,44 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
                  {noSendUnverifiedSetting}
              </SettingsSubsection>
+         );
++        */
++        return (
++            <SettingsSubsection heading={_t("settings|security|cryptography_section")}> {/* :TCHAP: name changed in translations */}
++            <div className="mx_SettingsTab_subsectionText">
++                <div>
++                    {_t("These keys only apply to the current session.")}
++                </div>
++                <div>
++                    <b>{_t("Please note this is not your recovery code for your automatic backup.")}</b>
++                </div>
++            </div>
++            <details>
++                <summary>{_t("common|advanced")}</summary>
++                <SettingsSubsectionText>
++                    <table className="mx_CryptographyPanel_sessionInfo">
++                        <tr>
++                            <th scope="row">{_t("settings|security|session_id")}</th>
++                            <td>
++                                <code>{deviceId}</code>
++                            </td>
++                        </tr>
++                        <tr>
++                            <th scope="row">{_t("settings|security|session_key")}</th>
++                            <td>
++                                <code>
++                                    <b>{identityKey}</b>
++                                </code>
++                            </td>
++                        </tr>
++                    </table>
++                </SettingsSubsectionText>
++            </details>
++            {importExportButtons}
++            {noSendUnverifiedSetting}
++            </SettingsSubsection>
++        );
+     }
++    // end :TCHAP:
+ 
+     private onExportE2eKeysClicked = (): void => {
+         Modal.createDialogAsync(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 index 74511df..5b124a1 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx

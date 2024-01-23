@@ -348,10 +348,6 @@
         "en": "Tchap is not available at the moment %(errCode)s. <a>View the status of services</a>.",
         "fr": "La connexion à Tchap n'est pas possible pour le moment %(errCode)s. <a>Voir l'état du service</a>"
     },
-    "Tchap keys": {
-        "en": "Tchap keys",
-        "fr": "Clés Tchap"
-    },
     "That email is not allowed on Tchap": {
         "en": "Your email adress is not allowed on Tchap. Make an autorization request <a>here</a>",
         "fr": "Votre adresse mail n'est pas autorisée sur Tchap. Demandez l'accès à Tchap pour votre administration via <a>ce formulaire</a>"
@@ -612,6 +608,12 @@
             "en": "Cross-signing is ready but not the secure backup.",
             "fr": "La signature croisée est activée mais pas la sauvegarde automatique des messages."
         },
+        "new_recovery_method_detected": {
+            "description_1": {
+                "en": "A new Recovery Code for Secure Messages has been detected.",
+                "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté."
+            }
+        },
         "recovery_method_removed": {
             "description_1": {
                 "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed.",
@@ -694,22 +696,6 @@
         "en": "members_of_%(roomName)s.txt",
         "fr": "membres_de_%(roomName)s.txt"
     },
-    "n_sessions_selected": {
-        "one": {
-            "en": "%(count)s device selected",
-            "fr": "%(count)s appareil sélectionné"
-        },
-        "other": {
-            "en": "%(count)s devices selected",
-            "fr": "%(count)s appareils sélectionnés"
-        }
-    },
-    "new_recovery_method_detected": {
-        "description_1": {
-            "en": "A new Recovery Code for Secure Messages has been detected.",
-            "fr": "Un nouveau Code de Récupération pour les messages sécurisés a été détecté."
-        }
-    },
     "onboarding_free_e2ee_messaging_tchap_limited_voip": {
         "en": "With free end-to-end encrypted messaging, %(brand)s is a great way to stay in touch.",
         "fr": "Grâce à la messagerie chiffrée de bout en bout gratuite, %(brand)s est un excellent moyen de rester en contact."
@@ -753,18 +739,6 @@
             "privileged_users_section": {
                 "en": "Privileged Users",
                 "fr": "Membres privilégiés"
-            }
-        }
-    },
-    "sessions": {
-        "sign_out_confirm_description": {
-            "one": {
-                "en": "Are you sure you want to sign out of %(count)s device?",
-                "fr": "Voulez-vous vraiment déconnecter %(count)s appareil ?"
-            },
-            "other": {
-                "en": "Are you sure you want to sign out of %(count)s devices?",
-                "fr": "Voulez-vous vraiment déconnecter %(count)s de vos appareils ?"
             }
         }
     },
@@ -828,6 +802,10 @@
                 "en": "Automatically back up your messages and retrieve them at any time using the Recovery Code.",
                 "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du Code de Récupération."
             },
+            "cryptography_section": {
+                "en": "Tchap keys",
+                "fr": "Clés Tchap"
+            },
             "export_megolm_keys": {
                 "en": "Save your Tchap keys",
                 "fr": "Sauvegardez vos clés Tchap"
@@ -879,6 +857,16 @@
                 "en": "Your device is ready for secure messaging.",
                 "fr": "Votre appareil est prêt à envoyer des messages."
             },
+            "n_sessions_selected": {
+                "one": {
+                    "en": "%(count)s device selected",
+                    "fr": "%(count)s appareil sélectionné"
+                },
+                "other": {
+                    "en": "%(count)s devices selected",
+                    "fr": "%(count)s appareils sélectionnés"
+                }
+            },
             "other_sessions_heading": {
                 "en": "Other devices",
                 "fr": "Autres appareils"
@@ -894,6 +882,16 @@
             "sign_out_all_other_sessions": {
                 "en": "Sign out of all other devices (%(otherSessionsCount)s)",
                 "fr": "Déconnecter tous les autres appareils (%(otherSessionsCount)s)"
+            },
+            "sign_out_confirm_description": {
+                "one": {
+                    "en": "Are you sure you want to sign out of %(count)s device?",
+                    "fr": "Voulez-vous vraiment déconnecter %(count)s appareil ?"
+                },
+                "other": {
+                    "en": "Are you sure you want to sign out of %(count)s devices?",
+                    "fr": "Voulez-vous vraiment déconnecter %(count)s de vos appareils ?"
+                }
             },
             "sign_out_n_sessions": {
                 "one": {
