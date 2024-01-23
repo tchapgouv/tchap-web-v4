@@ -647,15 +647,15 @@
         "en": "You are logging into a new device",
         "fr": "Vous vous connectez à un nouvel appareil"
     },
-    "Unverified session": {
+    "settings|sessions|unverified_session": {
         "en": "Unverified device",
         "fr": "Appareil non vérifié"
     },
-    "Unverified sessions": {
+    "settings|sessions|unverified_sessions": {
         "en": "Unverified devices",
         "fr": "Appareils non vérifiés"
     },
-    "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": {
+    "settings|sessions|unverified_sessions_explainer_1": {
         "en": "Unverified devices are devices that have logged in with your credentials but have not been cross-verified (emoji exchange or ou Recovery Code).",
         "fr": "Les appareils non vérifiés sont identifiés avec vos identifiants mais n’ont pas fait de vérification croisée (échange d'emojis ou Code de Récupération)."
     },
@@ -667,7 +667,7 @@
         "en": "Upgrade room",
         "fr": "Mettre à jour le salon"
     },
-    "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": {
+    "settings|key_backup|setup_secure_backup|use_phrase_only_you_know": {
         "en": "Use a secret phrase only you know, and optionally save a Recovery Code to use for backup.",
         "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un Code de Récupération à utiliser pour la sauvegarde."
     },
@@ -675,15 +675,15 @@
         "en": "Use your Recovery Code to continue.",
         "fr": "Utilisez votre Code de Récupération pour continuer."
     },
-    "User is already in the room": {
+    "invite|error_already_joined_room": {
         "en": "User is already in the room.",
         "fr": "Cette personne est déjà dans le salon."
     },
-    "Verified session": {
+    "settings|sessions|verified_session": {
         "en": "Verified device",
         "fr": "Appareil vérifié"
     },
-    "Verified sessions": {
+    "settings|sessions|verified_sessions": {
         "en": "Verified devices",
         "fr": "Appareils vérifiés"
     },
@@ -703,7 +703,7 @@
         "en": "Verify this device",
         "fr": "Vérifier cet appareil"
     },
-    "Verify with Security Key": {
+    "encryption|verification|verify_using_key": {
         "en": "Verify with Recovery Code",
         "fr": "Vérifier avec un Code de Récupération"
     },
@@ -711,11 +711,11 @@
         "en": "Verify with Recovery Code or Phrase",
         "fr": "Vérifier avec un Code de Récupération ou une phrase"
     },
-    "Verify your current session for enhanced secure messaging.": {
+    "settings|sessions|device_unverified_description_current": {
         "en": "Verify your current device to get your messages.",
         "fr": "Vérifier cet appareil afin de visualiser vos messages"
     },
-    "Verify your identity to access encrypted messages and prove your identity to others.": {
+    "encryption|verification|verification_description": {
         "en": "Verify your identity to access locked messages and prove your identity to others.",
         "fr": "Vérifiez votre identité pour accéder aux messages verrouillés et prouver votre identité aux autres."
     },
@@ -731,7 +731,7 @@
         "en": "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
         "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
     },
-    "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": {
+    "settings|key_backup|setup_secure_backup|generate_security_key_description": {
         "en": "We'll generate your unique Recovery Code for you to store somewhere safe, like a password manager or a safe.",
         "fr": "Nous génèrerons votre Code de Récupération unique que vous devrez stocker dans un endroit sûr, comme un gestionnaire de mots de passe ou un coffre."
     },
@@ -743,7 +743,7 @@
         "en": "The Recovery Code is not valid. Check that it is the latest one.",
         "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent."
     },
-    "You can also set up Secure Backup & manage your keys in Settings.": {
+    "settings|key_backup|setup_secure_backup|settings_reminder": {
         "en": "You can also set up Secure Backup & manage your keys in Settings.",
         "fr": "Vous pouvez aussi configurer la sauvegarde automatique des messages et gérer vos clés depuis les paramètres."
     },
@@ -751,15 +751,15 @@
         "en": "You can close this disconnected tab, and go to the other %(brand)s tab.",
         "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
     },
-    "You need to be able to kick users to do that.": {
+    "widget|error_need_kick_permission": {
         "en": "You need to be able to kick users to do that.",
         "fr": "Vous devez avoir l’autorisation de retirer des utilisateurs pour faire ceci."
     },
-    "You should make especially certain that you recognise these sessions as they could represent an unauthorised use of your account.": {
+    "settings|sessions|unverified_sessions_explainer_2": {
         "en": "You should make especially certain that you recognise these devices as they could represent an unauthorised use of your account.",
         "fr": "Vous devriez vous assurer que vous connaissez ces appareils, car ils pourraient représenter un usage frauduleux de votre compte."
     },
-    "Your %(brand)s is misconfigured": {
+    "auth|misconfigured_title": {
         "en": " ",
         "fr": " "
     },
@@ -775,15 +775,15 @@
         "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
         "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
     },
-    "Your current session is ready for secure messaging.": {
+    "settings|sessions|device_verified_description_current": {
         "en": "Your device is ready for secure messaging.",
         "fr": "Votre appareil est prêt à envoyer des messages."
     },
-    "Your keys are <b>not being backed up from this session</b>.": {
+    "settings|security|key_backup_inactive_warning": {
         "en": "This device is not backing up your messages.",
         "fr": "Cet appareil ne sauvegarde pas vos messages."
     },
-    "Your keys are now being backed up from this device.": {
+    "settings|key_backup|setup_secure_backup|backup_setup_success_description": {
         "en": "Your messages are now automatically backed up on this device.",
         "fr": "Vos messages sont maintenant automatiquement sauvegardés sur cet appareil."
     },
@@ -791,7 +791,7 @@
         "en": "Your last three login attempts have failed. Please try again in a few minutes.",
         "fr": "Vos trois dernières tentatives de connexion ont échoué. Veuillez réessayer dans quelques minutes."
     },
-    "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": {
+    "encryption|verification|verification_success_with_backup": {
         "en": "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.",
         "fr": "Votre nouvel appareil est maintenant vérifié. Il a accès à vos messages chiffrés et les autres utilisateurs le verront comme fiable."
     },
