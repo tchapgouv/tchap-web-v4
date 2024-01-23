@@ -43,9 +43,11 @@
     "error_dialog|search_failed|server_unavailable",
     "onboarding|download_f_droid",
     "powered_by_matrix_with_logo",
-    "settings|key_backup|setup_secure_backup|download_or_copy",
     "room|status_bar|server_connectivity_lost_title",
     "room_settings|general|aliases_section",
     "room_settings|security|public_without_alias_warning",
+    "settings|key_backup|setup_secure_backup|download_or_copy",
+    "settings|security|key_backup_connect_prompt",
+    "settings|security|key_backup_inactive",
     "welcome_to_element"
 ]
