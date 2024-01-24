@@ -10,7 +10,8 @@ export OUTPUT_FILE=$1
 
 # Convert tchap translations from piped format ("aa|bb|cc") to nested format.
 TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations.json`
-TCHAP_TRANSLATION_NESTED_FILE=`realpath modules/tchap-translations/tchap_translations_nested.json`
+TCHAP_TRANSLATION_NESTED_FILE=`realpath modules/tchap-translations/tmp/tchap_translations_nested.json`
+ node scripts/tchap/translations/reformatToNested.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_NESTED_FILE
 
 # Extract EN translations from tchap translations.
 TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_EN.json`
