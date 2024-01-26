@@ -27,7 +27,7 @@ index 7ce7ae2..0e66b0f 100644
              dis.dispatch({
                  action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index 93b1333..b90acd0 100644
+index 93b1333..2570ba2 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 @@ -227,14 +227,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
@@ -54,7 +54,18 @@ index 93b1333..b90acd0 100644
                  <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
                      {buttonCaption}
                  </AccessibleButton>,
-@@ -254,6 +261,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -242,7 +249,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+         }
+ 
+         if (keysExistAnywhere) {
+-            actions.push(
++            // :TCHAP actions.push(
++            advancedActions.push(
++            // end :TCHAP:
+                 <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
+                     {_t("action|reset")}
+                 </AccessibleButton>,
+@@ -254,6 +263,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
@@ -68,7 +79,7 @@ index 93b1333..b90acd0 100644
          return (
              <>
                  {summarisedStatus}
-@@ -309,6 +323,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -309,6 +325,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                              </td>
                          </tr>
                      </table>
