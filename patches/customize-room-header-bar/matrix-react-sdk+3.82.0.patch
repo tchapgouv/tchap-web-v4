@@ -21,12 +21,12 @@ index 2614e17..79fe37e 100644
 +    display: -webkit-box;
 +}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index bb8dd49..13ba615 100644
+index 2635366..2cf96e8 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-@@ -48,6 +48,10 @@ import RoomAvatar from "../avatars/RoomAvatar";
- import { formatCount } from "../../../utils/FormattingUtils";
+@@ -49,6 +49,10 @@ import { formatCount } from "../../../utils/FormattingUtils";
  import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+ import { Linkify, topicToHtml } from "../../../HtmlUtils";
  
 +import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 +import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader";
@@ -35,7 +35,7 @@ index bb8dd49..13ba615 100644
  /**
   * A helper to transform a notification color to the what the Compound Icon Button
   * expects
-@@ -110,7 +114,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -116,7 +120,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                  RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
              }}
          >
@@ -47,17 +47,17 @@ index bb8dd49..13ba615 100644
              <Box flex="1" className="mx_RoomHeader_info">
                  <BodyText
                      as="div"
-@@ -124,7 +131,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -130,7 +137,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                  >
                      {roomName}
  
 -                    {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
 +                    {/* :tchap: remove public forum icon */}
 +                    {false && !isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
-                         <Tooltip label={_t("Public room")}>
+                         <Tooltip label={_t("common|public_room")}>
                              <PublicIcon
                                  width="16px"
-@@ -135,7 +143,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -141,7 +149,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                          </Tooltip>
                      )}
  
@@ -67,17 +67,17 @@ index bb8dd49..13ba615 100644
                          <Tooltip label={_t("common|verified")}>
                              <VerifiedIcon
                                  width="16px"
-@@ -146,7 +155,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -152,7 +161,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                          </Tooltip>
                      )}
  
 -                    {isDirectMessage && e2eStatus === E2EStatus.Warning && (
 +                    {/* :tchap: do not show E2EStatus.Warning */}
 +                    {false && isDirectMessage && e2eStatus === E2EStatus.Warning && (
-                         <Tooltip label={_t("Untrusted")}>
+                         <Tooltip label={_t("room|header_untrusted_label")}>
                              <ErrorIcon
                                  width="16px"
-@@ -164,7 +174,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -170,7 +180,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                  )}
              </Box>
              <Flex as="nav" align="center" gap="var(--cpd-space-2x)">
@@ -89,23 +89,22 @@ index bb8dd49..13ba615 100644
                      <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                          <IconButton
                              disabled={!!voiceCallDisabledReason}
-@@ -175,6 +188,10 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -181,6 +194,9 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                          </IconButton>
                      </Tooltip>
                  )}
 +                {
 +                //:tchap: activate video call only if directmessage and if feature is activated on homeserver
 +                isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") && (
-+                //:tchap: end
                  <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
                      <IconButton
                          disabled={!!videoCallDisabledReason}
-@@ -183,7 +200,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
+@@ -189,7 +205,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                      >
                          <VideoCallIcon />
                      </IconButton>
 -                </Tooltip>
-+                </Tooltip>)}
++                </Tooltip>) /* end :TCHAP: */}
                  <Tooltip label={_t("common|threads")}>
                      <IconButton
                          indicator={notificationColorToIndicator(threadNotifications)}

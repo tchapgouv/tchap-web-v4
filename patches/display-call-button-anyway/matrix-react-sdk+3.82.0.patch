@@ -1,19 +1,19 @@
 diff --git a/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts b/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts
-index c369f5a..78b0781 100644
+index c1438ea..e53d147 100644
 --- a/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts
 +++ b/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts
 @@ -190,8 +190,12 @@ export const useRoomCall = (
      let videoCallDisabledReason: string | null;
      switch (state) {
          case State.NoPermission:
--            voiceCallDisabledReason = _t("You do not have permission to start voice calls");
--            videoCallDisabledReason = _t("You do not have permission to start video calls");
-+            //:tchap: disable noPermission
-+            //voiceCallDisabledReason = _t("You do not have permission to start voice calls");
-+            //ideoCallDisabledReason = _t("You do not have permission to start video calls");
+-            voiceCallDisabledReason = _t("voip|disabled_no_perms_start_voice_call");
+-            videoCallDisabledReason = _t("voip|disabled_no_perms_start_video_call");
++            // :tchap: disable noPermission
++            // voiceCallDisabledReason = _t("voip|disabled_no_perms_start_voice_call");
++            // videoCallDisabledReason = _t("voip|disabled_no_perms_start_video_call");
 +            voiceCallDisabledReason = null;
 +            videoCallDisabledReason = null;
-+            //:tchap end
++            // end :TCHAP:
              break;
          case State.Ongoing:
-             voiceCallDisabledReason = _t("Ongoing call");
+             voiceCallDisabledReason = _t("voip|disabled_ongoing_call");

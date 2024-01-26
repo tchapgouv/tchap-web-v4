@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index 7d48460..190caa6 100644
+index 40acfb3..76515f4 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 @@ -59,6 +59,7 @@ import InlineSpinner from "../../../elements/InlineSpinner";
@@ -21,7 +21,7 @@ index 7d48460..190caa6 100644
              const emails = this.state.loading3pids ? (
                  <InlineSpinner />
              ) : (
-@@ -531,7 +534,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -532,7 +535,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;

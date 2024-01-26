@@ -104,7 +104,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                 if (this.unmounted) {
                     return;
                 }
-                const msg = e.friendlyText || _t("Unknown error");
+                const msg = e.friendlyText || _t("error|unknown");
                 this.setState({
                     errStr: msg,
                     phase: Phase.Edit,
@@ -133,11 +133,11 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
             return false;
         }
         if (passphrase !== this.state.passphrase2) {
-            this.setState({ errStr: _t("Passphrases must match") });
+            this.setState({ errStr: _t("settings|key_export_import|phrase_must_match") });
             return false;
         }
         if (!passphrase) {
-            this.setState({ errStr: _t("Passphrase must not be empty") });
+            this.setState({ errStr: _t("settings|key_export_import|phrase_cannot_be_empty") });
             return false;
         }
 

@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
-index 4427716..12f9dc5 100644
+index 52cd233..106dd15 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx
 @@ -23,7 +23,7 @@ import InlineSpinner from "../elements/InlineSpinner";
@@ -12,7 +12,7 @@ index 4427716..12f9dc5 100644
  import { PlaybackManager } from "../../../audio/PlaybackManager";
  import { isVoiceMessage } from "../../../utils/EventUtils";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
-index ae60319..c16e2e7 100644
+index 4cb7d28..dc25c18 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 @@ -22,7 +22,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
@@ -51,7 +51,7 @@ index 092b948..5908036 100644
  import Tooltip from "../elements/Tooltip";
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
-index 2d34c90..91a1e5d 100644
+index df3ab6a..d057dc0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
 @@ -25,7 +25,7 @@ import { mediaFromContent } from "../../../customisations/Media";
@@ -64,7 +64,7 @@ index 2d34c90..91a1e5d 100644
  import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
  import MediaProcessingError from "./shared/MediaProcessingError";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
-index 83f26e1..b0db4ea 100644
+index 096824e..fe73df6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MVoiceMessageBody.tsx
 @@ -19,8 +19,8 @@ import React from "react";

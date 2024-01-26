@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
-index 8dc361b..3a5e10d 100644
+index 8e990d7..4a6cf17 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/GeneralRoomSettingsTab.tsx
 @@ -89,6 +89,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
@@ -7,7 +7,7 @@ index 8dc361b..3a5e10d 100644
                  </SettingsSection>
  
 +                {/* :TCHAP: no aliases for rooms
-                 <SettingsSection heading={_t("Room Addresses")}>
+                 <SettingsSection heading={_t("room_settings|general|aliases_section")}>
                      <AliasSettings
                          roomId={room.roomId}
 @@ -97,6 +98,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
@@ -16,5 +16,5 @@ index 8dc361b..3a5e10d 100644
                  </SettingsSection>
 +                end :TCHAP: */}
  
-                 <SettingsSection heading={_t("Other")}>
+                 <SettingsSection heading={_t("room_settings|general|other_section")}>
                      {urlPreviewSettings}

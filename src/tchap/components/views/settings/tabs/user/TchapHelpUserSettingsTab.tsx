@@ -410,7 +410,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 {this.renderLegal()}
                 {this.renderCredits()}
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{_t("Advanced")}</span>
+                    <span className="mx_SettingsTab_subheading">{_t("common|advanced")}</span>
                     <div className="mx_SettingsTab_subsectionText">
                         <div>
                             {_t(

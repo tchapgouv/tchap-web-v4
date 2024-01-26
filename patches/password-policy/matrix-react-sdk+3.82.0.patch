@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
-index 4efd06e..e0ad3cf 100644
+index a9048d7..8723016 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PassphraseField.tsx
 @@ -23,6 +23,7 @@ import withValidation, { IFieldState, IValidationResult } from "../elements/Vali

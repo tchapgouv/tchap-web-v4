@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-index 8047e13..cbb62fb 100644
+index bc573ec..8f885e6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 @@ -255,6 +255,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
@@ -15,7 +15,7 @@ index 8047e13..cbb62fb 100644
              );
          }
 +        end :TCHAP: */
-         const description = _t("Decide who can join %(roomName)s.", {
+         const description = _t("room_settings|security|join_rule_description", {
              roomName: room.name,
          });
  
@@ -25,7 +25,7 @@ index 8047e13..cbb62fb 100644
              advanced = (
                  <div>
                      <AccessibleButton
-@@ -434,9 +436,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
+@@ -422,9 +424,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
          const client = this.context;
          const room = this.props.room;
          const isEncrypted = this.state.encrypted;

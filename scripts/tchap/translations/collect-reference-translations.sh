@@ -8,10 +8,14 @@ source scripts/tchap/translations/helpers.sh
 mkdir -p `realpath modules/tchap-translations/tmp`
 export OUTPUT_FILE=$1
 
-# Extract EN translations from tchap translations.
+# Convert tchap translations from piped format ("aa|bb|cc") to nested format.
 TCHAP_TRANSLATION_FILE=`realpath modules/tchap-translations/tchap_translations.json`
+TCHAP_TRANSLATION_NESTED_FILE=`realpath modules/tchap-translations/tmp/tchap_translations_nested.json`
+ node scripts/tchap/translations/reformatToNested.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_NESTED_FILE
+
+# Extract EN translations from tchap translations.
 TCHAP_TRANSLATION_EN_FILE=`realpath modules/tchap-translations/tmp/tchap_EN.json`
-node scripts/tchap/translations/extractENTranslations.js --file=$TCHAP_TRANSLATION_FILE > $TCHAP_TRANSLATION_EN_FILE
+node scripts/tchap/translations/extractENTranslations.js --file=$TCHAP_TRANSLATION_NESTED_FILE > $TCHAP_TRANSLATION_EN_FILE
 
 # Merge element translations from both web and react-sdk repos, into OUTPUT_FILE
 export ELEMENT_WEB_TRANSLATION_FILE=`realpath src/i18n/strings/en_EN.json`
