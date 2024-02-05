@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index d2074c5..7f28b6b 100644
+index 5d826f2..79906f9 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -17,7 +17,7 @@ index d2074c5..7f28b6b 100644
 +        /* :TCHAP: do not ask for a github issue
          if ((!this.state.text || !this.state.text.trim()) && (!this.state.issueUrl || !this.state.issueUrl.trim())) {
              this.setState({
-                 err: _t("Please tell us what went wrong or, better, create a GitHub issue that describes the problem."),
+                 err: _t("bug_reporting|error_empty"),
              });
              return;
          }
@@ -34,7 +34,7 @@ index d2074c5..7f28b6b 100644
              (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
 @@ -111,11 +121,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
          this.setState({ busy: true, progress: null, err: null });
-         this.sendProgressCallback(_t("Preparing to send logs"));
+         this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
  
 -        sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
 -            userText,
@@ -70,7 +70,7 @@ index d2074c5..7f28b6b 100644
              });
  
              this.setState({
-@@ -213,6 +237,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -214,6 +238,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              );
          }
  
@@ -124,7 +124,7 @@ index d2074c5..7f28b6b 100644
          return (
              <BaseDialog
                  className="mx_BugReportDialog"
-@@ -279,5 +350,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -281,5 +352,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  />
              </BaseDialog>
          );
@@ -144,41 +144,11 @@ index e679955..69f9b61 100644
  };
  
  export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
-diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
-index e6341a8..cf7db3c 100644
---- a/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/elements/ErrorBoundary.tsx
-@@ -77,7 +77,9 @@ export default class ErrorBoundary extends React.PureComponent<Props, IState> {
- 
-     public render(): ReactNode {
-         if (this.state.error) {
--            const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
-+            // :TCHAP: change github url
-+            // const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
-+            const newIssueUrl = "https://github.com/tchapgouv/tchap-web-v4/issues/new/choose";
- 
-             let bugReportSection;
-             if (SdkConfig.get().bug_report_endpoint_url) {
-diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
-index a4f8b4d..e1cc8c3 100644
---- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
-+++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomPreviewBar.tsx
-@@ -599,7 +599,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
-                         {
-                             issueLink: (label) => (
-                                 <a
--                                    href="https://github.com/vector-im/element-web/issues/new/choose"
-+                                    // :TCHAP: change github url
-+                                    // href="https://github.com/vector-im/element-web/issues/new/choose"
-+                                    href="https://github.com/tchapgouv/tchap-web-v4/issues/new/choose"
-                                     target="_blank"
-                                     rel="noreferrer noopener"
-                                 >
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index 5cc8449..6f40b11 100644
+index 680dabe..f711c47 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-@@ -334,12 +334,13 @@ export async function submitFeedback(
+@@ -335,12 +335,13 @@ export async function submitFeedback(
          version = await PlatformPeg.get()?.getAppVersion();
      } catch (err) {} // PlatformPeg already logs this.
  
@@ -193,7 +163,7 @@ index 5cc8449..6f40b11 100644
      body.append("version", version || "UNKNOWN");
      body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
      body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
-@@ -349,6 +350,13 @@ export async function submitFeedback(
+@@ -350,6 +351,13 @@ export async function submitFeedback(
      }
  
      const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;

@@ -21,8 +21,6 @@
         "comments" : "add email in rageshake",
         "files": [
             "src/components/views/dialogs/BugReportDialog.tsx",
-            "src/components/views/elements/ErrorBoundary.tsx",
-            "src/components/views/rooms/RoomPreviewBar.tsx",
             "src/rageshake/submit-rageshake.ts",
             "src/components/views/elements/AccessibleButton.tsx"
         ]
