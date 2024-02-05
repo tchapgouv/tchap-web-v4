@@ -204,13 +204,6 @@
             "src/components/views/settings/Notifications.tsx"
         ]
     },
-    "remove-fdroid": {
-        "comments" : "Fixed in 1.11.47 : remove when issue is fixed in element-web : https://github.com/vector-im/element-web/issues/26309",
-        "package": "matrix-react-sdk",
-        "files": [
-            "src/components/views/dialogs/AppDownloadDialog.tsx"
-        ]
-    },
     "only-fr-and-en": {
         "comments" : "Leave all language files where they are to limit the work during upgrades, and instead filter languages in code.",
         "package": "matrix-react-sdk",
