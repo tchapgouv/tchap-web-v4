@@ -457,6 +457,16 @@
         "fr": "Vous risquez de ne pas pouvoir récupérer vos messages."
     },
     "encryption|verify_toast_title": { "en": "Verify this device", "fr": "Vérifier cet appareil" },
+    "error_app_open_in_another_tab": {
+        "comment": "2024-02-05: remove once the string is fr-translated in element",
+        "en": "Switch to the other tab to connect to %(brand)s. This tab can now be closed.",
+        "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
+    },
+    "error_app_open_in_another_tab_title": {
+        "comment": "2024-02-05: remove once the string is fr-translated in element",
+        "en": "%(brand)s is connected in another tab",
+        "fr": "%(brand)s a été connecté dans un autre onglet"
+    },
     "error_app_opened_in_another_window": {
         "comment": "2023-11-08: remove once the string is translated in element",
         "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
