@@ -37,6 +37,8 @@ electron/pub
 # Auto-generated file
 /src/modules.ts
 #/build_config.yaml # :TCHAP: writes this by hand.
+/book
+/index.html
 
 /cypress/videos
 /cypress/downloads

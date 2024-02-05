@@ -47,10 +47,6 @@ We are aiming for a set of common strings to be shared then some more localised 
 4. Otherwise, try to group keys logically and nest where appropriate, such as `keyboard_` for strings relating to keyboard shortcuts.
 5. Ensure your translation keys do not include `.` or `|` or ` `. Try to balance string length against descriptiveness.
 
-## matrix-react-sdk is still undergoing migration to translation keys
-
-If you are fortunate enough to be modifying not yet migrated strings please treat them as a new string using instructions below.
-
 ## Adding new strings
 
 1. Check if the import `import { _t } from 'matrix-react-sdk/src/languageHandler';` is present. If not add it to the other import statements. Also import `_td` if needed.
@@ -70,7 +66,7 @@ There you can also require all translations to be redone if the meaning of the s
 1. Add it to the array in `_t` for example `_t(TKEY, {variable: this.variable})`
 1. Add the variable inside the string. The syntax for variables is `%(variable)s`. Please note the _s_ at the end. The name of the variable has to match the previous used name.
 
--   You can use the special `count` variable to choose between multiple versions of the same string, in order to get the correct pluralization. E.g. `_t('You have %(count)s new messages', { count: 2 })` would show 'You have 2 new messages', while `_t('You have %(count)s new messages', { count: 1 })` would show 'You have one new message' (assuming a singular version of the string has been added to the translation file. See above). Passing in `count` is much prefered over having an if-statement choose the correct string to use, because some languages have much more complicated plural rules than english (e.g. they might need a completely different form if there are three things rather than two).
+-   You can use the special `count` variable to choose between multiple versions of the same string, in order to get the correct pluralization. E.g. `_t('You have %(count)s new messages', { count: 2 })` would show 'You have 2 new messages', while `_t('You have %(count)s new messages', { count: 1 })` would show 'You have one new message' (assuming a singular version of the string has been added to the translation file. See above). Passing in `count` is much preferred over having an if-statement choose the correct string to use, because some languages have much more complicated plural rules than english (e.g. they might need a completely different form if there are three things rather than two).
 -   If you want to translate text that includes e.g. hyperlinks or other HTML you have to also use tag substitution, e.g. `_t('<a>Click here!</a>', {}, { 'a': (sub) => <a>{sub}</a> })`. If you don't do the tag substitution you will end up showing literally '<a>' rather than making a hyperlink.
 -   You can also use React components with normal variable substitution if you want to insert HTML markup, e.g. `_t('Your email address is %(emailAddress)s', { emailAddress: <i>{userEmailAddress}</i> })`.
 

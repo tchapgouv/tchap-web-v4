@@ -22,7 +22,7 @@ jobs:
               id: node_version
               run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
             - name: Yarn cache
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   cache: "yarn"
                   node-version: ${{ steps.node_version.outputs.node_version }}
