@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index 40acfb3..76515f4 100644
+index 79eae26..d8d7395 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-@@ -59,6 +59,7 @@ import InlineSpinner from "../../../elements/InlineSpinner";
- import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+@@ -58,6 +58,7 @@ import Heading from "../../../typography/Heading";
+ import InlineSpinner from "../../../elements/InlineSpinner";
  import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
- import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
+ import { SDKContext } from "../../../../../contexts/SDKContext";
 +import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP:
  
  interface IProps {
      closeSettingsFn: () => void;
-@@ -324,7 +325,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -325,7 +326,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
      private renderAccountSection(): JSX.Element {
          let threepidSection: ReactNode = null;
  
@@ -21,7 +21,7 @@ index 40acfb3..76515f4 100644
              const emails = this.state.loading3pids ? (
                  <InlineSpinner />
              ) : (
-@@ -532,7 +535,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -533,7 +536,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;
