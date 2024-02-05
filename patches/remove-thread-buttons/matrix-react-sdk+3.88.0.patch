@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-index 98e9482..11d563a 100644
+index e0fca0a..c836aea 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/context_menus/MessageContextMenu.tsx
-@@ -61,6 +61,8 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
+@@ -60,6 +60,8 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
  import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
  import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
  import { CardContext } from "../right_panel/context";
@@ -11,7 +11,7 @@ index 98e9482..11d563a 100644
  
  interface IReplyInThreadButton {
      mxEvent: MatrixEvent;
-@@ -698,7 +700,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
+@@ -676,7 +678,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState>
                  <IconizedContextMenuOptionList>
                      {reactButton}
                      {replyButton}
@@ -24,7 +24,7 @@ index 98e9482..11d563a 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index c183cdc..6d3738c 100644
+index 60eee55..83f1998 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 @@ -61,6 +61,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa

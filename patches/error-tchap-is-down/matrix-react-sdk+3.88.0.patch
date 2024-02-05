@@ -21,7 +21,7 @@ index bfa9930..245fc75 100644
                              return false;
                          },
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
-index 657823f..46a424b 100644
+index 311f6b8..ce2f3f8 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/RoomStatusBar.tsx
 @@ -29,6 +29,7 @@ import InlineSpinner from "../views/elements/InlineSpinner";

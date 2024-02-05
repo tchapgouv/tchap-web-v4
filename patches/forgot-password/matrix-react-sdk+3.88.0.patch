@@ -103,7 +103,7 @@ index 9487fc5..0177f0a 100644
                  onInputChanged={this.onInputChanged}
                  onLoginClick={this.props.onLoginClick!} // set by default props
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
-index fbb08c7..f1a53f2 100644
+index 11e44e6..94bbedd 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/forgot-password/EnterEmail.tsx
 @@ -64,9 +64,11 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
