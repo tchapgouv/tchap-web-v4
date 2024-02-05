@@ -163,7 +163,7 @@
         "en": "Passphrase must be at least 8 character long",
         "fr": "Le mot de passe doit minimum faire 8 caractères"
     },
-    "Please confirm the objects on the other device (loading).": {
+    "encryption|verification|incoming_sas_dialog_waiting": {
         "en": "Please confirm the objects on the other device (loading).",
         "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
     },

@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
-index cd7ef6a..6d9d0fb 100644
+index a562760..2d13606 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/IncomingSasDialog.tsx
 @@ -175,6 +175,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
@@ -8,11 +8,11 @@ index cd7ef6a..6d9d0fb 100644
  
 +        /* :TCHAP: remove code
          const userDetailText = [
-             <p key="p1">
-                 {_t(
-@@ -202,11 +203,23 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
-                 )}
-             </p>,
+             <p key="p1">{_t("encryption|verification|incoming_sas_user_dialog_text_1")}</p>,
+             <p key="p2">
+@@ -190,11 +191,23 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
+             <p key="p1">{_t("encryption|verification|incoming_sas_device_dialog_text_1")}</p>,
+             <p key="p2">{_t("encryption|verification|incoming_sas_device_dialog_text_2")}</p>,
          ];
 +        end :TCHAP: */
  
@@ -34,27 +34,18 @@ index cd7ef6a..6d9d0fb 100644
                  <DialogButtons
                      primaryButton={_t("action|continue")}
                      hasCancel={true}
-@@ -234,7 +247,10 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
-         return (
-             <div>
-                 <Spinner />
-+                {/* :TCHAP: remove code
-                 <p>{_t("Waiting for partner to confirm…")}</p>
-+                end :TCHAP: */}
-+                <p>{ _t("Please confirm the objects on the other device (loading).")}</p>
-             </div>
-         );
-     }
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
-index e98ce97..b6527a2 100644
+index c6a86ae..0c3f80a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/VerificationRequestDialog.tsx
-@@ -49,7 +49,10 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
+@@ -49,9 +49,12 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
          const request = this.state.verificationRequest;
          const otherUserId = request?.otherUserId;
          const member = this.props.member || (otherUserId ? MatrixClientPeg.safeGet().getUser(otherUserId) : null);
 +        /* :TCHAP: remove code
-         const title = request?.isSelfVerification ? _t("Verify other device") : _t("Verification Request");
+         const title = request?.isSelfVerification
+             ? _t("encryption|verification|verification_dialog_title_device")
+             : _t("encryption|verification|verification_dialog_title_user");
 +        end :TCHAP: */
 +        const title = _t("Incoming Verification Request"); // :TCHAP:
  
