@@ -21,7 +21,7 @@ index a93366f..95b62a0 100644
 +    display: -webkit-box;
 +}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 92d7c78..ffef8fe 100644
+index 92d7c78..529c4ae 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 @@ -52,6 +52,10 @@ import { Linkify, topicToHtml } from "../../../HtmlUtils";
@@ -92,8 +92,8 @@ index 92d7c78..ffef8fe 100644
                  })}
 +
 +                { /*:tchap: activate video call only if directmessage and if feature is activated on homeserver */}
-+                isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") && (
-+                {/* end :TCHAP: */}
++                {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") && (
++                /* end :TCHAP: */
                  <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
                      <IconButton
                          disabled={!!videoCallDisabledReason}
@@ -101,7 +101,7 @@ index 92d7c78..ffef8fe 100644
                          <VideoCallIcon />
                      </IconButton>
                  </Tooltip>
-+                ) {/* :TCHAP: close bracket !*/}
++                ) /* :TCHAP: close bracket !*/}
 +
 +                {/*:TCHAP: activate audio call only if directmessage and if feature is activated on homeserver
                  {!useElementCallExclusively && (
