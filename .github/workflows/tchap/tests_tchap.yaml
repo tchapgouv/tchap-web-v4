@@ -1,6 +1,6 @@
 #Run the tests
 #tchap modification : use "./scripts/tchap/install-yarn-linked-repositories.sh" instead of "./scripts/layered.sh"
-name: Tests
+name: Tests Tchap # avoid having same name as Element workflows, it causes problems
 on:
     pull_request: {}
     push:

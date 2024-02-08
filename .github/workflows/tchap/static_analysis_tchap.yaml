@@ -1,5 +1,5 @@
 #Run a static analysis
-name: Static Analysis
+name: Static Analysis Tchap # avoid having same name as Element workflows, it causes problems
 on:
     pull_request: {}
     push:
