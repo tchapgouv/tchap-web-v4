@@ -52,6 +52,11 @@ merge_json_files $CRAWLED_WEB $CRAWLED_REACT $CRAWLED
 # Extra hack : config.json is not crawled by matrix-gen-i18n, so the terms_and_conditions_links are missing. Add them in.
 # Get the terms_and_conditions strings from config.json
 export TOC_TRANSLATIONS=`realpath modules/tchap-translations/tmp/terms_and_conditions_EN.json`
+# Create a config.json if there isn't file
+if [[ ! -f config.json ]];
+then
+    cp config.prod.json config.json
+fi
 jq '.terms_and_conditions_links[] | { (.text): .text} ' config.json | jq -s add > $TOC_TRANSLATIONS
 merge_json_files $TOC_TRANSLATIONS $CRAWLED $CRAWLED
 
