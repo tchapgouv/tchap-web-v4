@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 5d826f2..79906f9 100644
+index 5d826f2..5163137 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -88,7 +88,7 @@ index 5d826f2..79906f9 100644
 +                <Field
 +                    className="mx_BugReportDialog_field_input"
 +                    element="textarea"
-+                    label={_t("Notes")}
++                    label={_t("bug_reporting|textarea_label")}
 +                    rows={5}
 +                    onChange={this.onTextChange}
 +                    value={this.state.text}
