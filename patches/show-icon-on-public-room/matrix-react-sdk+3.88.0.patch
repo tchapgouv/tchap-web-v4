@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 39997e1..5b88a91 100644
+index 39997e1..844d59d 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 @@ -30,6 +30,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
@@ -64,6 +64,25 @@ index 39997e1..5b88a91 100644
              if (!this.isWatchingTimeline) {
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                  this.isWatchingTimeline = true;
+@@ -205,6 +237,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+ 
+         return (
+             <div className={classes}>
++                { /*:TCHAP: extra div to fix positioning.
++                https://github.com/tchapgouv/tchap-web-v4/issues/890
++                Issue should be opened in element-web. */ }
++                <div className="mx_DecoratedRoomAvatar_positionedParent">
+                 <RoomAvatar
+                     room={this.props.room}
+                     size={this.props.size}
+@@ -213,6 +249,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+                 />
+                 {icon}
+                 {badge}
++                </div> { /*:TCHAP: close div */ }
+             </div>
+         );
+     }
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 index d6dd212..67a3727 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
