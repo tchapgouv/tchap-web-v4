@@ -75,6 +75,26 @@ jobs:
             - name: Run Linter
               run: "yarn run lint:style"
 
+    i18n:
+        name: "i18n check"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Get Node Version
+              id: node_version
+              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+            - uses: actions/setup-node@v3
+              with:
+                  cache: "yarn"
+                  node-version: ${{ steps.node_version.outputs.node_version }}
+
+            # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
+            - name: Install Dependencies
+              run: "yarn install --pure-lockfile"
+
+            - name: Run i18n-tchap
+              run: "yarn i18n-tchap"
+
     # tchap : fix this https://github.com/tchapgouv/tchap-web-v4/issues/767
     # analyse_dead_code:
     #    name: "Analyse Dead Code"
