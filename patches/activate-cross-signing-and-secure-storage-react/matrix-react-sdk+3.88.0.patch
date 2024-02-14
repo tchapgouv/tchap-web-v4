@@ -1,0 +1,153 @@
+diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
+index 0e7d8e8..dbede57 100644
+--- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
++++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
+@@ -147,6 +147,7 @@ import { Filter } from "../views/dialogs/spotlight/Filter";
+ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
+ import { SessionLockStolenView } from "./auth/SessionLockStolenView";
+ import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
++import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
+ 
+ // legacy export
+ export { default as Views } from "../../Views";
+@@ -1769,6 +1770,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+             return;
+         }
+ 
++        //:tchap: add a screen to open user tab security
++        if (screen === TchapUrls.secureBackupFragment) {
++            //open the security tab
++            //there is no anchor to sauvegarde-automatique subection
++            const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Security };
++            dis.dispatch(payload);
++        } else
++        //:tchap: end
++
+         if (screen === "register") {
+             dis.dispatch({
+                 action: "start_registration",
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
+index 91791e6..194df53 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
+@@ -228,14 +228,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             userSigningPrivateKeyCached;
+ 
+         const actions: JSX.Element[] = [];
++        // :TCHAP move Reset button to advanced section
++        const advancedActions: JSX.Element[] = [];
++        // end :TCHAP:
+ 
+         // TODO: determine how better to expose this to users in addition to prompts at login/toast
+         if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
+-            let buttonCaption = _t("encryption|set_up_toast_title");
++            // :TCHAP: let buttonCaption = _t("encryption|set_up_toast_title");
++            let buttonCaption = _t("Activate on this device");
++            // end :TCHAP:
+             if (crossSigningPrivateKeysInStorage) {
+                 buttonCaption = _t("encryption|verify_toast_title");
+             }
+-            actions.push(
++            // :TCHAP: actions.push(
++            advancedActions.push(
++            // end :TCHAP:
+                 <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
+                     {buttonCaption}
+                 </AccessibleButton>,
+@@ -243,7 +250,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+         }
+ 
+         if (keysExistAnywhere) {
+-            actions.push(
++            // :TCHAP actions.push(
++            advancedActions.push(
++            // end :TCHAP:
+                 <AccessibleButton key="reset" kind="danger" onClick={this.onResetCrossSigningClick}>
+                     {_t("action|reset")}
+                 </AccessibleButton>,
+@@ -255,6 +264,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+             actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
+         }
+ 
++        // :TCHAP add
++        let advancedActionRow;
++        if (advancedActions.length) {
++            advancedActionRow = <div className="mx_CrossSigningPanel_buttonRow">{advancedActions}</div>;
++        }
++        // end :TCHAP:
++
+         return (
+             <>
+                 {summarisedStatus}
+@@ -312,6 +328,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+                             </tr>
+                         </tbody>
+                     </table>
++                    {advancedActionRow}
+                 </details>
+                 {errorSection}
+                 {actionRow}
+diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
+index 4a37950..8fed0f4 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/settings/SecureBackupPanel.tsx
+@@ -266,12 +266,23 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+             } else {
+                 statusDescription = (
+                     <>
++                        {/* TCHAP add Tchap text */}
++                        <SettingsSubsectionText>
++                                {_t(
++                                    "settings|security|key_backup_inactive_warning",
++                                    {},
++                                    { b: (sub) => <b>{sub}</b> },
++                                )}
++                        </SettingsSubsectionText>
++                        {/* end TCHAP */}
++                        {/* :TCHAP remove element text
+                         <SettingsSubsectionText>
+                             {_t("settings|security|key_backup_inactive", {}, { b: (sub) => <b>{sub}</b> })}
+                         </SettingsSubsectionText>
+                         <SettingsSubsectionText>
+                             {_t("settings|security|key_backup_connect_prompt")}
+                         </SettingsSubsectionText>
++                        end :TCHAP: */}
+                     </>
+                 );
+                 restoreButtonCaption = _t("settings|security|key_backup_connect");
+@@ -333,6 +344,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+                 </AccessibleButton>,
+             );
+ 
++            /* :TCHAP: hide
+             if (!isSecureBackupRequired(MatrixClientPeg.safeGet())) {
+                 actions.push(
+                     <AccessibleButton key="delete" kind="danger" onClick={this.deleteBackup}>
+@@ -340,13 +352,16 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+                     </AccessibleButton>,
+                 );
+             }
++            end :TCHAP: */
+         } else {
+             statusDescription = (
+                 <>
+                     <SettingsSubsectionText>
+                         {_t("settings|security|key_backup_inactive_warning", {}, { b: (sub) => <b>{sub}</b> })}
+                     </SettingsSubsectionText>
++                    {/* :TCHAP: remove
+                     <SettingsSubsectionText>{_t("encryption|setup_secure_backup|explainer")}</SettingsSubsectionText>
++                    end :TCHAP: */}
+                 </>
+             );
+             actions.push(
+@@ -359,7 +374,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
+         if (secretStorageKeyInAccount) {
+             actions.push(
+                 <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
+-                    {_t("action|reset")}
++                    {/* :TCHAP: _t("action|reset") */}
++                    {_t("Generate a new code")}
++                    {/* end :TCHAP: */}
+                 </AccessibleButton>,
+             );
+         }

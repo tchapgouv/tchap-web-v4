@@ -207,10 +207,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                 <div>
                     <p>
                         {this.props.description ||
-                            _t(
-                                "Upgrading a room is an advanced action and is usually recommended when a room " +
-                                    "is unstable due to bugs, missing features or security vulnerabilities.",
-                            )}
+                            _t("room_settings|advanced|upgrade_warning_dialog_description")}
                     </p>
                     <p>
                         {_t(

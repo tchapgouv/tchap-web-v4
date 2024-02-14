@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import AccessibleButton from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 
-import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import SdkConfig from "matrix-react-sdk/src/SdkConfig";
 import Modal from "matrix-react-sdk/src/Modal";
 
@@ -29,6 +28,7 @@ import UpdateCheckButton from "matrix-react-sdk/src/components/views/settings/Up
 import BugReportDialog from "matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
 import CopyableText from "matrix-react-sdk/src/components/views/elements/CopyableText";
 import ExternalLink from "matrix-react-sdk/src/components/views/elements/ExternalLink";
+import MatrixClientContext from "matrix-react-sdk/src/contexts/MatrixClientContext";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -39,7 +39,12 @@ interface IState {
     canUpdate: boolean;
 }
 
+//Tchap : This class is a replacement (via customizations) for matrix-react-sdk/src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx
 export default class HelpUserSettingsTab extends React.Component<IProps, IState> {
+    //those lines instantiate the 'context' which is kind of a singleton for a matrix client
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
     public constructor(props: IProps) {
         super(props);
 
@@ -64,17 +69,14 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             });
     }
 
-    private getVersionInfo(): { appVersion: string; olmVersion: string } {
+    private getVersionInfo(): { appVersion: string; cryptoVersion: string } {
         const brand = SdkConfig.get().brand;
         const appVersion = this.state.appVersion || "unknown";
-        const olmVersionTuple = MatrixClientPeg.get().olmVersion;
-        const olmVersion = olmVersionTuple
-            ? `${olmVersionTuple[0]}.${olmVersionTuple[1]}.${olmVersionTuple[2]}`
-            : "<not-enabled>";
+        const cryptoVersion = this.context.getCrypto()?.getVersion() ?? "<not-enabled>";
 
         return {
             appVersion: `${_t("setting|help_about|brand_version", { brand })} ${appVersion}`,
-            olmVersion: `${_t("setting|help_about|olm_version")} ${olmVersion}`,
+            cryptoVersion: `${_t("setting|help_about|crypto_version")} ${cryptoVersion}`,
         };
     }
 
@@ -84,8 +86,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
         // stopping in the middle of the logs.
         logger.log("Clear cache & reload clicked");
-        MatrixClientPeg.get().stopClient();
-        MatrixClientPeg.get()
+        this.context.stopClient();
+        this.context
             .store.deleteAllData()
             .then(() => {
                 PlatformPeg.get()?.reload();
@@ -195,8 +197,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     }
 
     private getVersionTextToCopy = (): string => {
-        const { appVersion, olmVersion } = this.getVersionInfo();
-        return `${appVersion}\n${olmVersion}`;
+        const { appVersion, cryptoVersion } = this.getVersionInfo();
+        return `${appVersion}\n${cryptoVersion}`;
     };
 
     /* :TCHAP: unused
@@ -299,7 +301,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             );
         }
 
-        const { appVersion, olmVersion } = this.getVersionInfo();
+        const { appVersion, cryptoVersion } = this.getVersionInfo();
 
         // :TCHAP: add Contact us section, proper FAQ section, Known Issues section
         const supportEmail = "support@tchap.beta.gouv.fr";
@@ -401,7 +403,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         <CopyableText getTextToCopy={this.getVersionTextToCopy}>
                             {appVersion}
                             <br />
-                            {olmVersion}
+                            {cryptoVersion}
                             <br />
                         </CopyableText>
                         {updateButton}
@@ -416,7 +418,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             {_t(
                                 "setting|help_about|homeserver",
                                 {
-                                    homeserverUrl: MatrixClientPeg.get().getHomeserverUrl(),
+                                    homeserverUrl: this.context.getHomeserverUrl(),
                                 },
                                 {
                                     code: (sub) => <code>{sub}</code>,
@@ -424,11 +426,11 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             )}
                         </div>
                         <div>
-                            {MatrixClientPeg.get().getIdentityServerUrl() &&
+                            {this.context.getIdentityServerUrl() &&
                                 _t(
                                     "setting|help_about|identity_server",
                                     {
-                                        identityServerUrl: MatrixClientPeg.get().getIdentityServerUrl(),
+                                        identityServerUrl: this.context.getIdentityServerUrl(),
                                     },
                                     {
                                         code: (sub) => <code>{sub}</code>,
@@ -442,8 +444,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                                     "setting|help_about|access_token_detail",
                                 )}
                             </b>
-                            <CopyableText getTextToCopy={() => MatrixClientPeg.get().getAccessToken()}>
-                                {MatrixClientPeg.get().getAccessToken()}
+                            <CopyableText getTextToCopy={() => this.context.getAccessToken()}>
+                                {this.context.getAccessToken()}
                             </CopyableText>
                         </details>
                         <AccessibleButton onClick={this.onClearCacheAndReload} kind="danger">

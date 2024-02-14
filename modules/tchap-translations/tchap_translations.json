@@ -15,7 +15,7 @@
         "en": "Access possible only by invitation of a member of the room.",
         "fr": "Accès possible uniquement sur invitation d'un membre du salon."
     },
-    "Access your secure message history and set up secure messaging by entering your Security Key.": {
+    "restore_key_backup_dialog|enter_key_description": {
         "en": "Access your secure message history and set up secure messaging by entering your Recovery Code.",
         "fr": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre Code de Récupération."
     },
@@ -48,11 +48,14 @@
         "en": "Are you sure you want to allow the externals to join this room ?",
         "fr": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
     },
-    "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": {
+    "restore_key_backup_dialog|recovery_key_mismatch_description": {
         "en": "Please try again with your recovery code.",
         "fr": "Merci d'essayer à nouveau avec votre code de récupération."
     },
-    "Clear cross-signing keys": { "en": "Reset Recovery Code", "fr": "Réinitialiser les clés de signature croisée" },
+    "encryption|destroy_cross_signing_dialog|primary_button_text": {
+        "en": "Reset Recovery Code",
+        "fr": "Réinitialiser les clés de signature croisée"
+    },
     "Confirm your Tchap Key password": {
         "en": "Confirm your Tchap Key password",
         "fr": "Confirmer votre mot de passe Clés Tchap"
@@ -77,11 +80,11 @@
         "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
         "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
     },
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": {
+    "encryption|destroy_cross_signing_dialog|warning": {
         "en": "Resetting your Recovery Code is permanent. Please use this procedure only if you have lost all devices that allow you to perform cross-signing.",
         "fr": "Réinitialiser les clés de signature croisée est permanent. Utiliser cette procédure uniquement si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée."
     },
-    "Destroy cross-signing keys?": {
+    "encryption|destroy_cross_signing_dialog|title": {
         "en": "Reset cross-signing keys?",
         "fr": "Réinitialiser les clés de signature croisée ?"
     },
@@ -90,10 +93,16 @@
         "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room.",
         "fr": "Récupérer la liste des membres de ce salon, dans un fichier texte. Utile pour inviter toutes ces personnes à un autre salon."
     },
-    "Email (optional)": { "en": "Email (optional)", "fr": "Adresse mail (facultatif)" },
-    "Email address": { "en": "Email address", "fr": "Adresse mail" },
-    "Enter Security Key": { "en": "Enter Recovery Code", "fr": "Saisir le Code de Récupération" },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": {
+    "auth|registration|continue_without_email_field_label": {
+        "en": "Email (optional)",
+        "fr": "Adresse mail (facultatif)"
+    },
+    "common|email_address": { "en": "Email address", "fr": "Adresse mail" },
+    "restore_key_backup_dialog|enter_key_title": {
+        "en": "Enter Recovery Code",
+        "fr": "Saisir le Code de Récupération"
+    },
+    "encryption|access_secret_storage_dialog|enter_phrase_or_key_prompt": {
         "en": "Enter your Security Phrase or <button>use your Recovery Code</button> to continue.",
         "fr": "Saisissez votre phrase de sécurité ou <button>utilisez votre Code de Récupération</button> pour continuer."
     },
@@ -104,19 +113,19 @@
     },
     "External users allowed": { "en": "external users allowed", "fr": "ouvert aux externes" },
     "Eye": { "en": "Eye", "fr": "OEil" },
-    "Fetching keys from server…": {
+    "restore_key_backup_dialog|key_fetch_in_progress": {
         "en": "Fetching messages from server…",
         "fr": "Récupération des messages depuis le serveur…"
     },
     "Finish": { "en": "Finish", "fr": "Terminer" },
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": {
+    "encryption|reset_all_button": {
         "en": "You have lost your Recovery Code? <a>Create a new code</a>",
         "fr": "Vous avez perdu votre Code de Récupération ? <a>Générer un nouveau code</a>"
     },
     "Forum room": { "en": "Public room", "fr": "Forum" },
     "Frequently Asked Questions (FAQ)": { "en": "Frequently Asked Questions (FAQ)", "fr": "Foire Aux Questions (FAQ)" },
     "Generate a new code": { "en": "Generate a new code", "fr": "Générer un nouveau code" },
-    "I don't want my encrypted messages": { "en": "Log out still", "fr": "Se déconnecter quand-même" },
+    "auth|logout_dialog|skip_key_backup": { "en": "Log out anyway", "fr": "Se déconnecter quand-même" },
     "I renewed the validity of my account": { "en": "I renewed my account", "fr": "J’ai renouvelé mon compte" },
     "I wrote down my code": { "en": "I wrote down my code", "fr": "J'ai noté mon code" },
     "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
@@ -127,11 +136,11 @@
         "en": "If you have any difficulties with using Tchap, please contact us by email at <b>%(supportEmail)s</b>",
         "fr": "Si vous rencontrez des difficultés dans votre utilisation de Tchap, contactez-nous par email à <b>%(supportEmail)s</b>"
     },
-    "If you've forgotten your Security Key you can <button>set up new recovery options</button>": {
+    "restore_key_backup_dialog|key_forgotten_text": {
         "en": "If you've forgotten your Recovery Code you can <button>set up new recovery options</button>",
         "fr": "Si vous avez oublié votre Code de Récupération, vous pouvez <button>définir de nouvelles options de récupération</button>"
     },
-    "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": {
+    "restore_key_backup_dialog|phrase_forgotten_text": {
         "en": "If you've forgotten your Security Phrase you can <button1>use your Recovery Code</button1> or <button2>set up new recovery options</button2>",
         "fr": "Si vous avez oublié votre phrase secrète vous pouvez <button1>utiliser votre Code de Récupération</button1> ou <button2>définir de nouvelles options de récupération</button2>"
     },
@@ -140,12 +149,15 @@
         "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
     },
     "Incoming Verification Request": { "en": "Incoming Verification Request", "fr": "Partage de vos Clés Tchap" },
-    "Incorrect Security Phrase": { "en": "Recovery code not recognized", "fr": "Code de récupération non reconnu" },
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": {
+    "restore_key_backup_dialog|incorrect_security_phrase_title": {
+        "en": "Recovery code not recognized",
+        "fr": "Code de récupération non reconnu"
+    },
+    "invite|name_email_mxid_share_room": {
         "en": "Invite someone using their name, email or username (like <userId/>) or <a>share this room</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break.",
         "fr": "Invitez quelqu’un via son nom, mail ou pseudo (p. ex. <userId/>) ou <a>partagez ce salon</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne."
     },
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": {
+    "invite|name_email_mxid_share_space": {
         "en": "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>. It is possible to invite multiple people by copy-pasting an email list separated by a comma (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) or separated by a line break.",
         "fr": "Invitez quelqu’un grâce à son nom, adresse mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne."
     },
@@ -153,7 +165,7 @@
         "en": "Just want to get your own logs, without sharing them with the Tchap team?",
         "fr": "Vous voulez juste obtenir vos journaux sans les partager avec l'équipe Tchap ?"
     },
-    "Keys restored": { "en": "Messages restored", "fr": "Messages récupérés" },
+    "restore_key_backup_dialog|keys_restored_title": { "en": "Messages restored", "fr": "Messages récupérés" },
     "Known issues": { "en": "Known issues", "fr": "Problèmes connus" },
     "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
@@ -163,7 +175,7 @@
         "en": "Passphrase must be at least 8 character long",
         "fr": "Le mot de passe doit minimum faire 8 caractères"
     },
-    "Please confirm the objects on the other device (loading).": {
+    "encryption|verification|incoming_sas_dialog_waiting": {
         "en": "Please confirm the objects on the other device (loading).",
         "fr": "Veuillez confirmer les objets sur l'autre appareil (en cours)."
     },
@@ -196,11 +208,11 @@
     "Read the FAQ": { "en": "Read the FAQ", "fr": "Consultez la FAQ" },
     "Read the Known Issues": { "en": "Read the Known Issues", "fr": "Consultez les problèmes connus" },
     "Read the Privacy Policy": { "en": "Read the Privacy Policy", "fr": "Lire la Politique de Confidentialité" },
-    "Recent Conversations": { "en": "Recents chats", "fr": "Messages directs récents" },
-    "Recently Direct Messaged": { "en": "Recents chats", "fr": "Messages directs récents" },
+    "invite|recents_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
+    "invite|suggestions_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
     "Reload the app": { "en": "Reload page", "fr": "Rafraîchir la page" },
     "Request a renewal email": { "en": "Request a renewal email", "fr": "Demander l’envoi d’un nouvel email" },
-    "Restoring keys from backup": {
+    "encryption|access_secret_storage_dialog|restoring": {
         "en": "Restoring messages from backup",
         "fr": "Restauration des messages depuis la sauvegarde"
     },
@@ -211,15 +223,18 @@
     },
     "Scan unavailable": { "en": "Scan unavailable", "fr": "Scan unavailable" },
     "Scanning": { "en": "Scanning", "fr": "Scanning" },
-    "Security Key": { "en": "Recovery Code", "fr": "Code de Récupération" },
+    "encryption|access_secret_storage_dialog|security_key_title": {
+        "en": "Recovery Code",
+        "fr": "Code de Récupération"
+    },
     "Set up": { "en": "Activate", "fr": "Activer" },
-    "Start using Key Backup": { "en": "Use automatic Backup", "fr": "Utiliser la sauvegarde automatique" },
+    "auth|logout_dialog|use_key_backup": { "en": "Use automatic Backup", "fr": "Utiliser la sauvegarde automatique" },
     "Submit debug logs to Tchap support team": {
         "comment": "The title of BugReportDialog is unclear, specify it",
         "en": "Submit debug logs to Tchap support team",
         "fr": "Envoyez les journaux de débogage à l'équipe support de Tchap"
     },
-    "Successfully restored %(sessionCount)s keys": {
+    "restore_key_backup_dialog|count_of_successfully_restored_keys": {
         "en": "%(sessionCount)s messages have been successfully restored.",
         "fr": "%(sessionCount)s messages ont été récupérés avec succès."
     },
@@ -257,7 +272,7 @@
         "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
         "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
     },
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": {
+    "space|preferences|show_people_in_space": {
         "en": "This groups your direct messages with members of this space. Turning this off will hide those rooms from your view of %(spaceName)s.",
         "fr": "Cela rassemble vos messages directs avec les membres de cet espace. Le désactiver masquera ces salons de votre vue de %(spaceName)s."
     },
@@ -279,7 +294,7 @@
     "Type of room": { "en": "Type of room", "fr": "Type de salon" },
     "Upgrade private room": { "en": "This room will be updated", "fr": "Ce salon va être mis à jour" },
     "Upgrade room": { "en": "Upgrade room", "fr": "Mettre à jour le salon" },
-    "Use your Security Key to continue.": {
+    "encryption|access_secret_storage_dialog|use_security_key_prompt": {
         "en": "Use your Recovery Code to continue.",
         "fr": "Utilisez votre Code de Récupération pour continuer."
     },
@@ -297,13 +312,9 @@
         "fr": "Nous avons constitué une liste des question les plus fréquentes posées par nos utilisateurs. Votre question a peut-être déjà une solution."
     },
     "Welcome to Tchap": { "en": "Welcome to Tchap", "fr": "Bienvenue sur Tchap" },
-    "Wrong Security Key": {
+    "encryption|access_secret_storage_dialog|key_validation_text|wrong_security_key": {
         "en": "The Recovery Code is not valid. Check that it is the latest one.",
         "fr": "Le Code de Récupération n’est pas valide. Vérifier que c’est le plus récent."
-    },
-    "You can close this disconnected tab, and go to the other %(brand)s tab.": {
-        "en": "You can close this disconnected tab, and go to the other %(brand)s tab.",
-        "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
     },
     "Your Tchap Key password": { "en": "Your Tchap Key password", "fr": "Votre mot de passe Clés Tchap" },
     "Your Tchap Keys (encryption keys) have been successful saved in the <b>tchap-keys.txt</b> file. You can import them when you login again to unlock your messages (<a>find out more</a>).": {
@@ -457,6 +468,16 @@
         "fr": "Vous risquez de ne pas pouvoir récupérer vos messages."
     },
     "encryption|verify_toast_title": { "en": "Verify this device", "fr": "Vérifier cet appareil" },
+    "error_app_open_in_another_tab": {
+        "comment": "2024-02-05: remove once the string is fr-translated in element",
+        "en": "Switch to the other tab to connect to %(brand)s. This tab can now be closed.",
+        "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
+    },
+    "error_app_open_in_another_tab_title": {
+        "comment": "2024-02-05: remove once the string is fr-translated in element",
+        "en": "%(brand)s is connected in another tab",
+        "fr": "%(brand)s a été connecté dans un autre onglet"
+    },
     "error_app_opened_in_another_window": {
         "comment": "2023-11-08: remove once the string is translated in element",
         "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
@@ -471,7 +492,8 @@
         "fr": "la messagerie instantanée de l'Administration"
     },
     "members_of_%(roomName)s.txt": { "en": "members_of_%(roomName)s.txt", "fr": "membres_de_%(roomName)s.txt" },
-    "onboarding_free_e2ee_messaging_tchap_limited_voip": {
+    "onboarding|free_e2ee_messaging_unlimited_voip": {
+        "comment": "remove when we have voip (audio and video)",
         "en": "With free end-to-end encrypted messaging, %(brand)s is a great way to stay in touch.",
         "fr": "Grâce à la messagerie chiffrée de bout en bout gratuite, %(brand)s est un excellent moyen de rester en contact."
     },

@@ -9,6 +9,7 @@ import AccessibleTooltipButton from "matrix-react-sdk/src/components/views/eleme
 import { ButtonEvent } from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { _t } from "matrix-react-sdk/src/languageHandler";
+import { Icon as UserExportIcon } from "../../../../../res/img/tchap/user-export.svg";
 
 import "../../../../../res/css/views/rooms/TchapExportMembersButton.pcss";
 
@@ -52,7 +53,8 @@ export default class MemberList extends React.Component<IProps, IState> {
               tooltip={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
               tooltipClassName="tc_exportRoomMembersTooltip"
           >
-              <span>{_t("Export room members")}</span>
+            <UserExportIcon width="1em" height="1em"/>
+            <span>{_t("Export room members")}</span>
           </AccessibleTooltipButton>
       );
     }

@@ -1,0 +1,17 @@
+diff --git a/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx b/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
+index c47114e..3f60b7b 100644
+--- a/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
++++ b/node_modules/matrix-react-sdk/src/stores/RoomViewStore.tsx
+@@ -609,6 +609,12 @@ export class RoomViewStore extends EventEmitter {
+         let description: ReactNode = err.message ? err.message : JSON.stringify(err);
+         logger.log("Failed to join room:", description);
+ 
++        /* :TCHAP: add this for a translation */
++        if (typeof description === 'string' && description.includes('You are not invited to this room')) {
++            description = _t("Access possible only by invitation of a member of the room.");
++        }
++        /* end :TCHAP: */
++
+         if (err.name === "ConnectionError") {
+             description = _t("room|error_join_connection");
+         } else if (err.errcode === "M_INCOMPATIBLE_ROOM_VERSION") {

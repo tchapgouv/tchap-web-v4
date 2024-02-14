@@ -3,29 +3,16 @@
 */
 
 .mx_AccessibleButton.mx_AccessibleButton_hasKind.tc_MemberList_export {
-  /* Copy the style from mx_MemberList_invite button just above. For some reason it doesn't follow the standard style. */
-  display: flex;
-  justify-content: center;
-  margin: 5px 9px 9px;
-  padding: 0px;
-  border-radius: 4px;
-  font-weight: 600;
+  margin: 0 var(--cpd-space-2x);
+  margin-top: var(--cpd-space-2x);
+  width: calc(100% - var(--cpd-space-13x));
+  color: var(--cpd-color-text-primary);
+  border: 1px solid var(--cpd-color-border-interactive-primary);
+  border-radius: var(--cpd-radius-pill-effect);
 }
 
-.tc_MemberList_export span {
-  padding: 8px 0;
-  display: inline-flex;
-
-  &::before {
-    content: "";
-    display: inline-block;
-    background-color: var(--accent);
-    mask-image: url("../../../img/tchap/user-export.svg");
-    mask-position: center;
-    mask-repeat: no-repeat;
-    mask-size: 20px;
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-  }
+.tc_MemberList_export svg {
+  color: var(--cpd-color-text-primary);
+  fill: var(--cpd-color-text-primary);
+  margin-right: var(--cpd-space-2x);
 }

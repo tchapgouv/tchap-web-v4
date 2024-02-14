@@ -56,9 +56,11 @@ const config: Config = {
         "waveWorker\\.min\\.js": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
         "context-filter-polyfill": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
         "FontManager.ts": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/FontManager.js",
-        "workers/(.+)\\.worker\\.ts": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/workerMock.js",
+        "workers/(.+)Factory": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/workerFactoryMock.js",
         "^!!raw-loader!.*": "jest-raw-loader",
-        "RecorderWorklet": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
+        "recorderWorkletFactory": "<rootDir>/node_modules/matrix-react-sdk/__mocks__/empty.js",
+        "^fetch-mock$": "<rootDir>/node_modules/fetch-mock",
+        // :TCHAP:
         "MImageBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageBody.tsx",
         "../../../../../../src/tchap/components/views/messages/OriginalFileBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx",
@@ -66,7 +68,7 @@ const config: Config = {
         "../../../../../../src/tchap/components/views/messages/OriginalAudioBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
         "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
-        "^fetch-mock$": "<rootDir>/node_modules/fetch-mock",
+        // end :TCHAP:
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
     coverageReporters: ["text-summary", "lcov"],
