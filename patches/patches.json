@@ -1,5 +1,5 @@
 {
-    "show-icon-on-public-room": {
+    "tchap-room-icons": {
         "package": "matrix-react-sdk",
         "files": [
             "src/components/views/avatars/DecoratedRoomAvatar.tsx",
