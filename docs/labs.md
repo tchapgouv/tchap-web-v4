@@ -115,8 +115,6 @@ Enables rendering of MD / HTML in room topics.
 Configures Element to use a new cryptography implementation based on the [matrix-rust-sdk](https://github.com/matrix-org/matrix-rust-sdk).
 
 This setting is (currently) _sticky_ to a user's session: it only takes effect when the user logs in to a new session. Likewise, even after disabling the setting in `config.json`, the Rust implementation will remain in use until users log out.
-<<<<<<< HEAD
-=======
 
 This configuration value is now set to `true` by default. This means that without any additional configuration
 every new login will use the new cryptography implementation.
@@ -134,7 +132,6 @@ This configuration should be placed under the `setting_defaults` section as show
 ```
 
 By adjusting the `RustCrypto.staged_rollout_percent` value, you can control the migration process according to your deployment strategy.
->>>>>>> v1.11.58
 
 ## New room header & details (`feature_new_room_decoration_ui`) [In Development]
 

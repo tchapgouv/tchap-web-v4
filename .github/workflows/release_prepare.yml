@@ -70,23 +70,10 @@ jobs:
                   fetch-tags: true
                   token: ${{ secrets.ELEMENT_BOT_TOKEN }}
 
-<<<<<<< HEAD
-            - name: Resolve repos
-              run: |
-                  echo "REPOS=$(ls . | tr '\n' ' ')" >> $GITHUB_ENV
-
-=======
->>>>>>> v1.11.58
             - name: Merge develop
               run: |
                   git config --global user.email "releases@riot.im"
                   git config --global user.name "RiotRobot"
-<<<<<<< HEAD
-                  for REPO in $REPOS; do git -C "$REPO" merge origin/develop; done
-
-            - name: Push staging
-              run: for REPO in $REPOS; do git -C "$REPO" push origin staging; done
-=======
                   for REPO in $REPOS; do [ -d "$REPO" ] && git -C "$REPO" merge origin/develop; done
 
             - name: Push staging
@@ -135,4 +122,3 @@ jobs:
                   wait-interval: 10
                   check-name: draft
                   allowed-conclusions: success
->>>>>>> v1.11.58
