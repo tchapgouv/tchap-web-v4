@@ -39,6 +39,9 @@ import { cleanLocalstorage, deleteIndexedDB, waitForLoadingSpinner, waitForWelco
 const DEFAULT_HS_URL = "http://my_server";
 const DEFAULT_IS_URL = "http://my_is";
 
+/** The matrix versions our mock server claims to support */
+const SERVER_SUPPORTED_MATRIX_VERSIONS = ["v1.1", "v1.5", "v1.6", "v1.8", "v1.9"];
+
 describe("loading:", function () {
     let httpBackend: MockHttpBackend;
 
@@ -126,6 +129,9 @@ describe("loading:", function () {
             embedded_pages: {
                 home_url: "data:text/html;charset=utf-8;base64,PGh0bWw+PC9odG1sPg==",
             },
+            features: {
+                feature_rust_crypto: false,
+            },
             ...(opts.config ?? {}),
         } as IConfigOptions;
 
@@ -155,7 +161,7 @@ describe("loading:", function () {
     async function expectAndAwaitSync(opts?: { isGuest?: boolean }): Promise<any> {
         let syncRequest: (typeof MockHttpBackend.prototype.requests)[number] | null = null;
         httpBackend.when("GET", "/_matrix/client/versions").respond(200, {
-            versions: ["v1.1"],
+            versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
             unstable_features: {},
         });
         const isGuest = opts?.isGuest;
@@ -215,7 +221,7 @@ describe("loading:", function () {
             });
 
             // Pass the liveliness checks
-            httpBackend.when("GET", "/versions").respond(200, { versions: ["v1.1"] });
+            httpBackend.when("GET", "/versions").respond(200, { versions: SERVER_SUPPORTED_MATRIX_VERSIONS });
             httpBackend.when("GET", "/_matrix/identity/v2").respond(200, {});
 
             return sleep(1)
@@ -265,7 +271,7 @@ describe("loading:", function () {
             });
 
             // Pass the liveliness checks
-            httpBackend.when("GET", "/versions").respond(200, { versions: ["v1.1"] });
+            httpBackend.when("GET", "/versions").respond(200, { versions: SERVER_SUPPORTED_MATRIX_VERSIONS });
             httpBackend.when("GET", "/_matrix/identity/v2").respond(200, {});
 
             return awaitLoginComponent(matrixChat)
@@ -301,6 +307,7 @@ describe("loading:", function () {
             localStorage.setItem("mx_is_url", "http://localhost");
             localStorage.setItem("mx_access_token", "access_token");
             localStorage.setItem("mx_user_id", "@me:localhost");
+            localStorage.setItem("mx_device_id", "QWERTYUIOP");
             localStorage.setItem("mx_last_room_id", "!last_room:id");
 
             // Create a crypto store as well to satisfy storage consistency checks
@@ -377,7 +384,7 @@ describe("loading:", function () {
             it("does not show a login view", async function () {
                 await awaitRoomView(matrixChat);
 
-                await screen.findByLabelText("Spaces");
+                await screen.getByRole("tree", { name: "Spaces" });
                 expect(screen.queryAllByText("Sign in")).toHaveLength(0);
             });
         });
@@ -400,6 +407,7 @@ describe("loading:", function () {
                         })
                         .respond(200, {
                             user_id: "@guest:localhost",
+                            device_id: "QWERTYUIOP",
                             access_token: "secret_token",
                         });
 

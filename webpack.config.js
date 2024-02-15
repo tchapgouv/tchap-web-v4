@@ -9,14 +9,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackInjectPreload = require("@principalstudio/html-webpack-inject-preload");
-const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
-const crypto = require("crypto");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-
-// XXX: mangle Crypto::createHash to replace md4 with sha256, output.hashFunction is insufficient as multiple bits
-// of webpack hardcode md4. The proper fix it to upgrade to webpack 5.
-const createHash = crypto.createHash;
-crypto.createHash = (algorithm, options) => createHash(algorithm === "md4" ? "sha256" : algorithm, options);
 
 // Environment variables
 // RIOT_OG_IMAGE_URL: specifies the URL to the image which should be used for the opengraph logo.
@@ -74,7 +67,7 @@ try {
         console.log(""); // blank line
         console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         console.warn("!! Customisations have been deprecated and will be removed in a future release      !!");
-        console.warn("!! See https://github.com/vector-im/element-web/blob/develop/docs/customisations.md !!");
+        console.warn("!! See https://github.com/element-hq/element-web/blob/develop/docs/customisations.md !!");
         console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         console.log(""); // blank line
     });
@@ -213,14 +206,14 @@ module.exports = (env, argv) => {
             minimize: enableMinification,
             minimizer: enableMinification
                 ? [
-                      new TerserPlugin({
-                          // Already minified and includes an auto-generated license comment
-                          // that the plugin would otherwise pointlessly extract into a separate
-                          // file. We add the actual license using CopyWebpackPlugin below.
-                          exclude: "jitsi_external_api.min.js",
-                      }),
-                      new CssMinimizerPlugin(),
-                  ]
+                    new TerserPlugin({
+                        // Already minified and includes an auto-generated license comment
+                        // that the plugin would otherwise pointlessly extract into a separate
+                        // file. We add the actual license using CopyWebpackPlugin below.
+                        exclude: "jitsi_external_api.min.js",
+                    }),
+                    new CssMinimizerPlugin(),
+                ]
                 : [],
 
             // Set the value of `process.env.NODE_ENV` for libraries like React
@@ -332,6 +325,7 @@ module.exports = (env, argv) => {
                     loader: "babel-loader",
                     options: {
                         cacheDirectory: true,
+                        plugins: enableMinification ? ["babel-plugin-jsx-remove-data-test-id"] : [],
                     },
                 },
                 {
@@ -392,34 +386,34 @@ module.exports = (env, argv) => {
                          */
                         useHMR
                             ? {
-                                  loader: "style-loader",
-                                  /**
-                                   * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
-                                   * we could try using `lazyStyleTag` here to add and remove styles on demand,
-                                   * that would nicely resolve issues of race conditions for themes,
-                                   * at least for development purposes.
-                                   */
-                                  options: {
-                                      insert: function insertBeforeAt(element) {
-                                          const parent = document.querySelector("head");
-                                          // We're in iframe
-                                          if (!window.MX_DEV_ACTIVE_THEMES) {
-                                              parent.appendChild(element);
-                                              return;
-                                          }
-                                          // Properly disable all other instances of themes
-                                          element.disabled = true;
-                                          element.onload = () => {
-                                              element.disabled = true;
-                                          };
-                                          const theme =
-                                              window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
-                                          element.setAttribute("data-mx-theme", theme);
-                                          window.MX_insertedThemeStylesCounter++;
-                                          parent.appendChild(element);
-                                      },
-                                  },
-                              }
+                                loader: "style-loader",
+                                /**
+                                 * If we refactor the `theme.js` in `matrix-react-sdk` a little bit,
+                                 * we could try using `lazyStyleTag` here to add and remove styles on demand,
+                                 * that would nicely resolve issues of race conditions for themes,
+                                 * at least for development purposes.
+                                 */
+                                options: {
+                                    insert: function insertBeforeAt(element) {
+                                        const parent = document.querySelector("head");
+                                        // We're in iframe
+                                        if (!window.MX_DEV_ACTIVE_THEMES) {
+                                            parent.appendChild(element);
+                                            return;
+                                        }
+                                        // Properly disable all other instances of themes
+                                        element.disabled = true;
+                                        element.onload = () => {
+                                            element.disabled = true;
+                                        };
+                                        const theme =
+                                            window.MX_DEV_ACTIVE_THEMES[window.MX_insertedThemeStylesCounter];
+                                        element.setAttribute("data-mx-theme", theme);
+                                        window.MX_insertedThemeStylesCounter++;
+                                        parent.appendChild(element);
+                                    },
+                                },
+                            }
                             : MiniCssExtractPlugin.loader,
                         {
                             loader: "css-loader",
@@ -719,18 +713,20 @@ module.exports = (env, argv) => {
                 files: [{ match: /.*Inter.*\.woff2$/ }],
             }),
 
-            // upload to sentry if sentry env is present
+            // Upload to sentry if sentry env is present
+            // This plugin throws an error on import on some platforms like ppc64le & s390x even if the plugin isn't called,
+            // so we require it conditionally.
             process.env.SENTRY_DSN &&
-                sentryWebpackPlugin({
-                    release: process.env.VERSION,
-                    sourcemaps: {
-                        paths: "./webapp/bundles/**",
-                    },
-                    errorHandler: (err, invokeErr, compilation) => {
-                        compilation.warnings.push("Sentry CLI Plugin: " + err.message);
-                        console.log(`::warning title=Sentry error::${err.message}`);
-                    },
-                }),
+            require("@sentry/webpack-plugin").sentryWebpackPlugin({
+                release: process.env.VERSION,
+                sourcemaps: {
+                    paths: "./webapp/bundles/**",
+                },
+                errorHandler: (err, invokeErr, compilation) => {
+                    compilation.warnings.push("Sentry CLI Plugin: " + err.message);
+                    console.log(`::warning title=Sentry error::${err.message}`);
+                },
+            }),
 
             new webpack.EnvironmentPlugin(["VERSION"]),
 
@@ -822,7 +818,7 @@ function getAssetOutputPath(url, resourcePath) {
     // `dist` is the parent dir for KaTeX assets
     const prefix = /^.*[/\\](dist|res)[/\\]/;
     /**
-     * Only needed for https://github.com/vector-im/element-web/pull/15939
+     * Only needed for https://github.com/element-hq/element-web/pull/15939
      * If keeping this, we are not able to load external assets such as SVG
      * images coming from @vector-im/compound-web.
      */

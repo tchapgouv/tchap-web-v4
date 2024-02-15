@@ -36,6 +36,9 @@ import {
 // Make setImmediate available in bundle
 import "setimmediate";
 
+// Make setImmediate available in bundle
+import "setimmediate";
+
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points
 // in webpack.config.js
@@ -110,7 +113,7 @@ const supportedBrowser = checkBrowserFeatures();
 // try in react but fallback to an `alert`
 // We start loading stuff but don't block on it until as late as possible to allow
 // the browser to use as much parallelism as it can.
-// Load parallelism is based on research in https://github.com/vector-im/element-web/issues/12253
+// Load parallelism is based on research in https://github.com/element-hq/element-web/issues/12253
 async function start(): Promise<void> {
     // load init.ts async so that its code is not executed immediately and we can catch any exceptions
     const {
@@ -145,7 +148,7 @@ async function start(): Promise<void> {
         // don't try to redirect to the native apps if we're
         // verifying a 3pid (but after we've loaded the config)
         // or if the user is following a deep link
-        // (https://github.com/vector-im/element-web/issues/7378)
+        // (https://github.com/element-hq/element-web/issues/7378)
         const preventRedirect = fragparts.params.client_secret || fragparts.location.length > 0;
 
         if (!preventRedirect) {
