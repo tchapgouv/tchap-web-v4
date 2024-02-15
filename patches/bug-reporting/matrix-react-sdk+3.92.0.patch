@@ -132,23 +132,23 @@ index 5d826f2..5163137 100644
      }
  }
 diff --git a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
-index e679955..69f9b61 100644
+index 1eb0379..90955dd 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/elements/AccessibleButton.tsx
-@@ -77,7 +77,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T>
-     disabled?: boolean;
-     className?: string;
-     triggerOnMouseDown?: boolean;
+@@ -85,7 +85,7 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
+     /**
+      * Event handler for button activation. Should be implemented exactly like a normal `onClick` handler.
+      */
 -    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 +    onClick?: ((e: ButtonEvent) => void | Promise<void>) | null;
  };
  
- export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+ /**
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index 680dabe..f711c47 100644
+index d15f3d9..7c7f6d8 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-@@ -335,12 +335,13 @@ export async function submitFeedback(
+@@ -334,12 +334,13 @@ export async function submitFeedback(
          version = await PlatformPeg.get()?.getAppVersion();
      } catch (err) {} // PlatformPeg already logs this.
  
@@ -163,7 +163,7 @@ index 680dabe..f711c47 100644
      body.append("version", version || "UNKNOWN");
      body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
      body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
-@@ -350,6 +351,13 @@ export async function submitFeedback(
+@@ -349,6 +350,13 @@ export async function submitFeedback(
      }
  
      const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;
