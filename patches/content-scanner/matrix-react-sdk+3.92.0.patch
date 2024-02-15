@@ -12,12 +12,12 @@ index 52cd233..106dd15 100644
  import { PlaybackManager } from "../../../audio/PlaybackManager";
  import { isVoiceMessage } from "../../../utils/EventUtils";
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
-index 4cb7d28..dc25c18 100644
+index ff4d573..8003410 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx
-@@ -22,7 +22,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
- import { logger } from "matrix-js-sdk/src/logger";
+@@ -23,7 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
  import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
+ import { Tooltip } from "@vector-im/compound-web";
  
 -import MFileBody from "./MFileBody";
 +import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
@@ -38,18 +38,18 @@ index c6d61a7..0d16a14 100644
  
  const FORCED_IMAGE_HEIGHT = 44;
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
-index 092b948..5908036 100644
+index 26c33e8..e0fdf70 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MStickerBody.tsx
-@@ -16,7 +16,7 @@ limitations under the License.
- 
- import React, { ReactNode } from "react";
+@@ -17,7 +17,7 @@ limitations under the License.
+ import React, { ComponentProps, ReactNode } from "react";
+ import { Tooltip } from "@vector-im/compound-web";
  
 -import MImageBody from "./MImageBody";
 +import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
  import { BLURHASH_FIELD } from "../../../utils/image-media";
- import Tooltip from "../elements/Tooltip";
  import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+ 
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx
 index df3ab6a..d057dc0 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MVideoBody.tsx

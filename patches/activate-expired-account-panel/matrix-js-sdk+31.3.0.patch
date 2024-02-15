@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/http-api/fetch.ts b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
-index 0c6f9a5..5ff612e 100644
+index fbe842f..fc67d09 100644
 --- a/node_modules/matrix-js-sdk/src/http-api/fetch.ts
 +++ b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
 @@ -177,6 +177,12 @@ export class FetchHttpApi<O extends IHttpOpts> {
@@ -41,10 +41,10 @@ index ee4456d..54de701 100644
  
  export interface UploadProgress {
 diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index 408aec6..c422f18 100644
+index 372260d..40bddb4 100644
 --- a/node_modules/matrix-js-sdk/src/sync.ts
 +++ b/node_modules/matrix-js-sdk/src/sync.ts
-@@ -615,6 +615,14 @@ export class SyncApi {
+@@ -619,6 +619,14 @@ export class SyncApi {
              this.updateSyncState(SyncState.Error, { error });
              return true;
          }

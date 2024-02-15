@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
-index e4bbb76..efdbb25 100644
+index 9dc6ebd..133b3c2 100644
 --- a/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 +++ b/node_modules/matrix-react-sdk/src/IdentityAuthClient.tsx
 @@ -29,6 +29,7 @@ import {
@@ -10,7 +10,7 @@ index e4bbb76..efdbb25 100644
  
  export class AbortedIdentityActionError extends Error {}
  
-@@ -130,6 +131,18 @@ export default class IdentityAuthClient {
+@@ -135,6 +136,18 @@ export default class IdentityAuthClient {
              throw e;
          }
  
@@ -30,7 +30,7 @@ index e4bbb76..efdbb25 100644
              !this.tempClient &&
              !doesAccountDataHaveIdentityServer(this.matrixClient) &&
 diff --git a/node_modules/matrix-react-sdk/src/Terms.ts b/node_modules/matrix-react-sdk/src/Terms.ts
-index 41400ef..f703430 100644
+index afa6524..7f54dbb 100644
 --- a/node_modules/matrix-react-sdk/src/Terms.ts
 +++ b/node_modules/matrix-react-sdk/src/Terms.ts
 @@ -20,6 +20,11 @@ import { logger } from "matrix-js-sdk/src/logger";
@@ -45,7 +45,7 @@ index 41400ef..f703430 100644
  
  export class TermsNotSignedError extends Error {}
  
-@@ -79,6 +84,15 @@ export async function startTermsFlow(
+@@ -83,6 +88,15 @@ export async function startTermsFlow(
      services: Service[],
      interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
  ): Promise<void> {
