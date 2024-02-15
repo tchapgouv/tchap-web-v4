@@ -30,19 +30,19 @@ index 1a68e58..a32b4ea 100644
  
  // A placeholder element for messages that could not be decrypted
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
-index 7a55c89..57878ff 100644
+index 1e30dcb..31722e7 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/ThreadSummary.tsx
-@@ -30,6 +30,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
- import { Action } from "../../../dispatcher/actions";
- import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+@@ -34,6 +34,8 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
  import defaultDispatcher from "../../../dispatcher/dispatcher";
+ import { useUnreadNotifications } from "../../../hooks/useUnreadNotifications";
+ import { notificationLevelToIndicator } from "../../../utils/notifications";
 +import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
 +import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
  
  interface IProps {
      mxEvent: MatrixEvent;
-@@ -96,6 +98,20 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
+@@ -105,6 +107,20 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
          return null;
      }
  
@@ -63,7 +63,7 @@ index 7a55c89..57878ff 100644
      return (
          <>
              <MemberAvatar
-@@ -113,7 +129,20 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
+@@ -122,7 +138,20 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
                      className="mx_ThreadSummary_content mx_DecryptionFailureBody"
                      title={_t("threads|unable_to_decrypt")}
                  >
