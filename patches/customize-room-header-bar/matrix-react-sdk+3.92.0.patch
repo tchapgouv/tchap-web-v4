@@ -21,7 +21,7 @@ index bc66cd2..a5330af 100644
 +    display: -webkit-box;
 +}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 9ec6921..cc08147 100644
+index 9ec6921..bdeca93 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 @@ -55,6 +55,10 @@ import { RoomKnocksBar } from "./RoomKnocksBar";
@@ -35,25 +35,7 @@ index 9ec6921..cc08147 100644
  export default function RoomHeader({
      room,
      additionalButtons,
-@@ -207,6 +211,17 @@ export default function RoomHeader({
-         videoCallButton = closeLobbyButton;
-     }
- 
-+    // :TCHAP: remove voice and video call buttons if needed
-+    // activate video call only if directmessage and if feature is activated on homeserver
-+    if (!isDirectMessage || !TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call")) {
-+        videoCallButton = undefined;
-+    }
-+    // activate audio call only if directmessage and if feature is activated on homeserver
-+    if (!isDirectMessage || !TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") ) {
-+        voiceCallButton = undefined;
-+    }
-+    // end :TCHAP:
-+
-     return (
-         <>
-             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-@@ -218,7 +233,14 @@ export default function RoomHeader({
+@@ -218,7 +222,14 @@ export default function RoomHeader({
                      }}
                      className="mx_RoomHeader_infoWrapper"
                  >
@@ -68,7 +50,7 @@ index 9ec6921..cc08147 100644
                      <Box flex="1" className="mx_RoomHeader_info">
                          <BodyText
                              as="div"
-@@ -231,6 +253,7 @@ export default function RoomHeader({
+@@ -231,6 +242,7 @@ export default function RoomHeader({
                          >
                              <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
  
@@ -76,7 +58,7 @@ index 9ec6921..cc08147 100644
                              {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
                                  <Tooltip label={_t("common|public_room")} side="right">
                                      <PublicIcon
-@@ -241,7 +264,9 @@ export default function RoomHeader({
+@@ -241,7 +253,9 @@ export default function RoomHeader({
                                      />
                                  </Tooltip>
                              )}
@@ -86,7 +68,7 @@ index 9ec6921..cc08147 100644
                              {isDirectMessage && e2eStatus === E2EStatus.Verified && (
                                  <Tooltip label={_t("common|verified")} side="right">
                                      <VerifiedIcon
-@@ -252,7 +277,9 @@ export default function RoomHeader({
+@@ -252,7 +266,9 @@ export default function RoomHeader({
                                      />
                                  </Tooltip>
                              )}
@@ -96,7 +78,7 @@ index 9ec6921..cc08147 100644
                              {isDirectMessage && e2eStatus === E2EStatus.Warning && (
                                  <Tooltip label={_t("room|header_untrusted_label")} side="right">
                                      <ErrorIcon
-@@ -263,6 +290,7 @@ export default function RoomHeader({
+@@ -263,6 +279,7 @@ export default function RoomHeader({
                                      />
                                  </Tooltip>
                              )}
@@ -104,3 +86,23 @@ index 9ec6921..cc08147 100644
                          </BodyText>
                          {roomTopic && (
                              <BodyText
+@@ -300,8 +317,19 @@ export default function RoomHeader({
+                         joinCallButton
+                     ) : (
+                         <>
++                            { /* :TCHAP: activate video call only if directmessage and if feature is activated on homeserver }
+                             {!isVideoRoom(room) && videoCallButton}
++                            */ }
++                            {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
++                              !isVideoRoom(room) && videoCallButton}
++                            {/* end :TCHAP: */}
++
++                            { /* :TCHAP: activate audio call only if directmessage and if feature is activated on homeserver
+                             {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
++                            */ }
++                            {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&
++                              !useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
++                            {/* end :TCHAP: */}
+                         </>
+                     )}
+ 
