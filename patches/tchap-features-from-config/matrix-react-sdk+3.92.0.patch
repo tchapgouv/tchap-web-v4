@@ -19,19 +19,19 @@ index 0781fca..de6c6de 100644
 +//end :tchap:
 \ No newline at end of file
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
-index a800e1d..46be43b 100644
+index ec47cff..aa70cf8 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/Notifications.tsx
-@@ -58,6 +58,8 @@ import { Caption } from "../typography/Caption";
- import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
+@@ -59,6 +59,8 @@ import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
  import SettingsSubsection from "./shared/SettingsSubsection";
+ import { doesRoomHaveUnreadMessages } from "../../../Unread";
  
 +import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 +
  // TODO: this "view" component still has far too much application logic in it,
  // which should be factored out to other files.
  
-@@ -724,7 +726,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
+@@ -725,7 +727,11 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                      </>
                  )}
  

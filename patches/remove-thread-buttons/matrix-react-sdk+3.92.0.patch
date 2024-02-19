@@ -24,7 +24,7 @@ index e0fca0a..c836aea 100644
                  </IconizedContextMenuOptionList>
              );
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
-index 60eee55..83f1998 100644
+index 9cf3592..066deae 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/MessageActionBar.tsx
 @@ -61,6 +61,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
@@ -48,7 +48,7 @@ index 60eee55..83f1998 100644
  
      /**
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
-index b5117d7..f9551b0 100644
+index 672a288..285ec19 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/LegacyRoomHeaderButtons.tsx
 @@ -40,6 +40,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
@@ -59,42 +59,21 @@ index b5117d7..f9551b0 100644
  
  const ROOM_INFO_PHASES = [
      RightPanelPhases.RoomSummary,
-@@ -273,20 +274,24 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+@@ -273,6 +274,8 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                  onClick={this.onTimelineCardClicked}
              />,
          );
--        rightPanelPhaseButtons.set(
--            RightPanelPhases.ThreadPanel,
--            <HeaderButton
--                key={RightPanelPhases.ThreadPanel}
--                name="threadsButton"
--                data-testid="threadsButton"
--                title={_t("common|threads")}
--                onClick={this.onThreadsPanelClicked}
--                isHighlighted={this.isPhase(LegacyRoomHeaderButtons.THREAD_PHASES)}
--                isUnread={this.state.threadNotificationColor > NotificationColor.None}
--            >
--                <UnreadIndicator color={this.state.threadNotificationColor} />
--            </HeaderButton>,
--        );
 +        //:tchap: activate Thread based on homeserver feature flag
 +        if(TchapUIFeature.isFeatureActiveForHomeserver("feature_thread")){
-+            rightPanelPhaseButtons.set(
-+                RightPanelPhases.ThreadPanel,
-+                <HeaderButton
-+                    key={RightPanelPhases.ThreadPanel}
-+                    name="threadsButton"
-+                    data-testid="threadsButton"
-+                    title={_t("common|threads")}
-+                    onClick={this.onThreadsPanelClicked}
-+                    isHighlighted={this.isPhase(LegacyRoomHeaderButtons.THREAD_PHASES)}
-+                    isUnread={this.state.threadNotificationColor > NotificationColor.None}
-+                    >
-+                    <UnreadIndicator color={this.state.threadNotificationColor} />
-+                </HeaderButton>,
-+            );
-+        }
-+        //:tchap: end
+         rightPanelPhaseButtons.set(
+             RightPanelPhases.ThreadPanel,
+             <HeaderButton
+@@ -287,6 +290,8 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
+                 <UnreadIndicator color={this.state.threadNotificationLevel} />
+             </HeaderButton>,
+         );
++        } //close bracket :tchap: end
++
          if (this.state.notificationsEnabled) {
              rightPanelPhaseButtons.set(
                  RightPanelPhases.NotificationPanel,

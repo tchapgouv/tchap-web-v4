@@ -80,7 +80,7 @@ index 5fadde7..82e44bb 100644
                      {footer}
                  </AuthBody>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index 174cdff..c45c3f1 100644
+index 6f1635e..2d2b007 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 @@ -50,6 +50,7 @@ interface IProps {
@@ -91,7 +91,7 @@ index 174cdff..c45c3f1 100644
      fieldValid: Partial<Record<LoginField, boolean>>;
      loginType: LoginField.Email | LoginField.MatrixId | LoginField.Phone;
      password: string;
-@@ -83,13 +84,21 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+@@ -84,13 +85,21 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
      public constructor(props: IProps) {
          super(props);
          this.state = {
@@ -114,7 +114,7 @@ index 174cdff..c45c3f1 100644
      private onForgotPasswordClick = (ev: ButtonEvent): void => {
          ev.preventDefault();
          ev.stopPropagation();
-@@ -420,13 +429,17 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+@@ -421,13 +430,17 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
          return (
              <div>
                  <form onSubmit={this.onSubmitForm}>
@@ -134,7 +134,7 @@ index 174cdff..c45c3f1 100644
                          name="password"
                          label={_t("common|password")}
                          value={this.state.password}
-@@ -435,6 +448,20 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
+@@ -436,6 +449,20 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                          autoFocus={autoFocusPassword}
                          onValidate={this.onPasswordValidate}
                          ref={(field) => (this[LoginField.Password] = field)}

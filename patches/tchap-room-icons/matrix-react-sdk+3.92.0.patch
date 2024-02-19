@@ -1,18 +1,19 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-index 39997e1..844d59d 100644
+index 4b6a094..4e3ce96 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/avatars/DecoratedRoomAvatar.tsx
-@@ -30,6 +30,9 @@ import TextWithTooltip from "../elements/TextWithTooltip";
+@@ -30,6 +30,10 @@ import { _t } from "../../../languageHandler";
  import DMRoomMap from "../../../utils/DMRoomMap";
  import { IOOBData } from "../../../stores/ThreepidInviteStore";
- import TooltipTarget from "../elements/TooltipTarget";
+ 
 +import TchapRoomUtils from "../../../../../../src/tchap/util/TchapRoomUtils";
 +import "../../../../../../res/css/views/avatars/_TchapDecoratedRoomAvatar.pcss";
 +import { TchapRoomType } from "../../../../../../src/tchap/@types/tchap";
- 
++
  interface IProps {
      room: Room;
-@@ -52,6 +55,11 @@ enum Icon {
+     size: string;
+@@ -53,6 +57,11 @@ enum Icon {
      // Note: the names here are used in CSS class names
      None = "NONE", // ... except this one
      Globe = "GLOBE",
@@ -24,7 +25,7 @@ index 39997e1..844d59d 100644
      PresenceOnline = "ONLINE",
      PresenceAway = "AWAY",
      PresenceOffline = "OFFLINE",
-@@ -62,6 +70,14 @@ function tooltipText(variant: Icon): string | undefined {
+@@ -63,6 +72,14 @@ function tooltipText(variant: Icon): string | undefined {
      switch (variant) {
          case Icon.Globe:
              return _t("room|header|room_is_public");
@@ -39,7 +40,7 @@ index 39997e1..844d59d 100644
          case Icon.PresenceOnline:
              return _t("presence|online");
          case Icon.PresenceAway:
-@@ -167,7 +183,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -166,7 +183,23 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
              }
          } else {
              // Track publicity
@@ -64,7 +65,7 @@ index 39997e1..844d59d 100644
              if (!this.isWatchingTimeline) {
                  this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                  this.isWatchingTimeline = true;
-@@ -205,6 +237,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+@@ -203,6 +236,10 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
  
          return (
              <div className={classes}>
@@ -75,16 +76,16 @@ index 39997e1..844d59d 100644
                  <RoomAvatar
                      room={this.props.room}
                      size={this.props.size}
-@@ -213,6 +249,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
-                 />
-                 {icon}
+@@ -215,6 +252,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
+                     </Tooltip>
+                 )}
                  {badge}
 +                </div> { /*:TCHAP: close div */ }
              </div>
          );
      }
 diff --git a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
-index d6dd212..67a3727 100644
+index 4a6ea31..9f8010a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/right_panel/RoomSummaryCard.tsx
 @@ -76,6 +76,9 @@ import { inviteToRoom } from "../../../utils/room/inviteToRoom";

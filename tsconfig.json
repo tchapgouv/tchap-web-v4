@@ -13,10 +13,11 @@
         "declaration": true,
         "jsx": "react",
         "lib": ["es2021", "dom", "dom.iterable"],
-        "strict": true
+        "strict": true,
     },
     "include": [
         "./node_modules/matrix-js-sdk/src/@types/*.d.ts",
+        "./node_modules/matrix-react-sdk/src/@types/react.d.ts",
         "./node_modules/matrix-react-sdk/src/@types/diff-dom.d.ts",
         "./node_modules/matrix-react-sdk/src/@types/opus-recorder.d.ts",
         "./node_modules/matrix-react-sdk/src/@types/png-chunks-extract.d.ts",
@@ -25,12 +26,12 @@
         "./src/**/*.tsx",
         "./test/**/*.ts",
         "./test/**/*.tsx",
-        "./scripts/*.ts"
+        "./scripts/*.ts",
     ],
     "ts-node": {
         "files": true,
         "moduleTypes": {
-            "*": "cjs"
-        }
-    }
+            "*": "cjs",
+        },
+    },
 }

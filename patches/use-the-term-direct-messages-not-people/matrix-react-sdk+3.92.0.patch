@@ -12,10 +12,10 @@ index 8e8e4ce..bd2b4d3 100644
                      <SettingsSubsectionText>
                          {_t("space|preferences|show_people_in_space", {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-index 374cb38..c13565c 100644
+index 9c1fad2..b595c35 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-@@ -382,7 +382,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
+@@ -379,7 +379,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
          defaultHidden: false,
      },
      [DefaultTagID.DM]: {
@@ -38,7 +38,7 @@ index 4d6cf9a..9c81549 100644
                          <SettingsSubsectionText>
                              {_t("settings|sidebar|metaspaces_people_description")}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
-index 4750b99..884a146 100644
+index 81d1e3d..9e7f739 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/spaces/QuickSettingsButton.tsx
 @@ -107,7 +107,9 @@ const QuickSettingsButton: React.FC<{

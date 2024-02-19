@@ -1,16 +1,16 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-index 0e7d8e8..dbede57 100644
+index 33d41b6..6e56572 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/MatrixChat.tsx
-@@ -147,6 +147,7 @@ import { Filter } from "../views/dialogs/spotlight/Filter";
- import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
+@@ -148,6 +148,7 @@ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
  import { SessionLockStolenView } from "./auth/SessionLockStolenView";
  import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
+ import { LoginSplashView } from "./auth/LoginSplashView";
 +import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
  
  // legacy export
  export { default as Views } from "../../Views";
-@@ -1769,6 +1770,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
+@@ -1770,6 +1771,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
              return;
          }
  
@@ -27,10 +27,10 @@ index 0e7d8e8..dbede57 100644
              dis.dispatch({
                  action: "start_registration",
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-index 91791e6..194df53 100644
+index d283d63..aff5fd6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CrossSigningPanel.tsx
-@@ -228,14 +228,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -227,14 +227,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              userSigningPrivateKeyCached;
  
          const actions: JSX.Element[] = [];
@@ -54,7 +54,7 @@ index 91791e6..194df53 100644
                  <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
                      {buttonCaption}
                  </AccessibleButton>,
-@@ -243,7 +250,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -242,7 +249,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
          }
  
          if (keysExistAnywhere) {
@@ -65,7 +65,7 @@ index 91791e6..194df53 100644
                  <AccessibleButton key="reset" kind="danger" onClick={this.onResetCrossSigningClick}>
                      {_t("action|reset")}
                  </AccessibleButton>,
-@@ -255,6 +264,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -254,6 +263,13 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
              actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
          }
  
@@ -79,7 +79,7 @@ index 91791e6..194df53 100644
          return (
              <>
                  {summarisedStatus}
-@@ -312,6 +328,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
+@@ -311,6 +327,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                              </tr>
                          </tbody>
                      </table>

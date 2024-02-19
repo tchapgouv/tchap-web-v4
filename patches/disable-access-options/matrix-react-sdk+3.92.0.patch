@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
-index bc573ec..8f885e6 100644
+index 6ac686e..69ded77 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx
 @@ -255,6 +255,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
@@ -39,4 +39,4 @@ index bc573ec..8f885e6 100644
 +        // end :TCHAP:
  
          let encryptionSettings: JSX.Element | undefined;
-         if (isEncrypted && SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
+         if (

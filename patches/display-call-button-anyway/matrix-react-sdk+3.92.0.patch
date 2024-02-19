@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts b/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts
-index c1438ea..e53d147 100644
+index fb76bdd..1532014 100644
 --- a/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts
 +++ b/node_modules/matrix-react-sdk/src/hooks/room/useRoomCall.ts
-@@ -190,8 +190,12 @@ export const useRoomCall = (
+@@ -231,8 +231,12 @@ export const useRoomCall = (
      let videoCallDisabledReason: string | null;
      switch (state) {
          case State.NoPermission:
