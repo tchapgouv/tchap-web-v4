@@ -145,7 +145,7 @@ index 1eb0379..90955dd 100644
  
  /**
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
-index 3c8241d..a8fb0fd 100644
+index 3c8241d..e947b3b 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
 @@ -28,6 +28,9 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -158,13 +158,14 @@ index 3c8241d..a8fb0fd 100644
  const MAX_NON_NARROW_WIDTH = (450 / 70) * 100;
  
  interface IProps {
-@@ -264,6 +267,24 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
+@@ -264,6 +267,25 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
          );
      }
  
 +    private onReportBugClick = (): void => {
 +        Modal.createDialog(BugReportDialog, {
 +            initialText: _t("tchap_voip_bug_report_prefill"),
++            label: "voip",
 +        });
 +    };
 +
@@ -183,7 +184,7 @@ index 3c8241d..a8fb0fd 100644
      public render(): React.ReactNode {
          const event = this.props.mxEvent;
          const sender = event.sender ? event.sender.name : event.getSender();
-@@ -300,6 +321,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
+@@ -300,6 +322,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                          </div>
                      </div>
                      {content}
