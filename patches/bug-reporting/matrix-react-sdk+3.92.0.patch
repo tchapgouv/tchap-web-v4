@@ -144,6 +144,51 @@ index 1eb0379..90955dd 100644
  };
  
  /**
+diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
+index 3c8241d..6405217 100644
+--- a/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
++++ b/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
+@@ -28,6 +28,9 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+ import { formatPreciseDuration } from "../../../DateUtils";
+ import Clock from "../audio_messages/Clock";
+ 
++import Modal from "matrix-react-sdk/src/Modal"; // :TCHAP:
++import BugReportDialog from "matrix-react-sdk/src/components/views/dialogs/BugReportDialog"; // :TCHAP:
++
+ const MAX_NON_NARROW_WIDTH = (450 / 70) * 100;
+ 
+ interface IProps {
+@@ -264,6 +267,22 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
+         );
+     }
+ 
++    private onReportBugClick = (): void => {
++        Modal.createDialog(BugReportDialog, {});
++    };
++
++    private renderBugReportButton(): JSX.Element {
++        return (
++            <AccessibleButton
++                className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_callBack"
++                onClick={this.onReportBugClick}
++                kind="primary"
++            >
++                <span> {_t("Report a problem")} </span>
++            </AccessibleButton>
++        );
++    }
++
+     public render(): React.ReactNode {
+         const event = this.props.mxEvent;
+         const sender = event.sender ? event.sender.name : event.getSender();
+@@ -300,6 +319,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
+                         </div>
+                     </div>
+                     {content}
++                    {this.renderBugReportButton()}
+                 </div>
+             </div>
+         );
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 index d15f3d9..7c7f6d8 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts

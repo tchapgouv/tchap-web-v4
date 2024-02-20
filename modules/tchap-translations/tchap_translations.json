@@ -713,5 +713,9 @@
     "widget|error_need_kick_permission": {
         "en": "You need to be able to kick users to do that.",
         "fr": "Vous devez avoir l’autorisation de retirer des utilisateurs pour faire ceci."
+    },
+    "Report a problem": {
+        "en": "Report a problem",
+        "fr": "Signaler un problème"
     }
 }
