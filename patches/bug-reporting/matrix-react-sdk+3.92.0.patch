@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 5d826f2..5163137 100644
+index 5d826f2..e3ec671 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -32,7 +32,7 @@ index 5d826f2..5163137 100644
  
          const userText =
              (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
-@@ -111,11 +121,24 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -111,11 +121,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
          this.setState({ busy: true, progress: null, err: null });
          this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
  
@@ -48,6 +48,10 @@ index 5d826f2..5163137 100644
 +            result.threepids.forEach(threepid => {
 +                return customFields[threepid.medium] = threepid.address;
 +            });
++            // is this a voip report ? Add it in "context" field
++            if (this.props.label === 'voip') {
++                customFields.context = 'voip';
++            }
 +            return customFields;
 +        }).then(customFields => {
 +            return sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
@@ -62,7 +66,7 @@ index 5d826f2..5163137 100644
          }).then(
              () => {
                  if (!this.unmounted) {
-@@ -150,6 +173,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -150,6 +177,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  sendLogs: true,
                  progressCallback: this.downloadProgressCallback,
                  labels: this.props.label ? [this.props.label] : [],
@@ -70,7 +74,7 @@ index 5d826f2..5163137 100644
              });
  
              this.setState({
-@@ -214,6 +238,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -214,6 +242,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              );
          }
  
@@ -124,7 +128,7 @@ index 5d826f2..5163137 100644
          return (
              <BaseDialog
                  className="mx_BugReportDialog"
-@@ -281,5 +352,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -281,5 +356,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  />
              </BaseDialog>
          );
