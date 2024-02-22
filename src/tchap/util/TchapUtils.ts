@@ -238,4 +238,37 @@ export default class TchapUtils {
         }
         return false;
     }
+
+    /**
+     * Whether the user is currently using a bluetooth audio input (bluetooth headset for example).
+     * In Chrome we can get the information sometimes, and in Firefox and Edge we don't know.
+     * @returns true if we are sure user is currently using a bluetooth audio input. False if no blutooth, or we don't know.
+     */
+    static async isCurrentlyUsingBluetooth(): Promise<boolean> {
+        if (!navigator.mediaDevices?.enumerateDevices) {
+            console.log("enumerateDevices() not supported. Cannot know if there is a bluetooth device.");
+            return false;
+        } else {
+            // List cameras and microphones.
+            return navigator.mediaDevices
+                .enumerateDevices()
+                .then((devices) => {
+                    let hasBluetooth = false;
+                    devices.forEach((device) => {
+                        console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+                        if (device.kind === "audioinput") {
+                            if (device.label.toLowerCase().includes("bluetooth")) {
+                                hasBluetooth = true;
+                            }
+                        }
+                    });
+                    return hasBluetooth;
+                })
+                .catch((err) => {
+                    console.error(`${err.name}: ${err.message}`);
+                    return false;
+                });
+        }
+    }
+
 }
