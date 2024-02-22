@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 5d826f2..e3ec671 100644
+index 5d826f2..c0008ea 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -49,8 +49,8 @@ index 5d826f2..e3ec671 100644
 +                return customFields[threepid.medium] = threepid.address;
 +            });
 +            // is this a voip report ? Add it in "context" field
-+            if (this.props.label === 'voip') {
-+                customFields.context = 'voip';
++            if (this.props.label === "voip-feedback") {
++                customFields.context = "voip";
 +            }
 +            return customFields;
 +        }).then(customFields => {
@@ -149,7 +149,7 @@ index 1eb0379..90955dd 100644
  
  /**
 diff --git a/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx b/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
-index 3c8241d..414e7cd 100644
+index 3c8241d..cdd9a83 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/messages/LegacyCallEvent.tsx
 @@ -28,6 +28,10 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -178,7 +178,7 @@ index 3c8241d..414e7cd 100644
 +    private onReportBugClick = (): void => {
 +        Modal.createDialog(BugReportDialog, {
 +            initialText: _t("tchap_voip_bug_report_prefill"),
-+            label: "voip",
++            label: "voip-feedback",
 +        });
 +    };
 +
