@@ -238,4 +238,35 @@ export default class TchapUtils {
         }
         return false;
     }
+
+    /**
+     * @returns true if we are sure user is currently using a bluetooth audio input. In many cases we don't know, and return false.
+     */
+    static async isCurrentlyUsingBluetooth(): Promise<boolean> {
+        if (!navigator.mediaDevices?.enumerateDevices) {
+            console.log("enumerateDevices() not supported. Cannot know if there is a bluetooth device.");
+            return false;
+        } else {
+            // List cameras and microphones.
+            return navigator.mediaDevices
+                .enumerateDevices()
+                .then((devices) => {
+                    let hasBluetooth = false;
+                    devices.forEach((device) => {
+                        console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+                        if (device.kind === "audioinput") {
+                            if (device.label.toLowerCase().includes("bluetooth")) {
+                                hasBluetooth = true;
+                            }
+                        }
+                    });
+                    return hasBluetooth;
+                })
+                .catch((err) => {
+                    console.error(`${err.name}: ${err.message}`);
+                    return false;
+                });
+        }
+    }
+
 }

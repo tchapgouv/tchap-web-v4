@@ -1,16 +1,17 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 5d826f2..c0008ea 100644
+index 5d826f2..51baf28 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-@@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
+@@ -32,6 +32,8 @@ import DialogButtons from "../elements/DialogButtons";
  import { sendSentryReport } from "../../../sentry";
  import defaultDispatcher from "../../../dispatcher/dispatcher";
  import { Action } from "../../../dispatcher/actions";
 +import { MatrixClientPeg } from '../../../MatrixClientPeg';  // :TCHAP:
++import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP:
  
  interface IProps {
      onFinished: (success: boolean) => void;
-@@ -96,12 +97,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -96,12 +98,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
      };
  
      private onSubmit = (): void => {
@@ -32,7 +33,7 @@ index 5d826f2..c0008ea 100644
  
          const userText =
              (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
-@@ -111,11 +121,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -111,11 +122,34 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
          this.setState({ busy: true, progress: null, err: null });
          this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
  
@@ -43,16 +44,22 @@ index 5d826f2..c0008ea 100644
 -            labels: this.props.label ? [this.props.label] : [],
 +        // :TCHAP: customise report : add email, prefix with "tchap-web"
 +        const client = MatrixClientPeg.get();
++        const customFields = {};
 +        client.getThreePids().then(result => {
-+            const customFields = {};
 +            result.threepids.forEach(threepid => {
 +                return customFields[threepid.medium] = threepid.address;
 +            });
++            return customFields;
++        }).then(customFields => {
 +            // is this a voip report ? Add it in "context" field
 +            if (this.props.label === "voip-feedback") {
 +                customFields.context = "voip";
 +            }
-+            return customFields;
++
++            return TchapUtils.isCurrentlyUsingBluetooth().then(isCurrentlyUsingBluetooth => {
++                customFields.audio_input = isCurrentlyUsingBluetooth ? "headset_bluetooth" : "device";
++                return customFields;
++            })
 +        }).then(customFields => {
 +            return sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
 +                userText,
@@ -66,7 +73,7 @@ index 5d826f2..c0008ea 100644
          }).then(
              () => {
                  if (!this.unmounted) {
-@@ -150,6 +177,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -150,6 +184,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  sendLogs: true,
                  progressCallback: this.downloadProgressCallback,
                  labels: this.props.label ? [this.props.label] : [],
@@ -74,7 +81,7 @@ index 5d826f2..c0008ea 100644
              });
  
              this.setState({
-@@ -214,6 +242,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -214,6 +249,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              );
          }
  
@@ -128,7 +135,7 @@ index 5d826f2..c0008ea 100644
          return (
              <BaseDialog
                  className="mx_BugReportDialog"
-@@ -281,5 +356,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -281,5 +363,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  />
              </BaseDialog>
          );
