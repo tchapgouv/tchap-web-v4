@@ -241,7 +241,7 @@ export default class TchapUtils {
 
     /**
      * Whether the user is currently using a bluetooth audio input (bluetooth headset for example).
-     * In Chrome we can get the information, but in Firefox and Edge we don't know.
+     * In Chrome we can get the information sometimes, and in Firefox and Edge we don't know.
      * @returns true if we are sure user is currently using a bluetooth audio input. False if no blutooth, or we don't know.
      */
     static async isCurrentlyUsingBluetooth(): Promise<boolean> {
