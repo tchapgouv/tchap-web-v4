@@ -719,7 +719,7 @@
         "fr": "Signaler un problème"
     },
     "tchap_voip_bug_report_prefill": {
-        "en": "Congratulations, your account has been renewed",
-        "fr": "Sujet: problème sur appel Tchap. \nPouver-vous donner des détails?\n\nJe suis connecté en : WIFI / VPN / sur la 4G d'un portable / AUTRE\nJe suis sur : AU TRAVAIL / AILLEURS\nDétails du problème : ..."
+        "en": "I had a problem during a Tchap call.\nDetails: ...",
+        "fr": "J'ai eu un problème pendant un appel Tchap.\nDétails : ..."
     }
 }
