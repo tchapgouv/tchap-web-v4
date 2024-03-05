@@ -663,7 +663,7 @@
         "fr": "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
     },
     "threads|unable_to_decrypt": {
-        "en": "Waiting for this message to be decrypted...",
+        "en": "Decrypting...",
         "fr": "Déchiffrement en cours..."
     },
     "threads|unable_to_decrypt_with_info_message": {
