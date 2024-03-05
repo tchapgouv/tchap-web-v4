@@ -667,7 +667,7 @@
         "fr": "Déchiffrement en cours..."
     },
     "threads|unable_to_decrypt_with_info_message": {
-        "en": "Waiting for this message to be decrypted... <a>Find out more</a>",
+        "en": "Decrypting... <a>Find out more</a>",
         "fr": "Déchiffrement en cours... <a>En savoir plus</a>"
     },
     "user_info|ban_button_room": { "en": "Ban from room", "fr": "Interdire l’accès au salon (définitif)" },
