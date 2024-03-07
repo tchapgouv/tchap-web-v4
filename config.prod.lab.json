@@ -150,7 +150,7 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
-        "UIFeature.locationSharing": false,
+        "UIFeature.locationSharing": true,
         "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
@@ -158,6 +158,7 @@
         "custom_themes": [],
         "FTUE.useCaseSelection": "WorkMessaging"
     },
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
         "auth_footer_links": [
