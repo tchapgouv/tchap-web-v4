@@ -9,6 +9,8 @@ export enum TchapRoomType {
 export enum TchapRoomAccessRule {
     Unrestricted = "unrestricted", // accessible to externals
     Restricted = "restricted", // not accessible to externals
+    Public = "public",
+    Invite = "invite",
 }
 
 export interface TchapIAccessRuleEventContent {
