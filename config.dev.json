@@ -51,6 +51,7 @@
         "https://matrix.dev02.tchap.incubateur.net": false,
         "https://matrix.ext01.tchap.incubateur.net": false
     },
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "setting_defaults": {
         "breadcrumbs": true,
         "UIFeature.voip": true,
@@ -70,7 +71,6 @@
         "custom_themes": [],
         "FTUE.useCaseSelection": "WorkMessaging"
     },
-    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo-dev.svg",
         "auth_footer_links": [
