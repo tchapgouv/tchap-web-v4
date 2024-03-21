@@ -14,20 +14,17 @@ describe("<UserMenu>", () => {
     beforeEach(() => {
         client = stubClient();
         sdkContext = new TestSdkContext();
-
     });
 
     describe("<UserMenu> UI", () => {
-
         beforeEach(() => {
             const UserMenu = wrapInSdkContext(UnwrappedUserMenu, sdkContext);
             render(<UserMenu isPanelCollapsed={false} />);
-        })
+        });
 
         // If this snapshot change, you should consider to check what change on the UI side from element
         // it"s a good indicator to see if this could introduce some regression on our code
         it("should render as expected", async () => {
-
             // open the user menu
             screen.getByRole("button", { name: "a11y" }).click();
 
@@ -39,12 +36,12 @@ describe("<UserMenu>", () => {
         // ...
     });
 
-    // Here you can add some business logic check 
+    // Here you can add some business logic check
     describe("<UserMenu> faq", () => {
         beforeEach(() => {
             const UserMenu = wrapInSdkContext(UnwrappedUserMenu, sdkContext);
             render(<UserMenu isPanelCollapsed={true} />);
-        })
+        });
 
         it("should open the faq when clicking on the faq button", () => {
             global.open = jest.fn();
@@ -54,11 +51,9 @@ describe("<UserMenu>", () => {
             screen.getByRole("menuitem", { name: "common" }).click();
             expect(global.open).toHaveBeenCalledTimes(1);
             expect(global.open).toHaveBeenCalledWith("https://www.tchap.gouv.fr/faq", "_blank");
-        })
+        });
     });
 
     // Here are the tests for checking the props of the component
-    describe("<UserMenu> props", () => {
-        
-    })
+    describe("<UserMenu> props", () => {});
 });
