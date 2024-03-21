@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import UnwrappedUserMenu from "~tchap-web-dep/matrix-react-sdk/src/components/structures/UserMenu";
 import { TestSdkContext } from "~tchap-web-dep/matrix-react-sdk/test/TestSdkContext";
 import { stubClient, wrapInSdkContext } from "~tchap-web-dep/matrix-react-sdk/test/test-utils";
-import { MatrixClient } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/matrix";
+import { MatrixClient } from "~tchap-web-dep/matrix-js-sdk/src/matrix";
 
 describe("<UserMenu>", () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
