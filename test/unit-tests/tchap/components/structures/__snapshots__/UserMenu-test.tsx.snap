@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
+<div
+  class="mx_ContextualMenu"
+  role="menu"
+>
+  <ul
+    class="mx_IconizedContextMenu mx_UserMenu_contextMenu"
+    role="none"
+  >
+    <div
+      class="mx_UserMenu_contextMenu_header"
+    >
+      <div
+        class="mx_UserMenu_contextMenu_name"
+      >
+        <span
+          class="mx_UserMenu_contextMenu_displayName"
+        />
+        <span
+          class="mx_UserMenu_contextMenu_userId"
+        >
+          @userId:matrix.org
+        </span>
+      </div>
+      <div
+        aria-label="user_menu"
+        class="mx_AccessibleButton mx_UserMenu_contextMenu_themeButton"
+        role="button"
+        tabindex="-1"
+      >
+        <img
+          alt=""
+          role="presentation"
+          src="image-file-stub"
+          width="16"
+        />
+      </div>
+    </div>
+    <div
+      class="mx_IconizedContextMenu_optionList mx_IconizedContextMenu_optionList_notFirst"
+    >
+      <li
+        aria-label="notifications"
+        class="mx_AccessibleButton mx_IconizedContextMenu_item"
+        role="menuitem"
+        tabindex="0"
+      >
+        <span
+          class="mx_IconizedContextMenu_icon mx_UserMenu_iconBell"
+        />
+        <span
+          class="mx_IconizedContextMenu_label"
+        >
+          notifications
+        </span>
+      </li>
+      <li
+        aria-label="room_settings"
+        class="mx_AccessibleButton mx_IconizedContextMenu_item"
+        role="menuitem"
+        tabindex="-1"
+      >
+        <span
+          class="mx_IconizedContextMenu_icon mx_UserMenu_iconLock"
+        />
+        <span
+          class="mx_IconizedContextMenu_label"
+        >
+          room_settings
+        </span>
+      </li>
+      <li
+        aria-label="user_menu"
+        class="mx_AccessibleButton mx_IconizedContextMenu_item"
+        role="menuitem"
+        tabindex="-1"
+      >
+        <span
+          class="mx_IconizedContextMenu_icon mx_UserMenu_iconSettings"
+        />
+        <span
+          class="mx_IconizedContextMenu_label"
+        >
+          user_menu
+        </span>
+      </li>
+      <li
+        aria-label="common"
+        class="mx_AccessibleButton mx_IconizedContextMenu_item"
+        role="menuitem"
+        tabindex="-1"
+      >
+        <span
+          class="mx_IconizedContextMenu_icon mx_UserMenu_iconInfo"
+        />
+        <span
+          class="mx_IconizedContextMenu_label"
+        >
+          common
+        </span>
+      </li>
+      <li
+        aria-label="action"
+        class="mx_AccessibleButton mx_IconizedContextMenu_option_red mx_IconizedContextMenu_item"
+        role="menuitem"
+        tabindex="-1"
+      >
+        <span
+          class="mx_IconizedContextMenu_icon mx_UserMenu_iconSignOut"
+        />
+        <span
+          class="mx_IconizedContextMenu_label"
+        >
+          action
+        </span>
+      </li>
+    </div>
+  </ul>
+</div>
+`;
