@@ -190,14 +190,14 @@ index 3c8241d..cdd9a83 100644
          const event = this.props.mxEvent;
          const sender = event.sender ? event.sender.name : event.getSender();
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index d15f3d9..fe42588 100644
+index d15f3d9..7b8cb62 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 @@ -66,7 +66,17 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
  
      const body = new FormData();
      body.append("text", opts.userText || "User did not supply any additional text.");
-+    /* :TCHAP: rename app and add email
++    /* :TCHAP: rename app and add email - for bugreport reageshakes
      body.append("app", opts.customApp || "element-web");
 +    */
 +    body.append("app", "tchap-web");
@@ -215,7 +215,7 @@ index d15f3d9..fe42588 100644
      body.append("text", comment);
      body.append("can_contact", canContact ? "yes" : "no");
  
-+    /* :TCHAP: rename app and add email
++    /* :TCHAP: rename app and add email - for feedback rageshakes
      body.append("app", "element-web");
 +    */
 +    body.append("app", "tchap-web");
