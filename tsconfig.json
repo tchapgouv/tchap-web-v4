@@ -13,6 +13,7 @@
         "declaration": true,
         "jsx": "react",
         "lib": ["es2021", "dom", "dom.iterable"],
+<<<<<<< HEAD
         "strict": true,
         /* :TCHAP: */
         "paths": {
@@ -21,6 +22,9 @@
         },
         "types": ["node", "jest", "@testing-library/jest-dom"],
         /* end :TCHAP: */
+=======
+        "strict": true
+>>>>>>> v1.11.61
     },
     "include": [
         "./node_modules/matrix-js-sdk/src/@types/*.d.ts",
@@ -33,12 +37,12 @@
         "./src/**/*.tsx",
         "./test/**/*.ts",
         "./test/**/*.tsx",
-        "./scripts/*.ts",
+        "./scripts/*.ts"
     ],
     "ts-node": {
         "files": true,
         "moduleTypes": {
-            "*": "cjs",
-        },
-    },
+            "*": "cjs"
+        }
+    }
 }
