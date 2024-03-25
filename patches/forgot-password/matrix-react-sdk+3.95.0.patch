@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
-index 9487fc5..0177f0a 100644
+index 9487fc5..f9a0d5e 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/ForgotPassword.tsx
 @@ -42,6 +42,8 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
@@ -75,7 +75,7 @@ index 9487fc5..0177f0a 100644
 +            });
 +            return;
 +        }
-+        const serverConfig = TchapUtils.makeValidatedServerConfig(serverResult);
++        const serverConfig = await TchapUtils.makeValidatedServerConfig(serverResult);
 +        await this.useNewServerConfig(serverConfig);
 +        // end :TCHAP:
 +

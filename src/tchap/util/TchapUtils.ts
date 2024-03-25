@@ -5,6 +5,7 @@ import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServe
 import { findMapStyleUrl } from "matrix-react-sdk/src/utils/location";
 
 import TchapApi from "./TchapApi";
+import { ClientConfig } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/autodiscovery";
 
 /**
  * Tchap utils.
@@ -107,8 +108,8 @@ export default class TchapUtils {
      * @param
      * @returns
      */
-    static makeValidatedServerConfig = (serverConfig): ValidatedServerConfig => {
-        const discoveryResult = {
+    static makeValidatedServerConfig = async (serverConfig: Record<string, any>): Promise<ValidatedServerConfig> => {
+        const discoveryResult: ClientConfig = {
             "m.homeserver": {
                 state: "SUCCESS",
                 error: null,
@@ -121,8 +122,8 @@ export default class TchapUtils {
                 base_url: serverConfig.base_url, // On Tchap our Identity server urls and home server urls are the same
                 server_name: serverConfig.server_name,
             },
-        };
-        const validatedServerConf = AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
+        } as ClientConfig;
+        const validatedServerConf = await AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(
             discoveryResult["m.homeserver"].server_name,
             discoveryResult,
         );
