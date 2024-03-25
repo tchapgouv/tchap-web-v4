@@ -1,12 +1,8 @@
 {
     "name": "element-web",
-<<<<<<< HEAD
     "productName": "Tchap",
     "version": "4.4.3",
-    "version-element-web": "1.11.58",
-=======
-    "version": "1.11.61",
->>>>>>> v1.11.61
+    "version-element-web": "1.11.61",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
     "repository": {
@@ -169,17 +165,12 @@
         "@types/testing-library__jest-dom": "^6.0.0",
         "@types/ua-parser-js": "^0.7.36",
         "@types/uuid": "^9.0.7",
-<<<<<<< HEAD
-        "@typescript-eslint/eslint-plugin": "^6.0.0",
-        "@typescript-eslint/parser": "^6.0.0",
+        "@typescript-eslint/eslint-plugin": "^7.0.0",
+        "@typescript-eslint/parser": "^7.0.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
         "allchange": "^1.0.6",
         "autoprefixer": "^10.4.8",
         "axe-core": "^4.4.3",
-=======
-        "@typescript-eslint/eslint-plugin": "^7.0.0",
-        "@typescript-eslint/parser": "^7.0.0",
->>>>>>> v1.11.61
         "babel-jest": "^29.0.0",
         "babel-loader": "^9.0.0",
         "babel-plugin-jsx-remove-data-test-id": "^3.0.0",
@@ -188,16 +179,11 @@
         "concurrently": "^8.0.0",
         "copy-webpack-plugin": "^12.0.0",
         "cronstrue": "^2.41.0",
-<<<<<<< HEAD
-        "css-loader": "^5.2.7",
-        "css-minimizer-webpack-plugin": "^5.0.1",
+        "css-loader": "^6.0.0",
+        "css-minimizer-webpack-plugin": "^6.0.0",
         "cypress": "^13.0.0",
         "cypress-axe": "^1.0.0",
         "cypress-real-events": "^1.7.1",
-=======
-        "css-loader": "^6.0.0",
-        "css-minimizer-webpack-plugin": "^6.0.0",
->>>>>>> v1.11.61
         "dotenv": "^16.0.2",
         "enzyme": "^3.11.0",
         "enzyme-to-json": "^3.6.2",
@@ -227,12 +213,8 @@
         "mkdirp": "^3.0.0",
         "modernizr": "3.12.0",
         "node-fetch": "^2.6.7",
-<<<<<<< HEAD
         "patch-package": "^8.0.0",
-        "postcss": "^8.4.31",
-=======
         "postcss": "8.4.33",
->>>>>>> v1.11.61
         "postcss-easings": "^2.0.0",
         "postcss-hexrgba": "2.0.1",
         "postcss-import": "16.0.0",
