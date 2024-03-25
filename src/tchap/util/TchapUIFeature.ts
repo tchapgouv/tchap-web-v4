@@ -28,20 +28,25 @@ export default class TchapUIFeature {
     public static activateClearCacheAndReloadAtVersion4 = true;
 
     /**
-        get list of homeservers where the feature should be activated from config.json
-        example
-         for feature : feature_email_notification
-         add this in config.json
-         {..
-         "tchap":{
-                "feature_email_notification": ["dev01.tchap.incubateur.net"]
-            }
-            ..
-        }
+     * Whether the given feature is active on the current user's homeserver.
+     * We get the list of homeservers where the feature should be activated from config.json
+     * Example : add this in config.json
+     *     {..
+     *         "tchap_features":{
+     *             "feature_email_notification": ["dev01.tchap.incubateur.net"] // only dev01 has the feature
+     *             "feature_thread": ["*"] // all servers have the feature
+     *             "feature_space": ["*", "dev01.tchap.incubateur.net"] // all servers have the feature, 2rd arg is ignored.
+     *         }
+     *         ..
+     *     }
     */
     public static isFeatureActiveForHomeserver(feature:string):boolean {
-
         const homeserversWithFeature:[string] = SdkConfig.get("tchap_features")?.[feature] || [];
+
+        if (homeserversWithFeature.indexOf("*") > -1) {
+            return true;
+        }
+
         const userHomeServer = MatrixClientPeg.getHomeserverName();
         return homeserversWithFeature.includes(userHomeServer);
     }
