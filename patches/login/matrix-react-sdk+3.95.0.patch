@@ -80,7 +80,7 @@ index 5fadde7..82e44bb 100644
                      {footer}
                  </AuthBody>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index 6f1635e..2d2b007 100644
+index 951262d..a4f2f41 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 @@ -50,6 +50,7 @@ interface IProps {

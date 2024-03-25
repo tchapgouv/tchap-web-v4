@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
-index 79eae26..d8d7395 100644
+index 3009c81..9c62640 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx
 @@ -58,6 +58,7 @@ import Heading from "../../../typography/Heading";
@@ -10,7 +10,7 @@ index 79eae26..d8d7395 100644
  
  interface IProps {
      closeSettingsFn: () => void;
-@@ -325,7 +326,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -326,7 +327,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
      private renderAccountSection(): JSX.Element {
          let threepidSection: ReactNode = null;
  
@@ -21,7 +21,7 @@ index 79eae26..d8d7395 100644
              const emails = this.state.loading3pids ? (
                  <InlineSpinner />
              ) : (
-@@ -533,7 +536,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
+@@ -534,7 +537,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
          }
  
          let discoverySection;

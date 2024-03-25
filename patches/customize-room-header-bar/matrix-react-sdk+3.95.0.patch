@@ -21,7 +21,7 @@ index bc66cd2..a5330af 100644
 +    display: -webkit-box;
 +}
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
-index 9ec6921..bdeca93 100644
+index 6d1ea9f..596e5fa 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomHeader.tsx
 @@ -55,6 +55,10 @@ import { RoomKnocksBar } from "./RoomKnocksBar";
@@ -35,7 +35,7 @@ index 9ec6921..bdeca93 100644
  export default function RoomHeader({
      room,
      additionalButtons,
-@@ -218,7 +222,14 @@ export default function RoomHeader({
+@@ -234,7 +238,14 @@ export default function RoomHeader({
                      }}
                      className="mx_RoomHeader_infoWrapper"
                  >
@@ -50,7 +50,7 @@ index 9ec6921..bdeca93 100644
                      <Box flex="1" className="mx_RoomHeader_info">
                          <BodyText
                              as="div"
-@@ -231,6 +242,7 @@ export default function RoomHeader({
+@@ -247,6 +258,7 @@ export default function RoomHeader({
                          >
                              <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
  
@@ -58,7 +58,7 @@ index 9ec6921..bdeca93 100644
                              {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
                                  <Tooltip label={_t("common|public_room")} side="right">
                                      <PublicIcon
-@@ -241,7 +253,9 @@ export default function RoomHeader({
+@@ -257,7 +269,9 @@ export default function RoomHeader({
                                      />
                                  </Tooltip>
                              )}
@@ -68,7 +68,7 @@ index 9ec6921..bdeca93 100644
                              {isDirectMessage && e2eStatus === E2EStatus.Verified && (
                                  <Tooltip label={_t("common|verified")} side="right">
                                      <VerifiedIcon
-@@ -252,7 +266,9 @@ export default function RoomHeader({
+@@ -268,7 +282,9 @@ export default function RoomHeader({
                                      />
                                  </Tooltip>
                              )}
@@ -78,7 +78,7 @@ index 9ec6921..bdeca93 100644
                              {isDirectMessage && e2eStatus === E2EStatus.Warning && (
                                  <Tooltip label={_t("room|header_untrusted_label")} side="right">
                                      <ErrorIcon
-@@ -263,6 +279,7 @@ export default function RoomHeader({
+@@ -279,6 +295,7 @@ export default function RoomHeader({
                                      />
                                  </Tooltip>
                              )}
@@ -86,7 +86,7 @@ index 9ec6921..bdeca93 100644
                          </BodyText>
                          {roomTopic && (
                              <BodyText
-@@ -300,8 +317,19 @@ export default function RoomHeader({
+@@ -316,8 +333,19 @@ export default function RoomHeader({
                          joinCallButton
                      ) : (
                          <>

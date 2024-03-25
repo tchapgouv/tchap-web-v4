@@ -12,10 +12,10 @@ index 8e8e4ce..bd2b4d3 100644
                      <SettingsSubsectionText>
                          {_t("space|preferences|show_people_in_space", {
 diff --git a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-index 9c1fad2..b595c35 100644
+index 28154c4..09f40ca 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/rooms/RoomList.tsx
-@@ -379,7 +379,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
+@@ -382,7 +382,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
          defaultHidden: false,
      },
      [DefaultTagID.DM]: {
