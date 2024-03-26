@@ -108,11 +108,7 @@
         }
     ],
     "tchap_features": {
-        "feature_email_notification": [
-            "dev01.tchap.incubateur.net",
-            "dev02.tchap.incubateur.net",
-            "ext01.tchap.incubateur.net"
-        ],
+        "feature_email_notification": ["*"],
         "feature_space": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"],
         "feature_thread": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"],
         "feature_audio_call": [
