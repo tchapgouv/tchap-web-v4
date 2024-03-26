@@ -51,6 +51,7 @@
         "https://matrix.dev02.tchap.incubateur.net": false,
         "https://matrix.ext01.tchap.incubateur.net": false
     },
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "setting_defaults": {
         "breadcrumbs": true,
         "UIFeature.voip": true,
@@ -62,7 +63,7 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
-        "UIFeature.locationSharing": false,
+        "UIFeature.locationSharing": true,
         "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
