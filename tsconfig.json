@@ -17,9 +17,9 @@
         /* :TCHAP: */
         "paths": {
             "~tchap-web/*": ["./*"],
-            "~tchap-web-dep/*": ["./yarn-linked-dependencies/*"],
+            "~tchap-web-dep/*": ["./yarn-linked-dependencies/*"]
         },
-        "types": ["node", "jest", "@testing-library/jest-dom"],
+        "types": ["node", "jest", "@testing-library/jest-dom"]
         /* end :TCHAP: */
     },
     "include": [
