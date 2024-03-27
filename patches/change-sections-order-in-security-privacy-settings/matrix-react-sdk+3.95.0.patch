@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
-index 13151d2..6814313 100644
+index 15ead0d..42116a6 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/CryptographyPanel.tsx
 @@ -72,6 +72,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
@@ -56,7 +56,7 @@ index 13151d2..6814313 100644
      private onExportE2eKeysClicked = (): void => {
          Modal.createDialogAsync(
 diff --git a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
-index 74511df..5b124a1 100644
+index 6d32f68..94785a8 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
 @@ -275,11 +275,20 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt

@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-react-sdk/src/IConfigOptions.ts b/node_modules/matrix-react-sdk/src/IConfigOptions.ts
-index 0781fca..de6c6de 100644
+index 501d8a3..19c2f3d 100644
 --- a/node_modules/matrix-react-sdk/src/IConfigOptions.ts
 +++ b/node_modules/matrix-react-sdk/src/IConfigOptions.ts
-@@ -213,3 +213,14 @@ export interface ISsoRedirectOptions {
+@@ -211,3 +211,14 @@ export interface ISsoRedirectOptions {
      immediate?: boolean;
      on_welcome_page?: boolean;
  }

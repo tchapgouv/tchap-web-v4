@@ -205,10 +205,10 @@ index 3c8241d..cdd9a83 100644
          const event = this.props.mxEvent;
          const sender = event.sender ? event.sender.name : event.getSender();
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index d15f3d9..7c7f6d8 100644
+index 5f2a399..3034aaa 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-@@ -334,12 +334,13 @@ export async function submitFeedback(
+@@ -412,12 +412,13 @@ export async function submitFeedback(
          version = await PlatformPeg.get()?.getAppVersion();
      } catch (err) {} // PlatformPeg already logs this.
  
@@ -223,7 +223,7 @@ index d15f3d9..7c7f6d8 100644
      body.append("version", version || "UNKNOWN");
      body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
      body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");
-@@ -349,6 +350,13 @@ export async function submitFeedback(
+@@ -427,6 +428,13 @@ export async function submitFeedback(
      }
  
      const bugReportEndpointUrl = SdkConfig.get().bug_report_endpoint_url;

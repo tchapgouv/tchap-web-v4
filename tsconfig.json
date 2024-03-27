@@ -17,9 +17,9 @@
         /* :TCHAP: */
         "paths": {
             "~tchap-web/*": ["./*"],
-            "~tchap-web-dep/*": ["./yarn-linked-dependencies/*"],
+            "~tchap-web-dep/*": ["./yarn-linked-dependencies/*"]
         },
-        "types": ["node", "jest", "@testing-library/jest-dom"],
+        "types": ["node", "jest", "@testing-library/jest-dom"]
         /* end :TCHAP: */
     },
     "include": [
@@ -33,12 +33,12 @@
         "./src/**/*.tsx",
         "./test/**/*.ts",
         "./test/**/*.tsx",
-        "./scripts/*.ts",
+        "./scripts/*.ts"
     ],
     "ts-node": {
         "files": true,
         "moduleTypes": {
-            "*": "cjs",
-        },
-    },
+            "*": "cjs"
+        }
+    }
 }
