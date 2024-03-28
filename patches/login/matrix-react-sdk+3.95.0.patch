@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
-index 5fadde7..82e44bb 100644
+index 5fadde7..0f81d32 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Login.tsx
 @@ -40,6 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
@@ -16,7 +16,7 @@ index 5fadde7..82e44bb 100644
      public isBusy = (): boolean => !!this.state.busy || !!this.props.busy;
  
 +    tchap_setServerInMemory = async (serverConfig) => {
-+        const validatedServerConf = TchapUtils.makeValidatedServerConfig(serverConfig);
++        const validatedServerConf = await TchapUtils.makeValidatedServerConfig(serverConfig);
 +
 +        // Simulate the end of the serverPicker component flow.
 +        this.props.onServerConfigChange(validatedServerConf);
@@ -80,7 +80,7 @@ index 5fadde7..82e44bb 100644
                      {footer}
                  </AuthBody>
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
-index 6f1635e..2d2b007 100644
+index 951262d..a4f2f41 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/PasswordLogin.tsx
 @@ -50,6 +50,7 @@ interface IProps {

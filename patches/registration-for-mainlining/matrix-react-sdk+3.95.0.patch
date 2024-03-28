@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
-index 4da7282..4928a4b 100644
+index 4da7282..751b266 100644
 --- a/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/structures/auth/Registration.tsx
 @@ -50,11 +50,15 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
@@ -24,7 +24,7 @@ index 4da7282..4928a4b 100644
      private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
 +        // :TCHAP: find the server corresponding to the entered email
 +        const server = await TchapUtils.fetchHomeserverForEmail(formVals.email);
-+        const validatedServerConfig = TchapUtils.makeValidatedServerConfig(server);
++        const validatedServerConfig = await TchapUtils.makeValidatedServerConfig(server);
 +        // Note : onServerConfigChange triggers a state change at the matrixChat level. All the children are rerendered.
 +        this.props.onServerConfigChange(validatedServerConfig);
 +        // end :TCHAP:
@@ -80,7 +80,7 @@ index 4da7282..4928a4b 100644
                      </div>
                      <div className="mx_Register_footerActions">
 diff --git a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
-index 8c17216..36f6ccb 100644
+index 6709b07..fe697e1 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/auth/RegistrationForm.tsx
 @@ -267,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState

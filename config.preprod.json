@@ -22,7 +22,7 @@
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
-    "brand": "TCHAP PREPROD",
+    "brand": "Tchap",
     "bug_report_endpoint_url": "https://matrix.i.tchap.gouv.fr/bugreports/submit",
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
@@ -103,7 +103,7 @@
         }
     ],
     "tchap_features": {
-        "feature_email_notification": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
+        "feature_email_notification": ["*"],
         "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_space": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_audio_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
