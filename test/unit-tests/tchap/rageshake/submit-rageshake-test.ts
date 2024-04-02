@@ -19,6 +19,9 @@ import { MatrixClientPeg } from "~tchap-web-dep/matrix-react-sdk/src/MatrixClien
 
 /**
  * Based on react-sdk's test, removed unused things. Maybe this test has more mocks than strictly necessary.
+ *
+ * Tests missing :
+ *  - submitFeedback adds email and appName to rageshake. (we are going to remoev submit feedback anyway, and code is not easily testable.)
  */
 describe("Rageshakes", () => {
     let mockClient: Mocked<MatrixClient>;
