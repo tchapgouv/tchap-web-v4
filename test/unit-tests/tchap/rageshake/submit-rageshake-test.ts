@@ -83,6 +83,19 @@ describe("Rageshakes", () => {
 
             expect(appName).toBe("tchap-web");
         });
+
+        // We did not customise the custom fields code, but we test to guard against changes of output if element changes
+        // custom field code.
+        it("should collect Tchap custom fields", async () => {
+            const formDataWithOpt = await collectBugReport({
+                customFields: {
+                    context: "voip",
+                    audio_input: "headset_bluetooth",
+                },
+            });
+            expect(formDataWithOpt.get("context")).toBe("voip");
+            expect(formDataWithOpt.get("audio_input")).toBe("headset_bluetooth");
+        });
     });
 
     describe("Credentials", () => {
