@@ -81,3 +81,6 @@ yarn link matrix-js-sdk
 # yarn link matrix-react-sdk
 yarn install --pure-lockfile
 
+
+cd ./linked-dependencies/matrix-react-sdk
+yarn install
