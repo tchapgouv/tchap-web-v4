@@ -33,6 +33,11 @@ describe("<BugReportDialog>", () => {
         await flushPromises(); // needed to run through all the chained promises in BugReportDialog.onSubmit
     };
 
+    it("should render as expected", async () => {
+        const component = render(<BugReportDialog initialText={userText} label={label} onFinished={() => {}} />);
+        expect(component).toMatchSnapshot();
+    });
+
     it("sends the bug report", async () => {
         // userText passed as prop. We don't test the user actually filling the textbox.
         const component = render(<BugReportDialog initialText={userText} label={label} onFinished={() => {}} />);
