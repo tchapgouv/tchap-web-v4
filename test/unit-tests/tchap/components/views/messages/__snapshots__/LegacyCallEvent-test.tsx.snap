@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LegacyCallEvent> shows 'Report a problem' button if the call ended cleanly 1`] = `
+<div
+  class="mx_AccessibleButton mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_reportBug mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+  role="button"
+  tabindex="0"
+>
+  <span>
+     
+    Report a problem
+     
+  </span>
+</div>
+`;
