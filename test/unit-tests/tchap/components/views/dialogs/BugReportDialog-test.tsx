@@ -9,11 +9,7 @@ describe("<BugReportDialog>", () => {
     const bugReportUrl = "/bug/report/url";
     const userText = "halo i haz problem";
     const label = "mylabel";
-    // Mocking trick to mock a default export : use requireActual.
-    const actual = jest.requireActual(
-        "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/rageshake/submit-rageshake",
-    );
-    const sendBugReportSpy = jest.spyOn(actual, "default").mockResolvedValue(bugReportUrl);
+    let sendBugReportSpy;
 
     beforeAll(() => {
         SdkConfig.reset(); // in case other tests didn't clean up
@@ -22,6 +18,18 @@ describe("<BugReportDialog>", () => {
 
     afterAll(function () {
         SdkConfig.reset(); // we touch the config, so clean up
+    });
+
+    beforeEach(() => {
+        // Mocking trick to mock a default export : use requireActual.
+        const actual = jest.requireActual(
+            "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/rageshake/submit-rageshake",
+        );
+        sendBugReportSpy = jest.spyOn(actual, "default").mockResolvedValue(bugReportUrl);
+    });
+
+    afterEach(() => {
+        sendBugReportSpy.mockRestore();
     });
 
     const doSendLogs = async (component: RenderResult) => {
@@ -53,6 +61,18 @@ describe("<BugReportDialog>", () => {
                 sendLogs: true,
             }),
         );
+    });
+
+    it("does not send the bug report if no userText", async () => {
+        // No userText passed as prop.
+        const component = render(<BugReportDialog initialText="" label={label} onFinished={() => {}} />);
+
+        await doSendLogs(component);
+
+        expect(sendBugReportSpy).not.toHaveBeenCalled();
+        // Error should be displayed. We don't test the error text to allow flexibility if we change it.
+        const error = component.container.querySelector(".error");
+        expect(error).toBeTruthy(); // error should be found
     });
 
     it("adds voip fields in case of voip report", async () => {
