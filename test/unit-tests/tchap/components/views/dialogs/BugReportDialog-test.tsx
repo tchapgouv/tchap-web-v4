@@ -9,7 +9,7 @@ describe("<BugReportDialog>", () => {
     const bugReportUrl = "/bug/report/url";
     const userText = "halo i haz problem";
     const label = "mylabel";
-    let sendBugReportSpy;
+    let sendBugReportSpy: jest.SpyInstance;
 
     beforeAll(() => {
         SdkConfig.reset(); // in case other tests didn't clean up
