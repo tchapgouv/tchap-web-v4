@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 5d826f2..2a10bf9 100644
+index 5d826f2..ce14001 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -66,7 +66,7 @@ index 5d826f2..2a10bf9 100644
          }).then(
              () => {
                  if (!this.unmounted) {
-@@ -214,6 +241,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -214,6 +241,55 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              );
          }
  
@@ -92,13 +92,15 @@ index 5d826f2..2a10bf9 100644
 +                />
 +                {progress}
 +                {error}
-+                <DialogButtons
-+                    primaryButton={_t("bug_reporting|send_logs")}
-+                    onPrimaryButtonClick={this.onSubmit}
-+                    focus={true}
-+                    hasCancel={false}
-+                    disabled={this.state.busy}
-+                />
++                <div className="mx_BugReportDialog_send_logs">
++                    <DialogButtons
++                        primaryButton={_t("bug_reporting|send_logs")}
++                        onPrimaryButtonClick={this.onSubmit}
++                        focus={true}
++                        hasCancel={false}
++                        disabled={this.state.busy}
++                    />
++                </div>
 +
 +                <div className="mx_BugReportDialog_download">
 +                    <p>
@@ -120,7 +122,7 @@ index 5d826f2..2a10bf9 100644
          return (
              <BaseDialog
                  className="mx_BugReportDialog"
-@@ -281,5 +355,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -281,5 +357,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  />
              </BaseDialog>
          );
@@ -190,17 +192,26 @@ index 3c8241d..cdd9a83 100644
          const event = this.props.mxEvent;
          const sender = event.sender ? event.sender.name : event.getSender();
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index 5f2a399..f3b6d2e 100644
+index 5f2a399..abaaa24 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-@@ -102,7 +102,17 @@ async function collectBaseInformation(body: FormData, opts: IOpts): Promise<void
+@@ -102,7 +102,11 @@ async function collectBaseInformation(body: FormData, opts: IOpts): Promise<void
      const touchInput = matchesMediaQuery("(pointer: coarse)");
  
      body.append("text", opts.userText || "User did not supply any additional text.");
-+    /* :TCHAP: rename app and add email - for bugreport reageshakes
++    /* :TCHAP: rename app - for bugreport rageshakes
      body.append("app", opts.customApp || "element-web");
 +    */
 +    body.append("app", "tchap-web");
++    // end :TCHAP:
+     body.append("version", version ?? "UNKNOWN");
+     body.append("user_agent", userAgent);
+     body.append("installed_pwa", installedPWA);
+@@ -129,6 +133,15 @@ async function collectClientInfo(client: MatrixClient, body: FormData): Promise<
+         await collectRecoveryInfo(client, cryptoApi, body);
+     }
+ 
++    // :TCHAP: add user email - for bugreport rageshakes
 +    if(client) {
 +        const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
 +        result.threepids.forEach(threepid => {
@@ -208,10 +219,11 @@ index 5f2a399..f3b6d2e 100644
 +        });
 +    }
 +    // end :TCHAP:
-     body.append("version", version ?? "UNKNOWN");
-     body.append("user_agent", userAgent);
-     body.append("installed_pwa", installedPWA);
-@@ -417,7 +427,18 @@ export async function submitFeedback(
++
+     await collectSynapseSpecific(client, body);
+ }
+ 
+@@ -417,7 +430,18 @@ export async function submitFeedback(
      body.append("text", comment);
      body.append("can_contact", canContact ? "yes" : "no");
  
