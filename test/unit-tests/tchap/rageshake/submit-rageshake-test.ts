@@ -15,7 +15,6 @@ import {
     mockClientMethodsCrypto,
 } from "~tchap-web-dep/matrix-react-sdk/test/test-utils";
 import { collectBugReport } from "~tchap-web-dep/matrix-react-sdk/src/rageshake/submit-rageshake";
-import { MatrixClientPeg } from "~tchap-web-dep/matrix-react-sdk/src/MatrixClientPeg";
 
 /**
  * Based on react-sdk's test, removed unused things. Maybe this test has more mocks than strictly necessary.
