@@ -31,6 +31,18 @@ body {
     --username-colors_6: #3f81e3;
     --username-colors_7: #000091;
 
+    /* Compound colors. Compound is a dependency for matrix-react-sdk, which manages colors (and maybe other style things ?) */
+    --cpd-color-bg-accent-rest: var(--accent);
+    --cpd-color-bg-action-primary-rest: var(--accent);
+    --cpd-color-text-on-solid-primary: #ffffff;
+    --cpd-color-icon-accent-tertiary: var(--accent);
+
+    /* TODO default avatar colors are broken because of the switch to use Compound to manage colors.
+    Try something like this:
+    --cpd-color-bg-decorative-2: #7989a8;
+    --cpd-color-text-decorative-2: #ffffff;
+    Not sure if --avatar-background-colors_X and --username-colors_X are still useful, try removing them ?
+    */
     /* if using  getComputedStyle(document.body).getPropertyValue it's better to leave no space */
     /* stylelint-disable-next-line declaration-colon-space-after */
     --avatar-background-colors_0: #7989a8;
