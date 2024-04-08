@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BugReportDialog> should render as expected 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="0"
+      />
+      <div
+        aria-describedby="mx_Dialog_content"
+        aria-labelledby="mx_BaseDialog_title"
+        class="mx_BugReportDialog mx_Dialog_fixedWidth"
+        data-focus-lock-disabled="false"
+        role="dialog"
+      >
+        <div
+          class="mx_Dialog_header mx_Dialog_headerWithCancel"
+        >
+          <h1
+            class="mx_Heading_h3 mx_Dialog_title"
+            id="mx_BaseDialog_title"
+          >
+            Submit debug logs to Tchap support team
+          </h1>
+          <div
+            aria-label="dialog_close_label"
+            class="mx_AccessibleButton mx_Dialog_cancelButton"
+            role="button"
+            tabindex="0"
+          />
+        </div>
+        <div
+          class="mx_Dialog_content"
+          id="mx_Dialog_content"
+        >
+          <p>
+            bug_reporting
+          </p>
+          <div
+            class="mx_Field mx_Field_textarea mx_BugReportDialog_field_input"
+          >
+            <textarea
+              id="mx_Field_1"
+              label="bug_reporting"
+              placeholder="bug_reporting"
+              rows="5"
+              type="text"
+            >
+              halo i haz problem
+            </textarea>
+            <label
+              for="mx_Field_1"
+            >
+              bug_reporting
+            </label>
+          </div>
+          <div
+            class="mx_BugReportDialog_send_logs"
+          >
+            <div
+              class="mx_Dialog_buttons"
+            >
+              <span
+                class="mx_Dialog_buttons_row"
+              >
+                <button
+                  class="mx_Dialog_primary"
+                  data-testid="dialog-primary-button"
+                  type="button"
+                >
+                  bug_reporting
+                </button>
+              </span>
+            </div>
+          </div>
+          <div
+            class="mx_BugReportDialog_download"
+          >
+            <p>
+              Just want to get your own logs, without sharing them with the Tchap team?
+            </p>
+            <div
+              class="mx_Dialog_buttons"
+            >
+              <span
+                class="mx_Dialog_buttons_row"
+              >
+                <button
+                  class="mx_Dialog_primary"
+                  data-testid="dialog-primary-button"
+                  type="button"
+                >
+                  bug_reporting
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        data-focus-guard="true"
+        style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+        tabindex="0"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      aria-describedby="mx_Dialog_content"
+      aria-labelledby="mx_BaseDialog_title"
+      class="mx_BugReportDialog mx_Dialog_fixedWidth"
+      data-focus-lock-disabled="false"
+      role="dialog"
+    >
+      <div
+        class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      >
+        <h1
+          class="mx_Heading_h3 mx_Dialog_title"
+          id="mx_BaseDialog_title"
+        >
+          Submit debug logs to Tchap support team
+        </h1>
+        <div
+          aria-label="dialog_close_label"
+          class="mx_AccessibleButton mx_Dialog_cancelButton"
+          role="button"
+          tabindex="0"
+        />
+      </div>
+      <div
+        class="mx_Dialog_content"
+        id="mx_Dialog_content"
+      >
+        <p>
+          bug_reporting
+        </p>
+        <div
+          class="mx_Field mx_Field_textarea mx_BugReportDialog_field_input"
+        >
+          <textarea
+            id="mx_Field_1"
+            label="bug_reporting"
+            placeholder="bug_reporting"
+            rows="5"
+            type="text"
+          >
+            halo i haz problem
+          </textarea>
+          <label
+            for="mx_Field_1"
+          >
+            bug_reporting
+          </label>
+        </div>
+        <div
+          class="mx_BugReportDialog_send_logs"
+        >
+          <div
+            class="mx_Dialog_buttons"
+          >
+            <span
+              class="mx_Dialog_buttons_row"
+            >
+              <button
+                class="mx_Dialog_primary"
+                data-testid="dialog-primary-button"
+                type="button"
+              >
+                bug_reporting
+              </button>
+            </span>
+          </div>
+        </div>
+        <div
+          class="mx_BugReportDialog_download"
+        >
+          <p>
+            Just want to get your own logs, without sharing them with the Tchap team?
+          </p>
+          <div
+            class="mx_Dialog_buttons"
+          >
+            <span
+              class="mx_Dialog_buttons_row"
+            >
+              <button
+                class="mx_Dialog_primary"
+                data-testid="dialog-primary-button"
+                type="button"
+              >
+                bug_reporting
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
