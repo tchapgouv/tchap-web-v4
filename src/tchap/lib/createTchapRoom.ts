@@ -3,6 +3,7 @@ import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import { HistoryVisibility, JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
+import { Room } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/matrix";
 
 export const DEFAULT_FEDERATE_VALUE = true;
 
@@ -23,6 +24,15 @@ export default class TchapCreateRoom {
         const opts: IOpts = {};
         const createRoomOpts: ICreateRoomOpts = {};
         opts.createOpts = createRoomOpts;
+
+        /**
+         * TODO(estelle) RoomType is new. Passed as props to CreateRoomDialog.
+         * export enum RoomType {
+            Space = "m.space",
+            UnstableCall = "org.matrix.msc3417.call",
+            ElementVideo = "io.element.video",
+            }
+         */
 
         //tchap common options
         createRoomOpts.name = name;

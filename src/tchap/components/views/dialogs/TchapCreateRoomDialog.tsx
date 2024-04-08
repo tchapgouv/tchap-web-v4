@@ -36,6 +36,15 @@ interface IProps {
     defaultEncrypted?: boolean; // unused for Tchap version
     onFinished(proceed: boolean, opts?: IOpts): void;
 }
+/* TODO(estelle) element now has :
+    type?: RoomType; -> NEW
+    defaultPublic?: boolean;
+    defaultName?: string;
+    parentSpace?: Room;
+    defaultEncrypted?: boolean;
+    onFinished(proceed?: false): void;
+    onFinished(proceed: true, opts: IOpts): void; -> why twice ?
+*/
 
 interface IState {
     name: string;
@@ -49,7 +58,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     private nameField = createRef<Field>();
     private readonly createRoomInSpace: boolean;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
         this.createRoomInSpace = !!this.props.parentSpace;
 
@@ -59,7 +68,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             name: this.props.defaultName || "",
             nameIsValid: false,
             tchapRoomType: TchapRoomType.Private,
-            forumFederationSwitchValue: federationOptions.forumFederationSwitchDefaultValue,
+            forumFederationSwitchValue: !!federationOptions.forumFederationSwitchDefaultValue,
             showFederateSwitch: federationOptions.showForumFederationSwitch,
         };
     }
