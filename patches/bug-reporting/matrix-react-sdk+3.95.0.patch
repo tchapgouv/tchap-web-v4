@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
-index 5d826f2..ce14001 100644
+index 5d826f2..c7df84a 100644
 --- a/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 +++ b/node_modules/matrix-react-sdk/src/components/views/dialogs/BugReportDialog.tsx
 @@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
@@ -32,7 +32,7 @@ index 5d826f2..ce14001 100644
  
          const userText =
              (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
-@@ -111,11 +121,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -111,11 +121,27 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
          this.setState({ busy: true, progress: null, err: null });
          this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
  
@@ -43,17 +43,16 @@ index 5d826f2..ce14001 100644
 -            labels: this.props.label ? [this.props.label] : [],
 +        // :TCHAP: add custom fields if it's a voip report
 +        Promise.resolve().then(() => {
-+            if (this.props.label === "voip-feedback") {
-+                const customFields = {};
-+                customFields.context = "voip";
-+
-+                return TchapUtils.isCurrentlyUsingBluetooth().then(isCurrentlyUsingBluetooth => {
-+                    customFields.audio_input = isCurrentlyUsingBluetooth ? "headset_bluetooth" : "device";
-+                    return customFields;
-+                });
-+            } else {
-+                return {};
++            if (this.props.label !== "voip-feedback") {
++                return Promise.resolve({});
 +            }
++
++            const customFields: Record<string, string> = {};
++            customFields.context = "voip";
++            return TchapUtils.isCurrentlyUsingBluetooth().then(isCurrentlyUsingBluetooth => {
++                customFields.audio_input = isCurrentlyUsingBluetooth ? "headset_bluetooth" : "device";
++                return customFields;
++            });
 +        }).then(customFields => {
 +            return sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
 +                userText,
@@ -66,7 +65,7 @@ index 5d826f2..ce14001 100644
          }).then(
              () => {
                  if (!this.unmounted) {
-@@ -214,6 +241,55 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -214,6 +240,55 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
              );
          }
  
@@ -122,7 +121,7 @@ index 5d826f2..ce14001 100644
          return (
              <BaseDialog
                  className="mx_BugReportDialog"
-@@ -281,5 +357,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
+@@ -281,5 +356,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                  />
              </BaseDialog>
          );
