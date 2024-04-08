@@ -191,7 +191,7 @@ index 3c8241d..cdd9a83 100644
          const event = this.props.mxEvent;
          const sender = event.sender ? event.sender.name : event.getSender();
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index 5f2a399..abaaa24 100644
+index 5f2a399..c93d459 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 @@ -102,7 +102,11 @@ async function collectBaseInformation(body: FormData, opts: IOpts): Promise<void
@@ -206,23 +206,35 @@ index 5f2a399..abaaa24 100644
      body.append("version", version ?? "UNKNOWN");
      body.append("user_agent", userAgent);
      body.append("installed_pwa", installedPWA);
-@@ -129,6 +133,15 @@ async function collectClientInfo(client: MatrixClient, body: FormData): Promise<
+@@ -129,6 +133,10 @@ async function collectClientInfo(client: MatrixClient, body: FormData): Promise<
          await collectRecoveryInfo(client, cryptoApi, body);
      }
  
 +    // :TCHAP: add user email - for bugreport rageshakes
-+    if(client) {
-+        const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
-+        result.threepids.forEach(threepid => {
-+            body.append(threepid.medium, threepid.address);
-+        });
-+    }
++    await collectUserEmail(client, body);
 +    // end :TCHAP:
 +
      await collectSynapseSpecific(client, body);
  }
  
-@@ -417,7 +430,18 @@ export async function submitFeedback(
+@@ -316,6 +324,16 @@ async function collectLogs(
+         body.append("compressed-log", new Blob([buf]), entry.id);
+     }
+ }
++
++// :TCHAP:
++async function collectUserEmail(client: MatrixClient, body: FormData): Promise<void> {
++    const result = await client.getThreePids(); //it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
++    result.threepids.forEach(threepid => {
++        body.append(threepid.medium, threepid.address);
++    });
++}
++// end :TCHAP:
++
+ /**
+  * Send a bug report.
+  *
+@@ -417,7 +435,15 @@ export async function submitFeedback(
      body.append("text", comment);
      body.append("can_contact", canContact ? "yes" : "no");
  
@@ -232,10 +244,7 @@ index 5f2a399..abaaa24 100644
 +    body.append("app", "tchap-web");
 +    const client = MatrixClientPeg.get();
 +    if(client) {
-+        const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
-+        result.threepids.forEach(threepid => {
-+            body.append(threepid.medium, threepid.address);
-+        });
++        await collectUserEmail(client, body);
 +    }
 +    // end :TCHAP:
      body.append("version", version || "UNKNOWN");
