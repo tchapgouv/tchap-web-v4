@@ -301,7 +301,7 @@
     "Verified!": { "en": "Verified!", "fr": "Vérifié !" },
     "Wait for at least %(wait)s seconds between two emails": {
         "en": "Wait for at least %(wait)s seconds between two emails",
-        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
+        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux emails"
     },
     "Warning: this is the only time this code will be displayed!": {
         "en": "Warning: this is the only time this code will be displayed!",
@@ -322,8 +322,8 @@
         "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
     },
     "Your account is still expired, please follow the link in the email you have received to renew it": {
-        "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
-        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
+        "en": "Your account is still expired, please follow the link in the email you should have received to renew it.",
+        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement."
     },
     "Your last three login attempts have failed. Please try again in a few minutes.": {
         "en": "Your last three login attempts have failed. Please try again in a few minutes.",
