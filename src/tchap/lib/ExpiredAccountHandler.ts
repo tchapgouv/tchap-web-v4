@@ -28,12 +28,13 @@ class ExpiredAccountHandler {
     }
 
     /**
-     * register the listener after the Matrix Client has been initialized but before it is started
+     * Register to listen to expired account event.
+     * Registration is done after the Matrix Client has been initialized but before it is started.
      */
     public register() {
         const expiredRegistrationId = this.dispatcher.register((payload: ActionPayload) => {
             if (payload.action === "will_start_client") {
-                console.log(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events");
+                console.log(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events"); // todo(estelle) logger
                 const cli = MatrixClientPeg.get();
                 cli.on(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT, this.boundOnExpiredAccountEvent);
                 //unregister callback once the work is done
@@ -46,14 +47,14 @@ class ExpiredAccountHandler {
      * When account expired account happens, display the panel if not open yet.
      */
     private onExpiredAccountError() {
-        console.log(":tchap: Expired Account Error received");
+        console.log(":tchap: Expired Account Error received"); // todo(estelle) reuse logger class
 
         if (this.isPanelOpen) {
             return;
         }
         //shutdown all matrix react services, but without unsetting the client
         stopMatrixClient(false);
-        console.log(":tchap: matrix react services have been shutdown");
+        console.log(":tchap: matrix react services have been shutdown"); // todo(estelle) reuse logger class
 
         //should we sent the email directly? Normally they should have received already an email 7 days earlier
         this.showExpirationPanel();
@@ -63,7 +64,7 @@ class ExpiredAccountHandler {
     private async showExpirationPanel() {
         Modal.createDialog(
             ExpiredAccountDialog,
-            {
+            { /* props */
                 onRequestNewEmail: () => {
                     return TchapUtils.requestNewExpiredAccountEmail();
                 },
@@ -74,10 +75,10 @@ class ExpiredAccountHandler {
                 },
                 //todo: define which static/dynamic settings are needed for this dialog
             },
-            null,
-            false,
-            true,
-            {
+            undefined /* className */,
+            false /* isPriorityModal */,
+            true /* isStaticModal */,
+            { /* options */
                 //close panel only if account is not expired
                 onBeforeClose: async () => {
                     //verify that the account is not expired anymore

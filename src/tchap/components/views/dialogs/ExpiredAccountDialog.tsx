@@ -9,7 +9,7 @@ import TchapUtils from "../../../util/TchapUtils";
 interface IProps {
     onFinished(): void;
     onRequestNewEmail(): Promise<any>;
-    emailDelay?: number; //delay betwenn 2 emails in seconds, by default 30
+    emailDelay?: number; //delay between 2 emails in seconds, by default 30
 }
 
 interface IState {
@@ -33,7 +33,7 @@ enum ProcessState {
 
  */
 export default class ExpiredAccountDialog extends React.Component<IProps, IState> {
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             isAccountExpired: false,
