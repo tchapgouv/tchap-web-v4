@@ -157,8 +157,9 @@ export default class TchapUtils {
      * @returns true is a map tile server is present in config or wellknown.
      */
     static isMapConfigured(): boolean {
+        const cli = MatrixClientPeg.get();
         try {
-            findMapStyleUrl();
+            findMapStyleUrl(cli);
             return true;
         } catch (e) {
             return false;
@@ -189,6 +190,8 @@ export default class TchapUtils {
             const k = keys[i];
             url += k + "=" + encodeURIComponent(params[k]);
         }
+        // todo(estelle) : write unit test, then try replacing by :
+        // url += "?" + new URLSearchParams(params).toString();
         return url;
     }
 
@@ -197,9 +200,10 @@ export default class TchapUtils {
      * @returns true if the mail was sent succesfully, false otherwise
      */
     static async requestNewExpiredAccountEmail(): Promise<boolean> {
-        console.log(":tchap: Requesting an email to renew to account");
-        const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
-        const accessToken = MatrixClientPeg.get().getAccessToken();
+        console.debug(":tchap: Requesting an email to renew to account"); // todo(estelle) reuse logger class
+        const client = MatrixClientPeg.get(); // todo(estelle) what to do if client is null ? use safeGet or get ?
+        const homeserverUrl = client.getHomeserverUrl();
+        const accessToken = client.getAccessToken();
         //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
         const url = `${homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
         const options = {
