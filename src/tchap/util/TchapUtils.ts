@@ -18,9 +18,9 @@ export default class TchapUtils {
      * @returns {string} The shortened value of getDomain().
      */
     static getShortDomain(): string {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const baseDomain = cli.getDomain();
-        const domain = baseDomain.split(".tchap.gouv.fr")[0].split(".").reverse().filter(Boolean)[0];
+        const domain = baseDomain?.split(".tchap.gouv.fr")[0].split(".").reverse().filter(Boolean)[0];
 
         return this.capitalize(domain) || "Tchap";
     }
@@ -34,7 +34,7 @@ export default class TchapUtils {
         showForumFederationSwitch: boolean;
         forumFederationSwitchDefaultValue?: boolean;
     } {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const baseDomain = cli.getDomain();
 
         // Only show the federate switch to defense users : it's difficult to understand, so we avoid
@@ -148,7 +148,7 @@ export default class TchapUtils {
      * @returns Promise<true> is cross signing is supported by home server or false
      */
     static async isCrossSigningSupportedByServer(): Promise<boolean> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
     }
 
@@ -157,7 +157,7 @@ export default class TchapUtils {
      * @returns true is a map tile server is present in config or wellknown.
      */
     static isMapConfigured(): boolean {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         try {
             findMapStyleUrl(cli);
             return true;
@@ -201,7 +201,10 @@ export default class TchapUtils {
      */
     static async requestNewExpiredAccountEmail(): Promise<boolean> {
         console.debug(":tchap: Requesting an email to renew to account"); // todo(estelle) reuse logger class
-        const client = MatrixClientPeg.get(); // todo(estelle) what to do if client is null ? use safeGet or get ?
+
+        // safeGet will throw if client is not initialised. We don't handle it because we don't know when this would happen.
+        const client = MatrixClientPeg.safeGet();
+
         const homeserverUrl = client.getHomeserverUrl();
         const accessToken = client.getAccessToken();
         //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
@@ -230,7 +233,7 @@ export default class TchapUtils {
      * @returns true if account is expired, false otherwise
      */
     static async isAccountExpired(): Promise<boolean> {
-        const client = MatrixClientPeg.safeGet(); // todo(estelle) throws if client is not logged in. Is that what we want ?
+        const client = MatrixClientPeg.safeGet();
         const matrixId: string | null = client.credentials.userId;
         if (!matrixId) {
             // throw ? return ? todo(estelle)

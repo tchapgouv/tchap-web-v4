@@ -35,7 +35,8 @@ class ExpiredAccountHandler {
         const expiredRegistrationId = this.dispatcher.register((payload: ActionPayload) => {
             if (payload.action === "will_start_client") {
                 console.log(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events"); // todo(estelle) logger
-                const cli = MatrixClientPeg.get();
+                // safeGet will throw if client is not initialised yet. We don't handle it because we don't know when it would happen.
+                const cli = MatrixClientPeg.safeGet();
                 cli.on(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT, this.boundOnExpiredAccountEvent);
                 //unregister callback once the work is done
                 this.dispatcher.unregister(expiredRegistrationId);
