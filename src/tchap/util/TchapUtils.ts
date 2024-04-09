@@ -6,6 +6,7 @@ import { findMapStyleUrl } from "matrix-react-sdk/src/utils/location";
 
 import TchapApi from "./TchapApi";
 import { ClientConfig } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/autodiscovery";
+import { MatrixError } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/http-api";
 
 /**
  * Tchap utils.
@@ -220,19 +221,20 @@ export default class TchapUtils {
     }
 
     /**
-     * Verify if the account is expired.
-     * It executes an API call and check that it receives a ORG_MATRIX_EXPIRED_ACCOUNT
-     * The API invoked is getProfileInfo()
-     * @param matrixId the account matrix Id
+     * Verify if the currently logged in account is expired.
+     * It executes an API call (to getProfileInfo) and checks whether the call throws a ORG_MATRIX_EXPIRED_ACCOUNT
      * @returns true if account is expired, false otherwise
      */
-    static async isAccountExpired(matrixId?: string): Promise<boolean> {
+    static async isAccountExpired(): Promise<boolean> {
+        const client = MatrixClientPeg.safeGet(); // todo(estelle) throws if client is not logged in. Is that what we want ?
+        const matrixId: string | null = client.credentials.userId;
         if (!matrixId) {
-            matrixId = MatrixClientPeg.getCredentials().userId;
+            // throw ? return ? todo(estelle)
         }
         try {
-            await MatrixClientPeg.get().getProfileInfo(matrixId);
-        } catch (err) {
+            await client.getProfileInfo(matrixId!);
+        } catch (error) {
+            const err = error as MatrixError;
             if (err.errcode === "ORG_MATRIX_EXPIRED_ACCOUNT") {
                 return true;
             }
