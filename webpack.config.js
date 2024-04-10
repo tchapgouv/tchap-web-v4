@@ -25,13 +25,23 @@ if (!process.env.VERSION) {
     process.env.VERSION = "!!UNSET!!";
 }
 
+/** :TCHAP: */
+const matrixReactSdkTchapPathName = "linked-dependencies/matrix-react-sdk";
+const matrixReactSdkTchapPath = "./" + matrixReactSdkTchapPathName;
+
+/** end :TCHAP: */
+
 const cssThemes = {
     // CSS themes
     //"theme-legacy-light": "./node_modules/matrix-react-sdk/res/themes/legacy-light/css/legacy-light.pcss",
     //"theme-legacy-dark": "./node_modules/matrix-react-sdk/res/themes/legacy-dark/css/legacy-dark.pcss",
     //"theme-light": "./node_modules/matrix-react-sdk/res/themes/light/css/light.pcss",
+    /** :TCHAP: */
+    // "theme-light-high-contrast":
+    //    "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
     "theme-light-high-contrast":
-        "./node_modules/matrix-react-sdk/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+        matrixReactSdkTchapPath + "/res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    /** end :TCHAP: */
     //"theme-dark": "./node_modules/matrix-react-sdk/res/themes/dark/css/dark.pcss",
     //"theme-light-custom": "./node_modules/matrix-react-sdk/res/themes/light-custom/css/light-custom.pcss",
     //"theme-dark-custom": "./node_modules/matrix-react-sdk/res/themes/dark-custom/css/dark-custom.pcss",
@@ -134,7 +144,10 @@ module.exports = (env, argv) => {
     // Resolve the directories for the react-sdk and js-sdk for later use. We resolve these early, so we
     // don't have to call them over and over. We also resolve to the package.json instead of the src
     // directory, so we don't have to rely on an index.js or similar file existing.
-    const reactSdkSrcDir = path.resolve(require.resolve("matrix-react-sdk/package.json"), "..", "src");
+    /** :TCHAP */
+    // const reactSdkSrcDir = path.resolve("./linked-dependencies/matrix-react-sdk/package.json", "..", "src");
+    const reactSdkSrcDir = path.resolve(matrixReactSdkTchapPathName + "/package.json", "..", "src");
+    /** end TCHAP */
     const jsSdkSrcDir = path.resolve(require.resolve("matrix-js-sdk/package.json"), "..", "src");
 
     const ACTIVE_THEMES = getActiveThemes();
@@ -165,7 +178,10 @@ module.exports = (env, argv) => {
             bundle: "./src/vector/index.ts",
             mobileguide: "./src/vector/mobile_guide/index.ts",
             jitsi: "./src/vector/jitsi/index.ts",
-            usercontent: "./node_modules/matrix-react-sdk/src/usercontent/index.ts",
+            /** :TCHAP: */
+            // usercontent: "./node_modules/matrix-react-sdk/src/usercontent/index.ts",
+            usercontent: matrixReactSdkTchapPath + "/src/usercontent/index.ts",
+            /** end :TCHAP: */
             ...(useHMR ? {} : cssThemes),
         },
 
@@ -245,7 +261,10 @@ module.exports = (env, argv) => {
 
                 // Same goes for js/react-sdk - we don't need two copies.
                 "matrix-js-sdk": path.resolve(__dirname, "node_modules/matrix-js-sdk"),
-                "matrix-react-sdk": path.resolve(__dirname, "node_modules/matrix-react-sdk"),
+                /** :TCHAP: */
+                // "matrix-react-sdk": path.resolve(__dirname, "node_modules/matrix-react-sdk"),
+                "matrix-react-sdk": path.resolve(__dirname, matrixReactSdkTchapPathName),
+                /** end :TCHAP: */
                 "@matrix-org/react-sdk-module-api": path.resolve(
                     __dirname,
                     "node_modules/@matrix-org/react-sdk-module-api",
@@ -709,7 +728,10 @@ module.exports = (env, argv) => {
 
             // This is the usercontent sandbox's entry point (separate for iframing)
             new HtmlWebpackPlugin({
-                template: "./node_modules/matrix-react-sdk/src/usercontent/index.html",
+                /** :TCHAP:*/
+                // template: "./node_modules/matrix-react-sdk/src/usercontent/index.html",
+                template: matrixReactSdkTchapPath + "/src/usercontent/index.html",
+                /** end :TCHAP:*/
                 filename: "usercontent/index.html",
                 minify: false,
                 chunks: ["usercontent"],
@@ -748,7 +770,10 @@ module.exports = (env, argv) => {
                     { from: "themes/**", context: path.resolve(__dirname, "res") },
                     { from: "vector-icons/**", context: path.resolve(__dirname, "res") },
                     { from: "decoder-ring/**", context: path.resolve(__dirname, "res") },
-                    { from: "media/**", context: path.resolve(__dirname, "node_modules/matrix-react-sdk/res/") },
+                    /** :TCHAP: */
+                    // { from: "media/**", context: path.resolve(__dirname, "node_modules/matrix-react-sdk/res/") },
+                    { from: "media/**", context: path.resolve(__dirname, matrixReactSdkTchapPathName + "/res/") },
+                    /** end :TCHAP: */
                     "node_modules/@matrix-org/olm/olm_legacy.js",
                     { from: "config.json", noErrorOnMissing: true },
                     "contribute.json",

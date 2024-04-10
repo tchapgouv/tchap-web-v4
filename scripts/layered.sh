@@ -21,14 +21,20 @@ export PR_ORG=element-hq
 export PR_REPO=element-web
 
 # Set up the js-sdk first
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-js-sdk develop
+# :TCHAP:
+# node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-js-sdk develop
+linked-dependencies/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-js-sdk develop
+# end :TCHAP:
 pushd matrix-js-sdk
 yarn link
 yarn install --frozen-lockfile
 popd
 
 # Also set up matrix-analytics-events for branch with matching name
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-analytics-events
+# :TCHAP:
+# node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-analytics-events
+linked-dependencies/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-analytics-events
+# end :TCHAP:
 # We don't pass a default branch so cloning may fail when we are not in a PR
 # This is expected as this project does not share a release cycle but we still branch match it
 if [ -d matrix-analytics-events ]; then
@@ -40,7 +46,10 @@ if [ -d matrix-analytics-events ]; then
 fi
 
 # Now set up the react-sdk
-node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk develop
+# :TCHAP:
+# node_modules/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk develop
+linked-dependencies/matrix-react-sdk/scripts/fetchdep.sh matrix-org matrix-react-sdk develop
+# end :TCHAP:
 pushd matrix-react-sdk
 yarn link
 yarn link matrix-js-sdk
