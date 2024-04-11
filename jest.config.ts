@@ -70,6 +70,8 @@ const config: Config = {
         "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
         "~tchap-web-dep/(.*)": "<rootDir>/yarn-linked-dependencies/$1",
         "~tchap-web/(.*)": "<rootDir>/$1",
+        "~linked-dep/(.*)": "<rootDir>/linked-dependencies/$1",
+        "matrix-react-sdk/(.*)": "<rootDir>/linked-dependencies/matrix-react-sdk/$1",
         // end :TCHAP:
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
