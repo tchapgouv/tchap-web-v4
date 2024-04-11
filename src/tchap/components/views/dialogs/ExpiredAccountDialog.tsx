@@ -101,7 +101,7 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
 
         switch (this.state.ProcessState) {
             case ProcessState.SENDING_EMAIL:
-                alertMessage = <InlineSpinner /> // todo translation+format or spinner
+                alertMessage = <InlineSpinner />
                 break;
             case ProcessState.EMAIL_MUST_WAIT:
                 //don't know which class should decorate this message, it is not really an error
