@@ -15,7 +15,6 @@ interface IProps {
 
 interface IState {
     emailDelaySecs: number; //delay betwenn 2 emails in seconds, by default 30
-    isAccountExpired: boolean; //todo: not used yet
     newEmailSentTimestamp: number; //timestamp
     ProcessState: ProcessState;
 }
@@ -38,7 +37,6 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
     constructor(props: IProps) {
         super(props);
         this.state = {
-            isAccountExpired: false,
             newEmailSentTimestamp: 0,
             emailDelaySecs: this.props.emailDelaySecs || 30,
             ProcessState: ProcessState.START,

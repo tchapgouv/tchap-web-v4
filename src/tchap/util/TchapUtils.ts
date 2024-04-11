@@ -191,7 +191,7 @@ export default class TchapUtils {
             const k = keys[i];
             url += k + "=" + encodeURIComponent(params[k]);
         }
-        // todo(estelle) : write unit test, then try replacing by :
+        // todo : write unit test, then try replacing by :
         // url += "?" + new URLSearchParams(params).toString();
         return url;
     }
@@ -208,7 +208,6 @@ export default class TchapUtils {
 
         const homeserverUrl = client.getHomeserverUrl();
         const accessToken = client.getAccessToken();
-        //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
         const url = `${homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
         const options = {
             method: "POST",
