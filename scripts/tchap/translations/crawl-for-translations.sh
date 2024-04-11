@@ -16,7 +16,7 @@ crawl () {
     export INPUT_FILE=$2 # var read by matrix-gen-i18n, don't rename
     export OUTPUT_FILE=$3 # var read by matrix-gen-i18n, don't rename
     if [[ "$repo" == "react-sdk" ]]; then
-        cd yarn-linked-dependencies/matrix-react-sdk
+        cd linked-dependencies/matrix-react-sdk
         yarn matrix-gen-i18n;
         cd ../../
     else
