@@ -25,16 +25,16 @@ describe("ExpiredAccountHandler", () => {
         jest.clearAllMocks();
     });
 
+    // TODO : it would be nice to test that our handler is propoerly registered on app load, in src/vector/index.ts
+    // Gonna require a lot of mocking...
     it("displays dialog when account is expired", () => {
-        // handler instance is created when import ExpiredAccountHandler is run.
+        // handler instance is created when "import ExpiredAccountHandler" is run.
         ExpiredAccountHandler.register();
 
         // Simulate start of app, for handler to initialise
         defaultDispatcher.dispatch({ action: "will_start_client" }, true);
 
         // Simulate expired error
-        // cli.on(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT)
-        // this.eventEmitter.emit(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT, err);
         mockClient.emit(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT);
 
         expect(Modal.createDialog).toHaveBeenCalledWith(
