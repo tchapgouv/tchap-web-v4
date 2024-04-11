@@ -3,8 +3,13 @@ import { render, screen } from "@testing-library/react";
 
 import ExpiredAccountDialog from "~tchap-web/src/tchap/components/views/dialogs/ExpiredAccountDialog";
 import { flushPromises } from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/test/test-utils";
+import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 
 describe("ExpiredAccountDialog", () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
     describe("'Send email' button", () => {
         it("sends email when button is clicked", async () => {
             // true = email sent successfully
@@ -60,6 +65,40 @@ describe("ExpiredAccountDialog", () => {
         });
     });
 
-    it("when 'I renewed' is clicked, and the account is renewed, it displays 'cool' and unblocks user (todo)", () => {});
-    it("when 'I renewed' is clicked, and the account is not renewed, it displays 'not cool' and keeps dialog up (todo)", () => {});
+    describe("'I renewed my account' button", () => {
+        it("if the account is renewed, it displays success message and ... ? (todo)", async () => {
+            const onFinishedMock = jest.fn();
+            jest.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(false);
+
+            const component = render(
+                <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={jest.fn()} />,
+            );
+            const iRenewedButton = component.getByTestId("dialog-primary-button");
+
+            iRenewedButton.click();
+            await flushPromises();
+
+            // display happy message todo
+            // "votre compte a été renouvelé"
+            // primary label is "Rafraîchir la page"
+            // click primary : onFinished
+        });
+
+        it("if the account is still not renewed, it displays explanation and keeps dialog up", async () => {
+            const onFinishedMock = jest.fn();
+            jest.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(true);
+
+            const component = render(
+                <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={jest.fn()} />,
+            );
+            const iRenewedButton = component.getByTestId("dialog-primary-button");
+
+            iRenewedButton.click();
+            await flushPromises();
+
+            // display unhappy message
+            screen.getByTestId("dialog-account-still-expired-message");
+            expect(onFinishedMock).not.toHaveBeenCalled();
+        });
+    });
 });

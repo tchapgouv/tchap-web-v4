@@ -122,7 +122,7 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
                 break;
             case ProcessState.ACCOUNT_STILL_EXPIRED:
                 alertMessage = (
-                    <p className="text-error">
+                    <p className="text-error" data-testid="dialog-account-still-expired-message">
                         {_t(
                             "Your account is still expired, please follow the link in the email you have received to renew it",
                         )}
@@ -131,8 +131,8 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
                 break;
             case ProcessState.ACCOUNT_RENEWED:
                 titleMessage = _t("Congratulations, your account has been renewed");
-                descriptionMessage = <p>{_t("The app will reload now")}</p>;
-                okButtonText = _t("Reload the app");
+                descriptionMessage = <p>{_t("You can refresh the page to continue your conversations")}</p>;
+                okButtonText = _t("Reload page");
                 alertMessage = null;
                 requestNewEmailButton = null;
                 break;
