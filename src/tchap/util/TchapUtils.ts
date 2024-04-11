@@ -236,7 +236,8 @@ export default class TchapUtils {
         const client = MatrixClientPeg.safeGet();
         const matrixId: string | null = client.credentials.userId;
         if (!matrixId) {
-            // throw ? return ? todo(estelle)
+            // user is not logged in. Or something went wrong.
+            return false;
         }
         try {
             await client.getProfileInfo(matrixId!);

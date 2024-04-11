@@ -3,23 +3,26 @@ import React from "react";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import BaseDialog from "matrix-react-sdk/src/components/views/dialogs/BaseDialog";
 import DialogButtons from "matrix-react-sdk/src/components/views/elements/DialogButtons";
+import InlineSpinner from "matrix-react-sdk/src/components/views/elements/InlineSpinner";
 
 import TchapUtils from "../../../util/TchapUtils";
 
 interface IProps {
     onFinished(): void;
     onRequestNewEmail(): Promise<any>;
-    emailDelay?: number; //delay between 2 emails in seconds, by default 30
+    emailDelaySecs?: number; //delay between 2 emails in seconds, by default 30
 }
 
 interface IState {
-    emailDelay: number; //delay betwenn 2 emails in seconds, by default 30
+    emailDelaySecs: number; //delay betwenn 2 emails in seconds, by default 30
     isAccountExpired: boolean; //todo: not used yet
     newEmailSentTimestamp: number; //timestamp
     ProcessState: ProcessState;
 }
 
 enum ProcessState {
+    START,
+    SENDING_EMAIL,
     EMAIL_MUST_WAIT,
     EMAIL_SUCCESS,
     EMAIL_FAILURE,
@@ -37,8 +40,8 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
         this.state = {
             isAccountExpired: false,
             newEmailSentTimestamp: 0,
-            emailDelay: this.props.emailDelay || 30, //seconds
-            ProcessState: null,
+            emailDelaySecs: this.props.emailDelaySecs || 30,
+            ProcessState: ProcessState.START,
         };
     }
 
@@ -46,7 +49,7 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
     private mustWait() {
         return (
             this.state.newEmailSentTimestamp != 0 &&
-            Date.now() - this.state.newEmailSentTimestamp < this.state.emailDelay * 1000
+            Date.now() - this.state.newEmailSentTimestamp < this.state.emailDelaySecs * 1000
         );
     }
 
@@ -76,6 +79,9 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
         }
 
         //send the new email requested
+        this.setState({
+            ProcessState: ProcessState.SENDING_EMAIL,
+        })
         this.props.onRequestNewEmail().then((success) => {
             this.setState({
                 newEmailSentTimestamp: success ? Date.now() : this.state.newEmailSentTimestamp,
@@ -94,12 +100,15 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
         let okButtonText = _t("I renewed the validity of my account");
 
         switch (this.state.ProcessState) {
+            case ProcessState.SENDING_EMAIL:
+                alertMessage = <InlineSpinner /> // todo translation+format or spinner
+                break;
             case ProcessState.EMAIL_MUST_WAIT:
                 //don't know which class should decorate this message, it is not really an error
                 //its goal is to avoid users to click twice or more on the button and spam themselves
                 alertMessage = (
                     <p className="">
-                        {_t("Wait for at least %(wait)s seconds between two emails", { wait: this.state.emailDelay })}
+                        {_t("Wait for at least %(wait)s seconds between two emails", { wait: this.state.emailDelaySecs })}
                     </p>
                 );
                 break;
