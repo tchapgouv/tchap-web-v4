@@ -5,6 +5,7 @@ import { stopMatrixClient } from "matrix-react-sdk/src/Lifecycle";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import Modal from "matrix-react-sdk/src/Modal";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import ExpiredAccountDialog from "../components/views/dialogs/ExpiredAccountDialog";
 import TchapUtils from "../util/TchapUtils";
@@ -34,7 +35,7 @@ class ExpiredAccountHandler {
     public register() {
         const expiredRegistrationId = this.dispatcher.register((payload: ActionPayload) => {
             if (payload.action === "will_start_client") {
-                console.log(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events"); // todo(estelle) logger
+                logger.debug(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events");
                 // safeGet will throw if client is not initialised yet. We don't handle it because we don't know when it would happen.
                 const cli = MatrixClientPeg.safeGet();
                 cli.on(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT, this.boundOnExpiredAccountEvent);
@@ -48,14 +49,14 @@ class ExpiredAccountHandler {
      * When account expired account happens, display the panel if not open yet.
      */
     private onExpiredAccountError() {
-        console.log(":tchap: Expired Account Error received"); // todo(estelle) reuse logger class
+        logger.debug(":tchap: Expired Account Error received");
 
         if (this.isPanelOpen) {
             return;
         }
         //shutdown all matrix react services, but without unsetting the client
         stopMatrixClient(false);
-        console.log(":tchap: matrix react services have been shutdown"); // todo(estelle) reuse logger class
+        logger.debug(":tchap: matrix react services have been shutdown");
 
         //should we sent the email directly? Normally they should have received already an email 7 days earlier
         this.showExpirationPanel();

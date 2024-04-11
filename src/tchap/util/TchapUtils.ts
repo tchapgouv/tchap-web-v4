@@ -3,6 +3,7 @@ import SdkConfig from "matrix-react-sdk/src/SdkConfig";
 import AutoDiscoveryUtils from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServerConfig";
 import { findMapStyleUrl } from "matrix-react-sdk/src/utils/location";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import TchapApi from "./TchapApi";
 import { ClientConfig } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/autodiscovery";
@@ -98,7 +99,7 @@ export default class TchapUtils {
                 };
             })
             .catch((error) => {
-                console.error("Could not find homeserver for this email", error);
+                logger.error("Could not find homeserver for this email", error);
                 return;
             });
     };
@@ -200,7 +201,7 @@ export default class TchapUtils {
      * @returns true if the mail was sent succesfully, false otherwise
      */
     static async requestNewExpiredAccountEmail(): Promise<boolean> {
-        console.debug(":tchap: Requesting an email to renew to account"); // todo(estelle) reuse logger class
+        logger.debug(":tchap: Requesting an email to renew to account");
 
         // safeGet will throw if client is not initialised. We don't handle it because we don't know when this would happen.
         const client = MatrixClientPeg.safeGet();
@@ -218,11 +219,11 @@ export default class TchapUtils {
 
         return fetch(url, options)
             .then((response) => {
-                console.log(":tchap: email NewExpiredAccountEmail sent", response);
+                logger.debug(":tchap: email NewExpiredAccountEmail sent", response);
                 return true;
             })
             .catch((err) => {
-                console.error(":tchap: email NewExpiredAccountEmail error", err);
+                logger.error(":tchap: email NewExpiredAccountEmail error", err);
                 return false;
             });
     }
@@ -257,7 +258,7 @@ export default class TchapUtils {
      */
     static async isCurrentlyUsingBluetooth(): Promise<boolean> {
         if (!navigator.mediaDevices?.enumerateDevices) {
-            console.log("enumerateDevices() not supported. Cannot know if there is a bluetooth device.");
+            logger.warn("enumerateDevices() not supported. Cannot know if there is a bluetooth device.");
             return false;
         } else {
             // List cameras and microphones.
@@ -266,7 +267,7 @@ export default class TchapUtils {
                 .then((devices) => {
                     let hasBluetooth = false;
                     devices.forEach((device) => {
-                        console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+                        logger.debug(`${device.kind}: ${device.label} id = ${device.deviceId}`);
                         if (device.kind === "audioinput") {
                             if (device.label.toLowerCase().includes("bluetooth")) {
                                 hasBluetooth = true;
@@ -276,7 +277,7 @@ export default class TchapUtils {
                     return hasBluetooth;
                 })
                 .catch((err) => {
-                    console.error(`${err.name}: ${err.message}`);
+                    logger.error(`${err.name}: ${err.message}`);
                     return false;
                 });
         }
