@@ -66,22 +66,27 @@ describe("ExpiredAccountDialog", () => {
     });
 
     describe("'I renewed my account' button", () => {
-        it("if the account is renewed, it displays success message and ... ? (todo)", async () => {
+        it("if the account is renewed, it displays confirmation message, and offers page reload", async () => {
             const onFinishedMock = jest.fn();
             jest.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(false);
 
             const component = render(
                 <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={jest.fn()} />,
             );
-            const iRenewedButton = component.getByTestId("dialog-primary-button");
+            const primaryButton = component.getByTestId("dialog-primary-button");
 
-            iRenewedButton.click();
+            // click "I renewed my account"
+            expect(primaryButton).toHaveTextContent("I renewed");
+            primaryButton.click();
             await flushPromises();
 
-            // display happy message todo
-            // "votre compte a été renouvelé"
-            // primary label is "Rafraîchir la page"
-            // click primary : onFinished
+            // Account renewed ! Display confirmation
+            component.getByText("your account has been renewed", { exact: false });
+            expect(primaryButton).toHaveTextContent("Reload page"); // new button text
+
+            // click "Reload page"
+            primaryButton.click();
+            expect(onFinishedMock).toHaveBeenCalled(); // onFinish will do the page reload. The actual reload is out of scope here.
         });
 
         it("if the account is still not renewed, it displays explanation and keeps dialog up", async () => {
