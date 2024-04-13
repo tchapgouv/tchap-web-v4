@@ -1,9 +1,9 @@
 import * as React from "react";
 import { RenderResult, fireEvent, render } from "@testing-library/react";
 
-import BugReportDialog from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
-import { flushPromises } from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/test/test-utils";
-import SdkConfig from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/SdkConfig";
+import BugReportDialog from "~linked-dep/matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
+import { flushPromises } from "~linked-dep/matrix-react-sdk/test/test-utils";
+import SdkConfig from "~linked-dep/matrix-react-sdk/src/SdkConfig";
 
 describe("<BugReportDialog>", () => {
     const bugReportUrl = "/bug/report/url";
@@ -22,9 +22,7 @@ describe("<BugReportDialog>", () => {
 
     beforeEach(() => {
         // Mocking trick to mock a default export : use requireActual.
-        const actual = jest.requireActual(
-            "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/rageshake/submit-rageshake",
-        );
+        const actual = jest.requireActual("~linked-dep/matrix-react-sdk/src/rageshake/submit-rageshake");
         sendBugReportSpy = jest.spyOn(actual, "default").mockResolvedValue(bugReportUrl);
     });
 
