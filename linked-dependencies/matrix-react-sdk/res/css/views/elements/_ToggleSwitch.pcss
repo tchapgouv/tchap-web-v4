@@ -1,0 +1,69 @@
+/*
+Copyright 2019 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_ToggleSwitch {
+    --ToggleSwitch-min-width: $font-44px;
+
+    transition:
+        background-color 0.2s ease-out 0.1s,
+        border-color 0.2s ease-out 0.1s;
+
+    width: $font-44px;
+    height: $font-20px;
+    border-radius: 1.5rem;
+    padding: 2px;
+
+    background-color: var(--cpd-color-bg-canvas-disabled);
+    border: 1px solid var(--cpd-color-border-disabled);
+    cursor: not-allowed;
+
+    &.mx_ToggleSwitch_enabled {
+        cursor: pointer;
+        background-color: var(--cpd-color-bg-canvas-default);
+        border: var(--cpd-border-width-1) solid var(--cpd-color-border-interactive-primary);
+
+        &.mx_ToggleSwitch_on {
+            background-color: var(--cpd-color-bg-accent-rest);
+            border-color: var(--cpd-color-bg-accent-rest);
+        }
+
+        > .mx_ToggleSwitch_ball {
+            background-color: var(--cpd-color-icon-secondary);
+        }
+    }
+
+    &.mx_ToggleSwitch_on {
+        background-color: var(--cpd-color-bg-action-primary-disabled);
+        border-color: var(--cpd-color-bg-action-primary-disabled);
+
+        > .mx_ToggleSwitch_ball {
+            left: calc(100% - $font-20px);
+            background-color: var(--cpd-color-icon-on-solid-primary);
+        }
+    }
+}
+
+.mx_ToggleSwitch_ball {
+    position: relative;
+    width: $font-20px;
+    height: $font-20px;
+    border-radius: $font-20px;
+    background-color: var(--cpd-color-bg-action-primary-disabled);
+    transition:
+        left 0.15s ease-out 0.1s,
+        background-color 0.15s ease-out 0.1s;
+    left: 0;
+}
