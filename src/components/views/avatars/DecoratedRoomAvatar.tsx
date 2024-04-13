@@ -1,0 +1,263 @@
+/*
+Copyright 2020 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import React from "react";
+import classNames from "classnames";
+import { EventType, JoinRule, MatrixEvent, Room, RoomEvent, User, UserEvent } from "matrix-js-sdk/src/matrix";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { Tooltip } from "@vector-im/compound-web";
+
+import RoomAvatar from "./RoomAvatar";
+import NotificationBadge from "../rooms/NotificationBadge";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { NotificationState } from "../../../stores/notifications/NotificationState";
+import { isPresenceEnabled } from "../../../utils/presence";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from "../../../languageHandler";
+import DMRoomMap from "../../../utils/DMRoomMap";
+import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import { getJoinedNonFunctionalMembers } from "../../../utils/room/getJoinedNonFunctionalMembers";
+
+import TchapRoomUtils from "../../../../../../src/tchap/util/TchapRoomUtils";
+import "../../../../../../res/css/views/avatars/_TchapDecoratedRoomAvatar.pcss";
+import { TchapRoomType } from "../../../../../../src/tchap/@types/tchap";
+
+interface IProps {
+    room: Room;
+    size: string;
+    displayBadge?: boolean;
+    forceCount?: boolean;
+    oobData?: IOOBData;
+    viewAvatarOnClick?: boolean;
+    tooltipProps?: {
+        tabIndex?: number;
+    };
+}
+
+interface IState {
+    notificationState?: NotificationState;
+    icon: Icon;
+}
+
+const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
+
+enum Icon {
+    // Note: the names here are used in CSS class names
+    None = "NONE", // ... except this one
+    Globe = "GLOBE",
+    // :TCHAP: add icons for custom room types
+    Forum = "FORUM",
+    Private = "PRIVATE",
+    External = "EXTERNAL",
+    // end :TCHAP:
+    PresenceOnline = "ONLINE",
+    PresenceAway = "AWAY",
+    PresenceOffline = "OFFLINE",
+    PresenceBusy = "BUSY",
+}
+
+function tooltipText(variant: Icon): string | undefined {
+    switch (variant) {
+        case Icon.Globe:
+            return _t("room|header|room_is_public");
+        // :TCHAP: add icons for custom room types
+        case Icon.Forum:
+            return _t("This room is a public forum");
+        case Icon.Private:
+            return _t("This room is private");
+        case Icon.External:
+            return _t("This room is private and open to external users");
+        // end :TCHAP:
+        case Icon.PresenceOnline:
+            return _t("presence|online");
+        case Icon.PresenceAway:
+            return _t("presence|away");
+        case Icon.PresenceOffline:
+            return _t("presence|offline");
+        case Icon.PresenceBusy:
+            return _t("presence|busy");
+    }
+}
+
+export default class DecoratedRoomAvatar extends React.PureComponent<IProps, IState> {
+    private _dmUser: User | null = null;
+    private isUnmounted = false;
+    private isWatchingTimeline = false;
+
+    public constructor(props: IProps) {
+        super(props);
+
+        this.state = {
+            notificationState: RoomNotificationStateStore.instance.getRoomState(this.props.room),
+            icon: this.calculateIcon(),
+        };
+    }
+
+    public componentWillUnmount(): void {
+        this.isUnmounted = true;
+        if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
+        this.dmUser = null; // clear listeners, if any
+    }
+
+    private get isPublicRoom(): boolean {
+        return this.props.room.getJoinRule() === JoinRule.Public;
+    }
+
+    private get dmUser(): User | null {
+        return this._dmUser;
+    }
+
+    private set dmUser(val: User | null) {
+        const oldUser = this._dmUser;
+        this._dmUser = val;
+        if (oldUser && oldUser !== this._dmUser) {
+            oldUser.off(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            oldUser.off(UserEvent.Presence, this.onPresenceUpdate);
+        }
+        if (this._dmUser && oldUser !== this._dmUser) {
+            this._dmUser.on(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            this._dmUser.on(UserEvent.Presence, this.onPresenceUpdate);
+        }
+    }
+
+    private onRoomTimeline = (ev: MatrixEvent, room?: Room): void => {
+        if (this.isUnmounted) return;
+        if (this.props.room.roomId !== room?.roomId) return;
+
+        if (ev.getType() === EventType.RoomJoinRules || ev.getType() === EventType.RoomMember) {
+            const newIcon = this.calculateIcon();
+            if (newIcon !== this.state.icon) {
+                this.setState({ icon: newIcon });
+            }
+        }
+    };
+
+    private onPresenceUpdate = (): void => {
+        if (this.isUnmounted) return;
+
+        const newIcon = this.getPresenceIcon();
+        if (newIcon !== this.state.icon) this.setState({ icon: newIcon });
+    };
+
+    private getPresenceIcon(): Icon {
+        if (!this.dmUser) return Icon.None;
+
+        let icon = Icon.None;
+
+        const isOnline = this.dmUser.currentlyActive || this.dmUser.presence === "online";
+        if (BUSY_PRESENCE_NAME.matches(this.dmUser.presence)) {
+            icon = Icon.PresenceBusy;
+        } else if (isOnline) {
+            icon = Icon.PresenceOnline;
+        } else if (this.dmUser.presence === "offline") {
+            icon = Icon.PresenceOffline;
+        } else if (this.dmUser.presence === "unavailable") {
+            icon = Icon.PresenceAway;
+        }
+
+        return icon;
+    }
+
+    private calculateIcon(): Icon {
+        let icon = Icon.None;
+
+        // We look at the DMRoomMap and not the tag here so that we don't exclude DMs in Favourites
+        const otherUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
+        if (otherUserId && getJoinedNonFunctionalMembers(this.props.room).length === 2) {
+            // Track presence, if available
+            if (isPresenceEnabled(this.props.room.client)) {
+                this.dmUser = MatrixClientPeg.safeGet().getUser(otherUserId);
+                icon = this.getPresenceIcon();
+            }
+        } else {
+            // Track publicity
+            //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
+            //:tchap: use custom icons for tchap room types
+            const roomType: TchapRoomType = TchapRoomUtils.getTchapRoomType(this.props.room);
+            switch(roomType) {
+                case TchapRoomType.Forum:
+                    icon = Icon.Forum;
+                    break;
+                case TchapRoomType.Private:
+                    icon = Icon.Private;
+                    break;
+                case TchapRoomType.External:
+                    icon = Icon.External;
+                    break;
+                default:
+                    icon = Icon.None;
+            }
+            //end :tchap:
+            if (!this.isWatchingTimeline) {
+                this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
+                this.isWatchingTimeline = true;
+            }
+        }
+        return icon;
+    }
+
+    public render(): React.ReactNode {
+        // Spread the remaining props to make it work with compound component
+        const { room, size, displayBadge, forceCount, oobData, viewAvatarOnClick, tooltipProps, ...props } = this.props;
+
+        let badge: React.ReactNode;
+        if (this.props.displayBadge && this.state.notificationState) {
+            badge = (
+                <NotificationBadge
+                    notification={this.state.notificationState}
+                    forceCount={this.props.forceCount}
+                    roomId={this.props.room.roomId}
+                />
+            );
+        }
+
+        let icon: JSX.Element | undefined;
+        if (this.state.icon !== Icon.None) {
+            icon = (
+                <div
+                    tabIndex={this.props.tooltipProps?.tabIndex ?? 0}
+                    className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
+                />
+            );
+        }
+
+        const classes = classNames("mx_DecoratedRoomAvatar", {
+            mx_DecoratedRoomAvatar_cutout: icon,
+        });
+
+        return (
+            <div className={classes} {...props }>
+                { /*:TCHAP: extra div to fix positioning.
+                https://github.com/tchapgouv/tchap-web-v4/issues/890
+                Issue should be opened in element-web. */ }
+                <div className="mx_DecoratedRoomAvatar_positionedParent">
+                <RoomAvatar
+                    room={this.props.room}
+                    size={this.props.size}
+                    oobData={this.props.oobData}
+                    viewAvatarOnClick={this.props.viewAvatarOnClick}
+                />
+                {icon && (
+                    <Tooltip label={tooltipText(this.state.icon)!} side="bottom">
+                        {icon}
+                    </Tooltip>
+                )}
+                {badge}
+                </div> { /*:TCHAP: close div */ }
+            </div>
+        );
+    }
+}
