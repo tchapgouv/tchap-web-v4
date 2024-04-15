@@ -61,11 +61,15 @@ popd
 # #yarn link @matrix-org/analytics-events # :TCHAP: we don't use this
 # yarn install --pure-lockfile
 # popd
+cd ../linked-dependencies/matrix-react-sdk
+yarn unlink # :TCHAP: for local build, undo previous links if present.
+yarn link
+yarn install --pure-lockfile
 
-# :TCHAP: we are now in linked-dependencies, go back out to tchap-web-v4 dir
-cd ..
 
 # :TCHAP: yarn-link modules
+cd .. # go back to root
+
 for d in modules/*/ ; do
     echo "Linking $d ..."
     pushd $d
@@ -78,9 +82,8 @@ done
 
 # Link the layers into element-web
 yarn link matrix-js-sdk
+yarn link matrix-react-sdk
+
 # yarn link matrix-react-sdk
 yarn install --pure-lockfile
 
-
-cd ./linked-dependencies/matrix-react-sdk
-yarn install
