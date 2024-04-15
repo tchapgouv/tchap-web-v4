@@ -217,19 +217,16 @@ yarn install
 popd
 ```
 
-For `matrix-react-sdk` we are using a subtree and our own fork:
-When you clone tchap-web-v4, you should be able to see the repo in `linked-dependencies/matrix-react-sdk`.
+Then similarly with `matrix-react-sdk`:
 
-Don't forget to run a first yarn install inside `linked-dependencies/matrix-react-sdk`. Our `package.json`
-will be using this directory as local dependencies for `matrix-react-sdk`
-
-You can make changes to the subtree repo as if it was code from the parent repo. 
-But you have to make sure to also update the fork using those commands :
+```bash
+git clone https://github.com/matrix-org/matrix-react-sdk.git
+pushd matrix-react-sdk
+yarn link
+yarn link matrix-js-sdk
+yarn install
+popd
 ```
-git subree push --prefix=./linked-dependencies/matrix-react-sdk  matrix-react-sdk-tchap org-35118060@github.com:tchapgouv/matrix-react-sdk-tchap.git develop_tchap
-```
-This command will take all the commits that touch the subtree repo and push them to the remote fork. If you don't want to take all the commits (shouldnt happen), you will have to cherry-pick and push manually to the remote.
-
 
 Clone the repo and switch to the `element-web` directory:
 
@@ -245,6 +242,7 @@ Finally, build and start Element itself:
 
 ```bash
 yarn link matrix-js-sdk
+yarn link matrix-react-sdk
 yarn install
 yarn start
 ```
