@@ -1,5 +1,5 @@
 {
-    "name": "matrix-react-sdk-tchap",
+    "name": "matrix-react-sdk",
     "version": "0.0.0",
     "version-matrix": "3.95.0",
     "description": "SDK for matrix.org using React for Tchap",
