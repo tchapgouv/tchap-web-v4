@@ -146,7 +146,7 @@ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
-import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
+import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP: activate-cross-signing-and-secure-storage-react
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1693,7 +1693,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        //:tchap: add a screen to open user tab security
+        //:tchap: activate-cross-signing-and-secure-storage-react - add a screen to open user tab security
         if (screen === TchapUrls.secureBackupFragment) {
             //open the security tab
             //there is no anchor to sauvegarde-automatique subection

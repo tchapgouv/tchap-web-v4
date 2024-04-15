@@ -29,7 +29,7 @@ import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
 import ExternalLink from "../views/elements/ExternalLink";
-import Tchapi18nUtils from '../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
+import Tchapi18nUtils from '../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP: error-tchap-is-down
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -271,7 +271,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                             <WarningIcon width="24" height="24" />
                             <div>
                                 <div className="mx_RoomStatusBar_connectionLostBar_title">
-                                    {/* :TCHAP: _t("room|status_bar|server_connectivity_lost_title") */}
+                                    {/* :TCHAP: error-tchap-is-down - _t("room|status_bar|server_connectivity_lost_title") */}
                                     {Tchapi18nUtils.getServerDownMessage()}
                                     {/* end :TCHAP: */}
                                 </div>

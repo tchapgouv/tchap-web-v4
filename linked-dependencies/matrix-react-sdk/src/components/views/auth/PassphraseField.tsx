@@ -100,7 +100,7 @@ class PassphraseField extends PureComponent<IProps> {
     });
 
     public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
-        // :TCHAP: use home-made validation
+        // :TCHAP: password-policy - use home-made validation
         // const result = await this.validate(fieldState);
         const result = await TchapStrongPassword.validate(fieldState);
         // end :TCHAP:

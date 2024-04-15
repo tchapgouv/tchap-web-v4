@@ -50,7 +50,7 @@ const getIcon = (kind: Kind): string => {
 const getSetupCaption = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            /* :TCHAP:
+            /* :TCHAP: cross-signing-ui
             return _t("action|continue");
             */
             return _t("action|enable");

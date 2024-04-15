@@ -72,7 +72,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             );
         }
 
-        /* :TCHAP: redesign the returned component
+        /* :TCHAP: change-sections-order-in-security-privacy-settings - redesign the returned component
         return (
             <SettingsSubsection heading={_t("settings|security|cryptography_section")}>
                 <SettingsSubsectionText>
@@ -99,7 +99,7 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
         );
         */
         return (
-            <SettingsSubsection heading={_t("settings|security|cryptography_section")}> {/* :TCHAP: name changed in translations */}
+            <SettingsSubsection heading={_t("settings|security|cryptography_section")}> {/* :TCHAP: change-sections-order-in-security-privacy-settings - name changed in translations */}
             <div className="mx_SettingsTab_subsectionText">
                 <div>
                     {_t("These keys only apply to the current session.")}

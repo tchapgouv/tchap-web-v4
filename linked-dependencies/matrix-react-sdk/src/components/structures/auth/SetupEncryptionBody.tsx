@@ -163,7 +163,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             if (lostKeys) {
                 return (
                     <div>
-                        { /*:TCHAP: change <p>{_t("encryption|verification|no_key_or_device")}</p> */ }
+                        { /*:TCHAP: cross-signing-ui - change <p>{_t("encryption|verification|no_key_or_device")}</p> */ }
                         <p>
                             {_t(
                                 "<p>The Tchap team is working on the deployment of a new feature to "+
@@ -176,7 +176,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
 
                         <div className="mx_CompleteSecurity_actionRow">
                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
-                                {/* :TCHAP: _t("encryption|verification|reset_proceed_prompt") */}
+                                {/* :TCHAP: cross-signing-ui - _t("encryption|verification|reset_proceed_prompt") */}
                                 {_t("Set up")}
                                 {/* end :TCHAP: */}
                             </AccessibleButton>

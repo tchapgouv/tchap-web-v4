@@ -211,10 +211,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 backupInfo ? await cli.getCrypto()?.isKeyBackupTrusted(backupInfo) : undefined;
 
             const { forceReset } = this.props;
-            // :tchap: const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
-            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ShowKey;//:tchap: goes directly to showke
+            // :tchap: cross-signing-ui - const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ChooseKeyPassphrase;
+            const phase = backupInfo && !forceReset ? Phase.Migrate : Phase.ShowKey;//:tchap: cross-signing-ui - goes directly to showke
 
-            /* :TCHAP: remove
+            /* :TCHAP: cross-signing-ui - remove
             this.setState({
                 phase,
                 backupInfo,
@@ -222,7 +222,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             });
             end :TCHAP: */
 
-            // add :TCHAP:
+            // add :TCHAP: cross-signing-ui
             if (phase === Phase.ShowKey) {
                 this.recoveryKey = await cli.createRecoveryKeyFromPassphrase();
                 this.setState({
@@ -769,7 +769,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         if (this.state.phase === Phase.ShowKey) {
             continueButton = (
                 <DialogButtons
-                    /* :TCHAP:
+                    /* :TCHAP: cross-signing-ui
                     primaryButton={_t("action|continue")}
                     disabled={!this.state.downloaded && !this.state.copied && !this.state.setPassphrase}
                     */
@@ -779,7 +779,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
                     onPrimaryButtonClick={this.onShowKeyContinueClick}
 
-                    /* :TCHAP:
+                    /* :TCHAP: cross-signing-ui
                     hasCancel={false}
                     */
                     hasCancel={true}
@@ -809,7 +809,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                             <code ref={this.recoveryKeyNode}>{this.recoveryKey?.encodedPrivateKey}</code>
                         </div>
                         <div className="mx_CreateSecretStorageDialog_recoveryKeyButtons">
-                            {/* :TCHAP: remove
+                            {/* :TCHAP: cross-signing-ui - remove
                             <AccessibleButton
                                 kind="primary"
                                 className="mx_Dialog_primary"

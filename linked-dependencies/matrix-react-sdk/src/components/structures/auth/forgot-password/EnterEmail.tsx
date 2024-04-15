@@ -64,7 +64,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
         <>
             <EmailIcon className="mx_AuthBody_icon" />
             <h1>{_t("auth|enter_email_heading")}</h1>
-            { /* :TCHAP: we don't display homeservers to users
+            { /* :TCHAP: forgot-password - we don't display homeservers to users
             <p className="mx_AuthBody_text">
                 {_t("auth|enter_email_explainer", { homeserver }, { b: (t) => <b>{t}</b> })}
             </p>

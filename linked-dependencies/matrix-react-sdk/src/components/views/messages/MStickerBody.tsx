@@ -17,9 +17,9 @@ limitations under the License.
 import React, { ComponentProps, ReactNode } from "react";
 import { Tooltip } from "@vector-im/compound-web";
 
-import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
+import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody"; // :TCHAP: content-scanner
 import { BLURHASH_FIELD } from "../../../utils/image-media";
-import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent"; // :TCHAP: content-scanner
 
 export default class MStickerBody extends MImageBody {
     // Mostly empty to prevent default behaviour of MImageBody

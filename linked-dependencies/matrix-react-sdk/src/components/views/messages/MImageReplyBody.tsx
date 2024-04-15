@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from "react";
 
-import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
-import { ImageContent } from "../../../customisations/models/IMediaEventContent";
+import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody"; // :TCHAP: content-scanner
+import { ImageContent } from "../../../customisations/models/IMediaEventContent"; // :TCHAP: content-scanner
 
 const FORCED_IMAGE_HEIGHT = 44;
 

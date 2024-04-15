@@ -60,7 +60,7 @@ import { getForwardableEvent } from "../../../events/forward/getForwardableEvent
 import { getShareableLocationEvent } from "../../../events/location/getShareableLocationEvent";
 import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
 import { CardContext } from "../right_panel/context";
-//:tchap: add feature flags
+//:tchap: remove-thread-buttons - add feature flags
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 
 interface IReplyInThreadButton {
@@ -678,7 +678,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 <IconizedContextMenuOptionList>
                     {reactButton}
                     {replyButton}
-                    {/* :TCHAP: activate Thread based on homeserver feature flag
+                    {/* :TCHAP: remove-thread-buttons - activate Thread based on homeserver feature flag
                     {replyInThreadButton} */}
                     {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? replyInThreadButton : null}
                     {/*:TCHAP: end */}

@@ -212,7 +212,7 @@ export interface ISsoRedirectOptions {
     on_welcome_page?: boolean;
 }
 
-/* :tchap:
+/* :tchap: tchap-features-from-config
 * Add tchap specific options to IConfigOptions. Both interfaces get merged in compilation. https://www.typescriptlang.org/docs/handbook/declaration-merging.html#merging-interfaces
 * IConfigOptions declares which options can get retrieved with SdkConfig, if not declared SdkConfig complains it does not know the parameter.
 */

@@ -42,7 +42,7 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
 import Spinner from "../../views/elements/Spinner";
 import { formatSeconds } from "../../../DateUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
-import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP:
+import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP: forgot-password
 import Tchapi18nUtils from "../../../../../../src/tchap/i18n/Tchapi18nUtils";
 
 const emailCheckInterval = 2000;
@@ -63,7 +63,7 @@ enum Phase {
 }
 
 interface Props {
-    // :TCHAP: we get serverConfig when user enters email, so remove it from props - serverConfig: ValidatedServerConfig;
+    // :TCHAP: forgot-password - we get serverConfig when user enters email, so remove it from props - serverConfig: ValidatedServerConfig;
     onLoginClick: () => void;
     onComplete: () => void;
 }
@@ -106,13 +106,13 @@ export default class ForgotPassword extends React.Component<Props, State> {
             serverDeadError: "",
             logoutDevices: false,
         };
-        // :TCHAP: no known server yet, this.reset stays undefined - this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
+        // :TCHAP: forgot-password - no known server yet, this.reset stays undefined - this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
     }
 
     // todo remove checkServerCapabilities in componentDidMount -> gone ?
 
     public componentDidUpdate(prevProps: Readonly<Props>): void {
-        /* :TCHAP: we ignore serverConfig passed in props. So no use checking the server here.
+        /* :TCHAP: forgot-password - we ignore serverConfig passed in props. So no use checking the server here.
         if (
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
@@ -142,7 +142,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         }
     }
 
-    // :TCHAP:
+    // :TCHAP: forgot-password
     private useNewServerConfig =  async (serverConfig) => {
         console.log('Using serverConfig corresponding to this email :', serverConfig);
 
@@ -160,7 +160,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
     private async onPhaseEmailInputSubmit(): Promise<void> {
         this.phase = Phase.SendingEmail;
 
-        // :TCHAP: find the server corresponding to the email.
+        // :TCHAP: forgot-password - find the server corresponding to the email.
         const serverResult = await TchapUtils.fetchHomeserverForEmail(this.state.email);
         if (!serverResult) {
             this.setState({

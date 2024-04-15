@@ -136,7 +136,7 @@ export default class IdentityAuthClient {
             throw e;
         }
 
-        // :TCHAP: no need confirmation of Terms and Conditions to set a default identity server as we trust our backend servers 
+        // :TCHAP: auto-accept-tac - no need confirmation of Terms and Conditions to set a default identity server as we trust our backend servers 
         if (TchapUIFeature.autoAcceptTermsAndConditions){
             if (
                 !this.tempClient &&

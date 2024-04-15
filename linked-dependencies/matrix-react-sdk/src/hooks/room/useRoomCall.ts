@@ -232,7 +232,7 @@ export const useRoomCall = (
     let videoCallDisabledReason: string | null;
     switch (state) {
         case State.NoPermission:
-            // :tchap: disable noPermission
+            // :tchap: display-call-button-anyway - disable noPermission
             // voiceCallDisabledReason = _t("voip|disabled_no_perms_start_voice_call");
             // videoCallDisabledReason = _t("voip|disabled_no_perms_start_video_call");
             voiceCallDisabledReason = null;

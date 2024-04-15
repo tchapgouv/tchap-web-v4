@@ -40,7 +40,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
-import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: remove-thread-buttons
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -274,7 +274,7 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                 onClick={this.onTimelineCardClicked}
             />,
         );
-        //:tchap: activate Thread based on homeserver feature flag
+        //:tchap: remove-thread-buttons - activate Thread based on homeserver feature flag
         if(TchapUIFeature.isFeatureActiveForHomeserver("feature_thread")){
         rightPanelPhaseButtons.set(
             RightPanelPhases.ThreadPanel,

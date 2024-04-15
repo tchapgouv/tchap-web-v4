@@ -175,7 +175,7 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             profile = <Spinner />;
         }
 
-        /* :TCHAP: remove code
+        /* :TCHAP: simplify-exchange-key-message - remove code
         const userDetailText = [
             <p key="p1">{_t("encryption|verification|incoming_sas_user_dialog_text_1")}</p>,
             <p key="p2">
@@ -195,12 +195,12 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
 
         return (
             <div>
-                {/* :TCHAP: remove code
+                {/* :TCHAP: simplify-exchange-key-message - remove code
                 {profile}
                 {isSelf ? selfDetailText : userDetailText}
                 end :TCHAP: */}
 
-                {/* :TCHAP: simplify modal message */}
+                {/* :TCHAP: simplify-exchange-key-message - simplify modal message */}
                 <p>{ _t(
                     "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
                     {},

@@ -89,7 +89,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                     <RoomProfileSettings roomId={room.roomId} />
                 </SettingsSection>
 
-                {/* :TCHAP: no aliases for rooms
+                {/* :TCHAP: hide-room-alias-settings - no aliases for rooms
                 <SettingsSection heading={_t("room_settings|general|aliases_section")}>
                     <AliasSettings
                         roomId={room.roomId}

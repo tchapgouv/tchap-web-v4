@@ -41,7 +41,7 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
         case MetaSpace.Favourites:
             return _t("common|favourites");
         case MetaSpace.People:
-            // TCHAP:
+            // TCHAP: use-the-term-direct-messages-not-people
             // return _t("common|people")
             return _t("Direct Messages");
             // end TCHAP

@@ -55,9 +55,9 @@ import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
 
-import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
-import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader";
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP:
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
+import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader"; // :TCHAP: customize-room-header-bar
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: customize-room-header-bar
 
 export default function RoomHeader({
     room,
@@ -238,12 +238,12 @@ export default function RoomHeader({
                     }}
                     className="mx_RoomHeader_infoWrapper"
                 >
-                    {/* :TCHAP: RoomAvatar -> DecoratedRoomAvatar
+                    {/* :TCHAP: customize-room-header-bar - RoomAvatar -> DecoratedRoomAvatar
                     <RoomAvatar room={room} size="40px" />
                     */}
                     <DecoratedRoomAvatar room={room} size="40px" />
                     {/* end :TCHAP: */}
-                    {/* :tchap: Add external caption when room is open to external */}
+                    {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
                     <TchapExternalRoomHeader room={room}></TchapExternalRoomHeader>
                     {/* :tchap: end */}
                     <Box flex="1" className="mx_RoomHeader_info">
@@ -258,7 +258,7 @@ export default function RoomHeader({
                         >
                             <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
 
-                            {/* :tchap: remove public forum icon
+                            {/* :tchap: customize-room-header-bar - remove public forum icon
                             {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
                                 <Tooltip label={_t("common|public_room")} side="right">
                                     <PublicIcon
@@ -271,7 +271,7 @@ export default function RoomHeader({
                             )}
                             */}
 
-                            {/* :tchap: do not show e2eStatus
+                            {/* :tchap: customize-room-header-bar - do not show e2eStatus
                             {isDirectMessage && e2eStatus === E2EStatus.Verified && (
                                 <Tooltip label={_t("common|verified")} side="right">
                                     <VerifiedIcon
@@ -284,7 +284,7 @@ export default function RoomHeader({
                             )}
                             */}
 
-                            {/* :tchap: do not show E2EStatus.Warning
+                            {/* :tchap: customize-room-header-bar - do not show E2EStatus.Warning
                             {isDirectMessage && e2eStatus === E2EStatus.Warning && (
                                 <Tooltip label={_t("room|header_untrusted_label")} side="right">
                                     <ErrorIcon
@@ -333,14 +333,14 @@ export default function RoomHeader({
                         joinCallButton
                     ) : (
                         <>
-                            { /* :TCHAP: activate video call only if directmessage and if feature is activated on homeserver }
+                            { /* :TCHAP: customize-room-header-bar - activate video call only if directmessage and if feature is activated on homeserver }
                             {!isVideoRoom(room) && videoCallButton}
                             */ }
                             {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
                               !isVideoRoom(room) && videoCallButton}
                             {/* end :TCHAP: */}
 
-                            { /* :TCHAP: activate audio call only if directmessage and if feature is activated on homeserver
+                            { /* :TCHAP: customize-room-header-bar - activate audio call only if directmessage and if feature is activated on homeserver
                             {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
                             */ }
                             {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&

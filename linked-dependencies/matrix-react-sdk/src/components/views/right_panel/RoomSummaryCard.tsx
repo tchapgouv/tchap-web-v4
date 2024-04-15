@@ -76,7 +76,7 @@ import { inviteToRoom } from "../../../utils/room/inviteToRoom";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useRoomState } from "../../../hooks/useRoomState";
 
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP:
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: tchap-room-icons
 
 
 interface IProps {
@@ -334,7 +334,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
         <header className="mx_RoomSummaryCard_container">
-            {/** :TCHAP: decorate the avatar with the tchap lock icons
+            {/** :TCHAP: tchap-room-icons - decorate the avatar with the tchap lock icons
             <RoomAvatar room={room} size="80px" viewAvatarOnClick />
             */}
             <DecoratedRoomAvatar room={room} size="80px" viewAvatarOnClick />
@@ -362,7 +362,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 {alias}
             </Text>
 
-            {/* :TCHAP: remove badges
+            {/* :TCHAP: tchap-room-icons - remove badges
             <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
                 {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
                     <Badge kind="default">

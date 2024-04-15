@@ -88,7 +88,7 @@ export async function startTermsFlow(
     services: Service[],
     interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
 ): Promise<void> {
-    // :TCHAP: no need to go through Terms flow as we trust our backend servers
+    // :TCHAP: auto-accept-tac - no need to go through Terms flow as we trust our backend servers
     if (TchapUIFeature.autoAcceptTermsAndConditions){
         if (!doesAccountDataHaveIdentityServer(client)) {
             setToDefaultIdentityServer(client);

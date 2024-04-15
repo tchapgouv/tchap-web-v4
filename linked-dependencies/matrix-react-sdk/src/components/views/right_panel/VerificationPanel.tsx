@@ -296,7 +296,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 description = _t("encryption|verification|successful_own_device");
             } else {
                 description = _t("The sharing of your Tchap Keys has succeeded. Your messages will be unlocked."); // :TCHAP:
-                /* :TCHAP:
+                /* :TCHAP: simplify-exchange-key-message
                 description = _t("encryption|verification|successful_device", {
                     deviceName: device.displayName,
                     deviceId: device.deviceId,

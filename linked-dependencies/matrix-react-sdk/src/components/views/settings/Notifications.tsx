@@ -59,7 +59,7 @@ import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
 import SettingsSubsection from "./shared/SettingsSubsection";
 import { doesRoomHaveUnreadMessages } from "../../../Unread";
 
-import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :tchap: tchap-features-from-config
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -727,7 +727,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     </>
                 )}
 
-                {/* :TCHAP: show button only if feature is active on homeserver
+                {/* :TCHAP: tchap-features-from-config - show button only if feature is active on homeserver
                 {emailSwitches}
                 */}
                 { TchapUIFeature.isFeatureActiveForHomeserver("feature_email_notification") ? emailSwitches : null}

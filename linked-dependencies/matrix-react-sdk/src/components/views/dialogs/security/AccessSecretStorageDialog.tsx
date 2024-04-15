@@ -82,7 +82,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         };
     }
 
-    // :TCHAP: add functionality that displays the Recovery Code for 2mn when clicking on the input eye icon 
+    // :TCHAP: ux-improvements-for-xsss - add functionality that displays the Recovery Code for 2mn when clicking on the input eye icon 
     private setDisplayPassword = (): void => {
         this.setState({ displayPassword: true });
     
@@ -431,7 +431,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                 />
                             </div>
                             {/*
-                             :TCHAP: hide for csss feature
+                             :TCHAP: ux-improvements-for-xsss - hide for csss feature
                             <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
                                 {_t("encryption|access_secret_storage_dialog|separator", {
                                     recoveryFile: "",
