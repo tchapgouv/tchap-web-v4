@@ -8,10 +8,8 @@ import * as fs from "node:fs";
 import _ from "lodash";
 import { util } from "webpack";
 import { Translations } from "matrix-web-i18n";
-/** :TCHAP: */
-// const REACT_I18N_BASE_PATH = "node_modules/matrix-react-sdk/src/i18n/strings/";
-const REACT_I18N_BASE_PATH = "linked-dependencies/matrix-react-sdk/src/i18n/strings/";
-/** end :TCHAP: */
+
+const REACT_I18N_BASE_PATH = "node_modules/matrix-react-sdk/src/i18n/strings/";
 const I18N_BASE_PATH = "src/i18n/strings/";
 const INCLUDE_LANGS = [...new Set([...fs.readdirSync(I18N_BASE_PATH), ...fs.readdirSync(REACT_I18N_BASE_PATH)])]
     .filter((fn) => fn.endsWith(".json"))

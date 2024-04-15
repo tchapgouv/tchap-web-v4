@@ -111,10 +111,7 @@ function next(i, err) {
 }
 
 function genLangFile(lang, dest) {
-    /** :TCHAP: */
-    // const reactSdkFile = "node_modules/matrix-react-sdk/src/i18n/strings/" + lang + ".json";
-    const reactSdkFile = "linked-dependencies/matrix-react-sdk/src/i18n/strings/" + lang + ".json";
-    /** end :TCHAP: */
+    const reactSdkFile = "node_modules/matrix-react-sdk/src/i18n/strings/" + lang + ".json";
     const riotWebFile = "src/i18n/strings/" + lang + ".json";
 
     const translations = {};
@@ -170,10 +167,7 @@ regenerate the file, adding its content-hashed filename to langFileMap
 and regenerating languages.json with the new filename
 */
 function watchLanguage(lang, dest, langFileMap) {
-    /** :TCHAP: */
-    // const reactSdkFile = "node_modules/matrix-react-sdk/src/i18n/strings/" + lang + ".json";
-    const reactSdkFile = "linked-dependencies/matrix-react-sdk/src/i18n/strings/" + lang + ".json";
-    /** end :TCHAP: */
+    const reactSdkFile = "node_modules/matrix-react-sdk/src/i18n/strings/" + lang + ".json";
     const riotWebFile = "src/i18n/strings/" + lang + ".json";
 
     // XXX: Use a debounce because for some reason if we read the language
