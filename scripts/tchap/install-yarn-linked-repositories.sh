@@ -64,6 +64,7 @@ popd
 cd ../linked-dependencies/matrix-react-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
+yarn link matrix-js-sdk
 yarn install --pure-lockfile
 
 

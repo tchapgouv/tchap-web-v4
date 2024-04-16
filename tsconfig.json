@@ -17,8 +17,8 @@
         /* :TCHAP: */
         "paths": {
             "~tchap-web/*": ["./*"],
-            "~tchap-web-dep/*": ["./yarn-linked-dependencies/*"],
-            "~linked-dep/*": ["./linked-dependencies/*"],
+            "~matrix-js-sdk/*": ["./yarn-linked-dependencies/matrix-js-sdk/*"],
+            "~matrix-react-sdk/*": ["./linked-dependencies/matrix-react-sdk/*"],
             "matrix-react-sdk/*": ["./linked-dependencies/matrix-react-sdk/*"]
         },
         "types": ["node", "jest", "@testing-library/jest-dom"]
