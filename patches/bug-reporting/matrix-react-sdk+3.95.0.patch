@@ -191,7 +191,7 @@ index 3c8241d..cdd9a83 100644
          const event = this.props.mxEvent;
          const sender = event.sender ? event.sender.name : event.getSender();
 diff --git a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
-index 5f2a399..c93d459 100644
+index 5f2a399..70d30df 100644
 --- a/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 +++ b/node_modules/matrix-react-sdk/src/rageshake/submit-rageshake.ts
 @@ -102,7 +102,11 @@ async function collectBaseInformation(body: FormData, opts: IOpts): Promise<void
@@ -201,7 +201,7 @@ index 5f2a399..c93d459 100644
 +    /* :TCHAP: rename app - for bugreport rageshakes
      body.append("app", opts.customApp || "element-web");
 +    */
-+    body.append("app", "tchap-web");
++    body.append("app", opts.customApp || "tchap-web");
 +    // end :TCHAP:
      body.append("version", version ?? "UNKNOWN");
      body.append("user_agent", userAgent);
