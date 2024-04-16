@@ -145,7 +145,7 @@
         "package": "matrix-react-sdk",
         "files": ["src/components/views/dialogs/security/AccessSecretStorageDialog.tsx"]
     },
-    "use-the-term-direct-messages-not-people": {
+    "use-the-term-direct-messages-not-people-and-tchap-annonces": {
         "github-issue": "https://github.com/tchapgouv/tchap-web-v4/issues/448",
         "package": "matrix-react-sdk",
         "files": [

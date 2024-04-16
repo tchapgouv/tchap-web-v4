@@ -721,5 +721,9 @@
     "tchap_voip_bug_report_prefill": {
         "en": "I had a problem during a Tchap call.\nDetails: ...",
         "fr": "J'ai eu un problème pendant un appel Tchap.\nDétails : ..."
+    },
+    "common|system_alerts": {
+        "en": "Tchap Info",
+        "fr": "Annonces Tchap"
     }
 }
