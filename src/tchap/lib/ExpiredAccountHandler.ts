@@ -5,6 +5,7 @@ import { stopMatrixClient } from "matrix-react-sdk/src/Lifecycle";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import Modal from "matrix-react-sdk/src/Modal";
 import PlatformPeg from "matrix-react-sdk/src/PlatformPeg";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import ExpiredAccountDialog from "../components/views/dialogs/ExpiredAccountDialog";
 import TchapUtils from "../util/TchapUtils";
@@ -28,13 +29,15 @@ class ExpiredAccountHandler {
     }
 
     /**
-     * register the listener after the Matrix Client has been initialized but before it is started
+     * Register to listen to expired account event.
+     * Registration is done after the Matrix Client has been initialized but before it is started.
      */
     public register() {
         const expiredRegistrationId = this.dispatcher.register((payload: ActionPayload) => {
             if (payload.action === "will_start_client") {
-                console.log(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events");
-                const cli = MatrixClientPeg.get();
+                logger.debug(":tchap: register a listener for HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT events");
+                // safeGet will throw if client is not initialised yet. We don't handle it because we don't know when it would happen.
+                const cli = MatrixClientPeg.safeGet();
                 cli.on(HttpApiEvent.ORG_MATRIX_EXPIRED_ACCOUNT, this.boundOnExpiredAccountEvent);
                 //unregister callback once the work is done
                 this.dispatcher.unregister(expiredRegistrationId);
@@ -46,14 +49,14 @@ class ExpiredAccountHandler {
      * When account expired account happens, display the panel if not open yet.
      */
     private onExpiredAccountError() {
-        console.log(":tchap: Expired Account Error received");
+        logger.debug(":tchap: Expired Account Error received");
 
         if (this.isPanelOpen) {
             return;
         }
         //shutdown all matrix react services, but without unsetting the client
         stopMatrixClient(false);
-        console.log(":tchap: matrix react services have been shutdown");
+        logger.debug(":tchap: matrix react services have been shutdown");
 
         //should we sent the email directly? Normally they should have received already an email 7 days earlier
         this.showExpirationPanel();
@@ -63,7 +66,7 @@ class ExpiredAccountHandler {
     private async showExpirationPanel() {
         Modal.createDialog(
             ExpiredAccountDialog,
-            {
+            { /* props */
                 onRequestNewEmail: () => {
                     return TchapUtils.requestNewExpiredAccountEmail();
                 },
@@ -74,10 +77,10 @@ class ExpiredAccountHandler {
                 },
                 //todo: define which static/dynamic settings are needed for this dialog
             },
-            null,
-            false,
-            true,
-            {
+            undefined /* className */,
+            false /* isPriorityModal */,
+            true /* isStaticModal */,
+            { /* options */
                 //close panel only if account is not expired
                 onBeforeClose: async () => {
                     //verify that the account is not expired anymore
