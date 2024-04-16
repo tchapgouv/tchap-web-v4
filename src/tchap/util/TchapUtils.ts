@@ -3,9 +3,11 @@ import SdkConfig from "matrix-react-sdk/src/SdkConfig";
 import AutoDiscoveryUtils from "matrix-react-sdk/src/utils/AutoDiscoveryUtils";
 import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServerConfig";
 import { findMapStyleUrl } from "matrix-react-sdk/src/utils/location";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import TchapApi from "./TchapApi";
 import { ClientConfig } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/autodiscovery";
+import { MatrixError } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/http-api";
 
 /**
  * Tchap utils.
@@ -17,9 +19,9 @@ export default class TchapUtils {
      * @returns {string} The shortened value of getDomain().
      */
     static getShortDomain(): string {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const baseDomain = cli.getDomain();
-        const domain = baseDomain.split(".tchap.gouv.fr")[0].split(".").reverse().filter(Boolean)[0];
+        const domain = baseDomain?.split(".tchap.gouv.fr")[0].split(".").reverse().filter(Boolean)[0];
 
         return this.capitalize(domain) || "Tchap";
     }
@@ -33,7 +35,7 @@ export default class TchapUtils {
         showForumFederationSwitch: boolean;
         forumFederationSwitchDefaultValue?: boolean;
     } {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         const baseDomain = cli.getDomain();
 
         // Only show the federate switch to defense users : it's difficult to understand, so we avoid
@@ -97,7 +99,7 @@ export default class TchapUtils {
                 };
             })
             .catch((error) => {
-                console.error("Could not find homeserver for this email", error);
+                logger.error("Could not find homeserver for this email", error);
                 return;
             });
     };
@@ -147,7 +149,7 @@ export default class TchapUtils {
      * @returns Promise<true> is cross signing is supported by home server or false
      */
     static async isCrossSigningSupportedByServer(): Promise<boolean> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         return cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing");
     }
 
@@ -156,8 +158,9 @@ export default class TchapUtils {
      * @returns true is a map tile server is present in config or wellknown.
      */
     static isMapConfigured(): boolean {
+        const cli = MatrixClientPeg.safeGet();
         try {
-            findMapStyleUrl();
+            findMapStyleUrl(cli);
             return true;
         } catch (e) {
             return false;
@@ -188,6 +191,8 @@ export default class TchapUtils {
             const k = keys[i];
             url += k + "=" + encodeURIComponent(params[k]);
         }
+        // todo : write unit test, then try replacing by :
+        // url += "?" + new URLSearchParams(params).toString();
         return url;
     }
 
@@ -196,10 +201,13 @@ export default class TchapUtils {
      * @returns true if the mail was sent succesfully, false otherwise
      */
     static async requestNewExpiredAccountEmail(): Promise<boolean> {
-        console.log(":tchap: Requesting an email to renew to account");
-        const homeserverUrl = MatrixClientPeg.get().getHomeserverUrl();
-        const accessToken = MatrixClientPeg.get().getAccessToken();
-        //const url = `${homeserverUrl}/_matrix/client/unstable/account_validity/send_mail`;
+        logger.debug(":tchap: Requesting an email to renew to account");
+
+        // safeGet will throw if client is not initialised. We don't handle it because we don't know when this would happen.
+        const client = MatrixClientPeg.safeGet();
+
+        const homeserverUrl = client.getHomeserverUrl();
+        const accessToken = client.getAccessToken();
         const url = `${homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
         const options = {
             method: "POST",
@@ -210,29 +218,31 @@ export default class TchapUtils {
 
         return fetch(url, options)
             .then((response) => {
-                console.log(":tchap: email NewExpiredAccountEmail sent", response);
+                logger.debug(":tchap: email NewExpiredAccountEmail sent", response);
                 return true;
             })
             .catch((err) => {
-                console.error(":tchap: email NewExpiredAccountEmail error", err);
+                logger.error(":tchap: email NewExpiredAccountEmail error", err);
                 return false;
             });
     }
 
     /**
-     * Verify if the account is expired.
-     * It executes an API call and check that it receives a ORG_MATRIX_EXPIRED_ACCOUNT
-     * The API invoked is getProfileInfo()
-     * @param matrixId the account matrix Id
+     * Verify if the currently logged in account is expired.
+     * It executes an API call (to getProfileInfo) and checks whether the call throws a ORG_MATRIX_EXPIRED_ACCOUNT
      * @returns true if account is expired, false otherwise
      */
-    static async isAccountExpired(matrixId?: string): Promise<boolean> {
+    static async isAccountExpired(): Promise<boolean> {
+        const client = MatrixClientPeg.safeGet();
+        const matrixId: string | null = client.credentials.userId;
         if (!matrixId) {
-            matrixId = MatrixClientPeg.getCredentials().userId;
+            // user is not logged in. Or something went wrong.
+            return false;
         }
         try {
-            await MatrixClientPeg.get().getProfileInfo(matrixId);
-        } catch (err) {
+            await client.getProfileInfo(matrixId!);
+        } catch (error) {
+            const err = error as MatrixError;
             if (err.errcode === "ORG_MATRIX_EXPIRED_ACCOUNT") {
                 return true;
             }
@@ -247,7 +257,7 @@ export default class TchapUtils {
      */
     static async isCurrentlyUsingBluetooth(): Promise<boolean> {
         if (!navigator.mediaDevices?.enumerateDevices) {
-            console.log("enumerateDevices() not supported. Cannot know if there is a bluetooth device.");
+            logger.warn("enumerateDevices() not supported. Cannot know if there is a bluetooth device.");
             return false;
         } else {
             // List cameras and microphones.
@@ -256,7 +266,7 @@ export default class TchapUtils {
                 .then((devices) => {
                     let hasBluetooth = false;
                     devices.forEach((device) => {
-                        console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+                        logger.debug(`${device.kind}: ${device.label} id = ${device.deviceId}`);
                         if (device.kind === "audioinput") {
                             if (device.label.toLowerCase().includes("bluetooth")) {
                                 hasBluetooth = true;
@@ -266,7 +276,7 @@ export default class TchapUtils {
                     return hasBluetooth;
                 })
                 .catch((err) => {
-                    console.error(`${err.name}: ${err.message}`);
+                    logger.error(`${err.name}: ${err.message}`);
                     return false;
                 });
         }

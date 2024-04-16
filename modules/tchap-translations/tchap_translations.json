@@ -210,7 +210,7 @@
     "Read the Privacy Policy": { "en": "Read the Privacy Policy", "fr": "Lire la Politique de Confidentialité" },
     "invite|recents_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
     "invite|suggestions_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
-    "Reload the app": { "en": "Reload page", "fr": "Rafraîchir la page" },
+    "Reload page": { "en": "Reload page", "fr": "Rafraîchir la page" },
     "Request a renewal email": { "en": "Request a renewal email", "fr": "Demander l’envoi d’un nouvel email" },
     "encryption|access_secret_storage_dialog|restoring": {
         "en": "Restoring messages from backup",
@@ -247,7 +247,7 @@
         "en": "Your email adress is not allowed on Tchap. Make an autorization request <a>here</a>",
         "fr": "Votre adresse mail n'est pas autorisée sur Tchap. Demandez l'accès à Tchap pour votre administration via <a>ce formulaire</a>"
     },
-    "The app will reload now": {
+    "You can refresh the page to continue your conversations": {
         "en": "You can refresh the page to continue your conversations",
         "fr": "Vous pouvez dorénavant rafraîchir la page pour continuer vos conversations"
     },
@@ -301,7 +301,7 @@
     "Verified!": { "en": "Verified!", "fr": "Vérifié !" },
     "Wait for at least %(wait)s seconds between two emails": {
         "en": "Wait for at least %(wait)s seconds between two emails",
-        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux mails"
+        "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux emails"
     },
     "Warning: this is the only time this code will be displayed!": {
         "en": "Warning: this is the only time this code will be displayed!",
@@ -322,8 +322,8 @@
         "fr": "Vos Clés Tchap (clés de chiffrement) ont été sauvegardées avec succès dans le fichier <b>tchap-keys.txt</b>. Vous pourrez les importer à votre prochaine connexion pour déverrouiller vos messages (<a>en savoir plus</a>)."
     },
     "Your account is still expired, please follow the link in the email you have received to renew it": {
-        "en": "Your account is still expired, please follow the link in the email you should have received to renew it",
-        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement"
+        "en": "Your account is still expired, please follow the link in the email you should have received to renew it.",
+        "fr": "Votre compte est toujours expiré, merci de cliquer sur le lien reçu dans le mail de renouvellement."
     },
     "Your last three login attempts have failed. Please try again in a few minutes.": {
         "en": "Your last three login attempts have failed. Please try again in a few minutes.",
@@ -721,5 +721,9 @@
     "tchap_voip_bug_report_prefill": {
         "en": "I had a problem during a Tchap call.\nDetails: ...",
         "fr": "J'ai eu un problème pendant un appel Tchap.\nDétails : ..."
+    },
+    "common|system_alerts": {
+        "en": "Tchap Info",
+        "fr": "Annonces Tchap"
     }
 }
