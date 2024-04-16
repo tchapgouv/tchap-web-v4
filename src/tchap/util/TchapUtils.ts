@@ -6,8 +6,8 @@ import { findMapStyleUrl } from "matrix-react-sdk/src/utils/location";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import TchapApi from "./TchapApi";
-import { ClientConfig } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/autodiscovery";
-import { MatrixError } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/http-api";
+import { ClientConfig } from "~matrix-js-sdk/src/autodiscovery";
+import { MatrixError } from "~matrix-js-sdk/src/http-api";
 
 /**
  * Tchap utils.
