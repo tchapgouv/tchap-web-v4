@@ -2,12 +2,12 @@ import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
-import { MatrixEvent } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/matrix";
-import LegacyCallEvent from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/components/views/messages/LegacyCallEvent";
-import LegacyCallEventGrouper from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/components/structures/LegacyCallEventGrouper";
-import { CallErrorCode, CallState } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/webrtc/call";
-import BugReportDialog from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
-import Modal from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/Modal";
+import { MatrixEvent } from "~matrix-js-sdk/src/matrix";
+import LegacyCallEvent from "~matrix-react-sdk/src/components/views/messages/LegacyCallEvent";
+import LegacyCallEventGrouper from "~matrix-react-sdk/src/components/structures/LegacyCallEventGrouper";
+import { CallErrorCode, CallState } from "~matrix-js-sdk/src/webrtc/call";
+import BugReportDialog from "~matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
+import Modal from "~matrix-react-sdk/src/Modal";
 
 const THEIR_USER_ID = "@them:here";
 

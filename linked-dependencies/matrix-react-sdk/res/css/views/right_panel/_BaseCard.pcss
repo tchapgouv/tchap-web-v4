@@ -1,0 +1,240 @@
+/*
+Copyright 2020 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_BaseCard {
+    --BaseCard_EventTile_line-padding-block: 2px;
+    --BaseCard_EventTile-spacing-inline: 36px;
+    --BaseCard_header-button-size: 28px;
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: var(--cpd-font-size-body-md);
+
+    .mx_BaseCard_header {
+        height: 64px;
+        padding: var(--cpd-space-3x);
+        box-sizing: border-box;
+        /* changing the color from $separator to transparent as it is
+           the best visual output during the transition period. This will be
+           reintroduced at a later stage. */
+        border-bottom: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--cpd-space-2x);
+        flex-shrink: 0;
+
+        > h2 {
+            margin: 0 44px;
+            font: var(--cpd-font-body-sm-semibold);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .mx_BaseCard_header_title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 24px;
+            flex: 1;
+
+            .mx_BaseCard_header_title_heading {
+                color: $primary-content;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .mx_BaseCard_header_title_button--option {
+                position: relative;
+                width: var(--BaseCard_header-button-size);
+                height: var(--BaseCard_header-button-size);
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset-block-start: 0;
+                    inset-inline-start: 0;
+                    height: 100%;
+                    width: 100%;
+                    mask-repeat: no-repeat;
+                    mask-position: center;
+                    mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
+                    background-color: $secondary-content;
+                }
+
+                &:hover::after {
+                    background-color: $primary-content;
+                }
+            }
+        }
+    }
+
+    .mx_AutoHideScrollbar {
+        min-height: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .mx_BaseCard_Group {
+        margin: $spacing-20 0 $spacing-16;
+
+        & > * {
+            margin-left: $spacing-12;
+            margin-right: $spacing-12;
+        }
+
+        > h2 {
+            color: $tertiary-content;
+            font: var(--cpd-font-body-sm-medium);
+            margin: $spacing-12;
+        }
+
+        .mx_BaseCard_Button {
+            padding: 10px;
+            padding-inline-start: $spacing-12;
+            margin: 0;
+            position: relative;
+            font: var(--cpd-font-heading-sm-medium);
+            height: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: flex;
+
+            .mx_BaseCard_Button_sublabel {
+                color: $tertiary-content;
+                margin-left: auto;
+            }
+
+            &:hover {
+                background-color: rgba(141, 151, 165, 0.1);
+            }
+
+            &.mx_AccessibleButton_disabled {
+                padding-right: $spacing-12;
+                &::after {
+                    content: unset;
+                }
+            }
+        }
+    }
+
+    .mx_BaseCard_footer {
+        padding-top: $spacing-4;
+        text-align: center;
+        display: flex;
+        justify-content: space-around;
+
+        .mx_AccessibleButton_kind_secondary {
+            color: $secondary-content;
+            background-color: rgba(141, 151, 165, 0.2);
+            font: var(--cpd-font-body-md-semibold);
+        }
+
+        .mx_AccessibleButton_disabled {
+            cursor: not-allowed;
+        }
+    }
+}
+
+.mx_BaseCard_back,
+.mx_BaseCard_close {
+    flex-shrink: 0;
+    position: relative;
+    /* @TODO(kerrya) background colours here are not semantic
+       these buttons to be replaced with IconButton after secondary variant is added
+       https://github.com/vector-im/compound/issues/279 */
+    background-color: var(--cpd-color-bg-subtle-secondary);
+    width: var(--BaseCard_header-button-size);
+    height: var(--BaseCard_header-button-size);
+    border-radius: 50%;
+
+    &:hover {
+        background-color: var(--cpd-color-bg-subtle-primary);
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        height: inherit;
+        width: inherit;
+        top: 0;
+        left: 0;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 20px;
+        background-color: var(--cpd-color-icon-secondary);
+    }
+}
+
+.mx_BaseCard_back {
+    order: 0; /* always first! */
+    &::before {
+        transform: rotate(90deg);
+        mask-size: 22px;
+        mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
+    }
+}
+
+.mx_BaseCard_close {
+    order: 999; /* always last */
+    &::before {
+        mask-image: url("@vector-im/compound-design-tokens/icons/close.svg");
+    }
+}
+
+.mx_ContextualMenu_wrapper.mx_BaseCard_header_title {
+    .mx_ContextualMenu {
+        position: initial;
+
+        span:first-of-type {
+            font-weight: var(--cpd-font-weight-semibold);
+            font-size: inherit;
+            color: $primary-content;
+        }
+
+        font: var(--cpd-font-body-sm-regular);
+        color: $primary-content;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        border: 1px solid $quinary-content;
+        box-shadow: 0px 1px 3px rgba(23, 25, 28, 0.05);
+    }
+
+    .mx_ContextualMenu_chevron_top {
+        left: auto;
+        right: 22px;
+        border-bottom-color: $quinary-content;
+
+        &::after {
+            content: "";
+            border: inherit;
+            border-bottom-color: $menu-bg-color;
+            position: absolute;
+            top: 1px;
+            left: -8px;
+        }
+    }
+}
+
+.mx_BaseCard_headerProp {
+    flex: 1 1 100%;
+}

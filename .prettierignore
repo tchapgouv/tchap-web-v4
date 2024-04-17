@@ -32,6 +32,7 @@ src/vector/modernizr.js
 #remove tchap files from prettier
 patches/
 yarn-linked-dependencies/
+linked-dependencies/
 .github/
 res/
 scripts/tchap

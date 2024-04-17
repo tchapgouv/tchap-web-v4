@@ -2,10 +2,10 @@ import { mocked, MockedObject } from "jest-mock";
 
 import ExpiredAccountDialog from "~tchap-web/src/tchap/components/views/dialogs/ExpiredAccountDialog";
 import ExpiredAccountHandler from "~tchap-web/src/tchap/lib/ExpiredAccountHandler";
-import { HttpApiEvent, MatrixClient } from "~tchap-web/yarn-linked-dependencies/matrix-js-sdk/src/matrix";
-import Modal from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/Modal";
-import defaultDispatcher from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/src/dispatcher/dispatcher";
-import { getMockClientWithEventEmitter } from "~tchap-web/yarn-linked-dependencies/matrix-react-sdk/test/test-utils";
+import { HttpApiEvent, MatrixClient } from "~matrix-js-sdk/src/matrix";
+import Modal from "~matrix-react-sdk/src/Modal";
+import defaultDispatcher from "~matrix-react-sdk/src/dispatcher/dispatcher";
+import { getMockClientWithEventEmitter } from "~matrix-react-sdk/test/test-utils";
 
 describe("ExpiredAccountHandler", () => {
     let mockClient: MockedObject<MatrixClient>;

@@ -68,8 +68,10 @@ const config: Config = {
         "../../../../../../src/tchap/components/views/messages/OriginalAudioBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
         "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
-        "~tchap-web-dep/(.*)": "<rootDir>/yarn-linked-dependencies/$1",
+        "~matrix-js-sdk/(.*)": "<rootDir>/yarn-linked-dependencies/matrix-js-sdk/$1",
+        "~matrix-react-sdk/(.*)": "<rootDir>/linked-dependencies/matrix-react-sdk/$1",
         "~tchap-web/(.*)": "<rootDir>/$1",
+        "matrix-react-sdk/(.*)": "<rootDir>/linked-dependencies/matrix-react-sdk/$1",
         // end :TCHAP:
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk|matrix-react-sdk).+$"],
