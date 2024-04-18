@@ -29,6 +29,7 @@ import SdkConfig from "../SdkConfig";
 import { UseCase } from "../settings/enums/UseCase";
 import { useSettingValue } from "./useSettings";
 import { UserOnboardingContext } from "./useUserOnboardingContext";
+import { accessSecretStorage } from "../SecurityManager"; // :TCHAP: onboarding-add-secure-backup
 
 interface UserOnboardingTask {
     id: string;
@@ -55,7 +56,8 @@ const onClickStartDm = (ev: ButtonEvent): void => {
 };
 
 const tasks: UserOnboardingTask[] = [
-    {
+    /** :TCHAP: onboarding-add-secure-backup */
+    /*{
         id: "create-account",
         title: _t("auth|create_account_title"),
         description: _t("onboarding|you_made_it"),
@@ -145,7 +147,91 @@ const tasks: UserOnboardingTask[] = [
             },
             hideOnComplete: true,
         },
+    },*/
+    {
+        id: "enable-secure-backup",
+        title: _t("onboarding|enable_secure_backup"),
+        description: _t("onboarding|enable_secure_backup_description"),
+        completed: (ctx: UserOnboardingContext) => ctx.hasSecureStorage,
+        action: {
+            label: _t("onboarding|enable_secure_backup_action"),
+            onClick: (ev: ButtonEvent) => {
+                accessSecretStorage();
+            },
+        },
     },
+    {
+        id: "setup-profile",
+        title: _t("onboarding|set_up_profile"),
+        description: _t("onboarding|set_up_profile_description"),
+        completed: (ctx: UserOnboardingContext) => ctx.hasAvatar,
+        action: {
+            label: _t("onboarding|set_up_profile_action"),
+            onClick: (ev: ButtonEvent) => {
+                PosthogTrackers.trackInteraction("WebUserOnboardingTaskSetupProfile", ev);
+                defaultDispatcher.dispatch({
+                    action: Action.ViewUserSettings,
+                    initialTabId: UserTab.General,
+                });
+            },
+        },
+    },
+    {
+        id: "find-friends",
+        title: _t("onboarding|find_friends"),
+        description: _t("onboarding|find_friends_description"),
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
+        relevant: [UseCase.PersonalMessaging, UseCase.Skip],
+        action: {
+            label: _t("onboarding|find_friends_action"),
+            onClick: onClickStartDm,
+        },
+    },
+    {
+        id: "find-coworkers",
+        title: _t("onboarding|find_coworkers"),
+        description: _t("onboarding|get_stuff_done"),
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
+        relevant: [UseCase.WorkMessaging],
+        action: {
+            label: _t("onboarding|find_people"),
+            onClick: onClickStartDm,
+        },
+    },
+    {
+        id: "find-community-members",
+        title: _t("onboarding|find_community_members"),
+        description: _t("onboarding|get_stuff_done"),
+        completed: (ctx: UserOnboardingContext) => ctx.hasDmRooms,
+        relevant: [UseCase.CommunityMessaging],
+        action: {
+            label: _t("onboarding|find_people"),
+            onClick: onClickStartDm,
+        },
+    },
+    {
+        id: "download-apps",
+        title: () =>
+            _t("onboarding|download_app", {
+                brand: SdkConfig.get("brand"),
+            }),
+        description: () =>
+            _t("onboarding|download_app_description", {
+                brand: SdkConfig.get("brand"),
+            }),
+        completed: (ctx: UserOnboardingContext) => ctx.hasDevices,
+        action: {
+            label: _t("onboarding|download_app_action"),
+            onClick: (ev: ButtonEvent) => {
+                PosthogTrackers.trackInteraction("WebUserOnboardingTaskDownloadApps", ev);
+                Modal.createDialog(AppDownloadDialog, {}, "mx_AppDownloadDialog_wrapper", false, true);
+            },
+        },
+        disabled(): boolean {
+            return !showAppDownloadDialogPrompt();
+        },
+    },
+    /** end :TCHAP: onboarding-add-secure-backup */
 ];
 
 export function useUserOnboardingTasks(context: UserOnboardingContext): UserOnboardingTaskWithResolvedCompletion[] {
