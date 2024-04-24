@@ -42,30 +42,13 @@ rm -R examples/
 
 popd
 
-# :TCHAP: we don't use this.
-# Also set up matrix-analytics-events so we get the latest from
-# the main branch or a branch with matching name
-#./scripts/fetchdep.sh matrix-org matrix-analytics-events main
-#pushd matrix-analytics-events
-#yarn link
-#yarn install --pure-lockfile
-#yarn build:ts
-#popd
-
-# # Now set up the react-sdk
-# ../scripts/tchap/fetchdep.with.version.sh matrix-org matrix-react-sdk $MATRIX_REACT_SDK_VERSION
-# pushd matrix-react-sdk
-# yarn unlink # :TCHAP: for local build, undo previous links if present.
-# yarn link
-# yarn link matrix-js-sdk
-# #yarn link @matrix-org/analytics-events # :TCHAP: we don't use this
-# yarn install --pure-lockfile
-# popd
-cd ../linked-dependencies/matrix-react-sdk
+cd ../linked-dependencies
+pushd matrix-react-sdk
 yarn unlink # :TCHAP: for local build, undo previous links if present.
 yarn link
 yarn link matrix-js-sdk
 yarn install --pure-lockfile
+popd
 
 
 # :TCHAP: yarn-link modules
