@@ -1,13 +1,13 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { CallErrorCode, CallState } from "matrix-js-sdk/src/webrtc/call";
 
-import { MatrixEvent } from "~matrix-js-sdk/src/matrix";
 import LegacyCallEvent from "~matrix-react-sdk/src/components/views/messages/LegacyCallEvent";
-import LegacyCallEventGrouper from "~matrix-react-sdk/src/components/structures/LegacyCallEventGrouper";
-import { CallErrorCode, CallState } from "~matrix-js-sdk/src/webrtc/call";
 import BugReportDialog from "~matrix-react-sdk/src/components/views/dialogs/BugReportDialog";
 import Modal from "~matrix-react-sdk/src/Modal";
+import LegacyCallEventGrouper from "~matrix-react-sdk/src/components/structures/LegacyCallEventGrouper";
 
 const THEIR_USER_ID = "@them:here";
 

@@ -17,7 +17,6 @@
         /* :TCHAP: */
         "paths": {
             "~tchap-web/*": ["./*"],
-            "~matrix-js-sdk/*": ["./yarn-linked-dependencies/matrix-js-sdk/*"],
             "~matrix-react-sdk/*": ["./linked-dependencies/matrix-react-sdk/*"],
             "matrix-react-sdk/*": ["./linked-dependencies/matrix-react-sdk/*"]
         },
