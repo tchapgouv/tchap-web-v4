@@ -76,11 +76,18 @@ describe("Rageshakes", () => {
             windowSpy.mockRestore();
         });
 
-        it("should include app name", async () => {
+        it("should include app name default as tchap", async () => {
             const formData = await collectBugReport();
             const appName = formData.get("app");
 
             expect(appName).toBe("tchap-web");
+        });
+
+        it("should include custom app name ", async () => {
+            const formData = await collectBugReport({ customApp: "toto" });
+            const appName = formData.get("app");
+
+            expect(appName).toBe("toto");
         });
 
         // We did not customise the custom fields code, but we test to guard against changes of output if element changes
