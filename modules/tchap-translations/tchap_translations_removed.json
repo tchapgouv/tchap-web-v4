@@ -43,5 +43,9 @@
     "settings|key_backup|setup_secure_backup|download_or_copy",
     "settings|security|key_backup_connect_prompt",
     "settings|security|key_backup_inactive",
-    "welcome_to_element"
+    "welcome_to_element",
+    "onboarding|enable_notifications",
+    "onboarding|enable_notifications_action",
+    "onboarding|enable_notifications_description",
+    "onboarding|you_made_it"
 ]

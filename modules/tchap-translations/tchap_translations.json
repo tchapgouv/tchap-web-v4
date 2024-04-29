@@ -725,5 +725,29 @@
     "common|system_alerts": {
         "en": "Tchap Info",
         "fr": "Annonces Tchap"
+    },
+    "onboarding|enable_secure_backup": {
+        "en": "Back up your messages automatically",
+        "fr": "Sauvegarder vos messages automatiquement"
+    },
+    "onboarding|enable_secure_backup_description": {
+        "en": "You will be able to retrieve them on any device using the Recovery Code.",
+        "fr": "Vous pourrez les récupérez sur n'importe quel appareil à l'aide du Code de Récupération."
+    },
+    "onboarding|enable_secure_backup_action": {
+        "en": "Setup Secure Backup",
+        "fr": "Activer la sauvegarde automatique"
+    },
+    "onboarding|find_coworkers": {
+        "en": "Find and invite your co-workers",
+        "fr": "Trouver et inviter vos collègues"
+    },
+    "onboarding|set_up_profile": {
+        "en": "Set up your profile picture",
+        "fr": "Ajouter une photo de profil"
+    },
+    "onboarding|download_app": {
+        "en": "Download mobile app",
+        "fr": "Télécharger l'application mobile"
     }
 }

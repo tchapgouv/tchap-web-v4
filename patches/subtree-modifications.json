@@ -1,0 +1,9 @@
+{
+    "onboarding-add-secure-backup": {
+        "PR": "https://github.com/tchapgouv/tchap-web-v4/pull/978/", 
+        "files": [
+            "src/hooks/useUserOnboardingContext.ts",
+            "src/hooks/useUserOnboardingTasks.ts"
+        ]
+    }
+}
