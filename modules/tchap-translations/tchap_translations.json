@@ -41,8 +41,8 @@
         "fr": "Autoriser les externes à rejoindre ce salon"
     },
     "An email has been sent to you. Click on the link it contains, click below.": {
-        "en": "An email has been sent to you. Its title is : \"Renew your Tchap account\" Once you’ve followed the link it contains, click on the button \"I renewed my account\".",
-        "fr": "Un email vous a été envoyé pour renouveler votre compte. Il est intitulé : \"Renouvelez votre compte Tchap\". Une fois que vous aurez suivi le lien qu'il contient, cliquez sur le bouton \"J’ai renouvelé mon compte\"."
+        "en": "An email has been sent to you. Its title is : \"Renew your Tchap account\" Once you’ve followed the link it contains, click on the button \"Continue\".",
+        "fr": "Un email vous a été envoyé pour renouveler votre compte. Une fois que vous aurez suivi le lien qu'il contient, cliquez sur le bouton \"Continuer\"."
     },
     "Are you sure you want to allow the externals to join this room ?": {
         "en": "Are you sure you want to allow the externals to join this room ?",
@@ -61,8 +61,8 @@
         "fr": "Confirmer votre mot de passe Clés Tchap"
     },
     "Congratulations, your account has been renewed": {
-        "en": "Congratulations, your account has been renewed",
-        "fr": "Félicitations, votre compte a été renouvelé"
+        "en": "Your Tchap account has been renewed",
+        "fr": "Votre compte Tchap a été renouvelé"
     },
     "Contact us": { "en": "Contact us", "fr": "Contactez-nous" },
     "Content blocked": { "en": "Content blocked", "fr": "Contenu bloqué" },
@@ -126,7 +126,7 @@
     "Frequently Asked Questions (FAQ)": { "en": "Frequently Asked Questions (FAQ)", "fr": "Foire Aux Questions (FAQ)" },
     "Generate a new code": { "en": "Generate a new code", "fr": "Générer un nouveau code" },
     "auth|logout_dialog|skip_key_backup": { "en": "Log out anyway", "fr": "Se déconnecter quand-même" },
-    "I renewed the validity of my account": { "en": "I renewed my account", "fr": "J’ai renouvelé mon compte" },
+    "I renewed the validity of my account": { "en": "Continue", "fr": "Continuer" },
     "I wrote down my code": { "en": "I wrote down my code", "fr": "J'ai noté mon code" },
     "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
         "en": "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.",
@@ -211,7 +211,7 @@
     "invite|recents_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
     "invite|suggestions_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
     "Reload page": { "en": "Reload page", "fr": "Rafraîchir la page" },
-    "Request a renewal email": { "en": "Request a renewal email", "fr": "Demander l’envoi d’un nouvel email" },
+    "Request a renewal email": { "en": "Request a renewal email", "fr": "Envoyer un nouvel email" },
     "encryption|access_secret_storage_dialog|restoring": {
         "en": "Restoring messages from backup",
         "fr": "Restauration des messages depuis la sauvegarde"
