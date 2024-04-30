@@ -26,7 +26,7 @@ import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
 import { WidgetType } from "../../widgets/WidgetType";
 import { useCall, useConnectionState, useParticipantCount } from "../useCall";
 import { useRoomMemberCount } from "../useRoomMembers";
-import { Call, ConnectionState, ElementCall } from "../../models/Call";
+import { ConnectionState, ElementCall } from "../../models/Call";
 import { placeCall } from "../../utils/room/placeCall";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { useRoomState } from "../useRoomState";
@@ -39,6 +39,8 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
+import { isVideoRoom } from "../../utils/video-rooms";
+import { useGuestAccessInformation } from "./useGuestAccessInformation";
 
 export enum PlatformCallType {
     ElementCall,
@@ -82,6 +84,7 @@ export const useRoomCall = (
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
 } => {
+    // settings
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
@@ -92,21 +95,25 @@ export const useRoomCall = (
         LegacyCallHandlerEvent.CallsChanged,
         () => LegacyCallHandler.instance.getCallForRoom(room.roomId) !== null,
     );
-
+    // settings
     const widgets = useWidgets(room);
     const jitsiWidget = useMemo(() => widgets.find((widget) => WidgetType.JITSI.matches(widget.type)), [widgets]);
     const hasJitsiWidget = !!jitsiWidget;
     const managedHybridWidget = useMemo(() => widgets.find(isManagedHybridWidget), [widgets]);
     const hasManagedHybridWidget = !!managedHybridWidget;
 
+    // group call
     const groupCall = useCall(room.roomId);
     const isConnectedToCall = useConnectionState(groupCall) === ConnectionState.Connected;
     const hasGroupCall = groupCall !== null;
     const hasActiveCallSession = useParticipantCount(groupCall) > 0;
-    const isViewingCall = useEventEmitterState(SdkContextClass.instance.roomViewStore, UPDATE_EVENT, () =>
-        SdkContextClass.instance.roomViewStore.isViewingCall(),
+    const isViewingCall = useEventEmitterState(
+        SdkContextClass.instance.roomViewStore,
+        UPDATE_EVENT,
+        () => SdkContextClass.instance.roomViewStore.isViewingCall() || isVideoRoom(room),
     );
 
+    // room
     const memberCount = useRoomMemberCount(room);
 
     const [mayEditWidgets, mayCreateElementCalls] = useRoomState(room, () => [
@@ -131,7 +138,7 @@ export const useRoomCall = (
                 return [PlatformCallType.ElementCall];
             }
             if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
-                // only allow joining joining the ongoing Element call if there is one.
+                // only allow joining the ongoing Element call if there is one.
                 return [PlatformCallType.ElementCall];
             }
         }
@@ -164,15 +171,16 @@ export const useRoomCall = (
     useEffect(() => {
         updateWidgetState();
     }, [room, jitsiWidget, groupCall, updateWidgetState]);
-    const [activeCalls, setActiveCalls] = useState<Call[]>(Array.from(CallStore.instance.activeCalls));
-    useEventEmitter(CallStore.instance, CallStoreEvent.ActiveCalls, () => {
-        setActiveCalls(Array.from(CallStore.instance.activeCalls));
-    });
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
     // We only want to prompt to pin the widget if it's not element call based.
     const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
+    const activeCalls = useEventEmitterState(CallStore.instance, CallStoreEvent.ActiveCalls, () =>
+        Array.from(CallStore.instance.activeCalls),
+    );
+    const { canInviteGuests } = useGuestAccessInformation(room);
+
     const state = useMemo((): State => {
         if (activeCalls.find((call) => call.roomId != room.roomId)) {
             return State.Ongoing;
@@ -183,8 +191,7 @@ export const useRoomCall = (
         if (hasLegacyCall) {
             return State.Ongoing;
         }
-
-        if (memberCount <= 1) {
+        if (memberCount <= 1 && !canInviteGuests) {
             return State.NoOneHere;
         }
 
@@ -194,6 +201,7 @@ export const useRoomCall = (
         return State.NoCall;
     }, [
         activeCalls,
+        canInviteGuests,
         hasGroupCall,
         hasJitsiWidget,
         hasLegacyCall,

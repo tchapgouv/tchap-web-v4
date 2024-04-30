@@ -54,6 +54,7 @@ import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
+import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
 
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader"; // :TCHAP: customize-room-header-bar
@@ -205,7 +206,10 @@ export default function RoomHeader({
     const voiceCallButton = (
         <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
             <IconButton
-                disabled={!!voiceCallDisabledReason}
+                // We need both: isViewingCall and isConnectedToCall
+                //  - in the Lobby we are viewing a call but are not connected to it.
+                //  - in pip view we are connected to the call but not viewing it.
+                disabled={!!voiceCallDisabledReason || isViewingCall || isConnectedToCall}
                 aria-label={voiceCallDisabledReason ?? _t("voip|voice_call")}
                 onClick={(ev) => voiceCallClick(ev, callOptions[0])}
             >
@@ -327,6 +331,7 @@ export default function RoomHeader({
                         );
                     })}
 
+                    {isViewingCall && <CallGuestLinkButton room={room} />}
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
                     {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (

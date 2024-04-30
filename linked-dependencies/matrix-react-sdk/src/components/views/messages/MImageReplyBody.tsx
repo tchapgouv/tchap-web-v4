@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
+import { ImageContent } from "matrix-js-sdk/src/types";
 
 import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody"; // :TCHAP: content-scanner
-import { ImageContent } from "../../../customisations/models/IMediaEventContent"; // :TCHAP: content-scanner
+// import MImageBody from "./MImageBody"; // :TCHAP: content-scanner
 
 const FORCED_IMAGE_HEIGHT = 44;
 

@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
+import { SecretStorageKeyDescription } from "matrix-js-sdk/src/secret-storage";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -33,7 +33,7 @@ import { Action } from "matrix-react-sdk/src/dispatcher/actions";
 import { UserTab } from "matrix-react-sdk/src/components/views/dialogs/UserTab";
 import { OpenToTabPayload } from "matrix-react-sdk/src/dispatcher/payloads/OpenToTabPayload";
 
-function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
+function keyHasPassphrase(keyInfo: SecretStorageKeyDescription): boolean {
     return Boolean(keyInfo.passphrase && keyInfo.passphrase.salt && keyInfo.passphrase.iterations);
 }
 

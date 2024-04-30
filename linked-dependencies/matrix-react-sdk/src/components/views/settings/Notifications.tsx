@@ -58,6 +58,7 @@ import { Caption } from "../typography/Caption";
 import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
 import SettingsSubsection from "./shared/SettingsSubsection";
 import { doesRoomHaveUnreadMessages } from "../../../Unread";
+import SettingsFlag from "../elements/SettingsFlag";
 
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :tchap: tchap-features-from-config
 
@@ -202,6 +203,18 @@ const maximumVectorState = (
     return vectorState;
 };
 
+const NotificationActivitySettings = (): JSX.Element => {
+    return (
+        <div>
+            <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
+            <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+        </div>
+    );
+};
+
+/**
+ * The old, deprecated notifications tab view, only displayed if the user has the labs flag disabled.
+ */
 export default class Notifications extends React.PureComponent<IProps, IState> {
     private settingWatchers: string[];
 
@@ -737,41 +750,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private renderCategory(category: RuleClass): ReactNode {
-        if (category !== RuleClass.VectorOther && this.isInhibited) {
+        if (this.isInhibited) {
             return null; // nothing to show for the section
-        }
-
-        let clearNotifsButton: JSX.Element | undefined;
-        if (
-            category === RuleClass.VectorOther &&
-            MatrixClientPeg.safeGet()
-                .getRooms()
-                .some((r) => doesRoomHaveUnreadMessages(r, true))
-        ) {
-            clearNotifsButton = (
-                <AccessibleButton
-                    onClick={this.onClearNotificationsClicked}
-                    disabled={this.state.clearingNotifications}
-                    kind="danger"
-                    className="mx_UserNotifSettings_clearNotifsButton"
-                    data-testid="clear-notifications"
-                >
-                    {_t("notifications|mark_all_read")}
-                </AccessibleButton>
-            );
-        }
-
-        if (category === RuleClass.VectorOther && this.isInhibited) {
-            // only render the utility buttons (if needed)
-            if (clearNotifsButton) {
-                return (
-                    <div className="mx_UserNotifSettings_floatingSection">
-                        <div>{_t("notifications|class_other")}</div>
-                        {clearNotifsButton}
-                    </div>
-                );
-            }
-            return null;
         }
 
         let keywordComposer: JSX.Element | undefined;
@@ -848,7 +828,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.Loud]}</span>
                     {fieldsetRows}
                 </div>
-                {clearNotifsButton}
                 {keywordComposer}
             </div>
         );
@@ -884,6 +863,25 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             return <p data-testid="error-message">{_t("settings|notifications|error_loading")}</p>;
         }
 
+        let clearNotifsButton: JSX.Element | undefined;
+        if (
+            MatrixClientPeg.safeGet()
+                .getRooms()
+                .some((r) => doesRoomHaveUnreadMessages(r, true))
+        ) {
+            clearNotifsButton = (
+                <AccessibleButton
+                    onClick={this.onClearNotificationsClicked}
+                    disabled={this.state.clearingNotifications}
+                    kind="danger"
+                    className="mx_UserNotifSettings_clearNotifsButton"
+                    data-testid="clear-notifications"
+                >
+                    {_t("notifications|mark_all_read")}
+                </AccessibleButton>
+            );
+        }
+
         return (
             <>
                 {this.renderTopSection()}
@@ -891,6 +889,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {this.renderCategory(RuleClass.VectorMentions)}
                 {this.renderCategory(RuleClass.VectorOther)}
                 {this.renderTargets()}
+                <NotificationActivitySettings />
+                {clearNotifsButton}
             </>
         );
     }
