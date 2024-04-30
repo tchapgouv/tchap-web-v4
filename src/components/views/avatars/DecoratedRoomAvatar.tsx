@@ -39,7 +39,11 @@ interface IProps {
     room: Room;
     size: string;
     displayBadge?: boolean;
-    forceCount?: boolean;
+    /**
+     * If true, show nothing if the notification would only cause a dot to be shown rather than
+     * a badge. That is: only display badges and not dots. Default: false.
+     */
+    hideIfDot?: boolean;
     oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
     tooltipProps?: {
@@ -58,7 +62,7 @@ enum Icon {
     // Note: the names here are used in CSS class names
     None = "NONE", // ... except this one
     Globe = "GLOBE",
-    // :TCHAP: add icons for custom room types
+    // :TCHAP: tchap-room-icons - add icons for custom room types
     Forum = "FORUM",
     Private = "PRIVATE",
     External = "EXTERNAL",
@@ -73,7 +77,7 @@ function tooltipText(variant: Icon): string | undefined {
     switch (variant) {
         case Icon.Globe:
             return _t("room|header|room_is_public");
-        // :TCHAP: add icons for custom room types
+        // :TCHAP: tchap-room-icons - add icons for custom room types
         case Icon.Forum:
             return _t("This room is a public forum");
         case Icon.Private:
@@ -185,7 +189,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         } else {
             // Track publicity
             //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
-            //:tchap: use custom icons for tchap room types
+            //:tchap: tchap-room-icons - use custom icons for tchap room types
             const roomType: TchapRoomType = TchapRoomUtils.getTchapRoomType(this.props.room);
             switch(roomType) {
                 case TchapRoomType.Forum:
@@ -211,14 +215,14 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public render(): React.ReactNode {
         // Spread the remaining props to make it work with compound component
-        const { room, size, displayBadge, forceCount, oobData, viewAvatarOnClick, tooltipProps, ...props } = this.props;
+        const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, ...props } = this.props;
 
         let badge: React.ReactNode;
         if (this.props.displayBadge && this.state.notificationState) {
             badge = (
                 <NotificationBadge
                     notification={this.state.notificationState}
-                    forceCount={this.props.forceCount}
+                    hideIfDot={this.props.hideIfDot}
                     roomId={this.props.room.roomId}
                 />
             );
@@ -240,7 +244,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
         return (
             <div className={classes} {...props }>
-                { /*:TCHAP: extra div to fix positioning.
+                { /*:TCHAP: tchap-room-icons - extra div to fix positioning.
                 https://github.com/tchapgouv/tchap-web-v4/issues/890
                 Issue should be opened in element-web. */ }
                 <div className="mx_DecoratedRoomAvatar_positionedParent">

@@ -19,8 +19,8 @@ import React from "react";
 import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
-import MAudioBody from "../../../../../../src/tchap/components/views/messages/OriginalAudioBody";
-import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
+import MAudioBody from "../../../../../../src/tchap/components/views/messages/OriginalAudioBody"; // :TCHAP: content-scanner
+import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody"; // :TCHAP: content-scanner
 import MediaProcessingError from "./shared/MediaProcessingError";
 
 export default class MVoiceMessageBody extends MAudioBody {

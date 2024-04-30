@@ -97,7 +97,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
     };
 
     private onSubmit = (): void => {
-        /* :TCHAP: do not ask for a github issue
+        /* :TCHAP: bug-reporting - do not ask for a github issue
         if ((!this.state.text || !this.state.text.trim()) && (!this.state.issueUrl || !this.state.issueUrl.trim())) {
             this.setState({
                 err: _t("bug_reporting|error_empty"),
@@ -121,7 +121,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         this.setState({ busy: true, progress: null, err: null });
         this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
 
-        // :TCHAP: add custom fields if it's a voip report
+        // :TCHAP: bug-reporting - add custom fields if it's a voip report
         Promise.resolve().then(() => {
             if (this.props.label !== "voip-feedback") {
                 return Promise.resolve({});
@@ -240,7 +240,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             );
         }
 
-        { /** :TCHAP: replace with our own dialog */}
+        { /** :TCHAP: bug-reporting - replace with our own dialog */}
         return (
             <BaseDialog
             className="mx_BugReportDialog"

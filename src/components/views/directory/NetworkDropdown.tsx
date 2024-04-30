@@ -157,7 +157,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
         options: [
             {
                 key: { roomServer, instanceId: undefined },
-                // :TCHAP: remove > label: _t("common|matrix"),
+                // :TCHAP: public-room-server-list - remove > label: _t("common|matrix"),
                 label: TchapUtils.toFriendlyServerName(roomServer)
             },
             ...(roomServer === homeServer && protocols
@@ -239,7 +239,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
             selectedLabel={(option) =>
                 option?.key
                     ? _t("spotlight|public_rooms|network_dropdown_selected_label_instance", {
-                        /* :TCHAP:
+                        /* :TCHAP: public-room-server-list
                         server: option.key.roomServer,
                         */
                         server: TchapUtils.toFriendlyServerName(option.key.roomServer),

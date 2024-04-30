@@ -82,10 +82,11 @@ interface IState {
 export const TAG_ORDER: TagID[] = [
     DefaultTagID.Invite,
     DefaultTagID.Favourite,
+    DefaultTagID.ServerNotice, // :TCHAP: tchap-annonces
     DefaultTagID.DM,
     DefaultTagID.Untagged,
+    DefaultTagID.Conference,
     DefaultTagID.LowPriority,
-    DefaultTagID.ServerNotice,
     DefaultTagID.Suggested,
     // DefaultTagID.Archived isn't here any more: we don't show it at all.
     // The section still exists in the code as a place for rooms that we know
@@ -382,10 +383,15 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         defaultHidden: false,
     },
     [DefaultTagID.DM]: {
-        sectionLabel: _td("Direct Messages"), /* TCHAP: change label _td("common|people"), */
+        sectionLabel: _td("Direct Messages"), /* TCHAP: use-the-term-direct-messages-not-people - change label _td("common|people"), */
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,
+    },
+    [DefaultTagID.Conference]: {
+        sectionLabel: _td("voip|metaspace_video_rooms|conference_room_section"),
+        isInvite: false,
+        defaultHidden: false,
     },
     [DefaultTagID.Untagged]: {
         sectionLabel: _td("common|rooms"),
@@ -594,6 +600,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
                 (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
                 (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM) ||
+                (this.props.activeSpace === MetaSpace.VideoRooms && orderedTagId === DefaultTagID.DM) ||
                 (!isMetaSpace(this.props.activeSpace) &&
                     orderedTagId === DefaultTagID.DM &&
                     !SettingsStore.getValue("Spaces.showPeopleInSpace", this.props.activeSpace))

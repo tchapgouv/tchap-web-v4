@@ -266,7 +266,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             } else {
                 statusDescription = (
                     <>
-                        {/* TCHAP add Tchap text */}
+                        {/* :TCHAP: activate-cross-signing-and-secure-storage-react - add Tchap text */}
                         <SettingsSubsectionText>
                                 {_t(
                                     "settings|security|key_backup_inactive_warning",
@@ -275,7 +275,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                                 )}
                         </SettingsSubsectionText>
                         {/* end TCHAP */}
-                        {/* :TCHAP remove element text
+                        {/* :TCHAP activate-cross-signing-and-secure-storage-react - remove element text
                         <SettingsSubsectionText>
                             {_t("settings|security|key_backup_inactive", {}, { b: (sub) => <b>{sub}</b> })}
                         </SettingsSubsectionText>
@@ -344,7 +344,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 </AccessibleButton>,
             );
 
-            /* :TCHAP: hide
+            /* :TCHAP: activate-cross-signing-and-secure-storage-react - hide
             if (!isSecureBackupRequired(MatrixClientPeg.safeGet())) {
                 actions.push(
                     <AccessibleButton key="delete" kind="danger_outline" onClick={this.deleteBackup}>

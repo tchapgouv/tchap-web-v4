@@ -32,7 +32,7 @@ import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-s
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
-import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -76,7 +76,7 @@ import { inviteToRoom } from "../../../utils/room/inviteToRoom";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useRoomState } from "../../../hooks/useRoomState";
 
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP:
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: tchap-room-icons
 
 
 interface IProps {
@@ -334,7 +334,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
         <header className="mx_RoomSummaryCard_container">
-            {/** :TCHAP: decorate the avatar with the tchap lock icons
+            {/** :TCHAP: tchap-room-icons - decorate the avatar with the tchap lock icons
             <RoomAvatar room={room} size="80px" viewAvatarOnClick />
             */}
             <DecoratedRoomAvatar room={room} size="80px" viewAvatarOnClick />
@@ -362,7 +362,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 {alias}
             </Text>
 
-            {/* :TCHAP: remove badges
+            {/* :TCHAP: tchap-room-icons - remove badges
             <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
                 {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
                     <Badge kind="default">
@@ -402,6 +402,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
         RoomListStore.instance.getTagsForRoom(room),
     );
+    const canInviteToState = useEventEmitterState(room, RoomStateEvent.Update, () => canInviteTo(room));
     const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
     return (
@@ -448,7 +449,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             <MenuItem
                 Icon={UserAddIcon}
                 label={_t("action|invite")}
-                disabled={!canInviteTo(room)}
+                disabled={!canInviteToState}
                 onSelect={() => inviteToRoom(room)}
             />
             <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />

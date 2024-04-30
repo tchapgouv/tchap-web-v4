@@ -21,7 +21,8 @@ import SetupEncryptionDialog from "../components/views/dialogs/security/SetupEnc
 import { accessSecretStorage } from "../SecurityManager";
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
-import SecurityCustomisations from "../customisations/Security";
+import { ModuleRunner } from "../modules/ModuleRunner";
+import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
 import Spinner from "../components/views/elements/Spinner";
 
 const TOAST_KEY = "setupencryption";
@@ -50,7 +51,7 @@ const getIcon = (kind: Kind): string => {
 const getSetupCaption = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            /* :TCHAP:
+            /* :TCHAP: cross-signing-ui
             return _t("action|continue");
             */
             return _t("action|enable");
@@ -83,7 +84,12 @@ const onReject = (): void => {
 };
 
 export const showToast = (kind: Kind): void => {
-    if (SecurityCustomisations.setupEncryptionNeeded?.(kind)) {
+    if (
+        ModuleRunner.instance.extensions.cryptoSetup.setupEncryptionNeeded({
+            kind: kind as any,
+            storeProvider: { getInstance: () => SetupEncryptionStore.sharedInstance() },
+        })
+    ) {
         return;
     }
 

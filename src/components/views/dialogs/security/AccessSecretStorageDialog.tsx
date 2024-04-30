@@ -17,8 +17,8 @@ limitations under the License.
 import { debounce } from "lodash";
 import classNames from "classnames";
 import React, { ChangeEvent, FormEvent } from "react";
-import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
+import { SecretStorage } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
@@ -42,7 +42,7 @@ const VALIDATION_THROTTLE_MS = 200;
 export type KeyParams = { passphrase?: string; recoveryKey?: string };
 
 interface IProps {
-    keyInfo: ISecretStorageKeyInfo;
+    keyInfo: SecretStorage.SecretStorageKeyDescription;
     checkPrivateKey: (k: KeyParams) => Promise<boolean>;
     onFinished(result?: false | KeyParams): void;
 }
@@ -82,7 +82,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         };
     }
 
-    // :TCHAP: add functionality that displays the Recovery Code for 2mn when clicking on the input eye icon 
+    // :TCHAP: ux-improvements-for-xsss - add functionality that displays the Recovery Code for 2mn when clicking on the input eye icon 
     private setDisplayPassword = (): void => {
         this.setState({ displayPassword: true });
     
@@ -290,8 +290,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
     public render(): React.ReactNode {
         const hasPassphrase = this.props.keyInfo?.passphrase?.salt && this.props.keyInfo?.passphrase?.iterations;
 
-        const resetButton = (
-            <div className="mx_AccessSecretStorageDialog_reset">
+        const resetLine = (
+            <strong className="mx_AccessSecretStorageDialog_reset">
                 {_t("encryption|reset_all_button", undefined, {
                     a: (sub) => (
                         <AccessibleButton
@@ -303,7 +303,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         </AccessibleButton>
                     ),
                 })}
-            </div>
+            </strong>
         );
 
         let content;
@@ -378,7 +378,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             onCancel={this.onCancel}
                             focus={false}
                             primaryDisabled={this.state.passPhrase.length === 0}
-                            additive={resetButton}
+                            additive={resetLine}
                         />
                     </form>
                 </div>
@@ -431,7 +431,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                 />
                             </div>
                             {/*
-                             :TCHAP: hide for csss feature
+                             :TCHAP: ux-improvements-for-xsss - hide for csss feature
                             <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
                                 {_t("encryption|access_secret_storage_dialog|separator", {
                                     recoveryFile: "",
@@ -458,11 +458,11 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             onPrimaryButtonClick={this.onRecoveryKeyNext}
                             hasCancel={true}
                             cancelButton={_t("action|go_back")}
-                            cancelButtonClass="danger"
+                            cancelButtonClass="warning"
                             onCancel={this.onCancel}
                             focus={false}
                             primaryDisabled={!this.state.recoveryKeyValid}
-                            additive={resetButton}
+                            additive={resetLine}
                         />
                     </form>
                 </div>

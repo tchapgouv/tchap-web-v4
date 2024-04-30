@@ -246,6 +246,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
+    // :TCHAP: user-menu
     private onOpenFAQPage = () => {
         window.open("https://www.tchap.gouv.fr/faq", '_blank');
     };

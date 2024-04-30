@@ -88,7 +88,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
             displayPassword: false,
             // Field error codes by field ID
             fieldValid: {},
-            // :TCHAP: force email login
+            // :TCHAP: login - force email login
             // loginType: LoginField.MatrixId,
             loginType: LoginField.Email,
             //

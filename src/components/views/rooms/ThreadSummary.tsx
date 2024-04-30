@@ -34,8 +34,8 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { useUnreadNotifications } from "../../../hooks/useUnreadNotifications";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
-import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
-import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
+import ExternalLink from "../elements/ExternalLink"; // :TCHAP: better-text-for-locked-messages
+import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP: better-text-for-locked-messages
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -107,7 +107,7 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
         return null;
     }
 
-    // :TCHAP:
+    // :TCHAP: better-text-for-locked-messages
     const undecryptedText = _t(
         "threads|unable_to_decrypt_with_info_message",
         {},
@@ -138,7 +138,7 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
                     className="mx_ThreadSummary_content mx_DecryptionFailureBody"
                     title={_t("threads|unable_to_decrypt")}
                 >
-                    { /* :TCHAP: <span className="mx_ThreadSummary_message-preview">{_t("threads|unable_to_decrypt")}</span>*/}
+                    { /* :TCHAP: better-text-for-locked-messages - <span className="mx_ThreadSummary_message-preview">{_t("threads|unable_to_decrypt")}</span>*/}
                     <span className="mx_ThreadSummary_message-preview">
                         {_t("threads|unable_to_decrypt_with_info_message", {},
                             {

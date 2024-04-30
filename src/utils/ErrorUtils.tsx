@@ -22,7 +22,7 @@ import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 import ExternalLink from "../components/views/elements/ExternalLink";
 
-import Tchapi18nUtils from '../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
+import Tchapi18nUtils from '../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP: login
 
 export const resourceLimitStrings = {
     "monthly_active_user": _td("error|mau"),
@@ -137,7 +137,7 @@ export function messageForLoginError(
         } else {
             return _t("auth|incorrect_credentials");
         }
-    // :TCHAP: display proper message for TOO_MANY_REQUESTS,
+    // :TCHAP: login - display proper message for TOO_MANY_REQUESTS,
     }  else if (err.httpStatus === 429) {
         return _t("Your last three login attempts have failed. Please try again in a few minutes.");
     // :TCHAP: end
@@ -150,7 +150,7 @@ export function messageForConnectionError(
     err: Error,
     serverConfig: Pick<ValidatedServerConfig, "hsName" | "hsUrl">,
 ): ReactNode {
-    /* :TCHAP: change default error text
+    /* :TCHAP: login - change default error text
     let errorText = _t("error|connection");
     */
     let errorText: ReactNode = Tchapi18nUtils.getServerDownMessage("");
@@ -163,7 +163,7 @@ export function messageForConnectionError(
         ) {
             return (
                 <span>
-                    {/* :TCHAP: customize error message
+                    {/* :TCHAP: login - customize error message
                     {_t(
                         "error|mixed_content",
                         {},
@@ -189,7 +189,7 @@ export function messageForConnectionError(
 
         return (
             <span>
-                {/* :TCHAP: customize error message
+                {/* :TCHAP: login - customize error message
                 {_t(
                     "error|tls",
                     {},

@@ -49,7 +49,7 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
         const request = this.state.verificationRequest;
         const otherUserId = request?.otherUserId;
         const member = this.props.member || (otherUserId ? MatrixClientPeg.safeGet().getUser(otherUserId) : null);
-        /* :TCHAP: remove code
+        /* :TCHAP: simplify-exchange-key-message - remove code
         const title = request?.isSelfVerification
             ? _t("encryption|verification|verification_dialog_title_device")
             : _t("encryption|verification|verification_dialog_title_user");

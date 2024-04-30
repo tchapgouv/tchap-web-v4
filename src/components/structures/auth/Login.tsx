@@ -40,8 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
-import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
-import Tchapi18nUtils from '../../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
+import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP: login
+import Tchapi18nUtils from '../../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP: login
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -181,7 +181,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         phoneNumber: string | undefined,
         password: string,
     ): Promise<void> => {
-        /* :TCHAP: remove alive check, we don't know which server to call yet.
+        /* :TCHAP: login - remove alive check, we don't know which server to call yet.
         if (!this.state.serverIsAlive) {
             this.setState({ busy: true });
             // Do a quick liveliness check on the URLs
@@ -216,7 +216,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             loginIncorrect: false,
         });
 
-        /* :TCHAP: fetch homeserver corresponding to email */
+        /* :TCHAP: login - fetch homeserver corresponding to email */
         const serverResult = await TchapUtils.fetchHomeserverForEmail(username);
 
         if (!serverResult) {
@@ -585,7 +585,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     </h1>
                     {errorTextSection}
                     {serverDeadSection}
-                    { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
+                    { /* :TCHAP: login - remove server picker, we don't allow user to chose, server is assigned to each email.
                     <ServerPicker
                         serverConfig={this.props.serverConfig}
                         onServerConfigChange={this.props.onServerConfigChange}

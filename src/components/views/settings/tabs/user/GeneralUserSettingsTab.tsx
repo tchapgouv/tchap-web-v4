@@ -58,7 +58,7 @@ import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
 import { SDKContext } from "../../../../../contexts/SDKContext";
-import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP:
+import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP: hide-discovery-email-phone-settings
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -327,7 +327,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
 
-        // :TCHAP: no need for users to view/edit their email or phone (TchapUIFeature.showEmailPhoneDiscoverySettings)
+        // :TCHAP: hide-discovery-email-phone-settings - no need for users to view/edit their email or phone (TchapUIFeature.showEmailPhoneDiscoverySettings)
         if (TchapUIFeature.showEmailPhoneDiscoverySettings &&
             SettingsStore.getValue(UIFeature.ThirdPartyID)) {
             const emails = this.state.loading3pids ? (

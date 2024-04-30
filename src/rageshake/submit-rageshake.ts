@@ -102,7 +102,7 @@ async function collectBaseInformation(body: FormData, opts: IOpts): Promise<void
     const touchInput = matchesMediaQuery("(pointer: coarse)");
 
     body.append("text", opts.userText || "User did not supply any additional text.");
-    /* :TCHAP: rename app - for bugreport rageshakes
+    /* :TCHAP: bug-reporting - rename app - for bugreport rageshakes
     body.append("app", opts.customApp || "element-web");
     */
     body.append("app", "tchap-web");
@@ -133,7 +133,7 @@ async function collectClientInfo(client: MatrixClient, body: FormData): Promise<
         await collectRecoveryInfo(client, cryptoApi, body);
     }
 
-    // :TCHAP: add user email - for bugreport rageshakes
+    // :TCHAP: bug-reporting - add user email - for bugreport rageshakes
     await collectUserEmail(client, body);
     // end :TCHAP:
 
@@ -325,7 +325,7 @@ async function collectLogs(
     }
 }
 
-// :TCHAP:
+// :TCHAP: bug-reporting
 async function collectUserEmail(client: MatrixClient, body: FormData): Promise<void> {
     const result = await client.getThreePids(); //it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
     result.threepids.forEach(threepid => {
@@ -435,7 +435,7 @@ export async function submitFeedback(
     body.append("text", comment);
     body.append("can_contact", canContact ? "yes" : "no");
 
-    /* :TCHAP: rename app and add email - for feedback rageshakes
+    /* :TCHAP: bug-reporting - rename app and add email - for feedback rageshakes
     body.append("app", "element-web");
     */
     body.append("app", "tchap-web");

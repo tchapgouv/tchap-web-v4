@@ -227,19 +227,19 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
             userSigningPrivateKeyCached;
 
         const actions: JSX.Element[] = [];
-        // :TCHAP move Reset button to advanced section
+        // :TCHAP: activate-cross-signing-and-secure-storage-react - move Reset button to advanced section
         const advancedActions: JSX.Element[] = [];
         // end :TCHAP:
 
         // TODO: determine how better to expose this to users in addition to prompts at login/toast
         if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
-            // :TCHAP: let buttonCaption = _t("encryption|set_up_toast_title");
+            // :TCHAP: activate-cross-signing-and-secure-storage-react - let buttonCaption = _t("encryption|set_up_toast_title");
             let buttonCaption = _t("Activate on this device");
             // end :TCHAP:
             if (crossSigningPrivateKeysInStorage) {
                 buttonCaption = _t("encryption|verify_toast_title");
             }
-            // :TCHAP: actions.push(
+            // :TCHAP: activate-cross-signing-and-secure-storage-react - actions.push(
             advancedActions.push(
             // end :TCHAP:
                 <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>
@@ -249,7 +249,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         }
 
         if (keysExistAnywhere) {
-            // :TCHAP actions.push(
+            // :TCHAP activate-cross-signing-and-secure-storage-react - actions.push(
             advancedActions.push(
             // end :TCHAP:
                 <AccessibleButton key="reset" kind="danger" onClick={this.onResetCrossSigningClick}>
@@ -263,7 +263,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
             actionRow = <div className="mx_CrossSigningPanel_buttonRow">{actions}</div>;
         }
 
-        // :TCHAP add
+        // :TCHAP: activate-cross-signing-and-secure-storage-react - add
         let advancedActionRow;
         if (advancedActions.length) {
             advancedActionRow = <div className="mx_CrossSigningPanel_buttonRow">{advancedActions}</div>;
