@@ -19,13 +19,12 @@ limitations under the License.
 
 import { ReactNode } from "react";
 import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
-import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
-import SecurityCustomisations from "./customisations/Security";
+import { ModuleRunner } from "./modules/ModuleRunner";
 import EventIndexPeg from "./indexing/EventIndexPeg";
 import createMatrixClient from "./utils/createMatrixClient";
 import Notifier from "./Notifier";
@@ -52,8 +51,6 @@ import LegacyCallHandler from "./LegacyCallHandler";
 import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { _t } from "./languageHandler";
-import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyncDialog";
-import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 import { setSentryUser } from "./sentry";
@@ -437,39 +434,6 @@ async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAg
         // if we have a tryAgain callback, call it the primary 'try again' button was clicked in the dialog
         onFinished: tryAgain ? (shouldTryAgain?: boolean) => shouldTryAgain && tryAgain() : undefined,
     });
-}
-
-export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> | void {
-    if (e.reason === InvalidStoreError.TOGGLED_LAZY_LOADING) {
-        return Promise.resolve()
-            .then(() => {
-                const lazyLoadEnabled = e.value;
-                if (lazyLoadEnabled) {
-                    return new Promise<void>((resolve) => {
-                        Modal.createDialog(LazyLoadingResyncDialog, {
-                            onFinished: resolve,
-                        });
-                    });
-                } else {
-                    // show warning about simultaneous use
-                    // between LL/non-LL version on same host.
-                    // as disabling LL when previously enabled
-                    // is a strong indicator of this (/develop & /app)
-                    return new Promise<void>((resolve) => {
-                        Modal.createDialog(LazyLoadingDisabledDialog, {
-                            onFinished: resolve,
-                            host: window.location.host,
-                        });
-                    });
-                }
-            })
-            .then(() => {
-                return MatrixClientPeg.safeGet().store.deleteAllData();
-            })
-            .then(() => {
-                PlatformPeg.get()?.reload();
-            });
-    }
 }
 
 function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName?: string): Promise<boolean> {
@@ -899,7 +863,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         localStorage.setItem("mx_device_id", credentials.deviceId);
     }
 
-    SecurityCustomisations.persistCredentials?.(credentials);
+    ModuleRunner.instance.extensions.cryptoSetup?.persistCredentials(credentials);
 
     logger.log(`Session persisted for ${credentials.userId}`);
 }
