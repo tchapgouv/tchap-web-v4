@@ -193,7 +193,11 @@
         "feature_email_notification": ["*"],
         "feature_thread": ["agent.dinum.tchap.gouv.fr"],
         "feature_space": ["agent.dinum.tchap.gouv.fr"],
-        "feature_audio_call": ["agent.dinum.tchap.gouv.fr"],
+        "feature_audio_call": [
+            "agent.dinum.tchap.gouv.fr",
+            "agent.diplomatie.tchap.gouv.fr",
+            "agent.finances.tchap.gouv.fr"
+        ],
         "feature_video_call": ["agent.dinum.tchap.gouv.fr"]
     }
 }
