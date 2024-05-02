@@ -3,7 +3,8 @@
 -   modules -> used for translation
 -   linked-dependencies -> subtree dependencies used for matrix-react-sdk
 -   yarn-linked-dependencies -> legacy dependencies used for matrix-js-sdk
--   patches -> legacy patches directory in which code for the patches where put
+-   patches_legacy -> legacy patches directory in which code for the patches where put
+-   patches -> used for matrix-js-sdk patches
 -   src -> code
 
 ## Local dev installation
@@ -38,18 +39,9 @@ This command will take all the commits that touch the subtree repo and push them
     You need to add around your code those comments
 
 ```
-// :TCHAP:
-...code
-// end :TCHAP:
-```
-
--   In matrix-react-sdk code :
-    You need to add around your code those comments
-
-```
 // :TCHAP: NAME_OF_THE_PATCH
 ...code
 // end :TCHAP:
 ```
 
-Then also update the `patches.json` file. eventhough we are not using patches anymore for matrix-react-sdk, we continue to use this file to keep track of the changes we make to the sdk. It will also be easier to separate different functionnality that tchap added to the code
+Then also update the `subtree-modifications.json` file. We continue to keep track of the changes we make to the sdk. It will also be easier to separate different functionnality that tchap added to the code
