@@ -5,5 +5,11 @@
             "src/hooks/useUserOnboardingContext.ts",
             "src/hooks/useUserOnboardingTasks.ts"
         ]
+    },
+    "hide-video-button-on-call-screen": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/952", 
+        "files": [
+            "src/components/views/voip/LegacyCallView.tsx"
+        ]
     }
 }
