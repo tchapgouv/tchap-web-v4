@@ -76,7 +76,7 @@
             { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
             { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
-        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
+        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
     "user_notice": {
         "title": "PREPROD",

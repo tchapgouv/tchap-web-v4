@@ -168,7 +168,7 @@
             { "text": "CGU", "url": "https://www.tchap.gouv.fr/cgu" },
             { "text": "FAQ", "url": "https://www.tchap.gouv.fr/faq" }
         ],
-        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.svg"
+        "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
     "desktop_builds": {
         "available": false
