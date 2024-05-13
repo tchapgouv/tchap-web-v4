@@ -749,5 +749,9 @@
     "onboarding|download_app": {
         "en": "Download mobile app",
         "fr": "Télécharger l'application mobile"
+    },
+    "settings|notifications|enable_notifications_email_detail": {
+        "en": "Receive an e-mail if at least one message is unread during 72h. <a> Learn more </a>",
+        "fr": "Recevez un e-mail si au moins un message reste non lu pendant 72h. <a>En savoir plus</a>"
     }
 }

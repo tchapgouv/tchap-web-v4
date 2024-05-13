@@ -697,6 +697,19 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     key={e.address}
                     value={!!this.state.pushers?.some((p) => p.kind === "email" && p.pushkey === e.address)}
                     label={_t("settings|notifications|enable_email_notifications", { email: e.address })}
+                    /** :TCHAP: email-notification-setting-caption*/
+                    caption={_t(
+                        "settings|notifications|enable_notifications_email_detail",
+                        {},
+                        {
+                            a: (sub) => (
+                                <AccessibleButton kind="link_inline" onClick={() => {window.open("https://aide.tchap.beta.gouv.fr/fr/article/notification-par-email-draft-6k7k89/","_blank")}}>
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                        }
+                    )}
+                    /** end :TCHAP: email-notification-setting-caption */ 
                     onChange={this.onEmailNotificationsChanged.bind(this, e.address)}
                     disabled={this.state.phase === Phase.Persisting}
                 />
