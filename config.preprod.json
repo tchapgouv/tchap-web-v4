@@ -57,7 +57,7 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
-        "UIFeature.locationSharing": false,
+        "UIFeature.locationSharing": true,
         "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
@@ -108,5 +108,6 @@
         "feature_space": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_audio_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_video_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"]
-    }
+    },
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
 }
