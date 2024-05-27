@@ -62,7 +62,7 @@
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
-        "UIFeature.locationSharing": false,
+        "UIFeature.locationSharing": true,
         "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
@@ -117,5 +117,6 @@
             "ext01.tchap.incubateur.net"
         ],
         "feature_video_call": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"]
-    }
+    },
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
 }
