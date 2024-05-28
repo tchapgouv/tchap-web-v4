@@ -27,6 +27,7 @@ export interface UserOnboardingContext {
     hasDevices: boolean;
     hasDmRooms: boolean;
     hasNotificationsEnabled: boolean;
+    hasSecureStorage: boolean, // :TCHAP: onboarding-add-secure-backup
 }
 
 const USER_ONBOARDING_CONTEXT_INTERVAL = 5000;
@@ -99,9 +100,15 @@ export function useUserOnboardingContext(): UserOnboardingContext {
     const hasNotificationsEnabled = useUserOnboardingContextValue(false, async () => {
         return Notifier.isPossible();
     });
+    /** :TCHAP: onboarding-add-secure-backup */
+    const hasSecureStorage = useUserOnboardingContextValue(false, async (cli) => {
+        const hasKey = await cli.secretStorage.hasKey()
+        return hasKey
+    });
+    /** end :TCHAP: onboarding-add-secure-backup */
 
     return useMemo(
-        () => ({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled }),
-        [hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled],
+        () => ({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled, hasSecureStorage }),
+        [hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled, hasSecureStorage],
     );
 }

@@ -105,7 +105,7 @@ async function collectBaseInformation(body: FormData, opts: IOpts): Promise<void
     /* :TCHAP: bug-reporting - rename app - for bugreport rageshakes
     body.append("app", opts.customApp || "element-web");
     */
-    body.append("app", "tchap-web");
+    body.append("app", opts.customApp || "tchap-web");
     // end :TCHAP:
     body.append("version", version ?? "UNKNOWN");
     body.append("user_agent", userAgent);
