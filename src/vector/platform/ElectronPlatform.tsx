@@ -444,20 +444,29 @@ export default class ElectronPlatform extends VectorBasePlatform {
         return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? "https://app.element.io";
     }
 
+    public get defaultOidcClientUri(): string {
+        // Default to element.io as our scheme `io.element.desktop` is within its scope on default MAS policies
+        return "https://element.io";
+    }
+
     public async getOidcClientMetadata(): Promise<OidcRegistrationClientMetadata> {
         const baseMetadata = await super.getOidcClientMetadata();
-        const redirectUri = this.getSSOCallbackUrl();
-        redirectUri.searchParams.delete(SSO_ID_KEY); // it will be shuttled via the state param instead
         return {
             ...baseMetadata,
             applicationType: "native",
-            redirectUris: [redirectUri.href],
-            // XXX: This should be overridable in config
-            clientUri: "https://element.io",
         };
     }
 
     public getOidcClientState(): string {
         return `:${SSO_ID_KEY}:${this.ssoID}`;
+    }
+
+    /**
+     * The URL to return to after a successful OIDC authentication
+     */
+    public getOidcCallbackUrl(): URL {
+        const url = super.getOidcCallbackUrl();
+        url.protocol = "io.element.desktop";
+        return url;
     }
 }

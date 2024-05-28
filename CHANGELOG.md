@@ -1,3 +1,59 @@
+Changes in [1.11.67](https://github.com/element-hq/element-web/releases/tag/v1.11.67) (2024-05-22)
+==================================================================================================
+## ✨ Features
+
+* Tooltip: Improve the accessibility of the composer and the rich text editor ([#12459](https://github.com/matrix-org/matrix-react-sdk/pull/12459)). Contributed by @florianduros.
+* Allow explicit configuration of OIDC dynamic registration metadata ([#12514](https://github.com/matrix-org/matrix-react-sdk/pull/12514)). Contributed by @t3chguy.
+* Tooltip: improve accessibility for messages ([#12487](https://github.com/matrix-org/matrix-react-sdk/pull/12487)). Contributed by @florianduros.
+* Collapse UserSettings tabs to just icons on narrow screens ([#12505](https://github.com/matrix-org/matrix-react-sdk/pull/12505)). Contributed by @dbkr.
+* Add room topic to right panel room info ([#12503](https://github.com/matrix-org/matrix-react-sdk/pull/12503)). Contributed by @t3chguy.
+* OIDC: pass `id_token` via `id_token_hint` on Manage Account interaction ([#12499](https://github.com/matrix-org/matrix-react-sdk/pull/12499)). Contributed by @t3chguy.
+* Tooltip: improve accessibility in room ([#12493](https://github.com/matrix-org/matrix-react-sdk/pull/12493)). Contributed by @florianduros.
+* Tooltip: improve accessibility for call and voice messages ([#12489](https://github.com/matrix-org/matrix-react-sdk/pull/12489)). Contributed by @florianduros.
+* Move the active tab in user settings to the dialog title ([#12481](https://github.com/matrix-org/matrix-react-sdk/pull/12481)). Contributed by @dbkr.
+* Tooltip: improve accessibility of spaces ([#12497](https://github.com/matrix-org/matrix-react-sdk/pull/12497)). Contributed by @florianduros.
+* Tooltip: improve accessibility of the right panel ([#12490](https://github.com/matrix-org/matrix-react-sdk/pull/12490)). Contributed by @florianduros.
+* MSC3575 (Sliding Sync) add well-known proxy support ([#12307](https://github.com/matrix-org/matrix-react-sdk/pull/12307)). Contributed by @EdGeraghty.
+
+## 🐛 Bug Fixes
+
+* Reuse single PlaybackWorker between Playback instances ([#12520](https://github.com/matrix-org/matrix-react-sdk/pull/12520)). Contributed by @t3chguy.
+* Fix well-known lookup for sliding sync labs check ([#12519](https://github.com/matrix-org/matrix-react-sdk/pull/12519)). Contributed by @t3chguy.
+* Fix `element-desktop-ssoid being` included in OIDC Authorization call ([#12495](https://github.com/matrix-org/matrix-react-sdk/pull/12495)). Contributed by @t3chguy.
+* Fix beta notifications reconciliation for intentional mentions push rules ([#12510](https://github.com/matrix-org/matrix-react-sdk/pull/12510)). Contributed by @t3chguy.
+* fix avatar stretched on 1:1 call ([#12494](https://github.com/matrix-org/matrix-react-sdk/pull/12494)). Contributed by @I-lander.
+* Check native sliding sync support against an unstable feature flag ([#12498](https://github.com/matrix-org/matrix-react-sdk/pull/12498)). Contributed by @turt2live.
+* Use OPTIONS for sliding sync detection poke ([#12492](https://github.com/matrix-org/matrix-react-sdk/pull/12492)). Contributed by @turt2live.
+* TAC: hide tooltip when the release announcement is displayed ([#12472](https://github.com/matrix-org/matrix-react-sdk/pull/12472)). Contributed by @florianduros.
+
+
+
+Changes in [1.11.66](https://github.com/element-hq/element-web/releases/tag/v1.11.66) (2024-05-07)
+==================================================================================================
+## ✨ Features
+
+* Use a different error message for UTDs when you weren't in the room. ([#12453](https://github.com/matrix-org/matrix-react-sdk/pull/12453)). Contributed by @uhoreg.
+* Take the Threads Activity Centre out of labs ([#12439](https://github.com/matrix-org/matrix-react-sdk/pull/12439)). Contributed by @dbkr.
+* Expected UTDs: use a different message for UTDs sent before login ([#12391](https://github.com/matrix-org/matrix-react-sdk/pull/12391)). Contributed by @richvdh.
+* Add `Tooltip` to `AccessibleButton` ([#12443](https://github.com/matrix-org/matrix-react-sdk/pull/12443)). Contributed by @florianduros.
+* Add analytics to activity toggles ([#12418](https://github.com/matrix-org/matrix-react-sdk/pull/12418)). Contributed by @dbkr.
+* Decrypt events in reverse order without copying the array ([#12445](https://github.com/matrix-org/matrix-react-sdk/pull/12445)). Contributed by @Johennes.
+* Use new compound tooltip ([#12416](https://github.com/matrix-org/matrix-react-sdk/pull/12416)). Contributed by @florianduros.
+* Expected UTDs: report a different Posthog code ([#12389](https://github.com/matrix-org/matrix-react-sdk/pull/12389)). Contributed by @richvdh.
+
+## 🐛 Bug Fixes
+
+* TAC: Fix accessibility issue when the Release announcement is displayed ([#12484](https://github.com/matrix-org/matrix-react-sdk/pull/12484)). Contributed by @RiotRobot.
+* TAC: Close Release Announcement when TAC button is clicked ([#12485](https://github.com/matrix-org/matrix-react-sdk/pull/12485)). Contributed by @florianduros.
+* MenuItem: fix caption usage ([#12455](https://github.com/matrix-org/matrix-react-sdk/pull/12455)). Contributed by @florianduros.
+* Show the local echo in previews ([#12451](https://github.com/matrix-org/matrix-react-sdk/pull/12451)). Contributed by @langleyd.
+* Fixed the drag and drop of X #27186 ([#12450](https://github.com/matrix-org/matrix-react-sdk/pull/12450)). Contributed by @asimdelvi.
+* Move the TAC to above the button ([#12438](https://github.com/matrix-org/matrix-react-sdk/pull/12438)). Contributed by @dbkr.
+* Use the same logic in previews as the timeline to hide events that should be hidden ([#12434](https://github.com/matrix-org/matrix-react-sdk/pull/12434)). Contributed by @langleyd.
+* Fix selector so maths support doesn't mangle divs ([#12433](https://github.com/matrix-org/matrix-react-sdk/pull/12433)). Contributed by @uhoreg.
+
+
+
 Changes in [1.11.65](https://github.com/element-hq/element-web/releases/tag/v1.11.65) (2024-04-23)
 ==================================================================================================
 ## ✨ Features
