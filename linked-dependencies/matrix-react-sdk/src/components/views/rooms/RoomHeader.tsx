@@ -354,7 +354,7 @@ export default function RoomHeader({
                         </>
                     )}
 
-                    <Tooltip label={_t("common|threads")}>
+                    {/* :TCHAP: extend-remove-thread-buttons <Tooltip label={_t("common|threads")}>
                         <IconButton
                             indicator={notificationLevelToIndicator(threadNotifications)}
                             onClick={(evt) => {
@@ -366,7 +366,25 @@ export default function RoomHeader({
                         >
                             <ThreadsIcon />
                         </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
+                    {
+                        TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ?
+                            <Tooltip label={_t("common|threads")} data-testid="room-header-thread-button">
+                                <IconButton
+                                    indicator={notificationLevelToIndicator(threadNotifications)}
+                                    onClick={(evt) => {
+                                        evt.stopPropagation();
+                                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
+                                        PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
+                                    }}
+                                    aria-label={_t("common|threads")}
+                                >
+                                    <ThreadsIcon />
+                                </IconButton>
+                            </Tooltip>
+                        : null
+                    }
+                    {/* end :TCHAP: */}
                     {notificationsEnabled && (
                         <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
                             <IconButton

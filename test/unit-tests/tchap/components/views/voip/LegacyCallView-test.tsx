@@ -1,4 +1,3 @@
-import { stubClient } from "matrix-react-sdk/test/test-utils";
 import SdkConfig, { ConfigOptions } from "matrix-react-sdk/src/SdkConfig";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import React from "react";
@@ -7,6 +6,7 @@ import { CallState } from "matrix-js-sdk/src/webrtc/call";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
+import { stubClient } from "~matrix-react-sdk/test/test-utils";
 import LegacyCallView from "~matrix-react-sdk/src/components/views/voip/LegacyCallView";
 import DMRoomMap from "~matrix-react-sdk/src/utils/DMRoomMap";
 

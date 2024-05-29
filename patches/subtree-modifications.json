@@ -17,5 +17,13 @@
         "files": [
             "src/components/views/settings/Notifications.tsx"
         ]
+    },
+    "extend-remove-thread-buttons": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/988",
+        "files": [
+            "src/components/views/spaces/SpacePanel.tsx",
+            "src/components/views/rooms/RoomHeader.tsx",
+            "src/components/views/settings/Notifications.tsx"
+        ]
     }
 }
