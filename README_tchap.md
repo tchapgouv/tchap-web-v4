@@ -45,3 +45,15 @@ This command will take all the commits that touch the subtree repo and push them
 ```
 
 Then also update the `subtree-modifications.json` file. We continue to keep track of the changes we make to the sdk. It will also be easier to separate different functionnality that tchap added to the code
+
+### Some commit naming
+
+```
+chore(merge-conflict) : describe quickly the files impacted
+
+Merge vX.Y.Z into TCHAP
+
+Merge subtree vX.Y.Z "COMMIT HASH" into TCHAP
+
+chore(update-patch):
+```
