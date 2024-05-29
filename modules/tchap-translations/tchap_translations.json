@@ -662,10 +662,6 @@
         "en": "Tchap is not available at the moment (err:03). View the status of services: https://status.tchap.numerique.gouv.fr",
         "fr": "La connexion à Tchap n'est pas possible pour le moment (err:03). Voir l'état du service: https://status.tchap.numerique.gouv.fr"
     },
-    "threads|unable_to_decrypt": {
-        "en": "Decrypting...",
-        "fr": "Déchiffrement en cours..."
-    },
     "threads|unable_to_decrypt_with_info_message": {
         "en": "Decrypting... <a>Find out more</a>",
         "fr": "Déchiffrement en cours... <a>En savoir plus</a>"
