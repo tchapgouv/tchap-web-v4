@@ -54,6 +54,6 @@ jobs:
                   artifacts: >
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-dev-${{ steps.date.outputs.date }}.tar.gz,
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-preprod-${{ steps.date.outputs.date }}.tar.gz,
-                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod-${{ steps.date.outputs.date }}.tar.gz
+                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod-${{ steps.date.outputs.date }}.tar.gz,
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod_rie-${{ steps.date.outputs.date }}.tar.gz
                   token: ${{ secrets.GITHUB_TOKEN }}
