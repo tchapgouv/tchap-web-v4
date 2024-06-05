@@ -9,7 +9,7 @@ import {
     ThreepidMedium,
     TweakName,
 } from "matrix-js-sdk/src/matrix";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 
 import Notifications from "~matrix-react-sdk/src/components/views/settings/Notifications";
 import {
@@ -157,7 +157,8 @@ const pushRules: IPushRules = {
 } as IPushRules;
 
 describe("<Notifications />", () => {
-    const featureName: string = "feature_email_notification";
+    const featureEmailName: string = "feature_email_notification";
+    const featurethreadName: string = "feature_thread";
     const homeserverName: string = "my.home.server";
 
     const getComponent = () => render(<Notifications />);
@@ -203,15 +204,14 @@ describe("<Notifications />", () => {
 
     const testEmail = "tester@test.com";
 
-    beforeEach(async () => {
-        // activate email notification in the config, otherwise the section won't appear
-        const config: ConfigOptions = {
-            tchap_features: {
-                [featureName]: [homeserverName],
-            },
-        };
+    const addHomeserverToMockConfig = (homeservers: string[], featureList: string[] = []) => {
+        // mock SdkConfig.get("tchap_features")
+        const config: ConfigOptions = { tchap_features: {} };
+        featureList.forEach((feature) => (config.tchap_features[feature] = homeservers));
         SdkConfig.put(config);
+    };
 
+    beforeEach(async () => {
         // Mock the email so that the section can be activated
         mockClient.getThreePids.mockResolvedValue({
             threepids: [
@@ -231,22 +231,69 @@ describe("<Notifications />", () => {
         await clearAllModals();
     });
 
-    describe("email switches", () => {
-        it("display well the caption when email notification is activated", async () => {
-            await getComponentAndWait();
+    afterEach(() => {
+        SdkConfig.reset(); // we touch the config, so clean up
+        cleanup();
+    });
 
-            fireEvent.click(screen.getByTestId("notif-master-switch"));
+    it("display well the caption when email notification feature is activated", async () => {
+        // activate email notification in the config, otherwise the section won't appear
+        addHomeserverToMockConfig([homeserverName], [featureEmailName]);
 
-            await flushPromises();
+        await getComponentAndWait();
 
-            const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]')!;
-            fireEvent.click(emailToggle);
+        fireEvent.click(screen.getByTestId("notif-master-switch"));
 
-            expect(
-                screen.findByText(
-                    "Recevez un e-mail si au moins un message reste non lu pendant 72h. <a>En savoir plus</a>",
-                ),
-            );
-        });
+        await flushPromises();
+
+        const emailToggle = screen.getByTestId("notif-email-switch");
+
+        const caption = emailToggle.querySelector(".mx_Caption");
+
+        expect(caption).toHaveClass("mx_Caption");
+    });
+
+    it("hides well the caption when email notification feature is deactivated for this homeserver", async () => {
+        addHomeserverToMockConfig([homeserverName]);
+
+        await getComponentAndWait();
+
+        fireEvent.click(screen.getByTestId("notif-master-switch"));
+
+        await flushPromises();
+
+        expect(screen.queryByTestId("notif-email-switch")).not.toBeInTheDocument();
+    });
+
+    it("hides well the caption when email notification feature is not activated for this homeserver", async () => {
+        addHomeserverToMockConfig(["other.server.fr"], [featureEmailName]);
+
+        await getComponentAndWait();
+
+        fireEvent.click(screen.getByTestId("notif-master-switch"));
+
+        await flushPromises();
+
+        expect(screen.queryByTestId("notif-email-switch")).not.toBeInTheDocument();
+    });
+
+    it("display well the tac notification switch when feature is activated", async () => {
+        addHomeserverToMockConfig([homeserverName], [featurethreadName]);
+
+        await getComponentAndWait();
+
+        const tacNotifParentElement = screen.queryByTestId("tac-notification-parent");
+
+        expect(tacNotifParentElement?.children.length).toBe(2);
+    });
+
+    it("display hides the tac notification switch when feature is deactivated", async () => {
+        addHomeserverToMockConfig([homeserverName]);
+
+        await getComponentAndWait();
+
+        const tacNotifParentElement = screen.queryByTestId("tac-notification-parent");
+
+        expect(tacNotifParentElement?.children.length).toBe(1);
     });
 });

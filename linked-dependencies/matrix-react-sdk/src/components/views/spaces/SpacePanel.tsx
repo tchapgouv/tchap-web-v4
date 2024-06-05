@@ -73,6 +73,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: extend-remove-thread-buttons
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -418,8 +419,9 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
-                        <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
-
+                        {/* :TCHAP: extend-remove-thread-buttons <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> */}
+                        {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
+                        {/** end :TCHAP: */}
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </nav>
                 </DragDropContext>

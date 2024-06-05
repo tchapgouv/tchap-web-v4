@@ -205,9 +205,15 @@ const maximumVectorState = (
 
 const NotificationActivitySettings = (): JSX.Element => {
     return (
-        <div>
+        // <div> :TCHAP: extend-remove-thread-buttons - we add data-testid to the parent for testing purpose, it is diffult to get to this element otherwise
+        <div data-testid="tac-notification-parent"> 
             <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
-            <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+            {/* :TCHAP: extend-remove-thread-buttons <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} /> */}
+            { TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? 
+                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+                : null   
+            }
+            {/* end :TCHAP: */}
         </div>
     );
 };
