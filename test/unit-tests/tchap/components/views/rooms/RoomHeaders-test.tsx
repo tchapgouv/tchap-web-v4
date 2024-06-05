@@ -23,12 +23,14 @@ describe("RoomHeader", () => {
     const featurethreadName: string = "feature_thread";
     const homeserverName: string = "my.home.server";
 
-    const mockFeatureConfig = (homeservers: string[], feature: string) => {
+    const addHomeserverToMockConfig = (homeservers: string[], feature: string) => {
         // mock SdkConfig.get("tchap_features")
         const config: ConfigOptions = { tchap_features: {} };
         config.tchap_features[feature] = homeservers;
         SdkConfig.put(config);
     };
+
+    const getComponent = () => render(<RoomHeader room={room} />, getWrapper());
 
     beforeEach(async () => {
         stubClient();
@@ -39,8 +41,6 @@ describe("RoomHeader", () => {
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
     });
-
-    const getComponent = () => render(<RoomHeader room={room} />, getWrapper());
 
     afterEach(() => {
         SdkConfig.reset();
@@ -53,7 +53,7 @@ describe("RoomHeader", () => {
     });
 
     it("display well the thread button when feature is activated", async () => {
-        mockFeatureConfig([homeserverName], featurethreadName);
+        addHomeserverToMockConfig([homeserverName], featurethreadName);
 
         getComponent();
 
@@ -61,7 +61,7 @@ describe("RoomHeader", () => {
     });
 
     it("hides the thread button when feature is deactivated", async () => {
-        mockFeatureConfig(["other.homeserver"], featurethreadName);
+        addHomeserverToMockConfig(["other.homeserver"], featurethreadName);
 
         getComponent();
 

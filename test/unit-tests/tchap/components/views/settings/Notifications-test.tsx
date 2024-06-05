@@ -204,7 +204,7 @@ describe("<Notifications />", () => {
 
     const testEmail = "tester@test.com";
 
-    const mockFeatureConfig = (homeservers: string[], featureList: string[] = []) => {
+    const addHomeserverToMockConfig = (homeservers: string[], featureList: string[] = []) => {
         // mock SdkConfig.get("tchap_features")
         const config: ConfigOptions = { tchap_features: {} };
         featureList.forEach((feature) => (config.tchap_features[feature] = homeservers));
@@ -238,7 +238,7 @@ describe("<Notifications />", () => {
 
     it("display well the caption when email notification feature is activated", async () => {
         // activate email notification in the config, otherwise the section won't appear
-        mockFeatureConfig([homeserverName], [featureEmailName]);
+        addHomeserverToMockConfig([homeserverName], [featureEmailName]);
 
         await getComponentAndWait();
 
@@ -254,7 +254,7 @@ describe("<Notifications />", () => {
     });
 
     it("hides well the caption when email notification feature is deactivated for this homeserver", async () => {
-        mockFeatureConfig([homeserverName]);
+        addHomeserverToMockConfig([homeserverName]);
 
         await getComponentAndWait();
 
@@ -266,7 +266,7 @@ describe("<Notifications />", () => {
     });
 
     it("hides well the caption when email notification feature is not activated for this homeserver", async () => {
-        mockFeatureConfig(["other.server.fr"], [featureEmailName]);
+        addHomeserverToMockConfig(["other.server.fr"], [featureEmailName]);
 
         await getComponentAndWait();
 
@@ -278,7 +278,7 @@ describe("<Notifications />", () => {
     });
 
     it("display well the tac notification switch when feature is activated", async () => {
-        mockFeatureConfig([homeserverName], [featurethreadName]);
+        addHomeserverToMockConfig([homeserverName], [featurethreadName]);
 
         await getComponentAndWait();
 
@@ -288,7 +288,7 @@ describe("<Notifications />", () => {
     });
 
     it("display hides the tac notification switch when feature is deactivated", async () => {
-        mockFeatureConfig([homeserverName]);
+        addHomeserverToMockConfig([homeserverName]);
 
         await getComponentAndWait();
 

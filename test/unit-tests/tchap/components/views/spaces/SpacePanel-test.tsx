@@ -13,7 +13,7 @@ describe("<SpacePanel />", () => {
     const featureName: string = "feature_thread";
     const homeserverName: string = "my.home.server";
 
-    const mockFeatureConfig = (homeservers: string[]) => {
+    const addHomeserverToMockConfig = (homeservers: string[]) => {
         // mock SdkConfig.get("tchap_features")
         const config: ConfigOptions = { tchap_features: {} };
         config.tchap_features[featureName] = homeservers;
@@ -32,14 +32,14 @@ describe("<SpacePanel />", () => {
     });
 
     it("returns true when the the homeserver include thread feature", () => {
-        mockFeatureConfig([homeserverName]);
+        addHomeserverToMockConfig([homeserverName]);
         const { container } = renderSpacePanel();
 
         expect(container.getElementsByClassName("mx_ThreadsActivityCentre_container").length).toBe(1);
     });
 
     it("returns false when the the homeserver doesnt include thread feature", async () => {
-        mockFeatureConfig(["other.homeserver"]);
+        addHomeserverToMockConfig(["other.homeserver"]);
         const { container } = renderSpacePanel();
 
         expect(container.getElementsByClassName("mx_ThreadsActivityCentre_container").length).toBe(0);
