@@ -85,6 +85,7 @@
         "@types/react": "17.0.80"
     },
     "dependencies": {
+        "@gouvfr-lasuite/integration": "^1.0.1",
         "@matrix-org/olm": "3.2.15",
         "@matrix-org/react-sdk-module-api": "^2.3.0",
         "gfm.css": "^1.1.2",
