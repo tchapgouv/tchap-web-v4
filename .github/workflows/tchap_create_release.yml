@@ -37,6 +37,14 @@ jobs:
               run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: prod
+            - name: Build the archive ${{ steps.version.outputs.version }} for dev rie
+              run: scripts/tchap/package-tchap.sh
+              env:
+                  CONFIG: dev_rie
+            - name: Build the archive ${{ steps.version.outputs.version }} for preprod rie
+              run: scripts/tchap/package-tchap.sh
+              env:
+                  CONFIG: preprod_rie
             - name: Build the archive ${{ steps.version.outputs.version }} for prod rie
               run: scripts/tchap/package-tchap.sh
               env:
@@ -55,5 +63,7 @@ jobs:
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-dev-${{ steps.date.outputs.date }}.tar.gz,
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-preprod-${{ steps.date.outputs.date }}.tar.gz,
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod-${{ steps.date.outputs.date }}.tar.gz,
+                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-dev_rie-${{ steps.date.outputs.date }}.tar.gz,
+                      /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-preprod_rie-${{ steps.date.outputs.date }}.tar.gz,
                       /home/runner/work/tchap-web-v4/tchap-web-v4/tchap-${{ steps.version.outputs.version }}-prod_rie-${{ steps.date.outputs.date }}.tar.gz
                   token: ${{ secrets.GITHUB_TOKEN }}
