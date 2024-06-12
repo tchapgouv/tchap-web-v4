@@ -25,5 +25,11 @@
             "src/components/views/rooms/RoomHeader.tsx",
             "src/components/views/settings/Notifications.tsx"
         ]
+    },
+    "lasuite-gaufre-integration": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1012",
+        "files": [
+            "src/components/views/spaces/SpacePanel.tsx"
+        ]
     }
 }

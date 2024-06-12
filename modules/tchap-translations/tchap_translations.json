@@ -753,5 +753,9 @@
     "location_sharing|live_enable_description": {
         "en": "Please note: the history of your shared location will still be accessible to other members of the room even after the functionality is stopped",
         "fr": "Attention: l'historique des positions partagées sera accessible aux autres membres du salon meme après avoir arreté le partage"
+    },
+    "lasuite_numerique": {
+        "en": "La suite numérique",
+        "fr": "La suite numérique"
     }
 }

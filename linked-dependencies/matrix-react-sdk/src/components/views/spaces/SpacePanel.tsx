@@ -74,6 +74,7 @@ import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: extend-remove-thread-buttons
+import TchapGaufre from "../../../../../../src/tchap/components/views/common/Gaufre";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -423,6 +424,10 @@ const SpacePanel: React.FC = () => {
                         {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
                         {/** end :TCHAP: */}
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+
+                        {/* :TCHAP: lasuite-gaufre-integration */}
+                        <TchapGaufre isPanelCollapsed={isPanelCollapsed}></TchapGaufre>
+                        {/* end :TCHAP: */}
                     </nav>
                 </DragDropContext>
             )}

@@ -1903,6 +1903,11 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.2.tgz#d8bae93ac8b815b2bd7a98078cf91e2724ef11e5"
   integrity sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==
 
+"@gouvfr-lasuite/integration@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@gouvfr-lasuite/integration/-/integration-1.0.1.tgz#26340c3c281fdcd13ea95bda08aee551d6b441e7"
+  integrity sha512-w1roGR5rG7RFoxmnvs0T1vg3lxB9AHws1Mmio6c3QsIR7GdltHC1HyHI/vZVq5V5TSoyLanlU4qG2lSi5uUnGw==
+
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.14.tgz#d78e481a039f7566ecc9660b4ea7fe6b1fec442b"
