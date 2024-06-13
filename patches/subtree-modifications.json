@@ -31,5 +31,11 @@
         "files": [
             "src/components/views/spaces/SpacePanel.tsx"
         ]
+    },
+    "hide-screensharing-button": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1042",
+        "files": [
+            "src/components/views/voip/LegacyCallView.tsx"
+        ]
     }
 }
