@@ -37,5 +37,11 @@
         "files": [
             "src/components/views/voip/LegacyCallView.tsx"
         ]
+    },
+    "lowercase-invite": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/983",
+        "files": [
+            "src/components/views/dialogs/InviteDialog.tsx"
+        ]
     }
 }
