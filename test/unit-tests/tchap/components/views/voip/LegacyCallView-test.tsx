@@ -56,6 +56,7 @@ describe("LegacyCallView", () => {
         // mock SdkConfig.get("tchap_features")
         const config: ConfigOptions = { tchap_features: {} };
         config.tchap_features[featureName] = homeservers;
+        config.tchap_features["feature_screenshare_call"] = homeservers;
         SdkConfig.put(config);
     };
 
@@ -138,5 +139,31 @@ describe("LegacyCallView", () => {
         waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
 
         expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_vid").length).toBe(1);
+    });
+
+    it("should display screenshare button when the the homeserver include feature_screenshare_call feature", () => {
+        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
+
+        mockFeatureConfig([homeserverName]);
+        const { container } = renderCallView();
+
+        // needs to hover on the component to make the control button appears
+        fireEvent.mouseEnter(container);
+        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
+
+        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_screensharing").length).toBe(1);
+    });
+
+    it("should not display screenshare button when the the homeserver doesnt include feature_screenshare_call feature", async () => {
+        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
+
+        mockFeatureConfig(["other.homeserver"]);
+        const { container } = renderCallView();
+
+        // needs to hover on the component to make the control button appears
+        fireEvent.mouseEnter(container);
+        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
+
+        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_screensharing").length).toBe(0);
     });
 });

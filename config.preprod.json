@@ -107,7 +107,8 @@
         "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_space": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_audio_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
-        "feature_video_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"]
+        "feature_video_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
+        "feature_screenshare_call": ["*"]
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
 }

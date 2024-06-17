@@ -194,7 +194,8 @@
         "feature_thread": ["agent.dinum.tchap.gouv.fr"],
         "feature_space": [],
         "feature_audio_call": ["*"],
-        "feature_video_call": []
+        "feature_video_call": [],
+        "feature_screenshare_call": ["*"]
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
 }
