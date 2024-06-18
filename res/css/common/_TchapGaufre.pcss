@@ -1,8 +1,15 @@
 .lasuite-gaufre-tchap {
-    border: solid 1px #9999fc;
-    color: #9999fc; 
+    --gaufre-color: #9999fc;
+
+    border: solid 1px var(--gaufre-color);
+    color: var(--gaufre-color); 
 
     &::before {
-        background: #9999fc;
+        background: var(--gaufre-color);
     }
+}
+
+#tchap-gaufre {
+    overflow: scroll;
+    height: 300px;
 }

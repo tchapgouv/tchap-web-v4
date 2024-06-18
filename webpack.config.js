@@ -687,7 +687,7 @@ module.exports = (env, argv) => {
                 minify: false,
                 templateParameters: {
                     og_image_url: ogImageUrl,
-                    csp_extra_source: process.env.CSP_EXTRA_SOURCE ?? "",
+                    csp_extra_source: "https://integration.lasuite.numerique.gouv.fr/", // :TCHAP:
                 },
             }),
 

@@ -63,7 +63,7 @@ const TchapGaufre: React.FC<{
                 managed={false}
                 focusLock={true}
             >
-                <div id="tchap-gaufre" ref={gaufreContentRef}>
+                <div id="tchap-gaufre" className="lasuite--gaufre-borderless" ref={gaufreContentRef}>
                 </div>
             </ContextMenu>
         );
