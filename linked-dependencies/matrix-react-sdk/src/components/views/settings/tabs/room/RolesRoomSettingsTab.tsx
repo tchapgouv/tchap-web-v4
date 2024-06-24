@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { EventType, RoomMember, RoomState, RoomStateEvent, Room, IContent } from "matrix-js-sdk/src/matrix";
+import { EventType, RoomMember, RoomState, RoomStateEvent, Room, IContent, M_BEACON_INFO } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle, get } from "lodash";
 import { KnownMembership, RoomPowerLevelsEventContent } from "matrix-js-sdk/src/types";
@@ -279,17 +279,27 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("room_settings|permissions|m.widget"),
             [VoiceBroadcastInfoEventType]: _td("room_settings|permissions|io.element.voice_broadcast_info"),
+
+            // :TCHAP: roles-power-setting-titles
+            [M_BEACON_INFO.name]: _td("room_settings|permissions|beacon_info"),
+            // end :TCHAP:
         };
 
-        if (SettingsStore.getValue("feature_pinning")) {
-            plEventsToLabels[EventType.RoomPinnedEvents] = _td("room_settings|permissions|m.room.pinned_events");
-        }
+        // :TCHAP: roles-power-setting-titles
+        // if (SettingsStore.getValue("feature_pinning")) {
+        //     plEventsToLabels[EventType.RoomPinnedEvents] = _td("room_settings|permissions|m.room.pinned_events");
+        // }
+        // // MSC3401: Native Group VoIP signaling
+        // if (SettingsStore.getValue("feature_group_calls")) {
+        //     plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("room_settings|permissions|m.call");
+        //     plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("room_settings|permissions|m.call.member");
+        // }
+        plEventsToLabels[EventType.RoomPinnedEvents] = _td("room_settings|permissions|m.room.pinned_events");
         // MSC3401: Native Group VoIP signaling
-        if (SettingsStore.getValue("feature_group_calls")) {
-            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("room_settings|permissions|m.call");
-            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("room_settings|permissions|m.call.member");
-        }
+        plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("room_settings|permissions|m.call");
+        plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("room_settings|permissions|m.call.member");
 
+        // end :TCHAP:
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {
             "users_default": {
                 desc: _t("room_settings|permissions|users_default"),
@@ -430,6 +440,14 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             delete eventsLevels[EventType.RoomEncryption];
         }
 
+        // :TCHAP: roles-power-setting-titles
+        if (eventsLevels?.hasOwnProperty(M_BEACON_INFO.altName)) {
+            // We already have the info on M_BEACON_INFO.name, 
+            // don't know why its in double, it is not present in element
+            delete eventsLevels[M_BEACON_INFO.altName];
+        }
+        // end :TCHAP:
+
         const eventPowerSelectors = Object.keys(eventsLevels)
             .map((eventType, i) => {
                 if (isSpaceRoom && plEventsToShow[eventType]?.hideForSpace) {
@@ -437,7 +455,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                 } else if (!isSpaceRoom && plEventsToShow[eventType]?.hideForRoom) {
                     return null;
                 }
-
+                
                 const translationKeyForEvent = plEventsToLabels[eventType];
                 let label: string;
                 if (translationKeyForEvent) {
