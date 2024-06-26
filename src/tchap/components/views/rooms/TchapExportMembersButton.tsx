@@ -5,7 +5,7 @@
 import React from "react";
 
 import { FileDownloader } from "matrix-react-sdk/src/utils/FileDownloader";
-import AccessibleTooltipButton from "matrix-react-sdk/src/components/views/elements/AccessibleTooltipButton";
+import AccessibleButton from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 import { ButtonEvent } from "matrix-react-sdk/src/components/views/elements/AccessibleButton";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { _t } from "matrix-react-sdk/src/languageHandler";
@@ -46,16 +46,15 @@ export default class MemberList extends React.Component<IProps, IState> {
   public render(): React.ReactNode {
     if (this.props.room?.getMyMembership() === "join" && !this.props.room.isSpaceRoom() && this.props.roomMembersIds.length > 0) {
       return (
-          <AccessibleTooltipButton
+          <AccessibleButton
               data-testid="tc_exportRoomMembersButton"
               className="tc_MemberList_export mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
               onClick={this.onExportButtonClick}
-              tooltip={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
-              tooltipClassName="tc_exportRoomMembersTooltip"
+              title={_t("Download the list of all this room's members, in a text file. Useful for adding them all to another room.")}
           >
             <UserExportIcon width="1em" height="1em"/>
             <span>{_t("Export room members")}</span>
-          </AccessibleTooltipButton>
+          </AccessibleButton>
       );
     }
     return null;

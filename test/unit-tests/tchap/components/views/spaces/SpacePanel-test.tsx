@@ -1,8 +1,8 @@
 import React from "react";
 import { render, cleanup } from "@testing-library/react";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { stubClient } from "~matrix-react-sdk/test/test-utils";
-import { MatrixClientPeg } from "~matrix-react-sdk/src/MatrixClientPeg";
 import { wrapInMatrixClientContext, wrapInSdkContext } from "~matrix-react-sdk/test/test-utils";
 import { SdkContextClass } from "~matrix-react-sdk/src/contexts/SDKContext";
 import UnwrappedSpacePanel from "~matrix-react-sdk/src/components/views/spaces/SpacePanel";
@@ -23,8 +23,8 @@ describe("<SpacePanel />", () => {
     const renderSpacePanel = () => render(<SpacePanel />);
 
     beforeEach(() => {
-        stubClient();
-        MatrixClientPeg.getHomeserverName = () => homeserverName;
+        const mockClient: MatrixClient = stubClient();
+        jest.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
     });
 
     afterEach(() => {

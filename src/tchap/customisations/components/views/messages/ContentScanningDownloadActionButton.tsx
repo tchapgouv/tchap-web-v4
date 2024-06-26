@@ -21,7 +21,7 @@ import { MediaEventHelper } from "matrix-react-sdk/src/utils/MediaEventHelper";
 import { FileDownloader } from "matrix-react-sdk/src/utils/FileDownloader";
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import Spinner from "matrix-react-sdk/src/components/views/elements/Spinner";
-import { RovingAccessibleTooltipButton } from "matrix-react-sdk/src/accessibility/RovingTabIndex";
+import { RovingAccessibleButton } from "matrix-react-sdk/src/accessibility/RovingTabIndex";
 import { Icon as DownloadIcon } from "matrix-react-sdk/res/img/download.svg";
 
 import { Media } from "../../../ContentScanningMedia";
@@ -143,14 +143,14 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         });
 
         return (
-            <RovingAccessibleTooltipButton
+            <RovingAccessibleButton
                 className={classes}
                 title={tooltip}
                 onClick={this.onDownloadClick}
                 disabled={this.disabled}
             >
                 {icon}
-            </RovingAccessibleTooltipButton>
+            </RovingAccessibleButton>
         );
     }
 
