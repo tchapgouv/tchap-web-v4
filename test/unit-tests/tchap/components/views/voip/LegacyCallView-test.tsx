@@ -1,5 +1,4 @@
 import SdkConfig, { ConfigOptions } from "matrix-react-sdk/src/SdkConfig";
-import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import React from "react";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { CallState } from "matrix-js-sdk/src/webrtc/call";
@@ -22,11 +21,9 @@ describe("LegacyCallView", () => {
     });
 
     beforeEach(() => {
-        stubClient();
-        MatrixClientPeg.getHomeserverName = () => homeserverName;
-
-        const mockClient: MatrixClient = MatrixClientPeg.safeGet();
+        const mockClient: MatrixClient = stubClient();
         mockClient.isFallbackICEServerAllowed = jest.fn();
+        jest.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
 
         const dmRoomMap = new DMRoomMap(mockClient);
 

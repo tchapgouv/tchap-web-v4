@@ -18,7 +18,6 @@ import {
     mockClientMethodsUser,
 } from "~matrix-react-sdk/test/test-utils";
 import SdkConfig from "~matrix-react-sdk/src/SdkConfig";
-import { MatrixClientPeg } from "~matrix-react-sdk/src/MatrixClientPeg";
 
 // don't pollute test output with error logs from mock rejections
 jest.mock("matrix-js-sdk/src/logger");
@@ -200,7 +199,7 @@ describe("<Notifications />", () => {
     });
 
     // Set the home servername used later to match with the config
-    jest.spyOn(MatrixClientPeg, "getHomeserverName").mockReturnValue(homeserverName);
+    jest.spyOn(mockClient, "getDomain").mockReturnValue(homeserverName);
 
     const testEmail = "tester@test.com";
 

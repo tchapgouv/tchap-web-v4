@@ -1,6 +1,6 @@
 import { stubClient } from "matrix-react-sdk/test/test-utils";
 import SdkConfig, { ConfigOptions } from "matrix-react-sdk/src/SdkConfig";
-import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
@@ -13,8 +13,8 @@ describe("TchapUIFeature", () => {
     });
 
     beforeEach(() => {
-        stubClient();
-        MatrixClientPeg.getHomeserverName = () => homeserverName;
+        const mockClient: MatrixClient = stubClient();
+        jest.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
     });
 
     afterEach(function () {

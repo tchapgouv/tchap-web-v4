@@ -47,8 +47,8 @@ export default class TchapUIFeature {
             return true;
         }
 
-        const userHomeServer = MatrixClientPeg.getHomeserverName();
-        return homeserversWithFeature.includes(userHomeServer);
+        const userHomeServer = MatrixClientPeg.safeGet().getDomain();
+        return homeserversWithFeature.includes(userHomeServer!);
     }
 
 
