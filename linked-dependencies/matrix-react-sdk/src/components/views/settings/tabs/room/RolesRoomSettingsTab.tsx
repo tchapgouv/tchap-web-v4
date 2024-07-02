@@ -190,6 +190,12 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             // deep copy "events" object, Object.assign itself won't deep copy
             plContent["events"] = Object.assign({}, plContent["events"] || {});
             plContent["events"][powerLevelKey.slice(eventsLevelPrefix.length)] = value;
+
+            // :TCHAP: roles-power-setting-titles also modify the stable value since we removed it from the list
+            if (powerLevelKey.slice(eventsLevelPrefix.length) === M_BEACON_INFO.name) {
+                plContent["events"][M_BEACON_INFO.altName] = value;
+            }
+            // end :TCHAP:
         } else {
             const keyPath = powerLevelKey.split(".");
             let parentObj: IContent = {};
@@ -443,7 +449,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         // :TCHAP: roles-power-setting-titles
         if (eventsLevels?.hasOwnProperty(M_BEACON_INFO.altName)) {
             // We already have the info on M_BEACON_INFO.name, 
-            // don't know why its in double, it is not present in element
+            // Its in double because of our custom roomaccess control in which we add default value to allow share location
+            // cf https://github.com/tchapgouv/synapse-room-access-rules/pull/3
             delete eventsLevels[M_BEACON_INFO.altName];
         }
         // end :TCHAP:
