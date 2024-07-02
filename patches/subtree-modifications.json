@@ -43,5 +43,11 @@
         "files": [
             "src/components/views/dialogs/InviteDialog.tsx"
         ]
+    },
+    "roles-power-settings-rename-titles": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1017",
+        "files": [
+            "src/components/views/settings/tabs/room/RolesRoomSettingsTab.tsx"
+        ]
     }
 }

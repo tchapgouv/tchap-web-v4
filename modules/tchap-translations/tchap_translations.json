@@ -757,5 +757,9 @@
     "lasuite_numerique": {
         "en": "La suite numérique",
         "fr": "La suite numérique"
+    },
+    "room_settings|permissions|beacon_info": {
+        "en": "Share your position data",
+        "fr": "Partager les informations de position"
     }
 }
