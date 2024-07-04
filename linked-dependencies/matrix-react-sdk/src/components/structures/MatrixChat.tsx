@@ -144,6 +144,8 @@ import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
 import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP: activate-cross-signing-and-secure-storage-react
+import TchapUtils from "../../../../../src/tchap/util/TchapUtils";
+import { ExternalUsersLifecycle } from '@matrix-org/react-sdk-module-api/lib/tchap/lifecycles/ExternalUsers';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -807,7 +809,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.chatCreateOrReuse(payload.user_id);
                 break;
             case "view_create_chat":
-                showStartChatInviteDialog(payload.initialText || "");
+                const domain =  MatrixClientPeg.safeGet().getDomain();
+                const serverName = TchapUtils.findHomeServerNameFromUrl(domain!);
+                if (serverName.includes('Externes')) {
+                    ModuleRunner.instance.invoke(ExternalUsersLifecycle.AddRoom);
+                } else {
+                    showStartChatInviteDialog(payload.initialText || "");
+                }
 
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
