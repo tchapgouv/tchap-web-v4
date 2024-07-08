@@ -165,7 +165,6 @@
         "@types/sdp-transform": "^2.4.9",
         "@types/semver": "^7.5.8",
         "@types/tar-js": "^0.3.5",
-        "@types/testing-library__jest-dom": "^6.0.0",
         "@types/ua-parser-js": "^0.7.36",
         "@types/uuid": "^9.0.7",
         "@typescript-eslint/eslint-plugin": "^7.0.0",
@@ -262,6 +261,7 @@
         "2023-08-29": "matrix-js-sdk requires >=18.0.0"
     },
     "optionalDependencies": {
-        "tchap-translations": "file:./modules/tchap-translations"
+        "tchap-translations": "file:./modules/tchap-translations",
+        "tchap-external-users": "file:./modules/tchap-external-users"
     }
 }
