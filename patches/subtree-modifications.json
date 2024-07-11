@@ -43,5 +43,11 @@
         "files": [
             "src/components/views/dialogs/InviteDialog.tsx"
         ]
+    },
+    "improve-faq-visibility": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/395",
+        "files": [
+            "src/components/views/spaces/SpacePanel.tsx"
+        ]
     }
 }
