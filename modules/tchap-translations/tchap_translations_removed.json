@@ -47,5 +47,13 @@
     "onboarding|enable_notifications",
     "onboarding|enable_notifications_action",
     "onboarding|enable_notifications_description",
-    "onboarding|you_made_it"
+    "onboarding|you_made_it",
+    "create_space|search_public_button",
+    "create_space|private_description",
+    "create_space|public_description",
+    "create_space|explainer",
+    "create_space|public_heading",
+    "common|private",
+    "room_list|add_space_label",
+    "spaces|error_no_permission_add_space"
 ]
