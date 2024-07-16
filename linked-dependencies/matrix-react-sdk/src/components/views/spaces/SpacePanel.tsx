@@ -73,6 +73,7 @@ import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: extend-remove-thread-buttons
 import TchapGaufre from "../../../../../../src/tchap/components/views/common/Gaufre";
+import QuickFaqButton from "../../../../../../src/tchap/components/views/common/QuickFaq"; // :TCHAP: improve-faq-visibility
 import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
@@ -419,8 +420,10 @@ const SpacePanel: React.FC = () => {
                         {/* :TCHAP: extend-remove-thread-buttons <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> */}
                         {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
                         {/** end :TCHAP: */}
-                        <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
-
+                        
+                        {/* :TCHAP: improve-faq-visibility <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
+                        <QuickFaqButton isPanelCollapsed={isPanelCollapsed}></QuickFaqButton>
+                        {/* end :TCHAP: */}
                         {/* :TCHAP: lasuite-gaufre-integration */}
                         <TchapGaufre isPanelCollapsed={isPanelCollapsed}></TchapGaufre>
                         {/* end :TCHAP: */}

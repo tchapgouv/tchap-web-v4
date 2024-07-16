@@ -757,5 +757,17 @@
     "lasuite_numerique": {
         "en": "La suite numérique",
         "fr": "La suite numérique"
+    },
+    "quick_faq|faq": {
+        "en": "Frequently Asked Questions",
+        "fr": "Foire Aux Questions"
+    },
+    "quick_faq|contact": {
+        "en": "Contact us",
+        "fr": "Contacter le support"
+    },
+    "quick_faq|guides": {
+        "en": "Get started",
+        "fr": "Prise en main"
     }
 }
