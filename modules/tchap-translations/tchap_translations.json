@@ -769,5 +769,13 @@
     "quick_faq|guides": {
         "en": "Get started",
         "fr": "Prise en main"
+    },
+    "create_space|add_details_prompt": {
+        "en": "A space is a dedicated folder in which you can organize your discussions by themes.",
+        "fr": "Un espace est un dossier privé dans lequel vous pouvez organiser vos conversations par thèmes."
+    },
+    "create_space|add_details_prompt_2": {
+        "en": "<a>Learn more </a>",
+        "fr": "<a>En savoir plus</a>"
     }
 }

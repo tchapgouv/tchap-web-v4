@@ -49,5 +49,14 @@
         "files": [
             "src/components/views/spaces/SpacePanel.tsx"
         ]
+    },
+    "space-remove-public-and-subspace": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/878",
+        "files": [
+            "src/components/views/spaces/SpaceCreateMenu.tsx",
+            "src/components/views/rooms/RoomListHeader.tsx",
+            "src/components/views/context_menus/SpaceContextMenu.tsx",
+            "src/components/structures/SpaceRoomView.tsx"
+        ]
     }
 }
