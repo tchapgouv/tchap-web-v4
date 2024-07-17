@@ -105,7 +105,7 @@
     "tchap_features": {
         "feature_email_notification": ["*"],
         "feature_thread": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
-        "feature_space": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
+        "feature_space": ["*"],
         "feature_audio_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_video_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_screenshare_call": ["*"]
