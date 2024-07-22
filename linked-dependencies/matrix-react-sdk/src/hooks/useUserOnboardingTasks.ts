@@ -148,6 +148,19 @@ const tasks: UserOnboardingTask[] = [
             hideOnComplete: true,
         },
     },*/
+    { /** :TCHAP: onboarding-add-tchap-guide */
+        id: "check-user-guide",
+        title: _t("onboarding|check_user_guide"),
+        description: _t("onboarding|check_user_guide_description"),
+        completed: (ctx: UserOnboardingContext) => ctx.hasCheckedUserGuide,
+        action: {
+            label: _t("onboarding|check_user_guide_action"),
+            onClick: (ev: ButtonEvent) => {
+                window.localStorage.setItem('tchap_user_guide_checked', 'true');
+                window.open("https://aide.tchap.beta.gouv.fr/fr/article/guide-de-prise-en-main-de-tchap-oswyn1/", "_blank");
+            },
+        },
+    }, /** end :TCHAP: onboarding-add-tchap-guide */
     {
         id: "enable-secure-backup",
         title: _t("onboarding|enable_secure_backup"),

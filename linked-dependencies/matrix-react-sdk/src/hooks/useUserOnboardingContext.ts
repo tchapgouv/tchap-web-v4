@@ -28,6 +28,7 @@ export interface UserOnboardingContext {
     hasDmRooms: boolean;
     hasNotificationsEnabled: boolean;
     hasSecureStorage: boolean, // :TCHAP: onboarding-add-secure-backup
+    hasCheckedUserGuide: boolean, // :TCHAP: onboarding-add-tchap-guide
 }
 
 const USER_ONBOARDING_CONTEXT_INTERVAL = 5000;
@@ -107,8 +108,15 @@ export function useUserOnboardingContext(): UserOnboardingContext {
     });
     /** end :TCHAP: onboarding-add-secure-backup */
 
+    /** :TCHAP: onboarding-add-tchap-guide */
+    const hasCheckedUserGuide = useUserOnboardingContextValue(false, async (cli) => {
+        const hasKey = window.localStorage.getItem('tchap_user_guide_checked') ?? 'false';
+        return Promise.resolve(JSON.parse(hasKey))
+    });
+    /** end :TCHAP: onboarding-add-tchap-guide */
+
     return useMemo(
-        () => ({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled, hasSecureStorage }),
-        [hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled, hasSecureStorage],
+        () => ({ hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled, hasSecureStorage, hasCheckedUserGuide }),
+        [hasAvatar, hasDevices, hasDmRooms, hasNotificationsEnabled, hasSecureStorage, hasCheckedUserGuide],
     );
 }

@@ -64,5 +64,13 @@
         "files": [
             "src/components/structures/auth/forgot-password/CheckEmail.tsx"
         ]
+    },
+    "onboarding-add-tchap-guide": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1069",
+        "files": [
+            "src/hooks/useUserOnboardingTasks.ts",
+            "src/hooks/useUserOnboardingContext.ts"
+
+        ]
     }
 }
