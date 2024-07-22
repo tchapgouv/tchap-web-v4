@@ -58,5 +58,11 @@
             "src/components/views/context_menus/SpaceContextMenu.tsx",
             "src/components/structures/SpaceRoomView.tsx"
         ]
+    },
+    "reset-password-warning-close-window": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1067",
+        "files": [
+            "src/components/structures/auth/forgot-password/CheckEmail.tsx"
+        ]
     }
 }

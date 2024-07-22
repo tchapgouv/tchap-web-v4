@@ -777,5 +777,9 @@
     "create_space|add_details_prompt_2": {
         "en": "<a>Learn more </a>",
         "fr": "<a>En savoir plus</a>"
+    },
+    "auth|warning|dont_close_windows": {
+        "en": "Please don't close this window. You will need it later.",
+        "fr": "Ne pas fermer cette page. Elle sera nécessaire pour la suite."
     }
 }
