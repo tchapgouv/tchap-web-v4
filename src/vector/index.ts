@@ -135,6 +135,7 @@ async function start(): Promise<void> {
         rageshakePromise,
         setupLogStorage,
         preparePlatform,
+        loadOlm,
         loadConfig,
         loadLanguage,
         loadTheme,
@@ -179,6 +180,7 @@ async function start(): Promise<void> {
             }
         }
 
+        const loadOlmPromise = loadOlm();
         // set the platform for react sdk
         preparePlatform();
         // load config requires the platform to be ready
@@ -248,6 +250,7 @@ async function start(): Promise<void> {
         // app load critical path starts here
         // assert things started successfully
         // ##################################
+        await loadOlmPromise;
         await loadModulesPromise;
         await loadThemePromise;
         await loadLanguagePromise;
