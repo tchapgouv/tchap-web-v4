@@ -24,14 +24,6 @@ import { shouldPolyfill as shouldPolyFillIntlSegmenter } from "@formatjs/intl-se
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
 import { parseQsFromFragment } from "./url_utils";
 import "./modernizr";
-// eslint-disable-next-line max-len
-import {
-    queueClearCacheAndReload,
-    queueOverideUserSettings,
-    needsRefreshForVersion4,
-    saveAppVersionInLocalStorage,
-    registerExpiredAccountListener,
-} from "../tchap/app/initTchap";
 
 // Make setImmediate available in bundle
 import "setimmediate";
@@ -150,6 +142,20 @@ async function start(): Promise<void> {
         /* webpackPreload: true */
         "./init"
     );
+
+    // :TCHAP: load initTchap.ts async so that its code is not executed immediately and we can catch any exceptions
+    const {
+        registerExpiredAccountListener,
+        saveAppVersionInLocalStorage,
+        queueOverideUserSettings,
+        queueClearCacheAndReload,
+        needsRefreshForVersion4,
+    } = await import(
+        /* webpackChunkName: "initTchap" */
+        /* webpackPreload: true */
+        "../tchap/app/initTchap"
+    );
+    // end :TCHAP:
 
     // Now perform the next stage of initialisation. This has its own try/catch in which we render
     // a react error page on failure.

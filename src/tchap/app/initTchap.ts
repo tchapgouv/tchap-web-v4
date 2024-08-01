@@ -90,3 +90,11 @@ export function saveAppVersionInLocalStorage() {
 export function registerExpiredAccountListener() {
     ExpiredAccountHandler.register();
 }
+
+export default {
+    registerExpiredAccountListener,
+    saveAppVersionInLocalStorage,
+    queueOverideUserSettings,
+    queueClearCacheAndReload,
+    needsRefreshForVersion4
+}
