@@ -1,12 +1,8 @@
 {
     "name": "element-web",
-<<<<<<< HEAD
     "productName": "Tchap",
     "version": "4.6.1",
-    "version-element-web": "1.11.69",
-=======
-    "version": "1.11.72",
->>>>>>> v1.11.72
+    "version-element-web": "1.11.72",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
     "repository": {
@@ -89,23 +85,15 @@
         "@types/react": "17.0.80"
     },
     "dependencies": {
-<<<<<<< HEAD
         "@gouvfr-lasuite/integration": "^1.0.1",
         "@matrix-org/olm": "3.2.15",
-=======
         "@formatjs/intl-segmenter": "^11.5.7",
->>>>>>> v1.11.72
         "@matrix-org/react-sdk-module-api": "^2.3.0",
         "jsrsasign": "^11.0.0",
         "katex": "^0.16.0",
         "lodash": "^4.17.21",
-<<<<<<< HEAD
-        "matrix-js-sdk": "33.1.0",
-        "matrix-react-sdk": "file:./linked-dependencies/matrix-react-sdk",
-=======
         "matrix-js-sdk": "34.2.0",
-        "matrix-react-sdk": "3.104.0",
->>>>>>> v1.11.72
+        "matrix-react-sdk": "file:./linked-dependencies/matrix-react-sdk",
         "matrix-widget-api": "^1.3.1",
         "react": "17.0.2",
         "react-dom": "17.0.2",
@@ -266,8 +254,7 @@
         "relativePaths": true
     },
     "engines": {
-<<<<<<< HEAD
-        "node": "^18"
+        "node": ">=20.0.0"
     },
     "engines-comment": {
         "2022-11-07": "matrix-js-sdk requires >=16.0.0. SSL librairies do not work with 18 and 19. 17 has incompatibilities with some deps.",
@@ -275,8 +262,5 @@
     },
     "optionalDependencies": {
         "tchap-translations": "file:./modules/tchap-translations"
-=======
-        "node": ">=20.0.0"
->>>>>>> v1.11.72
     }
 }

@@ -12,8 +12,7 @@
         "outDir": "./lib",
         "declaration": true,
         "jsx": "react",
-<<<<<<< HEAD
-        "lib": ["es2021", "dom", "dom.iterable"],
+        "lib": ["es2022", "dom", "dom.iterable"],
         "strict": true,
         /* :TCHAP: */
         "paths": {
@@ -23,10 +22,6 @@
         },
         "types": ["node", "jest", "@testing-library/jest-dom"]
         /* end :TCHAP: */
-=======
-        "lib": ["es2022", "dom", "dom.iterable"],
-        "strict": true
->>>>>>> v1.11.72
     },
     "include": [
         "./node_modules/matrix-js-sdk/src/@types/*.d.ts",
