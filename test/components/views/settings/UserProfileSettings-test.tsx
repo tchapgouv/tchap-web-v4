@@ -67,7 +67,7 @@ const renderProfileSettings = (toastRack: Partial<ToastRack>, client: MatrixClie
     return render(
         <MatrixClientContext.Provider value={client}>
             <ToastContext.Provider value={toastRack}>
-                <UserProfileSettings />
+                <UserProfileSettings canSetAvatar={true} canSetDisplayName={true} />
             </ToastContext.Provider>
         </MatrixClientContext.Provider>,
     );
@@ -165,6 +165,25 @@ describe("ProfileSettings", () => {
         });
 
         expect(client.setDisplayName).toHaveBeenCalledWith("The Value");
+    });
+
+    it("displays error if changing display name fails", async () => {
+        jest.spyOn(OwnProfileStore.instance, "displayName", "get").mockReturnValue("Alice");
+        mocked(client).setDisplayName.mockRejectedValue(new Error("Failed to set display name"));
+
+        renderProfileSettings(toastRack, client);
+
+        expect(editInPlaceOnSave).toBeDefined();
+
+        act(() => {
+            editInPlaceOnChange({
+                target: { value: "Not Alice any more" } as HTMLInputElement,
+            } as ChangeEvent<HTMLInputElement>);
+        });
+
+        await act(async () => {
+            await expect(editInPlaceOnSave()).rejects.toEqual(expect.any(Error));
+        });
     });
 
     it("resets on cancel", async () => {

@@ -18,12 +18,13 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
-import { Icon as CloseCallIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
+import CloseCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/close";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
+import { Icon as RoomInfoIcon } from "@vector-im/compound-design-tokens/icons/info-solid.svg";
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
-import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
-import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
-import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
+import VerifiedIcon from "@vector-im/compound-design-tokens/assets/web/icons/verified";
+import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error";
+import PublicIcon from "@vector-im/compound-design-tokens/assets/web/icons/public";
 import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
@@ -55,6 +56,10 @@ import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
 import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
+import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
+import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnouncementOpen";
+import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
 
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader"; // :TCHAP: customize-room-header-bar
@@ -86,6 +91,8 @@ export default function RoomHeader({
         isConnectedToCall,
         hasActiveCallSession,
         callOptions,
+        showVoiceCallButton,
+        showVideoCallButton,
     } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
@@ -203,7 +210,7 @@ export default function RoomHeader({
             )}
         </>
     );
-    const voiceCallButton = (
+    let voiceCallButton: JSX.Element | undefined = (
         <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
             <IconButton
                 // We need both: isViewingCall and isConnectedToCall
@@ -224,25 +231,44 @@ export default function RoomHeader({
             </IconButton>
         </Tooltip>
     );
-    let videoCallButton = startVideoCallButton;
+    let videoCallButton: JSX.Element | undefined = startVideoCallButton;
     if (isConnectedToCall) {
         videoCallButton = toggleCallButton;
     } else if (isViewingCall) {
         videoCallButton = closeLobbyButton;
     }
 
+    if (!showVideoCallButton) {
+        videoCallButton = undefined;
+    }
+    if (!showVoiceCallButton) {
+        voiceCallButton = undefined;
+    }
+
+    const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("newRoomHeader");
+
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-                <button
-                    aria-label={_t("right_panel|room_summary_card|title")}
-                    tabIndex={0}
-                    onClick={() => {
-                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
-                    }}
-                    className="mx_RoomHeader_infoWrapper"
+                <ReleaseAnnouncement
+                    feature="newRoomHeader"
+                    header={_t("room|header|release_announcement_header")}
+                    description={_t("room|header|release_announcement_description")}
+                    closeLabel={_t("action|ok")}
+                    placement="bottom"
                 >
-                    {/* :TCHAP: customize-room-header-bar - RoomAvatar -> DecoratedRoomAvatar
+                    <button
+                        aria-label={_t("right_panel|room_summary_card|title")}
+                        tabIndex={0}
+                        onClick={() => {
+                            if (isReleaseAnnouncementOpen) {
+                                ReleaseAnnouncementStore.instance.nextReleaseAnnouncement();
+                            }
+                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
+                        }}
+                        className="mx_RoomHeader_infoWrapper"
+                    >
+                        {/* :TCHAP: customize-room-header-bar - RoomAvatar -> DecoratedRoomAvatar
                     <RoomAvatar room={room} size="40px" />
                     */}
                     <DecoratedRoomAvatar room={room} size="40px" />
@@ -302,16 +328,17 @@ export default function RoomHeader({
                             */}
                         </BodyText>
                         {roomTopic && (
-                            <BodyText
-                                as="div"
-                                size="sm"
-                                className="mx_RoomHeader_topic mx_RoomHeader_truncated mx_lineClamp"
-                            >
-                                <Linkify>{roomTopicBody}</Linkify>
-                            </BodyText>
-                        )}
-                    </Box>
-                </button>
+                                <BodyText
+                                    as="div"
+                                    size="sm"
+                                    className="mx_RoomHeader_topic mx_RoomHeader_truncated mx_lineClamp"
+                                >
+                                    <Linkify>{roomTopicBody}</Linkify>
+                                </BodyText>
+                            )}
+                        </Box>
+                    </button>
+                </ReleaseAnnouncement>
                 <Flex align="center" gap="var(--cpd-space-2x)">
                     {additionalButtons?.map((props) => {
                         const label = props.label();
@@ -354,7 +381,20 @@ export default function RoomHeader({
                         </>
                     )}
 
+                    <Tooltip label={_t("right_panel|room_summary_card|title")}>
+                        <IconButton
+                            onClick={(evt) => {
+                                evt.stopPropagation();
+                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
+                            }}
+                            aria-label={_t("right_panel|room_summary_card|title")}
+                        >
+                            <RoomInfoIcon />
+                        </IconButton>
+                    </Tooltip>
+
                     {/* :TCHAP: extend-remove-thread-buttons <Tooltip label={_t("common|threads")}>
+                    <Tooltip label={_t("common|threads")}>
                         <IconButton
                             indicator={notificationLevelToIndicator(threadNotifications)}
                             onClick={(evt) => {
@@ -401,16 +441,7 @@ export default function RoomHeader({
                     )}
                 </Flex>
                 {!isDirectMessage && (
-                    <BodyText
-                        as="div"
-                        size="sm"
-                        weight="medium"
-                        aria-label={_t("common|n_members", { count: memberCount })}
-                        onClick={(e: React.MouseEvent) => {
-                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
-                            e.stopPropagation();
-                        }}
-                    >
+                    <BodyText as="div" size="sm" weight="medium">
                         <FacePile
                             className="mx_RoomHeader_members"
                             members={members.slice(0, 3)}
@@ -418,6 +449,11 @@ export default function RoomHeader({
                             overflow={false}
                             viewUserOnClick={false}
                             tooltipLabel={_t("room|header_face_pile_tooltip")}
+                            onClick={(e: ButtonEvent) => {
+                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                                e.stopPropagation();
+                            }}
+                            aria-label={_t("common|n_members", { count: memberCount })}
                         >
                             {formatCount(memberCount)}
                         </FacePile>

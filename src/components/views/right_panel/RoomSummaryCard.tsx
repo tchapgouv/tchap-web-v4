@@ -14,11 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+    ChangeEvent,
+    SyntheticEvent,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import classNames from "classnames";
 import {
     MenuItem,
-    Tooltip,
     Separator,
     ToggleMenuItem,
     Text,
@@ -26,22 +34,22 @@ import {
     Heading,
     IconButton,
     Link,
+    Search,
+    Form,
 } from "@vector-im/compound-web";
-import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
-import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
+import FavouriteIcon from "@vector-im/compound-design-tokens/assets/web/icons/favourite";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
-import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
-import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
-import { Icon as SettingsIcon } from "@vector-im/compound-design-tokens/icons/settings.svg";
+import LinkIcon from "@vector-im/compound-design-tokens/assets/web/icons/link";
+import SettingsIcon from "@vector-im/compound-design-tokens/assets/web/icons/settings";
 import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/icons/export-archive.svg";
-import { Icon as LeaveIcon } from "@vector-im/compound-design-tokens/icons/leave.svg";
-import { Icon as FilesIcon } from "@vector-im/compound-design-tokens/icons/files.svg";
-import { Icon as PollsIcon } from "@vector-im/compound-design-tokens/icons/polls.svg";
-import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin.svg";
+import LeaveIcon from "@vector-im/compound-design-tokens/assets/web/icons/leave";
+import FilesIcon from "@vector-im/compound-design-tokens/assets/web/icons/files";
+import PollsIcon from "@vector-im/compound-design-tokens/assets/web/icons/polls";
+import PinIcon from "@vector-im/compound-design-tokens/assets/web/icons/pin";
 import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-solid.svg";
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
-import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
-import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
+import PublicIcon from "@vector-im/compound-design-tokens/assets/web/icons/public";
+import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error";
 import { Icon as ChevronDownIcon } from "@vector-im/compound-design-tokens/icons/chevron-down.svg";
 import { EventType, JoinRule, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
@@ -63,7 +71,7 @@ import WidgetAvatar from "../avatars/WidgetAvatar";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import RoomContext from "../../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
@@ -89,6 +97,10 @@ import { useTopic } from "../../../hooks/room/useTopic";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import { Box } from "../../utils/Box";
 import { onRoomTopicLinkClick } from "../elements/RoomTopic";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { Key } from "../../../Keyboard";
+import { useTransition } from "../../../hooks/useTransition";
 
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: tchap-room-icons
 
@@ -96,8 +108,9 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: tch
 interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
-    onClose(): void;
-    onSearchClick?: () => void;
+    onSearchChange?: (e: ChangeEvent) => void;
+    onSearchCancel?: () => void;
+    focusRoomSearch?: boolean;
 }
 
 interface IAppsSectionProps {
@@ -367,7 +380,13 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     );
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
+const RoomSummaryCard: React.FC<IProps> = ({
+    room,
+    permalinkCreator,
+    onSearchChange,
+    onSearchCancel,
+    focusRoomSearch,
+}) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -397,11 +416,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
         });
     };
 
-    const onRoomMembersClick = (ev: Event): void => {
-        RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
-        PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
-    };
-
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -421,6 +435,26 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             }
         }
     }, [room, directRoomsList]);
+
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    useDispatcher(defaultDispatcher, (payload) => {
+        if (payload.action === Action.FocusMessageSearch) {
+            searchInputRef.current?.focus();
+        }
+    });
+    // Clear the search field when the user leaves the search view
+    useTransition(
+        (prevTimelineRenderingType) => {
+            if (
+                prevTimelineRenderingType === TimelineRenderingType.Search &&
+                roomContext.timelineRenderingType !== TimelineRenderingType.Search &&
+                searchInputRef.current
+            ) {
+                searchInputRef.current.value = "";
+            }
+        },
+        [roomContext.timelineRenderingType],
+    );
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
@@ -499,7 +533,13 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
     return (
-        <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
+        <BaseCard
+            hideHeaderButtons
+            id="room-summary-panel"
+            className="mx_RoomSummaryCard"
+            ariaLabelledBy="room-summary-panel-tab"
+            role="tabpanel"
+        >
             <Flex
                 as="header"
                 className="mx_RoomSummaryCard_header"
@@ -507,81 +547,85 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 align="center"
                 justify="space-between"
             >
-                <Tooltip label={_t("action|search")} placement="right">
-                    <button
-                        className="mx_RoomSummaryCard_searchBtn"
-                        data-testid="summary-search"
-                        onClick={() => {
-                            onSearchClick?.();
-                        }}
-                        aria-label={_t("action|search")}
-                    >
-                        <SearchIcon width="100%" height="100%" />
-                    </button>
-                </Tooltip>
-                <AccessibleButton
-                    data-testid="base-card-close-button"
-                    className="mx_BaseCard_close"
-                    onClick={onClose}
-                    title={_t("action|close")}
-                />
+                {onSearchChange && (
+                    <Form.Root className="mx_RoomSummaryCard_search" onSubmit={(e) => e.preventDefault()}>
+                        <Search
+                            placeholder={_t("room|search|placeholder")}
+                            name="room_message_search"
+                            onChange={onSearchChange}
+                            className="mx_no_textinput"
+                            ref={searchInputRef}
+                            autoFocus={focusRoomSearch}
+                            onKeyDown={(e) => {
+                                if (searchInputRef.current && e.key === Key.ESCAPE) {
+                                    searchInputRef.current.value = "";
+                                    onSearchCancel?.();
+                                }
+                            }}
+                        />
+                    </Form.Root>
+                )}
             </Flex>
 
             {header}
 
             <Separator />
 
-            <ToggleMenuItem
-                Icon={FavouriteIcon}
-                label={_t("room|context_menu|favourite")}
-                checked={isFavorite}
-                onChange={() => tagRoom(room, DefaultTagID.Favourite)}
-                // XXX: https://github.com/element-hq/compound/issues/288
-                onSelect={() => {}}
-            />
-            <MenuItem
-                Icon={UserAddIcon}
-                label={_t("action|invite")}
-                disabled={!canInviteToState}
-                onSelect={() => inviteToRoom(room)}
-            />
-            <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />
-            <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
+            <div role="menubar" aria-orientation="vertical">
+                <ToggleMenuItem
+                    Icon={FavouriteIcon}
+                    label={_t("room|context_menu|favourite")}
+                    checked={isFavorite}
+                    onChange={() => tagRoom(room, DefaultTagID.Favourite)}
+                    // XXX: https://github.com/element-hq/compound/issues/288
+                    onSelect={() => {}}
+                />
+                <MenuItem
+                    Icon={UserAddIcon}
+                    label={_t("action|invite")}
+                    disabled={!canInviteToState}
+                    onSelect={() => inviteToRoom(room)}
+                />
+                <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />
+                <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
 
-            <Separator />
-            <MenuItem
-                // this icon matches the legacy implementation
-                // and is a short term solution until legacy room header is removed
-                Icon={UserProfileSolidIcon}
-                label={_t("common|people")}
-                onSelect={onRoomMembersClick}
-            />
-            {!isVideoRoom && (
-                <>
-                    <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
-                    <MenuItem
-                        Icon={PollsIcon}
-                        label={_t("right_panel|polls_button")}
-                        onSelect={onRoomPollHistoryClick}
-                    />
-                    {pinningEnabled && (
+                <Separator />
+                {!isVideoRoom && (
+                    <>
+                        <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
                         <MenuItem
-                            Icon={PinIcon}
-                            label={_t("right_panel|pinned_messages_button")}
-                            onSelect={onRoomPinsClick}
-                        >
-                            <Text as="span" size="sm">
-                                {pinCount}
-                            </Text>
-                        </MenuItem>
-                    )}
-                    <MenuItem Icon={ExportArchiveIcon} label={_t("export_chat|title")} onSelect={onRoomExportClick} />
-                </>
-            )}
+                            Icon={PollsIcon}
+                            label={_t("right_panel|polls_button")}
+                            onSelect={onRoomPollHistoryClick}
+                        />
+                        {pinningEnabled && (
+                            <MenuItem
+                                Icon={PinIcon}
+                                label={_t("right_panel|pinned_messages_button")}
+                                onSelect={onRoomPinsClick}
+                            >
+                                <Text as="span" size="sm">
+                                    {pinCount}
+                                </Text>
+                            </MenuItem>
+                        )}
+                        <MenuItem
+                            Icon={ExportArchiveIcon}
+                            label={_t("export_chat|title")}
+                            onSelect={onRoomExportClick}
+                        />
+                    </>
+                )}
 
-            <Separator />
+                <Separator />
 
-            <MenuItem Icon={LeaveIcon} kind="critical" label={_t("action|leave_room")} onSelect={onLeaveRoomClick} />
+                <MenuItem
+                    Icon={LeaveIcon}
+                    kind="critical"
+                    label={_t("action|leave_room")}
+                    onSelect={onLeaveRoomClick}
+                />
+            </div>
 
             {SettingsStore.getValue(UIFeature.Widgets) &&
                 !isVideoRoom &&
