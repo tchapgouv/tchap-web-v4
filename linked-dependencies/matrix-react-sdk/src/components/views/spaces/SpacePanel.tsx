@@ -67,6 +67,8 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
@@ -74,6 +76,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: extend-remove-thread-buttons
 import TchapGaufre from "../../../../../../src/tchap/components/views/common/Gaufre";
 import QuickFaqButton from "../../../../../../src/tchap/components/views/common/QuickFaq"; // :TCHAP: improve-faq-visibility
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
@@ -386,7 +389,22 @@ const SpacePanel: React.FC = () => {
                 >
                     <nav
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
+                                LandmarkNavigation.findAndFocusNextLandmark(
+                                    Landmark.ACTIVE_SPACE_BUTTON,
+                                    navAction === KeyBindingAction.PreviousLandmark,
+                                );
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+                            onKeyDownHandler(ev);
+                        }}
                         ref={ref}
                         aria-label={_t("common|spaces")}
                     >

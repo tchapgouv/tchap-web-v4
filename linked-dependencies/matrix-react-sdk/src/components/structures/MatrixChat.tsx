@@ -31,7 +31,7 @@ import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 // what-input helps improve keyboard accessibility
 import "what-input";
@@ -552,7 +552,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             .then((loadedSession) => {
                 if (!loadedSession) {
                     // fall back to showing the welcome screen... unless we have a 3pid invite pending
-                    if (ThreepidInviteStore.instance.pickBestInvite()) {
+                    if (
+                        ThreepidInviteStore.instance.pickBestInvite() &&
+                        SettingsStore.getValue(UIFeature.Registration)
+                    ) {
                         dis.dispatch({ action: "start_registration" });
                     } else {
                         dis.dispatch({ action: "view_welcome_page" });
@@ -648,7 +651,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case "logout":
                 LegacyCallHandler.instance.hangupAllCalls();
                 Promise.all([
-                    ...[...CallStore.instance.activeCalls].map((call) => call.disconnect()),
+                    ...[...CallStore.instance.connectedCalls].map((call) => call.disconnect()),
                     cleanUpBroadcasts(this.stores),
                 ]).finally(() => Lifecycle.logout(this.stores.oidcClientStore));
                 break;
@@ -952,6 +955,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private async startRegistration(params: { [key: string]: string }): Promise<void> {
+        if (!SettingsStore.getValue(UIFeature.Registration)) {
+            this.showScreen("welcome");
+            return;
+        }
+
         const newState: Partial<IState> = {
             view: Views.REGISTER,
         };
@@ -1545,7 +1553,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (Lifecycle.isLoggingOut()) return;
 
             // A modal might have been open when we were logged out by the server
-            Modal.closeCurrentModal("Session.logged_out");
+            Modal.forceCloseAllModals();
 
             if (errObj.httpStatus === 401 && errObj.data && errObj.data["soft_logout"]) {
                 logger.warn("Soft logout issued by server - avoiding data deletion");
@@ -1615,7 +1623,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         cli.on(CryptoEvent.KeyBackupFailed, async (errcode): Promise<void> => {
             let haveNewVersion: boolean | undefined;
-            let newVersionInfo: IKeyBackupInfo | null = null;
+            let newVersionInfo: KeyBackupInfo | null = null;
             // if key backup is still enabled, there must be a new backup in place
             if (cli.getKeyBackupEnabled()) {
                 haveNewVersion = true;
@@ -1766,11 +1774,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (screen === "home") {
             dis.dispatch({
                 action: Action.ViewHomePage,
-            });
-        } else if (screen === "start") {
-            this.showScreen("home");
-            dis.dispatch({
-                action: "require_registration",
             });
         } else if (screen === "directory") {
             dis.fire(Action.ViewRoomDirectory);

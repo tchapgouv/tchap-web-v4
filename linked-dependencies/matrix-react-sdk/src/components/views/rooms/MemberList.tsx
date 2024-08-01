@@ -65,6 +65,7 @@ const SHOW_MORE_INCREMENT = 100;
 interface IProps {
     roomId: string;
     searchQuery: string;
+    hideHeaderButtons?: boolean;
     onClose(): void;
     onSearchQueryChanged: (query: string) => void;
 }
@@ -359,7 +360,14 @@ export default class MemberList extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         if (this.state.loading) {
             return (
-                <BaseCard className="mx_MemberList" onClose={this.props.onClose}>
+                <BaseCard
+                    id="memberlist-panel"
+                    className="mx_MemberList"
+                    ariaLabelledBy="memberlist-panel-tab"
+                    role="tabpanel"
+                    hideHeaderButtons={this.props.hideHeaderButtons}
+                    onClose={this.props.onClose}
+                >
                     <Spinner />
                 </BaseCard>
             );
@@ -416,12 +424,13 @@ export default class MemberList extends React.Component<IProps, IState> {
             />
         );
 
-        const scopeHeader = room ? <SpaceScopeHeader room={room} /> : undefined;
-
         return (
             <BaseCard
+                id="memberlist-panel"
                 className="mx_MemberList"
-                header={<React.Fragment>{scopeHeader}</React.Fragment>}
+                ariaLabelledBy="memberlist-panel-tab"
+                role="tabpanel"
+                hideHeaderButtons={this.props.hideHeaderButtons}
                 footer={footer}
                 onClose={this.props.onClose}
             >
