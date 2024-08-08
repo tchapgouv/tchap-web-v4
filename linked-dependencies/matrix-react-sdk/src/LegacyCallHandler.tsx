@@ -20,6 +20,7 @@ limitations under the License.
 import React from "react";
 import { MatrixError, RuleId, TweakName, SyncState } from "matrix-js-sdk/src/matrix";
 import {
+    CallDirection,
     CallError,
     CallErrorCode,
     CallEvent,
@@ -29,6 +30,8 @@ import {
     FALLBACK_ICE_SERVER,
     MatrixCall,
 } from "matrix-js-sdk/src/webrtc/call";
+import { CallEnded as CallEndedEvent } from "@matrix-org/analytics-events/types/typescript/CallEnded";
+import { CallStarted as CallStartEvent } from "@matrix-org/analytics-events/types/typescript/CallStarted";
 import { logger } from "matrix-js-sdk/src/logger";
 import EventEmitter from "events";
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
@@ -66,6 +69,7 @@ import { localNotificationsAreSilenced } from "./utils/notifications";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { showCantStartACallDialog } from "./voice-broadcast/utils/showCantStartACallDialog";
 import { isNotNull } from "./Typeguards";
+import { PosthogAnalytics } from "./PosthogAnalytics";
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
@@ -695,9 +699,13 @@ export default class LegacyCallHandler extends EventEmitter {
                     this.removeCallForRoom(mappedRoomId);
                 }
 
+                /** :TCHAP: metrics-call **/
+                this.trackCallEnded(call);
+                /** end :TCHAP: **/
+
                 if (oldState === CallState.InviteSent && call.hangupParty === CallParty.Remote) {
                     this.play(AudioID.Busy);
-
+                    
                     // Don't show a modal when we got rejected/the call was hung up
                     if (!hangupReason || [CallErrorCode.UserHangup, "user hangup"].includes(hangupReason)) break;
 
@@ -733,6 +741,30 @@ export default class LegacyCallHandler extends EventEmitter {
             }
         }
     };
+
+    /** :TCHAP: metrics-call **/
+    private async trackCallStart(call: MatrixCall): Promise<void> {
+        PosthogAnalytics.instance.trackEvent<CallStartEvent>({
+            eventName: "CallStarted",
+            placed: true,
+            isVideo: call.type == CallType.Video,
+            numParticipants: 2,
+        });
+    }
+
+    private async trackCallEnded(call: MatrixCall): Promise<void> {
+        let durationMs: number = call.getCallStartTime() == undefined ? 
+            0 
+            : Math.round((Date.now() - call.getCallStartTime()!));
+        PosthogAnalytics.instance.trackEvent<CallEndedEvent>({
+            eventName: "CallEnded",
+            placed: call.direction! == CallDirection.Outbound,
+            isVideo: call.type == CallType.Video,
+            durationMs: durationMs,
+            numParticipants: 2,
+        });
+    }
+    /** end :TCHAP: **/
 
     private async logCallStats(call: MatrixCall, mappedRoomId: string): Promise<void> {
         const stats = await call.getCurrentCallStats();
@@ -921,8 +953,14 @@ export default class LegacyCallHandler extends EventEmitter {
 
         if (type === CallType.Voice) {
             call.placeVoiceCall();
+            /** :TCHAP: metrics-call **/
+            this.trackCallStart(call)
+            /** end :TCHAP: **/
         } else if (type === "video") {
             call.placeVideoCall();
+            /** :TCHAP: metrics-call **/
+            this.trackCallStart(call)
+            /** end :TCHAP: **/
         } else {
             logger.error("Unknown conf call type: " + type);
         }
@@ -1036,6 +1074,9 @@ export default class LegacyCallHandler extends EventEmitter {
 
         call.answer();
         this.setActiveCallRoomId(roomId);
+        /** :TCHAP: metrics-call **/
+        this.trackCallStart(call)
+        /** end :TCHAP: **/
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,

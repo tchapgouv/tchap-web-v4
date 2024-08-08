@@ -72,5 +72,12 @@
             "src/hooks/useUserOnboardingContext.ts"
 
         ]
+    },
+    "metrics-call": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1088",
+        "files": [
+            "src/LegacyCallHandler.tsx"
+
+        ]
     }
 }
