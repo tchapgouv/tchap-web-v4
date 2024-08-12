@@ -6,5 +6,11 @@
             "src/http-api/fetch.ts",
             "src/sync.ts"
         ]
+    },
+    "metrics-call": {
+        "package": "matrix-js-sdk",
+        "files": [
+            "src/webrtc/call.ts"
+        ]
     }
 }

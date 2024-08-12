@@ -107,6 +107,11 @@
             "text": "Read the Privacy Policy"
         }
     ],
+    "posthog": {
+        "project_api_key": "phc_eQOeaQiaIxdX9kaQmqYTD7RJLyFubYmGYKUI9czqqQD",
+        "api_host": "https://us.i.posthog.com"
+    },
+    "privacy_policy_url": "https://tchap.beta.gouv.fr/politique-de-confidentialite",
     "tchap_features": {
         "feature_email_notification": ["*"],
         "feature_space": ["*"],

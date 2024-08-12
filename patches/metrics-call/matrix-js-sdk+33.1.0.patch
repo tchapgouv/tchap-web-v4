@@ -1,0 +1,17 @@
+diff --git a/node_modules/matrix-js-sdk/src/webrtc/call.ts b/node_modules/matrix-js-sdk/src/webrtc/call.ts
+index 3f5c61a..a223f4a 100644
+--- a/node_modules/matrix-js-sdk/src/webrtc/call.ts
++++ b/node_modules/matrix-js-sdk/src/webrtc/call.ts
+@@ -1572,6 +1572,12 @@ export class MatrixCall extends TypedEventEmitter<CallEvent, CallEventHandlerMap
+         return callOnHold;
+     }
+     
++    // :TCHAP: metrics-call-js-sdk
++    public getCallStartTime(): number| undefined {
++        return this.callStartTime!;
++    }
++    // end :TCHAP:
++
+     /**
+      * Sends a DTMF digit to the other party
+      * @param digit - The digit (nb. string - '#' and '*' are dtmf too)
