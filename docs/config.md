@@ -250,12 +250,14 @@ When Element is deployed alongside a homeserver with SSO-only login, some option
    user can be sent to in order to log them out of that system too, making logout symmetric between Element and the SSO system.
 2. `sso_redirect_options`: Options to define how to handle unauthenticated users. If the object contains `"immediate": true`, then
    all unauthenticated users will be automatically redirected to the SSO system to start their login. If instead you'd only like to
-   have users which land on the welcome page to be redirected, use `"on_welcome_page": true`. As an example:
+   have users which land on the welcome page to be redirected, use `"on_welcome_page": true`. Additionally, there is an option to
+   redirect anyone landing on the login page, by using `"on_login_page": true`. As an example:
     ```json
     {
         "sso_redirect_options": {
             "immediate": false,
-            "on_welcome_page": true
+            "on_welcome_page": true,
+            "on_login_page": true
         }
     }
     ```
@@ -372,8 +374,8 @@ The VoIP and Jitsi options are:
     }
     ```
     The `widget` is the `content` of a normal widget state event. The `layout` is the layout specifier for the widget being created,
-    as defined by the `io.element.widgets.layout` state event. By default this applies to all rooms, but the behaviour can be skipped for DMs
-    by setting the option `widget_build_url_ignore_dm` to `true`.
+    as defined by the `io.element.widgets.layout` state event. By default this applies to all rooms, but the behaviour can be skipped for
+    2-person rooms, causing Element to fall back to 1:1 VoIP, by setting the option `widget_build_url_ignore_dm` to `true`.
 5. `audio_stream_url`: Optional URL to pass to Jitsi to enable live streaming. This option is considered experimental and may be removed
    at any time without notice.
 6. `element_call`: Optional configuration for native group calls using Element Call, with the following subkeys:

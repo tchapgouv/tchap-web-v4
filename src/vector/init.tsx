@@ -138,7 +138,7 @@ export async function loadLanguage(): Promise<void> {
 }
 
 export async function loadTheme(): Promise<void> {
-    setTheme();
+    return setTheme();
 }
 
 export async function loadApp(fragParams: {}): Promise<void> {
@@ -189,3 +189,5 @@ export async function loadModules(): Promise<void> {
 }
 
 export { _t } from "../languageHandler";
+
+export { extractErrorMessageFromError } from "matrix-react-sdk/src/components/views/dialogs/ErrorDialog";

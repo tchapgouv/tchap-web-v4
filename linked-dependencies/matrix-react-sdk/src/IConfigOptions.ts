@@ -219,6 +219,7 @@ export interface IConfigOptions {
 export interface ISsoRedirectOptions {
     immediate?: boolean;
     on_welcome_page?: boolean;
+    on_login_page?: boolean;
 }
 
 /* :tchap: tchap-features-from-config

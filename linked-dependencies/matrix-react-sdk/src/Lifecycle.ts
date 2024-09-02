@@ -920,7 +920,7 @@ export function logout(oidcClientStore?: OidcClientStore): void {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
         // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
-        setImmediate(() => onLoggedOut());
+        setTimeout(onLoggedOut, 0);
         return;
     }
 
@@ -1056,6 +1056,7 @@ export async function onLoggedOut(): Promise<void> {
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
     await PlatformPeg.get()?.clearStorage();
+    SettingsStore.reset();
 
     // Do this last, so we can make sure all storage has been cleared and all
     // customisations got the memo.
