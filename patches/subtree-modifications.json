@@ -72,5 +72,11 @@
             "src/hooks/useUserOnboardingContext.ts"
 
         ]
+    },
+    "hide-discovery-email-phone-settings-updated": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1080",
+        "files": [
+            "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"
+        ]
     }
 }
