@@ -156,7 +156,8 @@
         "Spaces.allRoomsInHome": true,
         "layout": "bubble",
         "custom_themes": [],
-        "FTUE.useCaseSelection": "WorkMessaging"
+        "FTUE.useCaseSelection": "WorkMessaging",
+        "RustCrypto.staged_rollout_percent": 0
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
