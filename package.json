@@ -85,9 +85,9 @@
         "@types/react": "17.0.80"
     },
     "dependencies": {
+        "@formatjs/intl-segmenter": "^11.5.7",
         "@gouvfr-lasuite/integration": "^1.0.1",
         "@matrix-org/olm": "3.2.15",
-        "@formatjs/intl-segmenter": "^11.5.7",
         "@matrix-org/react-sdk-module-api": "^2.3.0",
         "jsrsasign": "^11.0.0",
         "katex": "^0.16.0",
@@ -101,9 +101,6 @@
     },
     "devDependencies-comments": {
         "tchap-added": {
-            "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
-            "enzyme": "^3.11.0",
-            "enzyme-to-json": "^3.6.2",
             "cypress packages": "since we run cypress from tchap-web repo, not from react-sdk. We cypress-related deps from matric-react-sdk.",
             "@testing-library/jest-dom": "^6.4.2",
             "@types/testing-library__jest-dom": "^6.0.0"
@@ -170,7 +167,6 @@
         "@types/uuid": "^10.0.0",
         "@typescript-eslint/eslint-plugin": "^7.0.0",
         "@typescript-eslint/parser": "^7.0.0",
-        "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
         "allchange": "^1.0.6",
         "autoprefixer": "^10.4.8",
         "axe-core": "^4.4.3",
@@ -188,8 +184,6 @@
         "cypress-axe": "^1.0.0",
         "cypress-real-events": "^1.7.1",
         "dotenv": "^16.0.2",
-        "enzyme": "^3.11.0",
-        "enzyme-to-json": "^3.6.2",
         "eslint": "8.57.0",
         "eslint-config-google": "^0.14.0",
         "eslint-config-prettier": "^9.0.0",
