@@ -33,7 +33,6 @@ import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import { SDKContext } from "../../../../../contexts/SDKContext";
-import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP: hide-discovery-email-phone-settings
 import UserPersonalInfoSettings from "../../UserPersonalInfoSettings";
 
 interface IProps {
@@ -202,7 +201,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                         canSetDisplayName={this.state.canSetDisplayName}
                         canSetAvatar={this.state.canSetAvatar}
                     />
-                    <UserPersonalInfoSettings canMake3pidChanges={this.state.canMake3pidChanges} />
+                    {/* :TCHAP: hide-discovery-email-phone-settings-updated */}
+                    {/* <UserPersonal   InfoSettings canMake3pidChanges={this.state.canMake3pidChanges} /> */}
+                    {/* end :TCHAP: */}
                     {this.renderAccountSection()}
                 </SettingsSection>
                 {accountManagementSection}
