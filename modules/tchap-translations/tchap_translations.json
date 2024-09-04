@@ -793,5 +793,9 @@
     "onboarding|check_user_guide_action": {
         "en": "Read the article",
         "fr": "Lire l'article"
+    },
+    "migrating_crypto": {
+        "en": "Hang tight. We are updating %(brand)s to make encryption faster and more reliable. Don't worry, it can take some time",
+        "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
     }
 }
