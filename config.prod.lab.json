@@ -157,7 +157,7 @@
         "layout": "bubble",
         "custom_themes": [],
         "FTUE.useCaseSelection": "WorkMessaging",
-        "RustCrypto.staged_rollout_percent": 0
+        "RustCrypto.staged_rollout_percent": 100
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
@@ -195,7 +195,7 @@
         "feature_thread": ["agent.dinum.tchap.gouv.fr", "agent.finances.tchap.gouv.fr"],
         "feature_space": ["agent.dinum.tchap.gouv.fr"],
         "feature_audio_call": ["*"],
-        "feature_video_call": ["agent.dinum.tchap.gouv.fr"],
+        "feature_video_call": ["agent.dinum.tchap.gouv.fr", "education.tchap.gouv.fr"],
         "feature_screenshare_call": ["*"]
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
