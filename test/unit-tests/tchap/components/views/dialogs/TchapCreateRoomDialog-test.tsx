@@ -1,14 +1,14 @@
 import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from "enzyme";
-// eslint-disable-next-line deprecate/import
-import { act } from "react-dom/test-utils";
+import { RenderResult, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MatrixClientPeg } from "matrix-react-sdk/src/MatrixClientPeg";
 import { EventEmitter } from "events";
 
 import { TchapRoomType } from "../../../../../../src/tchap/@types/tchap";
 import TchapUtils from "../../../../../../src/tchap/util/TchapUtils";
 import TchapCreateRoomDialog from "../../../../../../src/tchap/components/views/dialogs/TchapCreateRoomDialog";
+
+import { flushPromises } from "~matrix-react-sdk/test/test-utils";
 
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
 //I could not make a mock of TchapCreateRoomDialog, the real implementation was taken each time. Then I used jest spyOn
@@ -41,24 +41,39 @@ describe("TchapCreateRoomDialog", () => {
     };
 
     //simulate the submit of the form
-    const submitForm = async (wrapper: ReactWrapper) => {
-        act(() => {
-            wrapper.find("form").simulate("submit", { preventDefault: () => {} });
-        });
-        await new Promise(process.nextTick);
+    const submitForm = async (component: RenderResult) => {
+        // Note : component.getByX is preferable, and fails nicely if not found.
+        // But querySelector is good enough and doesn't need to change the prod code.
+        const createButton = component.getByTestId("dialog-primary-button");
+
+        await userEvent.click(createButton);
+
+        await flushPromises(); // needed to run through all the chained promises in BugReportDialog.onSubmit
     };
 
-    // build a new component using enzyme
-    const getComponent = (props = {}): ReactWrapper => mount(<TchapCreateRoomDialog {...defaultProps} {...props} />);
+    // simulate click on room type radio button
+    const selectRoomType = async (roomType: TchapRoomType) => {
+        const privateCheckbox = screen.getByDisplayValue(roomType);
 
-    /*
-    // Note : you can also build a shallow component https://fr.reactjs.org/docs/shallow-renderer.html
-    // can be used for simple component
-    // not used in this test
-    const getShallowComponent = (props={}) => {
-        shallow(<TchapCreateRoomDialog {...defaultProps} {...props} />);
-    }
-    */
+        await userEvent.click(privateCheckbox);
+    };
+
+    // simuate switch federation click
+    const switchFederacationClick = async () => {
+        const switchFederation = screen.getByRole("switch");
+
+        await userEvent.click(switchFederation);
+    };
+
+    // simulate field typing
+    const typeRoomName = async (text: string) => {
+        const nameField = screen.getByRole("textbox");
+
+        await userEvent.type(nameField, text);
+    };
+
+    // build a new component
+    const getComponent = (props: Record<string, any>) => render(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
     beforeEach(() => {
         jest.resetAllMocks();
@@ -81,9 +96,11 @@ describe("TchapCreateRoomDialog", () => {
                 showForumFederationSwitch: true,
                 forumFederationSwitchDefaultValue: false,
             });
-            const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
-            expect(forumFederationSwitch.exists()).toEqual(true);
+
+            getComponent({});
+
+            const federatedSwitch = screen.getByRole("switch");
+            expect(federatedSwitch).toBeTruthy();
         });
 
         it("should be absent", () => {
@@ -91,19 +108,23 @@ describe("TchapCreateRoomDialog", () => {
                 showForumFederationSwitch: false,
                 forumFederationSwitchDefaultValue: false,
             });
-            const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
-            expect(forumFederationSwitch.exists()).toEqual(false);
+            getComponent({});
+
+            const federatedSwitch = screen.queryByRole("switch");
+
+            expect(federatedSwitch).toBeNull();
         });
 
-        it("should be true by default", () => {
+        it("should be true by default", async () => {
             jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
                 showForumFederationSwitch: true,
                 forumFederationSwitchDefaultValue: true,
             });
-            const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
-            expect(forumFederationSwitch.prop("aria-checked")).toBeTruthy();
+
+            await getComponent({});
+
+            const federatedSwitch = screen.getByRole("switch");
+            expect(federatedSwitch?.getAttribute("aria-checked")).toEqual("true");
         });
 
         it("should be false by default", () => {
@@ -111,46 +132,41 @@ describe("TchapCreateRoomDialog", () => {
                 showForumFederationSwitch: true,
                 forumFederationSwitchDefaultValue: false,
             });
-            const component = getComponent();
-            const forumFederationSwitch = component.find(".tc_TchapRoomTypeSelector_forum div.mx_ToggleSwitch");
-            expect(forumFederationSwitch.prop("aria-checked")).toBeFalsy();
+            getComponent({});
+            const federatedSwitch = screen.getByRole("switch");
+            expect(federatedSwitch?.getAttribute("aria-checked")).toEqual("false");
         });
     });
 
     it("Should not create any room wihout a name", async () => {
         const onFinished = jest.fn();
         const wrapper = getComponent({ onFinished });
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                name: "",
-                tchapRoomType: TchapRoomType.Private,
-            });
-        });
+
+        await selectRoomType(TchapRoomType.Private);
 
         await submitForm(wrapper);
 
-        expect(onFinished).toBeCalledTimes(0);
+        expect(onFinished).toHaveBeenCalledTimes(0);
     });
 
     it("Should create a room with default value", async () => {
         const onFinished = jest.fn();
         const defaultName = "defaultName";
-        const wrapper = getComponent({ onFinished, defaultName });
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                tchapRoomType: TchapRoomType.Private,
-            });
-        });
+        const wrapper = getComponent({ onFinished });
+
+        await typeRoomName(defaultName);
+
+        await selectRoomType(TchapRoomType.Private);
 
         await submitForm(wrapper);
 
-        expect(onFinished).toBeCalledTimes(1);
+        expect(onFinished).toHaveBeenCalledTimes(1);
     });
 
     it("Should create a private room", async () => {
         const onFinished = jest.fn();
+
+        const wrapper = getComponent({ onFinished });
 
         const privateRoomExpectedOpts = {
             createOpts: {
@@ -176,16 +192,9 @@ describe("TchapCreateRoomDialog", () => {
             historyVisibility: "invited",
         };
 
-        const wrapper = getComponent({ onFinished });
+        await typeRoomName(roomName);
 
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                name: roomName,
-                tchapRoomType: TchapRoomType.Private,
-                showFederateSwitch: false,
-            });
-        });
+        await selectRoomType(TchapRoomType.Private);
 
         await submitForm(wrapper);
 
@@ -220,15 +229,9 @@ describe("TchapCreateRoomDialog", () => {
         };
         const wrapper = getComponent({ onFinished });
 
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                name: roomName,
-                tchapRoomType: TchapRoomType.Forum,
-                forumFederationSwitchValue: false,
-                showFederateSwitch: true,
-            });
-        });
+        await typeRoomName(roomName);
+
+        await selectRoomType(TchapRoomType.Forum);
 
         await submitForm(wrapper);
 
@@ -238,6 +241,11 @@ describe("TchapCreateRoomDialog", () => {
     it("Should create a public room with federation and switch", async () => {
         const onFinished = jest.fn();
 
+        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            showForumFederationSwitch: true,
+            forumFederationSwitchDefaultValue: false,
+        });
+
         const publicRoomWithFederationExpectedOpts = {
             createOpts: {
                 name: roomName,
@@ -263,15 +271,11 @@ describe("TchapCreateRoomDialog", () => {
         };
         const wrapper = getComponent({ onFinished });
 
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                name: roomName,
-                tchapRoomType: TchapRoomType.Forum,
-                forumFederationSwitchValue: true,
-                showFederateSwitch: true,
-            });
-        });
+        await typeRoomName(roomName);
+
+        await selectRoomType(TchapRoomType.Forum);
+
+        await switchFederacationClick();
 
         await submitForm(wrapper);
 
@@ -281,6 +285,11 @@ describe("TchapCreateRoomDialog", () => {
     it("Should create a public room with federation but no switch", async () => {
         const onFinished = jest.fn();
 
+        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            showForumFederationSwitch: false,
+            forumFederationSwitchDefaultValue: false,
+        });
+
         const publicRoomWithFederationExpectedOpts = {
             createOpts: {
                 name: roomName,
@@ -306,14 +315,9 @@ describe("TchapCreateRoomDialog", () => {
         };
         const wrapper = getComponent({ onFinished });
 
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                name: roomName,
-                tchapRoomType: TchapRoomType.Forum,
-                showFederateSwitch: false,
-            });
-        });
+        await typeRoomName(roomName);
+
+        await selectRoomType(TchapRoomType.Forum);
 
         await submitForm(wrapper);
 
@@ -348,14 +352,9 @@ describe("TchapCreateRoomDialog", () => {
         };
         const wrapper = getComponent({ onFinished });
 
-        // set state in component
-        act(() => {
-            wrapper.setState({
-                name: roomName,
-                tchapRoomType: TchapRoomType.External,
-                showFederateSwitch: false,
-            });
-        });
+        await typeRoomName(roomName);
+
+        await selectRoomType(TchapRoomType.External);
 
         await submitForm(wrapper);
 

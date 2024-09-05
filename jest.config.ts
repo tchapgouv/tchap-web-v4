@@ -30,7 +30,6 @@ import type { Config } from "jest";
 }
 */
 const config: Config = {
-    snapshotSerializers: ["enzyme-to-json/serializer"],
     testEnvironment: "jsdom",
     testEnvironmentOptions: {
         url: "http://localhost/",
