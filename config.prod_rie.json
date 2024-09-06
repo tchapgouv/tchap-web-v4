@@ -158,8 +158,8 @@
         "custom_themes": [],
         "FTUE.useCaseSelection": "WorkMessaging",
         "RustCrypto.staged_rollout_percent": 0,
-        "showDisplaynameChanges" : false,
-        "showAvatarChanges" : false
+        "showDisplaynameChanges": false,
+        "showAvatarChanges": false
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
