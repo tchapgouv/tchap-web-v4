@@ -797,5 +797,13 @@
     "migrating_crypto": {
         "en": "Hang tight. We are updating %(brand)s to make encryption faster and more reliable. Don't worry, it can take some time",
         "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
+    },
+    "incompatible_browser|continue_warning": {
+        "en": "I still want to use Tchap with this browser",
+        "fr": "Je souhaite tout de même utiliser Tchap avec ce navigateur"
+    },
+    "incompatible_browser|title": {
+        "en": "Your browser is not optimal to use Tchap",
+        "fr": "Votre navigateur n'est pas optimal pour l'utilisation de Tchap"
     }
 }

@@ -96,7 +96,10 @@ const CompatibilityView: React.FC<IProps> = ({ onAccept }) => {
             <div className="mx_ErrorView_container">
                 <div className="mx_HomePage_header">
                     <span className="mx_HomePage_logo">
-                        <img height="42" src="themes/element/img/logos/element-logo.svg" alt="Element" />
+                        {/* :TCHAP: compatibitily-warning-page*/}
+                        {/* <img height="42" src="themes/element/img/logos/element-logo.svg" alt="Element" /> */}
+                        <img height="42" src="themes/tchap/img/logos/tchap-logo.svg" alt="Tchap" />
+                        {/* end :TCHAP: */}
                     </span>
                     <h1>{_t("incompatible_browser|title")}</h1>
                 </div>
@@ -133,13 +136,15 @@ const CompatibilityView: React.FC<IProps> = ({ onAccept }) => {
                     </div>
                 </div>
 
-                <div className="mx_HomePage_row mx_Center mx_Spacer">
+                {/* :TCHAP: compatibitily-warning-page*/}
+                {/* <div className="mx_HomePage_row mx_Center mx_Spacer">
                     <p className="mx_Spacer">
                         <a href="https://element.io" target="_blank" className="mx_FooterLink">
                             {_t("go_to_element_io")}
                         </a>
                     </p>
-                </div>
+                </div> */}
+                {/* end :TCHAP: */}
             </div>
         </div>
     );
