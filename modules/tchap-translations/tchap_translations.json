@@ -67,8 +67,8 @@
     "Contact us": { "en": "Contact us", "fr": "Contactez-nous" },
     "Content blocked": { "en": "Content blocked", "fr": "Contenu bloqué" },
     "Conçue et gérée par l'Administration française": {
-        "en": "Designed and managed by the French Administration, for agents of the three public functions, <br/>to communicate easily with high security standards. Used by over 400,000 public officials.",
-        "fr": "Conçue et gérée par l'Administration française, pour les agents des trois fonctions publiques, <br/>pour communiquer facilement en toute sécurité. Utilisée par plus de 400 000 agents publics."
+        "en": "Designed and managed by the French Administration, for agents of the three public functions, <br/>to communicate easily with high security standards.",
+        "fr": "Conçue et gérée par l'Administration française, au bénéfice de la fonction publique, <br/>pour communiquer facilement en toute sécurité."
     },
     "Create Room": { "en": "Create New Room", "fr": "Créer un nouveau salon" },
     "Create a room in this space": { "en": "Create a room in this space", "fr": "Créer un salon dans cet espace" },
@@ -488,8 +488,8 @@
         "fr": "Cette personne est déjà dans le salon."
     },
     "la messagerie instantanée de l'Administration": {
-        "en": "The instant messaging app of the French Administration",
-        "fr": "la messagerie instantanée de l'Administration"
+        "en": "The instant messaging app of the French public sector",
+        "fr": "La messagerie instantanée du secteur public"
     },
     "members_of_%(roomName)s.txt": { "en": "members_of_%(roomName)s.txt", "fr": "membres_de_%(roomName)s.txt" },
     "onboarding|free_e2ee_messaging_unlimited_voip": {
