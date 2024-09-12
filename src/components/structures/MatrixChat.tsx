@@ -144,6 +144,7 @@ import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
 import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP: activate-cross-signing-and-secure-storage-react
+import { cleanUpDraftsIfRequired } from "../../DraftCleaner";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1391,8 +1392,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     title: userNotice.title,
                     props: {
                         description: <Linkify>{userNotice.description}</Linkify>,
-                        acceptLabel: _t("action|ok"),
-                        onAccept: () => {
+                        primaryLabel: _t("action|ok"),
+                        onPrimaryClick: () => {
                             ToastStore.sharedInstance().dismissToast(key);
                             localStorage.setItem(key, "1");
                         },
@@ -1529,6 +1530,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
 
             if (state === SyncState.Syncing && prevState === SyncState.Syncing) {
+                // We know we have performabed a live update and known rooms should be in a good state.
+                // Now is a good time to clean up drafts.
+                cleanUpDraftsIfRequired();
                 return;
             }
             logger.debug(`MatrixClient sync state => ${state}`);

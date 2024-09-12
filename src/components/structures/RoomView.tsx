@@ -161,7 +161,7 @@ interface IRoomProps {
 
 // This defines the content of the mainSplit.
 // If the mainSplit does not contain the Timeline, the chat is shown in the right panel.
-enum MainSplitContentType {
+export enum MainSplitContentType {
     Timeline,
     MaximisedWidget,
     Call,
@@ -417,7 +417,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private roomViewBody = createRef<HTMLDivElement>();
 
     public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
+    public declare context: React.ContextType<typeof SDKContext>;
 
     public constructor(props: IRoomProps, context: React.ContextType<typeof SDKContext>) {
         super(props, context);

@@ -1,3 +1,70 @@
+Changes in [3.108.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.108.0) (2024-08-27)
+=======================================================================================================
+## ✨ Features
+
+* Message Pinning: rework the message pinning list in the right panel ([#12825](https://github.com/matrix-org/matrix-react-sdk/pull/12825)). Contributed by @florianduros.
+* Tweak UIA postMessage check to work cross-origin ([#12878](https://github.com/matrix-org/matrix-react-sdk/pull/12878)). Contributed by @t3chguy.
+* Delayed events (Futures) / MSC4140 for call widget ([#12714](https://github.com/matrix-org/matrix-react-sdk/pull/12714)). Contributed by @AndrewFerr.
+* Stop the ongoing ring if another device joins the call session. ([#12866](https://github.com/matrix-org/matrix-react-sdk/pull/12866)). Contributed by @toger5.
+* Rich text Editor: Auto-replace plain text emoticons with emoji ([#12828](https://github.com/matrix-org/matrix-react-sdk/pull/12828)). Contributed by @langleyd.
+* Clean up editor drafts for unknown rooms  ([#12850](https://github.com/matrix-org/matrix-react-sdk/pull/12850)). Contributed by @langleyd.
+* Rename general user settings to account ([#12841](https://github.com/matrix-org/matrix-react-sdk/pull/12841)). Contributed by @dbkr.
+* Update settings tab icons ([#12867](https://github.com/matrix-org/matrix-react-sdk/pull/12867)). Contributed by @dbkr.
+* Disable jump to read receipt button instead of hiding when nothing to jump to ([#12863](https://github.com/matrix-org/matrix-react-sdk/pull/12863)). Contributed by @t3chguy.
+
+## 🐛 Bug Fixes
+
+* Ensure elements on Login page are disabled when in-flight ([#12895](https://github.com/matrix-org/matrix-react-sdk/pull/12895)). Contributed by @t3chguy.
+* Hide pinned messages when grouped in timeline when feature pinning is disabled ([#12888](https://github.com/matrix-org/matrix-react-sdk/pull/12888)). Contributed by @florianduros.
+* Add chat button on new room header for maximised widgets ([#12882](https://github.com/matrix-org/matrix-react-sdk/pull/12882)). Contributed by @t3chguy.
+* Show spinner whilst initial search request is in progress ([#12883](https://github.com/matrix-org/matrix-react-sdk/pull/12883)). Contributed by @t3chguy.
+* Fix user menu font ([#12879](https://github.com/matrix-org/matrix-react-sdk/pull/12879)). Contributed by @florianduros.
+* Allow selecting text in the right panel topic ([#12870](https://github.com/matrix-org/matrix-react-sdk/pull/12870)). Contributed by @t3chguy.
+* Add missing presence indicator to new room header ([#12865](https://github.com/matrix-org/matrix-react-sdk/pull/12865)). Contributed by @t3chguy.
+
+
+Changes in [3.107.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.107.0) (2024-08-20)
+=======================================================================================================
+* No changes
+
+
+Changes in [3.106.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.106.0) (2024-08-13)
+=======================================================================================================
+## ✨ Features
+
+* Invite dialog: display MXID on its own line ([#11756](https://github.com/matrix-org/matrix-react-sdk/pull/11756)). Contributed by @AndrewFerr.
+* Align RoomSummaryCard styles with Figma ([#12793](https://github.com/matrix-org/matrix-react-sdk/pull/12793)). Contributed by @t3chguy.
+* Extract Extensions into their own right panel tab ([#12844](https://github.com/matrix-org/matrix-react-sdk/pull/12844)). Contributed by @t3chguy.
+* Remove topic from new room header and expand right panel topic ([#12842](https://github.com/matrix-org/matrix-react-sdk/pull/12842)). Contributed by @t3chguy.
+* Rework how the onboarding notifications task works ([#12839](https://github.com/matrix-org/matrix-react-sdk/pull/12839)). Contributed by @t3chguy.
+* Update toast styles to match Figma ([#12833](https://github.com/matrix-org/matrix-react-sdk/pull/12833)). Contributed by @t3chguy.
+* Warn users on unsupported browsers before they lack features ([#12830](https://github.com/matrix-org/matrix-react-sdk/pull/12830)). Contributed by @t3chguy.
+* Add sign out button to settings profile section ([#12666](https://github.com/matrix-org/matrix-react-sdk/pull/12666)). Contributed by @dbkr.
+* Remove MatrixRTC realted import ES lint exceptions using a index.ts for matrixrtc ([#12780](https://github.com/matrix-org/matrix-react-sdk/pull/12780)). Contributed by @toger5.
+* Fix unwanted ringing of other devices even though the user is already connected to the call. ([#12742](https://github.com/matrix-org/matrix-react-sdk/pull/12742)). Contributed by @toger5.
+* Acknowledge `DeviceMute` widget actions ([#12790](https://github.com/matrix-org/matrix-react-sdk/pull/12790)). Contributed by @toger5.
+
+## 🐛 Bug Fixes
+
+* Fix formatting of rich text emotes ([#12862](https://github.com/matrix-org/matrix-react-sdk/pull/12862)). Contributed by @dbkr.
+* Fixed custom emotes background color #27745 ([#12798](https://github.com/matrix-org/matrix-react-sdk/pull/12798)). Contributed by @asimdelvi.
+* Ignore permalink\_prefix when serializing pills ([#11726](https://github.com/matrix-org/matrix-react-sdk/pull/11726)). Contributed by @herkulessi.
+* Deflake the chat export test ([#12854](https://github.com/matrix-org/matrix-react-sdk/pull/12854)). Contributed by @dbkr.
+* Fix alignment of RTL messages ([#12837](https://github.com/matrix-org/matrix-react-sdk/pull/12837)). Contributed by @dbkr.
+* Handle media download errors better ([#12848](https://github.com/matrix-org/matrix-react-sdk/pull/12848)). Contributed by @t3chguy.
+* Make micIcon display on primary ([#11908](https://github.com/matrix-org/matrix-react-sdk/pull/11908)). Contributed by @kdanielm.
+* Fix compound typography font component issues ([#12826](https://github.com/matrix-org/matrix-react-sdk/pull/12826)). Contributed by @t3chguy.
+* Allow Chrome page translator to translate messages in rooms ([#11113](https://github.com/matrix-org/matrix-react-sdk/pull/11113)). Contributed by @lukaszpolowczyk.
+
+
+Changes in [3.105.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.105.1) (2024-08-06)
+=======================================================================================================
+Fixes for CVE-2024-42347 / GHSA-f83w-wqhc-cfp4
+
+Changes in [3.105.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.105.0) (2024-08-06)
+=======================================================================================================
+Fixes for CVE-2024-42347 / GHSA-f83w-wqhc-cfp4
+
 Changes in [3.104.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.104.0) (2024-07-30)
 =======================================================================================================
 ## ✨ Features
