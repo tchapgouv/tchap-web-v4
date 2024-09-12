@@ -117,6 +117,7 @@ const CompatibilityView: React.FC<IProps> = ({ onAccept }) => {
                                         chromeLink: (sub) => <a href="https://www.google.com/chrome">{sub}</a>,
                                         firefoxLink: (sub) => <a href="https://firefox.com">{sub}</a>,
                                         safariLink: (sub) => <a href="https://apple.com/safari">{sub}</a>,
+                                        edgeLink: (sub) => <a href="https://www.microsoft.com/fr-fr/edge">{sub}</a>,
                                     },
                                 )}
                             </p>

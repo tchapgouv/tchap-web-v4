@@ -799,11 +799,15 @@
         "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
     },
     "incompatible_browser|continue_warning": {
-        "en": "I still want to use Tchap with this browser",
-        "fr": "Je souhaite tout de même utiliser Tchap avec ce navigateur"
+        "en": "I still want to use this browser",
+        "fr": "Je souhaite tout de même continuer sur ce navigateur"
     },
-    "incompatible_browser|title": {
-        "en": "Your browser is not optimal to use Tchap",
-        "fr": "Votre navigateur n'est pas optimal pour l'utilisation de Tchap"
+    "incompatible_browser|summary": {
+        "en": "This browser version cannot run %(brand)s properly",
+        "fr": "Cette version de navigateur ne permet pas une exécution optimale de %(brand)s"
+    },
+    "incompatible_browser|browser_links": {
+        "en": "Please install a recent version of <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> or <safariLink>Safari</safariLink> for the best experience.",
+        "fr": "Pour une expérience optimale, veuillez installer une version récente de l'un des navigateurs suivants : <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> ou <safariLink>Safari</safariLink>."
     }
 }
