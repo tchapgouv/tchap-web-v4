@@ -474,6 +474,7 @@
         "encrypted": "Encrypted",
         "encryption_enabled": "Encryption enabled",
         "error": "Error",
+        "extensions": "Extensions",
         "faq": "FAQ",
         "favourites": "Favourites",
         "feedback": "Feedback",
@@ -1657,8 +1658,8 @@
         "download_brand_desktop": "Download %(brand)s Desktop",
         "download_f_droid": "Get it on F-Droid",
         "download_google_play": "Get it on Google Play",
-        "enable_notifications": "Turn on notifications",
-        "enable_notifications_action": "Enable notifications",
+        "enable_notifications": "Turn on desktop notifications",
+        "enable_notifications_action": "Open settings",
         "enable_notifications_description": "Don’t miss a reply or important message",
         "explore_rooms": "Explore Public Rooms",
         "find_community_members": "Find and invite your community members",
@@ -1835,21 +1836,34 @@
         "restore_failed_error": "Unable to restore backup"
     },
     "right_panel": {
-        "add_integrations": "Add widgets, bridges & bots",
+        "add_integrations": "Add extensions",
         "add_topic": "Add topic",
-        "edit_integrations": "Edit widgets, bridges & bots",
         "export_chat_button": "Export chat",
+        "extensions_empty_description": "Select “%(addIntegrations)s” to browse and add extensions to this room",
+        "extensions_empty_title": "Boost productivity with more tools, widgets and bots",
         "files_button": "Files",
         "info": "Info",
         "pinned_messages": {
-            "empty": "Nothing pinned, yet",
-            "explainer": "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.",
+            "empty_description": "Select a message and choose “%(pinAction)s” to it include here.",
+            "empty_title": "Pin important messages so that they can be easily discovered",
+            "header": {
+                "one": "1 Pinned message",
+                "other": "%(count)s Pinned messages",
+                "zero": "Pinned message"
+            },
             "limits": {
                 "other": "You can only pin up to %(count)s widgets"
             },
-            "title": "Pinned messages"
+            "menu": "Open menu",
+            "title": "Pinned messages",
+            "unpin_all": {
+                "button": "Unpin all messages",
+                "content": "Make sure that you really want to remove all pinned messages. This action can’t be undone.",
+                "title": "Unpin all messages?"
+            },
+            "view": "View in timeline"
         },
-        "pinned_messages_button": "Pinned",
+        "pinned_messages_button": "Pinned messages",
         "poll": {
             "active_heading": "Active polls",
             "empty_active": "There are no active polls in this room",
@@ -1874,7 +1888,7 @@
             "view_in_timeline": "View poll in timeline",
             "view_poll": "View poll"
         },
-        "polls_button": "Poll history",
+        "polls_button": "Polls",
         "room_summary_card": {
             "title": "Room info"
         },
@@ -1994,7 +2008,7 @@
         "invite_reject_ignore": "Reject & Ignore user",
         "invite_sent_to_email": "This invite was sent to %(email)s",
         "invite_sent_to_email_room": "This invite to %(roomName)s was sent to %(email)s",
-        "invite_subtitle": "<userName/> invited you",
+        "invite_subtitle": "Invited by <userName/>",
         "invite_this_room": "Invite to this room",
         "invite_title": "Do you want to join %(roomName)s?",
         "inviter_unknown": "Unknown",
@@ -2425,6 +2439,10 @@
         }
     },
     "settings": {
+        "account": {
+            "dialog_title": "<strong>Settings:</strong> Account",
+            "title": "Account"
+        },
         "all_rooms_home": "Show all rooms in Home",
         "all_rooms_home_description": "All rooms you're in will appear in Home.",
         "always_show_message_timestamps": "Always show message timestamps",
@@ -2500,7 +2518,6 @@
             "deactivate_confirm_erase_label": "Hide my messages from new joiners",
             "deactivate_section": "Deactivate Account",
             "deactivate_warning": "Deactivating your account is a permanent action — be careful!",
-            "dialog_title": "<strong>Settings:</strong> General",
             "discovery_email_empty": "Discovery options will appear once you have added an email.",
             "discovery_email_verification_instructions": "Verify the link in your inbox",
             "discovery_msisdn_empty": "Discovery options will appear once you have added a phone number.",
@@ -2532,7 +2549,6 @@
             "error_share_msisdn_discovery": "Unable to share phone number",
             "identity_server_no_token": "No identity access token found",
             "identity_server_not_set": "Identity server not set",
-            "incorrect_msisdn_verification": "Incorrect verification code",
             "language_section": "Language",
             "msisdn_in_use": "This phone number is already in use",
             "msisdn_label": "Phone Number",
@@ -3267,6 +3283,8 @@
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Decrypting",
         "download_action_downloading": "Downloading",
+        "download_failed": "Download failed",
+        "download_failed_description": "An error occurred while downloading this file",
         "edits": {
             "tooltip_label": "Edited at %(date)s. Click to view edits.",
             "tooltip_sub": "Click to view edits",
@@ -3699,6 +3717,10 @@
     "truncated_list_n_more": {
         "other": "And %(count)s more..."
     },
+    "unsupported_browser": {
+        "description": "If you continue, some features may stop working and there is a risk that you may lose data in the future. Update your browser to continue using %(brand)s.",
+        "title": "%(brand)s does not support this browser"
+    },
     "unsupported_server_description": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
     "unsupported_server_title": "Your server is unsupported",
     "update": {
@@ -4068,7 +4090,7 @@
             "title": "Allow this widget to verify your identity"
         },
         "popout": "Popout widget",
-        "set_room_layout": "Set my room layout for everyone",
+        "set_room_layout": "Set layout for everyone",
         "shared_data_avatar": "Your profile picture URL",
         "shared_data_device_id": "Your device ID",
         "shared_data_lang": "Your language",
