@@ -1,0 +1,32 @@
+{
+    "action": {
+        "create_account": "Створити обліковий запис",
+        "dismiss": "Відхилити",
+        "explore_rooms": "Каталог кімнат",
+        "open": "Відкрити",
+        "sign_in": "Увійти"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Перейдіть у ваш браузер щоб завершити вхід"
+    },
+    "desktop_default_device_name": "%(brand)s для комп'ютера: %(platformName)s",
+    "download_completed": "Завантаження завершено",
+    "error": {
+        "app_launch_unexpected_error": "Неочікувана помилка при підготовці програми. Дивіться деталі у виводі консолі.",
+        "cannot_load_config": "Неможливо завантажити файл конфігурації. Оновіть, будь ласка, сторінку, щоб спробувати знову.",
+        "invalid_configuration_mixed_server": "Неправильна конфігурація: не можна вказати default_hs_url разом з default_server_name або default_server_config",
+        "invalid_configuration_no_server": "Невірна конфігурація: не вказано сервер за замовчуванням.",
+        "invalid_json": "Ваша конфігурація Element містить хибний JSON. Виправте проблему та оновіть сторінку.",
+        "invalid_json_detail": "Повідомлення від аналізатора : %(message)s",
+        "invalid_json_generic": "Хибний JSON",
+        "misconfigured": "Ваш Element налаштовано неправильно"
+    },
+    "incompatible_browser": {
+        "title": "Непідтримуваний браузер"
+    },
+    "powered_by_matrix": "Працює на Matrix",
+    "powered_by_matrix_with_logo": "Децентралізована, зашифрована бесіда та співпраця на основі $matrixLogo",
+    "unknown_device": "Невідомий пристрій",
+    "web_default_device_name": "%(appName)s: %(browserName)s на %(osName)s",
+    "welcome_to_element": "Ласкаво просимо до Element"
+}

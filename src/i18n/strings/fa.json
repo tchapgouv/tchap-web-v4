@@ -1,0 +1,31 @@
+{
+    "action": {
+        "create_account": "ایجاد حساب کاربری",
+        "dismiss": "نادیده بگیر",
+        "explore_rooms": "جستجو در اتاق ها",
+        "open": "باز",
+        "sign_in": "ورود"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "برای تکمیل ورود به مرورگر خود بروید"
+    },
+    "desktop_default_device_name": "%(brand)s دسکتاپ: %(platformName)s",
+    "download_completed": "بارگیری کامل شد",
+    "error": {
+        "app_launch_unexpected_error": "خطای غیر منتظره در آماده سازی برنامه. کنسول را برای جزئیات مشاهده کنید.",
+        "cannot_load_config": "قادر به بارگذاری فایل پیکربندی نیست: لطفا برای تلاش مجدد صفحه را تازه کنید.",
+        "invalid_configuration_no_server": "پیکربندی نامعتبر: سرور پیشفرض مشخص نشده است.",
+        "invalid_json": "پیکربندی المنت شما شامل JSON نا معتبر است. لطفا مشکل را اصلاح کنید و صفحه را بارگذاری مجدد کنید.",
+        "invalid_json_detail": "پیام از طرف تجزیه کننده: %(message)s",
+        "invalid_json_generic": "JSON اشتباه",
+        "misconfigured": "Element شما پیکربندی نشده است"
+    },
+    "incompatible_browser": {
+        "title": "مرورگر پش‬تبانی نمی شود"
+    },
+    "powered_by_matrix": "راه اندازی شده با استفاده از ماتریکس",
+    "powered_by_matrix_with_logo": "همکاری چت غیرمتمرکز و رمزگذاری شده &amp; توسعه یافته با استفاده از $matrixLogo",
+    "unknown_device": "دستگاه ناشناخته",
+    "web_default_device_name": "%(appName)s: %(browserName)s: روی %(osName)s",
+    "welcome_to_element": "به Element خوش‌آمدید"
+}

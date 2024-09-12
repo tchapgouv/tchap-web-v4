@@ -1,0 +1,30 @@
+{
+    "action": {
+        "create_account": "アカウントを作成",
+        "dismiss": "閉じる",
+        "explore_rooms": "ルームを探す",
+        "open": "開く",
+        "sign_in": "サインイン"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "ブラウザーに移動してサインインを完了してください"
+    },
+    "desktop_default_device_name": "%(brand)sデスクトップ：%(platformName)s",
+    "download_completed": "ダウンロードが完了しました",
+    "error": {
+        "app_launch_unexpected_error": "アプリケーションの準備中に予期しないエラーが発生しました。詳細はコンソールを参照してください。",
+        "cannot_load_config": "設定ファイルの読み込みに失敗しました：ページを再読み込みして、もう一度やり直してください。",
+        "invalid_configuration_no_server": "不正な設定：デフォルトのサーバーが設定されていません。",
+        "invalid_json": "Elementの設定ファイルに不正なJSONが含まれています。問題を修正してからページを再読み込みしてください。",
+        "invalid_json_detail": "パーサーのメッセージ：%(message)s",
+        "invalid_json_generic": "不正なJSON",
+        "misconfigured": "Elementの設定が誤っています"
+    },
+    "incompatible_browser": {
+        "title": "サポートされていないブラウザー"
+    },
+    "powered_by_matrix_with_logo": "$matrixLogo による、分散型で暗号化された会話とコラボレーション",
+    "unknown_device": "不明な端末",
+    "web_default_device_name": "%(appName)s： %(osName)sの%(browserName)s",
+    "welcome_to_element": "Elementにようこそ"
+}

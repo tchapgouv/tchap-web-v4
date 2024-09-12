@@ -1,0 +1,30 @@
+{
+    "action": {
+        "create_account": "Sukurti Paskyrą",
+        "dismiss": "Atmesti",
+        "explore_rooms": "Žvalgyti kambarius",
+        "open": "Atidaryti",
+        "sign_in": "Prisijungti"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Norėdami užbaigti prisijungimą, eikite į naršyklę"
+    },
+    "desktop_default_device_name": "%(brand)s Kompiuteryje: %(platformName)s",
+    "download_completed": "Atsisiuntimas baigtas",
+    "error": {
+        "app_launch_unexpected_error": "Netikėta klaida ruošiant programą. Norėdami sužinoti daugiau detalių, žiūrėkite konsolę.",
+        "cannot_load_config": "Nepavyko įkelti konfigūracijos failo: atnaujinkite puslapį, kad pabandytumėte dar kartą.",
+        "invalid_configuration_no_server": "Klaidinga konfigūracija: nenurodytas numatytasis serveris.",
+        "invalid_json": "Jūsų Element konfigūracijoje yra klaidingas JSON. Ištaisykite problemą ir iš naujo įkelkite puslapį.",
+        "invalid_json_detail": "Analizatoriaus žinutė yra: %(message)s",
+        "invalid_json_generic": "Klaidingas JSON",
+        "misconfigured": "Jūsų Element yra neteisingai sukonfigūruotas"
+    },
+    "incompatible_browser": {
+        "title": "Nepalaikoma naršyklė"
+    },
+    "powered_by_matrix": "Veikia su Matrix",
+    "powered_by_matrix_with_logo": "Decentralizuotas, užšifruotų pokalbių &amp; bendradarbiavimas, paremtas $matrixLogo",
+    "unknown_device": "Nežinomas įrenginys",
+    "welcome_to_element": "Sveiki atvykę į Element"
+}

@@ -1,0 +1,32 @@
+{
+    "action": {
+        "create_account": "Vytvořit účet",
+        "dismiss": "Zavřít",
+        "explore_rooms": "Procházet místnosti",
+        "open": "Otevřít",
+        "sign_in": "Přihlásit se"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Přejděte do prohlížeče a dokončete přihlášení"
+    },
+    "desktop_default_device_name": "%(brand)s Desktop: %(platformName)s",
+    "download_completed": "Stahování dokončeno",
+    "error": {
+        "app_launch_unexpected_error": "Neočekávaná chyba při přípravě aplikace. Podrobnosti najdete v konzoli.",
+        "cannot_load_config": "Nepodařilo se načíst konfigurační soubor: abyste to zkusili znovu, načtěte prosím znovu stránku.",
+        "invalid_configuration_mixed_server": "Neplatná konfigurace: default_hs_url nelze použít spolu s default_server_name nebo default_server_config",
+        "invalid_configuration_no_server": "Neplatná konfigurace: není zadán výchozí server.",
+        "invalid_json": "Vaše konfigurace Elementu obsahuje nesprávná data JSON. Vyřešte prosím problém a načtěte znovu stránku.",
+        "invalid_json_detail": "Zpráva z parseru je: %(message)s",
+        "invalid_json_generic": "Neplatný JSON",
+        "misconfigured": "Váš Element je nesprávně nastaven"
+    },
+    "incompatible_browser": {
+        "title": "Nepodporovaný prohlížeč"
+    },
+    "powered_by_matrix": "Běží na Matrixu",
+    "powered_by_matrix_with_logo": "Decentralizovaný, šifrovaný chat a spolupráce na platformě $matrixLogo",
+    "unknown_device": "Neznámé zařízení",
+    "web_default_device_name": "%(appName)s: %(browserName)s na %(osName)s",
+    "welcome_to_element": "Vítá vás Element"
+}

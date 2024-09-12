@@ -1,0 +1,44 @@
+{
+    "action": {
+        "create_account": "Utwórz konto",
+        "dismiss": "Pomiń",
+        "explore_rooms": "Przeglądaj pokoje",
+        "open": "Otwórz",
+        "sign_in": "Zaloguj się"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Aby dokończyć proces rejestracji, przejdź do swojej przeglądarki"
+    },
+    "desktop_default_device_name": "Komputer %(brand)s: %(platformName)s",
+    "download_completed": "Pobieranie zakończone",
+    "error": {
+        "app_launch_unexpected_error": "Niespodziewany błąd podczas przygotowywania aplikacji. Otwórz konsolę po szczegóły.",
+        "cannot_load_config": "Nie udało się załadować pliku konfiguracyjnego: odśwież stronę, aby spróbować ponownie.",
+        "invalid_configuration_mixed_server": "Nieprawidłowa konfiguracja: nie można określić default_hs_url wraz z default_server_name lub default_server_config",
+        "invalid_configuration_no_server": "Błędna konfiguracja: nie wybrano domyślnego serwera.",
+        "invalid_json": "Twoja konfiguracja Element zawiera nieprawidłowy JSON. Rozwiąż problem i odśwież stronę.",
+        "invalid_json_detail": "Wiadomość od parsera to: %(message)s",
+        "invalid_json_generic": "Błędny JSON",
+        "misconfigured": "Twój Element jest nieprawidłowo skonfigurowany"
+    },
+    "incompatible_browser": {
+        "continue": "Kontynuuj mimo to",
+        "description": "%(brand)s korzysta z niektórych funkcji, które nie są obecnie dostępne w Twojej przeglądarce. %(detail)s",
+        "detail_can_continue": "Jeśli kontynuujesz, niektóre funkcje mogą przestać działać, jak i istnieje ryzyko utraty danych w przyszłości.",
+        "detail_no_continue": "Zaktualizuj przeglądarkę, jeśli jeszcze tego nie zrobiłeś i spróbuj ponownie.",
+        "learn_more": "Dowiedz się więcej",
+        "linux": "Linux",
+        "macos": "Mac",
+        "supported_browsers": "Dla najlepszego doświadczenia korzystaj z <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge> lub <Safari>Safari</Safari>.",
+        "title": "%(brand)s nie wspiera tej przeglądarki",
+        "use_desktop_heading": "Zamiast tego użyj %(brand)s Desktop",
+        "use_mobile_heading": "Zamiast tego użyj %(brand)s Mobile",
+        "use_mobile_heading_after_desktop": "lub skorzystaj z naszej aplikacji mobilnej",
+        "windows": "Windows (%(bits)s-bit)"
+    },
+    "powered_by_matrix": "Zasilane przez Matrix",
+    "powered_by_matrix_with_logo": "Zdecentralizowany czat szyfrowany i współpraca oparta na $matrixLogo",
+    "unknown_device": "Nieznane urządzenie",
+    "web_default_device_name": "%(appName)s: %(browserName)s na %(osName)s",
+    "welcome_to_element": "Witamy w Element"
+}

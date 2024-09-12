@@ -1,0 +1,31 @@
+{
+    "action": {
+        "create_account": "Luo tili",
+        "dismiss": "Hylkää",
+        "explore_rooms": "Selaa huoneita",
+        "open": "Avaa",
+        "sign_in": "Kirjaudu"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Tee kirjautuminen loppuun selaimessasi"
+    },
+    "desktop_default_device_name": "%(brand)sin työpöytäversio: %(platformName)s",
+    "download_completed": "Lataus valmis",
+    "error": {
+        "app_launch_unexpected_error": "Odottamaton virhe sovellusta valmisteltaessa. Katso konsolista lisätietoja.",
+        "cannot_load_config": "Asetustiedostoa ei voi ladata. Yritä uudelleen lataamalla sivu uudelleen.",
+        "invalid_configuration_no_server": "Virheellinen asetus: oletuspalvelinta ei ole määritetty.",
+        "invalid_json": "Element-asetuksesi sisältävät epäkelpoa JSONia. Korjaa ongelma ja lataa sivu uudelleen.",
+        "invalid_json_detail": "Viesti jäsentimeltä: %(message)s",
+        "invalid_json_generic": "Virheellinen JSON",
+        "misconfigured": "Elementisi asetukset ovat pielessä"
+    },
+    "incompatible_browser": {
+        "title": "Selainta ei tueta"
+    },
+    "powered_by_matrix": "Moottorina Matrix",
+    "powered_by_matrix_with_logo": "Hajautettu, salattu keskustelu &amp; yhteistyö, taustavoimana $matrixLogo",
+    "unknown_device": "Tuntematon laite",
+    "web_default_device_name": "%(appName)s: %(browserName)s käyttöjärjestelmällä %(osName)s",
+    "welcome_to_element": "Tervetuloa Element-sovellukseen"
+}
