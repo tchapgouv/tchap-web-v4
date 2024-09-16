@@ -32,10 +32,11 @@
     "default_country_code": "FR",
     "show_labs_settings": false,
     "features": {
-        "feature_video_rooms": false,
+        "feature_video_rooms": true,
         "feature_notification_settings2": false,
         "feature_new_room_decoration_ui": true,
-        "feature_rust_crypto": true
+        "feature_rust_crypto": true,
+        "feature_group_calls": true
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -89,7 +90,7 @@
         "description": "You are on dev env",
         "show_once": false
     },
-    "desktopBuilds": {
+    "desktop_builds": {
         "available": false
     },
     "mobile_builds": {
@@ -124,5 +125,8 @@
         ],
         "feature_screenshare_call": ["*"]
     },
-    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json"
+    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    "element_call": {
+        "url": "https://element-call.tchap.incubateur.net/"
+    }
 }

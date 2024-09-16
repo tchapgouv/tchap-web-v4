@@ -39,12 +39,14 @@ interface IProps {
 export const ErrorView: React.FC<IProps> = ({ title, messages, footer, children }) => {
     return (
         <div className="mx_ErrorView cpd-theme-light">
-            <img
+            {/* :TCHAP: <img
                 className="mx_ErrorView_logo"
                 height="160"
-                src="themes/element/img/logos/element-app-logo.png"
-                alt="Element"
-            />
+                src="themes/tchap/img/logos/tchap-app-logo.png"
+                alt="Tchap"
+            /> */}
+            <img className="mx_ErrorView_logo" height="160" src="themes/tchap/img/logos/tchap-logo.svg" alt="Tchap" />
+            {/* end :TCHAP: */}
             <div className="mx_ErrorView_container">
                 <Heading size="md" weight="semibold">
                     {title}

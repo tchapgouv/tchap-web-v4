@@ -798,16 +798,44 @@
         "en": "Hang tight. We are updating %(brand)s to make encryption faster and more reliable. Don't worry, it can take some time",
         "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
     },
-    "incompatible_browser|continue_warning": {
-        "en": "I still want to use this browser",
-        "fr": "Je souhaite tout de même continuer sur ce navigateur"
+    "incompatible_browser|supported_browsers": {
+        "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.",
+        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, ou <Safari>Safari</Safari>."
     },
-    "incompatible_browser|summary": {
-        "en": "This browser version cannot run %(brand)s properly",
-        "fr": "Cette version de navigateur ne permet pas une exécution optimale de %(brand)s"
+    "incompatible_browser|description": {
+        "en": "%(brand)s uses some browser features which are not available in your current browser. %(detail)s",
+        "fr": "%(brand)s utilise des fonctionnalités non disponibles dans votre version courante du navigateur. %(detail)s"
     },
-    "incompatible_browser|browser_links": {
-        "en": "Please install a recent version of <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> or <safariLink>Safari</safariLink> for the best experience.",
-        "fr": "Pour une expérience optimale, veuillez installer une version récente de l'un des navigateurs suivants : <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> ou <safariLink>Safari</safariLink>."
+    "incompatible_browser|detail_can_continue": {
+        "en": "If you continue, some features may stop working and there is a risk that you may lose data in the future.",
+        "fr": "Si vous continuez, certaines fonctionnalités cesseront de fonctionner et vous pouvez potentiellement perdre des données"
+    },
+    "incompatible_browser|detail_no_continue": {
+        "en": "Try updating this browser if you're not using the latest version and try again.",
+        "fr": "Essayez de mettre à jour votre navigateur si vous n'utilisez pas la dernière version de celle-ci et réessayez"
+    },
+    "incompatible_browser|learn_more": {
+        "en": "Learn more",
+        "fr": "En savoir plus"
+    },
+    "incompatible_browser|title": {
+        "en": "%(brand)s does not support this browser",
+        "fr": "%(brand)s ne supporte pas cette version de navigateur"
+    },
+    "incompatible_browser|use_desktop_heading": {
+        "en": "Use %(brand)s Desktop instead",
+        "fr": "Utliser %(brand)s en tant qu'application Bureau"
+    },
+    "incompatible_browser|use_mobile_heading": {
+        "en": "Use %(brand)s on mobile instead",
+        "fr": "Utiliser %(brand)s sur mobile"
+    },
+    "incompatible_browser|use_mobile_heading_after_desktop": {
+        "en": "Or use our mobile app",
+        "fr": "Ou utiliser notre application mobile"
+    },
+    "incompatible_browser|continue": {
+        "en": "Continue anyway",
+        "fr": "Continuer tout de même"
     }
 }
