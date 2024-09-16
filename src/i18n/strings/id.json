@@ -1,0 +1,32 @@
+{
+    "action": {
+        "create_account": "Buat Akun",
+        "dismiss": "Abaikan",
+        "explore_rooms": "Jelajahi ruangan",
+        "open": "Buka",
+        "sign_in": "Masuk"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Buka peramban Anda untuk menyelesaikan Sign In"
+    },
+    "desktop_default_device_name": "%(brand)s Desktop: %(platformName)s",
+    "download_completed": "Unduhan Selesai",
+    "error": {
+        "app_launch_unexpected_error": "Kesalahan tak terduga saat menyiapkan aplikasi. Lihat konsol untuk detail.",
+        "cannot_load_config": "Tidak dapat memuat file konfigurasi: mohon muat ulang laman ini untuk mencoba lagi.",
+        "invalid_configuration_mixed_server": "Konfigurasi tidak valid: default_hs_url tidak dapat ditentukan bersama dengan default_server_name atau default_server_config",
+        "invalid_configuration_no_server": "Konfigurasi tidak absah: server bawaan belum ditentukan.",
+        "invalid_json": "Konfigurasi Element Anda berisi JSON yang tidak absah. Mohon perbaiki masalahnya dan muat ulang laman ini.",
+        "invalid_json_detail": "Pesan dari pengurai adalah: %(message)s",
+        "invalid_json_generic": "JSON tidak absah",
+        "misconfigured": "Anda salah mengatur Element"
+    },
+    "incompatible_browser": {
+        "title": "Peramban tidak didukung"
+    },
+    "powered_by_matrix": "Diberdayakan oleh Matrix",
+    "powered_by_matrix_with_logo": "Obrolan &amp; kolaborasi terdesentralisasi dan terenkripsi diberdayakan oleh $matrixLogo",
+    "unknown_device": "Perangkat tidak diketahui",
+    "web_default_device_name": "%(appName)s: %(browserName)s di %(osName)s",
+    "welcome_to_element": "Selamat datang di Element"
+}

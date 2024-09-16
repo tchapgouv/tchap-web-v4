@@ -32,6 +32,11 @@ exports[`<BugReportDialog> should render as expected 1`] = `
           id="mx_Dialog_content"
         >
           <p>
+            <b>
+              bug_reporting
+            </b>
+          </p>
+          <p>
             bug_reporting
           </p>
           <div
@@ -135,6 +140,11 @@ exports[`<BugReportDialog> should render as expected 1`] = `
         class="mx_Dialog_content"
         id="mx_Dialog_content"
       >
+        <p>
+          <b>
+            bug_reporting
+          </b>
+        </p>
         <p>
           bug_reporting
         </p>

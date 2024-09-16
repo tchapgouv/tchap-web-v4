@@ -1,0 +1,32 @@
+{
+    "action": {
+        "create_account": "Skapa konto",
+        "dismiss": "Avvisa",
+        "explore_rooms": "Utforska rum",
+        "open": "Öppna",
+        "sign_in": "Logga in"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Gå till din webbläsare för att slutföra inloggningen"
+    },
+    "desktop_default_device_name": "%(brand)s Skrivbord: %(platformName)s",
+    "download_completed": "Nedladdning slutförd",
+    "error": {
+        "app_launch_unexpected_error": "Oväntat fel vid appstart. Se konsolen för mer information.",
+        "cannot_load_config": "Kan inte ladda konfigurationsfilen: ladda om sidan för att försöka igen.",
+        "invalid_configuration_mixed_server": "Ogiltig konfiguration: en default_hs_url kan inte anges tillsammans med default_server_name eller default_server_config",
+        "invalid_configuration_no_server": "Ogiltiga inställningar: ingen standardserver specificerad.",
+        "invalid_json": "Din Elementkonfiguration innehåller ogiltig JSON. Vänligen rätta till problemet och ladda om sidan.",
+        "invalid_json_detail": "Meddelandet från parsern är: %(message)s",
+        "invalid_json_generic": "Ogiltig JSON",
+        "misconfigured": "Din Element är felkonfigurerad"
+    },
+    "incompatible_browser": {
+        "title": "Webbläsaren stöds ej"
+    },
+    "powered_by_matrix": "Drivs av Matrix",
+    "powered_by_matrix_with_logo": "Decentraliserad krypterad chatt &amp; samarbete som drivs av $matrixLogo",
+    "unknown_device": "Okänd enhet",
+    "web_default_device_name": "%(appName)s: %(browserName)s på %(osName)s",
+    "welcome_to_element": "Välkommen till Element"
+}

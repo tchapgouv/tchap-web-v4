@@ -1,0 +1,32 @@
+{
+    "action": {
+        "create_account": "Loo konto",
+        "dismiss": "Loobu",
+        "explore_rooms": "Tutvu jututubadega",
+        "open": "Ava",
+        "sign_in": "Logi sisse"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Sisselogimiseks ava oma brauser"
+    },
+    "desktop_default_device_name": "%(brand)s töölaud: %(platformName)s",
+    "download_completed": "Allalaadimine on lõpetatud",
+    "error": {
+        "app_launch_unexpected_error": "Rakenduse ettevalmistamisel tekkis ootamatu viga. Täpsema teabe leiad konsoolist.",
+        "cannot_load_config": "Seadistuste faili laadimine ei õnnestunud: uuesti proovimiseks palun laadi leht uuesti.",
+        "invalid_configuration_mixed_server": "Vigane seadistus: default_hs_url ei saa olla määratud koos default_server_name või default_server_config tunnustega",
+        "invalid_configuration_no_server": "Vigane seadistus: vaikimisi server on määramata.",
+        "invalid_json": "Sinu Element'i seadistustes on vigased JSON-vormingus andmed. Palun paranda see viga ja laadi leht uuesti.",
+        "invalid_json_detail": "Sõnum parserist on: %(message)s",
+        "invalid_json_generic": "Vigane JSON",
+        "misconfigured": "Sinu Element on valesti seadistatud"
+    },
+    "incompatible_browser": {
+        "title": "Sellele brauserile puudub tugi"
+    },
+    "powered_by_matrix": "Põhineb Matrix'il",
+    "powered_by_matrix_with_logo": "Hajutatud ja krüpteeritud suhtlus- ning ühistöörakendus, mille aluseks on $matrixLogo",
+    "unknown_device": "Tundmatu seade",
+    "web_default_device_name": "%(appName)s: %(browserName)s operatsioonisüsteemis %(osName)s",
+    "welcome_to_element": "Tere tulemast kasutama suhtlusrakendust Element"
+}

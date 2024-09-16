@@ -1,0 +1,31 @@
+{
+    "action": {
+        "create_account": "Crear conta",
+        "dismiss": "Rexeitar",
+        "explore_rooms": "Explorar salas",
+        "open": "Abrir",
+        "sign_in": "Acceder"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Abre o navegador para realizar a Conexión"
+    },
+    "desktop_default_device_name": "%(brand)s para Escritorio: %(platformName)s",
+    "download_completed": "Descarga realizada",
+    "error": {
+        "app_launch_unexpected_error": "Fallo non agardado ao preparar a app. Detalles na consola.",
+        "cannot_load_config": "Non se cargou o ficheiro de configuración: actualiza a páxina para reintentalo.",
+        "invalid_configuration_no_server": "Configuración non válida: non se indicou servidor por defecto.",
+        "invalid_json": "A configuración de Element contén JSON non válido. Corrixe o problema e recarga a páxina.",
+        "invalid_json_detail": "A mensaxe desde o intérprete é: %(message)s",
+        "invalid_json_generic": "JSON non válido",
+        "misconfigured": "Element non está ben configurado"
+    },
+    "incompatible_browser": {
+        "title": "Navegador non soportado"
+    },
+    "powered_by_matrix": "Funciona grazas a Matrix",
+    "powered_by_matrix_with_logo": "Conversas &amp; colaboración descentralizadas e cifradas grazas a $matrixLogo",
+    "unknown_device": "Dispositivo descoñecido",
+    "web_default_device_name": "%(appName)s: %(browserName)s en %(osName)s",
+    "welcome_to_element": "Benvida/o a Element"
+}

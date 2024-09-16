@@ -1,0 +1,31 @@
+{
+    "action": {
+        "create_account": "Crear cuenta",
+        "dismiss": "Omitir",
+        "explore_rooms": "Explorar salas",
+        "open": "Abrir",
+        "sign_in": "Iniciar sesión"
+    },
+    "auth": {
+        "sso_complete_in_browser_dialog_title": "Abre tu navegador web para completar el registro"
+    },
+    "desktop_default_device_name": "%(brand)s de escritorio: %(platformName)s",
+    "download_completed": "Descarga completada",
+    "error": {
+        "app_launch_unexpected_error": "Error inesperado preparando la aplicación. Ver la consola para más detalles.",
+        "cannot_load_config": "No se ha podido cargar el archivo de configuración. Recarga la página para intentarlo otra vez.",
+        "invalid_configuration_no_server": "Configuración errónea: no se ha especificado servidor.",
+        "invalid_json": "Tu configuración de Element contiene JSON inválido. Por favor corrígelo e inténtelo de nuevo.",
+        "invalid_json_detail": "El mensaje del parser es: %(message)s",
+        "invalid_json_generic": "JSON inválido",
+        "misconfigured": "Tu aplicación Element está mal configurada"
+    },
+    "incompatible_browser": {
+        "title": "Navegador no compatible"
+    },
+    "powered_by_matrix": "Funciona con Matrix",
+    "powered_by_matrix_with_logo": "Conversaciones y colaboración descentralizadas y cifradas gracias a $matrixLogo",
+    "unknown_device": "Dispositivo desconocido",
+    "web_default_device_name": "%(appName)s: %(browserName)s en %(osName)s",
+    "welcome_to_element": "Te damos la bienvenida a Element"
+}
