@@ -195,7 +195,9 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
                     canSetDisplayName={canSetDisplayName}
                     canSetAvatar={canSetAvatar}
                 />
-                <UserPersonalInfoSettings canMake3pidChanges={canMake3pidChanges} />
+                {/* :TCHAP: hide-discovery-email-phone-settings-updated */}
+                {/* <UserPersonalInfoSettings canMake3pidChanges={canMake3pidChanges} /> */}
+                {/* end :TCHAP: */}
                 <AccountSection
                     canChangePassword={canChangePassword}
                     onPasswordChanged={onPasswordChanged}
