@@ -54,6 +54,9 @@ enum Views {
 
     // Another instance of the application has started up. We just show an error page.
     LOCK_STOLEN,
+
+    // :TCHAP: screen before launching sso
+    EMAIL_PRECHECK_SSO
 }
 
 export default Views;

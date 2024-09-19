@@ -105,7 +105,7 @@
     }
 
     .mx_ButtonLabel {
-        margin-left: 20px;
+        margin-left: 30px;
     }
 
     .mx_Header_title {
@@ -203,6 +203,69 @@ we don't have an account and should hide them. No account == no guest account ei
             margin: 0 0 10px 0;
         }
     }
+
+    /* :TCHAP: sso-agentconnect-flow*/
+
+    .tc_ButtonCol {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tc_ButtonParent {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        padding: 14px 20px;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        border-radius: 4px;
+        width: 175px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        text-decoration: none;
+        color: #2e2f32 !important;
+    }
+
+    .tc_ButtonProconnect {
+        background-color: #000091;
+        color: white !important;
+        margin-bottom: 10px;
+    }
+    
+    .tc_Button {
+        color: #000091 !important;
+        font-weight: bold;
+    }
+
+    .tc_ButtonBorder {
+        outline: 1px solid #000091;
+        outline-offset: -2px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    .tc_ButtonProconnect_explanation {
+
+    }
+
+    .tc_Button_iconPC {
+        background-image: url("welcome/images/proconnect.svg");   
+    }
+
+    /* end :TCHAP: */
 </style>
 
 <div class="mx_Parent">
@@ -228,14 +291,30 @@ we don't have an account and should hide them. No account == no guest account ei
                 <div>_t("action|learn_more")</div>
             </a>
         </div>
-        <div class="mx_ButtonRow">
+        <!-- :TCHAP: sso-agentconnect-flow -->
+        <!-- <div class="mx_ButtonRow">
             <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
                 <div class="mx_ButtonLabel">_t("action|sign_in")</div>
             </a>
             <a href="#/register" class="mx_ButtonParent mx_ButtonCreateAccount mx_Button_iconCreateAccount">
                 <div class="mx_ButtonLabel">_t("action|create_account")</div>
             </a>
+        </div> -->
+        <div class="tc_ButtonCol">
+            <a href="#/email-precheck-sso" class="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
+                <div class="mx_ButtonLabel">_t("auth|sso|email_title")</div>
+            </a>
+            <a href="https://www.proconnect.gouv.fr/" class="tc_ButtonProconnect_explanation ">
+                <div>_t("welcome|sso|proconnect_explanation")</div>
+            </a>
+            <a href="#/login" class="tc_ButtonParent tc_Button tc_ButtonBorder">
+                <div>_t("auth|sso|sign_in_password_instead")</div>
+            </a>
+            <a href="#/register" class="tc_Button">
+                <div>_t("action|create_account")</div>
+            </a>
         </div>
+        <!-- end :TCHAP:  -->
         <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">
             <div>
                 <a href="#/directory" class="mx_ButtonParent mx_SecondaryButton mx_Button_iconRoomDirectory">
