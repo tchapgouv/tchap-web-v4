@@ -628,7 +628,9 @@ export default class Registration extends React.Component<IProps, IState> {
 
             return (
                 <React.Fragment>
-                    {ssoSection}
+                     {/* :TCHAP: sso-agentconnect-flow */}
+                    {/* {ssoSection} */}
+                    {/* end :TCHAP: */}
                     <RegistrationForm
                         defaultUsername={this.state.formVals.username}
                         defaultEmail={this.state.formVals.email}

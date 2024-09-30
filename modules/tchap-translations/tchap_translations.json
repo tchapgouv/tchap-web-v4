@@ -855,8 +855,8 @@
         "fr": "Votre adresse mail professionelle"
     },
     "welcome|sso|proconnect_explanation": {
-        "en": "What is ProConnect",
-        "fr": "Qu'est-ce que ProConnect"
+        "en": "-> What is ProConnect ?",
+        "fr": "-> Qu'est-ce que ProConnect ?"
     },
     "auth|sso|error": {
         "en": "An error occured during SSO login",
