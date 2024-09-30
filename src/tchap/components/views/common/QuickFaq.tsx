@@ -54,7 +54,7 @@ const QuickFaqButton: React.FC<{
     return (
         <>
             <AccessibleButton
-                className={classNames(["mx_QuickSettingsButton", { expanded: !isPanelCollapsed }, "mx_UserSettingsDialog_helpIcon", "tc_sidebar_quick_faq"])}
+                className={classNames(["mx_QuickSettingsButton", { expanded: !isPanelCollapsed }, "tc_sidebar_quick_faq"])}
                 onClick={openMenu}
                 aria-label={_t("common|help")}
                 title={isPanelCollapsed ? _t("common|help") : undefined}
