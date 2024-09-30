@@ -869,5 +869,9 @@
     "auth|sso|error_email": {
         "en": "You need to enter your professional email",
         "fr": "Vous devez entrer votre adresse professionelle"
+    },
+    "auth|sso|or": {
+        "en": "or",
+        "fr": "ou"
     }
 }

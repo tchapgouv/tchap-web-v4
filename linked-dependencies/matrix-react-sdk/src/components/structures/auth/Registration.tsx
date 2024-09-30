@@ -57,7 +57,8 @@ import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP: registration-for-mainlining
-import TchapUrls from "../../../../../../src/tchap/util/TchapUrls";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: sso-agentconnect-flow
+import ProconnectButton from "../../../../../../src/tchap/components/views/sso/ProconnectButton"; // :TCHAP: sso-agentconnect-flow
 
 const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_registration")) {
@@ -592,45 +593,51 @@ export default class Registration extends React.Component<IProps, IState> {
             );
         } else if (this.state.matrixClient && this.state.flows.length) {
             let ssoSection: JSX.Element | undefined;
-            if (this.state.ssoFlow) {
-                let continueWithSection;
-                const providers = this.state.ssoFlow.identity_providers || [];
-                // when there is only a single (or 0) providers we show a wide button with `Continue with X` text
-                if (providers.length > 1) {
-                    // i18n: ssoButtons is a placeholder to help translators understand context
-                    continueWithSection = (
-                        <h2 className="mx_AuthBody_centered">
-                            {_t("auth|continue_with_sso", { ssoButtons: "" }).trim()}
-                        </h2>
-                    );
-                }
+            // :TCHAP: sso-agentconnect-flow
+            // if (this.state.ssoFlow) {
+            //     let continueWithSection;
+            //     const providers = this.state.ssoFlow.identity_providers || [];
+            //     // when there is only a single (or 0) providers we show a wide button with `Continue with X` text
+            //     if (providers.length > 1) {
+            //         // i18n: ssoButtons is a placeholder to help translators understand context
+            //         continueWithSection = (
+            //             <h2 className="mx_AuthBody_centered">
+            //                 {_t("auth|continue_with_sso", { ssoButtons: "" }).trim()}
+            //             </h2>
+            //         );
+            //     }
 
-                // i18n: ssoButtons & usernamePassword are placeholders to help translators understand context
-                ssoSection = (
-                    <React.Fragment>
-                        {continueWithSection}
-                        <SSOButtons
-                            matrixClient={this.loginLogic.createTemporaryClient()}
-                            flow={this.state.ssoFlow}
-                            loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
-                            fragmentAfterLogin={this.props.fragmentAfterLogin}
-                            action={SSOAction.REGISTER}
-                        />
-                        <h2 className="mx_AuthBody_centered">
-                            {_t("auth|sso_or_username_password", {
-                                ssoButtons: "",
-                                usernamePassword: "",
-                            }).trim()}
-                        </h2>
-                    </React.Fragment>
-                );
+            //     // i18n: ssoButtons & usernamePassword are placeholders to help translators understand context
+            //     ssoSection = (
+            //         <React.Fragment>
+            //             {continueWithSection}
+            //             <SSOButtons
+            //                 matrixClient={this.loginLogic.createTemporaryClient()}
+            //                 flow={this.state.ssoFlow}
+            //                 loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
+            //                 fragmentAfterLogin={this.props.fragmentAfterLogin}
+            //                 action={SSOAction.REGISTER}
+            //             />
+            //             <h2 className="mx_AuthBody_centered">
+            //                 {_t("auth|sso_or_username_password", {
+            //                     ssoButtons: "",
+            //                     usernamePassword: "",
+            //                 }).trim()}
+            //             </h2>
+            //         </React.Fragment>
+            //     );
+            if (this.state.ssoFlow && TchapUIFeature.isSSOFlowActive()) {
+                ssoSection = <>
+                    <ProconnectButton/>
+                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|sso|or")}</p>
+                </>
             }
+            // }
+            // end :TCHAP:
 
             return (
                 <React.Fragment>
-                     {/* :TCHAP: sso-agentconnect-flow */}
-                    {/* {ssoSection} */}
-                    {/* end :TCHAP: */}
+                    {ssoSection}
                     <RegistrationForm
                         defaultUsername={this.state.formVals.username}
                         defaultEmail={this.state.formVals.email}

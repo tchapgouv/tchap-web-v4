@@ -292,20 +292,30 @@ we don't have an account and should hide them. No account == no guest account ei
         </a>
     </div>
     <div class="mx_ButtonGroup">
-        <div class="mx_ButtonRow mx_Center_content">
-            <a href="https://tchap.beta.gouv.fr?mtm_campaign=TchapWebConnectLogo"
-                class="mx_ButtonParent mx_SecondaryButton ">
-                <div>_t("action|learn_more")</div>
-            </a>
-        </div>
-        <div class="mx_ButtonRow">
+        <!-- :TCHAP: sso-agentconnect-flow -->
+        <!-- <div class="mx_ButtonRow">
             <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
                 <div class="mx_ButtonLabel">_t("action|sign_in")</div>
             </a>
             <a href="#/register" class="mx_ButtonParent mx_ButtonCreateAccount mx_Button_iconCreateAccount">
                 <div class="mx_ButtonLabel">_t("action|create_account")</div>
             </a>
+        </div> -->
+        <div class="tc_ButtonCol">
+            <a href="#/email-precheck-sso" class="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
+                <div class="mx_ButtonLabel">_t("auth|sso|email_title")</div>
+            </a>
+            <a href="https://www.proconnect.gouv.fr/" class="tc_ButtonProconnect_explanation ">
+                <div>_t("welcome|sso|proconnect_explanation")</div>
+            </a>
+            <a href="#/login" class="tc_ButtonParent tc_Button tc_ButtonBorder">
+                <div>_t("auth|sso|sign_in_password_instead")</div>
+            </a>
+            <a href="#/register" class="tc_Button">
+                <div>_t("action|create_account")</div>
+            </a>
         </div>
+        <!-- end :TCHAP:  -->
         <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">
             <div>
                 <a href="#/directory" class="mx_ButtonParent mx_SecondaryButton mx_Button_iconRoomDirectory">

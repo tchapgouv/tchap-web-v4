@@ -24,6 +24,7 @@ import { UIFeature } from "../../../settings/UIFeature";
 import LanguageSelector from "./LanguageSelector";
 import EmbeddedPage from "../../structures/EmbeddedPage";
 import { MATRIX_LOGO_HTML } from "../../structures/static-page-vars";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 
 interface IProps {}
 
@@ -47,7 +48,8 @@ export default class Welcome extends React.PureComponent<IProps> {
             const brandingConfig = SdkConfig.getObject("branding");
             const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
             replaceMap["$logoUrl"] = logoUrl;
-            pageUrl = "welcome.html";
+            // :TCHAP: sso-agentconnect-flow - pageUrl = "welcome.html"; 
+            pageUrl = TchapUIFeature.isSSOFlowActive() ? "welcome_sso.html" : "welcome.html";
         }
 
         return (

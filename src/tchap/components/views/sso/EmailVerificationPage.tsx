@@ -120,8 +120,8 @@ export default function EmailVerificationPage() {
                 <h1>
                     {_t("auth|sso|email_title")}
                 </h1>
-                <form onSubmit={onSubmit}>
-                    <fieldset disabled={loading}>
+                <form onSubmit={onSubmit} className="tc_pronnect">
+                    <fieldset disabled={loading} className="tc_login">
                         <div className="mx_AuthBody_fieldRow">
                             <EmailField
                                 name="check_email" // define a name so browser's password autofill gets less confused
