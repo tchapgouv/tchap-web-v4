@@ -50,6 +50,7 @@ export default class Welcome extends React.PureComponent<IProps> {
             replaceMap["$logoUrl"] = logoUrl;
             // :TCHAP: sso-agentconnect-flow - pageUrl = "welcome.html"; 
             pageUrl = TchapUIFeature.isSSOFlowActive() ? "welcome_sso.html" : "welcome.html";
+            // end :TCHAP:
         }
 
         return (

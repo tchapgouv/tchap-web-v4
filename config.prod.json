@@ -196,8 +196,7 @@
         "feature_space": ["*"],
         "feature_audio_call": ["*"],
         "feature_video_call": ["agent.dinum.tchap.gouv.fr"],
-        "feature_screenshare_call": ["*"],
-        "feature_sso_flow": []
+        "feature_screenshare_call": ["*"]
     },
     "tchap_sso_flow": {
         "isActive": false

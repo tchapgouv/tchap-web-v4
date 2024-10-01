@@ -109,8 +109,7 @@
         "feature_space": ["*"],
         "feature_audio_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
         "feature_video_call": ["i.tchap.gouv.fr", "e.tchap.gouv.fr"],
-        "feature_screenshare_call": ["*"],
-        "feature_sso_flow": []
+        "feature_screenshare_call": ["*"]
     },
     "tchap_sso_flow": {
         "isActive": false

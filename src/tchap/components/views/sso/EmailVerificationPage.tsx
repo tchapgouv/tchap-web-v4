@@ -68,10 +68,7 @@ export default function EmailVerificationPage() {
         const isFieldCorrect = await emailFieldRef.current?.validate({ allowEmpty: false });
 
         if (!isFieldCorrect) {
-            emailFieldRef.current?.focus();
-            emailFieldRef.current?.validate({ allowEmpty: false, focused: true });
-            setErrorText(_td("auth|sso|error_email"));
-            setLoading(false);
+            displayError(_td("auth|sso|error_email"));
             return;
         }
 
@@ -135,7 +132,7 @@ export default function EmailVerificationPage() {
                             />
                         </div>
                         {errorText && <ErrorMessage message={errorText} />}
-                        <button type="submit" className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
+                        <button type="submit" data-testid="proconnect-submit" className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
                             {submitButtonChild}
                         </button>
                         <div className="mx_AuthBody_button-container tc_bottomButton">
