@@ -807,7 +807,11 @@
         "fr": "Cette version de navigateur ne permet pas une exécution optimale de %(brand)s"
     },
     "incompatible_browser|browser_links": {
-        "en": "Please install a recent version of <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> or <safariLink>Safari</safariLink> for the best experience.",
-        "fr": "Pour une expérience optimale, veuillez installer une version récente de l'un des navigateurs suivants : <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> ou <safariLink>Safari</safariLink>."
+        "en": "Please install a recent version of <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> or <safariLink>Safari</safariLink> for the best experience. Don't hesitate to contact your IT department of your ministery or organization",
+        "fr": "Pour une expérience optimale, veuillez installer une version récente de l'un des navigateurs suivants : <chromeLink>Chrome</chromeLink>, <firefoxLink>Firefox</firefoxLink>, <edgeLink> Edge </edgeLink> ou <safariLink>Safari</safariLink>. N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation."
+    },
+    "incompatible_browser|title": {
+        "en": "Information on your browser version",
+        "fr": "Information sur votre version de navigateur"
     }
 }
