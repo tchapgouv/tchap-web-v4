@@ -8,7 +8,7 @@ export default function ProconnectButton(): JSX.Element {
     return (
         <div className="tc_pronnect">
             <a href="#/email-precheck-sso" className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
-                <div>_t("auth|sso|email_title")</div>
+                <div>{_t("auth|sso|email_title")}</div>
             </a>
         </div>
     );
