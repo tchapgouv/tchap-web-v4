@@ -799,28 +799,28 @@
         "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
     },
     "incompatible_browser|supported_browsers": {
-        "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.",
-        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, ou <Safari>Safari</Safari>."
+        "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.  Don't hesitate to contact your IT department of your ministery or organization.",
+        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, ou <Safari>Safari</Safari>.  N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation."
     },
     "incompatible_browser|description": {
         "en": "%(brand)s uses some browser features which are not available in your current browser. %(detail)s",
         "fr": "%(brand)s utilise des fonctionnalités non disponibles dans votre version courante du navigateur. %(detail)s"
     },
     "incompatible_browser|detail_can_continue": {
-        "en": "If you continue, some features may stop working and there is a risk that you may lose data in the future.",
-        "fr": "Si vous continuez, certaines fonctionnalités cesseront de fonctionner et vous pouvez potentiellement perdre des données"
+        "en": "You can continue using your current browser, but some or all features may not work and the look and feel of the application may be incorrect.",
+        "fr": "Vous pouvez continuer à utiliser votre navigateur actuel, mais vous risquez de trouver que certaines fonctionnalités et/ou l’apparence de l’application sont incorrectes."
     },
     "incompatible_browser|detail_no_continue": {
         "en": "Try updating this browser if you're not using the latest version and try again.",
-        "fr": "Essayez de mettre à jour votre navigateur si vous n'utilisez pas la dernière version de celle-ci et réessayez"
+        "fr": "Essayez de mettre à jour votre navigateur si vous n'utilisez pas la dernière version de celle-ci."
     },
     "incompatible_browser|learn_more": {
         "en": "Learn more",
         "fr": "En savoir plus"
     },
     "incompatible_browser|title": {
-        "en": "%(brand)s does not support this browser",
-        "fr": "%(brand)s ne supporte pas cette version de navigateur"
+        "en": "Information on your browser version",
+        "fr": "Information sur votre version de navigateur"
     },
     "incompatible_browser|use_desktop_heading": {
         "en": "Use %(brand)s Desktop instead",
