@@ -119,20 +119,9 @@
         font-size: 18px;
     }
 
-    .mx_Header_subtitle {
-        font-size: 12px;
-        font-weight: normal;
-        margin: 8px 0 0;
-    }
-
     .tc_paragraph {
         margin-bottom: 40px;
         margin-top: 40px;
-    }
-
-    .mx_ButtonSignIn {
-        background-color: #000091;
-        color: white !important;
     }
 
     .mx_ButtonCreateAccount {
@@ -147,21 +136,6 @@
         margin-bottom: 40px;
     }
 
-    .mx_Button_iconSignIn {
-        background-image: url("welcome/images/icon-sign-in.svg");
-    }
-
-    .mx_Button_iconCreateAccount {
-        background-image: url("welcome/images/icon-create-account.svg");
-    }
-
-    .mx_Button_iconHelp {
-        background-image: url("welcome/images/icon-help.svg");
-    }
-
-    .mx_Button_iconRoomDirectory {
-        background-image: url("welcome/images/icon-room-directory.svg");
-    }
 
     footer.mx_AuthFooter {
         background: rgba(255, 255, 255, 1) !important;
@@ -233,7 +207,7 @@ we don't have an account and should hide them. No account == no guest account ei
         -ms-flex-align: center;
         align-items: center;
         border-radius: 4px;
-        width: 175px;
+        width: 200px;
         background-repeat: no-repeat;
         background-position: 10px center;
         text-decoration: none;
@@ -273,11 +247,6 @@ we don't have an account and should hide them. No account == no guest account ei
 </style>
 
 <div class="mx_Parent">
-    <!-- :TCHAP: remove element logo, use tchap logo instead
-    <a href="https://element.io" target="_blank" rel="noopener">
-        <img src="$logoUrl" alt="" class="mx_Logo" />
-    </a>
-    -->
     <a href="https://tchap.beta.gouv.fr?mtm_camapaign=TchapWebConnectLogo" target="_blank" rel="noopener">
         <img src="$logoUrl" alt="Logo Tchap" class="mx_Logo" />
     </a>
@@ -292,18 +261,18 @@ we don't have an account and should hide them. No account == no guest account ei
         </a>
     </div>
     <div class="mx_ButtonGroup">
-        <div class="mx_ButtonRow mx_Center_content">
-            <a href="https://tchap.beta.gouv.fr?mtm_campaign=TchapWebConnectLogo"
-                class="mx_ButtonParent mx_SecondaryButton ">
-                <div>_t("action|learn_more")</div>
+        <div class="tc_ButtonCol">
+            <a href="#/email-precheck-sso" class="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
+                <div class="mx_ButtonLabel">_t("auth|sso|email_title")</div>
             </a>
-        </div>
-        <div class="mx_ButtonRow">
-            <a href="#/login" class="mx_ButtonParent mx_ButtonSignIn mx_Button_iconSignIn">
-                <div class="mx_ButtonLabel">_t("action|sign_in")</div>
+            <a href="https://www.proconnect.gouv.fr/" class="tc_ButtonProconnect_explanation ">
+                <div>_t("welcome|sso|proconnect_explanation")</div>
             </a>
-            <a href="#/register" class="mx_ButtonParent mx_ButtonCreateAccount mx_Button_iconCreateAccount">
-                <div class="mx_ButtonLabel">_t("action|create_account")</div>
+            <a href="#/login" class="tc_ButtonParent tc_Button tc_ButtonBorder">
+                <div>_t("auth|sso|sign_in_password_instead")</div>
+            </a>
+            <a href="#/register" class="tc_Button">
+                <div>_t("action|create_account")</div>
             </a>
         </div>
         <div class="mx_ButtonRow mx_WelcomePage_guestFunctions">

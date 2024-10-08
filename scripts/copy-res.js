@@ -24,6 +24,9 @@ const COPY_LIST = [
     ["res/manifest.json", "webapp"],
     ["res/sw.js", "webapp"],
     ["res/welcome.html", "webapp"],
+    // :TCHAP: sso-agentconnect-flow
+    ["res/welcome_sso.html", "webapp"],
+    // end :TCHAP:
     ["res/welcome/**", "webapp/welcome"],
     ["res/themes/**", "webapp/themes"],
     ["res/vector-icons/**", "webapp/vector-icons"],

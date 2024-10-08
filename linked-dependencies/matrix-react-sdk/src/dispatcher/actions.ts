@@ -393,4 +393,9 @@ export enum Action {
      * Opens right panel room summary and focuses the search input
      */
     FocusMessageSearch = "focus_search",
+
+    /**
+     * :TCHAP: Open new page to check email instance before launching SSO
+     */
+    EmailPrecheckSSO = "email_precheck_sso"
 }

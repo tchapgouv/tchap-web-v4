@@ -51,5 +51,12 @@ export default class TchapUIFeature {
         return homeserversWithFeature.includes(userHomeServer!);
     }
 
+    // We separate from previous method, cause in this feature we cannot differenciate between homeserver since it is before the user connexion
+    public static isSSOFlowActive():boolean {
+        const ssoFlow : Record<string, boolean> = SdkConfig.get("tchap_sso_flow") as Record<string, boolean> ?? {isActive: false};
+
+        return ssoFlow.isActive;
+    }
+
 
 }
