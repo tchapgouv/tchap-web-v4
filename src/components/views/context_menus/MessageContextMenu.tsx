@@ -1,19 +1,11 @@
 /*
+Copyright 2024 New Vector Ltd.
+Copyright 2015-2023 The Matrix.org Foundation C.I.C.
+Copyright 2021, 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
-Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import React, { createRef, useContext } from "react";
@@ -36,9 +28,8 @@ import Modal from "../../../Modal";
 import Resend from "../../../Resend";
 import SettingsStore from "../../../settings/SettingsStore";
 import { isUrlPermitted } from "../../../HtmlUtils";
-import { canEditContent, canPinEvent, editEvent, isContentActionable } from "../../../utils/EventUtils";
+import { canEditContent, editEvent, isContentActionable } from "../../../utils/EventUtils";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
-import { ReadPinsEventId } from "../right_panel/types";
 import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { ButtonEvent } from "../elements/AccessibleButton";
@@ -62,6 +53,8 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import { CardContext } from "../right_panel/context";
 //:tchap: remove-thread-buttons - add feature flags
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+import PinningUtils from "../../../utils/PinningUtils";
+import PosthogTrackers from "../../../PosthogTrackers.ts";
 
 interface IReplyInThreadButton {
     mxEvent: MatrixEvent;
@@ -179,23 +172,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             this.props.mxEvent.getType() !== EventType.RoomServerAcl &&
             this.props.mxEvent.getType() !== EventType.RoomEncryption;
 
-        let canPin =
-            !!room?.currentState.mayClientSendStateEvent(EventType.RoomPinnedEvents, cli) &&
-            canPinEvent(this.props.mxEvent);
-
-        // HACK: Intentionally say we can't pin if the user doesn't want to use the functionality
-        if (!SettingsStore.getValue("feature_pinning")) canPin = false;
+        const canPin = PinningUtils.canPin(cli, this.props.mxEvent) || PinningUtils.canUnpin(cli, this.props.mxEvent);
 
         this.setState({ canRedact, canPin });
     };
-
-    private isPinned(): boolean {
-        const room = MatrixClientPeg.safeGet().getRoom(this.props.mxEvent.getRoomId());
-        const pinnedEvent = room?.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
-        if (!pinnedEvent) return false;
-        const content = pinnedEvent.getContent();
-        return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
-    }
 
     private canEndPoll(mxEvent: MatrixEvent): boolean {
         return (
@@ -258,23 +238,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onPinClick = (): void => {
-        const cli = MatrixClientPeg.safeGet();
-        const room = cli.getRoom(this.props.mxEvent.getRoomId());
-        if (!room) return;
-        const eventId = this.props.mxEvent.getId();
+    private onPinClick = (isPinned: boolean): void => {
+        // Pin or unpin in background
+        PinningUtils.pinOrUnpinEvent(MatrixClientPeg.safeGet(), this.props.mxEvent);
+        PosthogTrackers.trackPinUnpinMessage(isPinned ? "Pin" : "Unpin", "Timeline");
 
-        const pinnedIds = room.currentState?.getStateEvents(EventType.RoomPinnedEvents, "")?.getContent().pinned || [];
-
-        if (pinnedIds.includes(eventId)) {
-            pinnedIds.splice(pinnedIds.indexOf(eventId), 1);
-        } else {
-            pinnedIds.push(eventId);
-            cli.setRoomAccountData(room.roomId, ReadPinsEventId, {
-                event_ids: [...(room.getAccountData(ReadPinsEventId)?.getContent()?.event_ids || []), eventId],
-            });
-        }
-        cli.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned: pinnedIds }, "");
         this.closeMenu();
     };
 
@@ -450,17 +418,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     iconClassName="mx_MessageContextMenu_iconForward"
                     label={_t("action|forward")}
                     onClick={this.onForwardClick(forwardableEvent)}
-                />
-            );
-        }
-
-        let pinButton: JSX.Element | undefined;
-        if (contentActionable && this.state.canPin) {
-            pinButton = (
-                <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconPin"
-                    label={this.isPinned() ? _t("action|unpin") : _t("action|pin")}
-                    onClick={this.onPinClick}
                 />
             );
         }
@@ -651,6 +608,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let pinButton: JSX.Element | undefined;
+        if (rightClick && this.state.canPin) {
+            const isPinned = PinningUtils.isPinned(MatrixClientPeg.safeGet(), this.props.mxEvent);
+            pinButton = (
+                <IconizedContextMenuOption
+                    iconClassName={isPinned ? "mx_MessageContextMenu_iconUnpin" : "mx_MessageContextMenu_iconPin"}
+                    label={isPinned ? _t("action|unpin") : _t("action|pin")}
+                    onClick={() => this.onPinClick(isPinned)}
+                />
+            );
+        }
+
         let viewInRoomButton: JSX.Element | undefined;
         if (isThreadRootEvent) {
             viewInRoomButton = (
@@ -673,7 +642,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         let quickItemsList: JSX.Element | undefined;
-        if (editButton || replyButton || reactButton) {
+        if (editButton || replyButton || reactButton || pinButton) {
             quickItemsList = (
                 <IconizedContextMenuOptionList>
                     {reactButton}
@@ -683,6 +652,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? replyInThreadButton : null}
                     {/*:TCHAP: end */}
                     {editButton}
+                    {pinButton}
                 </IconizedContextMenuOptionList>
             );
         }
@@ -693,7 +663,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 {openInMapSiteButton}
                 {endPollButton}
                 {forwardButton}
-                {pinButton}
                 {permalinkButton}
                 {reportEventButton}
                 {externalURLButton}

@@ -1,17 +1,9 @@
 /*
+Copyright 2024 New Vector Ltd.
 Copyright 2015-2021 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import {
@@ -57,13 +49,21 @@ import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP: registration-for-mainlining
-import TchapUrls from "../../../../../../src/tchap/util/TchapUrls";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: sso-agentconnect-flow
+import ProconnectButton from "../../../../../../src/tchap/components/views/sso/ProconnectButton"; // :TCHAP: sso-agentconnect-flow
 
 const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_registration")) {
         logger.log.call(console, "Registration debuglog:", ...args);
     }
 };
+
+export interface MobileRegistrationResponse {
+    user_id: string;
+    home_server: string;
+    access_token: string;
+    device_id: string;
+}
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -74,7 +74,7 @@ interface IProps {
     sessionId?: string;
     idSid?: string;
     fragmentAfterLogin?: string;
-
+    mobileRegister?: boolean;
     // Called when the user has logged in. Params:
     // - object with userId, deviceId, homeserverUrl, identityServerUrl, accessToken
     // - The user's password, if available and applicable (may be cached in memory
@@ -439,18 +439,33 @@ export default class Registration extends React.Component<IProps, IState> {
         debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
         // don’t log in if we found a session for a different user
         if (hasAccessToken && !newState.differentLoggedInUserId) {
-            await this.props.onLoggedIn(
-                {
-                    userId,
-                    deviceId: (response as RegisterResponse).device_id!,
-                    homeserverUrl: this.state.matrixClient.getHomeserverUrl(),
-                    identityServerUrl: this.state.matrixClient.getIdentityServerUrl(),
-                    accessToken,
-                },
-                this.state.formVals.password!,
-            );
+            if (this.props.mobileRegister) {
+                const mobileResponse: MobileRegistrationResponse = {
+                    user_id: userId,
+                    home_server: this.state.matrixClient.getHomeserverUrl(),
+                    access_token: accessToken,
+                    device_id: (response as RegisterResponse).device_id!,
+                };
+                const event = new CustomEvent<MobileRegistrationResponse>("mobileregistrationresponse", {
+                    detail: mobileResponse,
+                });
+                window.dispatchEvent(event);
+                newState.busy = false;
+                newState.completedNoSignin = true;
+            } else {
+                await this.props.onLoggedIn(
+                    {
+                        userId,
+                        deviceId: (response as RegisterResponse).device_id!,
+                        homeserverUrl: this.state.matrixClient.getHomeserverUrl(),
+                        identityServerUrl: this.state.matrixClient.getIdentityServerUrl(),
+                        accessToken,
+                    },
+                    this.state.formVals.password!,
+                );
 
-            this.setupPushers();
+                this.setupPushers();
+            }
         } else {
             newState.busy = false;
             newState.completedNoSignin = true;
@@ -592,39 +607,47 @@ export default class Registration extends React.Component<IProps, IState> {
             );
         } else if (this.state.matrixClient && this.state.flows.length) {
             let ssoSection: JSX.Element | undefined;
-            if (this.state.ssoFlow) {
-                let continueWithSection;
-                const providers = this.state.ssoFlow.identity_providers || [];
-                // when there is only a single (or 0) providers we show a wide button with `Continue with X` text
-                if (providers.length > 1) {
-                    // i18n: ssoButtons is a placeholder to help translators understand context
-                    continueWithSection = (
-                        <h2 className="mx_AuthBody_centered">
-                            {_t("auth|continue_with_sso", { ssoButtons: "" }).trim()}
-                        </h2>
-                    );
-                }
+            // :TCHAP: sso-agentconnect-flow
+            // if (!this.props.mobileRegister && this.state.ssoFlow) {
+            //     let continueWithSection;
+            //     const providers = this.state.ssoFlow.identity_providers || [];
+            //     // when there is only a single (or 0) providers we show a wide button with `Continue with X` text
+            //     if (providers.length > 1) {
+            //         // i18n: ssoButtons is a placeholder to help translators understand context
+            //         continueWithSection = (
+            //             <h2 className="mx_AuthBody_centered">
+            //                 {_t("auth|continue_with_sso", { ssoButtons: "" }).trim()}
+            //             </h2>
+            //         );
+            //     }
 
-                // i18n: ssoButtons & usernamePassword are placeholders to help translators understand context
-                ssoSection = (
-                    <React.Fragment>
-                        {continueWithSection}
-                        <SSOButtons
-                            matrixClient={this.loginLogic.createTemporaryClient()}
-                            flow={this.state.ssoFlow}
-                            loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
-                            fragmentAfterLogin={this.props.fragmentAfterLogin}
-                            action={SSOAction.REGISTER}
-                        />
-                        <h2 className="mx_AuthBody_centered">
-                            {_t("auth|sso_or_username_password", {
-                                ssoButtons: "",
-                                usernamePassword: "",
-                            }).trim()}
-                        </h2>
-                    </React.Fragment>
-                );
+            //     // i18n: ssoButtons & usernamePassword are placeholders to help translators understand context
+            //     ssoSection = (
+            //         <React.Fragment>
+            //             {continueWithSection}
+            //             <SSOButtons
+            //                 matrixClient={this.loginLogic.createTemporaryClient()}
+            //                 flow={this.state.ssoFlow}
+            //                 loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
+            //                 fragmentAfterLogin={this.props.fragmentAfterLogin}
+            //                 action={SSOAction.REGISTER}
+            //             />
+            //             <h2 className="mx_AuthBody_centered">
+            //                 {_t("auth|sso_or_username_password", {
+            //                     ssoButtons: "",
+            //                     usernamePassword: "",
+            //                 }).trim()}
+            //             </h2>
+            //         </React.Fragment>
+            //     );
+            if (!this.props.mobileRegister && this.state.ssoFlow && TchapUIFeature.isSSOFlowActive()) {
+                ssoSection = <>
+                    <ProconnectButton/>
+                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|sso|or")}</p>
+                </>
             }
+            // }
+            // end :TCHAP:
 
             return (
                 <React.Fragment>
@@ -640,6 +663,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         serverConfig={this.props.serverConfig}
                         canSubmit={!this.state.serverErrorIsFatal}
                         matrixClient={this.state.matrixClient}
+                        mobileRegister={this.props.mobileRegister}
                     />
                 </React.Fragment>
             );
@@ -694,7 +718,9 @@ export default class Registration extends React.Component<IProps, IState> {
         let body;
         if (this.state.completedNoSignin) {
             let regDoneText;
-            if (this.state.differentLoggedInUserId) {
+            if (this.props.mobileRegister) {
+                regDoneText = undefined;
+            } else if (this.state.differentLoggedInUserId) {
                 regDoneText = (
                     <div>
                         <p>
@@ -751,6 +777,15 @@ export default class Registration extends React.Component<IProps, IState> {
                     {regDoneText}
                 </div>
             );
+        } else if (this.props.mobileRegister) {
+            body = (
+                <Fragment>
+                    <h1>{_t("auth|mobile_create_account_title", { hsName: this.props.serverConfig.hsName })}</h1>
+                    {errorText}
+                    {serverDeadSection}
+                    {this.renderRegisterComponent()}
+                </Fragment>
+            );
         } else {
             body = (
                 <Fragment>
@@ -786,7 +821,13 @@ export default class Registration extends React.Component<IProps, IState> {
                 </Fragment>
             );
         }
-
+        if (this.props.mobileRegister) {
+            return (
+                <div className="mx_MobileRegister_body" data-testid="mobile-register">
+                    {body}
+                </div>
+            );
+        }
         return (
             <AuthPage>
                 <AuthHeader />

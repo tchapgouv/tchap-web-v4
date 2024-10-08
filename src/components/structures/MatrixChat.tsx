@@ -1,17 +1,9 @@
 /*
+Copyright 2024 New Vector Ltd.
 Copyright 2015-2024 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import React, { createRef } from "react";
@@ -143,13 +135,15 @@ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
-import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP: activate-cross-signing-and-secure-storage-react
 import { cleanUpDraftsIfRequired } from "../../DraftCleaner";
+
+import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP: activate-cross-signing-and-secure-storage-react
+import EmailVerificationPage from "../../../../../src/tchap/components/views/sso/EmailVerificationPage"; // :TCHAP: sso-agentconnect-flow
 
 // legacy export
 export { default as Views } from "../../Views";
 
-const AUTH_SCREENS = ["register", "login", "forgot_password", "start_sso", "start_cas", "welcome"];
+const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "welcome"];
 
 // Actions that are redirected through the onboarding process prior to being
 // re-dispatched. NOTE: some actions are non-trivial and would require
@@ -198,6 +192,7 @@ interface IState {
     register_session_id?: string;
     // eslint-disable-next-line camelcase
     register_id_sid?: string;
+    isMobileRegistration?: boolean;
     // When showing Modal dialogs we need to set aria-hidden on the root app element
     // and disable it when there are no dialogs
     hideToSRUsers: boolean;
@@ -252,6 +247,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             currentUserId: null,
 
             hideToSRUsers: false,
+            isMobileRegistration: false,
 
             syncError: null, // If the current syncing status is ERROR, the error object, otherwise null.
             resizeNotifier: new ResizeNotifier(),
@@ -376,7 +372,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // Create and start the client
             // accesses the new credentials just set in storage during attemptDelegatedAuthLogin
             // and sets logged in state
-            await Lifecycle.restoreFromLocalStorage({ ignoreGuest: true });
+            await Lifecycle.restoreSessionFromStorage({ ignoreGuest: true });
             await this.postLoginSetup();
             return;
         }
@@ -658,6 +654,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case "require_registration":
                 startAnyRegistrationFlow(payload as any);
+                break;
+            case "start_mobile_registration":
+                this.startRegistration(payload.params || {}, true);
                 break;
             case "start_registration":
                 if (Lifecycle.isSoftLogout()) {
@@ -946,6 +945,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     true,
                 );
                 break;
+            // :TCHAP: sso-agentconnect-flow
+            case Action.EmailPrecheckSSO:
+                if (Lifecycle.isSoftLogout()) {
+                    this.onSoftLogout();
+                    break;
+                }
+                this.viewEmailPrecheckSSO();
+                break;
+            // end :TCHAP:
         }
     };
 
@@ -955,8 +963,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private async startRegistration(params: { [key: string]: string }): Promise<void> {
-        if (!SettingsStore.getValue(UIFeature.Registration)) {
+    private async startRegistration(params: { [key: string]: string }, isMobileRegistration?: boolean): Promise<void> {
+        // If registration is disabled or mobile registration is requested but not enabled in settings redirect to the welcome screen
+        if (
+            !SettingsStore.getValue(UIFeature.Registration) ||
+            (isMobileRegistration && !SettingsStore.getValue("Registration.mobileRegistrationHelper"))
+        ) {
             this.showScreen("welcome");
             return;
         }
@@ -965,9 +977,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             view: Views.REGISTER,
         };
 
-        // Only honour params if they are all present, otherwise we reset
-        // HS and IS URLs when switching to registration.
-        if (params.client_secret && params.session_id && params.hs_url && params.is_url && params.sid) {
+        if (isMobileRegistration && params.hs_url) {
+            try {
+                const config = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(params.hs_url);
+                newState.serverConfig = config;
+            } catch (err) {
+                logger.warn("Failed to load hs_url param:", params.hs_url);
+            }
+        } else if (params.client_secret && params.session_id && params.hs_url && params.is_url && params.sid) {
+            // Only honour params if they are all present, otherwise we reset
+            // HS and IS URLs when switching to registration.
             newState.serverConfig = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
                 params.hs_url,
                 params.is_url,
@@ -987,10 +1006,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             newState.register_id_sid = params.sid;
         }
 
+        newState.isMobileRegistration = isMobileRegistration;
+
         this.setStateForNewView(newState);
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
-        this.notifyNewScreen("register");
+        this.notifyNewScreen(isMobileRegistration ? "mobile_register" : "register");
     }
 
     // switch view to the given room
@@ -1103,6 +1124,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         ThemeController.isLogin = true;
         this.themeWatcher.recheck();
     }
+
+    // :TCHAP: sso-agentconnect-flow
+    private viewEmailPrecheckSSO() {
+        this.setStateForNewView({
+            view: Views.EMAIL_PRECHECK_SSO
+        });
+        this.notifyNewScreen("email-precheck-sso");
+        ThemeController.isLogin = true;
+        this.themeWatcher.recheck();
+    }
+    // end :TCHAP:
 
     private viewHome(justRegistered = false): void {
         // The home page requires the "logged in" view, so we'll set that.
@@ -1739,6 +1771,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 params: params,
             });
             PerformanceMonitor.instance.start(PerformanceEntryNames.REGISTER);
+        } else if (screen === "mobile_register") {
+            dis.dispatch({
+                action: "start_mobile_registration",
+                params: params,
+            });
         } else if (screen === "login") {
             dis.dispatch({
                 action: "start_login",
@@ -1875,6 +1912,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 userId: userId,
                 subAction: params?.action,
             });
+        // :TCHAP: sso-agentconnect-flow
+        } else if (screen = "email-precheck-sso") {
+            dis.dispatch({
+                action: "email_precheck_sso",
+                params
+            });
+        // end :TCHAP:
         } else {
             logger.info(`Ignoring showScreen for '${screen}'`);
         }
@@ -2017,7 +2061,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (
             initialScreenAfterLogin &&
             // XXX: workaround for https://github.com/vector-im/element-web/issues/11643 causing a login-loop
-            !["welcome", "login", "register", "start_sso", "start_cas"].includes(initialScreenAfterLogin.screen)
+            // :TCHAP: sso-agentconnect-flow !["welcome", "login", "register", "start_sso", "start_cas"].includes(initialScreenAfterLogin.screen)
+            !["welcome", "login", "register", "start_sso", "start_cas", "email-precheck-sso"].includes(initialScreenAfterLogin.screen)
+            // end :TCHAP:
         ) {
             fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;
         }
@@ -2098,6 +2144,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onServerConfigChange={this.onServerConfigChange}
                     defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
                     fragmentAfterLogin={fragmentAfterLogin}
+                    mobileRegister={this.state.isMobileRegistration}
                     {...this.getServerProperties()}
                 />
             );
@@ -2137,6 +2184,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             view = <UseCaseSelection onFinished={(useCase): Promise<void> => this.onShowPostLoginScreen(useCase)} />;
         } else if (this.state.view === Views.LOCK_STOLEN) {
             view = <SessionLockStolenView />;
+        // :TCHAP: sso-agentconnect-flow
+        } else if (this.state.view === Views.EMAIL_PRECHECK_SSO) {
+            view = <EmailVerificationPage />;
+        // end :TCHAP:
         } else {
             logger.error(`Unknown view ${this.state.view}`);
             return null;

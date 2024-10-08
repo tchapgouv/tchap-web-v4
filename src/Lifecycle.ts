@@ -1,20 +1,12 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright 2024 New Vector Ltd.
+Copyright 2019, 2020 , 2023 The Matrix.org Foundation C.I.C.
 Copyright 2018 New Vector Ltd
-Copyright 2019, 2020, 2023 The Matrix.org Foundation C.I.C.
+Copyright 2017 Vector Creations Ltd
+Copyright 2015, 2016 OpenMarket Ltd
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import { ReactNode } from "react";
@@ -211,7 +203,7 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
                 false,
             ).then(() => true);
         }
-        const success = await restoreFromLocalStorage({
+        const success = await restoreSessionFromStorage({
             ignoreGuest: Boolean(opts.ignoreGuest),
         });
         if (success) {
@@ -556,17 +548,19 @@ async function abortLogin(): Promise<void> {
     }
 }
 
-// returns a promise which resolves to true if a session is found in
-// localstorage
-//
-// N.B. Lifecycle.js should not maintain any further localStorage state, we
-//      are moving towards using SessionStore to keep track of state related
-//      to the current session (which is typically backed by localStorage).
-//
-//      The plan is to gradually move the localStorage access done here into
-//      SessionStore to avoid bugs where the view becomes out-of-sync with
-//      localStorage (e.g. isGuest etc.)
-export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }): Promise<boolean> {
+/** Attempt to restore the session from localStorage or indexeddb.
+ *
+ * @returns true if a session was found; false if no existing session was found.
+ *
+ * N.B. Lifecycle.js should not maintain any further localStorage state, we
+ *      are moving towards using SessionStore to keep track of state related
+ *      to the current session (which is typically backed by localStorage).
+ *
+ *      The plan is to gradually move the localStorage access done here into
+ *      SessionStore to avoid bugs where the view becomes out-of-sync with
+ *      localStorage (e.g. isGuest etc.)
+ */
+export async function restoreSessionFromStorage(opts?: { ignoreGuest?: boolean }): Promise<boolean> {
     const ignoreGuest = opts?.ignoreGuest;
 
     if (!localStorage) {
@@ -590,10 +584,11 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         if (pickleKey) {
             logger.log(`Got pickle key for ${userId}|${deviceId}`);
         } else {
-            logger.log("No pickle key available");
+            logger.log(`No pickle key available for ${userId}|${deviceId}`);
         }
         const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_IV);
-        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV);
+        const decryptedRefreshToken =
+            refreshToken && (await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV));
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -603,7 +598,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             {
                 userId: userId,
                 deviceId: deviceId,
-                accessToken: decryptedAccessToken!,
+                accessToken: decryptedAccessToken,
                 refreshToken: decryptedRefreshToken,
                 homeserverUrl: hsUrl,
                 identityServerUrl: isUrl,

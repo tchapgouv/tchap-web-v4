@@ -1,20 +1,12 @@
 /*
+Copyright 2024 New Vector Ltd.
 Copyright 2024 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { MatrixClient, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import React from "react";
 import userEvent from "@testing-library/user-event";
@@ -226,7 +218,17 @@ describe("AddRemoveThreepids", () => {
         await userEvent.type(input, PHONE1_LOCALNUM);
 
         const addButton = screen.getByRole("button", { name: "Add" });
-        await userEvent.click(addButton);
+        userEvent.click(addButton);
+
+        const continueButton = await screen.findByRole("button", { name: "Continue" });
+
+        await expect(continueButton).toHaveAttribute("aria-disabled", "true");
+
+        await expect(
+            await screen.findByText(
+                `A text message has been sent to +${PHONE1.address}. Please enter the verification code it contains.`,
+            ),
+        ).toBeInTheDocument();
 
         expect(client.requestAdd3pidMsisdnToken).toHaveBeenCalledWith(
             "GB",
@@ -234,15 +236,14 @@ describe("AddRemoveThreepids", () => {
             client.generateClientSecret(),
             1,
         );
-        const continueButton = screen.getByRole("button", { name: "Continue" });
-
-        expect(continueButton).toHaveAttribute("aria-disabled", "true");
 
         const verificationInput = screen.getByRole("textbox", { name: "Verification code" });
         await userEvent.type(verificationInput, "123456");
 
         expect(continueButton).not.toHaveAttribute("aria-disabled", "true");
-        await userEvent.click(continueButton);
+        userEvent.click(continueButton);
+
+        await waitFor(() => expect(continueButton).toHaveAttribute("aria-disabled", "true"));
 
         expect(client.addThreePidOnly).toHaveBeenCalledWith({
             client_secret: client.generateClientSecret(),
