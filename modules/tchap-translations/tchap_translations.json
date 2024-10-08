@@ -838,19 +838,19 @@
         "en": "Continue anyway",
         "fr": "Continuer tout de même"
     },
-    "auth|sso|sign_in_password_instead": {
+    "auth|proconnect|sign_in_password_instead": {
         "en": "Login with password",
         "fr": "Se connecter par mot de passe"
     },
-    "auth|sso|email_title": {
+    "auth|proconnect|email_title": {
         "en": "Login with ProConnect",
         "fr": "Se connecter avec ProConnect"
     },
-    "auth|sso|proconnect_continue": {
+    "auth|proconnect|continue": {
         "en": "Continue with ProConnect",
         "fr": "Continuer avec ProConnect"
     },
-    "auth|sso|email_placeholder": {
+    "auth|proconnect|email_placeholder": {
         "en": "Your professional email",
         "fr": "Votre adresse mail professionelle"
     },
@@ -858,19 +858,19 @@
         "en": "-> What is ProConnect ?",
         "fr": "-> Qu'est-ce que ProConnect ?"
     },
-    "auth|sso|error": {
+    "auth|proconnect|error": {
         "en": "An error occured during SSO login",
         "fr": "Une erreur est survenue lors de la connexion"
     },
-    "auth|sso|error_homeserver": {
+    "auth|proconnect|error_homeserver": {
         "en": "There is an error with the homeserver configuration",
         "fr": "Il y a une erreur avec la configuration du serveur"
     },
-    "auth|sso|error_email": {
+    "auth|proconnect|error_email": {
         "en": "You need to enter your professional email",
         "fr": "Vous devez entrer votre adresse professionelle"
     },
-    "auth|sso|or": {
+    "auth|proconnect|or": {
         "en": "or",
         "fr": "ou"
     }

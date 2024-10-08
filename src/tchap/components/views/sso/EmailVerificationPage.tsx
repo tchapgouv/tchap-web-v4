@@ -40,7 +40,7 @@ export default function EmailVerificationPage() {
     const [email, setEmail] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
 
-    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("auth|sso|proconnect_continue");
+    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("auth|proconnect|continue");
 
     const emailFieldRef = useRef<Field>(null);
 
@@ -68,7 +68,7 @@ export default function EmailVerificationPage() {
         const isFieldCorrect = await emailFieldRef.current?.validate({ allowEmpty: false });
 
         if (!isFieldCorrect) {
-            displayError(_td("auth|sso|error_email"));
+            displayError(_td("auth|proconnect|error_email"));
             return;
         }
 
@@ -84,7 +84,7 @@ export default function EmailVerificationPage() {
             const validatedServerConfig = await setUpCurrentHs(hs);
 
             if (!validatedServerConfig) {
-                displayError(_td("auth|sso|error_homeserver"));
+                displayError(_td("auth|proconnect|error_homeserver"));
                 return
             }
             
@@ -98,7 +98,7 @@ export default function EmailVerificationPage() {
             setLoading(false);
 
         } catch(err) {
-            displayError(_td("auth|sso|error"));
+            displayError(_td("auth|proconnect|error"));
         }
     }
 
@@ -115,14 +115,14 @@ export default function EmailVerificationPage() {
             <AuthHeader/>
             <AuthBody>
                 <h1>
-                    {_t("auth|sso|email_title")}
+                    {_t("auth|proconnect|email_title")}
                 </h1>
                 <form onSubmit={onSubmit} className="tc_pronnect">
                     <fieldset disabled={loading} className="tc_login">
                         <div className="mx_AuthBody_fieldRow">
                             <EmailField
                                 name="check_email" // define a name so browser's password autofill gets less confused
-                                label={_td("auth|sso|email_placeholder")}
+                                label={_td("auth|proconnect|email_placeholder")}
                                 labelRequired={_td("auth|forgot_password_email_required")}
                                 labelInvalid={_td("auth|forgot_password_email_invalid")}
                                 value={email}
@@ -145,7 +145,7 @@ export default function EmailVerificationPage() {
                                     onLoginByPasswordClick();
                                 }}
                             >
-                                {_t("auth|sso|sign_in_password_instead")}
+                                {_t("auth|proconnect|sign_in_password_instead")}
                             </AccessibleButton>
                         </div>
                     </fieldset>
