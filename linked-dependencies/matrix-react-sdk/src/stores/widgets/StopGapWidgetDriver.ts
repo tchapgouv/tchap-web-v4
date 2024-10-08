@@ -1,17 +1,9 @@
 /*
- * Copyright 2020 - 2023 The Matrix.org Foundation C.I.C.
+ * Copyright 2024 New Vector Ltd.
+ * Copyright 2020-2023 The Matrix.org Foundation C.I.C.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+ * Please see LICENSE files in the repository root for full details.
  */
 
 import {
@@ -73,6 +65,7 @@ import { navigateToPermalink } from "../../utils/permalinks/navigator";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { ModuleRunner } from "../../modules/ModuleRunner";
 import SettingsStore from "../../settings/SettingsStore";
+import { Media } from "../../customisations/Media";
 
 // TODO: Purge this from the universe
 
@@ -182,7 +175,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomCreate).raw,
             );
 
-            const sendRecvRoomEvents = ["io.element.call.encryption_keys"];
+            const sendRecvRoomEvents = ["io.element.call.encryption_keys", EventType.Reaction, EventType.RoomRedaction];
             for (const eventType of sendRecvRoomEvents) {
                 this.allowedCapabilities.add(WidgetEventCapability.forRoomEvent(EventDirection.Send, eventType).raw);
                 this.allowedCapabilities.add(WidgetEventCapability.forRoomEvent(EventDirection.Receive, eventType).raw);
@@ -678,5 +671,19 @@ export class StopGapWidgetDriver extends WidgetDriver {
         const uploadResult = await client.uploadContent(file);
 
         return { contentUri: uploadResult.content_uri };
+    }
+
+    /**
+     * Download a file from the media repository on the homeserver.
+     *
+     * @param contentUri - the MXC URI of the file to download
+     * @returns an object with: file - response contents as Blob
+     */
+    public async downloadFile(contentUri: string): Promise<{ file: XMLHttpRequestBodyInit }> {
+        const client = MatrixClientPeg.safeGet();
+        const media = new Media({ mxc: contentUri }, client);
+        const response = await media.downloadSource();
+        const blob = await response.blob();
+        return { file: blob };
     }
 }

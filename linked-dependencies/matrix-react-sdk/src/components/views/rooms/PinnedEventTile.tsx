@@ -1,28 +1,21 @@
 /*
-Copyright 2017 Travis Ralston
+Copyright 2024 New Vector Ltd.
 Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2017 Travis Ralston
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import React, { JSX, useCallback, useState } from "react";
 import { EventTimeline, EventType, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { IconButton, Menu, MenuItem, Separator, Text } from "@vector-im/compound-web";
+import { IconButton, Menu, MenuItem, Separator, Tooltip } from "@vector-im/compound-web";
 import { Icon as ViewIcon } from "@vector-im/compound-design-tokens/icons/visibility-on.svg";
 import { Icon as UnpinIcon } from "@vector-im/compound-design-tokens/icons/unpin.svg";
 import { Icon as ForwardIcon } from "@vector-im/compound-design-tokens/icons/forward.svg";
 import { Icon as TriggerIcon } from "@vector-im/compound-design-tokens/icons/overflow-horizontal.svg";
 import { Icon as DeleteIcon } from "@vector-im/compound-design-tokens/icons/delete.svg";
+import { Icon as ThreadIcon } from "@vector-im/compound-design-tokens/icons/threads.svg";
 import classNames from "classnames";
 
 import dis from "../../../dispatcher/dispatcher";
@@ -39,6 +32,9 @@ import { isContentActionable } from "../../../utils/EventUtils";
 import { getForwardableEvent } from "../../../events";
 import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwardDialogPayload";
 import { createRedactEventDialog } from "../dialogs/ConfirmRedactDialog";
+import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayload";
+import PinningUtils from "../../../utils/PinningUtils.ts";
+import PosthogTrackers from "../../../PosthogTrackers.ts";
 
 const AVATAR_SIZE = "32px";
 
@@ -69,6 +65,9 @@ export function PinnedEventTile({ event, room, permalinkCreator }: PinnedEventTi
         throw new Error("Pinned event unexpectedly has no sender");
     }
 
+    const isInThread = Boolean(event.threadRootId);
+    const displayThreadInfo = !event.isThreadRoot && isInThread;
+
     return (
         <div className="mx_PinnedEventTile" role="listitem">
             <div>
@@ -81,13 +80,11 @@ export function PinnedEventTile({ event, room, permalinkCreator }: PinnedEventTi
             </div>
             <div className="mx_PinnedEventTile_wrapper">
                 <div className="mx_PinnedEventTile_top">
-                    <Text
-                        weight="semibold"
-                        className={classNames("mx_PinnedEventTile_sender", getUserNameColorClass(sender))}
-                        as="span"
-                    >
-                        {event.sender?.name || sender}
-                    </Text>
+                    <Tooltip label={event.sender?.name || sender}>
+                        <span className={classNames("mx_PinnedEventTile_sender", getUserNameColorClass(sender))}>
+                            {event.sender?.name || sender}
+                        </span>
+                    </Tooltip>
                     <PinMenu event={event} room={room} permalinkCreator={permalinkCreator} />
                 </div>
                 <MessageEvent
@@ -97,6 +94,36 @@ export function PinnedEventTile({ event, room, permalinkCreator }: PinnedEventTi
                     permalinkCreator={permalinkCreator}
                     replacingEventId={event.replacingEventId()}
                 />
+                {displayThreadInfo && (
+                    <div className="mx_PinnedEventTile_thread">
+                        <ThreadIcon />
+                        {_t(
+                            "right_panel|pinned_messages|reply_thread",
+                            {},
+                            {
+                                link: (sub) => (
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            if (!event.threadRootId) return;
+
+                                            const rootEvent = room.findEventById(event.threadRootId);
+                                            if (!rootEvent) return;
+
+                                            dis.dispatch<ShowThreadPayload>({
+                                                action: Action.ShowThread,
+                                                rootEvent: rootEvent,
+                                                push: true,
+                                            });
+                                        }}
+                                    >
+                                        {sub}
+                                    </button>
+                                ),
+                            },
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -118,6 +145,8 @@ function PinMenu({ event, room, permalinkCreator }: PinMenuProps): JSX.Element {
      * View the event in the timeline.
      */
     const onViewInTimeline = useCallback(() => {
+        PosthogTrackers.trackInteraction("PinnedMessageListViewTimeline");
+
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: event.getId(),
@@ -129,30 +158,18 @@ function PinMenu({ event, room, permalinkCreator }: PinMenuProps): JSX.Element {
 
     /**
      * Whether the client can unpin the event.
-     * Pin and unpin are using the same permission.
+     * If the room state change, we want to check again the permission
      */
-    const canUnpin = useRoomState(room, (state) =>
-        state.mayClientSendStateEvent(EventType.RoomPinnedEvents, matrixClient),
-    );
+    const canUnpin = useRoomState(room, () => PinningUtils.canUnpin(matrixClient, event));
 
     /**
      * Unpin the event.
      * @param event
      */
     const onUnpin = useCallback(async (): Promise<void> => {
-        const pinnedEvents = room
-            .getLiveTimeline()
-            .getState(EventTimeline.FORWARDS)
-            ?.getStateEvents(EventType.RoomPinnedEvents, "");
-        if (pinnedEvents?.getContent()?.pinned) {
-            const pinned = pinnedEvents.getContent().pinned;
-            const index = pinned.indexOf(event.getId());
-            if (index !== -1) {
-                pinned.splice(index, 1);
-                await matrixClient.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned }, "");
-            }
-        }
-    }, [event, room, matrixClient]);
+        await PinningUtils.pinOrUnpinEvent(matrixClient, event);
+        PosthogTrackers.trackPinUnpinMessage("Unpin", "MessagePinningList");
+    }, [event, matrixClient]);
 
     const contentActionable = isContentActionable(event);
     // Get the forwardable event for the given event

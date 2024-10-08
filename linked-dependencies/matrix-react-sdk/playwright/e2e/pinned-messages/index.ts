@@ -1,17 +1,9 @@
 /*
+ * Copyright 2024 New Vector Ltd.
  * Copyright 2024 The Matrix.org Foundation C.I.C.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+ * Please see LICENSE files in the repository root for full details.
  */
 
 import { Page } from "@playwright/test";
@@ -100,13 +92,35 @@ export class Helpers {
     }
 
     /**
-     * Pin the given message
+     * Pin the given message from the quick actions
+     * @param message
+     * @param unpin
+     */
+    async pinMessageFromQuickActions(message: string, unpin = false) {
+        const timelineMessage = this.page.locator(".mx_MTextBody", { hasText: message });
+        await timelineMessage.hover();
+        await this.page.getByRole("button", { name: unpin ? "Unpin" : "Pin", exact: true }).click();
+    }
+
+    /**
+     * Pin the given messages from the quick actions
+     * @param messages
+     * @param unpin
+     */
+    async pinMessagesFromQuickActions(messages: string[], unpin = false) {
+        for (const message of messages) {
+            await this.pinMessageFromQuickActions(message, unpin);
+        }
+    }
+
+    /**
+     * Pin the given message from the contextual menu
      * @param message
      */
     async pinMessage(message: string) {
         const timelineMessage = this.page.locator(".mx_MTextBody", { hasText: message });
         await timelineMessage.click({ button: "right" });
-        await this.page.getByRole("menuitem", { name: "Pin" }).click();
+        await this.page.getByRole("menuitem", { name: "Pin", exact: true }).click();
     }
 
     /**
@@ -146,9 +160,8 @@ export class Helpers {
 
     /**
      * Return the right panel
-     * @private
      */
-    private getRightPanel() {
+    public getRightPanel() {
         return this.page.locator("#mx_RightPanel");
     }
 
@@ -161,7 +174,6 @@ export class Helpers {
         await expect(rightPanel.getByRole("heading", { name: "Pinned messages" })).toHaveText(
             `${messages.length} Pinned messages`,
         );
-        await expect(rightPanel).toMatchScreenshot(`pinned-messages-list-messages-${messages.length}.png`);
 
         const list = rightPanel.getByRole("list");
         await expect(list.getByRole("listitem")).toHaveCount(messages.length);
@@ -220,6 +232,36 @@ export class Helpers {
 
         await item.getByRole("button").click();
         await this.page.getByRole("menu", { name: "Open menu" }).getByRole("menuitem", { name: "Unpin" }).click();
+    }
+
+    /**
+     * Return the banner
+     * @private
+     */
+    public getBanner() {
+        return this.page.getByTestId("pinned-message-banner");
+    }
+
+    /**
+     * Assert that the banner contains the given message
+     * @param msg
+     */
+    async assertMessageInBanner(msg: string) {
+        await expect(this.getBanner().getByText(msg)).toBeVisible();
+    }
+
+    /**
+     * Return the view all button
+     */
+    public getViewAllButton() {
+        return this.page.getByRole("button", { name: "View all" });
+    }
+
+    /**
+     * Return the close list button
+     */
+    public getCloseListButton() {
+        return this.page.getByRole("button", { name: "Close list" });
     }
 }
 
