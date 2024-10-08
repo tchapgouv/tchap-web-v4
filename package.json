@@ -1,12 +1,8 @@
 {
     "name": "element-web",
-<<<<<<< HEAD
     "productName": "Tchap",
     "version": "4.8.3",
-    "version-element-web": "1.11.76",
-=======
-    "version": "1.11.80",
->>>>>>> v1.11.80
+    "version-element-web": "1.11.80",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
     "repository": {
@@ -55,14 +51,9 @@
         "build:module_system": "ts-node --project ./tsconfig.module_system.json module_system/scripts/install.ts",
         "build:github": "yarn build:genfiles && yarn build:bundle",
         "dist": "scripts/package.sh",
-<<<<<<< HEAD
         "scalingo-postbuild": "scripts/tchap/package-tchap.sh",
         "start": "export VERSION=$(scripts/tchap/get-version-from-package-json.sh) && concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n modules,res \"yarn build:module_system\" \"yarn build:res\" && concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js\"",
-        "start:https": "concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js --https\"",
-=======
-        "start": "concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n modules,res \"yarn build:module_system\" \"yarn build:res\" && concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js\"",
         "start:https": "concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js --server-type https\"",
->>>>>>> v1.11.80
         "start:res": "ts-node scripts/copy-res.ts -w",
         "start:js": "webpack serve --output-path webapp --output-filename=bundles/_dev_/[name].js --output-chunk-filename=bundles/_dev_/[name].js --mode development",
         "lint": "yarn lint:types && yarn lint:js && yarn lint:style && yarn lint:workflows",
@@ -107,13 +98,8 @@
         "jsrsasign": "^11.0.0",
         "katex": "^0.16.0",
         "lodash": "^4.17.21",
-<<<<<<< HEAD
-        "matrix-js-sdk": "34.4.0",
-        "matrix-react-sdk": "file:./linked-dependencies/matrix-react-sdk",
-=======
         "matrix-js-sdk": "34.7.0",
-        "matrix-react-sdk": "3.112.0",
->>>>>>> v1.11.80
+        "matrix-react-sdk": "file:./linked-dependencies/matrix-react-sdk",
         "matrix-widget-api": "^1.8.2",
         "react": "17.0.2",
         "react-dom": "17.0.2",
