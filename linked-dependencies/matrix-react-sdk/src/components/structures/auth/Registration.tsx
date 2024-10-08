@@ -643,7 +643,7 @@ export default class Registration extends React.Component<IProps, IState> {
             if (!this.props.mobileRegister && this.state.ssoFlow && TchapUIFeature.isSSOFlowActive()) {
                 ssoSection = <>
                     <ProconnectButton/>
-                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|sso|or")}</p>
+                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
                 </>
             }
             // }
