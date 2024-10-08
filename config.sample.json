@@ -24,7 +24,12 @@
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
+<<<<<<< HEAD
     "brand": "Tchap",
+=======
+    "force_verification": false,
+    "brand": "Element",
+>>>>>>> v1.11.80
     "integrations_ui_url": "https://scalar.vector.im/",
     "integrations_rest_url": "https://scalar.vector.im/api",
     "integrations_widgets_urls": [
@@ -34,6 +39,7 @@
         "https://scalar-staging.vector.im/api",
         "https://scalar-staging.riot.im/scalar/api"
     ],
+    "default_widget_container_height": 280,
     "default_country_code": "GB",
     "show_labs_settings": false,
     "features": {
