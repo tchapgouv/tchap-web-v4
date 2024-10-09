@@ -1,17 +1,9 @@
 /*
+Copyright 2024 New Vector Ltd.
 Copyright 2023 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import React from "react";
@@ -43,6 +35,7 @@ describe("<PinnedEventTile />", () => {
         mockClient = stubClient();
         room = new Room(roomId, mockClient, userId);
         permalinkCreator = new RoomPermalinkCreator(room);
+        mockClient.getRoom = jest.fn().mockReturnValue(room);
         jest.spyOn(dis, "dispatch").mockReturnValue(undefined);
     });
 
@@ -95,6 +88,36 @@ describe("<PinnedEventTile />", () => {
     it("should render pinned event", () => {
         const { container } = renderComponent(makePinEvent());
         expect(container).toMatchSnapshot();
+    });
+
+    it("should render pinned event with thread info", async () => {
+        const event = makePinEvent({
+            content: {
+                "body": "First pinned message",
+                "msgtype": "m.text",
+                "m.relates_to": {
+                    "event_id": "$threadRootEventId",
+                    "is_falling_back": true,
+                    "m.in_reply_to": {
+                        event_id: "$$threadRootEventId",
+                    },
+                    "rel_type": "m.thread",
+                },
+            },
+        });
+        const threadRootEvent = makePinEvent({ event_id: "$threadRootEventId" });
+        jest.spyOn(room, "findEventById").mockReturnValue(threadRootEvent);
+
+        const { container } = renderComponent(event);
+        expect(container).toMatchSnapshot();
+
+        await userEvent.click(screen.getByRole("button", { name: "thread message" }));
+        // Check that the thread is opened
+        expect(dis.dispatch).toHaveBeenCalledWith({
+            action: Action.ShowThread,
+            rootEvent: threadRootEvent,
+            push: true,
+        });
     });
 
     it("should render the menu without unpin and delete", async () => {

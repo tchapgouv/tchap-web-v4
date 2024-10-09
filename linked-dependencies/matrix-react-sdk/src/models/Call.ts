@@ -1,17 +1,9 @@
 /*
+Copyright 2024 New Vector Ltd.
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import {
@@ -346,7 +338,7 @@ export class JitsiCall extends Call {
 
     public static get(room: Room): JitsiCall | null {
         // Only supported in video rooms
-        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
+        if (room.isElementVideoRoom()) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             // The isVideoChannel field differentiates rich Jitsi calls from bare Jitsi widgets
             const jitsiWidget = apps.find((app) => WidgetType.JITSI.matches(app.type) && app.data?.isVideoChannel);
@@ -813,33 +805,24 @@ export class ElementCall extends Call {
     }
 
     public static get(room: Room): ElementCall | null {
-        // Only supported in the new group call experience or in video rooms.
+        const apps = WidgetStore.instance.getApps(room.roomId);
+        const hasEcWidget = apps.some((app) => WidgetType.CALL.matches(app.type));
+        const session = room.client.matrixRTC.getRoomSession(room);
 
-        if (
-            SettingsStore.getValue("feature_group_calls") ||
-            (SettingsStore.getValue("feature_video_rooms") &&
-                SettingsStore.getValue("feature_element_call_video_rooms") &&
-                room.isCallRoom())
-        ) {
-            const apps = WidgetStore.instance.getApps(room.roomId);
-            const hasEcWidget = apps.some((app) => WidgetType.CALL.matches(app.type));
-            const session = room.client.matrixRTC.getRoomSession(room);
-
-            // A call is present if we
-            // - have a widget: This means the create function was called.
-            // - or there is a running session where we have not yet created a widget for.
-            // - or this is a call room. Then we also always want to show a call.
-            if (hasEcWidget || session.memberships.length !== 0 || room.isCallRoom()) {
-                // create a widget for the case we are joining a running call and don't have on yet.
-                const availableOrCreatedWidget = ElementCall.createOrGetCallWidget(
-                    room.roomId,
-                    room.client,
-                    undefined,
-                    undefined,
-                    isVideoRoom(room),
-                );
-                return new ElementCall(session, availableOrCreatedWidget, room.client);
-            }
+        // A call is present if we
+        // - have a widget: This means the create function was called.
+        // - or there is a running session where we have not yet created a widget for.
+        // - or this is a call room. Then we also always want to show a call.
+        if (hasEcWidget || session.memberships.length !== 0 || room.isCallRoom()) {
+            // create a widget for the case we are joining a running call and don't have on yet.
+            const availableOrCreatedWidget = ElementCall.createOrGetCallWidget(
+                room.roomId,
+                room.client,
+                undefined,
+                undefined,
+                isVideoRoom(room),
+            );
+            return new ElementCall(session, availableOrCreatedWidget, room.client);
         }
 
         return null;

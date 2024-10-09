@@ -1,3 +1,89 @@
+Changes in [1.11.80](https://github.com/element-hq/element-web/releases/tag/v1.11.80) (2024-10-08)
+==================================================================================================
+## ✨ Features
+
+* Add doc for 'force\_verification config option ([#28035](https://github.com/element-hq/element-web/pull/28035)). Contributed by @dbkr.
+* Roll back change to device isolation mode ([#104](https://github.com/element-hq/matrix-react-sdk/pull/104)). Contributed by @richvdh.
+* Remove right panel toggling behaviour on room header buttons ([#100](https://github.com/element-hq/matrix-react-sdk/pull/100)). Contributed by @t3chguy.
+* Improve error display for messages sent from insecure devices ([#93](https://github.com/element-hq/matrix-react-sdk/pull/93)). Contributed by @richvdh.
+* Add labs option to exclude unverified devices ([#92](https://github.com/element-hq/matrix-react-sdk/pull/92)). Contributed by @richvdh.
+* Improve contrast for timestamps, date separators \& spotlight trigger ([#91](https://github.com/element-hq/matrix-react-sdk/pull/91)). Contributed by @t3chguy.
+* Open room settings on room header avatar click ([#88](https://github.com/element-hq/matrix-react-sdk/pull/88)). Contributed by @t3chguy.
+* Use `strong` over `b` for improved a11y semantics ([#41](https://github.com/element-hq/matrix-react-sdk/pull/41)). Contributed by @t3chguy.
+* Grant Element Call widget capabilities for "raise hand" feature ([#82](https://github.com/element-hq/matrix-react-sdk/pull/82)). Contributed by @AndrewFerr.
+* Mobile registration optimizations and tests ([#62](https://github.com/element-hq/matrix-react-sdk/pull/62)). Contributed by @langleyd.
+* Ignore chat effect when older than 48h ([#48](https://github.com/element-hq/matrix-react-sdk/pull/48)). Contributed by @florianduros.
+
+## 🐛 Bug Fixes
+
+* Update native OIDC callback url to be RFC8252 compliant ([#28096](https://github.com/element-hq/element-web/pull/28096)). Contributed by @t3chguy.
+* Update icons to include transparency ([#28040](https://github.com/element-hq/element-web/pull/28040)). Contributed by @t3chguy.
+* Fix default\_widget\_container\_height in sample config ([#28034](https://github.com/element-hq/element-web/pull/28034)). Contributed by @dbkr.
+* Fix untranslated keys being rendered in `/help` dialog ([#90](https://github.com/element-hq/matrix-react-sdk/pull/90)). Contributed by @t3chguy.
+* Ensure timeline search results are visible even in video rooms ([#96](https://github.com/element-hq/matrix-react-sdk/pull/96)). Contributed by @t3chguy.
+* Pop right panel timeline when unmaximising widget to avoid double timeline ([#94](https://github.com/element-hq/matrix-react-sdk/pull/94)). Contributed by @t3chguy.
+* Fix accessible label on left panel spotlight trigger ([#87](https://github.com/element-hq/matrix-react-sdk/pull/87)). Contributed by @t3chguy.
+* Crypto: fix display of device key ([#86](https://github.com/element-hq/matrix-react-sdk/pull/86)). Contributed by @richvdh.
+
+
+
+Changes in [1.11.79](https://github.com/element-hq/element-web/releases/tag/v1.11.79) (2024-10-01)
+==================================================================================================
+* No changes
+
+## ✨ Features
+
+* [Backport staging] Allow joining calls and video rooms without enabling the labs flags ([#106](https://github.com/element-hq/matrix-react-sdk/pull/106)). Contributed by @RiotRobot.
+
+
+
+Changes in [1.11.78](https://github.com/element-hq/element-web/releases/tag/v1.11.78) (2024-09-24)
+==================================================================================================
+## ✨ Features
+
+* Add Release announcement for the pinning message list ([#46](https://github.com/element-hq/matrix-react-sdk/pull/46)). Contributed by @florianduros.
+* Unlabs feature pinning ([#22](https://github.com/element-hq/matrix-react-sdk/pull/22)). Contributed by @florianduros.
+* Add mobile registration ([#42](https://github.com/element-hq/matrix-react-sdk/pull/42)). Contributed by @langleyd.
+* Add support for `org.matrix.cross_signing_reset` UIA stage flow ([#34](https://github.com/element-hq/matrix-react-sdk/pull/34)). Contributed by @t3chguy.
+* Add timezone to user profile ([#20](https://github.com/element-hq/matrix-react-sdk/pull/20)). Contributed by @Half-Shot.
+* Add config option to force verification ([#29](https://github.com/element-hq/matrix-react-sdk/pull/29)). Contributed by @dbkr.
+* Reduce pinned message banner size ([#28](https://github.com/element-hq/matrix-react-sdk/pull/28)). Contributed by @florianduros.
+* Enable message pinning labs by default ([#25](https://github.com/element-hq/matrix-react-sdk/pull/25)). Contributed by @florianduros.
+* Remove release announcement of the new header ([#23](https://github.com/element-hq/matrix-react-sdk/pull/23)). Contributed by @florianduros.
+
+## 🐛 Bug Fixes
+
+* Fix timeout type ([#40](https://github.com/element-hq/matrix-react-sdk/pull/40)). Contributed by @dbkr.
+* Fix huge usage bandwidth and performance issue of pinned message banner. ([#37](https://github.com/element-hq/matrix-react-sdk/pull/37)). Contributed by @florianduros.
+* Reverse order of pinned message list ([#19](https://github.com/element-hq/matrix-react-sdk/pull/19)). Contributed by @florianduros.
+
+
+Changes in [1.11.77](https://github.com/element-hq/element-web/releases/tag/v1.11.77) (2024-09-10)
+==================================================================================================
+## ✨ Features
+
+* Add docs for widget container height option ([#27922](https://github.com/element-hq/element-web/pull/27922)). Contributed by @dbkr.
+* Allow user to set timezone ([#12775](https://github.com/matrix-org/matrix-react-sdk/pull/12775)). Contributed by @Timshel.
+* Implement download\_file in widget driver ([#12931](https://github.com/matrix-org/matrix-react-sdk/pull/12931)). Contributed by @weeman1337.
+* Sort the pinning message list in the same order than the banner. By timeline order. ([#12937](https://github.com/matrix-org/matrix-react-sdk/pull/12937)). Contributed by @florianduros.
+* Display pinned messages on a banner at the top of a room ([#12917](https://github.com/matrix-org/matrix-react-sdk/pull/12917)). Contributed by @florianduros.
+* Add a config option to control the default widget container height ([#12893](https://github.com/matrix-org/matrix-react-sdk/pull/12893)). Contributed by @dbkr.
+* RTE drafts ([#12674](https://github.com/matrix-org/matrix-react-sdk/pull/12674)). Contributed by @langleyd.
+* Add thread information in pinned message list ([#12902](https://github.com/matrix-org/matrix-react-sdk/pull/12902)). Contributed by @florianduros.
+* Add Pin/Unpin action in quick access of the message action bar ([#12897](https://github.com/matrix-org/matrix-react-sdk/pull/12897)). Contributed by @florianduros.
+
+## 🐛 Bug Fixes
+
+* Fix read receipt animation ([#12923](https://github.com/matrix-org/matrix-react-sdk/pull/12923)). Contributed by @dbkr.
+* Display the indicator even with one message in pinned message banner ([#12946](https://github.com/matrix-org/matrix-react-sdk/pull/12946)). Contributed by @florianduros.
+* Always display last pinned message on the banner ([#12945](https://github.com/matrix-org/matrix-react-sdk/pull/12945)). Contributed by @florianduros.
+* The pinned message banner or list are triggering  🎉 effect. ([#12944](https://github.com/matrix-org/matrix-react-sdk/pull/12944)). Contributed by @florianduros.
+* Fix reply message truncation on 2 lines ([#12929](https://github.com/matrix-org/matrix-react-sdk/pull/12929)). Contributed by @florianduros.
+* Fix pin/unpin slowness and non refresh from the message action bar ([#12934](https://github.com/matrix-org/matrix-react-sdk/pull/12934)). Contributed by @florianduros.
+* Ignore desktop for minimum browser support. ([#12928](https://github.com/matrix-org/matrix-react-sdk/pull/12928)). Contributed by @florianduros.
+
+
+
 Changes in [1.11.76](https://github.com/element-hq/element-web/releases/tag/v1.11.76) (2024-08-27)
 ==================================================================================================
 ## ✨ Features

@@ -1,17 +1,9 @@
 /*
+Copyright 2024 New Vector Ltd.
 Copyright 2020 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import React, { ChangeEvent, SyntheticEvent, useContext, useEffect, useRef, useState } from "react";
@@ -57,8 +49,6 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
-import { useFeatureEnabled } from "../../../hooks/useSettings";
-import { usePinnedEvents } from "./PinnedMessagesCard";
 import RoomName from "../elements/RoomName";
 import ExportDialog from "../dialogs/ExportDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
@@ -80,7 +70,9 @@ import { useDispatcher } from "../../../hooks/useDispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { Key } from "../../../Keyboard";
 import { useTransition } from "../../../hooks/useTransition";
-import { useIsVideoRoom } from "../../../utils/video-rooms";
+import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
+import { usePinnedEvents } from "../../../hooks/usePinnedEvents";
+import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement.tsx";
 
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: tchap-room-icons
 
@@ -98,6 +90,7 @@ const onRoomFilesClick = (): void => {
 };
 
 const onRoomPinsClick = (): void => {
+    PosthogTrackers.trackInteraction("PinnedMessageRoomInfoButton");
     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.PinnedMessages }, true);
 };
 
@@ -229,7 +222,7 @@ const RoomSummaryCard: React.FC<IProps> = ({
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
-    const isVideoRoom = useIsVideoRoom(room);
+    const isVideoRoom = calcIsVideoRoom(room);
 
     const roomState = useRoomState(room);
     const directRoomsList = useAccountData<Record<string, string[]>>(room.client, EventType.Direct);
@@ -330,8 +323,7 @@ const RoomSummaryCard: React.FC<IProps> = ({
         </header>
     );
 
-    const pinningEnabled = useFeatureEnabled("feature_pinning");
-    const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
+    const pinCount = usePinnedEvents(room).length;
 
     const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
         RoomListStore.instance.getTagsForRoom(room),
@@ -398,17 +390,25 @@ const RoomSummaryCard: React.FC<IProps> = ({
 
                 {!isVideoRoom && (
                     <>
-                        {pinningEnabled && (
-                            <MenuItem
-                                Icon={PinIcon}
-                                label={_t("right_panel|pinned_messages_button")}
-                                onSelect={onRoomPinsClick}
-                            >
-                                <Text as="span" size="sm">
-                                    {pinCount}
-                                </Text>
-                            </MenuItem>
-                        )}
+                        <ReleaseAnnouncement
+                            feature="pinningMessageList"
+                            header={_t("right_panel|pinned_messages|release_announcement|title")}
+                            description={_t("right_panel|pinned_messages|release_announcement|description")}
+                            closeLabel={_t("right_panel|pinned_messages|release_announcement|close")}
+                            placement="top"
+                        >
+                            <div>
+                                <MenuItem
+                                    Icon={PinIcon}
+                                    label={_t("right_panel|pinned_messages_button")}
+                                    onSelect={onRoomPinsClick}
+                                >
+                                    <Text as="span" size="sm">
+                                        {pinCount}
+                                    </Text>
+                                </MenuItem>
+                            </div>
+                        </ReleaseAnnouncement>
                         <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
                     </>
                 )}

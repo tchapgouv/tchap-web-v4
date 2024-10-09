@@ -1,18 +1,10 @@
 /*
+Copyright 2024 New Vector Ltd.
+Copyright 2019-2021 The Matrix.org Foundation C.I.C.
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019, 2021 The Matrix.org Foundation C.I.C.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+Please see LICENSE files in the repository root for full details.
 */
 
 import React, { FC, useState, useMemo, useCallback } from "react";
@@ -259,8 +251,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
     const [busy, setBusy] = useState(false);
     const showButtons = useSettingValue<boolean>("showCallButtonsInComposer");
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
-    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
-    const isVideoRoom = useMemo(() => videoRoomsEnabled && calcIsVideoRoom(room), [videoRoomsEnabled, room]);
+    const isVideoRoom = useMemo(() => calcIsVideoRoom(room), [room]);
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
     }, []);
@@ -298,53 +289,13 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
 
     if (isVideoRoom || !showButtons) {
         return null;
-    } else if (groupCallsEnabled) {
-        if (useElementCallExclusively) {
-            if (hasGroupCall) {
-                return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")));
-            } else if (mayCreateElementCalls) {
-                return makeVideoCallButton("element");
-            } else {
-                return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call")));
-            }
-        } else if (hasLegacyCall || hasJitsiWidget) {
-            return (
-                <>
-                    {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")))}
-                    {makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")))}
-                </>
-            );
-        } else if (functionalMembers.length <= 1) {
-            return (
-                <>
-                    {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_no_one_here")))}
-                    {makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_one_here")))}
-                </>
-            );
-        } else if (functionalMembers.length === 2) {
-            return (
-                <>
-                    {makeVoiceCallButton("legacy_or_jitsi")}
-                    {makeVideoCallButton("legacy_or_element")}
-                </>
-            );
-        } else if (mayEditWidgets) {
-            return (
-                <>
-                    {makeVoiceCallButton("legacy_or_jitsi")}
-                    {makeVideoCallButton(mayCreateElementCalls ? "jitsi_or_element" : "legacy_or_jitsi")}
-                </>
-            );
+    } else if (groupCallsEnabled && useElementCallExclusively) {
+        if (hasGroupCall) {
+            return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")));
+        } else if (mayCreateElementCalls) {
+            return makeVideoCallButton("element");
         } else {
-            const videoCallBehavior = mayCreateElementCalls
-                ? "element"
-                : new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call"));
-            return (
-                <>
-                    {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_voice_call")))}
-                    {makeVideoCallButton(videoCallBehavior)}
-                </>
-            );
+            return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call")));
         }
     } else if (hasLegacyCall || hasJitsiWidget) {
         return (
@@ -360,18 +311,31 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
                 {makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_one_here")))}
             </>
         );
-    } else if (functionalMembers.length === 2 || mayEditWidgets) {
+    } else if (functionalMembers.length === 2) {
         return (
             <>
                 {makeVoiceCallButton("legacy_or_jitsi")}
-                {makeVideoCallButton("legacy_or_jitsi")}
+                {makeVideoCallButton(groupCallsEnabled ? "legacy_or_element" : "legacy_or_jitsi")}
+            </>
+        );
+    } else if (mayEditWidgets) {
+        return (
+            <>
+                {makeVoiceCallButton("legacy_or_jitsi")}
+                {makeVideoCallButton(
+                    groupCallsEnabled && mayCreateElementCalls ? "jitsi_or_element" : "legacy_or_jitsi",
+                )}
             </>
         );
     } else {
+        const videoCallBehavior =
+            groupCallsEnabled && mayCreateElementCalls
+                ? "element"
+                : new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call"));
         return (
             <>
                 {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_voice_call")))}
-                {makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call")))}
+                {makeVideoCallButton(videoCallBehavior)}
             </>
         );
     }
@@ -753,7 +717,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     }
 
     public render(): React.ReactNode {
-        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && calcIsVideoRoom(this.props.room);
+        const isVideoRoom = calcIsVideoRoom(this.props.room);
 
         let roomAvatar: JSX.Element | null = null;
         if (this.props.room) {

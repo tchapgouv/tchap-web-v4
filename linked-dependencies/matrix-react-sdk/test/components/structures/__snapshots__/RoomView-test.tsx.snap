@@ -10,22 +10,23 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
       style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x);"
     >
       <button
-        aria-expanded="false"
-        aria-haspopup="dialog"
+        aria-label="Open room settings"
+        aria-live="off"
+        class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+        data-color="3"
+        data-testid="avatar-img"
+        data-type="round"
+        role="button"
+        style="--cpd-avatar-size: 40px;"
+        tabindex="-1"
+      >
+        u
+      </button>
+      <button
         aria-label="Room info"
         class="mx_RoomHeader_infoWrapper"
         tabindex="0"
       >
-        <span
-          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-          data-color="3"
-          data-testid="avatar-img"
-          data-type="round"
-          role="presentation"
-          style="--cpd-avatar-size: 40px;"
-        >
-          u
-        </span>
         <div
           class="mx_Box mx_RoomHeader_info mx_Box--flex"
           style="--mx-box-flex: 1;"
@@ -182,22 +183,23 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
       style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x);"
     >
       <button
-        aria-expanded="false"
-        aria-haspopup="dialog"
+        aria-label="Open room settings"
+        aria-live="off"
+        class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+        data-color="3"
+        data-testid="avatar-img"
+        data-type="round"
+        role="button"
+        style="--cpd-avatar-size: 40px;"
+        tabindex="-1"
+      >
+        u
+      </button>
+      <button
         aria-label="Room info"
         class="mx_RoomHeader_infoWrapper"
         tabindex="0"
       >
-        <span
-          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-          data-color="3"
-          data-testid="avatar-img"
-          data-type="round"
-          role="presentation"
-          style="--cpd-avatar-size: 40px;"
-        >
-          u
-        </span>
         <div
           class="mx_Box mx_RoomHeader_info mx_Box--flex"
           style="--mx-box-flex: 1;"
@@ -374,9 +376,9 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
                 <p>
                   <span>
                     Send your first message to invite 
-                    <b>
+                    <strong>
                       @user:example.com
-                    </b>
+                    </strong>
                      to chat
                   </span>
                 </p>
@@ -439,22 +441,23 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
       style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x);"
     >
       <button
-        aria-expanded="false"
-        aria-haspopup="dialog"
+        aria-label="Open room settings"
+        aria-live="off"
+        class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+        data-color="3"
+        data-testid="avatar-img"
+        data-type="round"
+        role="button"
+        style="--cpd-avatar-size: 40px;"
+        tabindex="-1"
+      >
+        u
+      </button>
+      <button
         aria-label="Room info"
         class="mx_RoomHeader_infoWrapper"
         tabindex="0"
       >
-        <span
-          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-          data-color="3"
-          data-testid="avatar-img"
-          data-type="round"
-          role="presentation"
-          style="--cpd-avatar-size: 40px;"
-        >
-          u
-        </span>
         <div
           class="mx_Box mx_RoomHeader_info mx_Box--flex"
           style="--mx-box-flex: 1;"
@@ -631,9 +634,9 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                 <p>
                   <span>
                     Send your first message to invite 
-                    <b>
+                    <strong>
                       @user:example.com
-                    </b>
+                    </strong>
                      to chat
                   </span>
                 </p>
@@ -773,22 +776,23 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
       style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x);"
     >
       <button
-        aria-expanded="false"
-        aria-haspopup="dialog"
+        aria-label="Open room settings"
+        aria-live="off"
+        class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+        data-color="3"
+        data-testid="avatar-img"
+        data-type="round"
+        role="button"
+        style="--cpd-avatar-size: 40px;"
+        tabindex="-1"
+      >
+        u
+      </button>
+      <button
         aria-label="Room info"
         class="mx_RoomHeader_infoWrapper"
         tabindex="0"
       >
-        <span
-          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-          data-color="3"
-          data-testid="avatar-img"
-          data-type="round"
-          role="presentation"
-          style="--cpd-avatar-size: 40px;"
-        >
-          u
-        </span>
         <div
           class="mx_Box mx_RoomHeader_info mx_Box--flex"
           style="--mx-box-flex: 1;"
@@ -960,9 +964,9 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                 <p>
                   <span>
                     Send your first message to invite 
-                    <b>
+                    <strong>
                       @user:example.com
-                    </b>
+                    </strong>
                      to chat
                   </span>
                 </p>
