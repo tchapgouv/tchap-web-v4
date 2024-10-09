@@ -56,5 +56,6 @@
     "common|private",
     "room_list|add_space_label",
     "spaces|error_no_permission_add_space",
-    "auth|continue_with_sso"
+    "auth|continue_with_sso",
+    "room|header_avatar_open_settings_label"
 ]

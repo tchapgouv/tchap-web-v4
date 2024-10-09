@@ -398,7 +398,7 @@ export default function RoomHeader({
                                     indicator={notificationLevelToIndicator(threadNotifications)}
                                     onClick={(evt) => {
                                         evt.stopPropagation();
-                                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
+                                        RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
                                         PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
                                     }}
                                     aria-label={_t("common|threads")}
