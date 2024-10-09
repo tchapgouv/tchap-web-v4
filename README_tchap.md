@@ -1,3 +1,16 @@
+## Config variable
+
+-   tchap_features : Object containing the feature that can be activated by homeserver
+    -   "feature_email_notification": Email notification
+    -   "feature_space": Creation of spaces
+    -   "feature_thread": Activate thread on messages
+    -   "feature_audio_call": Activate 1 to 1 voice call
+    -   "feature_video_call": Activate 1 to 1 video call
+    -   "feature_video_group_call": Activate group call on rooms, for this feature to work, the values of `UIFeature.widgets` and `feature_group_calls` needs to be true
+    -   "feature_screenshare_call": Activate 1 to 1 screenshare
+-   "tchap_sso_flow"
+    -   "isActive": Activate ProConnect SSO flow
+
 ## File structures
 
 -   modules -> used for translation
