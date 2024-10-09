@@ -82,10 +82,17 @@
     "sso-agentconnect-flow": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/386",
         "files": [
-            "src/components/structures/MatrixChat.tsx",
+        "src/components/structures/MatrixChat.tsx",
             "src/components/structures/auth/Registration.tsx",
             "src/components/structures/auth/Login.tsx",
             "src/components/views/auth/Welcome.tsx"
+        ]
+    },
+    "hide-widgets-settings": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1117",
+        "files": [
+            "src/components/views/right_panel/RightPanelTabs.tsx",
+            "src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx"
         ]
     }
 }

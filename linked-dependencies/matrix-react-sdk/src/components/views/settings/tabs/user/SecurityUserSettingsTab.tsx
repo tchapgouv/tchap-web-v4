@@ -36,6 +36,7 @@ import SettingsSubsection, { SettingsSubsectionText } from "../../shared/Setting
 import { useOwnDevices } from "../../devices/useOwnDevices";
 import DiscoverySettings from "../../discovery/DiscoverySettings";
 import SetIntegrationManager from "../../SetIntegrationManager";
+import TchapUIFeature from "../../../../../../../../src/tchap/util/TchapUIFeature";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -377,7 +378,9 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 {warning}
                 { /* :TCHAP: change-sections-order-in-security-privacy-settings - move secureBackup and privacySection, and remove eventIndex */ }
                 {secureBackup}
-                <SetIntegrationManager />
+                {/* :TCHAP: hide-widgets-settings - <SetIntegrationManager />*/}
+                { TchapUIFeature.showWidgetsSettings && <SetIntegrationManager />}
+                {/* end :TCHAP: */}
                 <SettingsSection heading={_t("settings|security|encryption_section")}>
                     {crossSigning}
                     <CryptographyPanel />
