@@ -8,12 +8,16 @@ import { SdkContextClass } from "~matrix-react-sdk/src/contexts/SDKContext";
 import UnwrappedSpacePanel from "~matrix-react-sdk/src/components/views/spaces/SpacePanel";
 import SdkConfig, { ConfigOptions } from "~tchap-web/linked-dependencies/matrix-react-sdk/src/SdkConfig";
 
+jest.mock("~tchap-web/src/tchap/components/views/common/Gaufre.tsx", () => {
+    return jest.fn((props: { isPanelCollapsed: boolean }) => <div>Mocked ChildComponent with text: </div>);
+});
+
 describe("<SpacePanel />", () => {
     const SpacePanel = wrapInSdkContext(wrapInMatrixClientContext(UnwrappedSpacePanel), SdkContextClass.instance);
-    const featureName: string = "feature_thread";
+    const featureThreadName: string = "feature_thread";
     const homeserverName: string = "my.home.server";
 
-    const addHomeserverToMockConfig = (homeservers: string[]) => {
+    const addHomeserverToMockConfig = (homeservers: string[], featureName: string) => {
         // mock SdkConfig.get("tchap_features")
         const config: ConfigOptions = { tchap_features: {} };
         config.tchap_features[featureName] = homeservers;
@@ -29,17 +33,25 @@ describe("<SpacePanel />", () => {
 
     afterEach(() => {
         cleanup();
+        SdkConfig.reset();
+        jest.restoreAllMocks();
+    });
+
+    it("should render as expected", async () => {
+        const { container } = renderSpacePanel();
+
+        expect(container).toMatchSnapshot();
     });
 
     it("returns true when the the homeserver include thread feature", () => {
-        addHomeserverToMockConfig([homeserverName]);
+        addHomeserverToMockConfig([homeserverName], featureThreadName);
         const { container } = renderSpacePanel();
 
         expect(container.getElementsByClassName("mx_ThreadsActivityCentre_container").length).toBe(1);
     });
 
     it("returns false when the the homeserver doesnt include thread feature", async () => {
-        addHomeserverToMockConfig(["other.homeserver"]);
+        addHomeserverToMockConfig(["other.homeserver"], featureThreadName);
         const { container } = renderSpacePanel();
 
         expect(container.getElementsByClassName("mx_ThreadsActivityCentre_container").length).toBe(0);

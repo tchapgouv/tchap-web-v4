@@ -99,6 +99,11 @@ describe("RoomHeader", () => {
         jest.restoreAllMocks();
     });
 
+    it("should render as expected", async () => {
+        const { container } = getComponent();
+        expect(container).toMatchSnapshot();
+    });
+
     it("renders the room header", () => {
         const { container } = getComponent();
         expect(container).toHaveTextContent(ROOM_ID);
