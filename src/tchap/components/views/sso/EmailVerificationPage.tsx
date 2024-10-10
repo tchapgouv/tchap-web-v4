@@ -62,13 +62,18 @@ export default function EmailVerificationPage() {
 
     }
 
+    const isSSOFlowActive = async (login: Login): Promise<boolean> => {
+        const flows = await login.getFlows();
+        return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.sso");
+    }
+
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         setLoading(true);
         const isFieldCorrect = await emailFieldRef.current?.validate({ allowEmpty: false });
 
         if (!isFieldCorrect) {
-            displayError(_td("auth|proconnect|error_email"));
+            displayError(_t("auth|proconnect|error_email"));
             return;
         }
 
@@ -81,16 +86,23 @@ export default function EmailVerificationPage() {
                 return;
             }
 
-            const validatedServerConfig = await setUpCurrentHs(hs);
-
-            if (!validatedServerConfig) {
-                displayError(_td("auth|proconnect|error_homeserver"));
-                return
-            }
-            
             const login = new Login(hs.base_url, hs.base_url, null, {});
 
             const matrixClient= login.createTemporaryClient();
+
+            const validatedServerConfig = await setUpCurrentHs(hs);
+
+            if (!validatedServerConfig) {
+                displayError(_t("auth|proconnect|error_homeserver"));
+                return
+            }
+
+            // check if oidc is activated on HS
+            const canSSO = await isSSOFlowActive(login);
+            if (!canSSO) {
+                displayError(_t("auth|proconnect|error_sso_inactive"));
+                return
+            }
 
             // start SSO flow since we got the homeserver
             PlatformPeg.get()?.startSingleSignOn(matrixClient, "sso", "/home", "", SSOAction.LOGIN);
@@ -98,7 +110,7 @@ export default function EmailVerificationPage() {
             setLoading(false);
 
         } catch(err) {
-            displayError(_td("auth|proconnect|error"));
+            displayError(_t("auth|proconnect|error"));
         }
     }
 

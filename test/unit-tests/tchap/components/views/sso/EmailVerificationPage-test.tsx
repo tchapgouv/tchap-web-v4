@@ -22,12 +22,7 @@ describe("<EmailVerificationPage />", () => {
     const PlatformPegMocked: MockedObject<BasePlatform> = mockPlatformPeg();
     const mockedClient: MatrixClient = stubClient();
     const mockedTchapUtils = mocked(TchapUtils);
-
-    const mockLoginObject = (hs: string = defaultHsUrl) => {
-        const mockLoginObject = mocked(new Login(hs, hs, null, {}));
-        mockLoginObject.createTemporaryClient.mockImplementation(() => mockedClient);
-        return mockLoginObject;
-    };
+    const mockedLogin = Login as jest.Mock;
 
     const mockedFetchHomeserverFromEmail = (hs: string = defaultHsUrl) => {
         mockedTchapUtils.fetchHomeserverForEmail.mockImplementation(() =>
@@ -68,7 +63,11 @@ describe("<EmailVerificationPage />", () => {
     const renderEmailVerificationPage = () => render(<EmailVerificationPage />);
 
     beforeEach(() => {
-        mockLoginObject(defaultHsUrl);
+        mockedLogin.mockImplementation(() => ({
+            hsUrl: defaultHsUrl,
+            createTemporaryClient: jest.fn().mockReturnValue(mockedClient),
+            getFlows: jest.fn().mockResolvedValue([{ type: "m.login.sso" }]),
+        }));
     });
 
     afterEach(() => {
@@ -206,5 +205,32 @@ describe("<EmailVerificationPage />", () => {
             server_name: secondHsUrl,
         });
         expect(PlatformPegMocked.startSingleSignOn).toHaveBeenCalledTimes(1);
+    });
+
+    it("should display error when sso is not configured in homeserer", async () => {
+        const { container } = renderEmailVerificationPage();
+
+        // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+        mockedFetchHomeserverFromEmail(secondHsUrl);
+        mockedValidatedServerConfig(false, secondHsUrl);
+        mockedPlatformPegStartSSO(false);
+        // get flow without sso configured on homeserver
+        mockedLogin.mockImplementation(() => ({
+            hsUrl: secondHsUrl,
+            createTemporaryClient: jest.fn().mockReturnValue(mockedClient),
+            getFlows: jest.fn().mockResolvedValue([{ type: "m.login.password" }]),
+        }));
+        // Put text in email field
+        const emailField = screen.getByRole("textbox");
+        fireEvent.focus(emailField);
+        fireEvent.change(emailField, { target: { value: userEmail } });
+
+        // click on proconnect button
+        const proconnectButton = screen.getByTestId("proconnect-submit");
+        await act(async () => {
+            await fireEvent.click(proconnectButton);
+        });
+
+        expect(container.getElementsByClassName("mx_ErrorMessage").length).toBe(1);
     });
 });
