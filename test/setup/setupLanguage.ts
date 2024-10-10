@@ -9,9 +9,9 @@ Please see LICENSE files in the repository root for full details.
 import fetchMock from "fetch-mock-jest";
 import _ from "lodash";
 import { setupLanguageMock as reactSetupLanguageMock } from "matrix-react-sdk/test/setup/setupLanguage";
+import reactEn from "matrix-react-sdk/src/i18n/strings/en_EN.json"; // :TCHAP: we want to have the sdk translation and element since we might have test for both repo
 
 import en from "../../src/i18n/strings/en_EN.json";
-import reactEn from "../../src/i18n/strings/en_EN.json";
 
 fetchMock.config.overwriteRoutes = false;
 
