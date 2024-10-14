@@ -31,22 +31,26 @@ import { SSOAction } from "matrix-js-sdk/src/matrix";
 import Login from "matrix-react-sdk/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "matrix-react-sdk/src/utils/ValidatedServerConfig";
-
+import * as Email from "matrix-react-sdk/src/email";
 import "../../../../../res/css/views/sso/TchapSSO.pcss";
 
 export default function EmailVerificationPage() {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
+    const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<string>("");
 
     const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("auth|proconnect|continue");
 
     const emailFieldRef = useRef<Field>(null);
 
+    const checkEmailField = async (fieldString: string = email) : Promise<boolean> => {
+        const fieldOk = await emailFieldRef.current?.validate({ allowEmpty: false, focused: true });
+        return !!fieldOk && Email.looksValid(fieldString);
+    }
+
     const displayError = (errorString: string): void => {
-        emailFieldRef.current?.focus();
-        emailFieldRef.current?.validate({ allowEmpty: false, focused: true });
         setErrorText(errorString);
         setLoading(false); 
     }
@@ -70,7 +74,7 @@ export default function EmailVerificationPage() {
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         setLoading(true);
-        const isFieldCorrect = await emailFieldRef.current?.validate({ allowEmpty: false });
+        const isFieldCorrect = await checkEmailField();
 
         if (!isFieldCorrect) {
             displayError(_t("auth|proconnect|error_email"));
@@ -114,8 +118,11 @@ export default function EmailVerificationPage() {
         }
     }
 
-    const onInputChanged = (event: React.FormEvent<HTMLInputElement>) => {
-        setEmail(event.currentTarget.value);
+    const onInputChanged = async (event: React.FormEvent<HTMLInputElement>) => {
+        const emailString = event.currentTarget.value
+        setEmail(emailString);
+        const isEmailValid = await checkEmailField(emailString);
+        setButtonDisabled(!isEmailValid);
     }
 
     const onLoginByPasswordClick = () => {
@@ -144,9 +151,20 @@ export default function EmailVerificationPage() {
                             />
                         </div>
                         {errorText && <ErrorMessage message={errorText} />}
-                        <button type="submit" data-testid="proconnect-submit" className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC">
-                            {submitButtonChild}
-                        </button>
+                        <AccessibleButton
+                                type="submit"
+                                data-testid="proconnect-submit"
+                                title={_t("auth|proconnect|continue")}
+                                className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC"
+                                element="button"
+                                kind="link"
+                                disabled={buttonDisabled}
+                                onClick={(e: ButtonEvent) => {
+                                    onSubmit(e);
+                                }}
+                            >
+                                {submitButtonChild}
+                            </AccessibleButton>
                         <div className="mx_AuthBody_button-container tc_bottomButton">
                             <AccessibleButton
                                 className="mx_AuthBody_sign-in-instead-button"
