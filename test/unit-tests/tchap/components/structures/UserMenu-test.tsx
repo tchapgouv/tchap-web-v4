@@ -26,7 +26,7 @@ describe("<UserMenu>", () => {
         // it"s a good indicator to see if this could introduce some regression on our code
         it("should render as expected", async () => {
             // open the user menu
-            screen.getByRole("button", { name: "a11y" }).click();
+            screen.getByRole("button", { name: "User menu" }).click();
 
             const menu = screen.getByRole("menu");
             expect(menu).toMatchSnapshot();
@@ -46,9 +46,9 @@ describe("<UserMenu>", () => {
         it("should open the faq when clicking on the faq button", () => {
             global.open = jest.fn();
             // open the user menu
-            screen.getByRole("button", { name: "a11y" }).click();
+            screen.getByRole("button", { name: "User menu" }).click();
             // click on the faq
-            screen.getByRole("menuitem", { name: "common" }).click();
+            screen.getByRole("menuitem", { name: "Help" }).click();
             expect(global.open).toHaveBeenCalledTimes(1);
             expect(global.open).toHaveBeenCalledWith("https://www.tchap.gouv.fr/faq", "_blank");
         });

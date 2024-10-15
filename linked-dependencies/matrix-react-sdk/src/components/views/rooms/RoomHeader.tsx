@@ -349,6 +349,9 @@ export default function RoomHeader({
                             { /* :TCHAP: customize-room-header-bar - activate video call only if directmessage and if feature is activated on homeserver }
                             {!isVideoRoom && videoCallButton}
                             */ }
+                            {!isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_group_call") &&
+                              !isVideoRoom && videoCallButton}
+
                             {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
                               !isVideoRoom && videoCallButton}
                             {/* end :TCHAP: */}

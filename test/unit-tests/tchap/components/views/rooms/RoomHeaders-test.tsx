@@ -1,13 +1,15 @@
 import React from "react";
-import { PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { screen, render, RenderOptions } from "@testing-library/react";
+import { KnownMembership, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
+import { screen, render, RenderOptions, getByLabelText, queryByLabelText } from "@testing-library/react";
 
-import { stubClient } from "~matrix-react-sdk/test/test-utils";
+import { mkRoomMember, stubClient } from "~matrix-react-sdk/test/test-utils";
 import RoomHeader from "~matrix-react-sdk/src/components/views/rooms/RoomHeader";
 import DMRoomMap from "~matrix-react-sdk/src/utils/DMRoomMap";
 import { MatrixClientPeg } from "~matrix-react-sdk/src/MatrixClientPeg";
 import MatrixClientContext from "~matrix-react-sdk/src/contexts/MatrixClientContext";
 import SdkConfig from "~matrix-react-sdk/src/SdkConfig";
+import SettingsStore from "~matrix-react-sdk/src/settings/SettingsStore";
+import { UIFeature } from "~matrix-react-sdk/src/settings/UIFeature";
 
 function getWrapper(): RenderOptions {
     return {
@@ -17,10 +19,33 @@ function getWrapper(): RenderOptions {
     };
 }
 
+/**
+ *
+ * @param count the number of users to create
+ */
+function mockRoomMembers(room: Room, count: number) {
+    const members = Array(count)
+        .fill(0)
+        .map((_, index) => ({
+            userId: `@user-${index}:example.org`,
+            name: `Member ${index}`,
+            rawDisplayName: `Member ${index}`,
+            roomId: room.roomId,
+            membership: KnownMembership.Join,
+            getAvatarUrl: () => `mxc://avatar.url/user-${index}.png`,
+            getMxcAvatarUrl: () => `mxc://avatar.url/user-${index}.png`,
+        }));
+
+    room.currentState.setJoinedMemberCount(members.length);
+    room.getJoinedMembers = jest.fn().mockReturnValue(members);
+}
+
 describe("RoomHeader", () => {
     let room: Room;
     const ROOM_ID = "!1:example.org";
     const featurethreadName: string = "feature_thread";
+    const featureVideoName: string = "feature_video_call";
+    const featureVideoGroupName: string = "feature_video_group_call";
     const homeserverName: string = "my.home.server";
 
     const addHomeserverToMockConfig = (homeservers: string[], feature: string) => {
@@ -32,11 +57,38 @@ describe("RoomHeader", () => {
 
     const getComponent = () => render(<RoomHeader room={room} />, getWrapper());
 
+    function mockDMRoom(memberCount: number = 2) {
+        mockRoomMembers(room, memberCount);
+        jest.spyOn(SettingsStore, "getValue").mockImplementation(() => false);
+        jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
+        jest.spyOn(room, "getMember").mockReturnValue(mkRoomMember(room.roomId, "@alice:example.org"));
+
+        DMRoomMap.setShared({
+            getUserIdForRoomId: () => {
+                return "@alice:example.org";
+            },
+        } as unknown as DMRoomMap);
+    }
+
     beforeEach(async () => {
-        stubClient();
+        const mockClient = stubClient();
         room = new Room(ROOM_ID, MatrixClientPeg.get()!, "@alice:example.org", {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
+
+        jest.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
+        jest.spyOn(room, "isElementVideoRoom").mockReturnValue(false);
+        jest.spyOn(room, "isCallRoom").mockReturnValue(false);
+        jest.spyOn(room, "isSpaceRoom").mockReturnValue(false);
+        jest.spyOn(room, "getType").mockReturnValue(undefined);
+
+        // allow element calls
+        jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+        // activate the group and widget features
+        jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            (feature) => feature === "feature_group_calls" || feature == UIFeature.Widgets,
+        );
+
         DMRoomMap.setShared({
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
@@ -47,24 +99,79 @@ describe("RoomHeader", () => {
         jest.restoreAllMocks();
     });
 
+    it("should render as expected", async () => {
+        const { container } = getComponent();
+        expect(container).toMatchSnapshot();
+    });
+
     it("renders the room header", () => {
         const { container } = getComponent();
         expect(container).toHaveTextContent(ROOM_ID);
     });
 
-    it("display well the thread button when feature is activated", async () => {
-        addHomeserverToMockConfig([homeserverName], featurethreadName);
+    it("display well the thread button when feature is activated", () => {
+        addHomeserverToMockConfig(["*"], featurethreadName);
 
         getComponent();
 
-        expect(screen.queryByTestId("room-header-thread-button")).toBeInTheDocument;
+        expect(screen.queryByRole("button", { name: "Threads" })).toBeInTheDocument();
     });
 
-    it("hides the thread button when feature is deactivated", async () => {
+    it("hides the thread button when feature is deactivated", () => {
         addHomeserverToMockConfig(["other.homeserver"], featurethreadName);
 
         getComponent();
 
-        expect(screen.queryByTestId("room-header-thread-button")).not.toBeInTheDocument;
+        expect(screen.queryByRole("button", { name: "Threads" })).not.toBeInTheDocument();
+    });
+
+    // For 1 to 1 video call
+    it("display well the video button when feature is activated for 1v1 call", () => {
+        addHomeserverToMockConfig([homeserverName], featureVideoName);
+        mockDMRoom();
+
+        const { container } = getComponent();
+
+        expect(queryByLabelText(container, "Video call")).toBeInTheDocument();
+    });
+
+    it("hides the video button when feature is deactivated for 1v1 call", () => {
+        addHomeserverToMockConfig(["other.homeserver"], featureVideoName);
+        mockDMRoom();
+
+        const { container } = getComponent();
+
+        expect(queryByLabelText(container, "Video call")).toBeNull();
+    });
+
+    it("hides the video button when feature is activated but is not a direct message room", () => {
+        addHomeserverToMockConfig([homeserverName], featureVideoName);
+
+        mockDMRoom(4);
+
+        const { container } = getComponent();
+
+        expect(queryByLabelText(container, "Video call")).toBeNull();
+    });
+
+    //  for video group element call button
+    it("display well the video group button when feature is activated", () => {
+        addHomeserverToMockConfig([homeserverName], featureVideoGroupName);
+
+        mockRoomMembers(room, 4);
+
+        const { container } = getComponent();
+
+        expect(getByLabelText(container, "Video call")).toBeInTheDocument();
+    });
+
+    it("hides the video group when feature is deactivated", () => {
+        addHomeserverToMockConfig(["other.homeserver"], featureVideoGroupName);
+
+        mockRoomMembers(room, 4);
+
+        const { container } = getComponent();
+
+        expect(queryByLabelText(container, "Video call")).toBeNull();
     });
 });

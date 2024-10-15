@@ -25,7 +25,7 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         </span>
       </div>
       <div
-        aria-label="user_menu"
+        aria-label="Switch to dark mode"
         class="mx_AccessibleButton mx_UserMenu_contextMenu_themeButton"
         role="button"
         tabindex="-1"
@@ -42,7 +42,7 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
       class="mx_IconizedContextMenu_optionList mx_IconizedContextMenu_optionList_notFirst"
     >
       <li
-        aria-label="notifications"
+        aria-label="Notifications"
         class="mx_AccessibleButton mx_IconizedContextMenu_item"
         role="menuitem"
         tabindex="0"
@@ -53,11 +53,11 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         <span
           class="mx_IconizedContextMenu_label"
         >
-          notifications
+          Notifications
         </span>
       </li>
       <li
-        aria-label="room_settings"
+        aria-label="Security & Privacy"
         class="mx_AccessibleButton mx_IconizedContextMenu_item"
         role="menuitem"
         tabindex="-1"
@@ -68,11 +68,11 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         <span
           class="mx_IconizedContextMenu_label"
         >
-          room_settings
+          Security & Privacy
         </span>
       </li>
       <li
-        aria-label="user_menu"
+        aria-label="All settings"
         class="mx_AccessibleButton mx_IconizedContextMenu_item"
         role="menuitem"
         tabindex="-1"
@@ -83,11 +83,11 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         <span
           class="mx_IconizedContextMenu_label"
         >
-          user_menu
+          All settings
         </span>
       </li>
       <li
-        aria-label="common"
+        aria-label="Help"
         class="mx_AccessibleButton mx_IconizedContextMenu_item"
         role="menuitem"
         tabindex="-1"
@@ -98,11 +98,11 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         <span
           class="mx_IconizedContextMenu_label"
         >
-          common
+          Help
         </span>
       </li>
       <li
-        aria-label="action"
+        aria-label="Sign out"
         class="mx_AccessibleButton mx_IconizedContextMenu_option_red mx_IconizedContextMenu_item"
         role="menuitem"
         tabindex="-1"
@@ -113,7 +113,7 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         <span
           class="mx_IconizedContextMenu_label"
         >
-          action
+          Sign out
         </span>
       </li>
     </div>

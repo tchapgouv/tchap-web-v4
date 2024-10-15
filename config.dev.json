@@ -32,7 +32,7 @@
     "default_country_code": "FR",
     "show_labs_settings": false,
     "features": {
-        "feature_video_rooms": true,
+        "feature_video_rooms": false,
         "feature_notification_settings2": false,
         "feature_new_room_decoration_ui": true,
         "feature_rust_crypto": true,
@@ -58,7 +58,7 @@
         "UIFeature.shareSocial": false,
         "UIFeature.registration": true,
         "UIFeature.urlPreviews": false,
-        "UIFeature.widgets": false,
+        "UIFeature.widgets": true,
         "UIFeature.shareQrCode": false,
         "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
@@ -112,17 +112,10 @@
     "tchap_features": {
         "feature_email_notification": ["*"],
         "feature_space": ["*"],
-        "feature_thread": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"],
-        "feature_audio_call": [
-            "dev01.tchap.incubateur.net",
-            "dev02.tchap.incubateur.net",
-            "ext01.tchap.incubateur.net"
-        ],
-        "feature_video_call": [
-            "dev01.tchap.incubateur.net",
-            "dev02.tchap.incubateur.net",
-            "ext01.tchap.incubateur.net"
-        ],
+        "feature_thread": ["*"],
+        "feature_audio_call": ["*"],
+        "feature_video_call": ["*"],
+        "feature_video_group_call": ["*"],
         "feature_screenshare_call": ["*"]
     },
     "tchap_sso_flow": {
