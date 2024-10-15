@@ -21,6 +21,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 
 function shouldShowTabsForPhase(phase?: RightPanelPhases): boolean {
     const tabs = [
@@ -86,7 +87,9 @@ export const RightPanelTabs: React.FC<Props> = ({ phase, room }): JSX.Element | 
             >
                 {_t("common|threads")}
             </NavItem>
-            {SettingsStore.getValue(UIFeature.Widgets) &&
+            {/* :TCHAP: hide-widgets-settings */}
+            {/* {SettingsStore.getValue(UIFeature.Widgets) && */}
+            {TchapUIFeature.showWidgetsSettings && SettingsStore.getValue(UIFeature.Widgets) &&
                 !isVideoRoom &&
                 shouldShowComponent(UIComponent.AddIntegrations) && (
                     <NavItem

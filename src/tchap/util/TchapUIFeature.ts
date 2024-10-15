@@ -28,6 +28,11 @@ export default class TchapUIFeature {
     public static activateClearCacheAndReloadAtVersion4 = true;
 
     /**
+     * Hide UI for widget and integration manager. We use a flag cause it may be useful for future usecase
+     */
+    public static showWidgetsSettings = false;
+
+    /**
      * Whether the given feature is active on the current user's homeserver.
      * We get the list of homeservers where the feature should be activated from config.json
      * Example : add this in config.json
