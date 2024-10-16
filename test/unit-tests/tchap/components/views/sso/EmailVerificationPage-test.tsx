@@ -6,7 +6,7 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import EmailVerificationPage from "~tchap-web/src/tchap/components/views/sso/EmailVerificationPage";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { ValidatedServerConfig } from "~matrix-react-sdk/src/utils/ValidatedServerConfig";
-import { mockPlatformPeg, stubClient } from "~matrix-react-sdk/test/test-utils";
+import { flushPromises, mockPlatformPeg, stubClient } from "~matrix-react-sdk/test/test-utils";
 import BasePlatform from "~matrix-react-sdk/src/BasePlatform";
 import Login from "~matrix-react-sdk/src/Login";
 
@@ -22,12 +22,7 @@ describe("<EmailVerificationPage />", () => {
     const PlatformPegMocked: MockedObject<BasePlatform> = mockPlatformPeg();
     const mockedClient: MatrixClient = stubClient();
     const mockedTchapUtils = mocked(TchapUtils);
-
-    const mockLoginObject = (hs: string = defaultHsUrl) => {
-        const mockLoginObject = mocked(new Login(hs, hs, null, {}));
-        mockLoginObject.createTemporaryClient.mockImplementation(() => mockedClient);
-        return mockLoginObject;
-    };
+    const mockedLogin = Login as jest.Mock;
 
     const mockedFetchHomeserverFromEmail = (hs: string = defaultHsUrl) => {
         mockedTchapUtils.fetchHomeserverForEmail.mockImplementation(() =>
@@ -68,7 +63,11 @@ describe("<EmailVerificationPage />", () => {
     const renderEmailVerificationPage = () => render(<EmailVerificationPage />);
 
     beforeEach(() => {
-        mockLoginObject(defaultHsUrl);
+        mockedLogin.mockImplementation(() => ({
+            hsUrl: defaultHsUrl,
+            createTemporaryClient: jest.fn().mockReturnValue(mockedClient),
+            getFlows: jest.fn().mockResolvedValue([{ type: "m.login.sso" }]),
+        }));
     });
 
     afterEach(() => {
@@ -77,7 +76,7 @@ describe("<EmailVerificationPage />", () => {
     });
 
     it("returns error when empty email", async () => {
-        const { container } = renderEmailVerificationPage();
+        renderEmailVerificationPage();
 
         // Put text in email field
         const emailField = screen.getByRole("textbox");
@@ -86,16 +85,17 @@ describe("<EmailVerificationPage />", () => {
 
         // click on proconnect button
         const proconnectButton = screen.getByTestId("proconnect-submit");
+
         await act(async () => {
             await fireEvent.click(proconnectButton);
         });
 
-        // Error classes should not appear
-        expect(container.getElementsByClassName("mx_ErrorMessage").length).toBe(1);
+        // Submit button should be disabled
+        expect(proconnectButton).toHaveAttribute("disabled");
     });
 
     it("returns inccorrect email", async () => {
-        const { container } = renderEmailVerificationPage();
+        renderEmailVerificationPage();
 
         // Put text in email field
         const emailField = screen.getByRole("textbox");
@@ -108,8 +108,8 @@ describe("<EmailVerificationPage />", () => {
             await fireEvent.click(proconnectButton);
         });
 
-        // Error classes should not appear
-        expect(container.getElementsByClassName("mx_ErrorMessage").length).toBe(1);
+        // Submit button should be disabled
+        expect(proconnectButton).toHaveAttribute("disabled");
     });
 
     it("should throw error when homeserver catch an error", async () => {
@@ -124,6 +124,7 @@ describe("<EmailVerificationPage />", () => {
         fireEvent.focus(emailField);
         fireEvent.change(emailField, { target: { value: userEmail } });
 
+        await flushPromises();
         // click on proconnect button
         const proconnectButton = screen.getByTestId("proconnect-submit");
         await act(async () => {
@@ -145,6 +146,8 @@ describe("<EmailVerificationPage />", () => {
         const emailField = screen.getByRole("textbox");
         fireEvent.focus(emailField);
         fireEvent.change(emailField, { target: { value: userEmail } });
+
+        await flushPromises();
 
         // click on proconnect button
         const proconnectButton = screen.getByTestId("proconnect-submit");
@@ -168,6 +171,8 @@ describe("<EmailVerificationPage />", () => {
         const emailField = screen.getByRole("textbox");
         fireEvent.focus(emailField);
         fireEvent.change(emailField, { target: { value: userEmail } });
+
+        await flushPromises();
 
         // click on proconnect button
         const proconnectButton = screen.getByTestId("proconnect-submit");
@@ -195,6 +200,8 @@ describe("<EmailVerificationPage />", () => {
         fireEvent.focus(emailField);
         fireEvent.change(emailField, { target: { value: userEmail } });
 
+        await flushPromises();
+
         // click on proconnect button
         const proconnectButton = screen.getByTestId("proconnect-submit");
         await act(async () => {
@@ -206,5 +213,34 @@ describe("<EmailVerificationPage />", () => {
             server_name: secondHsUrl,
         });
         expect(PlatformPegMocked.startSingleSignOn).toHaveBeenCalledTimes(1);
+    });
+
+    it("should display error when sso is not configured in homeserer", async () => {
+        const { container } = renderEmailVerificationPage();
+
+        // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+        mockedFetchHomeserverFromEmail(secondHsUrl);
+        mockedValidatedServerConfig(false, secondHsUrl);
+        mockedPlatformPegStartSSO(false);
+        // get flow without sso configured on homeserver
+        mockedLogin.mockImplementation(() => ({
+            hsUrl: secondHsUrl,
+            createTemporaryClient: jest.fn().mockReturnValue(mockedClient),
+            getFlows: jest.fn().mockResolvedValue([{ type: "m.login.password" }]),
+        }));
+        // Put text in email field
+        const emailField = screen.getByRole("textbox");
+        fireEvent.focus(emailField);
+        fireEvent.change(emailField, { target: { value: userEmail } });
+
+        await flushPromises();
+
+        // click on proconnect button
+        const proconnectButton = screen.getByTestId("proconnect-submit");
+        await act(async () => {
+            await fireEvent.click(proconnectButton);
+        });
+
+        expect(container.getElementsByClassName("mx_ErrorMessage").length).toBe(1);
     });
 });

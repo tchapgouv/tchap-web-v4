@@ -873,5 +873,9 @@
     "auth|proconnect|or": {
         "en": "or",
         "fr": "ou"
+    },
+    "auth|proconnect|error_sso_inactive": {
+        "en": "ProConnect is disabled for your domain",
+        "fr": "ProConnect est désactivé pour votre domaine"
     }
 }
