@@ -51,6 +51,7 @@ import { startOidcLogin } from "../../../utils/oidc/authorize";
 import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP: registration-for-mainlining
 import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature"; // :TCHAP: sso-agentconnect-flow
 import ProconnectButton from "../../../../../../src/tchap/components/views/sso/ProconnectButton"; // :TCHAP: sso-agentconnect-flow
+import TchapUrls from "../../../../../../src/tchap/util/TchapUrls";
 
 const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_registration")) {
@@ -643,7 +644,7 @@ export default class Registration extends React.Component<IProps, IState> {
             if (!this.props.mobileRegister && this.state.ssoFlow && TchapUIFeature.isSSOFlowActive()) {
                 ssoSection = <>
                     <ProconnectButton/>
-                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|sso|or")}</p>
+                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
                 </>
             }
             // }

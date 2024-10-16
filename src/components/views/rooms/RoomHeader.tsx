@@ -245,8 +245,9 @@ export default function RoomHeader({
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-                <WithPresenceIndicator room={room} size="8px">
-                    {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y */}
+                {/* :TCHAP: customize-room-header-bar - RoomAvatar -> DecoratedRoomAvatar */}
+                {/* <WithPresenceIndicator room={room} size="8px">
+                    {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y
                     <RoomAvatar
                         room={room}
                         size="40px"
@@ -255,23 +256,18 @@ export default function RoomHeader({
                         tabIndex={-1}
                         aria-label={_t("room|header_avatar_open_settings_label")}
                     />
-                </WithPresenceIndicator>
+                </WithPresenceIndicator> */}
+                <DecoratedRoomAvatar room={room} size="40px" />
+                {/* end :TCHAP: */}
+                {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
+                <TchapExternalRoomHeader room={room}></TchapExternalRoomHeader>
+                {/* :tchap: end */}
                 <button
                     aria-label={_t("right_panel|room_summary_card|title")}
                     tabIndex={0}
                     onClick={() => RightPanelStore.instance.showOrHidePhase(RightPanelPhases.RoomSummary)}
                     className="mx_RoomHeader_infoWrapper"
                 >
-                    {/* :TCHAP: customize-room-header-bar - RoomAvatar -> DecoratedRoomAvatar
-                    <WithPresenceIndicator room={room} size="8px">
-                        <RoomAvatar room={room} size="40px" oobData={oobData} />
-                    </WithPresenceIndicator>
-                    */}
-                    <DecoratedRoomAvatar room={room} size="40px" />
-                    {/* end :TCHAP: */}
-                    {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
-                    <TchapExternalRoomHeader room={room}></TchapExternalRoomHeader>
-                    {/* :tchap: end */}
                     <Box flex="1" className="mx_RoomHeader_info">
                         <BodyText
                             as="div"
@@ -353,6 +349,9 @@ export default function RoomHeader({
                             { /* :TCHAP: customize-room-header-bar - activate video call only if directmessage and if feature is activated on homeserver }
                             {!isVideoRoom && videoCallButton}
                             */ }
+                            {!isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_group_call") &&
+                              !isVideoRoom && videoCallButton}
+
                             {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
                               !isVideoRoom && videoCallButton}
                             {/* end :TCHAP: */}
@@ -402,7 +401,7 @@ export default function RoomHeader({
                                     indicator={notificationLevelToIndicator(threadNotifications)}
                                     onClick={(evt) => {
                                         evt.stopPropagation();
-                                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
+                                        RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
                                         PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
                                     }}
                                     aria-label={_t("common|threads")}
