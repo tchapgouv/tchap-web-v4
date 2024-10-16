@@ -1,3 +1,7 @@
+Changes in [3.113.0](https://github.com/element-hq/matrix-react-sdk/releases/tag/v3.113.0) (2024-10-15)
+=======================================================================================================
+Updates to js-sdk v34.8.0, although react-sdk has already stopped using the insecure functionality in question, so this release contains no functional changes.
+
 Changes in [3.112.0](https://github.com/element-hq/matrix-react-sdk/releases/tag/v3.112.0) (2024-10-08)
 =======================================================================================================
 ## ✨ Features

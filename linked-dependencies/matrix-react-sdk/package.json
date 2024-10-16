@@ -1,7 +1,7 @@
 {
     "name": "matrix-react-sdk",
     "version": "0.0.0",
-    "version-matrix": "3.112.0",
+    "version-matrix": "3.113.0",
     "description": "SDK for matrix.org using React for Tchap",
     "author": "DINUM",
     "repository": {
@@ -116,7 +116,7 @@
         "maplibre-gl": "^2.0.0",
         "matrix-encrypt-attachment": "^1.0.3",
         "matrix-events-sdk": "0.0.1",
-        "matrix-js-sdk": "34.7.0",
+        "matrix-js-sdk": "34.8.0",
         "matrix-widget-api": "^1.9.0",
         "memoize-one": "^6.0.0",
         "minimist": "^1.2.5",
