@@ -2,7 +2,7 @@
     "name": "element-web",
     "productName": "Tchap",
     "version": "4.9.2",
-    "version-element-web": "1.11.80",
+    "version-element-web": "1.11.81",
     "description": "A feature-rich client for Matrix.org",
     "author": "DINUM",
     "repository": {
@@ -98,7 +98,7 @@
         "jsrsasign": "^11.0.0",
         "katex": "^0.16.0",
         "lodash": "^4.17.21",
-        "matrix-js-sdk": "34.7.0",
+        "matrix-js-sdk": "34.8.0",
         "matrix-react-sdk": "file:./linked-dependencies/matrix-react-sdk",
         "matrix-widget-api": "^1.8.2",
         "react": "17.0.2",
