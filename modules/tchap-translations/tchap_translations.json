@@ -877,5 +877,9 @@
     "auth|proconnect|error_sso_inactive": {
         "en": "ProConnect is disabled for your domain",
         "fr": "ProConnect est désactivé pour votre domaine"
+    },
+    "encryption|verification|verification_skip_warning": {
+        "en": "Without verifying, you won't have access to all your messages and may appear as untrusted to others.",
+        "fr": "Sans vérification, vous n'aurez pas accès à tous vos messages et votre compte n'apparaitra pas comme fiable pour les autres utilisateurs"
     }
 }
