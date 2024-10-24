@@ -65,7 +65,9 @@
         "MessageComposerInput.showPollsButton": true,
         "RoomList.orderAlphabetically": false,
         "Spaces.allRoomsInHome": true,
-        "custom_themes": []
+        "custom_themes": [],
+        "hideDisplaynameChanges": true,
+        "hideAvatarChanges": true
     },
     "branding": {
         "authHeaderLogoUrl": "themes/tchap/img/logos/tchap-logo.svg",

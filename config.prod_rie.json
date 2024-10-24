@@ -91,7 +91,7 @@
         "feature_video_rooms": false,
         "feature_notification_settings2": false,
         "feature_new_room_decoration_ui": true,
-        "feature_rust_crypto": false
+        "feature_rust_crypto": true
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -157,7 +157,9 @@
         "layout": "bubble",
         "custom_themes": [],
         "FTUE.useCaseSelection": "WorkMessaging",
-        "RustCrypto.staged_rollout_percent": 0
+        "RustCrypto.staged_rollout_percent": 100,
+        "hideDisplaynameChanges": true,
+        "hideAvatarChanges": true
     },
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo.svg",
