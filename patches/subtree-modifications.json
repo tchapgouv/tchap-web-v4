@@ -94,5 +94,9 @@
             "src/components/views/right_panel/RightPanelTabs.tsx",
             "src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx"
         ]
+    },
+    "help-access-verify-device": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1140",
+        "files": []
     }
 }

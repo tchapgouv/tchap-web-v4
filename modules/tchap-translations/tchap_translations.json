@@ -877,5 +877,9 @@
     "auth|proconnect|error_sso_inactive": {
         "en": "ProConnect is disabled for your domain",
         "fr": "ProConnect est désactivé pour votre domaine"
+    },
+    "encryption|verification|help_link": {
+        "en": "<a>Learn more and get help</a>",
+        "fr": "<a>En savoir plus et obtenir de l'aide </a>"
     }
 }
