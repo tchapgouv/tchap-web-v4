@@ -3,6 +3,7 @@ import LabelledToggleSwitch from 'matrix-react-sdk/src/components/views/elements
 import SettingsSubsection from 'matrix-react-sdk/src/components/views/settings/shared/SettingsSubsection';
 import { _t } from "matrix-react-sdk/src/languageHandler";
 import TchapUtils from '../../../../../util/TchapUtils';
+import ToggleSwitch from 'matrix-react-sdk/src/components/views/elements/ToggleSwitch';
 
 interface TchapRedListSettingsProps {
 }
@@ -42,14 +43,21 @@ const TchapRedListSettings: React.FC<TchapRedListSettingsProps> = () => {
     return <SettingsSubsection
             heading={_t("settings|general|redlist")}
             stretchContent>
-                <LabelledToggleSwitch value={isOnRedList}
-                    onChange={(checked: boolean) => _onRedlistOptionChange(checked)}
-                    label={_t('settings|general|redlist_title')}
-                    disabled={loading}
+                <div className="mx_SettingsFlag">
+                    <label className="mx_SettingsFlag_label" htmlFor="redList-toggle">
+                        <span className="mx_SettingsFlag_labelText">{_t('settings|general|redlist_title')}</span>
+                        <div className="mx_SettingsFlag_microcopy">
+                            {_t("settings|general|redlist_description")}
+                        </div>
+                    </label>
+                    <ToggleSwitch
+                        id="redList-toggle"
+                        checked={isOnRedList}
+                        onChange={(checked: boolean) => _onRedlistOptionChange(checked)}
+                        disabled={loading}
+                        title={_t('settings|general|redlist_title')}
                     />
-                <p className="mx_SettingsTab_subsectionText">
-                    ({_t("settings|general|redlist_description")})
-                </p>
+                </div>
             </SettingsSubsection>
 }
 

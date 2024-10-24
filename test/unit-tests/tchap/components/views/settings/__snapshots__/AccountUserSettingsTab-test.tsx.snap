@@ -83,12 +83,12 @@ exports[`<AccountUserSettingsTab /> common view snapshot should render section w
             >
               <div
                 class="mx_UserProfileSettings_profile_controls_userId_label"
-                id=":r0.7849031942916656:"
+                id="1234"
               >
                 Username
               </div>
               <div
-                aria-labelledby=":r0.7849031942916656:"
+                aria-labelledby="1234"
                 class="mx_CopyableText mx_CopyableText_border"
               >
                 @alice:server.org
@@ -136,20 +136,27 @@ exports[`<AccountUserSettingsTab /> common view snapshot should render section w
               <div
                 class="mx_SettingsFlag"
               >
-                <span
+                <label
                   class="mx_SettingsFlag_label"
+                  for="redList-toggle"
                 >
+                  <span
+                    class="mx_SettingsFlag_labelText"
+                  >
+                    settings
+                  </span>
                   <div
-                    id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
+                    class="mx_SettingsFlag_microcopy"
                   >
                     settings
                   </div>
-                </span>
+                </label>
                 <div
                   aria-checked="false"
                   aria-disabled="false"
-                  aria-labelledby="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
+                  aria-label="settings"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  id="redList-toggle"
                   role="switch"
                   tabindex="0"
                 >
@@ -158,13 +165,6 @@ exports[`<AccountUserSettingsTab /> common view snapshot should render section w
                   />
                 </div>
               </div>
-              <p
-                class="mx_SettingsTab_subsectionText"
-              >
-                (
-                settings
-                )
-              </p>
             </div>
           </div>
         </div>

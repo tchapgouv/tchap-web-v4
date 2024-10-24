@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MockedObject } from "jest-mock";
+import { mocked, MockedObject } from "jest-mock";
 import AccountUserSettingsTab from "matrix-react-sdk/src/components/views/settings/tabs/user/AccountUserSettingsTab";
 import { SdkContextClass, SDKContext } from "matrix-react-sdk/src/contexts/SDKContext";
 import SettingsStore from "matrix-react-sdk/src/settings/SettingsStore";
@@ -15,7 +15,7 @@ import {
     mockClientMethodsUser,
     mockPlatformPeg,
 } from "matrix-react-sdk/test/test-utils";
-
+import { useId } from "matrix-react-sdk/src/utils/useId";
 
 jest.mock(
     "matrix-react-sdk/src/components/views/settings/ChangePassword",
@@ -24,6 +24,8 @@ jest.mock(
             return <button>Mock change password</button>;
         },
 );
+
+jest.mock("matrix-react-sdk/src/utils/useId");
 
 describe("<AccountUserSettingsTab />", () => {
     const defaultProps = {
@@ -75,21 +77,20 @@ describe("<AccountUserSettingsTab />", () => {
         jest.spyOn(SettingsStore, "getValue").mockImplementation(
             (settingName: string) => settingName === UIFeature.Deactivate,
         );
+
+        // labelled id on username is autogeneraed, we fix it so that snapshot is always the same
+        mocked(useId).mockImplementation(() => "1234");
     });
 
     afterEach(() => {
         jest.restoreAllMocks();
     });
 
-
     describe("common view snapshot", () => {
-        
         it("should render section when account deactivation feature is enabled", () => {
             const { container } = render(getComponent());
 
             expect(container).toMatchSnapshot();
         });
     });
-
-
 });
