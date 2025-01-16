@@ -694,6 +694,7 @@ module.exports = (env, argv) => {
                     { from: "vector-icons/**", context: path.resolve(__dirname, "res") },
                     { from: "decoder-ring/**", context: path.resolve(__dirname, "res") },
                     { from: "media/**", context: path.resolve(__dirname, "res/") },
+                    "node_modules/@matrix-org/olm/olm_legacy.js",
                     { from: "config.json", noErrorOnMissing: true },
                     "contribute.json",
                 ],
