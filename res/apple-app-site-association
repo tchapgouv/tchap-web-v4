@@ -6,7 +6,11 @@
           "7J4U792NQT.im.vector.app",
           "7J4U792NQT.io.element.elementx",
           "7J4U792NQT.io.element.elementx.nightly",
-          "7J4U792NQT.io.element.elementx.pr"
+          "7J4U792NQT.io.element.elementx.pr",
+          "NVMQD635C6.fr.gouv.tchap",
+          "NVMQD635C6.fr.gouv.tchapx",
+          "NVMQD635C6.fr.gouv.tchapx.staging",
+          "NVMQD635C6.fr.gouv.tchapx.dev"
         ],
         "components": [
           {
@@ -29,7 +33,11 @@
       "7J4U792NQT.im.vector.app",
       "7J4U792NQT.io.element.elementx",
       "7J4U792NQT.io.element.elementx.nightly",
-      "7J4U792NQT.io.element.elementx.pr"
+      "7J4U792NQT.io.element.elementx.pr",
+      "NVMQD635C6.fr.gouv.tchap",
+      "NVMQD635C6.fr.gouv.tchapx",
+      "NVMQD635C6.fr.gouv.tchapx.staging",
+      "NVMQD635C6.fr.gouv.tchapx.dev"
     ]
   }
 }
