@@ -38,12 +38,10 @@
     "default_federate": true,
     "default_theme": "light",
     "room_directory": {
-        "servers": ["dev01.tchap.incubateur.net", "dev02.tchap.incubateur.net", "ext01.tchap.incubateur.net"]
+        "servers": ["mas01.tchap.incubateur.net"]
     },
     "enable_presence_by_hs_url": {
-        "https://matrix.dev01.tchap.incubateur.net": false,
-        "https://matrix.dev02.tchap.incubateur.net": false,
-        "https://matrix.ext01.tchap.incubateur.net": false
+        "https://matrix.mas01.tchap.incubateur.net": false
     },
     "setting_defaults": {
         "breadcrumbs": true,
@@ -70,7 +68,7 @@
     "branding": {
         "auth_header_logo_url": "themes/tchap/img/logos/tchap-logo-dev.svg",
         "auth_footer_links": [
-            { "text": "DEV", "url": "https://matrix.dev01.tchap.incubateur.net/_matrix/client/versions" },
+            { "text": "DEV", "url": "https://matrix.mas01.tchap.incubateur.net/_matrix/client/versions" },
             { "text": "Gouvernement", "url": "https://www.gouvernement.fr" },
             { "text": "OpenData", "url": "https://www.data.gouv.fr" },
             { "text": "DINUM", "url": "https://numerique.gouv.fr" },
@@ -81,8 +79,8 @@
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
     "user_notice": {
-        "title": "DEV",
-        "description": "You are on dev env",
+        "title": "MAS-SANDBOX",
+        "description": "You are on MAS-SANDBOX",
         "show_once": false
     },
     "desktop_builds": {
@@ -93,7 +91,7 @@
         "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.a",
         "fdroid": null
     },
-    "permalink_prefix": "https://www.tchap.incubateur.net",
+    "permalink_prefix": "https://www.mas01.tchap.incubateur.net",
     "terms_and_conditions_links": [
         {
             "url": "https://tchap.numerique.gouv.fr/cgu",
@@ -121,7 +119,7 @@
         "url": "https://element-call.tchap.incubateur.net/"
     },
     "posthog": {
-        "project_api_key": "phc_FFa4pkvmuWjF9nZOMmYJWUXMibuYnCnPyf3DqPGZs4L",
+        "project_api_key": "",
         "api_host": "https://posthogdev.tchap.incubateur.net"
     }
 }
