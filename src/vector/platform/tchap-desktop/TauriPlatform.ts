@@ -72,7 +72,7 @@ function platformFriendlyName(): string {
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
     if (["call_state"].includes(payload.action)) {
-        window.electron!.send("app_onAction", payload);
+        window.__TAURI__.core.invoke("app_onAction", payload);
     }
 }
 
@@ -98,8 +98,8 @@ export default class TauriPlatform extends BasePlatform {
     public constructor() {
         super();
 
-        if (!window.electron) {
-            throw new Error("Cannot instantiate ElectronPlatform, window.electron is not set");
+        if (!window.__TAURI__) {
+            throw new Error("Cannot instantiate TauriPlatform, window.__TAURI__ is not set");
         }
 
         dis.register(onAction);
