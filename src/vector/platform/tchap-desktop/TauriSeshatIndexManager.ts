@@ -11,7 +11,7 @@ import BaseEventIndexManager, {
 import { TauriIPCManager as IPCManager } from "./TauriIPCManager";
 
 export class TauriSeshatIndexManager extends BaseEventIndexManager {
-    private readonly ipc = new IPCManager("seshat", "seshatReply");
+    private readonly ipc = new IPCManager("seshat");
 
     public async supportsEventIndexing(): Promise<boolean> {
         return this.ipc.call("supportsEventIndexing");

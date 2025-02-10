@@ -165,6 +165,7 @@
         "sanitize-filename": "^1.6.3",
         "sanitize-html": "2.13.1",
         "tar-js": "^0.3.0",
+        "taurpc": "^1.8.0",
         "temporal-polyfill": "^0.2.5",
         "ua-parser-js": "^1.0.2",
         "uuid": "^11.0.0",
@@ -174,7 +175,9 @@
         "tchap-added": {
             "cypress packages": "since we run cypress from tchap-web repo, not from react-sdk. We cypress-related deps from matric-react-sdk.",
             "@testing-library/jest-dom": "^6.4.2",
-            "@types/testing-library__jest-dom": "^6.0.0"
+            "@types/testing-library__jest-dom": "^6.0.0",
+            "@tauri-apps/api": "^2.2.0",
+            "taurpc": "^1.8.0"
         }
     },
     "devDependencies": {

@@ -2773,7 +2773,7 @@
     "@svgr/plugin-jsx" "8.1.0"
     "@svgr/plugin-svgo" "8.1.0"
 
-"@tauri-apps/api@^2.2.0":
+"@tauri-apps/api@^2.0.2", "@tauri-apps/api@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-2.2.0.tgz#daaff2515b1a4ff1e763cf84a414548b02b566c5"
   integrity sha512-R8epOeZl1eJEl603aUMIGb4RXlhPjpgxbGVEaqY+0G5JG9vzV/clNlzTeqc+NLYXVqXcn8mb4c5b9pJIUDEyAg==
@@ -12057,6 +12057,13 @@ tar-js@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/tar-js/-/tar-js-0.3.0.tgz#6949aabfb0ba18bb1562ae51a439fd0f30183a17"
   integrity sha512-9uqP2hJUZNKRkwPDe5nXxXdzo6w+BFBPq9x/tyi5/U/DneuSesO/HMb0y5TeWpfcv49YDJTs7SrrZeeu8ZHWDA==
+
+taurpc@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/taurpc/-/taurpc-1.8.0.tgz#ea338aaebdcd1071448462a386ef2caea323c04f"
+  integrity sha512-jtuB1dnvncrBkPyzLZ3JSKRzGhvV2F02kP+O8uBEgbqVmqhL8qJWBn9HuJlgxURse3ZG2lPKkRBSU7rILIh07Q==
+  dependencies:
+    "@tauri-apps/api" "^2.0.2"
 
 "tchap-translations@file:./modules/tchap-translations":
   version "0.0.0"
