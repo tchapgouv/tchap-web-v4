@@ -11,6 +11,8 @@ Please see LICENSE files in the repository root for full details.
 */
 // import { listen } from '@tauri-apps/api/event';
 import { getVersion } from '@tauri-apps/api/app';
+import { Client, Store, Stronghold } from '@tauri-apps/plugin-stronghold';
+import { appDataDir } from '@tauri-apps/api/path';
 
 import BasePlatform from "../../../BasePlatform";
 import dis from "../../../dispatcher/dispatcher";
@@ -48,9 +50,11 @@ function platformFriendlyName(): string {
     }
 }
 
-
 export default class TauriPlatform extends BasePlatform {
     private readonly ipc = new IPCManager("common");
+
+    private strongholdStore: Store | undefined;
+    private stronghold: Stronghold | undefined;
 
     public constructor() {
         super();
@@ -61,45 +65,93 @@ export default class TauriPlatform extends BasePlatform {
 
         dis.register(onAction);
 
-        this.ipc.call("setHomeserverUrl", MatrixClientPeg.get()?.getHomeserverUrl());
+        // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
     }
 
-    // public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
-    //     try {
-    //         return await this.ipc.call("getPickleKey", userId, deviceId);
-    //     } catch {
-    //         // if we can't connect to the password storage, assume there's no
-    //         // pickle key
-    //         return null;
-    //     }
-    // }
+    public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
+        try {
+            await this.initStronghold();
 
-    // public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
-    //     try {
-    //         return await this.ipc.call("createPickleKey", userId, deviceId);
-    //     } catch {
-    //         // if we can't connect to the password storage, assume there's no
-    //         // pickle key
-    //         return null;
-    //     }
-    // }
+            const key = `${userId}|${deviceId}`;
 
-    // public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
-    //     try {
-    //         await this.ipc.call("destroyPickleKey", userId, deviceId);
-    //     } catch {}
-    // }
+            // Read a record from store
+            const value = await this.strongholdStore?.get(key);
+            console.log(value); // 'secret value'
 
-    // public async clearStorage(): Promise<void> {
-    //     try {
-    //         await super.clearStorage();
-    //         await this.ipc.call("clearStorage");
-    //     } catch {}
-    // }
+            // Save your updates
+            await this.stronghold?.save();
 
+            return value ? new TextDecoder().decode(value) : null;
+        } catch {
+            // if we can't connect to the password storage, assume there's no
+            // pickle key
+            return null;
+        }
+    }
+
+    public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
+        try {
+            await this.initStronghold();
+            const key = `${userId}|${deviceId}`;
+            const randomArray = new Uint8Array(32);
+            const value = crypto.getRandomValues(randomArray);
+            // Insert a record to the store
+            this.strongholdStore?.insert(key, Array.from(value));
+
+            // Save your updates
+            await this.stronghold?.save();
+
+            return value ? new TextDecoder().decode(value) : null;
+        } catch {
+            // if we can't connect to the password storage, assume there's no
+            // pickle key
+            return null;
+        }
+    }
+
+    public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
+        try {
+            await this.initStronghold();
+            const key = `${userId}|${deviceId}`;
+            // Remove a record from store
+            await this.strongholdStore?.remove(key);
+        } catch {}
+    }
+
+    public async clearStorage(): Promise<void> {
+        try {
+            await super.clearStorage();
+            await this.ipc.call("clearStorage");
+        } catch {}
+    }
+
+    public async initStronghold(): Promise<void> {
+        try {
+            if (!this.strongholdStore) {
+                const vaultPath = `${await appDataDir()}/vault.hold`;
+                const vaultPassword = 'vault password';
+                const stronghold = await Stronghold.load(vaultPath, vaultPassword);
+            
+                const clientName = 'tchap-desktop';
+                let client: Client;
+                try {
+                    client = await stronghold.loadClient(clientName);
+                } catch {
+                    client = await stronghold.createClient(clientName);
+                }
+              
+                this.strongholdStore = client.getStore();
+                this.stronghold = stronghold;
+            }
+
+        } catch {}
+    };
+      
+      
+    
     public get baseUrl(): string {
         // This configuration is element-desktop specific so the types here do not know about it
-        return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? "https://app.element.io";
+        return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? "https://www.tchap.gouv.fr/";
     }
 
     public async getAppVersion(): Promise<string> {
