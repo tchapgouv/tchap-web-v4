@@ -18,15 +18,15 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     }
 
     public async initEventIndex(userId: string, deviceId: string): Promise<void> {
-        return this.ipc.call("initEventIndex", userId, deviceId);
+        return this.ipc.call("initEventIndex", {userId, deviceId});
     }
 
     public async addEventToIndex(ev: IMatrixEvent, profile: IMatrixProfile): Promise<void> {
-        return this.ipc.call("addEventToIndex", ev, profile);
+        return this.ipc.call("addEventToIndex", {ev, profile});
     }
 
     public async deleteEvent(eventId: string): Promise<boolean> {
-        return this.ipc.call("deleteEvent", eventId);
+        return this.ipc.call("deleteEvent", {eventId});
     }
 
     public async isEventIndexEmpty(): Promise<boolean> {
@@ -34,7 +34,7 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     }
 
     public async isRoomIndexed(roomId: string): Promise<boolean> {
-        return this.ipc.call("isRoomIndexed", roomId);
+        return this.ipc.call("isRoomIndexed", {roomId});
     }
 
     public async commitLiveEvents(): Promise<void> {
@@ -42,7 +42,7 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     }
 
     public async searchEventIndex(searchConfig: ISearchArgs): Promise<IResultRoomEvents> {
-        return this.ipc.call("searchEventIndex", searchConfig);
+        return this.ipc.call("searchEventIndex", {searchConfig});
     }
 
     public async addHistoricEvents(

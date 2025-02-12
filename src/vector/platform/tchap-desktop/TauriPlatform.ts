@@ -73,9 +73,9 @@ export default class TauriPlatform extends BasePlatform {
             await this.initStronghold();
 
             const key = `${userId}|${deviceId}`;
-
             // Read a record from store
             const value = await this.strongholdStore?.get(key);
+            console.log('In getpicklekey value', value);
             console.log(value); // 'secret value'
 
             // Save your updates
@@ -92,6 +92,7 @@ export default class TauriPlatform extends BasePlatform {
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
             await this.initStronghold();
+
             const key = `${userId}|${deviceId}`;
             const randomArray = new Uint8Array(32);
             const value = crypto.getRandomValues(randomArray);
@@ -129,7 +130,7 @@ export default class TauriPlatform extends BasePlatform {
         try {
             if (!this.strongholdStore) {
                 const vaultPath = `${await appDataDir()}/vault.hold`;
-                const vaultPassword = 'vault password';
+                const vaultPassword = 'tchap-desktop-vault321';
                 const stronghold = await Stronghold.load(vaultPath, vaultPassword);
             
                 const clientName = 'tchap-desktop';
@@ -143,10 +144,10 @@ export default class TauriPlatform extends BasePlatform {
                 this.strongholdStore = client.getStore();
                 this.stronghold = stronghold;
             }
-
-        } catch {}
+        } catch (err) {
+            console.error("Error in init stronghold", err);
+        }
     };
-      
       
     
     public get baseUrl(): string {

@@ -178,7 +178,8 @@
             "@testing-library/jest-dom": "^6.4.2",
             "@types/testing-library__jest-dom": "^6.0.0",
             "@tauri-apps/api": "^2.2.0",
-            "taurpc": "^1.8.0"
+            "taurpc": "^1.8.0",
+            "@tauri-apps/plugin-stronghold": "^2.2.0"
         }
     },
     "devDependencies": {
