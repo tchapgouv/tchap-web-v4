@@ -22,6 +22,9 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 // import { TauriSeshatIndexManager as SeshatIndexManager } from "./TauriSeshatIndexManager";
 import { TauriIPCManager as IPCManager } from "./TauriIPCManager";
 import { _t } from "../../../languageHandler";
+import { TauriSeshatIndexManager } from './TauriSeshatIndexManager';
+
+import BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexManager';
 
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
@@ -55,6 +58,7 @@ export default class TauriPlatform extends BasePlatform {
 
     private strongholdStore: Store | undefined;
     private stronghold: Stronghold | undefined;
+    private readonly eventIndexManager: BaseEventIndexManager = new TauriSeshatIndexManager(this);
 
     public constructor() {
         super();
@@ -91,11 +95,8 @@ export default class TauriPlatform extends BasePlatform {
 
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
-            await this.initStronghold();
-
             const key = `${userId}|${deviceId}`;
-            const randomArray = new Uint8Array(32);
-            const value = crypto.getRandomValues(randomArray);
+            const value = this.getRandom32Bytes();
             // Insert a record to the store
             this.strongholdStore?.insert(key, Array.from(value));
 
@@ -112,7 +113,6 @@ export default class TauriPlatform extends BasePlatform {
 
     public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
-            await this.initStronghold();
             const key = `${userId}|${deviceId}`;
             // Remove a record from store
             await this.strongholdStore?.remove(key);
@@ -124,6 +124,11 @@ export default class TauriPlatform extends BasePlatform {
             await super.clearStorage();
             await this.ipc.call("clearStorage");
         } catch {}
+    }
+
+    public getRandom32Bytes(): Uint8Array {
+        const randomArray = new Uint8Array(32);
+        return crypto.getRandomValues(randomArray);   
     }
 
     public async initStronghold(): Promise<void> {
@@ -149,6 +154,9 @@ export default class TauriPlatform extends BasePlatform {
         }
     };
       
+    public getEventIndexingManager(): BaseEventIndexManager | null {
+        return this.eventIndexManager;
+    }
     
     public get baseUrl(): string {
         // This configuration is element-desktop specific so the types here do not know about it

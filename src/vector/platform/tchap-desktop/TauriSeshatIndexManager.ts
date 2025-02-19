@@ -9,9 +9,16 @@ import BaseEventIndexManager, {
     ILoadArgs,
 } from "../../../indexing/BaseEventIndexManager";
 import { TauriIPCManager as IPCManager } from "./TauriIPCManager";
+import TauriPlatform from "./TauriPlatform";
 
 export class TauriSeshatIndexManager extends BaseEventIndexManager {
     private readonly ipc = new IPCManager("seshat");
+    private platform: TauriPlatform;
+
+    public constructor(platform: TauriPlatform) {
+        super();
+        this.platform = platform;
+    }
 
     public async supportsEventIndexing(): Promise<boolean> {
         return this.ipc.call("supportsEventIndexing");

@@ -173,7 +173,7 @@ async function start(): Promise<void> {
 
         const loadOlmPromise = loadOlm();
         // set the platform for react sdk
-        preparePlatform();
+        await preparePlatform();
         // load config requires the platform to be ready
         const loadConfigPromise = loadConfig();
         await settled(loadConfigPromise); // wait for it to settle

@@ -31,13 +31,15 @@ import TauriPlatform from "./platform/tchap-desktop/TauriPlatform";
 
 export const rageshakePromise = initRageshake();
 
-export function preparePlatform(): void {
+export async function preparePlatform(): Promise<void> {
     if (window.electron) {
         logger.log("Using Electron platform");
         PlatformPeg.set(new ElectronPlatform());
     // :TCHAP:
     } else if (window.__TAURI__){
-        PlatformPeg.set(new TauriPlatform());
+        const tauriPlatform = new TauriPlatform();
+        await tauriPlatform.initStronghold();
+        PlatformPeg.set(tauriPlatform);
     // end :TCHAP:
     } else if (window.matchMedia("(display-mode: standalone)").matches) {
         logger.log("Using PWA platform");
