@@ -25,6 +25,7 @@ import { _t } from "../../../languageHandler";
 import { TauriSeshatIndexManager } from './TauriSeshatIndexManager';
 
 import BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexManager';
+import { TauriSecureStorage } from './TauriSecureStorage';
 
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
@@ -55,9 +56,6 @@ function platformFriendlyName(): string {
 
 export default class TauriPlatform extends BasePlatform {
     private readonly ipc = new IPCManager("common");
-
-    private strongholdStore: Store | undefined;
-    private stronghold: Stronghold | undefined;
     private readonly eventIndexManager: BaseEventIndexManager = new TauriSeshatIndexManager(this);
 
     public constructor() {
@@ -72,18 +70,18 @@ export default class TauriPlatform extends BasePlatform {
         // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
     }
 
+    public getSecureStorageInstance(): TauriSecureStorage {
+        return TauriSecureStorage.instance;
+    }
+
     public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
-            await this.initStronghold();
-
             const key = `${userId}|${deviceId}`;
             // Read a record from store
-            const value = await this.strongholdStore?.get(key);
+            const value = await this.getSecureStorageInstance()?.getItem(key);
+
             console.log('In getpicklekey value', value);
             console.log(value); // 'secret value'
-
-            // Save your updates
-            await this.stronghold?.save();
 
             return value ? new TextDecoder().decode(value) : null;
         } catch {
@@ -96,12 +94,9 @@ export default class TauriPlatform extends BasePlatform {
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
             const key = `${userId}|${deviceId}`;
-            const value = this.getRandom32Bytes();
+            const value = this.getSecureStorageInstance().getRandom32Bytes();
             // Insert a record to the store
-            this.strongholdStore?.insert(key, Array.from(value));
-
-            // Save your updates
-            await this.stronghold?.save();
+            await this.getSecureStorageInstance().createItem(key, Array.from(value));
 
             return value ? new TextDecoder().decode(value) : null;
         } catch {
@@ -115,7 +110,7 @@ export default class TauriPlatform extends BasePlatform {
         try {
             const key = `${userId}|${deviceId}`;
             // Remove a record from store
-            await this.strongholdStore?.remove(key);
+            await this.getSecureStorageInstance().removeItem(key);
         } catch {}
     }
 
@@ -125,34 +120,6 @@ export default class TauriPlatform extends BasePlatform {
             await this.ipc.call("clearStorage");
         } catch {}
     }
-
-    public getRandom32Bytes(): Uint8Array {
-        const randomArray = new Uint8Array(32);
-        return crypto.getRandomValues(randomArray);   
-    }
-
-    public async initStronghold(): Promise<void> {
-        try {
-            if (!this.strongholdStore) {
-                const vaultPath = `${await appDataDir()}/vault.hold`;
-                const vaultPassword = 'tchap-desktop-vault321';
-                const stronghold = await Stronghold.load(vaultPath, vaultPassword);
-            
-                const clientName = 'tchap-desktop';
-                let client: Client;
-                try {
-                    client = await stronghold.loadClient(clientName);
-                } catch {
-                    client = await stronghold.createClient(clientName);
-                }
-              
-                this.strongholdStore = client.getStore();
-                this.stronghold = stronghold;
-            }
-        } catch (err) {
-            console.error("Error in init stronghold", err);
-        }
-    };
       
     public getEventIndexingManager(): BaseEventIndexManager | null {
         return this.eventIndexManager;

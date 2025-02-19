@@ -25,7 +25,12 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     }
 
     public async initEventIndex(userId: string, deviceId: string): Promise<void> {
-        return this.ipc.call("initEventIndex", {userId, deviceId});
+        const key = `seshat|${userId}|${deviceId}`;
+        let passphrase = await this.platform.getSecureStorageInstance().getItem(key);
+        if (!passphrase) {
+            passphrase = this.platform.getSecureStorageInstance().getRandom32Bytes();
+        }
+        return this.ipc.call("initEventIndex", {passphrase});
     }
 
     public async addEventToIndex(ev: IMatrixEvent, profile: IMatrixProfile): Promise<void> {

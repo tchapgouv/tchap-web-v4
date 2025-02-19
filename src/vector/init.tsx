@@ -38,7 +38,7 @@ export async function preparePlatform(): Promise<void> {
     // :TCHAP:
     } else if (window.__TAURI__){
         const tauriPlatform = new TauriPlatform();
-        await tauriPlatform.initStronghold();
+        await tauriPlatform.getSecureStorageInstance().initStronghold();
         PlatformPeg.set(tauriPlatform);
     // end :TCHAP:
     } else if (window.matchMedia("(display-mode: standalone)").matches) {
