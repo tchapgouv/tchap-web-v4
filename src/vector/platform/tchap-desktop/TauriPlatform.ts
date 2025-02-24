@@ -57,8 +57,9 @@ function platformFriendlyName(): string {
 export default class TauriPlatform extends BasePlatform {
     private readonly ipc = new IPCManager("common");
     private readonly eventIndexManager: BaseEventIndexManager = new TauriSeshatIndexManager(this);
+    protected tauriSecureStorage: TauriSecureStorage;
 
-    public constructor() {
+    public constructor(tauriSecureStorage: TauriSecureStorage) {
         super();
 
         if (!window.__TAURI__) {
@@ -66,19 +67,19 @@ export default class TauriPlatform extends BasePlatform {
         }
 
         dis.register(onAction);
-
+        this.tauriSecureStorage = tauriSecureStorage
         // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
     }
 
     public getSecureStorageInstance(): TauriSecureStorage {
-        return TauriSecureStorage.instance;
+        return this.tauriSecureStorage;
     }
 
     public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
             const key = `${userId}|${deviceId}`;
             // Read a record from store
-            const value = await this.getSecureStorageInstance()?.getItem(key);
+            const value = await this.tauriSecureStorage?.getItem(key);
 
             console.log('In getpicklekey value', value);
             console.log(value); // 'secret value'
@@ -94,9 +95,9 @@ export default class TauriPlatform extends BasePlatform {
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
             const key = `${userId}|${deviceId}`;
-            const value = this.getSecureStorageInstance().getRandom32Bytes();
+            const value = this.tauriSecureStorage.getRandom32Bytes();
             // Insert a record to the store
-            await this.getSecureStorageInstance().createItem(key, Array.from(value));
+            await this.tauriSecureStorage.createItem(key, Array.from(value));
 
             return value ? new TextDecoder().decode(value) : null;
         } catch {
@@ -110,7 +111,7 @@ export default class TauriPlatform extends BasePlatform {
         try {
             const key = `${userId}|${deviceId}`;
             // Remove a record from store
-            await this.getSecureStorageInstance().removeItem(key);
+            await this.tauriSecureStorage.removeItem(key);
         } catch {}
     }
 

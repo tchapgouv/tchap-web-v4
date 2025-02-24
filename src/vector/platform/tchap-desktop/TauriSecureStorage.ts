@@ -1,22 +1,12 @@
 import { Client, Store, Stronghold } from '@tauri-apps/plugin-stronghold';
 import { appDataDir } from '@tauri-apps/api/path';
 
-// singleton class storage 
+// Tauri secure storage - using strongholg
 export class TauriSecureStorage {
     private store: Store | undefined;
     private client: Stronghold | undefined;
 
-    private static my_instance: TauriSecureStorage;
-
     public constructor() {
-    }
-
-    public static get instance(): TauriSecureStorage{
-        if (!TauriSecureStorage.my_instance) {
-            TauriSecureStorage.my_instance = new TauriSecureStorage();
-        }
-        return TauriSecureStorage.my_instance;
-
     }
 
     public getRandom32Bytes(): Uint8Array {

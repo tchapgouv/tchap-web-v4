@@ -31,6 +31,8 @@ export class TauriIPCManager {
         switch(this.domain) {
             case 'common': 
                 return this.taurpc.common;
+            case 'seshat': 
+                return this.taurpc.seshat;
             default:
                 return this.taurpc.common;
         }
