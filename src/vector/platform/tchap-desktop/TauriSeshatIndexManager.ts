@@ -21,14 +21,15 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     }
 
     public async supportsEventIndexing(): Promise<boolean> {
-        return this.ipc.call("supportsEventIndexing");
+        return this.ipc.call("supports_event_indexing");
     }
 
     public async initEventIndex(userId: string, deviceId: string): Promise<void> {
         const key = `seshat|${userId}|${deviceId}`;
         let passphrase = await this.platform.getSecureStorageInstance().getItem(key);
         if (!passphrase) {
-            passphrase = this.platform.getSecureStorageInstance().getRandom32Bytes();
+            const ramdom32Bytes = this.platform.getSecureStorageInstance().getRandom32Bytes();
+            passphrase = new TextDecoder().decode(ramdom32Bytes);
         }
         return this.ipc.call("init_event_index", {passphrase});
     }
