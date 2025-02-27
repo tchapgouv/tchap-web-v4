@@ -12,7 +12,7 @@ import { TauriIPCManager as IPCManager } from "./TauriIPCManager";
 import TauriPlatform from "./TauriPlatform";
 
 export class TauriSeshatIndexManager extends BaseEventIndexManager {
-    private readonly ipc = new IPCManager("seshat");
+    private readonly ipc = new IPCManager();
     private platform: TauriPlatform;
 
     public constructor(platform: TauriPlatform) {
@@ -62,7 +62,7 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
         newCheckpoint: ICrawlerCheckpoint | null,
         oldCheckpoint: ICrawlerCheckpoint | null,
     ): Promise<boolean> {
-        return this.ipc.call("add_historic_events", events, newCheckpoint, oldCheckpoint);
+        return this.ipc.call("add_historic_events", { events, newCheckpoint, oldCheckpoint });
     }
 
     public async addCrawlerCheckpoint(checkpoint: ICrawlerCheckpoint): Promise<void> {

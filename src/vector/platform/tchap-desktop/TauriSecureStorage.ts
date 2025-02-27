@@ -1,5 +1,6 @@
 import { Client, Store, Stronghold } from '@tauri-apps/plugin-stronghold';
 import { appDataDir } from '@tauri-apps/api/path';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 // Tauri secure storage - using strongholg
 export class TauriSecureStorage {
@@ -36,17 +37,21 @@ export class TauriSecureStorage {
 
     // On dev build, loading the stronghold vault takes a really long time https://github.com/tauri-apps/tauri/issues/4197
     public async initStronghold(): Promise<void> {
+        logger.log("[Tauri] Initializing stronghold");
         try {
             if (!this.store) {
                 const vaultPath = `${await appDataDir()}/vault.hold`;
+                logger.log("[Tauri] vaulpath", vaultPath);
                 const vaultPassword = 'tchap-desktop-vault321';
                 const stronghold = await Stronghold.load(vaultPath, vaultPassword);
-            
+                logger.log("[Tauri] stronghold", stronghold);
                 const clientName = 'tchap-desktop';
                 let client: Client;
                 try {
+                    logger.log("[Tauri] stronghold loaded");
                     client = await stronghold.loadClient(clientName);
                 } catch {
+                    logger.log("[Tauri] stronghold created");
                     client = await stronghold.createClient(clientName);
                 }
               

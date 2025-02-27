@@ -11,21 +11,20 @@ Please see LICENSE files in the repository root for full details.
 */
 // import { listen } from '@tauri-apps/api/event';
 import { getVersion } from '@tauri-apps/api/app';
-import { Client, Store, Stronghold } from '@tauri-apps/plugin-stronghold';
-import { appDataDir } from '@tauri-apps/api/path';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import BasePlatform from "../../../BasePlatform";
 import dis from "../../../dispatcher/dispatcher";
 import SdkConfig from "../../../SdkConfig";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 // import { TauriSeshatIndexManager as SeshatIndexManager } from "./TauriSeshatIndexManager";
 import { TauriIPCManager as IPCManager } from "./TauriIPCManager";
 import { _t } from "../../../languageHandler";
 import { TauriSeshatIndexManager } from './TauriSeshatIndexManager';
+import { TauriSecureStorage } from './TauriSecureStorage';
 
 import BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexManager';
-import { TauriSecureStorage } from './TauriSecureStorage';
+import { invoke } from '@tauri-apps/api/core';
 
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
@@ -55,7 +54,7 @@ function platformFriendlyName(): string {
 }
 
 export default class TauriPlatform extends BasePlatform {
-    private readonly ipc = new IPCManager("common");
+    private readonly ipc = new IPCManager();
     private readonly eventIndexManager: BaseEventIndexManager = new TauriSeshatIndexManager(this);
     protected tauriSecureStorage: TauriSecureStorage;
 
@@ -63,11 +62,16 @@ export default class TauriPlatform extends BasePlatform {
         super();
 
         if (!window.__TAURI__) {
-            throw new Error("Canwnot instantiate TauriPlatform, window.__TAURI__ is not set");
+            throw new Error("Cannot instantiate TauriPlatform, window.__TAURI__ is not set");
         }
 
         dis.register(onAction);
-        this.tauriSecureStorage = tauriSecureStorage
+        this.tauriSecureStorage = tauriSecureStorage;
+        invoke("test");
+        logger.log("Test call command");
+        const rep = this.ipc.call("test");
+        logger.log("rep", rep);
+        this.ipc.call("test_not_async");
         // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
     }
 

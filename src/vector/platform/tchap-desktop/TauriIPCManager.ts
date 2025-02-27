@@ -4,37 +4,28 @@ Copyright 2022-2024 New Vector Ltd.
 SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
 Please see LICENSE files in the repository root for full details.
 */
-import { createTauRPCProxy } from './types/bindings.ts';
+import { invoke } from '@tauri-apps/api/core';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 export class TauriIPCManager {
 
-    private domain: string;
-
-    private taurpc = createTauRPCProxy();
-
-    public constructor(domain: string) {
+    public constructor() {
         if (!window.__TAURI__) {
             throw new Error("Cannot instantiate Tauri plateform, window.__TAURI__ is not set");
         }
-        this.domain = domain;
     }
 
-    public async call(name: string, ...args: any[]): Promise<any> {
-        const commands = this.getIPCFromDomain();
+    public async call(name: string, args?: Record<string, any>): Promise<any> {
         // Maybe add a timeout to these? Probably not necessary.
-        const result = await (commands as any)![name](args);
-    
-        return result;
-    }
-
-    public getIPCFromDomain(): Record<string, any> {
-        switch(this.domain) {
-            case 'common': 
-                return this.taurpc.common;
-            case 'seshat': 
-                return this.taurpc.seshat;
-            default:
-                return this.taurpc.common;
+        logger.log("[Tauri] IPCManager calling name", name);
+        logger.log("[Tauri] IPCManager calling args", args);
+        try {
+            const result = await invoke(name, args);
+        
+            return result;
+        } catch(e) {
+            logger.error(e);
+            throw e;
         }
     }
 }
