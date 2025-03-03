@@ -12,6 +12,8 @@ Please see LICENSE files in the repository root for full details.
 // import { listen } from '@tauri-apps/api/event';
 import { getVersion } from '@tauri-apps/api/app';
 import { logger } from 'matrix-js-sdk/src/logger';
+import { invoke } from '@tauri-apps/api/core';
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 import BasePlatform from "../../../BasePlatform";
 import dis from "../../../dispatcher/dispatcher";
@@ -24,7 +26,6 @@ import { TauriSeshatIndexManager } from './TauriSeshatIndexManager';
 import { TauriSecureStorage } from './TauriSecureStorage';
 
 import BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexManager';
-import { invoke } from '@tauri-apps/api/core';
 
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
@@ -73,6 +74,12 @@ export default class TauriPlatform extends BasePlatform {
         logger.log("rep", rep);
         this.ipc.call("test_not_async");
         // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
+        getCurrentWindow().onCloseRequested(async (event) => {
+            logger.log("tchap-desktop closing", event);
+            // shutdown eventindex db 
+            this.eventIndexManager.closeEventIndex();
+            process.exit();
+        });
     }
 
     public getSecureStorageInstance(): TauriSecureStorage {
