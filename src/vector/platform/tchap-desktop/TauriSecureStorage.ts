@@ -11,8 +11,24 @@ export class TauriSecureStorage {
     }
 
     public getRandom32Bytes(): Uint8Array {
-        const randomArray = new Uint8Array(32);
-        return crypto.getRandomValues(randomArray);   
+        return crypto.getRandomValues(new Uint8Array(32));
+    }
+
+    public getRandomUtf832Bytes(): Uint8Array{
+        // Define the Unicode range for Greek alphabet characters
+        const minCodePoint = 0x0391; // 'Α' (Greek Capital Letter Alpha)
+        const maxCodePoint = 0x03A9; // 'Ω' (Greek Capital Letter Omega)
+        const range = maxCodePoint - minCodePoint + 1;
+
+        // Create a Uint32Array to hold the random value
+        const randomValue = new Uint8Array(32);
+        crypto.getRandomValues(randomValue);
+
+        // Map the random value to the desired Unicode range
+        const randomCodePoint = randomValue.map(value => minCodePoint + (value % range));
+
+        // Convert the code point to a character
+        return randomCodePoint;
     }
 
     public async getItem(key: string): Promise<any> {
@@ -44,7 +60,6 @@ export class TauriSecureStorage {
                 logger.log("[Tauri] vaulpath", vaultPath);
                 const vaultPassword = 'tchap-desktop-vault321';
                 const stronghold = await Stronghold.load(vaultPath, vaultPassword);
-                logger.log("[Tauri] stronghold", stronghold);
                 const clientName = 'tchap-desktop';
                 let client: Client;
                 try {

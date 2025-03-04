@@ -68,11 +68,9 @@ export default class TauriPlatform extends BasePlatform {
 
         dis.register(onAction);
         this.tauriSecureStorage = tauriSecureStorage;
-        invoke("test");
-        logger.log("Test call command");
-        const rep = this.ipc.call("test");
-        logger.log("rep", rep);
-        this.ipc.call("test_not_async");
+
+        this.ipc.call("welcome");
+
         // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
         getCurrentWindow().onCloseRequested(async (event) => {
             logger.log("tchap-desktop closing", event);
