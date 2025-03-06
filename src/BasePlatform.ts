@@ -353,6 +353,7 @@ export default abstract class BasePlatform {
         }
         const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
         window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId, action); // redirect to SSO
+        //TODO: Olivier ajouter le login_hint ici
     }
 
     /**
