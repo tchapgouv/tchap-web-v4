@@ -12,8 +12,9 @@ Please see LICENSE files in the repository root for full details.
 // import { listen } from '@tauri-apps/api/event';
 import { getVersion } from '@tauri-apps/api/app';
 import { logger } from 'matrix-js-sdk/src/logger';
-import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { check } from '@tauri-apps/plugin-updater';
+import { relaunch } from '@tauri-apps/plugin-process';
 
 import BasePlatform from "../../../BasePlatform";
 import dis from "../../../dispatcher/dispatcher";
@@ -78,6 +79,39 @@ export default class TauriPlatform extends BasePlatform {
         //     this.eventIndexManager.closeEventIndex();
         //     process.exit();
         // });
+
+        this.checkUpdates();
+    }
+
+    public async checkUpdates(): Promise<void> {
+        
+        const update = await check();
+        if (update) {
+            logger.log(
+                `found update ${update.version} from ${update.date} with notes ${update.body}`
+            );
+            let downloaded = 0;
+            let contentLength = 0;
+            // alternatively we could also call update.download() and update.install() separately
+            await update.downloadAndInstall((event) => {
+                switch (event.event) {
+                case 'Started':
+                    contentLength = event.data.contentLength ?? 0;
+                    logger.log(`started downloading desktop update${contentLength} bytes`);
+                    break;
+                case 'Progress':
+                    downloaded += event.data.chunkLength;
+                    logger.log(`downloaded ${downloaded} from ${contentLength}`);
+                    break;
+                case 'Finished':
+                    logger.log('download tauri update finished');
+                    break;
+                }
+            });
+
+            logger.log('Desktop update installed');
+            await relaunch();
+        }
     }
 
     public getSecureStorageInstance(): TauriSecureStorage {
