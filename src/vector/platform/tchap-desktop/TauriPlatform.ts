@@ -72,12 +72,12 @@ export default class TauriPlatform extends BasePlatform {
         this.ipc.call("welcome");
 
         // this.ipc.call("set_homeserver_url", MatrixClientPeg.get()?.getHomeserverUrl());
-        getCurrentWindow().onCloseRequested(async (event) => {
-            logger.log("tchap-desktop closing", event);
-            // shutdown eventindex db 
-            this.eventIndexManager.closeEventIndex();
-            process.exit();
-        });
+        // getCurrentWindow().onCloseRequested(async (event) => {
+        //     logger.log("tchap-desktop closing", event);
+        //     // shutdown eventindex db 
+        //     this.eventIndexManager.closeEventIndex();
+        //     process.exit();
+        // });
     }
 
     public getSecureStorageInstance(): TauriSecureStorage {
