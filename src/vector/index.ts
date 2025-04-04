@@ -107,6 +107,20 @@ async function start(): Promise<void> {
         await import(/* webpackChunkName: "intl-segmenter-polyfill" */ "@formatjs/intl-segmenter/polyfill-force");
     }
 
+      // :TCHAP: load initTchap.ts async so that its code is not executed immediately and we can catch any exceptions
+    const {
+        registerExpiredAccountListener,
+        saveAppVersionInLocalStorage,
+        queueOverideUserSettings,
+        queueClearCacheAndReload,
+        needsRefreshForVersion4,
+    } = await import(
+        /* webpackChunkName: "initTchap" */
+        /* webpackPreload: true */
+        "../tchap/app/initTchap"
+    );
+    // end :TCHAP:
+    
     // load init.ts async so that its code is not executed immediately and we can catch any exceptions
     const {
         rageshakePromise,
@@ -128,20 +142,6 @@ async function start(): Promise<void> {
         /* webpackPreload: true */
         "./init"
     );
-
-    // :TCHAP: load initTchap.ts async so that its code is not executed immediately and we can catch any exceptions
-    const {
-        registerExpiredAccountListener,
-        saveAppVersionInLocalStorage,
-        queueOverideUserSettings,
-        queueClearCacheAndReload,
-        needsRefreshForVersion4,
-    } = await import(
-        /* webpackChunkName: "initTchap" */
-        /* webpackPreload: true */
-        "../tchap/app/initTchap"
-    );
-    // end :TCHAP:
 
     // Now perform the next stage of initialisation. This has its own try/catch in which we render
     // a react error page on failure.
