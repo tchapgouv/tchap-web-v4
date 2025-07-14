@@ -504,7 +504,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         );
         */
 
-        if (TchapUIFeature.isSSOFlowActive() && !this.isBusy() && !this.state.busyLoggingIn) {
+        if (!this.isBusy() && !this.state.busyLoggingIn) {
             return <div style={{marginBottom: "25px", position: "relative", top: "-15px"}}>
                 <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
                 <ProconnectButton />

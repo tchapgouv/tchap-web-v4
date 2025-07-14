@@ -33,6 +33,7 @@ import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
 import "~tchap-web/res/css/views/sso/TchapSSO.pcss";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 export default function EmailVerificationPage() {
 
@@ -41,7 +42,11 @@ export default function EmailVerificationPage() {
     const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<string>("");
 
-    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("auth|proconnect|continue");
+    const isMASFlow= TchapUIFeature.isMASFlowActive();
+
+    const submitButtonLabel = isMASFlow ? _t("action|continue") : _t("auth|proconnect|continue");
+    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : submitButtonLabel;
+
 
     const emailFieldRef = useRef<Field>(null);
 
@@ -129,12 +134,69 @@ export default function EmailVerificationPage() {
         window.location.assign("#/login"); 
     }
 
+    const getTitleLabel = () => {
+        if (isMASFlow) {
+            return _t("action|sign_in");
+        }
+        return _t("auth|proconnect|email_title");
+    }
+
+    const getButtonGroup = () => {
+        if (isMASFlow) {
+            return (
+                <AccessibleButton
+                        type="submit"
+                        data-testid="mas-submit"
+                        title={_t("action|continue")}
+                        className="tc_ButtonParent tc_ButtonProconnect"
+                        element="button"
+                        kind="link"
+                        disabled={buttonDisabled}
+                        onClick={(e: ButtonEvent) => {
+                            onSubmit(e);
+                        }}
+                    >
+                        {submitButtonChild}
+                </AccessibleButton>
+            )
+        }
+        return <>
+            <AccessibleButton
+                type="submit"
+                data-testid="proconnect-submit"
+                title={_t("auth|proconnect|continue")}
+                className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC"
+                element="button"
+                kind="link"
+                disabled={buttonDisabled}
+                onClick={(e: ButtonEvent) => {
+                    onSubmit(e);
+                }}
+            >
+                {submitButtonChild}
+            </AccessibleButton>
+            <div className="mx_AuthBody_button-container tc_bottomButton">
+                <AccessibleButton
+                    className="mx_AuthBody_sign-in-instead-button"
+                    element="button"
+                    kind="link"
+                    onClick={(e: ButtonEvent) => {
+                        e.preventDefault();
+                        onLoginByPasswordClick();
+                    }}
+                >
+                    {_t("auth|proconnect|sign_in_password_instead")}
+                </AccessibleButton>
+            </div>
+        </>
+    }
+
     return (
         <AuthPage>
             <AuthHeader/>
             <AuthBody>
                 <h1>
-                    {_t("auth|proconnect|email_title")}
+                    {getTitleLabel()}
                 </h1>
                 <form onSubmit={onSubmit} className="tc_pronnect">
                     <fieldset disabled={loading} className="tc_login">
@@ -151,33 +213,7 @@ export default function EmailVerificationPage() {
                             />
                         </div>
                         {errorText && <ErrorMessage message={errorText} />}
-                        <AccessibleButton
-                                type="submit"
-                                data-testid="proconnect-submit"
-                                title={_t("auth|proconnect|continue")}
-                                className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC"
-                                element="button"
-                                kind="link"
-                                disabled={buttonDisabled}
-                                onClick={(e: ButtonEvent) => {
-                                    onSubmit(e);
-                                }}
-                            >
-                                {submitButtonChild}
-                            </AccessibleButton>
-                        <div className="mx_AuthBody_button-container tc_bottomButton">
-                            <AccessibleButton
-                                className="mx_AuthBody_sign-in-instead-button"
-                                element="button"
-                                kind="link"
-                                onClick={(e: ButtonEvent) => {
-                                    e.preventDefault();
-                                    onLoginByPasswordClick();
-                                }}
-                            >
-                                {_t("auth|proconnect|sign_in_password_instead")}
-                            </AccessibleButton>
-                        </div>
+                        {getButtonGroup()}
                     </fieldset>
                 </form>
             </AuthBody>

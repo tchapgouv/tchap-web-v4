@@ -26,6 +26,7 @@ const COPY_LIST = [
     ["res/welcome.html", "webapp"],
     // :TCHAP: sso-agentconnect-flow
     ["res/welcome_sso.html", "webapp"],
+    ["res/welcome_mas.html", "webapp"],
     // end :TCHAP:
     ["res/welcome/**", "webapp/welcome"],
     ["res/themes/**", "webapp/themes"],

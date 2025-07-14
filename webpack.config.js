@@ -796,6 +796,7 @@ module.exports = (env, argv) => {
                     "res/welcome.html",
                     // :TCHAP: sso-agentconnect-flow
                     "res/welcome_sso.html",
+                    "res/welcome_mas.html",
                     // :TCHAP: legacy_olm TODO: remove all when content scanner will be updated to use rust crypto
                     "node_modules/@matrix-org/olm/olm_legacy.js",
                     // end :TCHAP:

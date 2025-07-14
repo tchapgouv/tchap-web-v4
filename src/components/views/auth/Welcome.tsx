@@ -41,7 +41,7 @@ export default class Welcome extends React.PureComponent<EmptyObject> {
             const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
             replaceMap["$logoUrl"] = logoUrl;
             // :TCHAP: sso-agentconnect-flow - pageUrl = "welcome.html"; 
-            pageUrl = TchapUIFeature.isSSOFlowActive() ? "welcome_sso.html" : "welcome.html";
+            pageUrl = TchapUIFeature.isMASFlowActive() ? "welcome_mas.html" : "welcome_sso.html";
             replaceMap["$proconnectFaq"] = TchapUrls.helpProconnectInstances;
             // end :TCHAP:
         }

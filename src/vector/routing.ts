@@ -12,6 +12,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { type QueryDict } from "matrix-js-sdk/src/utils";
 
 import { parseQsFromFragment } from "./url_utils";
+import TchapUIFeature from "../tchap/util/TchapUIFeature";
 
 let lastLocationHashSet: string | null = null;
 
@@ -38,6 +39,17 @@ function onHashChange(): void {
         // we just set this: no need to route it!
         return;
     }
+
+    // :TCHAP: 
+    // When MAS is activated we don't want to display login or register page
+    if (TchapUIFeature.isMASFlowActive()) {
+        if (["#/login", "#/register"].includes(window.location.hash)) {
+            window.location.replace("#/email-precheck-sso");
+            routeUrl(window.location);
+            return;
+         }
+    }
+    // end :TCHAP:
     routeUrl(window.location);
 }
 
