@@ -37,7 +37,7 @@ describe("<Register />", () => {
 
     const addSSOFlowToMockConfig = (isActive: boolean = false) => {
         // mock SdkConfig.get("tchap_features")
-        const config: ConfigOptions = { tchap_sso_flow: { isActive } };
+        const config: ConfigOptions = { tchap_mas_flow: { isActive } };
         SdkConfig.put(config);
     };
 

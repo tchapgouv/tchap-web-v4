@@ -10,6 +10,7 @@ import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import { flushPromises, mockPlatformPeg, stubClient } from "~tchap-web/test/test-utils";
 import Login from "~tchap-web/src/Login";
+import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 
 jest.mock("~tchap-web/src/PlatformPeg");
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
@@ -64,6 +65,9 @@ describe("<EmailVerificationPage />", () => {
     const renderEmailVerificationPage = () => render(<EmailVerificationPage />);
 
     beforeEach(() => {
+        const config: ConfigOptions = { tchap_mas_flow: { isActive: false } };
+        SdkConfig.put(config);
+
         mockedLogin.mockImplementation(() => ({
             hsUrl: defaultHsUrl,
             createTemporaryClient: jest.fn().mockReturnValue(mockedClient),
@@ -261,5 +265,19 @@ describe("<EmailVerificationPage />", () => {
         });
 
         expect(container.getElementsByClassName("mx_ErrorMessage").length).toBe(1);
+    });
+
+    describe("MAS flow activated", () => {
+        beforeEach(() => {
+            const config: ConfigOptions = { tchap_mas_flow: { isActive: true } };
+            SdkConfig.put(config);
+        });
+
+        it("should display correct title and button label when mas flow is activated", () => {
+            renderEmailVerificationPage();
+
+            expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument();
+            expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
+        });
     });
 });
