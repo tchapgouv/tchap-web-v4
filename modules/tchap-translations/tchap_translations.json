@@ -677,12 +677,12 @@
         "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
     },
     "incompatible_browser|supported_browsers": {
-        "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.  Don't hesitate to contact your IT department of your ministery or organization.",
-        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox (>115)</Firefox>, <Edge>Edge (>110)</Edge>, ou <Safari>Safari</Safari>.  N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation."
+        "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.  Don't hesitate to contact your IT department of your ministery or organization and consult the list of compatible browsers: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj",
+        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox (>115)</Firefox>, <Edge>Edge (>110)</Edge>, ou <Safari>Safari</Safari>.  N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation et consulter la liste des navigateurs compatibles: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj"
     },
     "incompatible_browser|description": {
         "en": "%(brand)s uses some browser features which are not available in your current browser. %(detail)s",
-        "fr": "%(brand)s utilise des fonctionnalités non disponibles dans votre version courante du navigateur. %(detail)s"
+        "fr": "%(brand)s utilise des fonctionnalités non disponibles dans votre navigateur actuel. %(detail)s"
     },
     "incompatible_browser|detail_can_continue": {
         "en": "You can continue using your current browser, but some or all features may not work and the look and feel of the application may be incorrect.",
@@ -690,7 +690,7 @@
     },
     "incompatible_browser|detail_no_continue": {
         "en": "Try updating this browser if you're not using the latest version and try again.",
-        "fr": "Essayez de mettre à jour votre navigateur (Firefox > 115, Edge > 110) si vous n'utilisez pas la dernière version de celle-ci."
+        "fr": "Essayez de mettre à jour votre navigateur (Firefox > 115, Edge > 110)."
     },
     "incompatible_browser|learn_more": {
         "en": "Learn more",
