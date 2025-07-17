@@ -992,8 +992,16 @@
         "en": "Privacy",
         "fr": "Vie privée"
     },
+    "settings|security|dialog_title": {
+        "en": "<strong>Settings:</strong> Privacy",
+        "fr": "<strong>Paramètres : </strong> Vie privée"
+    },
     "settings|encryption|title": {
-        "en": "Security and encryption",
-        "fr": "Sécurité et chiffrement"
+        "en": "Encrypted messages",
+        "fr": "Messages chiffrés"
+    },
+    "settings|encryption|dialog_title": {
+        "en": "<strong>Settings:</strong> Encrypted messages",
+        "fr": "<strong>Paramètres : </strong> Messages chiffrés"
     }
 }
