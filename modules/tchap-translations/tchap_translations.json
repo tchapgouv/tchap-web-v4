@@ -678,7 +678,7 @@
     },
     "incompatible_browser|supported_browsers": {
         "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.  Don't hesitate to contact your IT department of your ministery or organization and consult the list of compatible browsers: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj",
-        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox (>115)</Firefox>, <Edge>Edge (>110)</Edge>, ou <Safari>Safari</Safari>.  N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation et consulter la liste des navigateurs compatibles: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj"
+        "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, ou <Safari>Safari</Safari>.  N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation et consulter la liste des navigateurs compatibles: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj"
     },
     "incompatible_browser|description": {
         "en": "%(brand)s uses some browser features which are not available in your current browser. %(detail)s",
@@ -689,8 +689,8 @@
         "fr": "Vous pouvez continuer à utiliser votre navigateur actuel, mais vous risquez de trouver que certaines fonctionnalités et/ou l’apparence de l’application sont incorrectes."
     },
     "incompatible_browser|detail_no_continue": {
-        "en": "Try updating this browser if you're not using the latest version and try again.",
-        "fr": "Essayez de mettre à jour votre navigateur (Firefox > 115, Edge > 110)."
+        "en": "Try updating this browser if you're not using the latest version and try again. List of compatible browsers: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj",
+        "fr": "Essayez de mettre à jour votre navigateur. Liste des navigateurs compatibles: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj"
     },
     "incompatible_browser|learn_more": {
         "en": "Learn more",
