@@ -295,14 +295,17 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     public render(): React.ReactNode {
+        
+        /* :TCHAP:
+        //secureBackup is for dehydrated device which we do not use in Tchap
         const secureBackup = <SecureBackup />;
-
+        //eventIndex is moved another tab
         const eventIndex = (
             <SettingsSubsection heading={_t("settings|security|message_search_section")}>
                 <EventIndexPanel />
             </SettingsSubsection>
         );
-
+        end :TCHAP: */
         let warning;
         if (!privateShouldBeEncrypted(MatrixClientPeg.safeGet())) {
             warning = (
@@ -361,10 +364,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 {/* :TCHAP: hide-widgets-settings - <SetIntegrationManager />*/}
                 { TchapUIFeature.showWidgetsSettings && <SetIntegrationManager />}
                 {/* end :TCHAP: */}
+                {/* :TCHAP:
                 <SettingsSection heading={_t("settings|security|encryption_section")}>
                     {secureBackup}
                     {eventIndex}
                 </SettingsSection>
+                end :TCHAP: */}
                 <SettingsSection heading={_t("common|privacy")}>
                     {/* <DiscoverySettings /> :TCHAP: metrics-call we remove the discovery settings that appear when posthog is enabled */}
                     {posthogSection}

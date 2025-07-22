@@ -26,6 +26,8 @@ import { RecoveryPanelOutOfSync } from "../../encryption/RecoveryPanelOutOfSync"
 import { useTypedEventEmitter } from "../../../../../hooks/useEventEmitter";
 import { KeyStoragePanel } from "../../encryption/KeyStoragePanel";
 import { DeleteKeyStoragePanel } from "../../encryption/DeleteKeyStoragePanel";
+import { SettingsSubsection } from "../../shared/SettingsSubsection";
+import EventIndexPanel from "../../EventIndexPanel";
 
 /**
  * The state in the encryption settings tab.
@@ -74,6 +76,14 @@ export function EncryptionUserSettingsTab({ initialState = "loading" }: Props): 
     const checkEncryptionState = useCheckEncryptionState(state, setState);
 
     let content: JSX.Element;
+
+    //:TCHAP:
+    const eventIndex = (
+        <SettingsSubsection heading={_t("settings|security|message_search_section")}>
+            <EventIndexPanel />
+        </SettingsSubsection>
+    );
+    //end :TCHAP:
 
     switch (state) {
         case "loading":
@@ -142,6 +152,9 @@ export function EncryptionUserSettingsTab({ initialState = "loading" }: Props): 
     return (
         <SettingsTab className="mx_EncryptionUserSettingsTab" data-testid="encryptionTab">
             {content}
+            {/* :TCHAP: */}
+            {eventIndex}
+            {/* end :TCHAP: */}
         </SettingsTab>
     );
 }
