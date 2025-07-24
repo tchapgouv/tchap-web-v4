@@ -41,18 +41,21 @@ function onHashChange(): void {
     }
 
     // :TCHAP:
-    /* 
     //deactivate this check
-    //only for MAS migration
+    
     // When MAS is activated we don't want to display login or register page
-    if (TchapUIFeature.isMASFlowActive()) {
+
+    //only for migration
+    const activateLoginLegacyDuringMASMigration= TchapUIFeature.activateLoginLegacyDuringMASMigration();
+    
+    if (TchapUIFeature.isMASFlowActive() && !activateLoginLegacyDuringMASMigration) {
         if (["#/login", "#/register"].includes(window.location.hash)) {
             window.location.replace("#/email-precheck-sso");
             routeUrl(window.location);
             return;
          }
     }
-    */
+    
     // end :TCHAP:
     routeUrl(window.location);
 }
