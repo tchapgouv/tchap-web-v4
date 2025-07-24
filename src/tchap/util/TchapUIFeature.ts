@@ -63,4 +63,11 @@ export default class TchapUIFeature {
         return masFlow.isActive;
     }
 
+    
+    public static activateLoginLegacyDuringMASMigration():boolean {
+        const masFlow : Record<string, boolean> = SdkConfig.get("tchap_mas_flow") as Record<string, boolean> ?? {"activate_login_legacy_during_MAS_migration": false};
+
+        return masFlow.activate_login_legacy_during_MAS_migration;
+    }
+
 }

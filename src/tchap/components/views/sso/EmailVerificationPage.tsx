@@ -35,7 +35,14 @@ import * as Email from "~tchap-web/src/email";
 import "~tchap-web/res/css/views/sso/TchapSSO.pcss";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
-export default function EmailVerificationPage() {
+
+interface IProps {
+    //propagate the server config change
+    onServerConfigChange(config: ValidatedServerConfig): void;
+}
+
+//This page is map to EMAIL_PRECHECK_SSO
+export default function EmailVerificationPage(props: IProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
@@ -43,6 +50,7 @@ export default function EmailVerificationPage() {
     const [errorText, setErrorText] = useState<string>("");
 
     const isMASFlow= TchapUIFeature.isMASFlowActive();
+    const activateLoginLegacyDuringMASMigration= TchapUIFeature.activateLoginLegacyDuringMASMigration();
 
     const submitButtonLabel = isMASFlow ? _t("action|continue") : _t("auth|proconnect|continue");
     const submitButtonChild = loading ? <Spinner w={16} h={16} /> : submitButtonLabel;
@@ -75,6 +83,13 @@ export default function EmailVerificationPage() {
         const flows = await login.getFlows();
         return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.sso");
     }
+    
+    //only for MAS migration
+    const isLegacyLoginActive = async (login: Login): Promise<boolean> => {
+        const flows = await login.getFlows();
+        return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.password");
+    }
+
 
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
@@ -105,6 +120,22 @@ export default function EmailVerificationPage() {
                 displayError(_t("auth|proconnect|error_homeserver"));
                 return
             }
+
+            //:tchap: only for MAS migration
+            if(activateLoginLegacyDuringMASMigration){
+                const doesNotSupportMAS = await isLegacyLoginActive(login);
+                console.log("doesNotSupportMAS : ", doesNotSupportMAS);
+                
+                //when homeserver is not MAS ready
+                //propagate the serverConfig and switch to legacy login page
+                if(doesNotSupportMAS){
+                    props.onServerConfigChange(validatedServerConfig);
+                    onLoginByPasswordClick()
+                    return;
+                }
+            }
+            //end :tchap: only for MAS migration
+            
 
             // check if oidc is activated on HS
             const canSSO = await isSSOFlowActive(login);

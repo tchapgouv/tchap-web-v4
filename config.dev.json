@@ -122,13 +122,14 @@
         "feature_screenshare_call": ["*"]
     },
     "tchap_mas_flow": {
-        "isActive": true
+        "isActive": true,
+        "activate_login_legacy_during_MAS_migration" : true" : true
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "element_call": {
         "url": "https://element-call.tchap.incubateur.net/",
         "participant_limit": 25,
-        "brand": "Appel de groupew"
+        "brand": "Appel de groupe"
     },
     "posthog": {
         "project_api_key": "phc_FFa4pkvmuWjF9nZOMmYJWUXMibuYnCnPyf3DqPGZs4L",

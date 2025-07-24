@@ -504,13 +504,19 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         );
         */
 
-        if (!this.isBusy() && !this.state.busyLoggingIn) {
+        /*
+        :tchap: disable sso during mas migration
+        */
+        const activateLoginLegacyDuringMASMigration = TchapUIFeature.activateLoginLegacyDuringMASMigration();
+       
+        if (!this.isBusy() && !this.state.busyLoggingIn && !activateLoginLegacyDuringMASMigration) {
             return <div style={{marginBottom: "25px", position: "relative", top: "-15px"}}>
                 <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
                 <ProconnectButton />
             </div>;
         }
         return <></>;
+        //end :tchap:
         // end :TCHAP:
     };
 

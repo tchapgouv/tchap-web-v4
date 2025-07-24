@@ -40,7 +40,10 @@ function onHashChange(): void {
         return;
     }
 
-    // :TCHAP: 
+    // :TCHAP:
+    /* 
+    //deactivate this check
+    //only for MAS migration
     // When MAS is activated we don't want to display login or register page
     if (TchapUIFeature.isMASFlowActive()) {
         if (["#/login", "#/register"].includes(window.location.hash)) {
@@ -49,6 +52,7 @@ function onHashChange(): void {
             return;
          }
     }
+    */
     // end :TCHAP:
     routeUrl(window.location);
 }
