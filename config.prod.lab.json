@@ -205,7 +205,7 @@
     },
     "tchap_mas_flow": {
         "isActive": true,
-        "temp_activate_login_legacy_during_MAS_migration" : true
+        "temp_activate_login_legacy_during_MAS_migration": true
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
