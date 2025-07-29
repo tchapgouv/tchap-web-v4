@@ -18,6 +18,13 @@
         "files": [
             "src/interactive-auth.ts"
         ]
+    },
+    "add-support-for-login_hint-in-authorization-url-generation": {
+        "package": "matrix-js-sdk",
+        "files": [
+            "src/oidc/authorize.ts"
+        ],
+        "upstream-pr" : "https://github.com/matrix-org/matrix-js-sdk/pull/4943"
     }
 
 }

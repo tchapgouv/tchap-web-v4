@@ -28,12 +28,13 @@ import PlatformPeg from "~tchap-web/src/PlatformPeg";
 
 import { ErrorMessage } from "~tchap-web/src/components/structures/ErrorMessage";
 import { SSOAction } from "matrix-js-sdk/src/matrix";
-import Login from "~tchap-web/src/Login";
+import Login, { OidcNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
 import "~tchap-web/res/css/views/sso/TchapSSO.pcss";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
+import { startOidcLogin } from "../../../../utils/oidc/authorize";
 
 
 interface IProps {
@@ -83,13 +84,6 @@ export default function EmailVerificationPage(props: IProps) {
         const flows = await login.getFlows();
         return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.sso");
     }
-    
-    //only for MAS migration
-    const isLegacyLoginActive = async (login: Login): Promise<boolean> => {
-        const flows = await login.getFlows();
-        return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.password");
-    }
-
 
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
@@ -110,6 +104,52 @@ export default function EmailVerificationPage(props: IProps) {
                 return;
             }
 
+            /* use oidcNativeFlow */
+            if(isMASFlow){
+
+                const validatedServerConfig = await setUpCurrentHs(hs);
+                if (!validatedServerConfig) {
+                    displayError(_t("auth|proconnect|error_homeserver"));
+                    return
+                }
+
+                const login = new Login(hs.base_url, hs.base_url, null, {
+                    delegatedAuthentication: validatedServerConfig.delegatedAuthentication,
+                });
+                
+                const loginFlows = await login.getFlows(false);
+
+                //:tchap: only usefull during synapse + MAS migration
+                //when homeserver is not MAS ready
+                //propagate the serverConfig and switch to legacy login page
+                if(activateLoginLegacyDuringMASMigration && 
+                    loginFlows?.find((flow: Record<string, any>) => flow.type === "m.login.password")){
+                    props.onServerConfigChange(validatedServerConfig);
+                    onLoginByPasswordClick();
+                    return;
+                }
+
+                let oidcNativeFlow: OidcNativeFlow | undefined;
+                oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
+                
+                
+                startOidcLogin(
+                    validatedServerConfig.delegatedAuthentication!,
+                    oidcNativeFlow.clientId,
+                    validatedServerConfig.hsUrl,
+                    validatedServerConfig.isUrl,
+                    false,
+                    email
+                );
+                
+                setLoading(false);
+
+                return;
+                
+            }
+
+            //MAS Flow is not active
+            //legacy sso code
             const login = new Login(hs.base_url, hs.base_url, null, {});
 
             const matrixClient= login.createTemporaryClient();
@@ -120,22 +160,6 @@ export default function EmailVerificationPage(props: IProps) {
                 displayError(_t("auth|proconnect|error_homeserver"));
                 return
             }
-
-            //:tchap: only for MAS migration
-            if(activateLoginLegacyDuringMASMigration){
-                const doesNotSupportMAS = await isLegacyLoginActive(login);
-                console.log("doesNotSupportMAS : ", doesNotSupportMAS);
-                
-                //when homeserver is not MAS ready
-                //propagate the serverConfig and switch to legacy login page
-                if(doesNotSupportMAS){
-                    props.onServerConfigChange(validatedServerConfig);
-                    onLoginByPasswordClick()
-                    return;
-                }
-            }
-            //end :tchap: only for MAS migration
-            
 
             // check if oidc is activated on HS
             const canSSO = await isSSOFlowActive(login);

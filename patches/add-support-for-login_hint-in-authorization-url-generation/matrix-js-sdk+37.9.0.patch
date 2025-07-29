@@ -1,0 +1,28 @@
+diff --git a/node_modules/matrix-js-sdk/src/oidc/authorize.ts b/node_modules/matrix-js-sdk/src/oidc/authorize.ts
+index f768092..549f38e 100644
+--- a/node_modules/matrix-js-sdk/src/oidc/authorize.ts
++++ b/node_modules/matrix-js-sdk/src/oidc/authorize.ts
+@@ -136,6 +136,7 @@ export const generateOidcAuthorizationUrl = async ({
+     nonce,
+     prompt,
+     urlState,
++    login_hint
+ }: {
+     clientId: string;
+     metadata: ValidatedAuthMetadata;
+@@ -145,6 +146,7 @@ export const generateOidcAuthorizationUrl = async ({
+     nonce: string;
+     prompt?: string;
+     urlState?: string;
++    login_hint?:string;
+ }): Promise<string> => {
+     const scope = generateScope();
+     const oidcClient = new OidcClient({
+@@ -163,6 +165,7 @@ export const generateOidcAuthorizationUrl = async ({
+         nonce,
+         prompt,
+         url_state: urlState,
++        login_hint,
+     });
+ 
+     return request.url;

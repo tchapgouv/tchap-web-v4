@@ -31,6 +31,9 @@ export const startOidcLogin = async (
     homeserverUrl: string,
     identityServerUrl?: string,
     isRegistration?: boolean,
+    //:tchap:
+    loginHint?: string,
+    //:tchap: end
 ): Promise<void> => {
     const redirectUri = PlatformPeg.get()!.getOidcCallbackUrl().href;
 
@@ -47,6 +50,9 @@ export const startOidcLogin = async (
         nonce,
         prompt,
         urlState: PlatformPeg.get()?.getOidcClientState(),
+        //:tchap:
+        login_hint: loginHint
+        //:tchap: end
     });
 
     window.location.href = authorizationUrl;
