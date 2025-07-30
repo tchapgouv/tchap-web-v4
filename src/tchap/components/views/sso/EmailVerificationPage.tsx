@@ -105,14 +105,13 @@ export default function EmailVerificationPage(props: IProps) {
                 return;
             }
 
+            const validatedServerConfig = await setUpCurrentHs(hs);
+            if (!validatedServerConfig) {
+                displayError(_t("auth|proconnect|error_homeserver"));
+                return
+            }
             /* use oidcNativeFlow */
             if(isMASFlow){
-
-                const validatedServerConfig = await setUpCurrentHs(hs);
-                if (!validatedServerConfig) {
-                    displayError(_t("auth|proconnect|error_homeserver"));
-                    return
-                }
 
                 const login = new Login(hs.base_url, hs.base_url, null, {
                     delegatedAuthentication: validatedServerConfig.delegatedAuthentication,
@@ -126,6 +125,7 @@ export default function EmailVerificationPage(props: IProps) {
                 //activateLoginLegacyDuringMASMigration code can be cleared after MAS migration
                 if(isMASmigration && 
                     loginFlows?.find((flow: Record<string, any>) => flow.type === "m.login.password")){
+                    //console.log("Synapse support lm.ogin.password, use legacy flows");
                     props.onServerConfigChange(validatedServerConfig);
                     onLoginByPasswordClick();
                     return;
@@ -155,13 +155,6 @@ export default function EmailVerificationPage(props: IProps) {
             const login = new Login(hs.base_url, hs.base_url, null, {});
 
             const matrixClient= login.createTemporaryClient();
-
-            const validatedServerConfig = await setUpCurrentHs(hs);
-
-            if (!validatedServerConfig) {
-                displayError(_t("auth|proconnect|error_homeserver"));
-                return
-            }
 
             // check if oidc is activated on HS
             const canSSO = await isSSOFlowActive(login);

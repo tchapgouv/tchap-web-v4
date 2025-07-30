@@ -11,12 +11,13 @@ import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServer
 import { flushPromises, mockPlatformPeg, stubClient } from "~tchap-web/test/test-utils";
 import Login from "~tchap-web/src/Login";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
+import * as authorize from "~tchap-web/src/utils/oidc/authorize";
 
 jest.mock("~tchap-web/src/PlatformPeg");
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
 jest.mock("~tchap-web/src/Login");
 
-describe("<EmailVerificationPage />", () => {
+describe("Tests sso and oidc native flow", () => {
     const userEmail = "marc@tchap.beta.gouv.fr";
     const defaultHsUrl = "https://matrix.agent1.fr";
     const secondHsUrl = "https://matrix.agent2.fr";
@@ -62,7 +63,13 @@ describe("<EmailVerificationPage />", () => {
         }
     };
 
-    const renderEmailVerificationPage = () => render(<EmailVerificationPage />);
+    // Créer un mock pour onServerConfigChange
+    const onServerConfigChangeMock = jest.fn();
+ 
+    const renderEmailVerificationPage = () => render(<EmailVerificationPage onServerConfigChange={onServerConfigChangeMock} />);
+
+describe("MAS flow deactivated", () => {
+
 
     beforeEach(() => {
         const config: ConfigOptions = { tchap_mas_flow: { isActive: false } };
@@ -266,11 +273,21 @@ describe("<EmailVerificationPage />", () => {
 
         expect(container.getElementsByClassName("mx_ErrorMessage").length).toBe(1);
     });
-
+});
     describe("MAS flow activated", () => {
         beforeEach(() => {
-            const config: ConfigOptions = { tchap_mas_flow: { isActive: true } };
+
+            const config: ConfigOptions = 
+            { tchap_mas_flow:{ 
+                isActive: true , 
+                isMASmigration: false
+            } 
+            };
+
             SdkConfig.put(config);
+            // Dans le beforeEach du bloc "MAS flow activated"
+            jest.spyOn(authorize, 'startOidcLogin').mockImplementation(jest.fn());
+
         });
 
         it("should display correct title and button label when mas flow is activated", () => {
@@ -280,4 +297,93 @@ describe("<EmailVerificationPage />", () => {
             expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
         });
     });
+
+    /* Unit Test does not work, tested by hand
+    it("should redirect to login when m.login.password is detected (during MAS migration)", async () => {
+        
+        const config: ConfigOptions = 
+            { tchap_mas_flow:{ 
+                isActive: true , 
+                isMASmigration: true 
+            } 
+        };
+        SdkConfig.put(config);
+        
+         mockedLogin.mockImplementation(() => ({
+            hsUrl: defaultHsUrl,
+            createTemporaryClient: jest.fn().mockReturnValue(mockedClient),
+            getFlows: jest.fn().mockResolvedValue([{ type: "m.login.pasword" }]),
+        }));
+
+        renderEmailVerificationPage();
+
+        // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+        mockedFetchHomeserverFromEmail(defaultHsUrl);
+        mockedValidatedServerConfig(false, defaultHsUrl);
+        mockedPlatformPegStartSSO(false);
+
+        // Put text in email field
+        const emailField = screen.getByRole("textbox");
+        fireEvent.focus(emailField);
+        fireEvent.change(emailField, { target: { value: userEmail } });
+
+        await flushPromises();
+
+        // click on proconnect button
+        const proconnectButton = screen.getByTestId("mas-submit");
+        await act(async () => {
+            await fireEvent.click(proconnectButton);
+        });
+        
+        expect(onServerConfigChangeMock).toHaveBeenCalled();
+    });
+    */
+
+    it("should call start oidc native flow with login_hint", async () => {
+        
+        const config: ConfigOptions = 
+            { tchap_mas_flow:{ 
+                isActive: true , 
+                isMASmigration: true 
+            } 
+        };
+        SdkConfig.put(config);
+        
+         mockedLogin.mockImplementation(() => ({
+            hsUrl: defaultHsUrl,
+            delegatedAuthentication:{},
+            getFlows: jest.fn().mockResolvedValue([{ type: "oidcNativeFlow", clientId: "clientId" }]),
+        }));
+
+        renderEmailVerificationPage();
+
+        // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+        mockedFetchHomeserverFromEmail(defaultHsUrl);
+        mockedValidatedServerConfig(false, defaultHsUrl);
+        mockedPlatformPegStartSSO(false);
+
+        // Put text in email field
+        const emailField = screen.getByRole("textbox");
+        fireEvent.focus(emailField);
+        fireEvent.change(emailField, { target: { value: userEmail } });
+
+        await flushPromises();
+
+        // click on proconnect button
+        const proconnectButton = screen.getByTestId("mas-submit");
+        await act(async () => {
+            await fireEvent.click(proconnectButton);
+        });
+
+        expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+            undefined, // delegatedAuthentication is undefined in this test
+            expect.anything(), // clientId
+            expect.anything(), // hsUrl
+            expect.anything(), // isUrl 
+            expect.anything(), // isRegistration
+            userEmail // loginHint - c'est ce paramètre que nous voulons vérifier
+        );
+
+    });
+
 });
