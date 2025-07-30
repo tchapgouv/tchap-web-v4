@@ -507,7 +507,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         /*
         :tchap: disable sso during mas migration
         */
-        const activateLoginLegacyDuringMASMigration = TchapUIFeature.activateLoginLegacyDuringMASMigration();
+        const activateLoginLegacyDuringMASMigration = TchapUIFeature.isMASmigration();
        
         if (!this.isBusy() && !this.state.busyLoggingIn && !activateLoginLegacyDuringMASMigration) {
             return <div style={{marginBottom: "25px", position: "relative", top: "-15px"}}>

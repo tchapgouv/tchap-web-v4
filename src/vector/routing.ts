@@ -46,7 +46,7 @@ function onHashChange(): void {
     // When MAS is activated we don't want to display login or register page
 
     //only for migration
-    const activateLoginLegacyDuringMASMigration= TchapUIFeature.activateLoginLegacyDuringMASMigration();
+    const activateLoginLegacyDuringMASMigration= TchapUIFeature.isMASmigration();
     
     if (TchapUIFeature.isMASFlowActive() && !activateLoginLegacyDuringMASMigration) {
         if (["#/login", "#/register"].includes(window.location.hash)) {

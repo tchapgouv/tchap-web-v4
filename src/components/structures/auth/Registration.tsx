@@ -626,7 +626,7 @@ export default class Registration extends React.Component<IProps, IState> {
             //         </React.Fragment>
             //     );
             //:TCHAP: activate only legacy login, deactivate SSO during MAS migration
-            const activateLoginLegacyDuringMASMigration = TchapUIFeature.activateLoginLegacyDuringMASMigration();
+            const activateLoginLegacyDuringMASMigration = TchapUIFeature.isMASmigration();
 
             if (!this.props.mobileRegister && this.state.ssoFlow && !activateLoginLegacyDuringMASMigration) {    
                 ssoSection = <>

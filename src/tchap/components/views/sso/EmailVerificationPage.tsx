@@ -52,7 +52,7 @@ export default function EmailVerificationPage(props: IProps) {
     const [errorText, setErrorText] = useState<string>("");
 
     const isMASFlow= TchapUIFeature.isMASFlowActive();
-    const activateLoginLegacyDuringMASMigration= TchapUIFeature.activateLoginLegacyDuringMASMigration();
+    const isMASmigration= TchapUIFeature.isMASmigration();
 
     const submitButtonLabel = isMASFlow ? _t("action|continue") : _t("auth|proconnect|continue");
     const submitButtonChild = loading ? <Spinner w={16} h={16} /> : submitButtonLabel;
@@ -124,7 +124,7 @@ export default function EmailVerificationPage(props: IProps) {
                 //when homeserver is not MAS ready
                 //propagate the serverConfig and switch to legacy login page
                 //activateLoginLegacyDuringMASMigration code can be cleared after MAS migration
-                if(activateLoginLegacyDuringMASMigration && 
+                if(isMASmigration && 
                     loginFlows?.find((flow: Record<string, any>) => flow.type === "m.login.password")){
                     props.onServerConfigChange(validatedServerConfig);
                     onLoginByPasswordClick();
