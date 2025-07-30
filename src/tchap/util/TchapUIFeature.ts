@@ -63,7 +63,8 @@ export default class TchapUIFeature {
         return masFlow.isActive;
     }
 
-    
+    //only used for MAS migratin
+    //code can be cleared after migration
     public static activateLoginLegacyDuringMASMigration():boolean {
         const masFlow : Record<string, boolean> = SdkConfig.get("tchap_mas_flow") as Record<string, boolean> ?? {"temp_activate_login_legacy_during_MAS_migration": false};
 

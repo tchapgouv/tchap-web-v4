@@ -43,6 +43,7 @@ interface IProps {
 }
 
 //This page is map to EMAIL_PRECHECK_SSO
+//It aims at selecting the homeserver based on user email input, then it redirects to MAS
 export default function EmailVerificationPage(props: IProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -119,9 +120,10 @@ export default function EmailVerificationPage(props: IProps) {
                 
                 const loginFlows = await login.getFlows(false);
 
-                //:tchap: only usefull during synapse + MAS migration
+                //only usefull during synapse + MAS migration
                 //when homeserver is not MAS ready
                 //propagate the serverConfig and switch to legacy login page
+                //activateLoginLegacyDuringMASMigration code can be cleared after MAS migration
                 if(activateLoginLegacyDuringMASMigration && 
                     loginFlows?.find((flow: Record<string, any>) => flow.type === "m.login.password")){
                     props.onServerConfigChange(validatedServerConfig);
