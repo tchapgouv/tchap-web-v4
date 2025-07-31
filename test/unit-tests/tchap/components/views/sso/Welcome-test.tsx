@@ -7,7 +7,7 @@ import Welcome from "~tchap-web/src/components/views/auth/Welcome";
 import { flushPromises } from "~tchap-web/test/test-utils";
 
 describe("<Welcome />", () => {
-    const addSSOFlowToMockConfig = (isActive: boolean = false) => {
+    const addMasFlowToMockConfig = (isActive: boolean = false) => {
         // mock SdkConfig.get("tchap_features")
         const config: ConfigOptions = { tchap_mas_flow: { isActive } };
         SdkConfig.put(config);
@@ -20,7 +20,7 @@ describe("<Welcome />", () => {
     });
 
     it("returns welcome_mas html when mas_flow is active in config", async () => {
-        addSSOFlowToMockConfig(true);
+        addMasFlowToMockConfig(true);
 
         // we need to mock the call to the correct html page, since it is embeded in the component
         // we don't need to mock the other html page since it shouldnt call it, otherwise it will simply throw an error
@@ -33,17 +33,17 @@ describe("<Welcome />", () => {
         expect(screen.getByRole("heading", { level: 1 }).textContent).toEqual("MAS");
     });
 
-    it("returns sso welcome html page without mas flow", async () => {
-        addSSOFlowToMockConfig(false);
+    it("returns proconnect welcome html page without mas flow", async () => {
+        addMasFlowToMockConfig(false);
 
         // we need to mock the call to the correct html page, since it is embeded in the component
         // we don't need to mock the other html page since it shouldnt call it, otherwise it will simply throw an error
-        fetchMock.get("/welcome_with_proconnect.html", { body: "<h1>SSO</h1>" });
+        fetchMock.get("/welcome_with_proconnect.html", { body: "<h1>proconnect</h1>" });
 
         renderWelcomePage();
         await flushPromises();
 
         // the component should choose the correct html page based on the sso_flo active value
-        expect(screen.getByRole("heading", { level: 1 }).textContent).toEqual("SSO");
+        expect(screen.getByRole("heading", { level: 1 }).textContent).toEqual("proconnect");
     });
 });
