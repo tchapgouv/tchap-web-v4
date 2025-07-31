@@ -134,8 +134,7 @@ export default function EmailVerificationPage(props: IProps) {
                 let oidcNativeFlow: OidcNativeFlow | undefined;
                 oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
                 
-                
-                startOidcLogin(
+                await startOidcLogin(
                     validatedServerConfig.delegatedAuthentication!,
                     oidcNativeFlow.clientId,
                     validatedServerConfig.hsUrl,
