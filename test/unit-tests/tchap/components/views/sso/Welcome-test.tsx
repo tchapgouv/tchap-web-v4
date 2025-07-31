@@ -38,7 +38,7 @@ describe("<Welcome />", () => {
 
         // we need to mock the call to the correct html page, since it is embeded in the component
         // we don't need to mock the other html page since it shouldnt call it, otherwise it will simply throw an error
-        fetchMock.get("/welcome_sso.html", { body: "<h1>SSO</h1>" });
+        fetchMock.get("/welcome_with_proconnect.html", { body: "<h1>SSO</h1>" });
 
         renderWelcomePage();
         await flushPromises();
