@@ -203,7 +203,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                             )}
                         </p>
                         <p className="tc_modalParagraph tc_withMarginBottom tc_withMarginTop">
-                            {_t("Create your Tchap Key password (minimum 8 characters)")}
+                            {_t("Create your Tchap Key password")}
                         </p>
                         <div className="error">{this.state.errStr}</div>
                         <div className="mx_E2eKeysDialog_inputTable">
