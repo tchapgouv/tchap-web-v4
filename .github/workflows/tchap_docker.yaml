@@ -1,6 +1,12 @@
 name: Docker
 on:
-    workflow_dispatch: {}
+    workflow_dispatch:
+        inputs:
+            force_publish:
+                description: 'Force publication even in PR (for testing)'
+                required: false
+                default: false
+                type: boolean
     push:
         tags: [v*]
     pull_request: {}
@@ -13,7 +19,7 @@ jobs:
     buildx:
         name: Docker Buildx
         runs-on: ubuntu-24.04
-        environment: ${{ github.event_name != 'pull_request' && 'dockerhub' || '' }}
+        #environment: ${{ github.event_name != 'pull_request' && 'dockerhub' || '' }}
         permissions:
             id-token: write # needed for signing the images with GitHub OIDC Token
             packages: write # needed for publishing packages to GHCR
@@ -26,7 +32,7 @@ jobs:
 
             - name: Install Cosign
               uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3
-              if: github.event_name != 'pull_request'
+              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3
@@ -45,7 +51,7 @@ jobs:
 
             - name: Login to GitHub Container Registry
               uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
-              if: github.event_name != 'pull_request'
+              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
               with:
                   registry: ghcr.io
                   username: ${{ github.repository_owner }}
@@ -97,7 +103,7 @@ jobs:
             - name: Docker meta
               id: meta
               uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
-              if: github.event_name != 'pull_request'
+              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
               with:
                   images: |
                       tchapgouv/tchap-web-v4
@@ -111,7 +117,7 @@ jobs:
             - name: Build and push
               id: build-and-push
               uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6
-              if: github.event_name != 'pull_request'
+              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
               with:
                   context: .
                   push: true
@@ -123,7 +129,7 @@ jobs:
             #   env:
             #       DIGEST: ${{ steps.build-and-push.outputs.digest }}
             #       TAGS: ${{ steps.meta.outputs.tags }}
-            #   if: github.event_name != 'pull_request'
+            #   if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
             #   run: |
             #       images=""
             #       for tag in ${TAGS}; do
@@ -133,7 +139,7 @@ jobs:
 
             # - name: Update repo description
             #   uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4
-            #   if: github.event_name != 'pull_request'
+            #   if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
             #   continue-on-error: true
             #   with:
             #       username: ${{ secrets.DOCKERHUB_USERNAME }}
