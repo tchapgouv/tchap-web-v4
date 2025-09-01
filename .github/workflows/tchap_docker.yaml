@@ -1,15 +1,11 @@
 name: Docker
 on:
     workflow_dispatch:
-        inputs:
-            force_publish:
-                description: 'Force publication even in PR (for testing)'
-                required: false
-                default: true
-                type: boolean
     push:
         tags: [v*]
-    pull_request: {}
+    pull_request:
+        branches:
+        - 'add-docker-image'
     schedule:
         # This job can take a while, and we have usage limits, so just publish develop only twice a day
         - cron: "0 7/12 * * *"
@@ -32,7 +28,7 @@ jobs:
 
             - name: Install Cosign
               uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3
-              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
+              #if: github.event_name != 'pull_request'
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3
@@ -51,7 +47,7 @@ jobs:
 
             - name: Login to GitHub Container Registry
               uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
-              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
+              #if: github.event_name != 'pull_request'
               with:
                   registry: ghcr.io
                   username: ${{ github.repository_owner }}
@@ -103,7 +99,7 @@ jobs:
             - name: Docker meta
               id: meta
               uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
-              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
+              #if: github.event_name != 'pull_request'
               with:
                   images: |
                       tchapgouv/tchap-web-v4
@@ -117,7 +113,7 @@ jobs:
             - name: Build and push
               id: build-and-push
               uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6
-              if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
+              #if: github.event_name != 'pull_request'
               with:
                   context: .
                   push: true
@@ -129,7 +125,7 @@ jobs:
             #   env:
             #       DIGEST: ${{ steps.build-and-push.outputs.digest }}
             #       TAGS: ${{ steps.meta.outputs.tags }}
-            #   if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
+            #   if: github.event_name != 'pull_request'
             #   run: |
             #       images=""
             #       for tag in ${TAGS}; do
@@ -139,7 +135,7 @@ jobs:
 
             # - name: Update repo description
             #   uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4
-            #   if: github.event_name != 'pull_request' || github.event.inputs.force_publish == 'true'
+            #   if: github.event_name != 'pull_request'
             #   continue-on-error: true
             #   with:
             #       username: ${{ secrets.DOCKERHUB_USERNAME }}
