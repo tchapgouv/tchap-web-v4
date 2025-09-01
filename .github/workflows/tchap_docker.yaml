@@ -5,7 +5,7 @@ on:
             force_publish:
                 description: 'Force publication even in PR (for testing)'
                 required: false
-                default: false
+                default: true
                 type: boolean
     push:
         tags: [v*]
