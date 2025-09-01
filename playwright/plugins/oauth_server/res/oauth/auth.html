@@ -27,7 +27,27 @@ Mostly, it just redirects back to the `redirect_uri` in the query params.
             // process the query params, and set up the form
             const urlParams = new URLSearchParams(window.location.search);
             console.log("Test OAuth page: query params:", new Map(urlParams.entries()));
-            document.getElementById("auth_form").action = urlParams.get("redirect_uri");
+            // Set form action only if redirect_uri is a same-origin or relative path
+            const redirectUri = urlParams.get("redirect_uri");
+            let safeAction = "/";
+            if (redirectUri) {
+                try {
+                    // If relative (starts with '/'), allow
+                    if (redirectUri.startsWith("/")) {
+                        safeAction = redirectUri;
+                    } else {
+                        // If absolute, allow only same origin
+                        const redirectUrl = new URL(redirectUri, window.location.origin);
+                        if (redirectUrl.origin === window.location.origin) {
+                            safeAction = redirectUrl.href;
+                        }
+                    }
+                } catch (e) {
+                    // Ignore invalid URLs
+                    console.warn("Invalid redirect_uri:", redirectUri);
+                }
+            }
+            document.getElementById("auth_form").action = safeAction;
             document.getElementById("state").value = urlParams.get("state");
         </script>
     </body>
