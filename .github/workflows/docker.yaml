@@ -3,7 +3,11 @@ on:
     workflow_dispatch: {}
     push:
         tags: [v*]
-    pull_request: {}
+    pull_request:
+        #;tchap:
+        branches:
+        - 'test/**'
+        #;tchap:
     schedule:
         # This job can take a while, and we have usage limits, so just publish develop only twice a day
         - cron: "0 7/12 * * *"
