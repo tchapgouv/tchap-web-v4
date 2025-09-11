@@ -102,6 +102,9 @@ jobs:
             ./docker-bake.hcl
             cwd://${{ steps.meta.outputs.bake-file }}
             cwd://${{ steps.meta-debug.outputs.bake-file }}
+          set: |
+              *.platform=linux/amd64
+              *.output=type=docker
 
       - name: Docker meta (for push)
         id: meta-push
