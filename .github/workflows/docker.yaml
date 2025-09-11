@@ -94,24 +94,27 @@ jobs:
 
       - name: Build and load
         id: test-build
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
+        uses: docker/bake-action@v6.8.0
         with:
-            context: .
-            load: true
+          context: .
+          load: true
+          files: |
+            ./docker-bake.hcl
+            cwd://${{ steps.meta.outputs.bake-file }}
+            cwd://${{ steps.meta-debug.outputs.bake-file }}
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5
+      - name: Docker meta (for push)
+        id: meta-push
+        uses: docker/metadata-action@v5.8.0
         if: github.event_name != 'pull_request'
         with:
-            images: |
-                vectorim/element-web
-                ghcr.io/element-hq/element-web
-            tags: |
-                type=ref,event=branch
-                type=ref,event=tag
-            flavor: |
-                latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+          images: |
+            ghcr.io/tchapgouv/test-debug
+          flavor: |
+            latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
 
       - name: Debug - Show generated metadata
         run: |
@@ -120,14 +123,20 @@ jobs:
 
       - name: Build and push
         id: build-and-push
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
+        uses: docker/bake-action@v6.8.0
         if: github.event_name != 'pull_request'
         with:
-            context: .
-            push: true
-            platforms: linux/amd64,linux/arm64
-            tags: ${{ steps.meta.outputs.tags }}
-            labels: ${{ steps.meta.outputs.labels }}
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: ${{ steps.meta-push.outputs.tags }}
+          labels: ${{ steps.meta-push.outputs.labels }}
+          provenance: false
+          sbom: false
+          files: |
+            ./docker-bake.hcl
+            cwd://${{ steps.meta.outputs.bake-file }}
+            cwd://${{ steps.meta-debug.outputs.bake-file }}
 
       - name: Sign the images with GitHub OIDC Token
         if: github.event_name != 'pull_request'
