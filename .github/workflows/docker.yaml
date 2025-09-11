@@ -50,7 +50,7 @@ jobs:
               with:
                   registry: ghcr.io
                   username: ${{ github.repository_owner }}
-                  password: ${{ secrets.TCHAP_REGISTRY_BUILD_TOKEN }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Debug - Check token permissions
               run: |
@@ -62,7 +62,7 @@ jobs:
             - name: Debug - Test GHCR authentication
               #if: false
               run: |
-                  echo ${{ secrets.TCHAP_REGISTRY_BUILD_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+                  echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
                   docker pull hello-world
                   docker tag hello-world ghcr.io/${{ github.repository_owner }}/test-debug:latest
                   docker push ghcr.io/${{ github.repository_owner }}/test-debug:latest || echo "Push failed as expected"
@@ -120,7 +120,7 @@ jobs:
                 #       vectorim/element-web
                 #       ghcr.io/element-hq/element-web
                   images: |
-                      ghcr.io/tchapgouv/test-debug
+                      ghcr.io/${{ github.repository_owner }}/test-debug
                   tags: |
                       type=ref,event=branch
                       type=ref,event=tag
@@ -149,6 +149,7 @@ jobs:
                   labels: ${{ steps.meta.outputs.labels }}
                   provenance: false
                   sbom: false
+
 
             - name: Sign the images with GitHub OIDC Token
               env:
