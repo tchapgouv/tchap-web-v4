@@ -66,13 +66,17 @@ jobs:
                   docker pull hello-world
                   docker tag hello-world ghcr.io/${{ github.repository_owner }}/test-debug:latest
                   docker push ghcr.io/${{ github.repository_owner }}/test-debug:latest || echo "Push failed as expected"
-            
+
             - name: Build and load
               id: test-build
               uses: docker/bake-action@v6.8.0 # v6
               with:
                   context: .
                   load: true
+                  files: |
+                    ./docker-bake.hcl
+                    cwd://${{ steps.meta.outputs.bake-file }}
+                    cwd://${{ steps.meta-debug.outputs.bake-file }}
 
             - name: Test the image
               env:
@@ -131,12 +135,12 @@ jobs:
               run: |
                 echo "Generated tags: ${{ steps.meta.outputs.tags }}"
                 echo "Generated labels: ${{ steps.meta.outputs.labels }}"
-            
+
             # - name: Debug - Test simple push
             #   run: |
             #     docker build -t ghcr.io/tchapgouv/tchap-web-v4:test-simple .
             #     docker push ghcr.io/tchapgouv/tchap-web-v4:test-simple
-            
+
             - name: Build and push
               id: build-and-push
               uses: docker/bake-action@v6.8.0 # v6
@@ -149,6 +153,10 @@ jobs:
                   labels: ${{ steps.meta.outputs.labels }}
                   provenance: false
                   sbom: false
+                  files: |
+                    ./docker-bake.hcl
+                    cwd://${{ steps.meta.outputs.bake-file }}
+                    cwd://${{ steps.meta-debug.outputs.bake-file }}
 
             - name: Sign the images with GitHub OIDC Token
               env:
@@ -162,7 +170,7 @@ jobs:
                   done
                   cosign sign --yes ${images}
 
-            # do not use docker hub    
+            # do not use docker hub
             # - name: Update repo description
             #   uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4
             #   if: github.event_name != 'pull_request'
