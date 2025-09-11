@@ -1,181 +1,151 @@
 name: Docker
 on:
-    workflow_dispatch: {}
-    push:
-        tags: [v*]
-    pull_request: {}
-    schedule:
-        # This job can take a while, and we have usage limits, so just publish develop only twice a day
-        - cron: "0 7/12 * * *"
+  workflow_dispatch: {}
+  push:
+    tags: [v*]
+  pull_request: {}
+  schedule:
+    # Ce job peut prendre du temps, donc on ne publie que 2 fois par jour sur develop
+    - cron: "0 7/12 * * *"
+
 concurrency: ${{ github.workflow }}-${{ github.ref_name }}
+
 permissions: {}
+
 jobs:
-    buildx:
-        name: Docker Buildx
-        runs-on: ubuntu-24.04
-        #environment: ${{ github.event_name != 'pull_request' && 'dockerhub' || '' }}
-        permissions:
-            id-token: write # needed for signing the images with GitHub OIDC Token
-            packages: write # needed for publishing packages to GHCR
-        #env:
-        #    TEST_TAG: vectorim/element-web:test
-        steps:
-            - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-              with:
-                  fetch-depth: 0 # needed for docker-package to be able to calculate the version
+  buildx:
+    name: Docker Buildx
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write   # nécessaire pour cosign avec OIDC
+      packages: write   # nécessaire pour push GHCR
+      contents: read
 
-            - name: Install Cosign
-              uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3
-              if: github.event_name != 'pull_request'
+    steps:
+      - name: Clone or update Tchap-infra repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.9.2
+        if: github.event_name != 'pull_request'
 
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3
-              with:
-                  install: true
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-            # do not use docker hub    
-            # - name: Login to Docker Hub
-            #   uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
-            #   if: false && github.event_name != 'pull_request'
-            #   with:
-            #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-            #       password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config-inline: |
+            [registry."docker.io"]
+              mirrors = ["mirror.gcr.io"]
 
-            - name: Login to GitHub Container Registry
-              uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
-              if: github.event_name != 'pull_request'
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.repository_owner }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
+      # Connexion à GHCR
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Debug - Check token permissions
-              run: |
-                  echo "Repository: ${{ github.repository }}"
-                  echo "Repository owner: ${{ github.repository_owner }}"
-                  echo "Event name: ${{ github.event_name }}"
-                  echo "Ref name: ${{ github.ref_name }}"
+      - name: Debug - Check token permissions
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Repository owner: ${{ github.repository_owner }}"
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref name: ${{ github.ref_name }}"
 
-            - name: Debug - Test GHCR authentication
-              #if: false
-              run: |
-                  echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-                  docker pull hello-world
-                  docker tag hello-world ghcr.io/${{ github.repository_owner }}/test-debug:latest
-                  docker push ghcr.io/${{ github.repository_owner }}/test-debug:latest || echo "Push failed as expected"
+      - name: Debug - Test GHCR authentication
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker pull hello-world
+          docker tag hello-world ghcr.io/${{ github.repository_owner }}/test-debug:latest
+          docker push ghcr.io/${{ github.repository_owner }}/test-debug:latest || echo "Push failed as expected"
 
-            - name: Build and load
-              id: test-build
-              uses: docker/bake-action@v6.8.0 # v6
-              with:
-                  context: .
-                  load: true
-                  files: |
-                    ./docker-bake.hcl
-                    cwd://${{ steps.meta.outputs.bake-file }}
-                    cwd://${{ steps.meta-debug.outputs.bake-file }}
+      # Génération des métadonnées Docker (normal & debug)
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5.8.0
+        with:
+          images: |
+            ghcr.io/tchapgouv/test-debug
+          bake-target: docker-metadata-action
+          flavor: |
+            latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
 
-            - name: Test the image
-              env:
-                  IMAGEID: ${{ steps.test-build.outputs.imageid }}
-              timeout-minutes: 2
-              if: false
-              run: |
-                  set -x
+      - name: Docker meta (debug variant)
+        id: meta-debug
+        uses: docker/metadata-action@v5.8.0
+        with:
+          images: |
+            ghcr.io/tchapgouv/test-debug
+          bake-target: docker-metadata-action-debug
+          flavor: |
+            latest=auto
+            suffix=-debug,onlatest=true
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
 
-                  # Make a fake module to test the image
-                  MODULE_PATH="modules/module_name/index.js"
-                  mkdir -p $(dirname $MODULE_PATH)
-                  echo 'alert("Testing");' > $MODULE_PATH
+      - name: Build and load
+        id: test-build
+        uses: docker/bake-action@v6.8.0
+        with:
+          context: .
+          load: true
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta.outputs.bake-file }}
+            ${{ steps.meta-debug.outputs.bake-file }}
 
-                  # Spin up a container of the image
-                  ELEMENT_WEB_PORT=8181
-                  CONTAINER_ID=$(
-                      docker run \
-                          --rm \
-                          -e "ELEMENT_WEB_PORT=$ELEMENT_WEB_PORT" \
-                          -dp "$ELEMENT_WEB_PORT:$ELEMENT_WEB_PORT" \
-                          -v $(pwd)/modules:/modules \
-                          "$IMAGEID" \
-                  )
+      - name: Docker meta (for push)
+        id: meta-push
+        uses: docker/metadata-action@v5.8.0
+        if: github.event_name != 'pull_request'
+        with:
+          images: |
+            ghcr.io/tchapgouv/test-debug
+          flavor: |
+            latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
 
-                  # Run some smoke tests
-                  wget --retry-connrefused --tries=5 -q --wait=3 --spider "http://localhost:$ELEMENT_WEB_PORT/modules/module_name/index.js"
-                  MODULE_0=$(curl "http://localhost:$ELEMENT_WEB_PORT/config.json" | jq -r .modules[0])
-                  test "$MODULE_0" = "/${MODULE_PATH}"
+      - name: Debug - Show generated metadata
+        run: |
+          echo "Generated tags: ${{ steps.meta-push.outputs.tags }}"
+          echo "Generated labels: ${{ steps.meta-push.outputs.labels }}"
 
-                  # Check healthcheck
-                  until test "$(docker inspect -f {{.State.Health.Status}} $CONTAINER_ID)" == "healthy"; do
-                      sleep 1
-                  done
+      - name: Build and push
+        id: build-and-push
+        uses: docker/bake-action@v6.8.0
+        if: github.event_name != 'pull_request'
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: ${{ steps.meta-push.outputs.tags }}
+          labels: ${{ steps.meta-push.outputs.labels }}
+          provenance: false
+          sbom: false
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta.outputs.bake-file }}
+            ${{ steps.meta-debug.outputs.bake-file }}
 
-                  # Clean up
-                  docker stop "$CONTAINER_ID"
-
-            - name: Docker meta
-              id: meta
-              uses: docker/metadata-action@v5.8.0 # v5
-              if: github.event_name != 'pull_request'
-              with:
-                #   images: |
-                #       vectorim/element-web
-                #       ghcr.io/element-hq/element-web
-                  images: |
-                      ghcr.io/tchapgouv/test-debug
-                  tags: |
-                      type=ref,event=branch
-                      type=ref,event=tag
-                  flavor: |
-                      latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
-
-            - name: Debug - Show generated metadata
-              run: |
-                echo "Generated tags: ${{ steps.meta.outputs.tags }}"
-                echo "Generated labels: ${{ steps.meta.outputs.labels }}"
-
-            # - name: Debug - Test simple push
-            #   run: |
-            #     docker build -t ghcr.io/tchapgouv/tchap-web-v4:test-simple .
-            #     docker push ghcr.io/tchapgouv/tchap-web-v4:test-simple
-
-            - name: Build and push
-              id: build-and-push
-              uses: docker/bake-action@v6.8.0 # v6
-              if: github.event_name != 'pull_request'
-              with:
-                  context: .
-                  push: true
-                  platforms: linux/amd64
-                  tags: ${{ steps.meta.outputs.tags }}
-                  labels: ${{ steps.meta.outputs.labels }}
-                  provenance: false
-                  sbom: false
-                  files: |
-                    ./docker-bake.hcl
-                    cwd://${{ steps.meta.outputs.bake-file }}
-                    cwd://${{ steps.meta-debug.outputs.bake-file }}
-
-            - name: Sign the images with GitHub OIDC Token
-              env:
-                  DIGEST: ${{ steps.build-and-push.outputs.digest }}
-                  TAGS: ${{ steps.meta.outputs.tags }}
-              if: github.event_name != 'pull_request'
-              run: |
-                  images=""
-                  for tag in ${TAGS}; do
-                      images+="${tag}@${DIGEST} "
-                  done
-                  cosign sign --yes ${images}
-
-            # do not use docker hub
-            # - name: Update repo description
-            #   uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4
-            #   if: github.event_name != 'pull_request'
-            #   continue-on-error: true
-            #   with:
-            #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-            #       password: ${{ secrets.DOCKERHUB_TOKEN }}
-            #       repository: vectorim/element-web
+      - name: Sign the images with GitHub OIDC Token
+        if: github.event_name != 'pull_request'
+        env:
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          TAGS: ${{ steps.meta-push.outputs.tags }}
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
