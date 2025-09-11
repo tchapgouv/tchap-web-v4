@@ -100,8 +100,8 @@ jobs:
           load: true
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta.outputs.bake-file }}
-            ${{ steps.meta-debug.outputs.bake-file }}
+            cwd://${{ steps.meta.outputs.bake-file }}
+            cwd://${{ steps.meta-debug.outputs.bake-file }}
 
       - name: Docker meta (for push)
         id: meta-push
@@ -135,8 +135,8 @@ jobs:
           sbom: false
           files: |
             ./docker-bake.hcl
-            ${{ steps.meta.outputs.bake-file }}
-            ${{ steps.meta-debug.outputs.bake-file }}
+            cwd://${{ steps.meta.outputs.bake-file }}
+            cwd://${{ steps.meta-debug.outputs.bake-file }}
 
       - name: Sign the images with GitHub OIDC Token
         if: github.event_name != 'pull_request'
