@@ -50,7 +50,7 @@ jobs:
               with:
                   registry: ghcr.io
                   username: ${{ github.repository_owner }}
-                  password: ${{ secrets.TCHAP_REGISTRY_BUILD_TOKEN }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Debug - Check token permissions
               run: |
@@ -62,14 +62,14 @@ jobs:
             - name: Debug - Test GHCR authentication
               #if: false
               run: |
-                  echo ${{ secrets.TCHAP_REGISTRY_BUILD_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+                  echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
                   docker pull hello-world
                   docker tag hello-world ghcr.io/${{ github.repository_owner }}/test-debug:latest
                   docker push ghcr.io/${{ github.repository_owner }}/test-debug:latest || echo "Push failed as expected"
             
             - name: Build and load
               id: test-build
-              uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6
+              uses: docker/bake-action@v6.8.0 # v6
               with:
                   context: .
                   load: true
@@ -113,7 +113,7 @@ jobs:
 
             - name: Docker meta
               id: meta
-              uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
+              uses: docker/metadata-action@v5.8.0 # v5
               if: github.event_name != 'pull_request'
               with:
                 #   images: |
@@ -139,7 +139,7 @@ jobs:
             
             - name: Build and push
               id: build-and-push
-              uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6
+              uses: docker/bake-action@v6.8.0 # v6
               if: github.event_name != 'pull_request'
               with:
                   context: .
