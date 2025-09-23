@@ -56,7 +56,7 @@
         "start": "export VERSION=$(scripts/tchap/get-version-from-package-json.sh) && concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n modules,res \"yarn build:module_system\" \"yarn build:res\" && concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js\"",
         "start:https": "concurrently --kill-others-on-fail --prefix \"{time} [{name}]\" -n res,element-js \"yarn start:res\" \"yarn start:js --server-type https\"",
         "start:res": "ts-node scripts/copy-res.ts -w",
-        "start:js": "webpack serve --output-path webapp --output-filename=bundles/_dev_/[name].js --output-chunk-filename=bundles/_dev_/[name].js --mode development",
+        "start:js": "webpack serve --output-path webapp --output-filename=bundles/_dev_/[name].js --output-chunk-filename=bundles/_dev_/[name].js --mode development --port 8088",
         "lint": "yarn lint:types && yarn lint:js && yarn lint:style && yarn lint:workflows",
         "lint:js:tchap": "eslint --max-warnings 100 test/unit-tests/tchap module_system && prettier --check .",
         "lint:js": "eslint --max-warnings 0 src test playwright module_system && prettier --check .",
