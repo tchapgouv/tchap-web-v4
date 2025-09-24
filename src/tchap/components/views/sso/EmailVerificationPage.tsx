@@ -75,7 +75,6 @@ export default function EmailVerificationPage(props: IProps) {
             const validatedServerConfig: ValidatedServerConfig = await TchapUtils.makeValidatedServerConfig(hs);
             return validatedServerConfig; 
         } catch(err) {
-            window.location.assign("email-precheck-sso")
             return null
         }
 
