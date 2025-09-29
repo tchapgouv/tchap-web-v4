@@ -126,8 +126,8 @@
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
-        "project_api_key": "phc_FFa4pkvmuWjF9nZOMmYJWUXMibuYnCnPyf3DqPGZs4L",
-        "api_host": "https://posthogdev.tchap.incubateur.net"
+        "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",
+        "api_host": "https://posthog.preprod.tchap.numerique.gouv.fr"
     },
     "element_call": {
         "url": "https://call.preprod.tchap.gouv.fr/",

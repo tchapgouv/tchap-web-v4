@@ -132,7 +132,7 @@
         "brand": "Appel de groupe"
     },
     "posthog": {
-        "project_api_key": "phc_FFa4pkvmuWjF9nZOMmYJWUXMibuYnCnPyf3DqPGZs4L",
-        "api_host": "https://posthogdev.tchap.incubateur.net"
+        "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",
+        "api_host": "https://posthog.tchap.incubateur.net"
     }
 }
