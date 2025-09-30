@@ -331,9 +331,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
         let primaryOptionList = (
             <IconizedContextMenuOptionList>
                 {homeButton}
-                {/* :TCHAP: remove-link-new-device-qr-code */}
-                {/* {linkNewDeviceButton} */}
-                {/* end :TCHAP: */}
+                {linkNewDeviceButton}
+
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconBell"
                     label={_t("notifications|enable_prompt_toast_title")}
