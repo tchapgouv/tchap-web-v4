@@ -159,8 +159,10 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                 <div className="mx_SettingsTab_subsectionText">
                     {crawlerState}
                     <br />
-                    {_t("settings|security|message_search_space_used")} {formatBytes(this.state.eventIndexSize, 0)}
-                    <br />
+                    {/* :TCHAP: desktop-manage-search-messages comment this section*/}
+                    {/* {_t("settings|security|message_search_space_used")} {formatBytes(this.state.eventIndexSize, 0)}
+                    <br /> */}
+                    {/* end :TCHAP: */}
                     {_t("settings|security|message_search_indexed_messages")} {formatCountLong(this.state.eventCount)}
                     <br />
                     {_t("settings|security|message_search_indexed_rooms")}{" "}
@@ -169,12 +171,14 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                         totalRooms: formatCountLong(this.state.roomCount),
                     })}{" "}
                     <br />
-                    <Field
+                    {/* :TCHAP: desktop-manage-search-messages comment this section*/}
+                    {/* <Field
                         label={_t("settings|security|message_search_sleep_time")}
                         type="number"
                         value={this.state.crawlerSleepTime.toString()}
                         onChange={this.onCrawlerSleepTimeChange}
-                    />
+                    /> */}
+                    {/* end :TCHAP: */}
                 </div>
             </div>
         );

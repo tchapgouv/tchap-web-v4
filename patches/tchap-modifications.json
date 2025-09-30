@@ -275,5 +275,11 @@
         "files": [
             "src/components/views/settings/encryption/ChangeRecoveryKey.tsx"
         ]
+    },
+    "desktop-manage-search-messages": {
+        "issue": "https://github.com/tchapgouv/tchap-desktop/issues/78",
+        "files": [
+            "src/async-components/views/dialogs/eventindex/ManageEventIndexDialog.tsx"
+        ]
     }
 }

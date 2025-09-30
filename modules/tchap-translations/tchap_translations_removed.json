@@ -59,5 +59,6 @@
     "encryption|verification|reset_proceed_prompt",
     "settings|security|key_backup_connect",
     "encryption|set_up_toast_description",
-    "auth|logout_dialog|use_key_backup"
+    "auth|logout_dialog|use_key_backup",
+    "settings|security|message_search_space_used"
 ]

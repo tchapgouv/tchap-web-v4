@@ -1035,5 +1035,21 @@
     "encryption|verification|modal_success_description": {
         "en": "Keep your recovery code in a safe place, it will allow you to verify your identity for every new connection and restore your message history.",
         "fr": "Gardez votre Code de Récupération dans un endroit sûr, il vous permettra de vérifier votre identité lors de toute nouvelle connexion et à restaurer votre historique."
+    },
+    "settings|security|message_search_indexed_rooms": {
+        "en": "Processed rooms:",
+        "fr": "Salon traités :"
+    },
+    "settings|security|message_search_indexing": {
+        "en": "Currently processing: %(currentRoom)s",
+        "fr": "En train de traiter: %(currentRoom)s"
+    },
+    "settings|security|message_search_indexing_idle": {
+        "en": "No new messages to process.",
+        "fr": "Pas de nouveaux messages à traiter."
+    },
+    "settings|security|message_search_indexed_messages": {
+        "en": "Number of messages processed:",
+        "fr": "Nombres de messages traités :"
     }
 }
