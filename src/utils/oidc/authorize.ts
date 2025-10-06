@@ -52,7 +52,7 @@ export const startOidcLogin = async (
         prompt,
         urlState: PlatformPeg.get()?.getOidcClientState(),
         //:tchap:
-        login_hint: loginHint
+        loginHint
         //:tchap: end
     });
 
