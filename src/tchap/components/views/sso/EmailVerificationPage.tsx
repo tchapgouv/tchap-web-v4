@@ -32,10 +32,11 @@ import Login, { OidcNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
-import "~tchap-web/res/css/views/sso/TchapSSO.pcss";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import { startOidcLogin } from "../../../../utils/oidc/authorize";
+import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
 
+import "~tchap-web/res/css/views/sso/TchapSSO.pcss";
 
 interface IProps {
     //propagate the server config change
@@ -56,6 +57,8 @@ export default function EmailVerificationPage(props: IProps) {
 
     const submitButtonLabel = isMASFlow ? _t("action|continue") : _t("auth|proconnect|continue");
     const submitButtonChild = loading ? <Spinner w={16} h={16} /> : submitButtonLabel;
+    const params = getScreenFromLocation(window.location).params;
+    const isCreateAccount: boolean = params.createAccount ? true : false;
 
 
     const emailFieldRef = useRef<Field>(null);
@@ -138,7 +141,7 @@ export default function EmailVerificationPage(props: IProps) {
                     oidcNativeFlow.clientId,
                     validatedServerConfig.hsUrl,
                     validatedServerConfig.isUrl,
-                    false,
+                    isCreateAccount,
                     email
                 );
                 

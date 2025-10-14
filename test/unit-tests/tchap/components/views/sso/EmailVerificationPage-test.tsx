@@ -12,6 +12,7 @@ import { flushPromises, mockPlatformPeg, stubClient } from "~tchap-web/test/test
 import Login from "~tchap-web/src/Login";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import * as authorize from "~tchap-web/src/utils/oidc/authorize";
+import * as routing from "~tchap-web/src/vector/routing";
 
 jest.mock("~tchap-web/src/PlatformPeg");
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
@@ -285,6 +286,12 @@ describe("Tests sso and oidc native flow", () => {
             SdkConfig.put(config);
             // Dans le beforeEach du bloc "MAS flow activated"
             jest.spyOn(authorize, "startOidcLogin").mockImplementation(jest.fn());
+
+            mockedLogin.mockImplementation(() => ({
+                hsUrl: defaultHsUrl,
+                delegatedAuthentication: {},
+                getFlows: jest.fn().mockResolvedValue([{ type: "oidcNativeFlow", clientId: "clientId" }]),
+            }));
         });
 
         it("should display correct title and button label when mas flow is activated", () => {
@@ -293,50 +300,82 @@ describe("Tests sso and oidc native flow", () => {
             expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument();
             expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
         });
-    });
 
-    it("should call start oidc native flow with login_hint", async () => {
-        const config: ConfigOptions = {
-            tchap_mas_flow: {
-                isActive: true,
-                isMASmigration: true,
-            },
-        };
-        SdkConfig.put(config);
+        it("should call start oidc native flow with login_hint", async () => {
+            jest.spyOn(routing, "getScreenFromLocation").mockReturnValue({
+                screen: "email-precheck-sso",
+                params: {
+                    createAccount: false,
+                },
+            });
 
-        mockedLogin.mockImplementation(() => ({
-            hsUrl: defaultHsUrl,
-            delegatedAuthentication: {},
-            getFlows: jest.fn().mockResolvedValue([{ type: "oidcNativeFlow", clientId: "clientId" }]),
-        }));
+            renderEmailVerificationPage();
 
-        renderEmailVerificationPage();
+            // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+            mockedFetchHomeserverFromEmail(defaultHsUrl);
+            mockedValidatedServerConfig(false, defaultHsUrl);
+            mockedPlatformPegStartSSO(false);
 
-        // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
-        mockedFetchHomeserverFromEmail(defaultHsUrl);
-        mockedValidatedServerConfig(false, defaultHsUrl);
-        mockedPlatformPegStartSSO(false);
+            // Put text in email field
+            const emailField = screen.getByRole("textbox");
+            fireEvent.focus(emailField);
+            fireEvent.change(emailField, { target: { value: userEmail } });
 
-        // Put text in email field
-        const emailField = screen.getByRole("textbox");
-        fireEvent.focus(emailField);
-        fireEvent.change(emailField, { target: { value: userEmail } });
+            await flushPromises();
 
-        await flushPromises();
+            // click on proconnect button
+            const proconnectButton = screen.getByTestId("mas-submit");
+            await act(async () => {
+                await fireEvent.click(proconnectButton);
+            });
 
-        // click on proconnect button
-        const proconnectButton = screen.getByTestId("mas-submit");
-        await act(async () => {
-            await fireEvent.click(proconnectButton);
+            expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+                undefined, // delegatedAuthentication is undefined in this test
+                expect.anything(), // clientId
+                expect.anything(), // hsUrl
+                expect.anything(), // isUrl
+                expect.anything(), // isRegistration
+                userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
+            );
         });
 
-        expect(authorize.startOidcLogin).toHaveBeenCalledWith(
-            undefined, // delegatedAuthentication is undefined in this test
-            expect.anything(), // clientId
-            expect.anything(), // hsUrl
-            expect.anything(), // isUrl
-            expect.anything(), // isRegistration
-            userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
-        );
+        it("should call start oidc native flow with createAccount", async () => {
+            // We clicked on create account button from welcome page
+            jest.spyOn(routing, "getScreenFromLocation").mockReturnValue({
+                screen: "email-precheck-sso",
+                params: {
+                    createAccount: true,
+                },
+            });
+
+            renderEmailVerificationPage();
+
+            // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+            mockedFetchHomeserverFromEmail(defaultHsUrl);
+            mockedValidatedServerConfig(false, defaultHsUrl);
+            mockedPlatformPegStartSSO(false);
+
+            // Put text in email field
+            const emailField = screen.getByRole("textbox");
+            fireEvent.focus(emailField);
+            fireEvent.change(emailField, { target: { value: userEmail } });
+
+            await flushPromises();
+
+            // click on proconnect button
+            const proconnectButton = screen.getByTestId("mas-submit");
+            await act(async () => {
+                await fireEvent.click(proconnectButton);
+            });
+
+            expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+                undefined, // delegatedAuthentication is undefined in this test
+                expect.anything(), // clientId
+                expect.anything(), // hsUrl
+                expect.anything(), // isUrl
+                true, // isRegistration
+                userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
+            );
+        });
     });
 });

@@ -950,7 +950,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     this.onSoftLogout();
                     break;
                 }
-                this.viewEmailPrecheckSSO();
+                this.viewEmailPrecheckSSO(payload.params || {});
                 break;
             // end :TCHAP:
         }
@@ -1121,11 +1121,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     // :TCHAP: sso-agentconnect-flow
-    private viewEmailPrecheckSSO(): void {
+    private viewEmailPrecheckSSO(params?: QueryDict): void {
         this.setStateForNewView({
-            view: Views.EMAIL_PRECHECK_SSO
+            view: Views.EMAIL_PRECHECK_SSO,
         });
-        this.notifyNewScreen("email-precheck-sso");
+
+        const uri = params && params.createAccount ? `email-precheck-sso?createAccount=${params.createAccount}` : "email-precheck-sso"
+        this.notifyNewScreen(uri);
         ThemeController.isLogin = true;
         this.themeWatcher?.recheck();
     }
