@@ -4,7 +4,7 @@ on:
     workflow_dispatch: {}
     push:
         tags: [tchap-*]
-        branch: [develop_tchap]
+        branches: [develop_tchap]
 concurrency: ${{ github.workflow }}-${{ github.ref_name }}
 permissions: {}
 jobs:
