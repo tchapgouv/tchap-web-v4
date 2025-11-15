@@ -69,6 +69,7 @@ module.exports = {
                     "node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-semantic-mq.css",
 
                     // :TCHAP:
+                    { from: "res/themes/light-high-contrast/css/_tchap_custom_vars.pcss", type: "css" },
                     { from: "res/themes/tchap-light/css/_tchap_custom_vars.pcss", type: "css" },
                     { from: "res/themes/tchap-dark/css/_tchap_custom_vars.pcss", type: "css" },
                     // end :TCHAP:
