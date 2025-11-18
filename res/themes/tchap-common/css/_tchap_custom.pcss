@@ -170,7 +170,7 @@
 .mx_LeftPanel {
     background-color: var(--cpd-color-bg-canvas-default);
     height: 100%;
-    border-right: 1px solid var(--cpd-color-bg-subtle-primary);
+    border-right: 1px solid var(--cpd-color-gray-400);
 }
 // add border on search room in left panel
 .mx_RoomSearch {
@@ -183,7 +183,7 @@
 
 .mx_SpacePanel {
     background-color: var(--cpd-color-bg-canvas-default);
-    border-right: 1px solid var(--cpd-color-bg-subtle-primary);
+    border-right: 1px solid var(--cpd-color-gray-400);
 }
 
 /* Separator in the room list */
@@ -229,4 +229,28 @@
 .mx_LeftPanel .mx_LeftPanel_roomListContainer .mx_LeftPanel_filterContainer {
     margin: 0;
     padding: 15px 12px 15px;
+}
+
+.mx_EventTile[data-layout=bubble][data-self=true] {
+    --backgroundColor: var(--cpd-color-bg-subtle-primary);
+}
+/* not messages, but visible events */
+.mx_EventTile[data-layout=bubble][data-self=true].mx_EventTile_info {
+    --backgroundColor: transparent;
+}
+
+/* send button using ui kit blue */
+.mx_MessageComposer_sendMessage {
+    background-color: var(--cpd-color-bg-action-primary-rest);
+}
+
+/* For pills when mentionning on messages */
+.mx_Pill {
+    background-color: var(--cpd-color-alpha-gray-700) !important;
+    &:hover {
+        background-color: var(--cpd-color-bg-action-primary-rest) !important;
+    }
+}
+.mx_Pill.mx_UserPill_me, .mx_Pill.mx_AtRoomPill {
+    background-color: var(--cpd-color-bg-action-primary-rest) !important;
 }

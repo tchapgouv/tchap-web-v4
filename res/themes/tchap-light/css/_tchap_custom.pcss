@@ -12,11 +12,9 @@ $color_1: #2e2f32;
 $color_2: white;
 $color_3: #68707d;
 $hover: #f4f6fa;
-$background-color_1: #3E5DE7;
+$background-color_1: var(--cpd-color-bg-action-primary-rest);
 $background-color_2: transparent;
-$background-color_3: rgba(125, 125, 150, 0.65);
 $background-color_4: #c7d5e4;
-$border-color_1: #7e7ec4;
 
 /* sometimes its red due to tchap red badge icon, so we force the green on the e2e verified color */
 $e2e-verified-color: var(--confirmation-color);
@@ -30,22 +28,7 @@ $e2e-verified-color: var(--confirmation-color);
         background-color: $background-color_2;
     }
 }
-.mx_Pill {
-    background-color: $background-color_3 !important;
-    &:hover {
-        background-color: $background-color_1 !important;
-        color: $color_2;
-    }
-}
-.mx_Pill.mx_UserPill_me, .mx_Pill.mx_AtRoomPill {
-    &:hover {
-        background-color: $background-color_1 !important;
-        color: $color_2;
 
-    }
-    background-color: $background-color_1 !important;
-    color: $color_2;
-}
 .mx_RoomView_body[data-layout="bubble"] {
     .mx_MessageComposer {
         width: 100%;
@@ -115,4 +98,23 @@ $e2e-verified-color: var(--confirmation-color);
 
 .mx_ThreadsActivityCentreButton .mx_ThreadsActivityCentreButton_Icon {
     fill: $background-color_1;
+}
+
+/* The background color of the thread container */
+.mx_ThreadSummary {
+    background-color: var(--cpd-color-gray-400);
+    border: none;
+}
+
+/* The icons by default takes compound-tertiary color which is blue in our cases */
+/* There are some icons that we dont want to be this blue */
+.mx_EventTile_e2eIcon.mx_EventTile_e2eIcon_normal,
+.mx_EventTile_e2eIcon.mx_EventTile_e2eIcon_decryption_failure {
+    &::after {
+        background-color: var(--cpd-color-icon-secondary);
+    }
+}
+
+.mx_ThreadSummary > div:first-child {
+    color: var(--cpd-color-icon-secondary);
 }
