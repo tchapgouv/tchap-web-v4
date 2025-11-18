@@ -17,3 +17,10 @@ example of how to override a style
 div[data-floating-ui-portal][data-floating-ui-inert] * {
     color: white;
 }
+
+ /* TODO: remove when compound is fixed  */
+/* For tooltip hover, with grey background and black text */
+div[data-floating-ui-focusable][role="tooltip"] {
+    color: black;
+    background-color: var(--cpd-color-gray-1000)
+}
