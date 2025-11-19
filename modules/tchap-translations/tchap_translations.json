@@ -1069,8 +1069,8 @@
         "fr": "La sauvegarde automatique n'est pas synchronisé"
     },
     "encryption|key_storage_out_of_sync_description": {
-        "en": "Confirm your verification code to be in sync. If this persist, you can try to deactivate and reactivate the automatic messages backup, and then reconfigure your Recovery Code. <a> Learn more </a>",
-        "fr": "Confirmez votre code de vérification pour vous synchroniser. Si cette action persiste, vous pouvez essayer de désactiver et réactiver la sauvegarde automatique, puis reconfigurer votre Code de Récupération. <a> En savoir plus </a>"
+        "en": "Confirm your verification code to be in sync. If this persist, you can try to deactivate and reactivate the automatic messages backup, and then reconfigure your verification code. <a> Learn more </a>",
+        "fr": "Confirmez votre code de vérification pour vous synchroniser. Si cette action persiste, vous pouvez essayer de désactiver et réactiver la sauvegarde automatique, puis reconfigurer votre code de vérification. <a> En savoir plus </a>"
     },
     "encryption|enter_recovery_key": {
         "en": "Enter verification code",
