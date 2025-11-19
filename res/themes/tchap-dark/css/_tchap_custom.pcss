@@ -24,3 +24,8 @@ div[data-floating-ui-focusable][role="tooltip"] {
     color: black;
     background-color: var(--cpd-color-gray-1000)
 }
+
+/* The first bubble description in the room, should not have blue background  */
+.mx_RoomView_MessageList > li:nth-child(2) {
+    --backgroundColor: transparent !important;
+}
