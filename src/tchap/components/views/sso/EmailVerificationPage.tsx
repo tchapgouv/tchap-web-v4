@@ -187,6 +187,9 @@ export default function EmailVerificationPage(props: IProps) {
 
     const getTitleLabel = () => {
         if (isMASFlow) {
+            if (isCreateAccount) {
+                return _t("action|create_account");
+            }
             return _t("action|sign_in");
         }
         return _t("auth|proconnect|email_title");
