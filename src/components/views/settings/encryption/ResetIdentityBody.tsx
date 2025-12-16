@@ -9,7 +9,7 @@ import { Button, InlineSpinner, VisualList, VisualListItem } from "@vector-im/co
 import CheckIcon from "@vector-im/compound-design-tokens/assets/web/icons/check";
 import InfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info";
 import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error-solid";
-import React, { type JSX, useState } from "react";
+import React, { type JSX, useContext, useState } from "react";
 
 import { _t } from "../../../../languageHandler";
 import { EncryptionCard } from "./EncryptionCard";
@@ -19,6 +19,7 @@ import { EncryptionCardEmphasisedContent } from "./EncryptionCardEmphasisedConte
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
 import ExternalLink from "../../elements/ExternalLink";
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
+import { SDKContext } from "~tchap-web/src/contexts/SDKContext";
 
 interface ResetIdentityBodyProps {
     /**
@@ -64,10 +65,39 @@ export type ResetIdentityBodyVariant = "compromised" | "forgot" | "sync_failed" 
  */
 export function ResetIdentityBody({ onCancelClick, onReset, variant }: ResetIdentityBodyProps): JSX.Element {
     const matrixClient = useMatrixClientContext();
-
+    const sdkContext = useContext(SDKContext);
     // After the user clicks "Continue", we disable the button so it can't be
     // clicked again, and warn the user not to close the window.
     const [inProgress, setInProgress] = useState(false);
+    
+    if (sdkContext.oidcClientStore?.isUserAuthenticatedWithOidc) {
+        setInProgress(true);
+        matrixClient
+            .getCrypto()
+            ?.resetEncryption((makeRequest) => uiAuthCallback(matrixClient, makeRequest)).then(() => {
+                setInProgress(false);
+                onReset();
+            }).catch((err) => {
+                setInProgress(false);
+                onReset();
+            });
+
+        return (
+            <EncryptionCard Icon={ErrorIcon} destructive={true} title={titleForVariant(variant)}>
+                {inProgress ? (
+                    <EncryptionCardEmphasisedContent>
+                        <span className="mx_ResetIdentityPanel_warning">
+                            {_t("settings|encryption|advanced|do_not_close_warning")}
+                        </span>
+                    </EncryptionCardEmphasisedContent>
+                ) : (
+                    <Button kind="tertiary" onClick={onCancelClick}>
+                        {_t("action|cancel")}
+                    </Button>
+                )}
+            </EncryptionCard>
+        )
+    }
 
     return (
         <EncryptionCard Icon={ErrorIcon} destructive={true} title={titleForVariant(variant)}>
