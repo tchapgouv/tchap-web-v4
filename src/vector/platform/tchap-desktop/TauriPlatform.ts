@@ -72,7 +72,7 @@ export default class TauriPlatform extends BasePlatform {
         this.protocol = "tchap";
 
         dis.register(onAction);
-        this.tauriSecureStorage = new TauriSecureStorage("tchap.gouv.fr", this.ipc);
+        this.tauriSecureStorage = new TauriSecureStorage(this.baseUrl, this.ipc);
 
         this.ipc.call("welcome");
 
@@ -220,7 +220,7 @@ export default class TauriPlatform extends BasePlatform {
     
     public get baseUrl(): string {
         // This configuration is element-desktop specific so the types here do not know about it
-        return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? "https://www.tchap.gouv.fr/";
+        return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? SdkConfig.get("permalink_prefix")!;
     }
 
 
