@@ -2,7 +2,7 @@ import { listen } from '@tauri-apps/api/event';
 import { getVersion } from '@tauri-apps/api/app';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { logger } from 'matrix-js-sdk/src/logger';
-import { check } from '@tauri-apps/plugin-updater';
+import { check, type Update } from '@tauri-apps/plugin-updater';
 import { relaunch } from '@tauri-apps/plugin-process';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { onOpenUrl } from '@tauri-apps/plugin-deep-link';
@@ -11,7 +11,7 @@ import { type MatrixEvent, type Room, type MatrixClient, type SSOAction, type Oi
 import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification';
 import { encodeParams } from 'matrix-js-sdk/src/utils';
 
-import BasePlatform, { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "../../../BasePlatform";
+import BasePlatform, { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY, UpdateCheckStatus, type UpdateStatus } from "../../../BasePlatform";
 import dis from "../../../dispatcher/dispatcher";
 import SdkConfig from "../../../SdkConfig";
 import { type ActionPayload } from "../../../dispatcher/payloads";
@@ -26,8 +26,13 @@ import Modal from '~tchap-web/src/Modal';
 import Spinner from '~tchap-web/src/components/views/elements/Spinner';
 import ToastStore from '~tchap-web/src/stores/ToastStore';
 import GenericExpiringToast from '~tchap-web/src/components/views/toasts/GenericExpiringToast';
+import { hideToast as hideUpdateToast, showToast as showUpdateToast} from '~tchap-web/src/toasts/UpdateToast';
+import { type CheckUpdatesPayload } from '~tchap-web/src/dispatcher/payloads/CheckUpdatesPayload';
+import { Action } from '~tchap-web/src/dispatcher/actions';
 
 const SSO_ID_KEY = "tchap-desktop-ssoid";
+const POKE_RATE_MS = 60 * 60 * 1000; // 1h
+const UPDATE_DEFER_KEY = "mx_defer_update";
 
 function onAction(payload: ActionPayload): void {
     // Whitelist payload actions, no point sending most across
@@ -75,8 +80,6 @@ export default class TauriPlatform extends BasePlatform {
         this.tauriSecureStorage = tauriSecureStorage;
 
         this.ipc.call("welcome");
-
-        this.checkUpdates();
 
         this.checkDeepLinkOpen();
 
@@ -134,40 +137,99 @@ export default class TauriPlatform extends BasePlatform {
         });
     }
 
-    public async checkUpdates(): Promise<void> {
-        try {
-
-            const update = await check();
-            if (update) {
-                logger.info(
-                    `found update ${update.version} from ${update.date} with notes ${update.body}`
-                );
-                let downloaded = 0;
-                let contentLength = 0;
-                // alternatively we could also call update.download() and update.install() separately
-                await update.downloadAndInstall((event) => {
-                    switch (event.event) {
-                    case 'Started':
-                        contentLength = event.data.contentLength ?? 0;
-                        logger.info(`started downloading desktop update${contentLength} bytes`);
-                        break;
-                    case 'Progress':
-                        downloaded += event.data.chunkLength;
-                        logger.info(`downloaded ${downloaded} from ${contentLength}`);
-                        break;
-                    case 'Finished':
-                        logger.info('download tauri update finished');
-                        break;
+    public pollForUpdate = (
+        showUpdate: (currentVersion: string, mostRecentVersion: string) => void,
+        showNoUpdate?: () => void,
+    ): Promise<UpdateStatus> => {
+        return check().then(
+            (update: Update | null) => {
+                if(update) {
+                    const mostRecentVersion = update.version;
+                    if (this.shouldShowUpdate(mostRecentVersion)) {
+                        console.log("Update available to " + mostRecentVersion + ", will notify user");
+                        showUpdate(update.currentVersion, mostRecentVersion);
+                    } else {
+                        console.log("Update available to " + mostRecentVersion + " but won't be shown");
                     }
-                });
-    
-                logger.info('Desktop update installed');
-                await relaunch();
-            }
-        } catch(e) {
-            logger.error('Error checking for updates', e);
-        }
+                    return { status: UpdateCheckStatus.Ready };
+                } else {
+                    console.log("No update available");
+                    showNoUpdate?.();
+                }
+
+                return { status: UpdateCheckStatus.NotAvailable };
+            },
+            (err) => {
+                logger.error("Failed to poll for update", err);
+                return {
+                    status: UpdateCheckStatus.Error,
+                    detail: err.message || (err.status ? err.status.toString() : "Unknown Error"),
+                };
+            },
+        );
     }
+
+    public startUpdater(): void {
+        setInterval(() => this.pollForUpdate(showUpdateToast, hideUpdateToast), POKE_RATE_MS);
+    }
+
+    public installUpdate(): void {
+            check().then((update: Update | null) => {
+                if (update) {
+                    logger.info(
+                        `found update ${update.version} from ${update.date} with notes ${update.body}`
+                    );
+                    let downloaded = 0;
+                    let contentLength = 0;
+                    // alternatively we could also call update.download() and update.install() separately
+                    update.downloadAndInstall((event) => {
+                        switch (event.event) {
+                        case 'Started':
+                            contentLength = event.data.contentLength ?? 0;
+                            logger.info(`started downloading desktop update${contentLength} bytes`);
+                            break;
+                        case 'Progress':
+                            downloaded += event.data.chunkLength;
+                            logger.info(`downloaded ${downloaded} from ${contentLength}`);
+                            break;
+                        case 'Finished':
+                            logger.info('download tauri update finished');
+                            break;
+                        }
+                    }).then(() => {
+                        logger.info('Desktop update installed');
+                        relaunch();
+                    }).catch(() => {
+                        logger.info('Error downloadAndInstall: Desktop update in installUpdate');
+                    });
+                }
+            }).catch((e) => {
+                logger.error('Error checking for updates', e);
+            })
+    }
+    
+
+    public startUpdateCheck(): void {
+        super.startUpdateCheck();
+        void this.pollForUpdate(showUpdateToast, hideUpdateToast).then((updateState) => {
+            dis.dispatch<CheckUpdatesPayload>({
+                action: Action.CheckUpdates,
+                ...updateState,
+            });
+        });
+    }
+
+    /**
+     * Ignore the pending update and don't prompt about this version
+     * until the 2 days at morning (8am).
+     */
+    public deferUpdate(newVersion: string): void {
+        const date = new Date(Date.now() + 48 * 60 * 60 * 1000);
+        date.setHours(8, 0, 0, 0); // set to next 48h at 8am
+        localStorage.setItem(UPDATE_DEFER_KEY, JSON.stringify([newVersion, date.getTime()]));
+        hideUpdateToast();
+    }
+
 
     public getSecureStorageInstance(): TauriSecureStorage {
         return this.tauriSecureStorage;
