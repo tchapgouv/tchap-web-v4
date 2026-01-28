@@ -385,4 +385,9 @@ export enum Action {
      * Open the create room dialog
      */
     CreateRoom = "view_create_room",
+
+    /**
+     * :TCHAP: desktop-auto-update - Loading app desktop update 
+     */
+    LoadingUpdate = "loading_update"
 }

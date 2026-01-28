@@ -31,7 +31,7 @@ import { type CheckUpdatesPayload } from '~tchap-web/src/dispatcher/payloads/Che
 import { Action } from '~tchap-web/src/dispatcher/actions';
 
 const SSO_ID_KEY = "tchap-desktop-ssoid";
-const POKE_RATE_MS = 60 * 60 * 1000; // 1h
+const POKE_RATE_MS = 60 * 60 * 1000; // Check every hour for a new update 
 const UPDATE_DEFER_KEY = "mx_defer_update";
 
 function onAction(payload: ActionPayload): void {
@@ -143,6 +143,7 @@ export default class TauriPlatform extends BasePlatform {
     ): Promise<UpdateStatus> => {
         return check().then(
             (update: Update | null) => {
+                console.log("[PollForUpdate] checking an update", update);
                 if(update) {
                     const mostRecentVersion = update.version;
                     if (this.shouldShowUpdate(mostRecentVersion)) {
@@ -181,20 +182,22 @@ export default class TauriPlatform extends BasePlatform {
                     );
                     let downloaded = 0;
                     let contentLength = 0;
+                    // Display loading view during the download
+                    dis.fire(Action.LoadingUpdate);
                     // alternatively we could also call update.download() and update.install() separately
                     update.downloadAndInstall((event) => {
                         switch (event.event) {
-                        case 'Started':
-                            contentLength = event.data.contentLength ?? 0;
-                            logger.info(`started downloading desktop update${contentLength} bytes`);
-                            break;
-                        case 'Progress':
-                            downloaded += event.data.chunkLength;
-                            logger.info(`downloaded ${downloaded} from ${contentLength}`);
-                            break;
-                        case 'Finished':
-                            logger.info('download tauri update finished');
-                            break;
+                            case 'Started':
+                                contentLength = event.data.contentLength ?? 0;
+                                logger.info(`started downloading desktop update${contentLength} bytes`);
+                                break;
+                            case 'Progress':
+                                downloaded += event.data.chunkLength;
+                                logger.info(`downloaded ${downloaded} from ${contentLength}`);
+                                break;
+                            case 'Finished':
+                                logger.info('download tauri update finished');
+                                break;
                         }
                     }).then(() => {
                         logger.info('Desktop update installed');
@@ -209,6 +212,7 @@ export default class TauriPlatform extends BasePlatform {
     }
     
 
+    // Used by manual update check on the user settings
     public startUpdateCheck(): void {
         super.startUpdateCheck();
         void this.pollForUpdate(showUpdateToast, hideUpdateToast).then((updateState) => {
