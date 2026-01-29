@@ -66,5 +66,11 @@
     "slash_command|holdcall",
     "slash_command|unholdcall",
     "slash_command|myroomnick",
-    "slash_command|nick"
+    "slash_command|nick",
+    "slash_command|myroomavatar",
+    "slash_command|addwidget",
+    "slash_command|addwidget_missing_url",
+    "slash_command|addwidget_iframe_missing_src",
+    "slash_command|addwidget_no_permissions",
+    "slash_command|addwidget_invalid_protocol"
 ]
