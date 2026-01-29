@@ -214,8 +214,8 @@
         "feature_screenshare_call": ["*"]
     },
     "tchap_mas_flow": {
-        "isActive": false,
-        "temp_is_MAS_migration": false
+        "isActive": true,
+        "temp_is_MAS_migration": true
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
