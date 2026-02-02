@@ -40,6 +40,8 @@ import AuthHeader from "~tchap-web/src/components/views/auth/AuthHeader";
 interface IProps {
     //propagate the server config change
     onServerConfigChange(config: ValidatedServerConfig): void;
+    onLoginClick(params?: { [key: string]: any }): void;
+    onRegisterClick(params?: { [key: string]: any }): void;
 }
 
 //This page is map to EMAIL_PRECHECK_SSO
@@ -128,7 +130,11 @@ export default function EmailVerificationPage(props: IProps) {
                     loginFlows?.find((flow: Record<string, any>) => flow.type === "m.login.password")){
                     //console.log("Synapse support lm.ogin.password, use legacy flows");
                     props.onServerConfigChange(validatedServerConfig);
-                    onLoginByPasswordClick();
+                    if (isCreateAccount) {
+                        onRegisterByPasswordClick();
+                    } else {
+                        onLoginByPasswordClick();
+                    }
                     return;
                 }
 
@@ -181,7 +187,13 @@ export default function EmailVerificationPage(props: IProps) {
     }
 
     const onLoginByPasswordClick = () => {
-        window.location.assign("#/login"); 
+        // Used for mas migration only, where both legacy and mas login/register are available
+        props.onLoginClick({ tchapEmailHint: email });
+    }
+    
+    const onRegisterByPasswordClick = () => {
+        // Used for mas migration only, where both legacy and mas login/register are available
+        props.onRegisterClick({ tchapEmailHint: email });
     }
 
     const getTitleLabel = () => {

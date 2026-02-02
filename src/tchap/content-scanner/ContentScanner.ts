@@ -15,8 +15,7 @@
  */
 
 import { getHttpUriForMxc } from "matrix-js-sdk/src/content-repo";
-import { IEncryptedFile } from "~tchap-web/src/customisations/models/IMediaEventContent";
-import { PkEncryption } from "@matrix-org/olm";
+import { type EncryptedFile } from "matrix-js-sdk/src/types";
 import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 import SdkConfig from "~tchap-web/src/SdkConfig";
@@ -53,8 +52,7 @@ interface ContentScannerConfig extends IConfigOptions {
 export class ContentScanner {
     private static internalInstance: ContentScanner;
 
-    private mcsKey: PkEncryption = new global.Olm.PkEncryption();
-    private hasKey = false;
+    private publicKey?: string;
     private cachedScans = new Map<string, Promise<boolean>>();
 
     constructor(private scannerUrl: string) {}
@@ -70,20 +68,21 @@ export class ContentScanner {
         return matrixUrl.replace(/media\/r0/, "media_proxy/unstable");
     }
 
-    public async download(mxc: string, file?: IEncryptedFile): Promise<Response> {
+    public async download(mxc: string, file?: EncryptedFile): Promise<Response> {
         const authHeaders = this.getAuthHeaders();
         if (!file) {
             return fetch(this.urlForMxc(mxc));
         }
 
-        if (!this.hasKey) {
+        if (!this.publicKey) {
             await this.fetchKey();
         }
 
+        const encryptedData = this.encryptData(file); 
         return fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/download_encrypted", {
             method: "POST",
             body: JSON.stringify({
-                encrypted_body: this.mcsKey.encrypt(JSON.stringify({ file })),
+                encrypted_body: encryptedData,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -92,7 +91,7 @@ export class ContentScanner {
         });
     }
 
-    public async scan(mxc: string, file?: IEncryptedFile): Promise<boolean> {
+    public async scan(mxc: string, file?: EncryptedFile): Promise<boolean> {
         // XXX: we're assuming that encryption won't be a differentiating factor and that the MXC URIs
         // will be different.
         if (this.cachedScans.has(mxc)) {
@@ -104,19 +103,19 @@ export class ContentScanner {
         return prom;
     }
 
-    private async doScan(mxc: string, file?: IEncryptedFile): Promise<boolean> {
+    private async doScan(mxc: string, file?: EncryptedFile): Promise<boolean> {
         let response: Response;
         const authHeaders = this.getAuthHeaders();
 
         if (file) {
-            if (!this.hasKey) {
+            if (!this.publicKey) {
                 await this.fetchKey();
             }
-
+            const encryptedData = this.encryptData(file); 
             response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
                 method: "POST",
                 body: JSON.stringify({
-                    encrypted_body: this.mcsKey.encrypt(JSON.stringify({ file })),
+                    encrypted_body: encryptedData
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -139,10 +138,14 @@ export class ContentScanner {
         const response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/public_key").then((r) =>
             r.json(),
         );
-        this.mcsKey.set_recipient_key(response["public_key"]);
-        this.hasKey = true;
+        this.publicKey = response["public_key"];
     }
 
+    private encryptData(file: EncryptedFile) {
+        const crypto = MatrixClientPeg.get()?.getCrypto();
+        const encryptedData = crypto?.pkEncryptString(this.publicKey!, JSON.stringify({ file }))
+        return encryptedData;
+    }
     /**
      * Returns a ContentScanner instance.
      * The ContentScanner uses the same URL as the matrix client.
@@ -158,7 +161,7 @@ export class ContentScanner {
 
     private static get contentScannerUrl(): string {
         return (
-            (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url ?? MatrixClientPeg.get().getHomeserverUrl()
+            (SdkConfig.get() as ContentScannerConfig)?.content_scanner?.url ?? MatrixClientPeg.get()?.getHomeserverUrl()
         );
     }
 }

@@ -8,10 +8,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import olmWasmPath from "@matrix-org/olm/olm.wasm";
-import Olm from "@matrix-org/olm";
 import { createRoot } from "react-dom/client";
 import React, { StrictMode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -71,48 +67,6 @@ export async function loadConfig(): Promise<void> {
     } else {
         SdkConfig.reset();
     }
-}
-
-export function loadOlm(): Promise<void> {
-    /* Load Olm. We try the WebAssembly version first, and then the legacy,
-     * asm.js version if that fails. For this reason we need to wait for this
-     * to finish before continuing to load the rest of the app. In future
-     * we could somehow pass a promise down to react-sdk and have it wait on
-     * that so olm can be loading in parallel with the rest of the app.
-     *
-     * We also need to tell the Olm js to look for its wasm file at the same
-     * level as index.html. It really should be in the same place as the js,
-     * ie. in the bundle directory, but as far as I can tell this is
-     * completely impossible with webpack. We do, however, use a hashed
-     * filename to avoid caching issues.
-     */
-    return Olm.init({
-        locateFile: () => olmWasmPath,
-    })
-        .then(() => {
-            logger.log("Using WebAssembly Olm");
-        })
-        .catch((wasmLoadError) => {
-            logger.log("Failed to load Olm: trying legacy version", wasmLoadError);
-            return new Promise((resolve, reject) => {
-                const s = document.createElement("script");
-                s.src = "olm_legacy.js"; // XXX: This should be cache-busted too
-                s.onload = resolve;
-                s.onerror = reject;
-                document.body.appendChild(s);
-            })
-                .then(() => {
-                    // Init window.Olm, ie. the one just loaded by the script tag,
-                    // not 'Olm' which is still the failed wasm version.
-                    return window.Olm.init();
-                })
-                .then(() => {
-                    logger.log("Using legacy Olm");
-                })
-                .catch((legacyLoadError) => {
-                    logger.log("Both WebAssembly and asm.js Olm failed!", legacyLoadError);
-                });
-        });
 }
 
 export async function loadLanguage(): Promise<void> {

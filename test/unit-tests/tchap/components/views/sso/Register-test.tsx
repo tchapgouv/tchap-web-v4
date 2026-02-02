@@ -36,9 +36,9 @@ describe("<Register />", () => {
     const defaultHsUrl = "https://matrix.org";
     const defaultIsUrl = "https://vector.im";
 
-    const addMASToMockConfig = (isActive: boolean = false) => {
+    const addMASToMockConfig = (isActive: boolean = false, tempMASMigration: boolean = false) => {
         // mock SdkConfig.get("tchap_features")
-        const config: ConfigOptions = { tchap_mas_flow: { isActive, temp_is_MAS_migration: isActive } };
+        const config: ConfigOptions = { tchap_mas_flow: { isActive, temp_is_MAS_migration: tempMASMigration } };
         SdkConfig.put(config);
     };
 
@@ -124,7 +124,7 @@ describe("<Register />", () => {
     });
 
     it("returns no proconnect button in register in MAS mode", async () => {
-        addMASToMockConfig(true);
+        addMASToMockConfig(true, false);
         mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
 
         const { container } = render(getRawComponent());
@@ -132,6 +132,17 @@ describe("<Register />", () => {
         await waitForElementToBeRemoved(() => screen.queryAllByTestId("spinner"));
 
         expect(container.getElementsByClassName("tc_pronnect").length).toBe(0);
+    });
+
+    it("returns proconnect button in register in MAS mode during migration", async () => {
+        addMASToMockConfig(true, true);
+        mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
+
+        const { container } = render(getRawComponent());
+
+        await waitForElementToBeRemoved(() => screen.queryAllByTestId("spinner"));
+
+        expect(container.getElementsByClassName("tc_pronnect").length).toBe(1);
     });
 
     it("returns no proconnect button when the config does'nt include sso flow", () => {

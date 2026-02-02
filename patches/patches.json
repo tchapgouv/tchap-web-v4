@@ -18,5 +18,12 @@
         "files": [
             "src/interactive-auth.ts"
         ]
+    },
+    "expose-pkencryption": {
+        "package": "matrix-js-sdk",
+        "files": [
+            "src/crypto-api/index.ts",
+            "src/rust-crypto/rust-crypto.ts"
+        ]
     }
 }

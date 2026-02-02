@@ -358,10 +358,6 @@ module.exports = (env, argv) => {
                 // there is no need for webpack to parse them - they can just be
                 // included as-is.
                 /highlight\.js[\\/]lib[\\/]languages/,
-
-                // olm takes ages for webpack to process, and it's already heavily
-                // optimised, so there is little to gain by us uglifying it.
-                /olm[\\/](javascript[\\/])?olm\.js$/,
             ],
             rules: [
                 {
@@ -492,23 +488,6 @@ module.exports = (env, argv) => {
                         },
                     ],
                 },
-                // :TCHAP: we still use olm for the content scanner
-                // https://github.com/tchapgouv/tchap-web-v4/issues/1138
-                {
-                    // the olm library wants to load its own wasm, rather than have webpack do it.
-                    // We therefore use the `file-loader` to tell webpack to dump the contents to
-                    // a separate file and return the name, and override the default `type` for `.wasm` files
-                    // (which is `webassembly/experimental` under webpack 4) to stop webpack trying to interpret
-                    // the filename as webassembly. (see also https://github.com/webpack/webpack/issues/6725)
-                    test: /olm\.wasm$/,
-                    loader: "file-loader",
-                    type: "javascript/auto",
-                    options: {
-                        name: "[name].[hash:7].[ext]",
-                        outputPath: ".",
-                    },
-                },
-                // end :TCHAP:
                 {
                     // Fix up the name of the opus-recorder worker (react-sdk dependency).
                     // We more or less just want it to be clear it's for opus and not something else.
@@ -801,9 +780,6 @@ module.exports = (env, argv) => {
                     // :TCHAP: sso-agentconnect-flow
                     "res/welcome_with_proconnect.html",
                     "res/welcome_mas.html",
-                    // :TCHAP: legacy_olm TODO: remove all when content scanner will be updated to use rust crypto
-                    "node_modules/@matrix-org/olm/olm_legacy.js",
-                    // end :TCHAP:
                     { from: "welcome/**", context: path.resolve(__dirname, "res") },
                     { from: "themes/**", context: path.resolve(__dirname, "res") },
                     { from: "vector-icons/**", context: path.resolve(__dirname, "res") },

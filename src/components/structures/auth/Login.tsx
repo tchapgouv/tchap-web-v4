@@ -507,9 +507,19 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         /*
         :tchap: disable sso during mas migration
         */
-        const activateLoginLegacyDuringMASMigration = TchapUIFeature.isMASmigration();
-       
-        if (!this.isBusy() && !this.state.busyLoggingIn && !activateLoginLegacyDuringMASMigration) {
+        const isMASmigration = TchapUIFeature.isMASmigration();
+        const isMASFlowActive = TchapUIFeature.isMASFlowActive();
+
+        if (!this.isBusy() && !this.state.busyLoggingIn) {
+            if (isMASFlowActive) {
+                // If we are still in migration mode, we have to display PC button
+                return (isMASmigration ? <>
+                    <ProconnectButton client={this.loginLogic.createTemporaryClient()} />
+                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
+                </> :
+                <></>
+                )
+            }
             return <div style={{marginBottom: "25px", position: "relative", top: "-15px"}}>
                 <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
                 <ProconnectButton />

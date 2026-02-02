@@ -7,15 +7,15 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React from "react";
-import { Glass } from "@vector-im/compound-web";
+import { Glass  } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStore";
 import SetupEncryptionBody from "./SetupEncryptionBody";
-import AccessibleButton from "../../views/elements/AccessibleButton";
 import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
 import AuthPage from "../../views/auth/AuthPage";
 import SdkConfig from "../../../SdkConfig";
+import AccessibleButton from "../../views/elements/AccessibleButton";
 
 interface IProps {
     onFinished: () => void;
@@ -96,7 +96,8 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
 
         return (
             <AuthPage addBlur={false}>
-                <Glass className="mx_Dialog_border">
+
+                {/* :TCHAP: welcome-flow-MAS-ui <Glass className="mx_Dialog_border" style={{ zIndex: 1000 }}> */}
                     <CompleteSecurityBody>
                         <h1 className="mx_CompleteSecurity_header">
                             {icon}
@@ -107,7 +108,7 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
                             <SetupEncryptionBody onFinished={this.props.onFinished} allowLogout={true} />
                         </div>
                     </CompleteSecurityBody>
-                </Glass>
+                {/* </Glass> */}
             </AuthPage>
         );
     }

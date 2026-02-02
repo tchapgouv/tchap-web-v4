@@ -1,0 +1,52 @@
+diff --git a/node_modules/matrix-js-sdk/src/crypto-api/index.ts b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
+index ff55c43..5a0979f 100644
+--- a/node_modules/matrix-js-sdk/src/crypto-api/index.ts
++++ b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
+@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
+-import type { SecretsBundle } from "@matrix-org/matrix-sdk-crypto-wasm";
++import type { PkMessage, SecretsBundle } from "@matrix-org/matrix-sdk-crypto-wasm";
+ import type { IMegolmSessionData } from "../@types/crypto.ts";
+ import type { ToDeviceBatch, ToDevicePayload } from "../models/ToDeviceMessage.ts";
+ import { type Room } from "../models/room.ts";
+@@ -726,6 +726,14 @@ export interface CryptoApi {
+      * @experimental
+      */
+     shareRoomHistoryWithUser(roomId: string, userId: string): Promise<void>;
++
++    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
++    //
++    // PkEncryption method, used for content scanner in tchap
++    //
++    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
++
++    pkEncryptString(publicKey: string, message: string): Record<string, any>;
+ }
+ 
+ /** A reason code for a failure to decrypt an event. */
+diff --git a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
+index 638bf37..9f2e1b5 100644
+--- a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
++++ b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
+@@ -2111,6 +2111,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
+     public async getOwnIdentity(): Promise<RustSdkCryptoJs.OwnUserIdentity | undefined> {
+         return await this.olmMachine.getIdentity(new RustSdkCryptoJs.UserId(this.userId));
+     }
++
++    // Expose PkEncryption methods to use in tchap-web
++    public pkEncryptString(publicKey: string, message: string): Record<string, any> {
++        const key = new RustSdkCryptoJs.Curve25519PublicKey(publicKey);
++        // Taken from the crypto-wasm package, based on vodozemac. Before we directly loaded libolm wasm in tchap
++        // Now it is taken from this package
++        const result = RustSdkCryptoJs.PkEncryption.fromKey(key).encryptString(message);
++        return {
++            ciphertext: encodeBase64(result.ciphertext()),
++            mac: encodeBase64(result.mac()),
++            ephemeral: result.ephemeralKey().toBase64(),
++        };
++    }
+ }
+ 
+ class EventDecryptor {

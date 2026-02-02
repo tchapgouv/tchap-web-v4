@@ -58,8 +58,8 @@
     "Contact us": { "en": "Contact us", "fr": "Contactez-nous" },
     "Content blocked": { "en": "Content blocked", "fr": "Contenu bloqué" },
     "Conçue et gérée par l'Administration française": {
-        "en": "Designed and managed by the French Administration, for agents of the three public functions, <br/>to communicate easily with high security standards.",
-        "fr": "Conçue et gérée par l'Administration française, au bénéfice de la fonction publique, <br/>pour communiquer facilement en toute sécurité."
+        "en": "Designed and managed by the French Administration, for agents of the three public functions, to communicate easily with high security standards.",
+        "fr": "Conçue et gérée par l'Administration française, au bénéfice de la fonction publique, pour communiquer facilement en toute sécurité."
     },
     "Create Room": { "en": "Create New Room", "fr": "Créer un nouveau salon" },
     "Create a room in this space": { "en": "Create a room in this space", "fr": "Créer un salon dans cet espace" },
@@ -1033,7 +1033,7 @@
     },
     "encryption|key_storage_out_of_sync": {
         "en": "Automatic messages backup is not in sync",
-        "fr": "La sauvegarde automatique n'est pas synchronisé"
+        "fr": "La sauvegarde automatique n'est pas synchronisée"
     },
     "encryption|key_storage_out_of_sync_description": {
         "en": "Confirm your verification code to be in sync. If this persist, you can try to deactivate and reactivate the automatic messages backup, and then reconfigure your verification code. <a> Learn more </a>",

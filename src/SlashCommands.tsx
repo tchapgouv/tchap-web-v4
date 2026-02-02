@@ -274,35 +274,37 @@ export const Commands = [
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
-    new Command({
-        command: "myroomavatar",
-        args: "[<mxc_url>]",
-        description: _td("slash_command|myroomavatar"),
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const room = cli.getRoom(roomId);
-            const userId = cli.getSafeUserId();
+    // :TCHAP: 
+    // new Command({
+    //     command: "myroomavatar",
+    //     args: "[<mxc_url>]",
+    //     description: _td("slash_command|myroomavatar"),
+    //     isEnabled: (cli) => !isCurrentLocalRoom(cli),
+    //     runFn: function (cli, roomId, threadId, args) {
+    //         const room = cli.getRoom(roomId);
+    //         const userId = cli.getSafeUserId();
 
-            let promise = Promise.resolve(args ?? null);
-            if (!args) {
-                promise = singleMxcUpload(cli);
-            }
+    //         let promise = Promise.resolve(args ?? null);
+    //         if (!args) {
+    //             promise = singleMxcUpload(cli);
+    //         }
 
-            return success(
-                promise.then((url) => {
-                    if (!url) return;
-                    const ev = room?.currentState.getStateEvents(EventType.RoomMember, userId);
-                    const content: RoomMemberEventContent = {
-                        ...(ev ? ev.getContent() : { membership: KnownMembership.Join }),
-                        avatar_url: url,
-                    };
-                    return cli.sendStateEvent(roomId, EventType.RoomMember, content, userId);
-                }),
-            );
-        },
-        category: CommandCategories.actions,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    //         return success(
+    //             promise.then((url) => {
+    //                 if (!url) return;
+    //                 const ev = room?.currentState.getStateEvents(EventType.RoomMember, userId);
+    //                 const content: RoomMemberEventContent = {
+    //                     ...(ev ? ev.getContent() : { membership: KnownMembership.Join }),
+    //                     avatar_url: url,
+    //                 };
+    //                 return cli.sendStateEvent(roomId, EventType.RoomMember, content, userId);
+    //             }),
+    //         );
+    //     },
+    //     category: CommandCategories.actions,
+    //     renderingTypes: [TimelineRenderingType.Room],
+    // }),
+    // end :TCHAP:
     new Command({
         command: "myavatar",
         args: "[<mxc_url>]",
@@ -610,63 +612,65 @@ export const Commands = [
         },
         category: CommandCategories.advanced,
     }),
-    new Command({
-        command: "addwidget",
-        args: "<url | embed code | Jitsi url>",
-        description: _td("slash_command|addwidget"),
-        isEnabled: (cli) =>
-            SettingsStore.getValue(UIFeature.Widgets) &&
-            shouldShowComponent(UIComponent.AddIntegrations) &&
-            !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, widgetUrl) {
-            if (!widgetUrl) {
-                return reject(new UserFriendlyError("slash_command|addwidget_missing_url"));
-            }
+    // :TCHAP: No widgets available in tchap
+    // new Command({
+    //     command: "addwidget",
+    //     args: "<url | embed code | Jitsi url>",
+    //     description: _td("slash_command|addwidget"),
+    //     isEnabled: (cli) =>
+    //         SettingsStore.getValue(UIFeature.Widgets) &&
+    //         shouldShowComponent(UIComponent.AddIntegrations) &&
+    //         !isCurrentLocalRoom(cli),
+    //     runFn: function (cli, roomId, threadId, widgetUrl) {
+    //         if (!widgetUrl) {
+    //             return reject(new UserFriendlyError("slash_command|addwidget_missing_url"));
+    //         }
 
-            // Try and parse out a widget URL from iframes
-            if (widgetUrl.toLowerCase().startsWith("<iframe ")) {
-                const embed = new DOMParser().parseFromString(widgetUrl, "text/html").body;
-                if (embed?.childNodes?.length === 1) {
-                    const iframe = embed.firstElementChild;
-                    if (iframe?.tagName.toLowerCase() === "iframe") {
-                        logger.log("Pulling URL out of iframe (embed code)");
-                        if (!iframe.hasAttribute("src")) {
-                            return reject(new UserFriendlyError("slash_command|addwidget_iframe_missing_src"));
-                        }
-                        widgetUrl = iframe.getAttribute("src")!;
-                    }
-                }
-            }
+    //         // Try and parse out a widget URL from iframes
+    //         if (widgetUrl.toLowerCase().startsWith("<iframe ")) {
+    //             const embed = new DOMParser().parseFromString(widgetUrl, "text/html").body;
+    //             if (embed?.childNodes?.length === 1) {
+    //                 const iframe = embed.firstElementChild;
+    //                 if (iframe?.tagName.toLowerCase() === "iframe") {
+    //                     logger.log("Pulling URL out of iframe (embed code)");
+    //                     if (!iframe.hasAttribute("src")) {
+    //                         return reject(new UserFriendlyError("slash_command|addwidget_iframe_missing_src"));
+    //                     }
+    //                     widgetUrl = iframe.getAttribute("src")!;
+    //                 }
+    //             }
+    //         }
 
-            if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
-                return reject(new UserFriendlyError("slash_command|addwidget_invalid_protocol"));
-            }
-            if (WidgetUtils.canUserModifyWidgets(cli, roomId)) {
-                const userId = cli.getUserId();
-                const nowMs = new Date().getTime();
-                const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
-                let type = WidgetType.CUSTOM;
-                let name = "Custom";
-                let data = {};
+    //         if (!widgetUrl.startsWith("https://") && !widgetUrl.startsWith("http://")) {
+    //             return reject(new UserFriendlyError("slash_command|addwidget_invalid_protocol"));
+    //         }
+    //         if (WidgetUtils.canUserModifyWidgets(cli, roomId)) {
+    //             const userId = cli.getUserId();
+    //             const nowMs = new Date().getTime();
+    //             const widgetId = encodeURIComponent(`${roomId}_${userId}_${nowMs}`);
+    //             let type = WidgetType.CUSTOM;
+    //             let name = "Custom";
+    //             let data = {};
 
-                // Make the widget a Jitsi widget if it looks like a Jitsi widget
-                const jitsiData = Jitsi.getInstance().parsePreferredConferenceUrl(widgetUrl);
-                if (jitsiData) {
-                    logger.log("Making /addwidget widget a Jitsi conference");
-                    type = WidgetType.JITSI;
-                    name = "Jitsi";
-                    data = jitsiData;
-                    widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl();
-                }
+    //             // Make the widget a Jitsi widget if it looks like a Jitsi widget
+    //             const jitsiData = Jitsi.getInstance().parsePreferredConferenceUrl(widgetUrl);
+    //             if (jitsiData) {
+    //                 logger.log("Making /addwidget widget a Jitsi conference");
+    //                 type = WidgetType.JITSI;
+    //                 name = "Jitsi";
+    //                 data = jitsiData;
+    //                 widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl();
+    //             }
 
-                return success(WidgetUtils.setRoomWidget(cli, roomId, widgetId, type, widgetUrl, name, data));
-            } else {
-                return reject(new UserFriendlyError("slash_command|addwidget_no_permissions"));
-            }
-        },
-        category: CommandCategories.admin,
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
+    //             return success(WidgetUtils.setRoomWidget(cli, roomId, widgetId, type, widgetUrl, name, data));
+    //         } else {
+    //             return reject(new UserFriendlyError("slash_command|addwidget_no_permissions"));
+    //         }
+    //     },
+    //     category: CommandCategories.admin,
+    //     renderingTypes: [TimelineRenderingType.Room],
+    // }),
+    // tchap
     new Command({
         command: "verify",
         args: "<device-id> <device-fingerprint>",
