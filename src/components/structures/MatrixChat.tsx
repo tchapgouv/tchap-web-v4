@@ -954,6 +954,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 this.viewEmailPrecheckSSO(payload.params || {});
                 break;
+            // desktop-auto-update - For tauri desktop auto update
+            case Action.LoadingUpdate: 
+                // it should be the last view before reloading the app with the update.
+                this.setState({ view: Views.LOADING });
             // end :TCHAP:
         }
     };
