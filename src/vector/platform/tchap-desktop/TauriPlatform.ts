@@ -19,7 +19,7 @@ import { type ActionPayload } from "../../../dispatcher/payloads";
 import { TauriIPCManager as IPCManager } from "./TauriIPCManager";
 import { _t } from "../../../languageHandler";
 import { TauriSeshatIndexManager } from './TauriSeshatIndexManager';
-import { type TauriSecureStorage } from './TauriSecureStorage';
+import { TauriSecureStorage } from './TauriSecureStorage';
 import type BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexManager';
 
 import Modal from '~tchap-web/src/Modal';
@@ -68,7 +68,7 @@ export default class TauriPlatform extends BasePlatform {
 
     // this is the opaque token we pass to the HS which when we get it in our callback we can resolve to a profile
     private readonly ssoID: string = secureRandomString(32);
-    public constructor(tauriSecureStorage: TauriSecureStorage) {
+    public constructor() {
         super();
 
         if (!window.__TAURI__) {
@@ -77,7 +77,7 @@ export default class TauriPlatform extends BasePlatform {
         this.protocol = "tchap";
 
         dis.register(onAction);
-        this.tauriSecureStorage = tauriSecureStorage;
+        this.tauriSecureStorage = new TauriSecureStorage(this.baseUrl, this.ipc);
 
         this.ipc.call("welcome");
 
@@ -239,16 +239,16 @@ export default class TauriPlatform extends BasePlatform {
         return this.tauriSecureStorage;
     }
 
+    public overrideBrowserShortcuts(): boolean {
+        return true;
+    }
+
     public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
             const key = `${userId}|${deviceId}`;
             // Read a record from store
             const value = await this.tauriSecureStorage?.getItem(key);
-
-            console.log('In getpicklekey value', value);
-            console.log(value); // 'secret value'
-
-            return value ? new TextDecoder().decode(value) : null;
+            return value;
         } catch {
             // if we can't connect to the password storage, assume there's no
             // pickle key
@@ -259,11 +259,10 @@ export default class TauriPlatform extends BasePlatform {
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
             const key = `${userId}|${deviceId}`;
-            const value = this.tauriSecureStorage.getRandom32Bytes();
+            const value = this.tauriSecureStorage.getRandom32BytesEncoded();
             // Insert a record to the store
-            await this.tauriSecureStorage.createItem(key, Array.from(value));
-
-            return value ? new TextDecoder().decode(value) : null;
+            await this.tauriSecureStorage.createItem(key, value);
+            return value;
         } catch {
             // if we can't connect to the password storage, assume there's no
             // pickle key
@@ -292,7 +291,7 @@ export default class TauriPlatform extends BasePlatform {
     
     public get baseUrl(): string {
         // This configuration is element-desktop specific so the types here do not know about it
-        return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? "https://www.tchap.gouv.fr/";
+        return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? SdkConfig.get("permalink_prefix")!;
     }
 
 

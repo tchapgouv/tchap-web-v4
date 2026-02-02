@@ -28,24 +28,19 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     public async initEventIndex(userId: string, deviceId: string): Promise<void> {
         const key = `seshat|${userId}|${deviceId}`;
 
-        let passphrase: Uint8Array = await this.platform.getSecureStorageInstance().getItem(key);
+        let passphrase: string = await this.platform.getSecureStorageInstance().getItem(key);
         logger.debug("[init_event_index] key", key);
 
         if (!passphrase) {
             logger.debug("[init_event_index] Passphrase was not found, creating new one");
             // Stronghold needs a Uint32 bytes array
-            const ramdom32Bytes: Uint8Array = this.platform.getSecureStorageInstance().getRandomUtf832Bytes();
+            const ramdom32BytesEncoded: string = this.platform.getSecureStorageInstance().getRandom32BytesEncoded();
             
-            this.platform.getSecureStorageInstance().createItem(key, ramdom32Bytes);
-            passphrase = ramdom32Bytes;
+            this.platform.getSecureStorageInstance().createItem(key, ramdom32BytesEncoded);
+            passphrase = ramdom32BytesEncoded;
         }
-        
-        // In order to be a readable string, the 32bytes array has been restricted to ascii char codes
-        const passphraseString: string = new TextDecoder().decode(passphrase);
 
-        logger.debug("[init_event_index] passphrase decoded", passphraseString);
-        logger.debug("[init_event_index] passphrase encoded", passphrase);
-        return this.ipc.call("init_event_index", {passphrase: passphraseString});
+        return this.ipc.call("init_event_index", {passphrase: passphrase});
     }
 
     public async addEventToIndex(event: IMatrixEvent, profile: IMatrixProfile): Promise<void> {
