@@ -1033,7 +1033,7 @@
     },
     "encryption|key_storage_out_of_sync": {
         "en": "Automatic messages backup is not in sync",
-        "fr": "La sauvegarde automatique n'est pas synchronisé"
+        "fr": "La sauvegarde automatique n'est pas synchronisée"
     },
     "encryption|key_storage_out_of_sync_description": {
         "en": "Confirm your verification code to be in sync. If this persist, you can try to deactivate and reactivate the automatic messages backup, and then reconfigure your verification code. <a> Learn more </a>",
