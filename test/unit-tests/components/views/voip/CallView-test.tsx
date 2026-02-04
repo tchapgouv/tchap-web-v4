@@ -18,7 +18,6 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
 
-import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,
     mkRoomMember,
@@ -32,6 +31,8 @@ import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 import { CallView as _CallView } from "../../../../../src/components/views/voip/CallView";
 import { WidgetMessagingStore } from "../../../../../src/stores/widgets/WidgetMessagingStore";
 import { CallStore } from "../../../../../src/stores/CallStore";
+import DMRoomMap from "../../../../../src/utils/DMRoomMap";
+import { type WidgetMessaging } from "../../../../../src/stores/widgets/WidgetMessaging";
 
 const CallView = wrapInMatrixClientContext(_CallView);
 
@@ -50,6 +51,7 @@ describe("CallView", () => {
 
         stubClient();
         client = mocked(MatrixClientPeg.safeGet());
+        DMRoomMap.makeShared(client);
 
         room = new Room("!1:example.org", client, "@alice:example.org", {
             pendingEventOrdering: PendingEventOrdering.Detached,
@@ -71,8 +73,11 @@ describe("CallView", () => {
 
         widget = new Widget(call.widget);
         WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, {
+            on: () => {},
+            off: () => {},
             stop: () => {},
-        } as unknown as ClientWidgetApi);
+            embedUrl: "https://example.org",
+        } as unknown as WidgetMessaging);
     });
 
     afterEach(() => {

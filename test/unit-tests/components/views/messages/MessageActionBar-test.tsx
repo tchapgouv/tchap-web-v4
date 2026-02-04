@@ -29,8 +29,7 @@ import {
     makeBeaconInfoEvent,
 } from "../../../../test-utils";
 import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permalinks";
-import RoomContext, { TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
-import { type IRoomState } from "../../../../../src/components/structures/RoomView";
+import RoomContext, { type RoomContextType, TimelineRenderingType } from "../../../../../src/contexts/RoomContext";
 import dispatcher from "../../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../../src/settings/SettingsStore";
 import { Action } from "../../../../../src/dispatcher/actions";
@@ -115,8 +114,8 @@ describe("<MessageActionBar />", () => {
         canSendMessages: true,
         canReact: true,
         room,
-    } as unknown as IRoomState;
-    const getComponent = (props = {}, roomContext: Partial<IRoomState> = {}) =>
+    } as unknown as RoomContextType;
+    const getComponent = (props = {}, roomContext: Partial<RoomContextType> = {}) =>
         render(
             <ScopedRoomContextProvider {...defaultRoomContext} {...roomContext}>
                 <MessageActionBar {...defaultProps} {...props} />
@@ -125,7 +124,8 @@ describe("<MessageActionBar />", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        alicesMessageEvent.setStatus(EventStatus.SENT);
+        // The base case is that we have received the remote echo and have an eventId. No sending status.
+        alicesMessageEvent.setStatus(null);
         jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
         jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
     });
@@ -376,6 +376,25 @@ describe("<MessageActionBar />", () => {
             expect(queryByLabelText("Delete")).toBeTruthy();
         });
 
+        it("only shows retry and delete buttons when event could not be sent", () => {
+            // Enable pin and other features
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+
+            alicesMessageEvent.setStatus(EventStatus.NOT_SENT);
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+
+            // Should show retry and cancel buttons
+            expect(queryByLabelText("Retry")).toBeTruthy();
+            expect(queryByLabelText("Delete")).toBeTruthy();
+
+            // Should NOT show edit, pin, react, reply buttons
+            expect(queryByLabelText("Edit")).toBeFalsy();
+            expect(queryByLabelText("Pin")).toBeFalsy();
+            expect(queryByLabelText("React")).toBeFalsy();
+            expect(queryByLabelText("Reply")).toBeFalsy();
+            expect(queryByLabelText("Reply in thread")).toBeFalsy();
+        });
+
         it.todo("unsends event on cancel click");
         it.todo("retrys event on retry click");
     });
@@ -515,6 +534,31 @@ describe("<MessageActionBar />", () => {
             );
 
             await waitFor(() => expect(screen.getByLabelText("Unpin")).toBeInTheDocument());
+        });
+    });
+
+    describe("expand/collapse quote buttons", () => {
+        it.each([
+            ["expand", false],
+            ["collapse", true],
+        ])("should render %s", (state, value) => {
+            const { getByLabelText } = getComponent({
+                mxEvent: new MatrixEvent({
+                    type: EventType.RoomMessage,
+                    sender: userId,
+                    room_id: roomId,
+                    content: {
+                        "msgtype": MsgType.Text,
+                        "body": "Hello",
+                        "m.relates_to": {
+                            "m.in_reply_to": { event_id: alicesMessageEvent.getId() },
+                        },
+                    },
+                    event_id: "$alices_reply",
+                }),
+                isQuoteExpanded: value,
+            });
+            expect(getByLabelText(`${state[0].toUpperCase()}${state.slice(1)} quotes`)).toBeInTheDocument();
         });
     });
 });

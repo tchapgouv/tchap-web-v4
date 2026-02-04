@@ -53,7 +53,10 @@ export class ElementAppPage {
      */
 
     public async openCreateRoomDialog(roomKindname: "New room" | "New video room" = "New room"): Promise<Locator> {
-        await this.page.getByRole("navigation", { name: "Room list" }).getByRole("button", { name: "Add" }).click();
+        await this.page
+            .getByRole("navigation", { name: "Room list" })
+            .getByRole("button", { name: "New conversation" })
+            .click();
         await this.page.getByRole("menuitem", { name: roomKindname }).click();
         return this.page.locator(".mx_CreateRoomDialog");
     }
@@ -200,6 +203,21 @@ export class ElementAppPage {
     }
 
     /**
+     * Opens the room info panel if it is not already open.
+     *
+     * TODO: fix this so that it works correctly if, say, the member list was open instead of the room info panel.
+     *
+     * @returns locator to the right panel
+     */
+    public async openRoomInfoPanel(): Promise<Locator> {
+        const locator = this.page.getByTestId("right-panel");
+        if (!(await locator.isVisible())) {
+            await this.page.getByRole("button", { name: "Room info" }).first().click();
+        }
+        return locator;
+    }
+
+    /**
      * Opens/closes the memberlist panel
      * @returns locator to the memberlist panel
      */
@@ -217,31 +235,13 @@ export class ElementAppPage {
      * @param userId - The user to invite to the room.
      */
     public async inviteUserToCurrentRoom(userId: string): Promise<void> {
-        await this.toggleRoomInfoPanel(); // TODO skip this if the room info panel is already open
-        await this.page.getByLabel("Right panel").getByRole("menuitem", { name: "Invite" }).click();
+        const rightPanel = await this.openRoomInfoPanel();
+        await rightPanel.getByRole("menuitem", { name: "Invite" }).click();
 
         const input = this.page.getByRole("dialog").getByTestId("invite-dialog-input");
         await input.fill(userId);
         await input.press("Enter");
         await this.page.getByRole("dialog").getByRole("button", { name: "Invite" }).click();
-    }
-
-    /**
-     * Get a locator for the tooltip associated with an element
-     * @param e The element with the tooltip
-     * @returns Locator to the tooltip
-     */
-    public async getTooltipForElement(e: Locator): Promise<Locator> {
-        const [labelledById, describedById] = await Promise.all([
-            e.getAttribute("aria-labelledby"),
-            e.getAttribute("aria-describedby"),
-        ]);
-        if (!labelledById && !describedById) {
-            throw new Error(
-                "Element has no aria-labelledby or aria-describedy attributes! The tooltip should have added either one of these.",
-            );
-        }
-        return this.page.locator(`id=${labelledById ?? describedById}`);
     }
 
     /**

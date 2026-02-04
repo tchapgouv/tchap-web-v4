@@ -8,14 +8,16 @@ Please see LICENSE files in the repository root for full details.
 
 import React from "react";
 import classNames from "classnames";
+import {
+    ShieldIcon,
+    ErrorSolidIcon,
+    ComputerIcon,
+    MobileIcon,
+    WebBrowserIcon,
+    DevicesIcon,
+} from "@vector-im/compound-design-tokens/assets/web/icons";
 
-import { Icon as UnknownDeviceIcon } from "../../../../../res/img/element-icons/settings/unknown-device.svg";
-import { Icon as DesktopIcon } from "../../../../../res/img/element-icons/settings/desktop.svg";
-import { Icon as WebIcon } from "../../../../../res/img/element-icons/settings/web.svg";
-import { Icon as MobileIcon } from "../../../../../res/img/element-icons/settings/mobile.svg";
-import { Icon as VerifiedIcon } from "../../../../../res/img/e2e/verified.svg";
-import { Icon as UnverifiedIcon } from "../../../../../res/img/e2e/warning.svg";
-import { _t, _td, type TranslationKey } from "../../../../languageHandler";
+import { _t, _td } from "../../../../languageHandler";
 import { type ExtendedDevice } from "./types";
 import { DeviceType } from "../../../../utils/device/parseUserAgent";
 
@@ -26,10 +28,10 @@ interface Props {
 }
 
 const deviceTypeIcon: Record<DeviceType, React.FC<React.SVGProps<SVGSVGElement>>> = {
-    [DeviceType.Desktop]: DesktopIcon,
+    [DeviceType.Desktop]: ComputerIcon,
     [DeviceType.Mobile]: MobileIcon,
-    [DeviceType.Web]: WebIcon,
-    [DeviceType.Unknown]: UnknownDeviceIcon,
+    [DeviceType.Web]: WebBrowserIcon,
+    [DeviceType.Unknown]: DevicesIcon,
 };
 const deviceTypeLabel: Record<DeviceType, TranslationKey> = {
     [DeviceType.Desktop]: _td("settings|sessions|desktop_session"),
@@ -51,13 +53,13 @@ export const DeviceTypeIcon: React.FC<Props> = ({ isVerified, isSelected, device
                 <Icon className="mx_DeviceTypeIcon_deviceIcon" role="img" aria-label={label} />
             </div>
             {isVerified ? (
-                <VerifiedIcon
+                <ShieldIcon
                     className={classNames("mx_DeviceTypeIcon_verificationIcon", "verified")}
                     role="img"
                     aria-label={_t("common|verified")}
                 />
             ) : (
-                <UnverifiedIcon
+                <ErrorSolidIcon
                     className={classNames("mx_DeviceTypeIcon_verificationIcon", "unverified")}
                     role="img"
                     aria-label={_t("common|unverified")}

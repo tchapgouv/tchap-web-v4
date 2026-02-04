@@ -739,8 +739,8 @@ export const Commands = [
     new Command({
         command: "help",
         description: _td("slash_command|help"),
-        runFn: function () {
-            Modal.createDialog(SlashCommandHelpDialog);
+        runFn: function (cli, roomId, threadId, args) {
+            Modal.createDialog(SlashCommandHelpDialog, { roomId });
             return success();
         },
         category: CommandCategories.advanced,
@@ -994,14 +994,15 @@ interface ICmd {
 
 /**
  * Process the given text for /commands and returns a parsed command that can be used for running the operation.
+ * @param {string} roomId The room ID where the command was issued.
  * @param {string} input The raw text input by the user.
  * @return {ICmd} The parsed command object.
  * Returns an empty object if the input didn't match a command.
  */
-export function getCommand(input: string): ICmd {
+export function getCommand(roomId: string, input: string): ICmd {
     const { cmd, args } = parseCommandString(input);
 
-    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled(MatrixClientPeg.get())) {
+    if (cmd && CommandMap.has(cmd) && CommandMap.get(cmd)!.isEnabled(MatrixClientPeg.get(), roomId)) {
         return {
             cmd: CommandMap.get(cmd),
             args,

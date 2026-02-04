@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { percentageOf, percentageWithin } from "../../packages/shared-components/src/utils/numbers";
+import { percentageOf, percentageWithin } from "@element-hq/web-shared-components";
 
 /**
  * Quickly resample an array to have less/more data points. If an input which is larger
@@ -297,8 +297,8 @@ export class GroupedArray<K, T> {
     }
 }
 
-export const concat = (...arrays: Uint8Array[]): Uint8Array => {
-    return arrays.reduce((concatenatedSoFar: Uint8Array, toBeConcatenated: Uint8Array) => {
+export const concat = (...arrays: Uint8Array<ArrayBuffer>[]): Uint8Array<ArrayBuffer> => {
+    return arrays.reduce((concatenatedSoFar: Uint8Array<ArrayBuffer>, toBeConcatenated: Uint8Array<ArrayBuffer>) => {
         const concatenated = new Uint8Array(concatenatedSoFar.length + toBeConcatenated.length);
         concatenated.set(concatenatedSoFar, 0);
         concatenated.set(toBeConcatenated, concatenatedSoFar.length);

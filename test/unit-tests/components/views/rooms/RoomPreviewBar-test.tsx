@@ -16,7 +16,7 @@ import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../../src/utils/DMRoomMap";
 import RoomPreviewBar from "../../../../../src/components/views/rooms/RoomPreviewBar";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
-import ModuleApi from "../../../../../src/modules/Api.ts";
+import { ModuleApi } from "../../../../../src/modules/Api.ts";
 
 jest.mock("../../../../../src/IdentityAuthClient", () => {
     return jest.fn().mockImplementation(() => {
@@ -423,6 +423,20 @@ describe("<RoomPreviewBar />", () => {
                     await testJoinButton({ inviterName, invitedEmail })();
                 });
 
+                it("renders email mismatch message when no email bound", async () => {
+                    MatrixClientPeg.safeGet().lookupThreePid = jest.fn().mockReturnValue({});
+                    const component = getComponent({ inviterName, invitedEmail });
+                    await waitForElementToBeRemoved(() => component.queryByRole("progressbar"));
+
+                    expect(getMessage(component)).toMatchSnapshot();
+                    expect(MatrixClientPeg.safeGet().lookupThreePid).toHaveBeenCalledWith(
+                        "email",
+                        invitedEmail,
+                        "mock-token",
+                    );
+                    await testJoinButton({ inviterName, invitedEmail })();
+                });
+
                 it("renders invite message when invite email mxid match", async () => {
                     MatrixClientPeg.safeGet().lookupThreePid = jest.fn().mockReturnValue({ mxid: userId });
                     const component = getComponent({ inviterName, invitedEmail });
@@ -500,7 +514,7 @@ describe("<RoomPreviewBar />", () => {
     });
 
     it("should render Module roomPreviewBarRenderer if specified", () => {
-        jest.spyOn(ModuleApi.customComponents, "roomPreviewBarRenderer", "get").mockReturnValue(() => (
+        jest.spyOn(ModuleApi.instance.customComponents, "roomPreviewBarRenderer", "get").mockReturnValue(() => (
             <>Test component</>
         ));
         const { getByText } = render(<RoomPreviewBar />);

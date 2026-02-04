@@ -20,7 +20,7 @@ jobs:
         env:
             TEST_TAG: vectorim/element-web:test
         steps:
-            - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+            - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
               with:
                   fetch-depth: 0 # needed for docker-package to be able to calculate the version
 
@@ -29,27 +29,12 @@ jobs:
               if: github.event_name != 'pull_request'
 
             - name: Set up QEMU
-              uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3
+              uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
 
             - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3
+              uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
               with:
                   install: true
-
-            - name: Login to Docker Hub
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
-              if: github.event_name != 'pull_request'
-              with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-            - name: Login to GitHub Container Registry
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
-              if: github.event_name != 'pull_request'
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.repository_owner }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Build and load
               id: test-build
@@ -96,17 +81,69 @@ jobs:
 
             - name: Docker meta
               id: meta
-              uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5
+              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
               if: github.event_name != 'pull_request'
               with:
                   images: |
                       vectorim/element-web
                       ghcr.io/element-hq/element-web
+                      oci-push.vpn.infra.element.io/element-web
                   tags: |
                       type=ref,event=branch
                       type=ref,event=tag
                   flavor: |
                       latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+
+            - name: Login to Docker Hub
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
+              if: github.event_name != 'pull_request'
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
+              if: github.event_name != 'pull_request'
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Connect to Tailscale
+              uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4
+              if: github.event_name != 'pull_request'
+              with:
+                  oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                  audience: ${{ secrets.TS_AUDIENCE }}
+                  tags: tag:github-actions
+
+            - name: Compute vault jwt role name
+              id: vault-jwt-role
+              if: github.event_name != 'pull_request'
+              run: |
+                  echo "role_name=github_service_management_$( echo "${{ github.repository }}" | sed -r 's|[/-]|_|g')" | tee -a "$GITHUB_OUTPUT"
+
+            - name: Get team registry token
+              id: import-secrets
+              uses: hashicorp/vault-action@4c06c5ccf5c0761b6029f56cfb1dcf5565918a3b # v3
+              if: github.event_name != 'pull_request'
+              with:
+                  url: https://vault.infra.ci.i.element.dev
+                  role: ${{ steps.vault-jwt-role.outputs.role_name }}
+                  path: service-management/github-actions
+                  jwtGithubAudience: https://vault.infra.ci.i.element.dev
+                  method: jwt
+                  secrets: |
+                      services/web-repositories/secret/data/oci.element.io username | OCI_USERNAME ;
+                      services/web-repositories/secret/data/oci.element.io password | OCI_PASSWORD ;
+
+            - name: Login to oci.element.io Registry
+              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
+              if: github.event_name != 'pull_request'
+              with:
+                  registry: oci-push.vpn.infra.element.io
+                  username: ${{ steps.import-secrets.outputs.OCI_USERNAME }}
+                  password: ${{ steps.import-secrets.outputs.OCI_PASSWORD }}
 
             - name: Build and push
               id: build-and-push
@@ -139,6 +176,7 @@ jobs:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
                   repository: vectorim/element-web
+<<<<<<< HEAD
 
             - name: Repository Dispatch
               uses: peter-evans/repository-dispatch@5fc4efd1a4797ddb68ffd0714a238564e4cc0e6f # v4
@@ -152,3 +190,5 @@ jobs:
                       {
                           "base-ref": "${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}"
                       }
+=======
+>>>>>>> v1.12.9

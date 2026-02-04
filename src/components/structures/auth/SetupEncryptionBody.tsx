@@ -27,6 +27,8 @@ import { EncryptionCardButtons } from "../../views/settings/encryption/Encryptio
 import { EncryptionCardEmphasisedContent } from "../../views/settings/encryption/EncryptionCardEmphasisedContent";
 import ExternalLink from "../../views/elements/ExternalLink";
 import dispatcher from "../../../dispatcher/dispatcher";
+import E2EIcon from "../../views/rooms/E2EIcon.tsx";
+import { E2EStatus } from "../../../utils/ShieldUtils.ts";
 
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls"; // :TCHAP: help-access-verify-device
 
@@ -237,7 +239,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             }
             return (
                 <div>
-                    <div className="mx_CompleteSecurity_heroIcon mx_E2EIcon_verified" />
+                    <E2EIcon className="mx_CompleteSecurity_heroIcon" status={E2EStatus.Verified} hideTooltip />
                     {message}
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton kind="primary" onClick={this.onDoneClick}>

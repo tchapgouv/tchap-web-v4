@@ -8,6 +8,16 @@ Please see LICENSE files in the repository root for full details.
 
 import React, { type JSX, createRef, type ReactNode } from "react";
 import { type Room } from "matrix-js-sdk/src/matrix";
+import {
+    ChatSolidIcon,
+    HomeSolidIcon,
+    LockSolidIcon,
+    QrCodeIcon,
+    SettingsSolidIcon,
+    LeaveIcon,
+    NotificationsSolidIcon,
+    ThemeIcon,
+} from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -42,8 +52,11 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { type ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 import { SDKContext } from "../../contexts/SDKContext";
 import { shouldShowFeedback } from "../../utils/Feedback";
+<<<<<<< HEAD
 import DarkLightModeSvg from "../../../res/img/element-icons/roomlist/dark-light-mode.svg";
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
+=======
+>>>>>>> v1.12.9
 
 interface IProps {
     isPanelCollapsed: boolean;
@@ -303,7 +316,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.hasHomePage) {
             homeButton = (
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconHome"
+                    icon={<HomeSolidIcon />}
                     label={_t("common|home")}
                     onClick={this.onHomeClick}
                 />
@@ -314,7 +327,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (shouldShowFeedback()) {
             feedbackButton = (
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconMessage"
+                    icon={<ChatSolidIcon />}
                     label={_t("common|feedback")}
                     onClick={this.onProvideFeedback}
                 />
@@ -323,7 +336,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
 
         const linkNewDeviceButton = (
             <IconizedContextMenuOption
-                iconClassName="mx_UserMenu_iconQr"
+                icon={<QrCodeIcon />}
                 label={_t("user_menu|link_new_device")}
                 onClick={(e) => this.onSettingsOpen(e, UserTab.SessionManager, { showMsc4108QrCode: true })}
             />
@@ -336,13 +349,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 {/* {linkNewDeviceButton} */}
                 {/* end :TCHAP: */}
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconBell"
+                    icon={<NotificationsSolidIcon />}
                     label={_t("notifications|enable_prompt_toast_title")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
                 />
                 {/* :TCHAP:
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconLock"
+                    icon={<LockSolidIcon />}
                     label={_t("room_settings|security|title")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
                 /> */}
@@ -353,7 +366,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 />
                 {/* end :TCHAP: */}
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconSettings"
+                    icon={<SettingsSolidIcon />}
                     label={_t("user_menu|settings")}
                     onClick={(e) => this.onSettingsOpen(e)}
                 />
@@ -367,7 +380,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 {/* end :TCHAP: */}
                 <IconizedContextMenuOption
                     className="mx_IconizedContextMenu_option_red"
-                    iconClassName="mx_UserMenu_iconSignOut"
+                    icon={<LeaveIcon />}
                     label={_t("action|sign_out")}
                     onClick={this.onSignOutClick}
                 />
@@ -379,7 +392,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 <IconizedContextMenuOptionList>
                     {homeButton}
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSettings"
+                        icon={<SettingsSolidIcon />}
                         label={_t("common|settings")}
                         onClick={(e) => this.onSettingsOpen(e)}
                     />
@@ -420,7 +433,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                                 : _t("user_menu|switch_theme_dark")
                         }
                     >
-                        <img src={DarkLightModeSvg} role="presentation" alt="" width={16} />
+                        <ThemeIcon width="16px" height="16px" />
                     </RovingAccessibleButton>
                 </div>
                 {topSection}

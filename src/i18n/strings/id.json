@@ -91,6 +91,7 @@
         "maximise": "Maksimalkan",
         "mention": "Sebutkan",
         "minimise": "Minimalkan",
+        "new_conversation": "Percakapan baru",
         "new_room": "Ruangan baru",
         "new_video_room": "Ruangan video baru",
         "next": "Lanjut",
@@ -98,9 +99,7 @@
         "ok": "Oke",
         "open": "Buka",
         "open_menu": "Buka menu",
-        "pause": "Jeda",
         "pin": "Sematkan",
-        "play": "Mainkan",
         "proceed": "Lanjut",
         "quote": "Kutip",
         "react": "Bereaksi",
@@ -601,6 +600,7 @@
         "video": "Video",
         "video_room": "Ruangan video",
         "view_message": "Tampilkan pesan",
+        "voice": "Suara",
         "warning": "Peringatan"
     },
     "composer": {
@@ -803,6 +803,17 @@
         },
         "developer_mode": "Mode pengembang",
         "developer_tools": "Alat Pengembang",
+        "device_dehydrated_no": "Dehidrasi: Tidak",
+        "device_dehydrated_yes": "Dehidrasi: Ya",
+        "device_id": "ID Perangkat: %(deviceId)s",
+        "device_keys": "Kunci perangkat",
+        "device_verification_status": {
+            "signed_by_owner": "Status verifikasi: <E2EIcon /> Ditandatangani oleh pemilik",
+            "unknown": "Status verifikasi: Tidak diketahui",
+            "unverified": "Status verifikasi: <E2EIcon /> Tidak ditandatangani oleh pemilik",
+            "verified": "Status verifikasi: <E2EIcon /> Diverifikasi dengan penandatanganan silang"
+        },
+        "devices": "Perangkat kriptografi (%(count)s)",
         "edit_setting": "Edit pengaturan",
         "edit_values": "Edit nilai",
         "empty_string": "<string kosong>",
@@ -818,6 +829,7 @@
         "failed_to_save": "Gagal menyimpan pengaturan.",
         "failed_to_send": "Gagal mengirimkan pertistiwa!",
         "id": "ID: ",
+        "invalid_device_key_id": "ID kunci perangkat tidak valid",
         "invalid_json": "Tidak terlihat seperti JSON yang absah.",
         "level": "Tingkat",
         "low_bandwidth_mode": "Mode bandwidth rendah",
@@ -828,6 +840,7 @@
         "notification_state": "Keadaan notifikasi adalah <strong>%(notificationState)s</strong>",
         "notifications_debug": "Pengawakutuan notifikasi",
         "number_of_users": "Jumlah pengguna",
+        "only_joined_members": "Hanya pengguna yang bergabung",
         "original_event_source": "Sumber peristiwa asli",
         "room_encrypted": "Ruangan <strong>terenkripsi ✅</strong>",
         "room_id": "ID ruangan: %(roomId)s",
@@ -873,10 +886,23 @@
         "toggle_event": "alih peristiwa",
         "toolbox": "Kotak Peralatan",
         "use_at_own_risk": "UI ini TIDAK memeriksa tipe nilai. Gunakan dengan hati-hati.",
+        "user_avatar": "Avatar: %(avatar)s",
+        "user_displayname": "Nama tampilan: %(displayname)s",
+        "user_id": "ID Pengguna: %(userId)s",
+        "user_no_avatar": "Avatar: <i>Tidak ada</i>",
+        "user_no_displayname": "Nama tampilan: <i>Tidak ada</i>",
         "user_read_up_to": "Pembacaan pengguna sampai: ",
         "user_read_up_to_ignore_synthetic": "Pengguna membaca sampai (ignoreSynthetic): ",
         "user_read_up_to_private": "Pengguna membaca sampai (m.read.private): ",
         "user_read_up_to_private_ignore_synthetic": "Pengguna membaca sampai (m.read.private;ignoreSynthetic): ",
+        "user_room_membership": "Keanggotaan: %(membership)s",
+        "user_verification_status": {
+            "identity_changed": "Status verifikasi: <E2EIcon /> Belum diverifikasi, dan identitas berubah",
+            "unverified": "Status verifikasi: <E2EIcon /> Belum diverifikasi",
+            "verified": "Status verifikasi: <E2EIcon /> Terverifikasi",
+            "was_verified": "Status verifikasi: <E2EIcon /> Telah diverifikasi, tetapi identitas berubah"
+        },
+        "users": "Pengguna",
         "value": "Nilai",
         "value_colon": "Nilai:",
         "value_in_this_room": "Nilai di ruangan ini",
@@ -1471,7 +1497,6 @@
         "upload_file": "Unggah sebuah file"
     },
     "labs": {
-        "allow_screen_share_only_mode": "Perbolehkan mode hanya pembagian layar",
         "ask_to_join": "Aktifkan bertanya untuk bergabung",
         "automatic_debug_logs": "Kirim catatan pengawakutu secara otomatis saat ada kesalahan",
         "automatic_debug_logs_decryption": "Kirim catatan pengawakutu secara otomatis ketika terjadi kesalahan pendekripsian",
@@ -1911,7 +1936,6 @@
         "thread_list": {
             "context_menu_label": "Opsi utasan"
         },
-        "title": "Panel kanan",
         "video_room_chat": {
             "title": "Obrolan"
         }
@@ -1946,7 +1970,6 @@
         "dm_invite_title": "Apakah Anda ingin mengobrol dengan %(user)s?",
         "drop_file_prompt": "Lepaskan file di sini untuk mengunggah",
         "edit_topic": "Edit topik",
-        "error_3pid_invite_email_lookup": "Tidak dapat mencari pengguna dengan surel",
         "error_cancel_knock_title": "Gagal membatalkan",
         "error_join_403": "Anda memerlukan undangan untuk mengakses ruangan ini.",
         "error_join_404_1": "Anda mencoba untuk bergabung menggunakan sebuah ID ruangan tanpa menyediakan daftar server untuk bergabung melalui server. ID ruangan adalah pengenal internal dan tidak dapat digunakan untuk bergabung dengan sebuah ruangan tanpa informasi tambahan.",
@@ -2075,18 +2098,6 @@
             },
             "this_room_button": "Cari ruangan ini"
         },
-        "status_bar": {
-            "delete_all": "Hapus semua",
-            "exceeded_resource_limit": "Pesan Anda tidak terkirim karena homeserver ini melebihi sebuah batas sumber daya. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
-            "homeserver_blocked": "Pesan Anda tidak dikirim karena homeserver ini telah diblokir oleh administrator. Mohon <a>hubungi administrator layanan Anda</a> untuk terus menggunakan layanan ini.",
-            "monthly_user_limit_reached": "Pesan Anda tidak terkirim karena homesever ini telah mencapat batas Pengguna Aktif Bulanan. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
-            "requires_consent_agreement": "Anda tidak dapat mengirimkan pesan apa saja sampai Anda lihat dan terima <consentLink>syarat dan ketentuan kami</consentLink>.",
-            "retry_all": "Coba ulang semua",
-            "select_messages_to_retry": "Anda dapat memilih semua atau beberapa pesan untuk dicoba lagi atau dihapus",
-            "server_connectivity_lost_description": "Pesan yang akan dikirim akan disimpan sampai koneksi Anda telah kembali.",
-            "server_connectivity_lost_title": "Koneksi ke server telah hilang.",
-            "some_messages_not_sent": "Beberapa pesan Anda tidak terkirim"
-        },
         "unknown_status_code_for_timeline_jump": "kode keadaan tidak diketahui",
         "unread_notifications_predecessor": {
             "one": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini.",
@@ -2166,26 +2177,6 @@
         "redacting_messages_status": {
             "one": "Saat ini menghapus pesan-pesan di %(count)s ruangan",
             "other": "Saat ini menghapus pesan-pesan di %(count)s ruangan"
-        },
-        "release_announcement": {
-            "done": "Selesai",
-            "filter": {
-                "description": "Saring obrolan Anda dengan satu klik. Klik untuk melihat lebih banyak filter.",
-                "title": "Filter cepat baru"
-            },
-            "intro": {
-                "description": "Daftar obrolan telah diperbarui agar lebih jelas dan mudah digunakan.",
-                "title": "Obrolan memiliki tampilan baru!"
-            },
-            "next": "Berikutnya",
-            "settings": {
-                "description": "Untuk menampilkan atau menyembunyikan pratinjau pesan, buka Semua pengaturan > Preferensi > Daftar ruangan",
-                "title": "Beberapa pengaturan telah dipindahkan"
-            },
-            "sort": {
-                "description": "Ubah urutan obrolan Anda dari yang terbaru ke A-Z",
-                "title": "Urutkan obrolan Anda"
-            }
         },
         "room": {
             "more_options": "Opsi Lainnya",
@@ -2394,7 +2385,6 @@
             "error_join_rule_change_unknown": "Kesalahan yang tidak diketahui",
             "guest_access_warning": "Orang-orang dengan klien yang didukung akan dapat bergabung ruangan ini tanpa harus memiliki sebuah akun yang terdaftar.",
             "history_visibility_invited": "Anggota saja (sejak mereka diundang)",
-            "history_visibility_joined": "Anggota saja (sejak mereka bergabung)",
             "history_visibility_legend": "Siapa yang dapat membaca riwayat?",
             "history_visibility_shared": "Anggota saja (sejak memilih opsi ini)",
             "history_visibility_warning": "Visibilitas riwayat yang ada tidak akan berubah.",
@@ -2455,7 +2445,6 @@
             "error_update_guest_access": "Gagal untuk memperbarui akses tamu untuk space ini",
             "error_update_history_visibility": "Gagal untuk memperbarui visibilitas riwayat untuk space ini",
             "guest_access_explainer": "Tamu dapat bergabung sebuah space tanpa harus mempunyai akun.",
-            "guest_access_explainer_public_space": "Ini mungkin berguna untuk space publik.",
             "guest_access_label": "Aktifkan akses tamu",
             "history_visibility_anyone_space": "Tampilkan Space",
             "history_visibility_anyone_space_description": "Memungkinkan orang-orang untuk memperlihatkan space Anda sebelum mereka bergabung.",
@@ -2587,7 +2576,7 @@
                 "do_not_close_warning": "Jangan tutup jendela ini sampai pengaturan ulang selesai",
                 "export_keys": "Ekspor kunci",
                 "import_keys": "Impor kunci",
-                "other_people_device_description": "Secara bawaan dalam ruangan terenkripsi, jangan kirim pesan terenkripsi kepada siapa pun sampai Anda memverifikasinya",
+                "other_people_device_description": "Peringatan: pengguna yang belum secara eksplisit memverifikasi dengan Anda (misalnya menggunakan emoji) tidak akan menerima pesan terenkripsi Anda. Selain itu, device yang belum diverifikasi dari pengguna yang telah diverifikasi juga tidak akan menerima pesan terenkripsi Anda. Perubahan memerlukan pemulaian ulang aplikasi agar berlaku.",
                 "other_people_device_label": "Jangan pernah mengirim pesan terenkripsi ke perangkat yang tidak terverifikasi",
                 "other_people_device_title": "Perangkat orang lain",
                 "reset_identity": "Atur ulang identitas kriptografi",
@@ -2853,10 +2842,6 @@
             "rule_suppress_notices": "Pesan dikirim oleh bot",
             "rule_tombstone": "Ketika ruangan telah ditingkatkan",
             "show_message_desktop_notification": "Tampilkan pesan di notifikasi desktop",
-            "sounds_release_announcement": {
-                "description": "Notifikasi ping dan dering panggilan Anda telah diperbarui—lebih jelas, lebih cepat, dan tidak mengganggu",
-                "title": "Kami telah menyegarkan suara Anda"
-            },
             "voip": "Panggilan Audio dan Video"
         },
         "preferences": {
@@ -3358,24 +3343,10 @@
         "no_rooms_with_unread_threads": "Anda belum memiliki ruangan dengan utas yang belum dibaca."
     },
     "time": {
-        "about_day_ago": "1 hari yang lalu",
-        "about_hour_ago": "1 jam yang lalu",
-        "about_minute_ago": "1 menit yang lalu",
         "date_at_time": "%(date)s pada %(time)s",
-        "few_seconds_ago": "beberapa detik yang lalu",
         "hours_minutes_seconds_left": "Sisa %(hours)sj %(minutes)sm %(seconds)sd",
-        "in_about_day": "1 hari dari sekarang",
-        "in_about_hour": "1 jam dari sekarang",
-        "in_about_minute": "1 menit dari sekarang",
-        "in_few_seconds": "beberapa detik dari sekarang",
-        "in_n_days": "%(num)s hari dari sekarang",
-        "in_n_hours": "%(num)s jam dari sekarang",
-        "in_n_minutes": "%(num)s dari sekarang",
         "left": "%(timeRemaining)sd lagi",
         "minutes_seconds_left": "Sisa %(minutes)sm %(seconds)sd",
-        "n_days_ago": "%(num)s hari yang lalu",
-        "n_hours_ago": "%(num)s jam yang lalu",
-        "n_minutes_ago": "%(num)s menit yang lalu",
         "seconds_left": "%(seconds)sd lagi",
         "short_days": "%(value)sh",
         "short_days_hours_minutes_seconds": "%(days)sh %(hours)sj %(minutes)sm %(seconds)sd",
@@ -3430,11 +3401,9 @@
             "unable_to_find": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi tidak dapat menemukannya."
         },
         "m.audio": {
-            "audio_player": "Pemutar audio",
             "error_downloading_audio": "Terjadi kesalahan mengunduh audio",
             "error_processing_audio": "Terjadi kesalahan mengolah pesan suara",
-            "error_processing_voice_message": "Terjadi kesalahan mengolah pesan suara",
-            "unnamed_audio": "Audio tidak dinamai"
+            "error_processing_voice_message": "Terjadi kesalahan mengolah pesan suara"
         },
         "m.beacon_info": {
             "view_live_location": "Tampilkan lokasi langsung"
@@ -3492,7 +3461,6 @@
             }
         },
         "m.poll.end": {
-            "ended": "Mengakhiri sebuah pemungutan suara",
             "sender_ended": "%(senderName)s telah mengakhiri sebuah poll"
         },
         "m.poll.start": "%(senderName)s telah memulai sebuah pungutan suara — %(pollQuestion)s",
@@ -4009,7 +3977,6 @@
         "hide_sidebar_button": "Sembunyikan sisi bilah",
         "input_devices": "Perangkat masukan",
         "jitsi_call": "Konferensi Jitsi",
-        "join_button_tooltip_call_full": "Maaf — panggilan ini saat ini penuh",
         "legacy_call": "Panggilan Lawas",
         "maximise": "Penuhi layar",
         "maximise_call": "Maksimalkan panggilan",
@@ -4064,9 +4031,11 @@
         "user_busy_description": "Pengguna yang Anda panggil sedang sibuk.",
         "user_is_presenting": "%(sharerName)s sedang mempresentasi",
         "video_call": "Panggilan video",
+        "video_call_incoming": "Panggilan video masuk",
         "video_call_started": "Panggilan video dimulai",
         "video_call_using": "Panggilan video menggunakan:",
         "voice_call": "Panggilan suara",
+        "voice_call_incoming": "Panggilan suara masuk",
         "you_are_presenting": "Anda sedang mempresentasi"
     },
     "web_default_device_name": "%(appName)s: %(browserName)s di %(osName)s",

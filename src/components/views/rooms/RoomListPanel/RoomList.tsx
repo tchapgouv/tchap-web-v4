@@ -5,15 +5,14 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-import React, { useCallback, useRef, useState, type JSX } from "react";
+import React, { useCallback, useRef, type JSX, useMemo } from "react";
 import { type Room } from "matrix-js-sdk/src/matrix";
-import { type ScrollIntoViewLocation } from "react-virtuoso";
 import { isEqual } from "lodash";
 
 import { type RoomListViewState } from "../../../viewmodels/roomlist/RoomListViewModel";
 import { _t } from "../../../../languageHandler";
 import { RoomListItemView } from "./RoomListItemView";
-import { type ListContext, ListView } from "../../../utils/ListView";
+import { type ListContext, ListView, type ScrollIntoViewOnChange } from "../../../utils/ListView";
 import { type FilterKey } from "../../../../stores/room-list-v3/skip-list/filters";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
@@ -25,6 +24,12 @@ interface RoomListProps {
      */
     vm: RoomListViewState;
 }
+
+type Context = {
+    spaceId: string;
+    filterKeys: FilterKey[] | undefined;
+};
+
 /**
  * Height of a single room list item
  */
@@ -44,16 +49,12 @@ export function RoomList({ vm: { roomsResult, activeIndex } }: RoomListProps): J
     const lastSpaceId = useRef<string | undefined>(undefined);
     const lastFilterKeys = useRef<FilterKey[] | undefined>(undefined);
     const roomCount = roomsResult.rooms.length;
-    const [isScrolling, setIsScrolling] = useState(false);
     const getItemComponent = useCallback(
         (
             index: number,
             item: Room,
-            context: ListContext<{
-                spaceId: string;
-                filterKeys: FilterKey[] | undefined;
-            }>,
-            onFocus: (e: React.FocusEvent) => void,
+            context: ListContext<Context>,
+            onFocus: (item: Room, e: React.FocusEvent) => void,
         ): JSX.Element => {
             const itemKey = item.roomId;
             const isRovingItem = itemKey === context.tabIndexKey;
@@ -69,21 +70,18 @@ export function RoomList({ vm: { roomsResult, activeIndex } }: RoomListProps): J
                     roomIndex={index}
                     roomCount={roomCount}
                     onFocus={onFocus}
-                    listIsScrolling={isScrolling}
                 />
             );
         },
-        [activeIndex, roomCount, isScrolling],
+        [activeIndex, roomCount],
     );
 
     const getItemKey = useCallback((item: Room): string => {
         return item.roomId;
     }, []);
 
-    const scrollIntoViewOnChange = useCallback(
-        (params: {
-            context: ListContext<{ spaceId: string; filterKeys: FilterKey[] | undefined }>;
-        }): ScrollIntoViewLocation | null | undefined | false | void => {
+    const scrollIntoViewOnChange = useCallback<ScrollIntoViewOnChange<Room, Context>>(
+        (params) => {
             const { spaceId, filterKeys } = params.context.context;
             const shouldScrollIndexIntoView =
                 lastSpaceId.current !== spaceId || !isEqual(lastFilterKeys.current, filterKeys);
@@ -114,10 +112,14 @@ export function RoomList({ vm: { roomsResult, activeIndex } }: RoomListProps): J
             return;
         }
     }, []);
+    const context = useMemo<Context>(
+        () => ({ spaceId: roomsResult.spaceId, filterKeys: roomsResult.filterKeys }),
+        [roomsResult.spaceId, roomsResult.filterKeys],
+    );
 
     return (
         <ListView
-            context={{ spaceId: roomsResult.spaceId, filterKeys: roomsResult.filterKeys }}
+            context={context}
             scrollIntoViewOnChange={scrollIntoViewOnChange}
             initialTopMostItemIndex={activeIndex}
             data-testid="room-list"
@@ -129,7 +131,6 @@ export function RoomList({ vm: { roomsResult, activeIndex } }: RoomListProps): J
             getItemKey={getItemKey}
             isItemFocusable={() => true}
             onKeyDown={keyDownCallback}
-            isScrolling={setIsScrolling}
             increaseViewportBy={{
                 bottom: EXTENDED_VIEWPORT_HEIGHT,
                 top: EXTENDED_VIEWPORT_HEIGHT,

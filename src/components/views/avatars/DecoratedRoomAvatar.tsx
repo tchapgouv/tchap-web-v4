@@ -18,6 +18,11 @@ import {
     UserEvent,
 } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+<<<<<<< HEAD
+=======
+import { Tooltip } from "@vector-im/compound-web";
+import { PublicIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+>>>>>>> v1.12.9
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from "../rooms/NotificationBadge";
@@ -48,6 +53,7 @@ interface IProps {
     tooltipProps?: {
         tabIndex?: number;
     };
+    className?: string;
 }
 
 interface IState {
@@ -194,7 +200,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public render(): React.ReactNode {
         // Spread the remaining props to make it work with compound component
-        const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, ...props } = this.props;
+        const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, className, ...props } =
+            this.props;
 
         let badge: React.ReactNode;
         if (this.props.displayBadge && this.state.notificationState) {
@@ -213,13 +220,19 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
                 <div
                     tabIndex={this.props.tooltipProps?.tabIndex ?? 0}
                     className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
-                />
+                >
+                    {this.state.icon === Icon.Globe ? <PublicIcon /> : null}
+                </div>
             );
         }
 
-        const classes = classNames("mx_DecoratedRoomAvatar", {
-            mx_DecoratedRoomAvatar_cutout: icon,
-        });
+        const classes = classNames(
+            "mx_DecoratedRoomAvatar",
+            {
+                mx_DecoratedRoomAvatar_cutout: icon,
+            },
+            className,
+        );
 
         return (
             <div className={classes} {...props }>

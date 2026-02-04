@@ -10,6 +10,7 @@ import { type MatrixClient, type Room } from "matrix-js-sdk/src/matrix";
 import { render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 import { mkRoom, stubClient, withClientContextRenderOptions } from "../../../../../test-utils";
 import { RoomListItemView } from "../../../../../../src/components/views/rooms/RoomListPanel/RoomListItemView";
@@ -48,7 +49,7 @@ describe("<RoomListItemView />", () => {
         room = mkRoom(matrixClient, "room1");
 
         DMRoomMap.makeShared(matrixClient);
-        jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(null);
+        jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(undefined);
 
         const notificationState = new RoomNotificationState(room, false);
         jest.spyOn(notificationState, "hasAnyNotificationOrActivity", "get").mockReturnValue(true);
@@ -64,6 +65,7 @@ describe("<RoomListItemView />", () => {
             isBold: false,
             isVideoRoom: false,
             callConnectionState: null,
+            callType: CallType.Video,
             hasParticipantInCall: false,
             name: room.name,
             showNotificationDecoration: false,
@@ -98,42 +100,6 @@ describe("<RoomListItemView />", () => {
 
         await user.click(screen.getByRole("option", { name: `Open room ${room.name}` }));
         expect(defaultValue.openRoom).toHaveBeenCalled();
-    });
-
-    test("should hover decoration if hovered", async () => {
-        mocked(useRoomListItemViewModel).mockReturnValue({ ...defaultValue, showHoverMenu: true });
-
-        const user = userEvent.setup();
-        renderRoomListItem();
-
-        const listItem = screen.getByRole("option", { name: `Open room ${room.name}` });
-        expect(screen.queryByRole("button", { name: "More Options" })).toBeNull();
-
-        await user.hover(listItem);
-        await waitFor(() => expect(screen.getByRole("button", { name: "More Options" })).toBeInTheDocument());
-    });
-
-    test("should hover decoration if focused", async () => {
-        const { rerender } = renderRoomListItem({
-            isFocused: true,
-        });
-
-        const listItem = screen.getByRole("option", { name: `Open room ${room.name}` });
-        expect(listItem).toHaveClass("flex mx_RoomListItemView mx_RoomListItemView_hover");
-
-        rerender(
-            <RoomListItemView
-                room={room}
-                isSelected={false}
-                isFocused={false}
-                onFocus={jest.fn()}
-                roomIndex={0}
-                roomCount={1}
-                listIsScrolling={false}
-            />,
-        );
-
-        await waitFor(() => expect(listItem).not.toHaveClass("flex mx_RoomListItemView mx_RoomListItemView_hover"));
     });
 
     test("should be selected if isSelected=true", async () => {
@@ -192,27 +158,5 @@ describe("<RoomListItemView />", () => {
         // Menu should close
         await user.keyboard("{Escape}");
         expect(screen.queryByRole("menu")).toBeNull();
-    });
-
-    test("should not render context menu when list is scrolling", async () => {
-        const user = userEvent.setup();
-
-        mocked(useRoomListItemViewModel).mockReturnValue({
-            ...defaultValue,
-            showContextMenu: true,
-        });
-
-        renderRoomListItem({
-            listIsScrolling: true,
-        });
-
-        const button = screen.getByRole("option", { name: `Open room ${room.name}` });
-        await user.pointer([{ target: button }, { keys: "[MouseRight]", target: button }]);
-
-        // Context menu should not appear when scrolling
-        expect(screen.queryByRole("menu")).toBeNull();
-
-        // But the room item itself should still be rendered
-        expect(button).toBeInTheDocument();
     });
 });

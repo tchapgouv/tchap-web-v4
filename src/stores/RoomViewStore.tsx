@@ -15,7 +15,6 @@ import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import { type ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
 import { type JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
-import { type Optional } from "matrix-events-sdk";
 import EventEmitter from "events";
 import {
     RoomViewLifecycle,
@@ -52,7 +51,11 @@ import { ModuleRunner } from "../modules/ModuleRunner";
 import { setMarkedUnreadState } from "../utils/notifications";
 import { ConnectionState, ElementCall } from "../models/Call";
 import { isVideoRoom } from "../utils/video-rooms";
+<<<<<<< HEAD
 import ExternalAccountHandler from "../tchap/lib/ExternalAccountHandler"; // :TCHAP:
+=======
+import { ModuleApi } from "../modules/Api";
+>>>>>>> v1.12.9
 
 const NUM_JOIN_RETRY = 5;
 
@@ -154,6 +157,7 @@ export class RoomViewStore extends EventEmitter {
     public constructor(
         dis: MatrixDispatcher,
         private readonly stores: SdkContextClass,
+        private readonly lockedToRoomId?: string,
     ) {
         super();
         this.resetDispatcher(dis);
@@ -188,7 +192,7 @@ export class RoomViewStore extends EventEmitter {
 
         const lastRoomId = this.state.roomId;
         this.state = Object.assign(this.state, newState);
-        if (lastRoomId !== this.state.roomId) {
+        if (!this.lockedToRoomId && lastRoomId !== this.state.roomId) {
             if (lastRoomId) this.emitForRoom(lastRoomId, false);
             if (this.state.roomId) this.emitForRoom(this.state.roomId, true);
 
@@ -205,6 +209,9 @@ export class RoomViewStore extends EventEmitter {
     }
 
     private onDispatch(payload: ActionPayload): void {
+        if (this.lockedToRoomId && payload.room_id && this.lockedToRoomId !== payload.room_id) {
+            return;
+        }
         // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // view_room:
@@ -282,17 +289,22 @@ export class RoomViewStore extends EventEmitter {
 
                 break;
             }
-            case "on_client_not_viable":
+            case Action.ClientNotViable:
             case Action.OnLoggedOut:
                 this.reset();
                 break;
             case "reply_to_event":
                 // Thread timeline view handles its own reply-to-state
                 if (TimelineRenderingType.Thread !== payload.context) {
+                    const roomId: string | undefined = payload.event?.getRoomId();
+
                     // If currently viewed room does not match the room in which we wish to reply then change rooms this
                     // can happen when performing a search across all rooms. Persist the data from this event for both
                     // room and search timeline rendering types, search will get auto-closed by RoomView at this time.
-                    if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
+                    if (payload.event && roomId !== this.state.roomId) {
+                        // if the room is displayed in a module, we don't want to change the room view
+                        if (roomId && this.isRoomDisplayedInModule(roomId)) return;
+
                         this.dis?.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
@@ -325,7 +337,7 @@ export class RoomViewStore extends EventEmitter {
         }
     }
 
-    private async viewRoom(payload: ViewRoomPayload): Promise<void> {
+    public async viewRoom(payload: ViewRoomPayload): Promise<void> {
         if (payload.room_id) {
             const room = MatrixClientPeg.safeGet().getRoom(payload.room_id);
 
@@ -352,7 +364,17 @@ export class RoomViewStore extends EventEmitter {
                 });
             }
 
-            if (room && (payload.view_call || isVideoRoom(room))) {
+            let viewingCall = payload.view_call;
+            if (viewingCall === undefined) {
+                // Default behavior: keep the same call state as before if viewing the same room
+                if (payload.room_id === this.state.roomId) viewingCall = this.state.viewingCall;
+                // Always view the call in video rooms
+                else if (room && isVideoRoom(room)) viewingCall = true;
+                // Otherwise, only view if actively connected
+                else viewingCall = CallStore.instance.getActiveCall(payload.room_id) !== null;
+            }
+
+            if (room && viewingCall) {
                 let call = CallStore.instance.getCall(payload.room_id);
                 // Start a call if not already there
                 if (call === null) {
@@ -362,7 +384,9 @@ export class RoomViewStore extends EventEmitter {
                 call.presented = true;
                 // Immediately start the call. This will connect to all required widget events
                 // and allow the widget to show the lobby.
-                if (call.connectionState === ConnectionState.Disconnected) call.start({ skipLobby: payload.skipLobby });
+                if (call.connectionState === ConnectionState.Disconnected) {
+                    call.start({ skipLobby: payload.skipLobby, voiceOnly: payload.voiceOnly });
+                }
             }
             // If we switch to a different room from the call, we are no longer presenting it
             const prevRoomCall = this.state.roomId ? CallStore.instance.getCall(this.state.roomId) : null;
@@ -410,11 +434,7 @@ export class RoomViewStore extends EventEmitter {
                 replyingToEvent: null,
                 viaServers: payload.via_servers ?? [],
                 wasContextSwitch: payload.context_switch ?? false,
-                viewingCall:
-                    payload.view_call ??
-                    (payload.room_id === this.state.roomId
-                        ? this.state.viewingCall
-                        : CallStore.instance.getActiveCall(payload.room_id) !== null),
+                viewingCall,
             };
 
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
@@ -429,13 +449,21 @@ export class RoomViewStore extends EventEmitter {
             this.setState(newState);
 
             if (payload.auto_join) {
-                this.dis?.dispatch<JoinRoomPayload>({
+                const joinPayload: JoinRoomPayload = {
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
                     metricsTrigger: payload.metricsTrigger as JoinRoomPayload["metricsTrigger"],
                     canAskToJoin: SettingsStore.getValue("feature_ask_to_join"),
-                });
+                };
+                // Explicitly pass viaServers in case state doesn't contain the same due to
+                // some race issues.
+                if (payload.via_servers) {
+                    joinPayload.opts = {
+                        viaServers: payload.via_servers,
+                    };
+                }
+                this.dis?.dispatch<JoinRoomPayload>(joinPayload);
             }
 
             if (room) {
@@ -660,16 +688,16 @@ export class RoomViewStore extends EventEmitter {
     }
 
     // The room ID of the room currently being viewed
-    public getRoomId(): Optional<string> {
+    public getRoomId(): string | null {
         return this.state.roomId;
     }
 
-    public getThreadId(): Optional<string> {
+    public getThreadId(): string | null {
         return this.state.threadId;
     }
 
     // The event to scroll to when the room is first viewed
-    public getInitialEventId(): Optional<string> {
+    public getInitialEventId(): string | null {
         return this.state.initialEventId;
     }
 
@@ -684,7 +712,7 @@ export class RoomViewStore extends EventEmitter {
     }
 
     // The room alias of the room (or null if not originally specified in view_room)
-    public getRoomAlias(): Optional<string> {
+    public getRoomAlias(): string | null {
         return this.state.roomAlias;
     }
 
@@ -694,7 +722,7 @@ export class RoomViewStore extends EventEmitter {
     }
 
     // Any error that has occurred during loading
-    public getRoomLoadError(): Optional<MatrixError> {
+    public getRoomLoadError(): MatrixError | null {
         return this.state.roomLoadError;
     }
 
@@ -726,7 +754,7 @@ export class RoomViewStore extends EventEmitter {
     }
 
     // Any error that has occurred during joining
-    public getJoinError(): Optional<Error> {
+    public getJoinError(): Error | null {
         return this.state.joinError;
     }
 
@@ -809,5 +837,17 @@ export class RoomViewStore extends EventEmitter {
         const viewRoomOpts: ViewRoomOpts = { buttons: [] };
         ModuleRunner.instance.invoke(RoomViewLifecycle.ViewRoom, viewRoomOpts, this.getRoomId());
         this.setState({ viewRoomOpts });
+    }
+
+    /**
+     * Checks if a room is already displayed in the current active space module.
+     * @param roomId
+     */
+    public isRoomDisplayedInModule(roomId: string): boolean {
+        const currentSpace = this.stores.spaceStore.activeSpace;
+        const cb = ModuleApi.instance.extras.visibleRoomBySpaceKey.get(currentSpace);
+        if (!cb) return false;
+
+        return cb().includes(roomId);
     }
 }

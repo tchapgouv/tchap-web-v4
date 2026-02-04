@@ -22,16 +22,14 @@
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 import React from "react";
-import { type TranslationKey as _TranslationKey, KEY_SEPARATOR } from "matrix-web-i18n";
+import { KEY_SEPARATOR } from "matrix-web-i18n";
 import counterpart from "counterpart";
-
-import type Translations from "../../../../src/i18n/strings/en_EN.json";
-
-// @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
-import webpackLangJsonUrl from "$webapp/i18n/languages.json";
 
 export { KEY_SEPARATOR, normalizeLanguageKey, getNormalizedLanguageKeys } from "matrix-web-i18n";
 
+// Path where we load language files from (the index plus translations for each language)
+// The filename is appended to this, so a relative path here will result in a fetch for
+// a relative URL.
 const i18nFolder = "i18n/";
 
 // Control whether to also return original, untranslated strings
@@ -45,16 +43,23 @@ counterpart.setSeparator(KEY_SEPARATOR);
 const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
-/**
- * A type representing the union of possible keys into the translation file using `|` delimiter to access nested fields.
- * @example `common|error` to access `error` within the `common` sub-object.
- * {
- *     "common": {
- *         "error": "Error"
- *     }
- * }
- */
-export type TranslationKey = _TranslationKey<typeof Translations>;
+// export wrappers around these functions because if we used counterpart directly from
+// element-web, it operates on a different instance of counterpart
+export function registerTranslations(locale: string, data: object): void {
+    counterpart.registerTranslations(locale, data);
+}
+
+export function setMissingEntryGenerator(callback: (value: string) => void): void {
+    counterpart.setMissingEntryGenerator(callback);
+}
+
+export function getLocale(): string {
+    return counterpart.getLocale();
+}
+
+export function setLocale(value: string): string {
+    return counterpart.setLocale(value);
+}
 
 // Function which only purpose is to mark that a string is translatable
 // Does not actually do anything. It's helpful for automatic extraction of translatable strings
@@ -414,13 +419,7 @@ async function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
 }
 
 export async function getLangsJson(): Promise<Languages> {
-    let url: string;
-    if (typeof webpackLangJsonUrl === "string") {
-        // in Jest this 'url' isn't a URL, so just fall through
-        url = webpackLangJsonUrl;
-    } else {
-        url = i18nFolder + "languages.json";
-    }
+    const url = i18nFolder + "languages.json";
 
     const res = await fetch(url, { method: "GET" });
 

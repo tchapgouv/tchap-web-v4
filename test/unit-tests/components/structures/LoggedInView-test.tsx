@@ -17,6 +17,8 @@ import {
     PushRuleKind,
     ProfileKeyTimezone,
     ProfileKeyMSC4175Timezone,
+    SyncState,
+    MatrixError,
 } from "matrix-js-sdk/src/matrix";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -35,6 +37,7 @@ import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import { Action } from "../../../../src/dispatcher/actions";
 import Modal from "../../../../src/Modal";
 import { SETTINGS } from "../../../../src/settings/Settings";
+import ToastStore from "../../../../src/stores/ToastStore";
 
 // Create a mock resizer instance that can be shared across tests
 const mockResizerInstance = {
@@ -505,6 +508,29 @@ describe("<LoggedInView />", () => {
         });
     });
 
+    describe("resource limit exceeded errors", () => {
+        it("pops a toast when M_RESOURCE_LIMIT_EXCEEDED is seen down sync", async () => {
+            const addOrReplaceToast = jest.spyOn(ToastStore.sharedInstance(), "addOrReplaceToast");
+            const dismissToast = jest.spyOn(ToastStore.sharedInstance(), "dismissToast");
+            getComponent();
+            mockClient.emit(ClientEvent.Sync, SyncState.Error, null, {
+                error: new MatrixError({
+                    errcode: "M_RESOURCE_LIMIT_EXCEEDED",
+                    limit_type: "hs_disabled",
+                    admin_contact: "admin@example.org",
+                }),
+            });
+            expect(addOrReplaceToast).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    key: "serverlimit",
+                    title: "Warning",
+                }),
+            );
+            mockClient.emit(ClientEvent.Sync, SyncState.Prepared, null, undefined);
+            expect(dismissToast).toHaveBeenCalledWith("serverlimit");
+        });
+    });
+
     describe("resizer preferences", () => {
         let mockResize: jest.Mock;
         let mockForHandleWithId: jest.Mock;
@@ -582,6 +608,36 @@ describe("<LoggedInView />", () => {
 
             // Verify localStorage was set to the minimum width (224), not 0
             expect(window.localStorage.getItem("mx_lhs_size")).toBe("224");
+        });
+    });
+
+    describe("create a new resizer when page_type changes", () => {
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it("should call loadResizer when page_type changes", () => {
+            const component = getComponent({ page_type: "room" });
+
+            // Re-render with different page_type
+            component.rerender(<LoggedInView {...defaultProps} page_type="home" />);
+
+            // Verify that detach was called (from loadResizer)
+            expect(mockResizerInstance.detach).toHaveBeenCalledTimes(1);
+            // Verify that attach was called (from loadResizer)
+            // 1 (when page_type = "room") + 1 (when page_type = "home")
+            expect(mockResizerInstance.attach).toHaveBeenCalledTimes(2);
+        });
+
+        it("should not call loadResizer when page_type remains the same", () => {
+            const component = getComponent({ page_type: "room" });
+
+            // Re-render with same page_type but different other props
+            component.rerender(<LoggedInView {...defaultProps} page_type="room" currentRoomId="!different:room.id" />);
+
+            // Verify that resizer methods were not called
+            expect(mockResizerInstance.detach).not.toHaveBeenCalled();
+            expect(mockResizerInstance.attach).toHaveBeenCalledTimes(1);
         });
     });
 });

@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 import React, { useCallback, useEffect } from "react";
 import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { LinkIcon, OverflowHorizontalIcon, VisibilityOnIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { type ButtonEvent } from "../elements/AccessibleButton";
 import dis from "../../../dispatcher/dispatcher";
@@ -88,7 +89,9 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
                 isExpanded={menuDisplayed}
                 ref={button}
                 data-testid="threadlist-dropdown-button"
-            />
+            >
+                <OverflowHorizontalIcon />
+            </ContextMenuTooltipButton>
             {menuDisplayed && (
                 <IconizedContextMenu
                     onFinished={closeThreadOptions}
@@ -102,7 +105,7 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
                             <IconizedContextMenuOption
                                 onClick={(e) => viewInRoom(e)}
                                 label={_t("timeline|mab|view_in_room")}
-                                iconClassName="mx_ThreadPanel_viewInRoom"
+                                icon={<VisibilityOnIcon />}
                             />
                         )}
                         {permalinkCreator && (
@@ -110,7 +113,7 @@ const ThreadListContextMenu: React.FC<ThreadListContextMenuProps> = ({
                                 data-testid="copy-thread-link"
                                 onClick={(e) => copyLinkToThread(e)}
                                 label={_t("timeline|mab|copy_link_thread")}
-                                iconClassName="mx_ThreadPanel_copyLinkToThread"
+                                icon={<LinkIcon />}
                             />
                         )}
                     </IconizedContextMenuOptionList>

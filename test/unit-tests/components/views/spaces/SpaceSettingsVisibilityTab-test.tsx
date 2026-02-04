@@ -17,6 +17,7 @@ import {
     GuestAccess,
     HistoryVisibility,
     JoinRule,
+    Visibility,
 } from "matrix-js-sdk/src/matrix";
 
 import _SpaceSettingsVisibilityTab from "../../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
@@ -35,6 +36,7 @@ jest.useFakeTimers();
 
 describe("<SpaceSettingsVisibilityTab />", () => {
     const mockMatrixClient = createTestClient() as MatrixClient;
+    mocked(mockMatrixClient.isVersionSupported).mockImplementation(async (v) => v === "v1.4");
 
     const makeJoinEvent = (rule: JoinRule = JoinRule.Invite) =>
         mkEvent({
@@ -72,6 +74,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
     ): Room => {
         const events = [makeJoinEvent(joinRule), makeGuestAccessEvent(guestRule), makeHistoryEvent(historyRule)];
         const space = mkSpace(client, mockSpaceId);
+        mocked(client.getRoom).mockImplementation((roomId) => (roomId === mockSpaceId ? space : null));
         const getStateEvents = mockStateEventImplementation(events);
         mocked(space.currentState).getStateEvents.mockImplementation(getStateEvents);
         mocked(space.currentState).mayClientSendStateEvent.mockReturnValue(false);
@@ -132,6 +135,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
         const joinRule = JoinRule.Public;
         const guestRule = GuestAccess.CanJoin;
         const historyRule = HistoryVisibility.Joined;
+        mocked(mockMatrixClient.getRoomDirectoryVisibility).mockResolvedValue({ visibility: Visibility.Public });
 
         describe("Access", () => {
             it("renders guest access section toggle", async () => {
@@ -150,7 +154,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 await toggleGuestAccessSection(component);
                 const guestAccessInput = getGuestAccessToggle(component);
 
-                expect(guestAccessInput?.getAttribute("aria-checked")).toEqual("true");
+                expect(guestAccessInput).toBeChecked();
 
                 fireEvent.click(guestAccessInput!);
                 expect(mockMatrixClient.sendStateEvent).toHaveBeenCalledWith(
@@ -162,7 +166,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 );
 
                 // toggled off
-                expect(guestAccessInput?.getAttribute("aria-checked")).toEqual("false");
+                expect(guestAccessInput).not.toBeChecked();
             });
 
             it("renders error message when update fails", async () => {
@@ -184,7 +188,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
 
                 await toggleGuestAccessSection(component);
 
-                expect(getGuestAccessToggle(component)?.getAttribute("aria-disabled")).toEqual("true");
+                expect(getGuestAccessToggle(component)).toBeDisabled();
             });
         });
 
@@ -194,7 +198,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 const component = getComponent({ space });
 
                 // toggle off because space settings is != WorldReadable
-                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-checked")).toEqual("false");
+                expect(getHistoryVisibilityToggle(component)).not.toBeChecked();
             });
 
             it("updates history visibility on toggle", () => {
@@ -202,7 +206,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 const component = getComponent({ space });
 
                 // toggle off because space settings is != WorldReadable
-                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-checked")).toEqual("false");
+                expect(getHistoryVisibilityToggle(component)).not.toBeChecked();
 
                 fireEvent.click(getHistoryVisibilityToggle(component)!);
                 expect(mockMatrixClient.sendStateEvent).toHaveBeenCalledWith(
@@ -212,7 +216,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                     "",
                 );
 
-                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-checked")).toEqual("true");
+                expect(getHistoryVisibilityToggle(component)).toBeChecked();
             });
 
             it("renders error message when history update fails", async () => {
@@ -231,16 +235,20 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 const space = makeMockSpace(mockMatrixClient, joinRule, guestRule, historyRule);
                 (space.currentState.maySendStateEvent as jest.Mock).mockReturnValue(false);
                 const component = getComponent({ space });
-                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-disabled")).toEqual("true");
+                expect(getHistoryVisibilityToggle(component)).toBeDisabled();
             });
         });
 
-        it("renders addresses section", () => {
+        it("renders addresses section with publish toggle", async () => {
             const space = makeMockSpace(mockMatrixClient, joinRule, guestRule);
-            const { getByTestId } = getComponent({ space });
+            const { findByLabelText, getByTestId, asFragment } = getComponent({ space });
 
             expect(getByTestId("published-address-fieldset")).toBeTruthy();
             expect(getByTestId("local-address-fieldset")).toBeTruthy();
+            await expect(
+                findByLabelText("Publish this room to the public in matrix.org's room directory?"),
+            ).resolves.toBeInTheDocument();
+            expect(asFragment()).toMatchSnapshot();
         });
     });
 });

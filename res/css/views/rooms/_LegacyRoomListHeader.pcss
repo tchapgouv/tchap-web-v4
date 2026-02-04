@@ -31,26 +31,17 @@ Please see LICENSE files in the repository root for full details.
             background-color: $quinary-content;
         }
 
-        &::before {
-            content: "";
+        svg {
             width: 20px;
             height: 20px;
             top: 3px;
             right: 0;
             position: absolute;
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background-color: $tertiary-content;
-            mask-image: url("@vector-im/compound-design-tokens/icons/chevron-down.svg");
+            color: $tertiary-content;
         }
 
         &[aria-expanded="true"] {
             background-color: $quinary-content;
-
-            &::before {
-                transform: rotate(180deg);
-            }
         }
     }
 
@@ -66,43 +57,19 @@ Please see LICENSE files in the repository root for full details.
         box-sizing: border-box;
         flex-shrink: 0;
 
-        &::before {
-            content: "";
+        svg {
             width: 16px;
             height: 16px;
             position: absolute;
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background-color: $secondary-content;
-            mask-image: url("@vector-im/compound-design-tokens/icons/plus.svg");
+            color: $secondary-content;
         }
 
         &:hover {
             background-color: $tertiary-content;
 
-            &::before {
-                background-color: $background;
+            svg {
+                color: $background;
             }
         }
     }
-}
-
-.mx_LegacyRoomListHeader_iconInvite::before {
-    mask-image: url("$(res)/img/element-icons/room/invite.svg");
-}
-.mx_LegacyRoomListHeader_iconStartChat::before {
-    mask-image: url("@vector-im/compound-design-tokens/icons/user-add-solid.svg");
-}
-.mx_LegacyRoomListHeader_iconNewRoom::before {
-    mask-image: url("$(res)/img/element-icons/roomlist/hash-plus.svg");
-}
-.mx_LegacyRoomListHeader_iconNewVideoRoom::before {
-    mask-image: url("$(res)/img/element-icons/roomlist/hash-video.svg");
-}
-.mx_LegacyRoomListHeader_iconExplore::before {
-    mask-image: url("$(res)/img/element-icons/roomlist/hash-search.svg");
-}
-.mx_LegacyRoomListHeader_iconPlus::before {
-    mask-image: url("@vector-im/compound-design-tokens/icons/plus.svg");
 }
