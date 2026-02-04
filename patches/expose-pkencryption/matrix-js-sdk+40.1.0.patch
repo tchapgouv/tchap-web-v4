@@ -1,5 +1,5 @@
 diff --git a/node_modules/matrix-js-sdk/src/crypto-api/index.ts b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
-index ff55c43..5a0979f 100644
+index b4c4147..5581448 100644
 --- a/node_modules/matrix-js-sdk/src/crypto-api/index.ts
 +++ b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
 @@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
@@ -11,7 +11,7 @@ index ff55c43..5a0979f 100644
  import type { IMegolmSessionData } from "../@types/crypto.ts";
  import type { ToDeviceBatch, ToDevicePayload } from "../models/ToDeviceMessage.ts";
  import { type Room } from "../models/room.ts";
-@@ -726,6 +726,14 @@ export interface CryptoApi {
+@@ -731,6 +731,14 @@ export interface CryptoApi {
       * @experimental
       */
      shareRoomHistoryWithUser(roomId: string, userId: string): Promise<void>;
@@ -27,10 +27,10 @@ index ff55c43..5a0979f 100644
  
  /** A reason code for a failure to decrypt an event. */
 diff --git a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
-index 638bf37..9f2e1b5 100644
+index e7d13b2..1c5c268 100644
 --- a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
 +++ b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
-@@ -2111,6 +2111,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
+@@ -2182,6 +2182,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
      public async getOwnIdentity(): Promise<RustSdkCryptoJs.OwnUserIdentity | undefined> {
          return await this.olmMachine.getIdentity(new RustSdkCryptoJs.UserId(this.userId));
      }
