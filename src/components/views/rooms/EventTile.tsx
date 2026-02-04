@@ -83,13 +83,9 @@ import { getLateEventInfo } from "../../structures/grouper/LateEventGrouper";
 import PinningUtils from "../../../utils/PinningUtils";
 import { PinnedMessageBadge } from "../messages/PinnedMessageBadge";
 import { EventPreview } from "./EventPreview";
-<<<<<<< HEAD
-import { ElementCallEventType, ElementCallMemberEventType } from "../../../call-types";
-=======
 import { ElementCallEventType } from "../../../call-types";
 import { E2eMessageSharedIcon } from "./EventTile/E2eMessageSharedIcon.tsx";
 import { E2ePadlock, E2ePadlockIcon } from "./EventTile/E2ePadlock.tsx";
->>>>>>> v1.12.9
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -1061,8 +1057,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         } else if (
             (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File) ||
             eventType === EventType.CallInvite ||
-            // ElementCallEventType.matches(eventType) :TCHAP: deprecated-call-event-permissions
-            ElementCallMemberEventType.matches(eventType)
+            ElementCallEventType.matches(eventType)
         ) {
             // no avatar or sender profile for continuation messages and call tiles
             avatarSize = null;

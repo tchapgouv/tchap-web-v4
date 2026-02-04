@@ -52,11 +52,8 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { type ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 import { SDKContext } from "../../contexts/SDKContext";
 import { shouldShowFeedback } from "../../utils/Feedback";
-<<<<<<< HEAD
-import DarkLightModeSvg from "../../../res/img/element-icons/roomlist/dark-light-mode.svg";
+
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
-=======
->>>>>>> v1.12.9
 
 interface IProps {
     isPanelCollapsed: boolean;
@@ -360,7 +357,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
                 /> */}
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconKey"
+                    className="mx_UserMenu_iconKey"
                     label={_t("settings|encryption|title")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Encryption)}
                 />
@@ -373,7 +370,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 {feedbackButton}
                 {/* :TCHAP: */}
                 <IconizedContextMenuOption
-                    iconClassName="mx_UserMenu_iconInfo"
+                    className="mx_UserMenu_iconInfo"
                     label={_t("common|help")}
                     onClick={this.onOpenFAQPage}
                 />

@@ -17,13 +17,8 @@ import { shouldPolyfill as shouldPolyFillIntlSegmenter } from "@formatjs/intl-se
 import { parseQsFromFragment } from "./url_utils";
 import "./modernizr";
 
-<<<<<<< HEAD
-// Make setImmediate available in bundle
-import "setimmediate";
-=======
 // Import shared components CSS
 import "@element-hq/web-shared-components/dist/element-web-shared-components.css";
->>>>>>> v1.12.9
 
 // Require common CSS here; this will make webpack process it into bundle.css.
 // Our own CSS (which is themed) is imported via separate webpack entry points

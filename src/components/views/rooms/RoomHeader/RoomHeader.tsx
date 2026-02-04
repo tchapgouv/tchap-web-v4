@@ -7,13 +7,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-<<<<<<< HEAD
-import React, { type JSX, useCallback, useMemo, useState } from "react";
-import { Body as BodyText, Button, IconButton, Tooltip } from "@vector-im/compound-web";
-=======
 import React, { type JSX, useCallback, useState } from "react";
 import { Text, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
->>>>>>> v1.12.9
 import VideoCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/video-call-solid";
 import VoiceCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/voice-call-solid";
 import CloseCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/close";
@@ -30,13 +25,7 @@ import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStore
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext.tsx";
 import { useRoomMemberCount, useRoomMembers } from "../../../../hooks/useRoomMembers.ts";
 import { _t } from "../../../../languageHandler.tsx";
-<<<<<<< HEAD
-import { Flex } from "../../../../../packages/shared-components/src/utils/Flex";
-import { Box } from "../../../../../packages/shared-components/src/utils/Box";
 import { useRoomCall } from "../../../../hooks/room/useRoomCall.tsx";
-=======
-import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/useRoomCall.tsx";
->>>>>>> v1.12.9
 import { useRoomThreadNotifications } from "../../../../hooks/room/useRoomThreadNotifications.ts";
 import { useGlobalNotificationState } from "../../../../hooks/useGlobalNotificationState.ts";
 import { useFeatureEnabled } from "../../../../hooks/useSettings.ts";
@@ -61,8 +50,7 @@ import { RoomSettingsTab } from "../../dialogs/RoomSettingsDialog.tsx";
 import { useScopedRoomContext } from "../../../../contexts/ScopedRoomContext.tsx";
 import { ToggleableIcon } from "./toggle/ToggleableIcon.tsx";
 import { CurrentRightPanelPhaseContextProvider } from "../../../../contexts/CurrentRightPanelPhaseContext.tsx";
-<<<<<<< HEAD
-import { type LocalRoom } from "../../../../models/LocalRoom.ts";
+import { LocalRoom } from "../../../../models/LocalRoom.ts";
 import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
@@ -73,9 +61,6 @@ import WithTchapIndicator from "~tchap-web/src/tchap/components/views/avatars/Wi
 import Modal from "~tchap-web/src/Modal.tsx";
 
 
-=======
-import { LocalRoom } from "../../../../models/LocalRoom.ts";
->>>>>>> v1.12.9
 
 function RoomHeaderButtons({
     room,
@@ -108,7 +93,6 @@ function RoomHeaderButtons({
 
     const notificationsEnabled = useFeatureEnabled("feature_notifications");
 
-<<<<<<< HEAD
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
 
     // :TCHAP: group-call-modal-confirmation
@@ -116,8 +100,6 @@ function RoomHeaderButtons({
     //      (ev: React.MouseEvent) => videoCallClick(ev, callOptions[0]),
     //      [callOptions, videoCallClick],
     // );
-=======
->>>>>>> v1.12.9
     const videoClick = useCallback(
         async (ev: React.MouseEvent, isJoin: boolean = false) => {
             // directly start call if join click or is a DM video call
@@ -166,16 +148,10 @@ function RoomHeaderButtons({
         >
             <Button
                 size="sm"
-<<<<<<< HEAD
                 // :TCHAP: add distinction between join click and start click
                 // onClick={videoClick}
                 onClick={(ev: React.MouseEvent) => videoClick(ev, true)}
-                Icon={VideoCallIcon}
-=======
-                onClick={videoClick}
-                // If we know this is a voice session, show the voice call. All other kinds of call are video calls.
                 Icon={activeCallSessionType === CallType.Voice ? VoiceCallIcon : VideoCallIcon}
->>>>>>> v1.12.9
                 className="mx_RoomHeader_join_button"
                 disabled={!!videoCallDisabledReason}
                 color="primary"
@@ -271,80 +247,16 @@ function RoomHeaderButtons({
         // </>
 
         <>
-<<<<<<< HEAD
             <IconButton
                 disabled={!!videoCallDisabledReason}
                 aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
                 onClick={videoClick}
             >
-                {callIconWithTooltip}
+                {videoCallIconWithTooltip}
             </IconButton>
-=======
-            {/* Can be either a menu or just a button depending on the number of call options.*/}
-            {callOptions.length > 1 ? (
-                <Menu
-                    open={videoMenuOpen}
-                    onOpenChange={onVideoOpenChange}
-                    title={_t("voip|video_call_using")}
-                    trigger={
-                        <IconButton
-                            disabled={!!videoCallDisabledReason}
-                            aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-                        >
-                            {videoCallIconWithTooltip}
-                        </IconButton>
-                    }
-                    side="left"
-                    align="start"
-                >
-                    {callOptions.map((option) => {
-                        const { label, children } = getPlatformCallTypeProps(option);
-                        return (
-                            <MenuItem
-                                key={option}
-                                label={label}
-                                aria-label={label}
-                                children={children}
-                                className="mx_RoomHeader_videoCallOption"
-                                onClick={(ev) => {
-                                    setVideoMenuOpen(false);
-                                    videoCallClick(ev, option);
-                                }}
-                                Icon={VideoCallIcon}
-                                onSelect={() => {} /* Dummy handler since we want the click event.*/}
-                            />
-                        );
-                    })}
-                </Menu>
-            ) : (
-                <IconButton
-                    disabled={!!videoCallDisabledReason}
-                    aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-                    onClick={videoClick}
-                >
-                    {videoCallIconWithTooltip}
-                </IconButton>
-            )}
->>>>>>> v1.12.9
         </>
         // end :TCHAP:
     );
-<<<<<<< HEAD
-    
-    let voiceCallButton: JSX.Element | undefined = (
-        <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
-            <IconButton
-                // We need both: isViewingCall and isConnectedToCall
-                //  - in the Lobby we are viewing a call but are not connected to it.
-                //  - in pip view we are connected to the call but not viewing it.
-                disabled={!!voiceCallDisabledReason || isViewingCall || isConnectedToCall}
-                aria-label={voiceCallDisabledReason ?? _t("voip|voice_call")}
-                onClick={(ev) => voiceCallClick(ev, callOptions[0])}
-            >
-                <VoiceCallIcon />
-            </IconButton>
-        </Tooltip>
-=======
     const startVoiceCallButton = (
         <>
             {/* Can be either a menu or just a button depending on the number of call options.*/}
@@ -393,7 +305,6 @@ function RoomHeaderButtons({
                 </IconButton>
             )}
         </>
->>>>>>> v1.12.9
     );
 
     const closeLobbyButton = (
@@ -453,12 +364,29 @@ function RoomHeaderButtons({
                 joinCallButton
             ) : (
                 <>
+                    { /* :TCHAP: customize-room-header-bar - activate video call only if directmessage and if feature is activated on homeserver }
                     {!isVideoRoom && videoCallButton}
-                    {!isVideoRoom && voiceCallButton}
+                    */ }
+                    {!isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_group_call") &&
+                        TchapRoomUtils.getTchapRoomType(room) !== TchapRoomType.Forum &&
+                        !isVideoRoom && videoCallButton}
+
+                    {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
+                        !isVideoRoom && videoCallButton}
+                    {/* end :TCHAP: */}
+
+                    { /* :TCHAP: customize-room-header-bar - activate audio call only if directmessage and if feature is activated on homeserver
+                    {!isVideoRoom(room) && voiceCallButton}
+                    */ }
+                    {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&
+                        !isVideoRoom && voiceCallButton}
+                    {/* end :TCHAP: */}
                 </>
             )}
 
             {showChatButton && <VideoRoomChatButton room={room} />}
+            
+            {/* :TCHAP: extend-remove-thread-buttons <Tooltip label={_t("common|threads")}>
 
             <Tooltip label={_t("common|threads")}>
                 <IconButton
@@ -472,7 +400,25 @@ function RoomHeaderButtons({
                 >
                     <ToggleableIcon Icon={ThreadsIcon} phase={RightPanelPhases.ThreadPanel} />
                 </IconButton>
-            </Tooltip>
+            </Tooltip> */}
+            {
+                TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ?
+                    <Tooltip label={_t("common|threads")} data-testid="room-header-thread-button">
+                        <IconButton
+                            indicator={notificationLevelToIndicator(threadNotifications)}
+                            onClick={(evt) => {
+                                evt.stopPropagation();
+                                RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
+                                PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
+                            }}
+                            aria-label={_t("common|threads")}
+                        >
+                            <ThreadsIcon />
+                        </IconButton>
+                    </Tooltip>
+                : null
+            }
+            {/* end :TCHAP: */}
             {notificationsEnabled && (
                 <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
                     <IconButton
@@ -550,7 +496,6 @@ export default function RoomHeader({
         <>
             <CurrentRightPanelPhaseContextProvider roomId={room.roomId}>
                 <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-<<<<<<< HEAD
                     {/* :TCHAP: customize-room-header-bar - add room type decoration */}
                      {/* <WithPresenceIndicator room={room} size="8px"> */}
                      <WithTchapIndicator room={room} size="8px" tooltipProps={{ tabIndex: -1 }}>
@@ -560,7 +505,7 @@ export default function RoomHeader({
                                 room={room}
                                 size="40px"
                                 oobData={oobData}
-                                onClick={onAvatarClick}
+                                onClick={room instanceof LocalRoom ? undefined : onAvatarClick}
                                 tabIndex={-1}
                                 aria-label={_t("room|header_avatar_open_settings_label")}
                             />
@@ -571,21 +516,6 @@ export default function RoomHeader({
                     {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
                     <TchapExternalRoomHeader room={room} />
                     {/* :tchap: end */}
-=======
-                    <WithPresenceIndicator room={room} size="8px">
-                        {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y */}
-                        {/* Disable on-click actions until the room is created */}
-                        <RoomAvatar
-                            room={room}
-                            size="40px"
-                            oobData={oobData}
-                            onClick={room instanceof LocalRoom ? undefined : onAvatarClick}
-                            tabIndex={-1}
-                            aria-label={_t("room|header_avatar_open_settings_label")}
-                        />
-                    </WithPresenceIndicator>
-                    {/* Disable on-click actions until the room is created */}
->>>>>>> v1.12.9
                     <button
                         aria-label={_t("right_panel|room_summary_card|title")}
                         tabIndex={0}
@@ -646,144 +576,13 @@ export default function RoomHeader({
                                         />
                                     </Tooltip>
                                 )}
-<<<<<<< HEAD
                                 */}
-                            </BodyText>
-                        </Box>
-                    </button>
-
-                    {additionalButtons?.map((props) => {
-                        const label = props.label();
-
-                        return (
-                            <Tooltip label={label} key={props.id}>
-                                <IconButton
-                                    aria-label={label}
-                                    onClick={(event) => {
-                                        event.stopPropagation();
-                                        props.onClick();
-                                    }}
-                                >
-                                    {typeof props.icon === "function" ? props.icon() : props.icon}
-                                </IconButton>
-                            </Tooltip>
-                        );
-                    })}
-
-                    {isViewingCall && <CallGuestLinkButton room={room} />}
-
-                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
-                        joinCallButton
-                    ) : (
-                        <>
-                            { /* :TCHAP: customize-room-header-bar - activate video call only if directmessage and if feature is activated on homeserver }
-                            {!isVideoRoom && videoCallButton}
-                            */ }
-                            {!isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_group_call") &&
-                               TchapRoomUtils.getTchapRoomType(room) !== TchapRoomType.Forum &&
-                              !isVideoRoom && videoCallButton}
-
-                            {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
-                              !isVideoRoom && videoCallButton}
-                            {/* end :TCHAP: */}
-
-                            { /* :TCHAP: customize-room-header-bar - activate audio call only if directmessage and if feature is activated on homeserver
-                            {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
-                            */ }
-                            {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&
-                              !useElementCallExclusively && !isVideoRoom && voiceCallButton}
-                            {/* end :TCHAP: */}
-                        </>
-                    )}
-
-                    {showChatButton && <VideoRoomChatButton room={room} />}
-
-                    {/* :TCHAP: extend-remove-thread-buttons <Tooltip label={_t("common|threads")}>
-
-                    <Tooltip label={_t("common|threads")}>
-                        <IconButton
-                            indicator={notificationLevelToIndicator(threadNotifications)}
-                            onClick={(evt) => {
-                                evt.stopPropagation();
-                                RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
-                                PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
-                            }}
-                            aria-label={_t("common|threads")}
-                        >
-                            <ToggleableIcon Icon={ThreadsIcon} phase={RightPanelPhases.ThreadPanel} />
-                        </IconButton>
-                    </Tooltip> */}
-                    {
-                        TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ?
-                            <Tooltip label={_t("common|threads")} data-testid="room-header-thread-button">
-                                <IconButton
-                                    indicator={notificationLevelToIndicator(threadNotifications)}
-                                    onClick={(evt) => {
-                                        evt.stopPropagation();
-                                        RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
-                                        PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
-                                    }}
-                                    aria-label={_t("common|threads")}
-                                >
-                                    <ThreadsIcon />
-                                </IconButton>
-                            </Tooltip>
-                        : null
-                    }
-                    {/* end :TCHAP: */}
-                    {notificationsEnabled && (
-                        <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
-                            <IconButton
-                                indicator={notificationLevelToIndicator(globalNotificationState.level)}
-                                onClick={(evt) => {
-                                    evt.stopPropagation();
-                                    RightPanelStore.instance.showOrHidePhase(RightPanelPhases.NotificationPanel);
-                                }}
-                                aria-label={_t("notifications|enable_prompt_toast_title")}
-                            >
-                                <ToggleableIcon Icon={NotificationsIcon} phase={RightPanelPhases.NotificationPanel} />
-                            </IconButton>
-                        </Tooltip>
-                    )}
-
-                    <Tooltip label={_t("right_panel|room_summary_card|title")}>
-                        <IconButton
-                            onClick={(evt) => {
-                                evt.stopPropagation();
-                                RightPanelStore.instance.showOrHidePhase(RightPanelPhases.RoomSummary);
-                            }}
-                            aria-label={_t("right_panel|room_summary_card|title")}
-                        >
-                            <ToggleableIcon Icon={RoomInfoIcon} phase={RightPanelPhases.RoomSummary} />
-                        </IconButton>
-                    </Tooltip>
-
-                    {!isDirectMessage && (
-                        <BodyText as="div" size="sm" weight="medium">
-                            <FacePile
-                                className="mx_RoomHeader_members"
-                                members={members.slice(0, 3)}
-                                size="20px"
-                                overflow={false}
-                                viewUserOnClick={false}
-                                tooltipLabel={_t("room|header_face_pile_tooltip")}
-                                onClick={(e: ButtonEvent) => {
-                                    RightPanelStore.instance.showOrHidePhase(RightPanelPhases.MemberList);
-                                    e.stopPropagation();
-                                }}
-                                aria-label={_t("common|n_members", { count: memberCount })}
-                            >
-                                {formatCount(memberCount)}
-                            </FacePile>
-                        </BodyText>
-=======
                             </Text>
                         </Box>
                     </button>
                     {/* If the room is local-only then we don't want to show any additional buttons, as it won't work */}
                     {room instanceof LocalRoom === false && (
                         <RoomHeaderButtons room={room} additionalButtons={additionalButtons} />
->>>>>>> v1.12.9
                     )}
                 </Flex>
                 {askToJoinEnabled && <RoomKnocksBar room={room} />}

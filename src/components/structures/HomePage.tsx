@@ -137,7 +137,6 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
             <div className="mx_HomePage_default_wrapper">
                 {introSection}
                 <div className="mx_HomePage_default_buttons">
-<<<<<<< HEAD
                     {/*:TCHAP: <AccessibleButton onClick={onClickSendDm} className="mx_HomePage_button_sendDm"> */}
                     <AccessibleButton onClick={onClickFAQ} className="mx_HomePage_button_sendDm">
                         {_tDom("onboarding|send_dm")}
@@ -148,18 +147,6 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
                     </AccessibleButton>
                     {/* :TCHAP: <AccessibleButton onClick={onClickNewRoom} className="mx_HomePage_button_createGroup"> */}
                     <AccessibleButton onClick={onClickDownloadApps} className="mx_HomePage_button_createGroup">
-=======
-                    <AccessibleButton onClick={onClickSendDm} className="mx_HomePage_button_sendDm">
-                        <ChatSolidIcon />
-                        {_tDom("onboarding|send_dm")}
-                    </AccessibleButton>
-                    <AccessibleButton onClick={onClickExplore} className="mx_HomePage_button_explore">
-                        <ExploreIcon />
-                        {_tDom("onboarding|explore_rooms")}
-                    </AccessibleButton>
-                    <AccessibleButton onClick={onClickNewRoom} className="mx_HomePage_button_createGroup">
-                        <GroupIcon />
->>>>>>> v1.12.9
                         {_tDom("onboarding|create_room")}
                     </AccessibleButton>
                 </div>

@@ -12,15 +12,12 @@ import { Glass  } from "@vector-im/compound-web";
 import { _t } from "../../../languageHandler";
 import { Phase, SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";
 import SetupEncryptionBody from "./SetupEncryptionBody";
+import AccessibleButton from "../../views/elements/AccessibleButton";
 import CompleteSecurityBody from "../../views/auth/CompleteSecurityBody";
 import AuthPage from "../../views/auth/AuthPage";
 import SdkConfig from "../../../SdkConfig";
-<<<<<<< HEAD
-import AccessibleButton from "../../views/elements/AccessibleButton";
-=======
 import E2EIcon from "../../views/rooms/E2EIcon.tsx";
 import { E2EStatus } from "../../../utils/ShieldUtils.ts";
->>>>>>> v1.12.9
 
 interface IProps {
     onFinished: () => void;

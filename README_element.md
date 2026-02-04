@@ -27,7 +27,7 @@ Element has several tiers of support for different environments:
 - Best effort
     - Definition:
         - Issues **accepted**, regressions **do not block** the release
-        - The wider Element Products(including Element Call and the Enterprise Server Suite) do still not officially support these browsers.
+        - The wider Element Products (including Element Call and the Enterprise Server Suite) do still not officially support these browsers.
         - The element web project and its contributors should keep the client functioning and gracefully degrade where other sibling features (E.g. Element Call) may not function.
     - Last major release of Firefox ESR and Chrome/Edge Extended Stable
 - Community Supported
@@ -126,7 +126,7 @@ guide](https://classic.yarnpkg.com/en/docs/install) if you do not have it alread
 1. Install the prerequisites: `yarn install`.
     - If you're using the `develop` branch, then it is recommended to set up a
       proper development environment (see [Setting up a dev
-      environment](#setting-up-a-dev-environment) below). Alternatively, you
+      environment](./developer_guide.md#setting-up-a-dev-environment) below). Alternatively, you
       can use <https://develop.element.io> - the continuous integration release of
       the develop branch.
 1. Configure the app by copying `config.sample.json` to `config.json` and
@@ -194,6 +194,17 @@ To add a new translation, head to the [translating doc](docs/translating.md).
 
 For a developer guide, see the [translating dev doc](docs/translating-dev.md).
 
+# Extending Element Web with Modules
+
+Element Web supports a module system that allows you to extend or modify functionality at runtime. Modules are loaded dynamically and provide a safe, predictable API for customization.
+
+## What are modules?
+
+Modules are extensions that can add or modify Element Web's functionality. They are:
+
+- Built using the [`@element-hq/element-web-module-api`](https://github.com/element-hq/element-modules/tree/main/packages/element-web-module-api)
+- Loaded in EW via [config.json](docs/config.md#modules)
+
 # Triaging issues
 
 Issues are triaged by community members and the Web App Team, following the [triage process](https://github.com/element-hq/element-meta/wiki/Triage-process).
@@ -211,3 +222,6 @@ This software is multi licensed by New Vector Ltd (Element). It can be used eith
 (1) for free under the terms of the GNU Affero General Public License (as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version); OR
 
 (2) for free under the terms of the GNU General Public License (as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version); OR
+
+(3) under the terms of a paid-for Element Commercial License agreement between you and Element (the terms of which may vary depending on what you and Element have agreed to).
+Unless required by applicable law or agreed to in writing, software distributed under the Licenses is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Licenses for the specific language governing permissions and limitations under the Licenses.

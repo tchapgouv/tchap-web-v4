@@ -116,7 +116,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         if (keyFromCustomisations) this.initExtension(keyFromCustomisations);
     }
 
-<<<<<<< HEAD
     /**
      * :TCHAP: remove-passphrase-4S
      * We don't show the choice between passphrase and key, we directly show the key phase
@@ -139,10 +138,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
     // end :TCHAP:
 
-    private initExtension(keyFromCustomisations: Uint8Array): void {
-=======
     private initExtension(keyFromCustomisations: Uint8Array<ArrayBuffer>): void {
->>>>>>> v1.12.9
         logger.log("CryptoSetupExtension: Created key via extension, jumping to bootstrap step");
         this.recoveryKey = {
             privateKey: keyFromCustomisations,

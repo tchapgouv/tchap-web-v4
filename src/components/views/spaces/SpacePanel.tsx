@@ -442,6 +442,10 @@ const SpacePanel: React.FC = () => {
                         ref={ref}
                         aria-label={_t("common|spaces")}
                     >
+
+                        {/* :TCHAP: */}
+                        <SpacePanelTchap isPanelCollapsed={isPanelCollapsed}/>
+                        {/* end :TCHAP: */}
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
                             <AccessibleButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", {
@@ -455,58 +459,6 @@ const SpacePanel: React.FC = () => {
                                         className="mx_SpacePanel_Tooltip_KeyboardShortcut"
                                     />
                                 }
-<<<<<<< HEAD
-                                onKeyDownHandler(ev);
-                            }}
-                            ref={ref}
-                            aria-label={_t("common|spaces")}
-                        >
-                            {/* :TCHAP: */}
-                            <SpacePanelTchap isPanelCollapsed={isPanelCollapsed}/>
-                            {/* end :TCHAP: */}
-
-                            <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                                <AccessibleButton
-                                    className={classNames("mx_SpacePanel_toggleCollapse", {
-                                        expanded: !isPanelCollapsed,
-                                    })}
-                                    onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                                    title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                    caption={
-                                        <KeyboardShortcut
-                                            value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
-                                            className="mx_SpacePanel_Tooltip_KeyboardShortcut"
-                                        />
-                                    }
-                                />
-                            </UserMenu>
-                            <Droppable droppableId="top-level-spaces">
-                                {(provided, snapshot) => (
-                                    <InnerSpacePanel
-                                        {...provided.droppableProps}
-                                        isPanelCollapsed={isPanelCollapsed}
-                                        setPanelCollapsed={setPanelCollapsed}
-                                        isDraggingOver={snapshot.isDraggingOver}
-                                        innerRef={provided.innerRef}
-                                    >
-                                        {provided.placeholder}
-                                    </InnerSpacePanel>
-                                )}
-                            </Droppable>
-
-                            {/* :TCHAP: extend-remove-thread-buttons <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> */}
-                            {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
-                            {/** end :TCHAP: */}
-                            
-                            {/* :TCHAP: improve-faq-visibility <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
-                            <QuickFaqButton isPanelCollapsed={isPanelCollapsed} />
-                            {/* end :TCHAP: */}
-                            {/* :TCHAP: lasuite-gaufre-integration */}
-                            <TchapGaufre isPanelCollapsed={isPanelCollapsed} />
-                            {/* end :TCHAP: */}
-                        </nav>
-                    </ReleaseAnnouncement>
-=======
                             >
                                 <ChevronRightIcon />
                             </AccessibleButton>
@@ -525,11 +477,18 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
-                        <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
-
-                        <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+                        
+                        {/* :TCHAP: extend-remove-thread-buttons <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> */}
+                        {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
+                        {/** end :TCHAP: */}
+                        
+                        {/* :TCHAP: improve-faq-visibility <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
+                        <QuickFaqButton isPanelCollapsed={isPanelCollapsed} />
+                        {/* end :TCHAP: */}
+                        {/* :TCHAP: lasuite-gaufre-integration */}
+                        <TchapGaufre isPanelCollapsed={isPanelCollapsed} />
+                        {/* end :TCHAP: */}
                     </nav>
->>>>>>> v1.12.9
                 </DragDropContext>
             )}
         </RovingTabIndexProvider>

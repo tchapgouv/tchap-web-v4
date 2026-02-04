@@ -157,16 +157,12 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                         totalRooms: formatCountLong(this.state.roomCount),
                     })}{" "}
                     <br />
-<<<<<<< HEAD
                     {/* :TCHAP: desktop-manage-search-messages comment this section*/}
-                    {/* <Field
-=======
-                    {_t("settings|security|message_search_pending_rooms", {
+                    {/* {_t("settings|security|message_search_pending_rooms", {
                         pendingRooms: formatCountLong(this.state.crawlingRoomsCount),
                     })}
                     <br />
                     <Field
->>>>>>> v1.12.9
                         label={_t("settings|security|message_search_sleep_time")}
                         type="number"
                         value={this.state.crawlerSleepTime.toString()}

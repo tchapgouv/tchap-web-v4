@@ -51,11 +51,8 @@ import { ModuleRunner } from "../modules/ModuleRunner";
 import { setMarkedUnreadState } from "../utils/notifications";
 import { ConnectionState, ElementCall } from "../models/Call";
 import { isVideoRoom } from "../utils/video-rooms";
-<<<<<<< HEAD
 import ExternalAccountHandler from "../tchap/lib/ExternalAccountHandler"; // :TCHAP:
-=======
 import { ModuleApi } from "../modules/Api";
->>>>>>> v1.12.9
 
 const NUM_JOIN_RETRY = 5;
 

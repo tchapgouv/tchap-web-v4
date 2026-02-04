@@ -43,6 +43,7 @@ import SdkConfig from "../../../../../SdkConfig";
 import { shouldForceDisableEncryption } from "../../../../../utils/crypto/shouldForceDisableEncryption";
 import { Caption } from "../../../typography/Caption";
 import { MEGOLM_ENCRYPTION_ALGORITHM } from "../../../../../utils/crypto";
+import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 
 interface IProps {
     room: Room;
@@ -460,15 +461,12 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             });
         }
 
-<<<<<<< HEAD
         // :TCHAP: hide-history-setting-since-selection
         if (this.state.encrypted) {
             // we remove HistoryVisibility.Shared, its not working on encrypted rooms
             options.shift();
         }
         // end :TCHAP:
-        const description = _t("room_settings|security|history_visibility_warning");
-=======
         const description = (
             <>
                 {_t(
@@ -476,13 +474,12 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     {},
                     {
                         a: (sub) => (
-                            <ExternalLink href="https://element.io/en/help#e2ee-history-sharing">{sub}</ExternalLink>
+                            <ExternalLink href={TchapUrls.helpCreateRoom}>{sub}</ExternalLink>
                         ),
                     },
                 )}
             </>
         );
->>>>>>> v1.12.9
 
         return (
             <SettingsFieldset legend={_t("room_settings|security|history_visibility_legend")} description={description}>
@@ -525,11 +522,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const client = this.context;
         const room = this.props.room;
         const isEncrypted = this.state.encrypted;
-<<<<<<< HEAD
-        /* :TCHAP: disable-access-options - does not allow changing encryption
-=======
         const isStateEncrypted = this.state.stateEncrypted;
->>>>>>> v1.12.9
+        /* :TCHAP: disable-access-options - does not allow changing encryption
         const isEncryptionLoading = isEncrypted === null;
         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
         const isEncryptionForceDisabled = shouldForceDisableEncryption(client);

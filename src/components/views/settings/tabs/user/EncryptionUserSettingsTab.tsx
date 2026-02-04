@@ -24,13 +24,10 @@ import { RecoveryPanelOutOfSync } from "../../encryption/RecoveryPanelOutOfSync"
 import { useTypedEventEmitterState } from "../../../../../hooks/useEventEmitter";
 import { KeyStoragePanel } from "../../encryption/KeyStoragePanel";
 import { DeleteKeyStoragePanel } from "../../encryption/DeleteKeyStoragePanel";
-<<<<<<< HEAD
 import { SettingsSubsection } from "../../shared/SettingsSubsection";
 import EventIndexPanel from "../../EventIndexPanel";
-=======
 import DeviceListener, { DeviceListenerEvents, type DeviceState } from "../../../../../DeviceListener";
 import { useKeyStoragePanelViewModel } from "../../../../viewmodels/settings/encryption/KeyStoragePanelViewModel";
->>>>>>> v1.12.9
 
 /**
  * The state in the encryption settings tab.
@@ -90,16 +87,6 @@ export function EncryptionUserSettingsTab({ initialState = "main" }: Readonly<Pr
 
     switch (state) {
         case "main":
-<<<<<<< HEAD
-            content = (
-                <>
-                    <KeyStoragePanel onKeyStorageDisableClick={() => setState("key_storage_delete")} />
-                    
-                    {/* :TCHAP: encryption-panel-recovery-code add separator because no more text for recovery code button */}
-                    {state !== "main" && <Separator kind="section" /> }
-                    {/* We only show the "Recovery" panel if key storage is enabled.*/}
-                    {state === "main" && (
-=======
             switch (deviceState) {
                 // some device states require action from the user rather than showing the main settings screen
                 case "verify_this_session":
@@ -127,10 +114,10 @@ export function EncryptionUserSettingsTab({ initialState = "main" }: Readonly<Pr
                     break;
                 default:
                     content = (
->>>>>>> v1.12.9
                         <>
                             <KeyStoragePanel onKeyStorageDisableClick={() => setState("key_storage_delete")} />
-                            <Separator kind="section" />
+                            {/* :TCHAP: encryption-panel-recovery-code add separator because no more text for recovery code button */}
+                            {state !== "main" && <Separator kind="section" /> }
                             {/* We only show the "Recovery" panel if key storage is enabled.*/}
                             {isBackupEnabled && (
                                 <>

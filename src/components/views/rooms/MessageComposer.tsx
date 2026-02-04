@@ -536,16 +536,10 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         <Tooltip label={_t("composer|room_unencrypted")}>
                             <LockOffIcon
                                 aria-label={_t("composer|room_unencrypted")}
-<<<<<<< HEAD
-                                width={12}
-                                height={12}
-                                // :TCHAP: color="var(--cpd-color-icon-info-primary)"
-                                color="var(--forum-color)"
-=======
                                 width="12px"
                                 height="12px"
-                                color="var(--cpd-color-icon-info-primary)"
->>>>>>> v1.12.9
+                                // :TCHAP: color="var(--cpd-color-icon-info-primary)"
+                                color="var(--forum-color)"
                                 className="mx_E2EIcon mx_MessageComposer_e2eIcon"
                             />
                         </Tooltip>
@@ -681,55 +675,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
         });
 
         return (
-<<<<<<< HEAD
-            <Tooltip open={isTooltipOpen} description={formatTimeLeft(secondsLeft)} placement="bottom">
-                <div className={classes} ref={this.ref} role="region" aria-label={_t("a11y|message_composer")}>
-                    <div className="mx_MessageComposer_wrapper">
-                        {/* :TCHAP: remove-identity-change-warning */}
-                        {/* <UserIdentityWarning room={this.props.room} key={this.props.room.roomId} /> */}
-                        {/* end :TCHAP: */}
-                        <ReplyPreview
-                            replyToEvent={this.props.replyToEvent}
-                            permalinkCreator={this.props.permalinkCreator}
-                        />
-                        <div className="mx_MessageComposer_row">
-                            {leftIcon}
-                            {composer}
-                            <div className="mx_MessageComposer_actions">
-                                {controls}
-                                {canSendMessages && (
-                                    <MessageComposerButtons
-                                        addEmoji={this.addEmoji}
-                                        haveRecording={this.state.haveRecording}
-                                        isMenuOpen={this.state.isMenuOpen}
-                                        isStickerPickerOpen={this.state.isStickerPickerOpen}
-                                        menuPosition={menuPosition}
-                                        relation={this.props.relation}
-                                        onRecordStartEndClick={this.onRecordStartEndClick}
-                                        setStickerPickerOpen={this.setStickerPickerOpen}
-                                        showLocationButton={
-                                            !window.electron && SettingsStore.getValue(UIFeature.LocationSharing)
-                                        }
-                                        showPollsButton={this.state.showPollsButton}
-                                        showStickersButton={this.showStickersButton}
-                                        isRichTextEnabled={this.state.isRichTextEnabled}
-                                        onComposerModeClick={this.onRichTextToggle}
-                                        toggleButtonMenu={this.toggleButtonMenu}
-                                    />
-                                )}
-                                {showSendButton && (
-                                    <SendButton
-                                        key="controls_send"
-                                        onClick={this.sendMessage}
-                                        title={
-                                            this.state.haveRecording
-                                                ? _t("composer|send_button_voice_message")
-                                                : undefined
-                                        }
-                                    />
-                                )}
-                            </div>
-=======
             <div className={classes} ref={this.ref} role="region" aria-label={_t("a11y|message_composer")}>
                 <HistoryVisibleBanner
                     room={this.props.room}
@@ -737,7 +682,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
                     threadId={threadId ?? null}
                 />
                 <div className="mx_MessageComposer_wrapper">
-                    <UserIdentityWarning room={this.props.room} key={this.props.room.roomId} />
+                    {/* :TCHAP: remove-identity-change-warning */}
+                    {/* <UserIdentityWarning room={this.props.room} key={this.props.room.roomId} /> */}
+                    {/* end :TCHAP: */}
                     <ReplyPreview
                         replyToEvent={this.props.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator}
@@ -776,7 +723,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     }
                                 />
                             )}
->>>>>>> v1.12.9
                         </div>
                     </div>
                 </div>

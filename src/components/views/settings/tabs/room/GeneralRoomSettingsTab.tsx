@@ -89,7 +89,6 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                         <RoomProfileSettings roomId={room.roomId} />
                     </SettingsSection>
 
-<<<<<<< HEAD
                 {/* :TCHAP: hide-room-alias-settings - no aliases for rooms
                 <SettingsSection heading={_t("room_settings|general|aliases_section")}>
                     <AliasSettings
@@ -100,16 +99,6 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                     />
                 </SettingsSection>
                 end :TCHAP: */}
-=======
-                    <SettingsSection heading={_t("room_settings|general|aliases_section")}>
-                        <AliasSettings
-                            roomId={room.roomId}
-                            canSetCanonicalAlias={canSetCanonical}
-                            canSetAliases={canSetAliases}
-                            canonicalAliasEvent={canonicalAliasEv}
-                        />
-                    </SettingsSection>
->>>>>>> v1.12.9
 
                     <SettingsSection heading={_t("room_settings|general|other_section")}>
                         {urlPreviewSettings}

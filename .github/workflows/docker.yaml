@@ -176,19 +176,3 @@ jobs:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
                   repository: vectorim/element-web
-<<<<<<< HEAD
-
-            - name: Repository Dispatch
-              uses: peter-evans/repository-dispatch@5fc4efd1a4797ddb68ffd0714a238564e4cc0e6f # v4
-              if: github.event_name != 'pull_request'
-              with:
-                  repository: element-hq/element-web-pro
-                  token: ${{ secrets.ELEMENT_BOT_TOKEN }}
-                  event-type: image-built
-                  # Stable way to determine the :version
-                  client-payload: |-
-                      {
-                          "base-ref": "${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}"
-                      }
-=======
->>>>>>> v1.12.9

@@ -2053,7 +2053,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 userId: userId,
                 subAction: params?.action,
             });
-<<<<<<< HEAD
         // :TCHAP: sso-agentconnect-flow
         } else if (screen === "email-precheck-sso") {
             dis.dispatch({
@@ -2061,12 +2060,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 params
             });
         // end :TCHAP:
-        } else {
-            logger.info(`Ignoring showScreen for '${screen}'`);
-=======
         } else if (ModuleApi.instance.navigation.locationRenderers.get(screen)) {
             this.setState({ page_type: screen });
->>>>>>> v1.12.9
         }
     }
 

@@ -18,11 +18,7 @@ import {
     UserEvent,
 } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
-<<<<<<< HEAD
-=======
-import { Tooltip } from "@vector-im/compound-web";
 import { PublicIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
->>>>>>> v1.12.9
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from "../rooms/NotificationBadge";

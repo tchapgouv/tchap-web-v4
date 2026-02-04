@@ -47,13 +47,9 @@ import { waitForMember } from "./utils/membership";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "./utils/PreferredRoomVersions";
 import SettingsStore from "./settings/SettingsStore";
 import { MEGOLM_ENCRYPTION_ALGORITHM } from "./utils/crypto";
-<<<<<<< HEAD
 import ExternalAccountHandler from "./tchap/lib/ExternalAccountHandler";
-import { ElementCallEventType, ElementCallMemberEventType } from "./call-types";
-=======
 import { ElementCallMemberEventType } from "./call-types";
 import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
->>>>>>> v1.12.9
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -197,11 +193,6 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
                 ...DEFAULT_EVENT_POWER_LEVELS,
                 // It should always (including non video rooms) be possible to join a group call.
                 [ElementCallMemberEventType.name]: 0,
-<<<<<<< HEAD
-                // Make sure only admins can enable it (DEPRECATED)
-                // [ElementCallEventType.name]: 100, :TCHAP:
-=======
->>>>>>> v1.12.9
             },
         };
     }

@@ -30,16 +30,11 @@ import { initialiseDehydrationIfEnabled } from "../../../../utils/device/dehydra
 import { withSecretStorageKeyCache } from "../../../../SecurityManager";
 import { EncryptionCardButtons } from "./EncryptionCardButtons";
 import { logErrorAndShowErrorDialog } from "../../../../utils/ErrorUtils.tsx";
-<<<<<<< HEAD
-import { RECOVERY_ACCOUNT_DATA_KEY } from "../../../../DeviceListener";
-import Spinner from "../../elements/Spinner.tsx";
-
-import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP:
-import TchapRecoveryCodeSuccessDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapRecoveryCodeSuccessDialog.tsx"; // :TCHAP:
-=======
 import DeviceListener, { RECOVERY_ACCOUNT_DATA_KEY } from "../../../../DeviceListener";
 import { resetKeyBackupAndWait } from "../../../../utils/crypto/resetKeyBackup";
->>>>>>> v1.12.9
+import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP:
+import TchapRecoveryCodeSuccessDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapRecoveryCodeSuccessDialog.tsx"; // :TCHAP:
+import Spinner from "../../elements/Spinner.tsx";
 
 /**
  * The possible states of the component.
@@ -140,15 +135,6 @@ export function ChangeRecoveryKey({
                         const spinner = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
                         // end :TCHAP:
                         try {
-<<<<<<< HEAD
-
-                            // We need to enable the cache to avoid to prompt the user to enter the new key
-                            // when we will try to access the secret storage during the bootstrap
-                            await withSecretStorageKeyCache(async () => {
-                                await crypto.bootstrapSecretStorage({
-                                    setupNewSecretStorage: true,
-                                    createSecretStorageKey: async () => recoveryKey,
-=======
                             const deviceListener = DeviceListener.sharedInstance();
 
                             // we need to call keyStorageOutOfSyncNeedsBackupReset here because
@@ -169,7 +155,6 @@ export function ChangeRecoveryKey({
                                         await resetKeyBackupAndWait(crypto);
                                     }
                                     await initialiseDehydrationIfEnabled(matrixClient, { createNewKey: true });
->>>>>>> v1.12.9
                                 });
                             });
 

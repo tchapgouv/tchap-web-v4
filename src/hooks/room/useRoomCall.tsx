@@ -175,19 +175,12 @@ export const useRoomCall = (
     // If there are multiple options, the user will be prompted to choose.
     const callOptions = useMemo((): PlatformCallType[] => {
         const options: PlatformCallType[] = [];
-<<<<<<< HEAD
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
             return options; // :TCHAP: flow-legacy-call-element-call in all case if 
                             // we are only two in the room we use legacy call, compatible with legacy mobile apps
-        }/* :TCHAP: remove-jitsi-option
-        else if (mayEditWidgets || hasJitsiWidget) {
-            options.push(PlatformCallType.JitsiCall);
-        }  
-        end :TCHAP:*/
-        
-=======
->>>>>>> v1.12.9
+        }
+
         if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
@@ -198,9 +191,12 @@ export const useRoomCall = (
         }
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else if (mayEditWidgets || hasJitsiWidget) {
+        }
+        /* :TCHAP: remove-jitsi-option
+        else if (mayEditWidgets || hasJitsiWidget) {
             options.push(PlatformCallType.JitsiCall);
         }
+        end :TCHAP:*/
         if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
             // only allow joining the ongoing Element call if there is one.
             return [PlatformCallType.ElementCall];

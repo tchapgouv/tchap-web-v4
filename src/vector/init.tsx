@@ -25,12 +25,8 @@ import ElectronPlatform from "./platform/ElectronPlatform";
 import PWAPlatform from "./platform/PWAPlatform";
 import WebPlatform from "./platform/WebPlatform";
 import { initRageshake, initRageshakeStore } from "./rageshakesetup";
-<<<<<<< HEAD
-import ModuleApi from "../modules/Api.ts";
-import TauriPlatform from "./platform/tchap-desktop/TauriPlatform";
-=======
 import { ModuleApi } from "../modules/Api.ts";
->>>>>>> v1.12.9
+import TauriPlatform from "./platform/tchap-desktop/TauriPlatform";
 
 export const rageshakePromise = initRageshake();
 

@@ -158,7 +158,14 @@ export default class BugReportDialog extends React.Component<BugReportDialogProp
         this.setState({ busy: true, progress: null, err: null });
         this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
 
-<<<<<<< HEAD
+        if (this.isLocalOnly) {
+            // Shouldn't reach here, but throw in case we do.
+            this.setState({
+                err: _t("bug_reporting|failed_send_logs_causes|unknown_error"),
+            });
+            return;
+        }
+
         // :TCHAP: bug-reporting - add custom fields if it's a voip report
         Promise.resolve().then(() => {
             if (this.props.label !== "voip-feedback") {
@@ -180,21 +187,6 @@ export default class BugReportDialog extends React.Component<BugReportDialogProp
                 customFields: customFields,
             });
             // end :TCHAP:
-=======
-        if (this.isLocalOnly) {
-            // Shouldn't reach here, but throw in case we do.
-            this.setState({
-                err: _t("bug_reporting|failed_send_logs_causes|unknown_error"),
-            });
-            return;
-        }
-
-        sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-            userText,
-            sendLogs: true,
-            progressCallback: this.sendProgressCallback,
-            labels: this.props.label ? [this.props.label] : [],
->>>>>>> v1.12.9
         }).then(
             () => {
                 if (!this.unmounted) {
