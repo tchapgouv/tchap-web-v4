@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-/* eslint-disable max-len */
-=======
 /*
 Copyright 2025 Element Creations Ltd.
 
@@ -8,7 +5,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
->>>>>>> v1.12.9
 /* eslint-disable quote-props */
 
 const dotenv = require("dotenv");
@@ -228,7 +224,6 @@ module.exports = (env, argv) => {
                 // Define a variable so the i18n stuff can load
                 "$webapp": path.resolve(__dirname, "webapp"),
 
-<<<<<<< HEAD
                 // :TCHAP:
                 "~tchap-web": path.resolve(__dirname, "."),
                 // Hack in order to include the fonts declare in tchap compound-design-tokens
@@ -330,10 +325,9 @@ module.exports = (env, argv) => {
                 ),
                 // we use tchap own compound-web package
                 "@vector-im/compound-web": path.resolve(__dirname, "node_modules/compound-web-tchap"),
-=======
+                // end :TCHAP:
                 // Make shared-components imports resolve to EW counterpart
                 "counterpart": path.resolve(__dirname, "node_modules/counterpart"),
->>>>>>> v1.12.9
             },
             fallback: {
                 // Mock out the NodeFS module: The opus decoder imports this wrongly.
