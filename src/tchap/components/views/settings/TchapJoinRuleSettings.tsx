@@ -34,7 +34,6 @@ import dis from "~tchap-web/src/dispatcher/dispatcher";
 import { Action } from "~tchap-web/src/dispatcher/actions";
 import { ViewRoomPayload } from "~tchap-web/src/dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "~tchap-web/src/utils/PreferredRoomVersions";
-import LabelledToggleSwitch from "~tchap-web/src/components/views/elements/LabelledToggleSwitch";
 import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
 
 import TchapUIFeature from "../../../util/TchapUIFeature";
@@ -43,6 +42,7 @@ import TchapRoomLinkAccess from "../rooms/TchapRoomLinkAccess";
 import TchapRoomUtils from "../../../util/TchapRoomUtils";
 import { RoomJoinRulesEventContent } from "matrix-js-sdk/src/types";
 import { RoomSettingsTab } from "~tchap-web/src/components/views/dialogs/RoomSettingsDialog";
+import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 
 interface JoinRuleSettingsProps {
     room: Room;
@@ -191,6 +191,29 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         setTchapAccessRule({ rule: TchapRoomAccessRule.Unrestricted });
     };
 
+
+    const renderStandaloneExternalButton = () => {
+        return (
+            <Form.Root
+            className="tc_JoinRuleSettings_externs_switch"
+            onSubmit={(evt) => {
+                evt.preventDefault();
+                evt.stopPropagation();
+            }}
+        >
+            <SettingsToggleInput
+                name="open_to_external_switch"
+                label={_t("Allow external users to join this room")}
+                onChange={onExternalAccessChange}
+                checked={openedToExternalUsers}
+                disabled={disabled || openedToExternalUsers}
+                helpMessage={_t("room_settings|security|link_sharing_caption")}
+            />
+        </Form.Root>
+        )
+    }
+
+
     /* code from element web
     const definitions: IDefinition<JoinRule>[] = [{
         value: JoinRule.Invite,
@@ -219,13 +242,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
                 <div>
                     <div>{_t("room_settings|security|join_rule_invite_description")}</div>
                     <span>
-                        <LabelledToggleSwitch
-                            className="tc_JoinRuleSettings_externs_switch"
-                            value={openedToExternalUsers}
-                            onChange={onExternalAccessChange}
-                            label={_t("Allow external users to join this room")}
-                            disabled={disabled || openedToExternalUsers}
-                        />
+                        {renderStandaloneExternalButton()}
                     </span>
                 </div>
             );
@@ -455,22 +472,6 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         return <TchapRoomLinkAccess room={room} onUpdateParentView={activateLinkSharingChange}></TchapRoomLinkAccess>
     }
 
-    const renderStandaloneExternalButton = () => {
-        // show the toggle only on share link activated
-        if (isShareLinkActivated) {
-            return (
-                <LabelledToggleSwitch 
-                    className="tc_JoinRuleSettings_externs_switch"
-                    value={openedToExternalUsers}
-                    onChange={onExternalAccessChange}
-                    label={_t("Allow external users to join this room")}
-                    disabled={disabled || openedToExternalUsers}
-                    data-testid="standalone_external_switch"/>
-            );
-        }
-        return null;
-    }
-
     return (
         <>
             {!isShareLinkActivated && <StyledRadioGroup
@@ -481,7 +482,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
                 disabled={disabled}
                 className="mx_JoinRuleSettings_radioButton"
             />}
-            { renderStandaloneExternalButton() }
+            { isShareLinkActivated && renderStandaloneExternalButton() }
             { renderLinkSharing() }
         </>
     );

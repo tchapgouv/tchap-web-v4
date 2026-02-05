@@ -1,7 +1,6 @@
 import { EventType, GuestAccess, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 
 import React, { JSX, useEffect, useState } from 'react';
-import LabelledToggleSwitch from '~tchap-web/src/components/views/elements/LabelledToggleSwitch';
 import { _t } from '~tchap-web/src/languageHandler';
 import { secureRandomString } from 'matrix-js-sdk/src/randomstring';
 import TchapRoomUtils from '../../../util/TchapRoomUtils';
@@ -15,6 +14,7 @@ import ErrorDialog from "~tchap-web/src/components/views/dialogs/ErrorDialog";
 import ElementPermalinkConstructor from "~tchap-web/src/utils/permalinks/ElementPermalinkConstructor";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
+import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 
 interface ITchapRoomLinkAccessProps {
     room: Room,
@@ -153,14 +153,23 @@ export default function TchapRoomLinkAccess({room, onUpdateParentView}: ITchapRo
     }
 
     return (
-        <div>
-            <LabelledToggleSwitch value={isLinkSharingActivated}
-                onChange={ _onLinkSharingSwitchChange }
-                label={_t("room_settings|security|link_sharing_title")}
-                caption={_t("room_settings|security|link_sharing_caption")}
-                disabled={disableLinkSharing}
-                data-testid="share_link_switch"
-                />
+        <Form.Root
+        onSubmit={(evt) => {
+            evt.preventDefault();
+            evt.stopPropagation();
+        }}
+    >
+        <SettingsToggleInput
+            data-testid="share_link_switch"
+            name="share_link_switch"
+            label={_t("room_settings|security|link_sharing_title")}
+            onChange={(e) => {
+                _onLinkSharingSwitchChange(e.target.checked);
+            }}
+            checked={isLinkSharingActivated}
+            disabled={disableLinkSharing}
+            helpMessage={_t("room_settings|security|link_sharing_caption")}
+        />
             {
                 isLinkSharingActivated ? 
                     <CopyableText getTextToCopy={() => linkSharingUrl} aria-labelledby="shared_room_link">
@@ -168,6 +177,6 @@ export default function TchapRoomLinkAccess({room, onUpdateParentView}: ITchapRo
                     </CopyableText>
                     : null
             }
-        </div>
+        </Form.Root>
     )
 }
