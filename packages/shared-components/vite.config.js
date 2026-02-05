@@ -26,7 +26,13 @@ export default defineConfig({
         rollupOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
-            external: ["react", "react-dom", "@vector-im/compound-design-tokens", "@vector-im/compound-web"],
+            external: [
+                "react",
+                "react-dom",
+                "@vector-im/compound-design-tokens",
+                "@vector-im/compound-web",
+                "compound-web-tchap",
+            ],
             output: {
                 // Provide global variables to use in the UMD build
                 // for externalized deps
@@ -40,7 +46,8 @@ export default defineConfig({
     resolve: {
         alias: {
             // Alias used by i18n.tsx
-            $webapp: resolve(__dirname, "..", "..", "webapp"),
+            "$webapp": resolve(__dirname, "..", "..", "webapp"),
+            "@vector-im/compound-web": resolve(__dirname, "node_modules/compound-web-tchap"),
         },
     },
     plugins: [

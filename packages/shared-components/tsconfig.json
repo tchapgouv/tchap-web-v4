@@ -18,7 +18,8 @@
         "strict": true,
         "paths": {
             "jest-matrix-react": ["./src/test/utils/jest-matrix-react"],
-            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"]
+            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"],
+            "@vector-im/compound-web": ["./node_modules/compound-web-tchap"]
         }
     },
     "include": ["./src/**/*.ts", "./src/**/*.tsx"]

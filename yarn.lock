@@ -2909,7 +2909,7 @@
   resolved "https://registry.yarnpkg.com/@radix-ui/react-compose-refs/-/react-compose-refs-1.1.2.tgz#a2c4c47af6337048ee78ff6dc0d090b390d2bb30"
   integrity sha512-z4eqJvfiNnFMHIIvXP3CY57y2WJs5g2v3X0zm9mEJkrkNv4rDxu+sg9Jh8EkXyeqBkB7SOcboo9dMVqhyrACIg==
 
-"@radix-ui/react-context-menu@^2.2.1":
+"@radix-ui/react-context-menu@^2.2.16":
   version "2.2.16"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-context-menu/-/react-context-menu-2.2.16.tgz#e7bf94a457b68af08f24ad696949144530faab50"
   integrity sha512-O8morBEW+HsVG28gYDZPTrT9UUovQUlJue5YO836tiTJhuIWBm/zQHc7j388sHWtdH/xUZurK9olD2+pcqx5ww==
@@ -4386,7 +4386,7 @@
   version "6.7.0"
   resolved "https://github.com/tchapgouv/compound-design-tokens.git#cf16c8b05cc3f081b738e1c2861951497830a886"
 
-"@vector-im/matrix-wysiwyg-wasm@link:../../bindings/wysiwyg-wasm":
+"@vector-im/matrix-wysiwyg-wasm@link:../../.cache/yarn/v6/npm-@vector-im-matrix-wysiwyg-2.40.0-53c9ca5ea907d91e4515da64f20a82e5586b882c-integrity/node_modules/bindings/wysiwyg-wasm":
   version "0.0.0"
   uid ""
 
@@ -5706,13 +5706,13 @@ commonmark@^0.31.0:
     mdurl "~1.0.1"
     minimist "~1.2.8"
 
-compound-web-tchap@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/compound-web-tchap/-/compound-web-tchap-1.0.4.tgz#322c8e68480f2398b39748be7ef7792f80ed2330"
-  integrity sha512-x7uGKld7d2klhO3kn3Q/smXOFhx9msqx2/XYntwsd09slI42Oi5BujnP2Mi/fvGeJh57A4Ck7MPbJJDR73sfxw==
+compound-web-tchap@4.18.4:
+  version "4.18.4"
+  resolved "https://registry.yarnpkg.com/compound-web-tchap/-/compound-web-tchap-4.18.4.tgz#059381f97aadb5c283d89d4961882137e53d6be6"
+  integrity sha512-bJGxdmcJDiWokQ/1gFqfZ0KeIjriDFH104nuzngptvyzW0gQNR6KsGpYNQQLzqekeFvJM2ePQw6/opM6Nsy/6A==
   dependencies:
     "@floating-ui/react" "^0.27.0"
-    "@radix-ui/react-context-menu" "^2.2.1"
+    "@radix-ui/react-context-menu" "^2.2.16"
     "@radix-ui/react-dropdown-menu" "^2.1.1"
     "@radix-ui/react-form" "^0.1.0"
     "@radix-ui/react-progress" "^1.1.0"
