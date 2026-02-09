@@ -464,7 +464,6 @@
     },
     "settings|encryption|advanced|title": { "en": "Tchap keys", "fr": "Clés Tchap" },
     "settings|security|ignore_users_section": { "en": "Ignored users", "fr": "Membres ignorés" },
-    "settings|security|key_backup_connect": { "en": "Verify this device", "fr": "Vérifier cet appareil" },
     "settings|security|message_search_unsupported_web": {
         "comment": "We have to include a <<desktopLink> otherwise the i18n checker crashes. So add an empty one.",
         "en": "Currently %(brand)s does not support searching into messages in encrypted rooms.<desktopLink></desktopLink>",

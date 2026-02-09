@@ -30,6 +30,8 @@ import ConfirmKeyStorageOffDialog from "../components/views/dialogs/ConfirmKeySt
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { resetKeyBackupAndWait } from "../utils/crypto/resetKeyBackup";
 import { PosthogAnalytics } from "../PosthogAnalytics";
+import Tchapi18nUtils from "../tchap/i18n/Tchapi18nUtils";
+import { TCHAP_AVAILABLE_LINK } from "../tchap/util/TchapUrls";
 
 const TOAST_KEY = "setupencryption";
 
@@ -110,14 +112,18 @@ const getSecondaryButtonLabel = (state: DeviceStateForToast): string => {
     }
 };
 
-const getDescription = (state: DeviceStateForToast): string => {
+const getDescription = (state: DeviceStateForToast): string | React.ReactNode => {
     switch (state) {
         case "set_up_recovery":
             return _t("encryption|set_up_recovery_toast_description");
         case "verify_this_session":
             return _t("encryption|verify_toast_description");
         case "key_storage_out_of_sync":
-            return _t("encryption|key_storage_out_of_sync_description");
+            // :TCHAP: return _t("encryption|key_storage_out_of_sync_description")
+            return _t("encryption|key_storage_out_of_sync_description", {},
+                {
+                    a: (sub) => Tchapi18nUtils.simpleLink(sub, TCHAP_AVAILABLE_LINK.HELP_POPUP_PERSISTENT)
+                });
         case "turn_on_key_storage":
             return _t("encryption|turn_on_key_storage_description");
         case "identity_needs_reset":

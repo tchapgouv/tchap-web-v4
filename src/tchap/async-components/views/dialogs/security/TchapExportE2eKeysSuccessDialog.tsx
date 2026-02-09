@@ -20,8 +20,8 @@ import dis from "~tchap-web/src/dispatcher/dispatcher";
 import { _t } from "~tchap-web/src/languageHandler";
 
 import { TchapAnchor } from "../../../../components/views/common/TchapAnchor";
-import KeySavedImage from "../../../../../../res/img/tchap/key-saved.svg";
 import TchapUrls from "../../../../util/TchapUrls";
+import { KeySavedIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 interface IProps {
     allowLogout: boolean;
@@ -52,7 +52,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
             >
                 <div className="mx_Dialog_content">
                     <div className="tc_exportE2eKeysSuccessDialog_img">
-                        <img src={KeySavedImage} alt="Export logo" width="70" />
+                        <KeySavedIcon width="70" />
                     </div>
 
                     <p className="tc_modalParagraph">

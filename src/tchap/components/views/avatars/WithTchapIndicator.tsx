@@ -15,6 +15,7 @@ import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import { getJoinedNonFunctionalMembers } from "~tchap-web/src/utils/room/getJoinedNonFunctionalMembers";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
+import { PadlockExternalIcon, PadlockForumIcon, PadlockPrivateIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 interface Props {
     room: Room;
@@ -45,50 +46,40 @@ function tooltipText(variant: Icon): string | undefined {
     }
 }
 
-const calculateIcon = (room: Room): Icon => {
-    let icon = Icon.None;
-
+const calculateIcon = (room: Room): [JSX.Element | null, Icon] => {
+    let icon: JSX.Element | null = null;
+    let iconText = Icon.None
     // We look at the DMRoomMap and not the tag here so that we don't exclude DMs in Favourites
     const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
     if (otherUserId && getJoinedNonFunctionalMembers(room).length === 2) {
-        return icon;
+        return [null, Icon.None];
     }
-    //:tchap: tchap-room-icons - use custom icons for tchap room types
     const roomType: TchapRoomType = TchapRoomUtils.getTchapRoomType(room);
     switch(roomType) {
         case TchapRoomType.Forum:
-            icon = Icon.Forum;
+            icon = <PadlockForumIcon className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Forum.toLowerCase()}`} />;
+            iconText = Icon.Forum;
             break;
         case TchapRoomType.Private:
-            icon = Icon.Private;
+            icon = <PadlockPrivateIcon className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`} />
+            iconText = Icon.Private;
             break;
         case TchapRoomType.External:
-            icon = Icon.External;
+            icon = <PadlockExternalIcon className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`} />;
+            iconText = Icon.External;
             break;
-        default:
-            icon = Icon.None;
     }
-    //end :tchap:
-    return icon;
+
+    return [icon, iconText];
 }
 
 const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
-    const iconValue = calculateIcon(room);
-
-    let icon: JSX.Element | undefined;
-    if (iconValue != Icon.None) {
-        icon = (
-                <div
-                    tabIndex={tooltipProps?.tabIndex ?? 0}
-                className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${iconValue.toLowerCase()}`}
-            />
-        );
-    }
+    const [icon, iconText] = calculateIcon(room);
 
     return <div className="mx_DecoratedRoomAvatar">
             {children}
             {icon && (
-                <Tooltip label={tooltipText(iconValue)!} placement="bottom">
+                <Tooltip label={tooltipText(iconText)!} placement="bottom">
                     {icon}
                 </Tooltip>
             )}

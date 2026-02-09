@@ -2,13 +2,14 @@
 import React, { JSX } from 'react';
 
 import { ChevronFace, alwaysAboveRightOf, useContextMenu } from '~tchap-web/src/components/structures/ContextMenu';
-import AccessibleButton from '~tchap-web/src/components/views/elements/AccessibleButton';
 import classNames from 'classnames';
 import { _t } from '../../../../languageHandler';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from '~tchap-web/src/components/views/context_menus/IconizedContextMenu';
 import TchapUrls from '../../../util/TchapUrls';
 import Modal from '~tchap-web/src/Modal';
 import BugReportDialog from '~tchap-web/src/components/views/dialogs/BugReportDialog';
+import { IconButton, Tooltip } from '@vector-im/compound-web';
+import { HelpSolidIcon } from '@vector-im/compound-design-tokens/assets/web/icons';
 
 const QuickFaqButton: React.FC<{
     isPanelCollapsed: boolean;
@@ -28,28 +29,28 @@ const QuickFaqButton: React.FC<{
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconInfo"
+                        className="mx_UserMenu_iconInfo"
                         label={_t("quick_faq|faq")}
                         onClick={(e) => {
                             TchapUrls.openHelper("https://www.tchap.gouv.fr/faq")
                         }}
                     />
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconMessage"
+                        className="mx_UserMenu_iconMessage"
                         label={_t("quick_faq|contact")}
                         onClick={(e) => {
                             TchapUrls.openHelper("mailto:support@tchap.beta.gouv.fr")
                         }}
                     />
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconHome"
+                        className="mx_UserMenu_iconHome"
                         label={_t("quick_faq|guides")}
                         onClick={(e) => {
                             TchapUrls.openHelper(TchapUrls.helpUserOnboarding)
                         }}
                     />
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconBug"
+                        className="mx_UserMenu_iconBug"
                         label={_t("quick_faq|bug")}
                         onClick={(e) => {
                             e.preventDefault();
@@ -64,19 +65,40 @@ const QuickFaqButton: React.FC<{
         );
     }
 
-    return (
-        <>
-            <AccessibleButton
-                className={classNames(["mx_QuickSettingsButton", { expanded: !isPanelCollapsed }, "tc_sidebar_quick_faq"])}
-                onClick={openMenu}
-                aria-label={_t("common|help")}
-                title={isPanelCollapsed ? _t("common|help") : undefined}
-                ref={handle}
-                aria-expanded={!isPanelCollapsed}
-            >
-                {!isPanelCollapsed ? _t("common|help") : null}
-            </AccessibleButton>
+    let button = (
+        <IconButton
+            aria-label={_t("quick_settings|title")}
+            className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
+            onClick={openMenu}
+            title={isPanelCollapsed ? _t("quick_settings|title") : undefined}
+            ref={handle}
+            aria-expanded={!isPanelCollapsed}
+            
+        >
+            <>
+                <HelpSolidIcon />
+                {/* This is dirty, but we need to add the label to the indicator icon */}
+                {!isPanelCollapsed && (
+                    <Text className="mx_QuickSettingsButton_label" as="span" size="md" title={_t("common|settings")}>
+                        {_t("common|settings")}
+                    </Text>
+                )}
+            </>
+        </IconButton>
+    );
 
+
+    if (isPanelCollapsed) {
+        button = (
+            <Tooltip label={_t("quick_settings|title")} placement="right">
+                {button}
+            </Tooltip>
+        );
+    }
+
+    return (
+        <> 
+            {button}
             {contextMenu}
         </>
     );
