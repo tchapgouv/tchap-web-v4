@@ -77,7 +77,6 @@ export default class TauriPlatform extends BasePlatform {
         this.protocol = "tchap";
 
         dis.register(onAction);
-        this.tauriSecureStorage = new TauriSecureStorage(this.baseUrl, this.ipc);
 
         this.ipc.call("welcome");
 
@@ -236,6 +235,10 @@ export default class TauriPlatform extends BasePlatform {
 
 
     public getSecureStorageInstance(): TauriSecureStorage {
+        if (!this.tauriSecureStorage) {
+            this.tauriSecureStorage = new TauriSecureStorage(this.baseUrl, this.ipc);
+            return this.tauriSecureStorage
+        }
         return this.tauriSecureStorage;
     }
 
