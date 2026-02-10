@@ -57,15 +57,15 @@ const calculateIcon = (room: Room): [JSX.Element | null, Icon] => {
     const roomType: TchapRoomType = TchapRoomUtils.getTchapRoomType(room);
     switch(roomType) {
         case TchapRoomType.Forum:
-            icon = <PadlockForumIcon className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Forum.toLowerCase()}`} />;
+            icon = <PadlockForumIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Forum.toLowerCase()}`} />;
             iconText = Icon.Forum;
             break;
         case TchapRoomType.Private:
-            icon = <PadlockPrivateIcon className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`} />
+            icon = <PadlockPrivateIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`} />
             iconText = Icon.Private;
             break;
         case TchapRoomType.External:
-            icon = <PadlockExternalIcon className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`} />;
+            icon = <PadlockExternalIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`} />;
             iconText = Icon.External;
             break;
     }
