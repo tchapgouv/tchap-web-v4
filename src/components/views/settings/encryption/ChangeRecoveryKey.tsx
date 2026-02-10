@@ -32,9 +32,10 @@ import { EncryptionCardButtons } from "./EncryptionCardButtons";
 import { logErrorAndShowErrorDialog } from "../../../../utils/ErrorUtils.tsx";
 import DeviceListener, { RECOVERY_ACCOUNT_DATA_KEY } from "../../../../DeviceListener";
 import { resetKeyBackupAndWait } from "../../../../utils/crypto/resetKeyBackup";
+import Spinner from "../../elements/Spinner.tsx";
+
 import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP:
 import TchapRecoveryCodeSuccessDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapRecoveryCodeSuccessDialog.tsx"; // :TCHAP:
-import Spinner from "../../elements/Spinner.tsx";
 
 /**
  * The possible states of the component.
@@ -129,6 +130,7 @@ export function ChangeRecoveryKey({
                     onCancelClick={onCancelClick}
                     onSubmit={async () => {
                         const crypto = matrixClient.getCrypto();
+                        console.log("**** crypto", crypto)
                         if (!crypto) return onFinish();
 
                         // :TCHAP: :TCHAP: recovery-code-flow-improve 
@@ -383,7 +385,6 @@ function KeyForm({ onCancelClick, onSubmit, recoveryKey, submitButtonLabel }: Ke
             onChange={async (evt) => {
                 evt.preventDefault();
                 evt.stopPropagation();
-
                 // We don't have any file in the form, we can cast it as string safely
                 const filledKey = new FormData(evt.currentTarget).get("recoveryKey") as string | "";
                 setIsKeyValid(filledKey.trim() === recoveryKey);

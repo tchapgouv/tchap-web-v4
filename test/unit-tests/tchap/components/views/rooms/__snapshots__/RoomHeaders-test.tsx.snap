@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`RoomHeader should render as expected 1`] = `
 <div>
   <header
-    class="flex mx_RoomHeader light-panel"
+    class="_flex_4dswl_9 mx_RoomHeader light-panel"
     style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
   >
     <div
@@ -15,7 +15,7 @@ exports[`RoomHeader should render as expected 1`] = `
         <button
           aria-label="Open room settings"
           aria-live="off"
-          class="_avatar_1qbcf_8 mx_BaseAvatar _avatar-imageless_1qbcf_52"
+          class="_avatar_zysgz_8 mx_BaseAvatar _avatar-imageless_zysgz_55"
           data-color="3"
           data-testid="avatar-img"
           data-type="round"
@@ -26,11 +26,27 @@ exports[`RoomHeader should render as expected 1`] = `
           !
         </button>
       </div>
-      <div
-        aria-labelledby="«r0»"
+      <svg
+        aria-labelledby="_r_0_"
         class="mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_private"
-        tabindex="-1"
-      />
+        fill="none"
+        height="1em"
+        viewBox="0 0 45 53"
+        width="24px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M0 49.623c0 1.034.838 1.872 1.872 1.872h33.886c1.033 0 1.871-.838 1.871-1.871V23.954c0-1.033-.838-1.871-1.871-1.871H1.872C.838 22.084 0 22.922 0 23.955v25.669z"
+          fill="#EB5757"
+          fill-rule="evenodd"
+        />
+        <path
+          d="M9.36 29.439V18.722c0-5.217 4.232-9.446 9.455-9.446 5.221 0 9.454 4.229 9.454 9.446v10.717"
+          stroke="#EB5757"
+          stroke-width="5"
+        />
+      </svg>
     </div>
     <button
       aria-label="Room info"
@@ -38,7 +54,7 @@ exports[`RoomHeader should render as expected 1`] = `
       tabindex="0"
     >
       <div
-        class="mx_RoomHeader_info box-flex"
+        class="mx_RoomHeader_info _box-flex_1odfs_9"
         style="--mx-box-flex: 1;"
       >
         <div
@@ -57,15 +73,15 @@ exports[`RoomHeader should render as expected 1`] = `
     </button>
     <button
       aria-label="Room info"
-      aria-labelledby="«r5»"
-      class="_icon-button_1pz9o_8"
+      aria-labelledby="_r_5_"
+      class="_icon-button_1215g_8"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_zr2a0_17"
+        class="_indicator-icon_147l5_17"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -87,13 +103,13 @@ exports[`RoomHeader should render as expected 1`] = `
     >
       <div
         aria-label="0 members"
-        aria-labelledby="«ra»"
+        aria-labelledby="_r_a_"
         class="mx_AccessibleButton mx_FacePile"
         role="button"
         tabindex="0"
       >
         <div
-          class="_stacked-avatars_1qbcf_102"
+          class="_stacked-avatars_zysgz_109"
         />
         0
       </div>

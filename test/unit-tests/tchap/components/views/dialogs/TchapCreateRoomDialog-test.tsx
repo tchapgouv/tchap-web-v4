@@ -123,7 +123,7 @@ describe("TchapCreateRoomDialog", () => {
             await getComponent({});
 
             const federatedSwitch = screen.getByRole("switch");
-            expect(federatedSwitch?.getAttribute("aria-checked")).toEqual("true");
+            expect(federatedSwitch).toBeChecked();
         });
 
         it("should be false by default", () => {
@@ -133,7 +133,7 @@ describe("TchapCreateRoomDialog", () => {
             });
             getComponent({});
             const federatedSwitch = screen.getByRole("switch");
-            expect(federatedSwitch?.getAttribute("aria-checked")).toEqual("false");
+            expect(federatedSwitch).not.toBeChecked();
         });
     });
 
