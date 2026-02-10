@@ -168,7 +168,8 @@ export class RoomStatusBarViewModel
     };
 
     private isResending = false;
-    private hasClickedTermsAndConditions = false;
+    // :TCHAP: terms and condition always true private hasClickedTermsAndConditions = false;
+    private hasClickedTermsAndConditions = true;
 
     private setSnapshot(): void {
         this.snapshot.set(
@@ -180,9 +181,11 @@ export class RoomStatusBarViewModel
             ),
         );
         // Reset `hasClickedTermsAndConditions` once the state has cleared.
-        if (this.hasClickedTermsAndConditions && !this.snapshot.current.state) {
-            this.hasClickedTermsAndConditions = false;
-        }
+        // :TCHAP: leave hasClickedTermsAndConditions to true
+        // if (this.hasClickedTermsAndConditions && !this.snapshot.current.state) {
+        //     this.hasClickedTermsAndConditions = false;
+        // }
+        // end :TCHAP:
     }
 
     public onTermsAndConditionsClicked = (): void => {

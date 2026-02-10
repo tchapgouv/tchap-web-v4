@@ -31,6 +31,9 @@
             "some_messages_not_sent": "Certains de vos messages n’ont pas été envoyés"
         }
     },
+    "tchap": {
+        "server_connectivity_lost_title": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>"
+    },
     "terms": {
         "tac_button": "Voir les conditions générales"
     },

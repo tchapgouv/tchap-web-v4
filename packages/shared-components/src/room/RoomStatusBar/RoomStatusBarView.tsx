@@ -13,6 +13,7 @@ import styles from "./RoomStatusBarView.module.css";
 import { useViewModel } from "../../useViewModel";
 import { type ViewModel } from "../../viewmodel";
 import { useI18n } from "../../utils/i18nContext";
+import { _t as _translateAndSubstitute} from "../../utils/i18n";
 import { Banner } from "../../composer/Banner";
 export interface RoomStatusBarViewActions {
     /**
@@ -160,10 +161,23 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
     switch (snapshot.state) {
         case RoomStatusBarState.ConnectionLost:
             return (
-                <Banner type="critical" role="status" aria-labelledby={bannerTitleId}>
+                // :TCHAP: <Banner type="critical" role="status" aria-labelledby={bannerTitleId}>
+                <Banner type="info" role="status" aria-labelledby={bannerTitleId}>
                     <div className={styles.container}>
                         <Text id={bannerTitleId} weight="semibold">
-                            {_t("room|status_bar|server_connectivity_lost_title")}
+                            {/* :TCHAP: error-tchap-is-down - _t("room|status_bar|server_connectivity_lost_title") */}
+                            {_translateAndSubstitute("tchap|server_connectivity_lost_title", {}, {
+                                a: (sub: string) => (
+                                    <a
+                                        target="_blank"
+                                        rel="noreferrer noopener"
+                                        href="https://status.tchap.numerique.gouv.fr"
+                                    >
+                                        {sub}
+                                    </a>
+                                ),
+                            })}
+                            {/* end :TCHAP: */}
                         </Text>
                         <Text className={styles.description} size="sm">
                             {_t("room|status_bar|server_connectivity_lost_description")}
@@ -174,7 +188,8 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
         case RoomStatusBarState.NeedsConsent:
             return (
                 <Banner
-                    type="critical"
+                    // :TCHAP: type="critical" looks really violent
+                    type="info"
                     role="status"
                     aria-labelledby={bannerTitleId}
                     actions={
@@ -201,7 +216,8 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
         case RoomStatusBarState.ResourceLimited:
             return (
                 <Banner
-                    type="critical"
+                    // :TCHAP: type="critical"
+                    type="info"
                     role="status"
                     aria-labelledby={bannerTitleId}
                     actions={
@@ -236,7 +252,8 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
             return (
                 <Banner
                     role="status"
-                    type="critical"
+                    // :TCHAP: type="critical"
+                    type="info"
                     aria-labelledby={bannerTitleId}
                     actions={
                         <Button
@@ -259,7 +276,8 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
             return (
                 <Banner
                     role="status"
-                    type="critical"
+                    // :TCHAP: type="critical"
+                    type="info"
                     actions={
                         snapshot.isResending ? (
                             <InlineSpinner />
@@ -295,7 +313,19 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                 >
                     <div className={styles.container}>
                         <Text id={bannerTitleId} weight="semibold">
-                            {_t("room|status_bar|some_messages_not_sent")}
+                            {/* :TCHAP: error-tchap-is-down - {_t("room|status_bar|some_messages_not_sent")} */}
+                            {_translateAndSubstitute("tchap|server_connectivity_lost_title", {
+                                a: (sub: string) => (
+                                    <a
+                                        target="_blank"
+                                        rel="noreferrer noopener"
+                                        href="https://status.tchap.numerique.gouv.fr"
+                                    >
+                                        {sub}
+                                    </a>
+                                ),
+                            })}
+                            {/* end :TCHAP: */}
                         </Text>
                         <Text className={styles.description} size="sm">
                             {_t("room|status_bar|select_messages_to_retry")}

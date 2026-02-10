@@ -27,9 +27,11 @@
             "retry_all": "Retry all",
             "select_messages_to_retry": "You can select all or individual messages to retry or delete",
             "server_connectivity_lost_description": "Sent messages will be stored until your connection has returned.",
-            "server_connectivity_lost_title": "Connectivity to the server has been lost.",
             "some_messages_not_sent": "Some of your messages have not been sent"
         }
+    },
+    "tchap": {
+        "server_connectivity_lost_title": "Tchap is not available at the moment. <a>View the status of services</a>."
     },
     "terms": {
         "tac_button": "Review terms and conditions"

@@ -59,7 +59,6 @@
     "encryption|set_up_toast_description",
     "auth|logout_dialog|use_key_backup",
     "settings|security|message_search_space_used",
-    "bug_reporting|download_logs",
     "create_space|private_only_heading",
     "room_settings|security|join_rule_world_readable_description",
     "slash_command|no_active_call",
@@ -72,5 +71,7 @@
     "slash_command|addwidget_missing_url",
     "slash_command|addwidget_iframe_missing_src",
     "slash_command|addwidget_no_permissions",
-    "slash_command|addwidget_invalid_protocol"
+    "slash_command|addwidget_invalid_protocol",
+    "settings|security|message_search_pending_rooms",
+    "room|status_bar|some_messages_not_sent"
 ]

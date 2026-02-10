@@ -307,10 +307,22 @@
         ]
     },
     "desktop-auto-update": {
-     "issue": "https://github.com/tchapgouv/tchap-desktop/issues/162",
+        "issue": "https://github.com/tchapgouv/tchap-desktop/issues/162",
         "files": [
             "src/components/structures/MatrixChat.tsx",
             "src/dispatcher/actions.ts"
         ]   
+    },
+    "auto-accept-terms-condition": {
+        "issue":"",
+        "files": [
+            "src/viewmodels/room/RoomStatusBar.ts"
+        ]
+    },
+    "error-tchap-is-down": {
+        "issue":"",
+        "files": [
+            "packages/shared-components/src/room/RoomStatusBar/RoomStatusBarView.tsx"
+        ]
     }
 }
