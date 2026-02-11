@@ -820,6 +820,7 @@ export default class LegacyCallHandler extends TypedEventEmitter<LegacyCallHandl
 
         // if the runtime env doesn't do VoIP, whine.
         if (!cli.supportsVoip()) {
+            console.log("*** doesnt support voip")
             Modal.createDialog(ErrorDialog, {
                 title: _t("voip|unsupported"),
                 description: _t("voip|unsupported_browser"),
@@ -828,6 +829,7 @@ export default class LegacyCallHandler extends TypedEventEmitter<LegacyCallHandl
         }
 
         if (cli.getSyncState() === SyncState.Error) {
+            console.log("*** sunc state error")
             Modal.createDialog(ErrorDialog, {
                 title: _t("voip|connection_lost"),
                 description: _t("voip|connection_lost_description"),
@@ -837,6 +839,7 @@ export default class LegacyCallHandler extends TypedEventEmitter<LegacyCallHandl
 
         // don't allow > 2 calls to be placed.
         if (this.getAllActiveCalls().length > 1) {
+            console.log("*** more than 1 active call")
             Modal.createDialog(ErrorDialog, {
                 title: _t("voip|too_many_calls"),
                 description: _t("voip|too_many_calls_description"),
@@ -848,7 +851,9 @@ export default class LegacyCallHandler extends TypedEventEmitter<LegacyCallHandl
         // otherwise it can race.
 
         const members = getJoinedNonFunctionalMembers(room);
+        console.log("*** members", members)
         if (members.length <= 1) {
+            console.log("*** member lenght")
             Modal.createDialog(ErrorDialog, {
                 description: _t("voip|cannot_call_yourself_description"),
             });

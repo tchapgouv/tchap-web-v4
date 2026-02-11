@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 
-# This postinstall script is to make sure we use the linked-dependencies module for matrx-react-sdk
-
+# Apply tchap patches on patches_tchap folder
 ./scripts/tchap/apply_patches.sh
 
+# Apply element patches from patches folder
 yarn patch-package
