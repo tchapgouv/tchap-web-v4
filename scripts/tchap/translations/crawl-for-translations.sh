@@ -14,7 +14,7 @@ crawl () {
     # Then it writes key:value in OUTPUT_FILE.
     export INPUT_FILE=$1 # var read by matrix-gen-i18n, don't rename
     export OUTPUT_FILE=$2 # var read by matrix-gen-i18n, don't rename
-    yarn matrix-gen-i18n src res packages/shared-components/src;
+    yarn matrix-gen-i18n src res;
     retVal=$?
     if [ $retVal -ne 0 ]; then
         echo "gen-i18n failed. Aborting."
@@ -32,6 +32,10 @@ export CRAWLED=$2
 
 # Repo web
 crawl $REFERENCE_TRANSLATIONS $CRAWLED
+
+# Merge with SC file, no need to crawl, since everything is referenced in en_EN directly
+export ELEMENT_WEB_SC_TRANSLATION_FILE=`realpath packages/shared-components/src/i18n/strings/en_EN.json`
+merge_json_files $CRAWLED $ELEMENT_WEB_SC_TRANSLATION_FILE $CRAWLED
 
 # Extra hack : config.json is not crawled by matrix-gen-i18n, so the terms_and_conditions_links are missing. Add them in.
 # Get the terms_and_conditions strings from config.json

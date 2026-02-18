@@ -99,7 +99,7 @@ describe("<SessionManagerTab />", () => {
             doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(true),
             getPushers: jest.fn(),
             setPusher: jest.fn(),
-            setLocalNotificationSettings: jest.fn()
+            setLocalNotificationSettings: jest.fn(),
         });
         jest.clearAllMocks();
         jest.spyOn(logger, "error").mockRestore();

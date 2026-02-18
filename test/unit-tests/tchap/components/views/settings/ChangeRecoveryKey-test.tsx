@@ -132,7 +132,6 @@ describe("<ChangeRecoveryKey />", () => {
             // Display the recovery key to save
             await waitFor(() => user.click(getByRole("button", { name: "Continue" })));
 
-
             // Display the form to confirm the recovery key
             // :TCHAP:  it is named action instead of Copy and continue because it is not loading the tchap translation overload
             await waitFor(() => user.click(getByRole("button", { name: "action" })));
@@ -140,7 +139,7 @@ describe("<ChangeRecoveryKey />", () => {
             await waitFor(() => expect(getByText("Enter your recovery key to confirm")).toBeInTheDocument());
 
             const input = getByTitle("Enter recovery key");
-            
+
             input.focus();
 
             await waitFor(() => user.paste("encoded private key"));
@@ -152,7 +151,9 @@ describe("<ChangeRecoveryKey />", () => {
 
             await waitFor(() => user.click(finishButton));
 
-            await waitFor(() => expect(Modal.createDialog).toHaveBeenCalledWith(Spinner, undefined, "mx_Dialog_spinner"));
+            await waitFor(() =>
+                expect(Modal.createDialog).toHaveBeenCalledWith(Spinner, undefined, "mx_Dialog_spinner"),
+            );
             // : TCHAP: compare to element, we already mocked the modal
             expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
                 title: "Failed to set up secret storage",

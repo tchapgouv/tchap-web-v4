@@ -1,29 +1,18 @@
 {
     "activate-expired-account-panel": {
         "package": "matrix-js-sdk",
-        "files": [
-            "src/http-api/interface.ts",
-            "src/http-api/fetch.ts",
-            "src/sync.ts"
-        ]
+        "files": ["src/http-api/interface.ts", "src/http-api/fetch.ts", "src/sync.ts"]
     },
     "remove-font-lasuite-integration": {
         "package": "@gouvfr-lasuite/integration",
-        "files": [
-            "dist/css/homepage-full.css"
-        ]
+        "files": ["dist/css/homepage-full.css"]
     },
     "prefer-sso-interactive-auth": {
         "package": "matrix-js-sdk",
-        "files": [
-            "src/interactive-auth.ts"
-        ]
+        "files": ["src/interactive-auth.ts"]
     },
     "expose-pkencryption": {
         "package": "matrix-js-sdk",
-        "files": [
-            "src/crypto-api/index.ts",
-            "src/rust-crypto/rust-crypto.ts"
-        ]
+        "files": ["src/crypto-api/index.ts", "src/rust-crypto/rust-crypto.ts"]
     }
 }

@@ -1,8 +1,8 @@
 ## How to make patches
 
--   Make some changes to dependencies files : matrix-js-sdk : in node_modules/matrix-js-sdk or in the yarn-linked repo if you are using yarn links.
--   add the info for your new patch `my-new-patch-name` in `patches/patches.json`
--   run `yarn patch-make my-new-patch-name`
+- Make some changes to dependencies files : matrix-js-sdk : in node_modules/matrix-js-sdk or in the yarn-linked repo if you are using yarn links.
+- add the info for your new patch `my-new-patch-name` in `patches_tchap/patches.json`
+- run `yarn patch-make my-new-patch-name`
 
 When you have made edits to the files, recreate the patch by running again : `yarn patch-make my-new-patch-name`
 

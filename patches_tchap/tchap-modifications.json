@@ -1,22 +1,15 @@
 {
     "onboarding-add-secure-backup": {
-        "PR": "https://github.com/tchapgouv/tchap-web-v4/pull/978/", 
-        "files": [
-            "src/hooks/useUserOnboardingContext.ts",
-            "src/hooks/useUserOnboardingTasks.ts"
-        ]
+        "PR": "https://github.com/tchapgouv/tchap-web-v4/pull/978/",
+        "files": ["src/hooks/useUserOnboardingContext.ts", "src/hooks/useUserOnboardingTasks.ts"]
     },
     "hide-video-button-on-call-screen": {
-        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/952", 
-        "files": [
-            "src/components/views/voip/LegacyCallView.tsx"
-        ]
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/952",
+        "files": ["src/components/views/voip/LegacyCallView.tsx"]
     },
     "email-notification-setting-caption": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/988",
-        "files": [
-            "src/components/views/settings/Notifications.tsx"
-        ]
+        "files": ["src/components/views/settings/Notifications.tsx"]
     },
     "extend-remove-thread-buttons": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/988",
@@ -28,27 +21,19 @@
     },
     "lasuite-gaufre-integration": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1012",
-        "files": [
-            "src/components/views/spaces/SpacePanel.tsx"
-        ]
+        "files": ["src/components/views/spaces/SpacePanel.tsx"]
     },
     "hide-screensharing-button": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1042",
-        "files": [
-            "src/components/views/voip/LegacyCallView.tsx"
-        ]
+        "files": ["src/components/views/voip/LegacyCallView.tsx"]
     },
     "lowercase-invite": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/983",
-        "files": [
-            "src/components/views/dialogs/InviteDialog.tsx"
-        ]
+        "files": ["src/components/views/dialogs/InviteDialog.tsx"]
     },
     "improve-faq-visibility": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/395",
-        "files": [
-            "src/components/views/spaces/SpacePanel.tsx"
-        ]
+        "files": ["src/components/views/spaces/SpacePanel.tsx"]
     },
     "space-remove-public-and-subspace": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/878",
@@ -61,28 +46,20 @@
     },
     "reset-password-warning-close-window": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1067",
-        "files": [
-            "src/components/structures/auth/forgot-password/CheckEmail.tsx"
-        ]
+        "files": ["src/components/structures/auth/forgot-password/CheckEmail.tsx"]
     },
     "onboarding-add-tchap-guide": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1069",
-        "files": [
-            "src/hooks/useUserOnboardingTasks.ts",
-            "src/hooks/useUserOnboardingContext.ts"
-
-        ]
+        "files": ["src/hooks/useUserOnboardingTasks.ts", "src/hooks/useUserOnboardingContext.ts"]
     },
     "hide-discovery-email-phone-settings-updated": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1080",
-        "files": [
-            "src/components/views/settings/tabs/user/AccountUserSettingsTab.tsx"
-        ]
-    }, 
+        "files": ["src/components/views/settings/tabs/user/AccountUserSettingsTab.tsx"]
+    },
     "sso-agentconnect-flow": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/386",
         "files": [
-        "src/components/structures/MatrixChat.tsx",
+            "src/components/structures/MatrixChat.tsx",
             "src/components/structures/auth/Registration.tsx",
             "src/components/structures/auth/Login.tsx",
             "src/components/views/auth/Welcome.tsx",
@@ -99,9 +76,7 @@
     },
     "red-list-settings": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1134",
-        "files": [
-            "src/components/views/settings/tabs/user/AccountUserSettingsTab.tsx"
-        ]
+        "files": ["src/components/views/settings/tabs/user/AccountUserSettingsTab.tsx"]
     },
     "help-access-verify-device": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1140",
@@ -124,16 +99,11 @@
     },
     "last-admin-warning-room-settings": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1092",
-        "files": [
-            "src/components/views/settings/PowerLevelSelector.tsx"
-        ]
+        "files": ["src/components/views/settings/PowerLevelSelector.tsx"]
     },
     "remove-notification-powerlevel-change": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1176",
-        "files": [
-            "src/Unread.ts",
-            "src/stores/room-list/algorithms/tag-sorting/RecentAlgorithm.ts"
-        ]
+        "files": ["src/Unread.ts", "src/stores/room-list/algorithms/tag-sorting/RecentAlgorithm.ts"]
     },
     "externals-error-messages": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1164",
@@ -145,10 +115,7 @@
     },
     "metrics-call": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1184",
-        "files": [
-            "src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx",
-            "src/LegacyCallHandler.tsx"
-        ]
+        "files": ["src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx", "src/LegacyCallHandler.tsx"]
     },
     "copy-link-room-behavior": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1187",
@@ -159,60 +126,39 @@
     },
     "default-language-french": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1199",
-        "files": [
-            "src/vector/init.tsx"
-        ]
+        "files": ["src/vector/init.tsx"]
     },
     "hide-history-setting-since-selection": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1160",
-        "files": [
-            "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
-        ]
+        "files": ["src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"]
     },
     "remove-identity-change-warning": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1177",
-        "files": [
-            "src/components/views/rooms/MessageComposer.tsx"
-        ]
+        "files": ["src/components/views/rooms/MessageComposer.tsx"]
     },
     "lasuite-header": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1183",
-        "files": [
-            "src/components/views/auth/AuthPage.tsx",
-            "src/vector/index.html"
-        ]
+        "files": ["src/components/views/auth/AuthPage.tsx", "src/vector/index.html"]
     },
     "remove-toast-analytics-browser-support": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1222",
-        "files": [
-            "src/SupportedBrowser.ts",
-            "src/components/structures/MatrixChat.tsx"
-        ]
+        "files": ["src/SupportedBrowser.ts", "src/components/structures/MatrixChat.tsx"]
     },
     "remove-jitsi-option": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1130",
-        "files": [
-            "src/hooks/room/useRoomCall.tsx"
-        ]
+        "files": ["src/hooks/room/useRoomCall.tsx"]
     },
     "tac-remove-tooltip": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1233",
-        "files": [
-            "src/components/views/spaces/threads-activity-centre/ThreadsActivityCentreButton.tsx"
-        ]
+        "files": ["src/components/views/spaces/threads-activity-centre/ThreadsActivityCentreButton.tsx"]
     },
     "mail-signature": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1254",
-        "files": [
-            "src/tchap/components/views/settings/tabs/user/TchapMailSignature.tsx",
-            "src/PosthogTrackers.ts"
-        ]
+        "files": ["src/tchap/components/views/settings/tabs/user/TchapMailSignature.tsx", "src/PosthogTrackers.ts"]
     },
     "export-room-members": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1263",
-        "files": [
-            "src/components/views/rooms/MemberList/MemberListHeaderView.tsx"
-        ]
+        "files": ["src/components/views/rooms/MemberList/MemberListHeaderView.tsx"]
     },
     "flow-legacy-call-element-call": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1174",
@@ -237,18 +183,13 @@
     },
     "sso-login-hint": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1245",
-        "files": [
-            "src/BasePlatform.ts",
-            "src/components/views/auth/InteractiveAuthEntryComponents.tsx"
-        ]
+        "files": ["src/BasePlatform.ts", "src/components/views/auth/InteractiveAuthEntryComponents.tsx"]
     },
     "warning-logout-dialog": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1319",
-        "files": [
-            "src/components/views/dialogs/LogoutDialog.tsx"
-        ]
+        "files": ["src/components/views/dialogs/LogoutDialog.tsx"]
     },
-    "encryption-panel-recovery-code" : {
+    "encryption-panel-recovery-code": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1339",
         "files": [
             "src/components/views/settings/tabs/user/EncryptionUserSettingsTab.tsx",
@@ -266,63 +207,42 @@
     },
     "group-call-modal-confirmation": {
         "isuue": "https://github.com/tchapgouv/tchap-web-v4/issues/1394",
-        "files": [
-            "src/components/views/rooms/RoomHeader/RoomHeader.tsx"
-        ]
+        "files": ["src/components/views/rooms/RoomHeader/RoomHeader.tsx"]
     },
     "recovery-code-flow-improve": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1365",
-        "files": [
-            "src/components/views/settings/encryption/ChangeRecoveryKey.tsx"
-        ]
+        "files": ["src/components/views/settings/encryption/ChangeRecoveryKey.tsx"]
     },
     "desktop-manage-search-messages": {
         "issue": "https://github.com/tchapgouv/tchap-desktop/issues/78",
-        "files": [
-            "src/async-components/views/dialogs/eventindex/ManageEventIndexDialog.tsx"
-        ]
+        "files": ["src/async-components/views/dialogs/eventindex/ManageEventIndexDialog.tsx"]
     },
     "keybackup-out-of-sync-hide-toast": {
         "issue": "",
-        "files": [
-            "src/toasts/SetupEncryptionToast.ts"
-        ]
+        "files": ["src/toasts/SetupEncryptionToast.ts"]
     },
     "oidc-logout": {
         "issue": "",
-        "files": [
-            "src/stores/oidc/OidcClientStore.ts"
-        ]
+        "files": ["src/stores/oidc/OidcClientStore.ts"]
     },
     "welcome-flow-MAS-ui": {
-     "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1494",
-        "files": [
-            "src/components/structures/auth/CompleteSecurity.tsx"
-        ]   
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1494",
+        "files": ["src/components/structures/auth/CompleteSecurity.tsx"]
     },
     "desktop-uia": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1500",
-        "files": [
-            "src/components/views/auth/InteractiveAuthEntryComponents.tsx"
-        ]
+        "files": ["src/components/views/auth/InteractiveAuthEntryComponents.tsx"]
     },
     "desktop-auto-update": {
         "issue": "https://github.com/tchapgouv/tchap-desktop/issues/162",
-        "files": [
-            "src/components/structures/MatrixChat.tsx",
-            "src/dispatcher/actions.ts"
-        ]   
+        "files": ["src/components/structures/MatrixChat.tsx", "src/dispatcher/actions.ts"]
     },
     "auto-accept-terms-condition": {
-        "issue":"",
-        "files": [
-            "src/viewmodels/room/RoomStatusBar.ts"
-        ]
+        "issue": "",
+        "files": ["src/viewmodels/room/RoomStatusBar.ts"]
     },
     "error-tchap-is-down": {
-        "issue":"",
-        "files": [
-            "packages/shared-components/src/room/RoomStatusBar/RoomStatusBarView.tsx"
-        ]
+        "issue": "",
+        "files": ["packages/shared-components/src/room/RoomStatusBar/RoomStatusBarView.tsx"]
     }
 }
