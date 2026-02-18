@@ -85,6 +85,7 @@ function RoomHeaderButtons({
         showVoiceCallButton,
         showVideoCallButton,
     } = useRoomCall(room);
+
     const threadNotifications = useRoomThreadNotifications(room);
     const globalNotificationState = useGlobalNotificationState();
 
@@ -102,14 +103,11 @@ function RoomHeaderButtons({
     // );
     const videoClick = useCallback(
         async (ev: React.MouseEvent, isJoin: boolean = false) => {
-            console.log("***isDirectMessage", isDirectMessage);
             // directly start call if join click or is a DM video call
             if (isJoin || isDirectMessage) {
-                console.log("*** direct start call");
                 videoCallClick(ev, callOptions[0]);
                 return;
             }
-            console.log("*** Modale")
             const { finished } = Modal.createDialog(QuestionDialog, {
                 title: _t("voip|modal_confirmation_title"),
                 description: (
@@ -122,7 +120,6 @@ function RoomHeaderButtons({
             });
             const [confirmed] = await finished;
             if (confirmed) {
-                console.log("*** Modale confirmed")
                 videoCallClick(ev, callOptions[0])
             }
         },

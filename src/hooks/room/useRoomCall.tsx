@@ -170,7 +170,7 @@ export const useRoomCall = (
     ]);
 
     const mayCreateElementCalls = mayCreateElementCallState && serverIsConfiguredForElementCall;
-    console.log("***mayCreateElementCalls", mayCreateElementCalls);
+
     // The options provided to the RoomHeader.
     // If there are multiple options, the user will be prompted to choose.
     const callOptions = useMemo((): PlatformCallType[] => {
@@ -277,7 +277,6 @@ export const useRoomCall = (
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-                console.log("****placecall voice", callPlatformType, evt?.shiftKey)
                 placeCall(room, CallType.Voice, callPlatformType, evt?.shiftKey || undefined, true);
             }
         },
@@ -289,8 +288,6 @@ export const useRoomCall = (
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-
-                console.log("****placecall video", callPlatformType, evt?.shiftKey)
                 // If we have pressed shift then always skip the lobby, otherwise `undefined` will defer
                 // to the defaults of the call implementation.
                 placeCall(room, CallType.Video, callPlatformType, evt?.shiftKey || undefined, false);
