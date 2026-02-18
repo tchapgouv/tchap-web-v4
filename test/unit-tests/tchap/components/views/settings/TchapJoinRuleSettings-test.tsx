@@ -131,7 +131,7 @@ describe("TchapJoinRule", () => {
         // link room access button
         const linkSwitch = screen.getByRole("switch", { name: "room_settings" });
 
-        expect(linkSwitch.getAttribute("aria-disabled")).toBeTruthy();
+        expect(linkSwitch).toBeDisabled();
         // should not see external link switch, since we didnt click on activate access by link
         expect(
             screen.queryByRole("switch", { name: "Allow external users to join this room" }),

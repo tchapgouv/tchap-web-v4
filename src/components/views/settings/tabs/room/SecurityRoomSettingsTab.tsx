@@ -43,7 +43,6 @@ import SdkConfig from "../../../../../SdkConfig";
 import { shouldForceDisableEncryption } from "../../../../../utils/crypto/shouldForceDisableEncryption";
 import { Caption } from "../../../typography/Caption";
 import { MEGOLM_ENCRYPTION_ALGORITHM } from "../../../../../utils/crypto";
-import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 
 interface IProps {
     room: Room;
@@ -257,8 +256,6 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
     private renderJoinRule(): JSX.Element {
         const room = this.props.room;
-
-        /* :TCHAP: disable-access-options - remove
         const isPublic = room.getJoinRule() === JoinRule.Public;
         const description = (
             <>
@@ -273,7 +270,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         <span>{_t("room_settings|security|join_rule_world_readable_description")}</span>
                     </div>
                 )}
-                {isPublic && !this.state.hasAliases && (
+                {/* :TCHAP: remove alias warning */}
+                {false && isPublic && !this.state.hasAliases && (
                     <div className="mx_SecurityRoomSettingsTab_warning">
                         <WarningIcon width={15} height={15} />
                         <span>{_t("room_settings|security|public_without_alias_warning")}</span>
@@ -281,13 +279,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 )}
             </>
         );
-        end :TCHAP: */
-        const description = _t("room_settings|security|join_rule_description", {
-            roomName: room.name,
-        });
 
         let advanced: JSX.Element | undefined;
-        if (false) { // :TCHAP: disable-access-options - no guest access - if(room.getJoinRule() === JoinRule.Public) {
+        if (room.getJoinRule() === JoinRule.Public) {
             advanced = (
                 <div>
                     <AccessibleButton
@@ -461,23 +455,18 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             });
         }
 
-        // :TCHAP: hide-history-setting-since-selection
-        if (this.state.encrypted) {
-            // we remove HistoryVisibility.Shared, its not working on encrypted rooms
-            options.shift();
-        }
-        // end :TCHAP:
         const description = (
             <>
-                {_t(
+                {/* :TCHAP: {_t(
                     "room_settings|security|history_visibility_warning",
                     {},
                     {
                         a: (sub) => (
-                            <ExternalLink href={TchapUrls.helpCreateRoom}>{sub}</ExternalLink>
+                            <ExternalLink href="https://element.io/en/help#e2ee-history-sharing">{sub}</ExternalLink>
                         ),
                     },
-                )}
+                )} */}
+                {_t("room_settings|security|history_visibility_warning")}
             </>
         );
 
@@ -523,16 +512,10 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const room = this.props.room;
         const isEncrypted = this.state.encrypted;
         const isStateEncrypted = this.state.stateEncrypted;
-        /* :TCHAP: disable-access-options - does not allow changing encryption
         const isEncryptionLoading = isEncrypted === null;
         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
         const isEncryptionForceDisabled = shouldForceDisableEncryption(client);
         const canEnableEncryption = !isEncrypted && !isEncryptionForceDisabled && hasEncryptionPermission;
-        */
-        const isEncryptionLoading = isEncrypted === null;
-        const isEncryptionForceDisabled = false;
-        const canEnableEncryption = false;
-        // end :TCHAP:
 
         let encryptionSettings: JSX.Element | undefined;
         if (
