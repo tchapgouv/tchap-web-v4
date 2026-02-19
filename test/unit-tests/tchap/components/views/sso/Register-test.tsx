@@ -3,7 +3,7 @@ import { render, screen, waitForElementToBeRemoved } from "jest-matrix-react";
 import { type MockedObject } from "jest-mock";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import { type MatrixClient, MatrixError, type OidcClientConfig } from "matrix-js-sdk/src/matrix";
-import fetchMock from "fetch-mock";
+import fetchMock from "@fetch-mock/jest";
 
 import SdkConfig, { type ConfigOptions, DEFAULTS } from "~tchap-web/src/SdkConfig";
 import Registration from "~tchap-web/src/components/structures/auth/Registration";
@@ -107,7 +107,7 @@ describe("<Register />", () => {
 
     afterEach(() => {
         jest.restoreAllMocks();
-        fetchMock.restore();
+        fetchMock.mockRestore();
         SdkConfig.reset(); // we touch the config, so clean up
         unmockPlatformPeg();
     });

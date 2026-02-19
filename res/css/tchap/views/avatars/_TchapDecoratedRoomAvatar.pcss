@@ -2,17 +2,7 @@
 Copyright 2022 DINUM
 */
 
-.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_positionedParent {
-    position: relative;
-    display: inline-block;
-}
-
-.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_forum::before,
-.mx_ExtraTile .mx_DecoratedRoomAvatar_icon_forum::before {
-    mask-position: center;
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-image: url("../../../img/tchap/padlock-forum.svg");
+.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_forum::before{
     background-color: var(--forum-color);
     bottom: -13%;
     right: -30%;
@@ -22,10 +12,6 @@ Copyright 2022 DINUM
 
 .mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_private::before,
 .mx_ExtraTile .mx_DecoratedRoomAvatar_icon_private::before {
-    mask-position: center;
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-image: url("../../../img/tchap/padlock-private.svg");
     background-color: var(--private-color);
     bottom: -13%;
     right: -30%;
@@ -35,10 +21,6 @@ Copyright 2022 DINUM
 
 .mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_external::before,
 .mx_ExtraTile .mx_DecoratedRoomAvatar_icon_external::before {
-    mask-position: center;
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-image: url("../../../img/tchap/padlock-external.svg");
     background-color: var(--external-color);
     bottom: -13%;
     right: -30%;

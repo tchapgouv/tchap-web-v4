@@ -8,7 +8,7 @@ import {
     TypedEventEmitter,
     MatrixHttpApi,
 } from "matrix-js-sdk/src/matrix";
-import fetchMock from "fetch-mock-jest";
+import fetchMock from "@fetch-mock/jest";
 
 import { getMockClientWithEventEmitter, mockClientMethodsCrypto } from "~tchap-web/test/test-utils";
 import { collectBugReport } from "~tchap-web/src/rageshake/submit-rageshake";
@@ -53,7 +53,7 @@ describe("Rageshakes", () => {
             ],
         });
 
-        fetchMock.restore();
+        fetchMock.mockReset();
         fetchMock.catch(404);
     });
 

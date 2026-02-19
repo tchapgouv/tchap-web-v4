@@ -1,4 +1,5 @@
 /*
+ * Copyright 2025 Element Creations Ltd.
  * Copyright 2024 New Vector Ltd.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
@@ -29,7 +30,8 @@ import { initialiseDehydrationIfEnabled } from "../../../../utils/device/dehydra
 import { withSecretStorageKeyCache } from "../../../../SecurityManager";
 import { EncryptionCardButtons } from "./EncryptionCardButtons";
 import { logErrorAndShowErrorDialog } from "../../../../utils/ErrorUtils.tsx";
-import { RECOVERY_ACCOUNT_DATA_KEY } from "../../../../DeviceListener";
+import DeviceListener, { RECOVERY_ACCOUNT_DATA_KEY } from "../../../../DeviceListener";
+import { resetKeyBackupAndWait } from "../../../../utils/crypto/resetKeyBackup";
 import Spinner from "../../elements/Spinner.tsx";
 
 import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP:
@@ -128,21 +130,34 @@ export function ChangeRecoveryKey({
                     onCancelClick={onCancelClick}
                     onSubmit={async () => {
                         const crypto = matrixClient.getCrypto();
+                        console.log("**** crypto", crypto)
                         if (!crypto) return onFinish();
 
                         // :TCHAP: :TCHAP: recovery-code-flow-improve 
                         const spinner = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
                         // end :TCHAP:
                         try {
+                            const deviceListener = DeviceListener.sharedInstance();
 
-                            // We need to enable the cache to avoid to prompt the user to enter the new key
-                            // when we will try to access the secret storage during the bootstrap
-                            await withSecretStorageKeyCache(async () => {
-                                await crypto.bootstrapSecretStorage({
-                                    setupNewSecretStorage: true,
-                                    createSecretStorageKey: async () => recoveryKey,
+                            // we need to call keyStorageOutOfSyncNeedsBackupReset here because
+                            // deviceListener.whilePaused() sets its client to undefined, so
+                            // keyStorageOutOfSyncNeedsBackupReset won't be able to check
+                            // the backup state.
+                            const needsBackupReset = await deviceListener.keyStorageOutOfSyncNeedsBackupReset(true);
+                            await deviceListener.whilePaused(async () => {
+                                // We need to enable the cache to avoid to prompt the user to enter the new key
+                                // when we will try to access the secret storage during the bootstrap
+                                await withSecretStorageKeyCache(async () => {
+                                    await crypto.bootstrapSecretStorage({
+                                        setupNewSecretStorage: true,
+                                        createSecretStorageKey: async () => recoveryKey,
+                                    });
+                                    // Reset the key backup if needed
+                                    if (needsBackupReset) {
+                                        await resetKeyBackupAndWait(crypto);
+                                    }
+                                    await initialiseDehydrationIfEnabled(matrixClient, { createNewKey: true });
                                 });
-                                await initialiseDehydrationIfEnabled(matrixClient, { createNewKey: true });
                             });
 
                             // Record the fact that the user explicitly enabled recovery.
@@ -370,7 +385,6 @@ function KeyForm({ onCancelClick, onSubmit, recoveryKey, submitButtonLabel }: Ke
             onChange={async (evt) => {
                 evt.preventDefault();
                 evt.stopPropagation();
-
                 // We don't have any file in the form, we can cast it as string safely
                 const filledKey = new FormData(evt.currentTarget).get("recoveryKey") as string | "";
                 setIsKeyValid(filledKey.trim() === recoveryKey);

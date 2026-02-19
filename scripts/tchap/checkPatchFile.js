@@ -64,12 +64,12 @@ function checkForMissingElementsInPatchFile(patchFile, patchDirs) {
 
 const getPatchDirs = () => {
     return fs
-        .readdirSync("patches", { withFileTypes: true })
+        .readdirSync("patches_tchap", { withFileTypes: true })
         .filter((file) => file.isDirectory())
         .map((dir) => dir.name);
 };
 
-const patchFile = require("../../patches/patches.json");
+const patchFile = require("../../patches_tchap/patches.json");
 const patchDirs = getPatchDirs();
 checkForDuplicateFiles(patchFile);
 checkForMissingPatchDirs(patchFile, patchDirs);

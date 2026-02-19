@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 import EventEmitter from "events";
 import { logger } from "matrix-js-sdk/src/logger";
+import { type JSX } from "react";
 
 import type React from "react";
 import { type ComponentClass } from "../@types/common";
@@ -17,7 +18,7 @@ export interface IToast<C extends ComponentClass> {
     // higher priority number will be shown on top of lower priority
     priority: number;
     title?: string;
-    icon?: string;
+    icon?: JSX.Element;
     component: C;
     className?: string;
     bodyClassName?: string;
@@ -29,9 +30,6 @@ export interface IToast<C extends ComponentClass> {
  */
 export default class ToastStore extends EventEmitter {
     private toasts: IToast<any>[] = [];
-    // The count of toasts which have been seen & dealt with in this stack
-    // where the count resets when the stack of toasts clears.
-    private countSeen = 0;
 
     public static sharedInstance(): ToastStore {
         if (!window.mxToastStore) window.mxToastStore = new ToastStore();
@@ -40,7 +38,6 @@ export default class ToastStore extends EventEmitter {
 
     public reset(): void {
         this.toasts = [];
-        this.countSeen = 0;
     }
 
     /**
@@ -67,27 +64,15 @@ export default class ToastStore extends EventEmitter {
     }
 
     public dismissToast(key: string): void {
-        if (this.toasts[0] && this.toasts[0].key === key) {
-            this.countSeen++;
-        }
-
         const length = this.toasts.length;
         this.toasts = this.toasts.filter((t) => t.key !== key);
         if (length !== this.toasts.length) {
             logger.info(`Removed toast with key '${key}'`);
-            if (this.toasts.length === 0) {
-                this.countSeen = 0;
-            }
-
             this.emit("update");
         }
     }
 
     public getToasts(): IToast<any>[] {
         return this.toasts;
-    }
-
-    public getCountSeen(): number {
-        return this.countSeen;
     }
 }

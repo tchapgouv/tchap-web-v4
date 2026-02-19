@@ -6,9 +6,9 @@ import React from "react";
 import classNames from "classnames";
 import { _t } from "~tchap-web/src/languageHandler";
 import StyledRadioButton from "~tchap-web/src/components/views/elements/StyledRadioButton";
-import LabelledToggleSwitch from "~tchap-web/src/components/views/elements/LabelledToggleSwitch";
 
 import { TchapRoomType } from "../../../@types/tchap";
+import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 
 
 interface IProps {
@@ -61,15 +61,21 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         let roomFederateOpt;
         if (this.props.showFederateSwitch) {
             roomFederateOpt = (
-                <div>
-                    <LabelledToggleSwitch
-                        label={_t('Allow access to this room to all users, even outside "%(domain)s" domain', {
-                            domain: this.props.shortDomain,
-                        })}
-                        onChange={this.props.setForumFederationSwitchValue}
-                        value={this.props.forumFederationSwitchValue}
-                    />
-                </div>
+                <Form.Root
+                onSubmit={(evt) => {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }}
+            >
+                <SettingsToggleInput
+                    name="only_joined_members"
+                    label={_t('Allow access to this room to all users, even outside "%(domain)s" domain', {
+                        domain: this.props.shortDomain,
+                    })}
+                    onChange={(e) => this.props.setForumFederationSwitchValue(e.target.checked)}
+                    checked={this.props.forumFederationSwitchValue}
+                />
+            </Form.Root>
             );
         }
 

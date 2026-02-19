@@ -23,7 +23,9 @@ async function uploadFile(page: Page, file: string) {
 
     // Wait until the file is sent
     await expect(page.locator(".mx_RoomView_statusArea_expanded")).not.toBeVisible();
-    await expect(page.locator(".mx_EventTile.mx_EventTile_last .mx_EventTile_receiptSent")).toBeVisible();
+    await expect(page.locator(".mx_EventTile.mx_EventTile_last").getByRole("status")).toHaveAccessibleName(
+        "Your message was sent",
+    );
 }
 
 test.describe("FilePanel", () => {
@@ -126,7 +128,12 @@ test.describe("FilePanel", () => {
             // Take a snapshot of file tiles list on FilePanel
             await expect(filePanelMessageList).toMatchScreenshot("file-tiles-list.png", {
                 // Exclude timestamps & flaky seek bar from snapshot
-                mask: [page.locator(".mx_MessageTimestamp"), page.getByTestId("audio-player-seek")],
+                mask: [page.getByTestId("audio-player-seek")],
+                css: `
+                    .mx_MessageTimestamp {
+                        visibility: hidden;
+                    }
+                `,
             });
         });
 

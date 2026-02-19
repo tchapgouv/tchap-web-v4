@@ -11,11 +11,11 @@ import React from "react";
 import { EventEmitter } from "events";
 import { type MatrixEvent, Room, RoomMember, type Thread, ReceiptType } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
-import { render } from "jest-matrix-react";
+import { render, within } from "jest-matrix-react";
 
 import MessagePanel, { shouldFormContinuation } from "../../../../src/components/structures/MessagePanel";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
+import RoomContext, { type RoomContextType, TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import * as TestUtilsMatrix from "../../../test-utils";
 import {
@@ -29,7 +29,6 @@ import {
     mockClientPushProcessor,
 } from "../../../test-utils";
 import type ResizeNotifier from "../../../../src/utils/ResizeNotifier";
-import { type IRoomState } from "../../../../src/components/structures/RoomView";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { ScopedRoomContextProvider } from "../../../../src/contexts/ScopedRoomContext.tsx";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext.ts";
@@ -92,9 +91,9 @@ describe("MessagePanel", function () {
         showAvatarChanges: false,
         showDisplaynameChanges: true,
         showHiddenEvents: false,
-    } as unknown as IRoomState;
+    } as unknown as RoomContextType;
 
-    const getComponent = (props = {}, roomContext: Partial<IRoomState> = {}) => (
+    const getComponent = (props = {}, roomContext: Partial<RoomContextType> = {}) => (
         <ScopedRoomContextProvider {...defaultRoomContext} {...roomContext}>
             <MessagePanel {...defaultProps} {...props} />
         </ScopedRoomContextProvider>
@@ -795,8 +794,8 @@ describe("MessagePanel", function () {
 
         const tiles = container.getElementsByClassName("mx_EventTile");
         expect(tiles.length).toEqual(2);
-        expect(tiles[0].querySelector(".mx_EventTile_receiptSent")).toBeTruthy();
-        expect(tiles[1].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+        expect(within(tiles[0] as HTMLElement).queryByRole("status")).toHaveAccessibleName("Your message was sent");
+        expect(within(tiles[1] as HTMLElement).queryByRole("status")).not.toBeInTheDocument();
     });
 
     it("should set lastSuccessful=false on non-last event if last event has a receipt from someone else", () => {
@@ -831,8 +830,8 @@ describe("MessagePanel", function () {
 
         const tiles = container.getElementsByClassName("mx_EventTile");
         expect(tiles.length).toEqual(2);
-        expect(tiles[0].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
-        expect(tiles[1].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+        expect(within(tiles[0] as HTMLElement).queryByRole("status")).not.toBeInTheDocument();
+        expect(within(tiles[1] as HTMLElement).queryByRole("status")).not.toBeInTheDocument();
     });
 });
 

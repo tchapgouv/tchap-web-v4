@@ -19,7 +19,7 @@ import {
     type MatrixClient,
 } from "matrix-js-sdk/src/matrix";
 import { mocked, type MockedObject } from "jest-mock";
-import fetchMock from "fetch-mock-jest";
+import fetchMock from "@fetch-mock/jest";
 
 import {
     clearAllModals,
@@ -100,7 +100,6 @@ describe("<SessionManagerTab />", () => {
             getPushers: jest.fn(),
             setPusher: jest.fn(),
             setLocalNotificationSettings: jest.fn(),
-            getAuthIssuer: jest.fn().mockReturnValue(new Promise(() => {})),
         });
         jest.clearAllMocks();
         jest.spyOn(logger, "error").mockRestore();
@@ -170,16 +169,15 @@ describe("<SessionManagerTab />", () => {
                     enabled: true,
                 },
             });
-            mockClient.getAuthIssuer.mockResolvedValue({ issuer });
             mockCrypto.exportSecretsBundle = jest.fn();
-            fetchMock.mock(`${issuer}/.well-known/openid-configuration`, {
+            fetchMock.get(`${issuer}/.well-known/openid-configuration`, {
                 ...openIdConfiguration,
                 grant_types_supported: [
                     ...openIdConfiguration.grant_types_supported,
                     "urn:ietf:params:oauth:grant-type:device_code",
                 ],
             });
-            fetchMock.mock(openIdConfiguration.jwks_uri!, {
+            fetchMock.get(openIdConfiguration.jwks_uri!, {
                 status: 200,
                 headers: {
                     "Content-Type": "application/json",

@@ -6,14 +6,18 @@
  */
 
 import React, { type HTMLProps, type JSX } from "react";
-import MentionIcon from "@vector-im/compound-design-tokens/assets/web/icons/mention";
-import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error-solid";
-import NotificationOffIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications-off-solid";
-import VideoCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/video-call-solid";
-import EmailIcon from "@vector-im/compound-design-tokens/assets/web/icons/email-solid";
+import {
+    MentionIcon,
+    ErrorIcon,
+    NotificationsOffSolidIcon,
+    VideoCallSolidIcon,
+    EmailSolidIcon,
+    VoiceCallSolidIcon,
+} from "@vector-im/compound-design-tokens/assets/web/icons";
 import { UnreadCounter, Unread } from "@vector-im/compound-web";
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { Flex } from "@element-hq/web-shared-components";
 
-import { Flex } from "../../../../packages/shared-components/src/utils/Flex";
 import { type RoomNotificationState } from "../../../stores/notifications/RoomNotificationState";
 import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
@@ -24,9 +28,9 @@ interface NotificationDecorationProps extends HTMLProps<HTMLDivElement> {
      */
     notificationState: RoomNotificationState;
     /**
-     * Whether the room has a video call.
+     * Whether the room has a voice or video call.
      */
-    hasVideoCall: boolean;
+    callType?: CallType;
 }
 
 /**
@@ -34,7 +38,7 @@ interface NotificationDecorationProps extends HTMLProps<HTMLDivElement> {
  */
 export function NotificationDecoration({
     notificationState,
-    hasVideoCall,
+    callType,
     ...props
 }: NotificationDecorationProps): JSX.Element | null {
     // Listen to the notification state and update the component when it changes
@@ -58,7 +62,7 @@ export function NotificationDecoration({
         muted: notificationState.muted,
     }));
 
-    if (!hasAnyNotificationOrActivity && !muted && !hasVideoCall) return null;
+    if (!hasAnyNotificationOrActivity && !muted && !callType) return null;
 
     return (
         <Flex
@@ -69,12 +73,17 @@ export function NotificationDecoration({
             data-testid="notification-decoration"
         >
             {isUnsentMessage && <ErrorIcon width="20px" height="20px" fill="var(--cpd-color-icon-critical-primary)" />}
-            {hasVideoCall && <VideoCallIcon width="20px" height="20px" fill="var(--cpd-color-icon-accent-primary)" />}
-            {invited && <EmailIcon width="20px" height="20px" fill="var(--cpd-color-icon-accent-primary)" />}
+            {callType === CallType.Video && (
+                <VideoCallSolidIcon width="20px" height="20px" fill="var(--cpd-color-icon-accent-primary)" />
+            )}
+            {callType === CallType.Voice && (
+                <VoiceCallSolidIcon width="20px" height="20px" fill="var(--cpd-color-icon-accent-primary)" />
+            )}
+            {invited && <EmailSolidIcon width="20px" height="20px" fill="var(--cpd-color-icon-accent-primary)" />}
             {isMention && <MentionIcon width="20px" height="20px" fill="var(--cpd-color-icon-accent-primary)" />}
             {(isMention || isNotification) && <UnreadCounter count={count || null} />}
             {isActivityNotification && <Unread />}
-            {muted && <NotificationOffIcon width="20px" height="20px" fill="var(--cpd-color-icon-tertiary)" />}
+            {muted && <NotificationsOffSolidIcon width="20px" height="20px" fill="var(--cpd-color-icon-tertiary)" />}
         </Flex>
     );
 }

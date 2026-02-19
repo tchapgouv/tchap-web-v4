@@ -1,10 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`<VideoRoomChatButton /> renders button with an unread marker when room is unread 1`] = `
 <button
   aria-label="Chat"
-  aria-labelledby="«r6»"
-  class="_icon-button_1pz9o_8"
+  aria-labelledby="_r_6_"
+  class="_icon-button_1215g_8"
   data-indicator="default"
   data-kind="primary"
   role="button"
@@ -12,7 +12,7 @@ exports[`<VideoRoomChatButton /> renders button with an unread marker when room 
   tabindex="0"
 >
   <div
-    class="_indicator-icon_zr2a0_17"
+    class="_indicator-icon_147l5_17"
     data-indicator="default"
     style="--cpd-icon-button-size: 100%;"
   >

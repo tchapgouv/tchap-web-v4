@@ -77,15 +77,14 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
         const modalContentStyle: React.CSSProperties = {
             display: "flex",
             zIndex: 1,
-            borderRadius: "8px",
+            borderRadius: "inherit",
         };
 
         let modalBlur;
         if (this.props.addBlur !== false) {
             // Blur out the background: add a `div` which covers the content behind the modal,
-            // and blurs it out, and make the modal's background semitransparent.
+            // and blurs it out.
             modalBlur = <div className="mx_AuthPage_modalBlur" style={blurStyle} />;
-            modalContentStyle.background = "rgba(255, 255, 255, 0.59)";
         }
 
         const modalClasses = classNames({
@@ -100,9 +99,14 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
                 {/* end :TCHAP: */}
                 <div className={modalClasses} style={modalStyle}>
                     {modalBlur}
-                    <div className="mx_AuthPage_modalContent" style={modalContentStyle}>
+                    <main
+                        className="mx_AuthPage_modalContent"
+                        style={modalContentStyle}
+                        tabIndex={-1}
+                        aria-live="polite"
+                    >
                         {this.props.children}
-                    </div>
+                    </main>
                 </div>
                 {/* :TCHAP: lasuite-footer */}
                 {/* <AuthFooter /> */}

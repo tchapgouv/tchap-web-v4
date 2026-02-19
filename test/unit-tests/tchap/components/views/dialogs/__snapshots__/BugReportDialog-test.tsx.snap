@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`<BugReportDialog> should render as expected 1`] = `
 {
@@ -32,10 +32,10 @@ exports[`<BugReportDialog> should render as expected 1`] = `
           class="mx_Dialog_content"
           id="mx_Dialog_content"
         >
-          <p>
-            <strong>
-              Reminder: Your browser is unsupported, so your experience may be unpredictable.
-            </strong>
+          <p
+            class="_typography_6v6n8_153 _font-body-md-semibold_6v6n8_55"
+          >
+            Reminder: Your browser is unsupported, so your experience may be unpredictable.
           </p>
           <p>
             Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.
@@ -133,10 +133,10 @@ exports[`<BugReportDialog> should render as expected 1`] = `
         class="mx_Dialog_content"
         id="mx_Dialog_content"
       >
-        <p>
-          <strong>
-            Reminder: Your browser is unsupported, so your experience may be unpredictable.
-          </strong>
+        <p
+          class="_typography_6v6n8_153 _font-body-md-semibold_6v6n8_55"
+        >
+          Reminder: Your browser is unsupported, so your experience may be unpredictable.
         </p>
         <p>
           Debug logs contain application usage data including your username, the IDs or aliases of the rooms you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.

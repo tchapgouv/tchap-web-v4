@@ -1,4 +1,4 @@
-const patchFile = require("../../patches/patches.json");
+const patchFile = require("../../patches_tchap/patches.json");
 
 if (process.argv.length !== 3) {
     console.log("\nMissing patch name.");
@@ -17,12 +17,12 @@ if (process.argv.length !== 3) {
 const patchName = process.argv[2];
 const patchInfo = patchFile[patchName];
 if (!patchInfo) {
-    console.log("Your patch name is not listed in patches/patches.json. Aborting.");
+    console.log("Your patch name is not listed in patches_tchap/patches.json. Aborting.");
     process.exit(1);
 }
 
 const fileList = patchInfo.files.join("|");
-const command = `yarn patch-package --patch-dir patches/${patchName} --include "${fileList}"  ${patchInfo.package}`;
+const command = `yarn patch-package --patch-dir patches_tchap/${patchName} --include "${fileList}"  ${patchInfo.package}`;
 
 var child = require("child_process").exec(command);
 // use event hooks to provide a callback to execute when data are available:

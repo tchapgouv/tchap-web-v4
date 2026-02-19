@@ -6,9 +6,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import classNames from "classnames";
 import { type Room } from "matrix-js-sdk/src/matrix";
-import React, { type JSX, Fragment, useState } from "react";
+import React, { Fragment, type JSX, type ReactNode, useState } from "react";
+import {
+    NotificationsOffSolidIcon,
+    OverflowHorizontalIcon,
+    NotificationsSolidIcon,
+} from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { ContextMenuTooltipButton } from "../../../../accessibility/context_menu/ContextMenuTooltipButton";
 import { useNotificationState } from "../../../../hooks/useRoomNotificationState";
@@ -24,6 +28,15 @@ import { UIComponent } from "../../../../settings/UIFeature";
 
 interface Props {
     room: Room;
+}
+
+export function getNotificationIcon(state: RoomNotifState): ReactNode {
+    switch (state) {
+        case RoomNotifState.Mute:
+            return <NotificationsOffSolidIcon />;
+        default:
+            return <NotificationsSolidIcon />;
+    }
 }
 
 export function RoomResultContextMenus({ room }: Props): JSX.Element {
@@ -64,14 +77,6 @@ export function RoomResultContextMenus({ room }: Props): JSX.Element {
         );
     }
 
-    const notificationMenuClasses = classNames("mx_SpotlightDialog_option--notifications", {
-        // Show bell icon for the default case too.
-        mx_RoomNotificationContextMenu_iconBell: notificationState === RoomNotifState.AllMessages,
-        mx_RoomNotificationContextMenu_iconBellDot: notificationState === RoomNotifState.AllMessagesLoud,
-        mx_RoomNotificationContextMenu_iconBellMentions: notificationState === RoomNotifState.MentionsOnly,
-        mx_RoomNotificationContextMenu_iconBellCrossed: notificationState === RoomNotifState.Mute,
-    });
-
     return (
         <Fragment>
             {shouldShowComponent(UIComponent.RoomOptionsMenu) && (
@@ -86,11 +91,13 @@ export function RoomResultContextMenus({ room }: Props): JSX.Element {
                     }}
                     title={room.isSpaceRoom() ? _t("space|context_menu|options") : _t("room|context_menu|title")}
                     isExpanded={generalMenuPosition !== null}
-                />
+                >
+                    <OverflowHorizontalIcon />
+                </ContextMenuTooltipButton>
             )}
             {!room.isSpaceRoom() && (
                 <ContextMenuTooltipButton
-                    className={notificationMenuClasses}
+                    className="mx_SpotlightDialog_option--notifications"
                     onClick={(ev: ButtonEvent) => {
                         ev.preventDefault();
                         ev.stopPropagation();
@@ -100,7 +107,9 @@ export function RoomResultContextMenus({ room }: Props): JSX.Element {
                     }}
                     title={_t("room_list|notification_options")}
                     isExpanded={notificationMenuPosition !== null}
-                />
+                >
+                    {getNotificationIcon(notificationState!)}
+                </ContextMenuTooltipButton>
             )}
             {generalMenu}
             {notificationMenu}

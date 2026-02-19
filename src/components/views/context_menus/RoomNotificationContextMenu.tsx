@@ -46,7 +46,6 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
         <IconizedContextMenuRadio
             label={_t("room|context_menu|notifications_default")}
             active={notificationState === RoomNotifState.AllMessages}
-            iconClassName="mx_RoomNotificationContextMenu_iconBell"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.AllMessages))}
         />
     );
@@ -55,7 +54,6 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
         <IconizedContextMenuRadio
             label={_t("notifications|all_messages")}
             active={notificationState === RoomNotifState.AllMessagesLoud}
-            iconClassName="mx_RoomNotificationContextMenu_iconBellDot"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.AllMessagesLoud))}
         />
     );
@@ -64,7 +62,6 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
         <IconizedContextMenuRadio
             label={_t("notifications|mentions_keywords")}
             active={notificationState === RoomNotifState.MentionsOnly}
-            iconClassName="mx_RoomNotificationContextMenu_iconBellMentions"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.MentionsOnly))}
         />
     );
@@ -73,7 +70,6 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
         <IconizedContextMenuRadio
             label={_t("room|context_menu|notifications_mute")}
             active={notificationState === RoomNotifState.Mute}
-            iconClassName="mx_RoomNotificationContextMenu_iconBellCrossed"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.Mute))}
         />
     );

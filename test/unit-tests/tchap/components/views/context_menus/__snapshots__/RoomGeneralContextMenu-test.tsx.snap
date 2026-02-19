@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
 <div>
@@ -29,9 +29,22 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitem"
             tabindex="0"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconMarkAsUnread"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"
+              />
+              <path
+                clip-rule="evenodd"
+                d="M17 5H5a2 2 0 0 0-2 2v10.4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7.83a3 3 0 0 1-2 0q-.316-.113-.595-.288L12 11.89 5 7.138V7h12.764A3 3 0 0 1 17 5m-4.438 8.927L19 9.555V17.4H5V9.555l6.438 4.372a1 1 0 0 0 1.124 0"
+                fill-rule="evenodd"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >
@@ -45,17 +58,22 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitemcheckbox"
             tabindex="-1"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconStar"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12.897 2.817 2.336 4.733 5.223.76a1 1 0 0 1 .555 1.705L17.23 13.7l.892 5.202a1 1 0 0 1-1.45 1.054L12 17.5l-4.672 2.456a1 1 0 0 1-1.451-1.054l.892-5.202-3.78-3.685a1 1 0 0 1 .555-1.706l5.223-.759 2.336-4.733a1 1 0 0 1 1.794 0"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >
               Favourite
             </span>
-            <span
-              class="mx_IconizedContextMenu_icon mx_IconizedContextMenu_unchecked"
-            />
           </div>
           <div
             aria-checked="false"
@@ -64,17 +82,22 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitemcheckbox"
             tabindex="-1"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconArrowDown"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 4.5a1 1 0 0 1 1 1v10.586l4.293-4.293a1 1 0 0 1 1.414 1.414l-6 6a1 1 0 0 1-1.414 0l-6-6a1 1 0 1 1 1.414-1.414L11 16.086V5.5a1 1 0 0 1 1-1"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >
               Low Priority
             </span>
-            <span
-              class="mx_IconizedContextMenu_icon mx_IconizedContextMenu_unchecked"
-            />
           </div>
           <li
             aria-label="Invite"
@@ -82,9 +105,17 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitem"
             tabindex="-1"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconInvite"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 12q-1.65 0-2.825-1.175T6 8t1.175-2.825T10 4t2.825 1.175T14 8t-1.175 2.825T10 12m-8 6v-.8q0-.85.438-1.562.437-.713 1.162-1.088a14.8 14.8 0 0 1 3.15-1.163A13.8 13.8 0 0 1 10 13q1.65 0 3.25.387 1.6.388 3.15 1.163.724.375 1.163 1.087Q18 16.35 18 17.2v.8q0 .824-.587 1.413A1.93 1.93 0 0 1 16 20H4q-.824 0-1.412-.587A1.93 1.93 0 0 1 2 18m2 0h12v-.8a.97.97 0 0 0-.5-.85q-1.35-.675-2.725-1.012a11.6 11.6 0 0 0-5.55 0Q5.85 15.675 4.5 16.35a.97.97 0 0 0-.5.85zm6-8q.825 0 1.412-.588Q12 8.826 12 8q0-.824-.588-1.412A1.93 1.93 0 0 0 10 6q-.825 0-1.412.588A1.93 1.93 0 0 0 8 8q0 .825.588 1.412Q9.175 10 10 10m7 1h2v2q0 .424.288.713.287.287.712.287.424 0 .712-.287A.97.97 0 0 0 21 13v-2h2q.424 0 .712-.287A.97.97 0 0 0 24 10a.97.97 0 0 0-.288-.713A.97.97 0 0 0 23 9h-2V7a.97.97 0 0 0-.288-.713A.97.97 0 0 0 20 6a.97.97 0 0 0-.712.287A.97.97 0 0 0 19 7v2h-2a.97.97 0 0 0-.712.287A.97.97 0 0 0 16 10q0 .424.288.713.287.287.712.287"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >
@@ -97,9 +128,17 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitem"
             tabindex="-1"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconCopyLink"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 19.071q-1.467 1.467-3.536 1.467-2.067 0-3.535-1.467t-1.467-3.535q0-2.07 1.467-3.536L7.05 9.879q.3-.3.707-.3t.707.3.301.707-.3.707l-2.122 2.121a2.9 2.9 0 0 0-.884 2.122q0 1.237.884 2.12.884.885 2.121.885t2.122-.884l2.121-2.121q.3-.3.707-.3t.707.3.3.707q0 .405-.3.707zm-1.414-4.243q-.3.3-.707.301a.97.97 0 0 1-.707-.3q-.3-.3-.301-.708 0-.405.3-.707l4.243-4.242q.3-.3.707-.3t.707.3.3.707-.3.707zm6.364-.707q-.3.3-.707.3a.97.97 0 0 1-.707-.3q-.3-.3-.301-.707 0-.405.3-.707l2.122-2.121q.884-.885.884-2.121 0-1.238-.884-2.122a2.9 2.9 0 0 0-2.121-.884q-1.237 0-2.122.884l-2.121 2.122q-.3.3-.707.3a.97.97 0 0 1-.707-.3q-.3-.3-.3-.708 0-.405.3-.707L12 4.93q1.467-1.467 3.536-1.467t3.535 1.467 1.467 3.536T19.071 12z"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >
@@ -112,9 +151,17 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitem"
             tabindex="-1"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconSettings"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.731 2C13.432 2 14 2.568 14 3.269c0 .578.396 1.074.935 1.286q.128.052.253.106c.531.23 1.162.16 1.572-.25a1.27 1.27 0 0 1 1.794 0l1.034 1.035a1.27 1.27 0 0 1 0 1.794c-.41.41-.48 1.04-.248 1.572l.105.253c.212.539.708.935 1.286.935.701 0 1.269.568 1.269 1.269v1.462c0 .701-.568 1.269-1.269 1.269-.578 0-1.074.396-1.287.935q-.05.128-.104.253c-.232.531-.161 1.162.248 1.572a1.27 1.27 0 0 1 0 1.794l-1.034 1.034a1.27 1.27 0 0 1-1.794 0c-.41-.41-1.04-.48-1.572-.248a8 8 0 0 1-.253.105c-.539.212-.935.708-.935 1.286 0 .701-.568 1.269-1.269 1.269H11.27c-.702 0-1.27-.568-1.27-1.269 0-.578-.396-1.074-.935-1.287a8 8 0 0 1-.253-.104c-.531-.232-1.162-.161-1.572.248a1.27 1.27 0 0 1-1.794 0l-1.034-1.034a1.27 1.27 0 0 1 0-1.794c.41-.41.48-1.04.249-1.572a8 8 0 0 1-.106-.253C4.343 14.396 3.847 14 3.27 14 2.568 14 2 13.432 2 12.731V11.27c0-.702.568-1.27 1.269-1.27.578 0 1.074-.396 1.286-.935q.052-.128.106-.253c.23-.531.16-1.162-.25-1.572a1.27 1.27 0 0 1 0-1.794l1.035-1.034a1.27 1.27 0 0 1 1.794 0c.41.41 1.04.48 1.572.249a8 8 0 0 1 .253-.106c.539-.212.935-.708.935-1.286C10 2.568 10.568 2 11.269 2zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >
@@ -131,9 +178,20 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             role="menuitem"
             tabindex="-1"
           >
-            <span
-              class="mx_IconizedContextMenu_icon mx_RoomGeneralContextMenu_iconSignOut"
-            />
+            <svg
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 13q.424 0 .713-.287A.97.97 0 0 0 15 12a.97.97 0 0 0-.287-.713A.97.97 0 0 0 14 11a.97.97 0 0 0-.713.287A.97.97 0 0 0 13 12q0 .424.287.713.288.287.713.287"
+              />
+              <path
+                d="M10.385 21.788A1 1 0 0 1 10 21V3a1.003 1.003 0 0 1 1.242-.97l8 2A1 1 0 0 1 20 5v14a1 1 0 0 1-.758.97l-8 2a1 1 0 0 1-.857-.182M18 5.781l-6-1.5v15.438l6-1.5zM9 6H7v12h2v2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2z"
+              />
+            </svg>
             <span
               class="mx_IconizedContextMenu_label"
             >

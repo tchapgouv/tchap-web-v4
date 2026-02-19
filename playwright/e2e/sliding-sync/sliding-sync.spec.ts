@@ -184,11 +184,9 @@ test.describe("Sliding Sync", () => {
 
     test("should update user settings promptly", async ({ page, app }) => {
         await app.settings.openUserSettings("Preferences");
-        const locator = page.locator(".mx_SettingsFlag").filter({ hasText: "Show timestamps in 12 hour format" });
+        const locator = page.getByRole("switch", { name: "Show timestamps in 12 hour format" });
         await expect(locator).toBeVisible();
-        await expect(locator.locator(".mx_ToggleSwitch_on")).not.toBeAttached();
-        await locator.locator(".mx_ToggleSwitch_ball").click();
-        await expect(locator.locator(".mx_ToggleSwitch_on")).toBeAttached();
+        await locator.check();
     });
 
     test("should send subscribe_rooms on room switch if room not already subscribed", async ({ page, app }) => {
@@ -361,7 +359,9 @@ test.describe("Sliding Sync", () => {
         await expect(page.locator(".mx_ReplyPreview")).toBeVisible();
 
         // now click on the permalink for Permalink me
-        await page.locator(".mx_EventTile").filter({ hasText: "Permalink me" }).locator("a").dispatchEvent("click");
+        const tile = page.locator(".mx_EventTile").filter({ hasText: "Permalink me" });
+        await tile.hover();
+        await tile.locator("a").dispatchEvent("click");
 
         // make sure it is now selected with the little green |
         await expect(page.locator(".mx_EventTile_selected").filter({ hasText: "Permalink me" })).toBeVisible();

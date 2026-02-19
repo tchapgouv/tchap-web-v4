@@ -8,7 +8,7 @@ Please see LICENSE files in the repository root for full details.
 import React from "react";
 import { render, screen, waitForElementToBeRemoved } from "jest-matrix-react";
 import { mocked } from "jest-mock";
-import fetchMock from "fetch-mock-jest";
+import fetchMock from "@fetch-mock/jest";
 import { type OidcClientConfig } from "matrix-js-sdk/src/matrix";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 
@@ -52,8 +52,7 @@ describe("Login", function () {
             mockClient.baseUrl = opts.baseUrl;
             return mockClient;
         });
-        fetchMock.resetBehavior();
-        fetchMock.resetHistory();
+        fetchMock.mockReset();
         fetchMock.get("https://matrix.org/_matrix/client/versions", {
             unstable_features: {},
             versions: ["v1.1"],
@@ -61,7 +60,7 @@ describe("Login", function () {
     });
 
     afterEach(function () {
-        fetchMock.restore();
+        fetchMock.mockRestore();
         SdkConfig.reset(); // we touch the config, so clean up
     });
 

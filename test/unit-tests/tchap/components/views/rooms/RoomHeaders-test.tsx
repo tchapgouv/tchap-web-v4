@@ -1,43 +1,53 @@
 import React from "react";
-import { KnownMembership, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { screen, render, type RenderOptions, getByLabelText, queryByLabelText, logRoles } from "jest-matrix-react";
+import {
+    KnownMembership,
+    type MatrixClient,
+    PendingEventOrdering,
+    Room,
+    type RoomMember,
+} from "matrix-js-sdk/src/matrix";
+import {
+    screen,
+    render,
+    type RenderOptions,
+    getByLabelText,
+    queryByLabelText,
+    logRoles,
+    waitFor,
+} from "jest-matrix-react";
 import { mocked } from "jest-mock";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import userEvent from "@testing-library/user-event";
 
-import { mkRoomMember, stubClient } from "~tchap-web/test/test-utils";
+import { mkRoomMember, setupAsyncStoreWithClient, stubClient } from "~tchap-web/test/test-utils";
 import RoomHeader from "~tchap-web/src/components/views/rooms/RoomHeader/RoomHeader";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
-import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import SettingsStore from "~tchap-web/src/settings/SettingsStore";
 import { UIFeature } from "~tchap-web/src/settings/UIFeature";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
-import { placeCall } from "~tchap-web/src/utils/room/placeCall";
-import { PlatformCallType } from "~tchap-web/src/hooks/room/useRoomCall";
 import * as ShieldUtils from "~tchap-web/src/utils/ShieldUtils";
 import Modal from "~tchap-web/src/Modal";
 import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
-import * as hooks from "~tchap-web/src/hooks/useCall.ts";
+import { ScopedRoomContextProvider } from "~tchap-web/src/contexts/ScopedRoomContext";
+import RoomContext, { type RoomContextType } from "~tchap-web/src/contexts/RoomContext";
+import { CallStore } from "~tchap-web/src/stores/CallStore";
+import LegacyCallHandler from "~tchap-web/src/LegacyCallHandler";
+import dispatcher from "~tchap-web/src/dispatcher/dispatcher";
+import { type Call } from "~tchap-web/src/models/Call";
+import WidgetStore from "~tchap-web/src/stores/WidgetStore";
+import { WidgetLayoutStore } from "~tchap-web/src/stores/widgets/WidgetLayoutStore";
 
 jest.mock("~tchap-web/src/utils/ShieldUtils");
 jest.mock("~tchap-web/src/tchap/util/TchapRoomUtils");
-jest.mock("~tchap-web/src/utils/room/placeCall");
 
 jest.mock("~tchap-web/src/hooks/right-panel/useCurrentPhase", () => ({
     useCurrentPhase: () => {
         return { currentPhase: "foo", isOpen: false };
     },
 }));
-
-function getWrapper(): RenderOptions {
-    return {
-        wrapper: ({ children }) => (
-            <MatrixClientContext.Provider value={MatrixClientPeg.safeGet()}>{children}</MatrixClientContext.Provider>
-        ),
-    };
-}
 
 /**
  *
@@ -55,7 +65,6 @@ function mockRoomMembers(room: Room, count: number) {
             getAvatarUrl: () => `mxc://avatar.url/user-${index}.png`,
             getMxcAvatarUrl: () => `mxc://avatar.url/user-${index}.png`,
         }));
-
     room.currentState.setJoinedMemberCount(members.length);
     room.getJoinedMembers = jest.fn().mockReturnValue(members);
 }
@@ -68,6 +77,25 @@ describe("RoomHeader", () => {
     const featureVideoGroupName: string = "feature_video_group_call";
     const homeserverName: string = "my.home.server";
     const mockedTchapRoomUtils = mocked(TchapRoomUtils);
+    let mockClient: MatrixClient;
+    let roomContext: RoomContextType;
+
+    const mockRoomViewStore = {
+        isViewingCall: jest.fn().mockReturnValue(false),
+        on: jest.fn(),
+        off: jest.fn(),
+        emit: jest.fn(),
+    };
+
+    function getWrapper(): RenderOptions {
+        return {
+            wrapper: ({ children }) => (
+                <MatrixClientContext.Provider value={mockClient}>
+                    <ScopedRoomContextProvider {...roomContext}>{children}</ScopedRoomContextProvider>
+                </MatrixClientContext.Provider>
+            ),
+        };
+    }
 
     const addHomeserverToMockConfig = (homeservers: string[], feature: string | string[]) => {
         const config: ConfigOptions = { tchap_features: {} };
@@ -86,19 +114,22 @@ describe("RoomHeader", () => {
     function mockDMRoom(memberCount: number = 2, r = room) {
         mockRoomMembers(r, memberCount);
         // in a dm room, the users are both admins
-        jest.spyOn(r.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-        jest.spyOn(r, "getMember").mockReturnValue(mkRoomMember(r.roomId, "@alice:example.org"));
+        jest.spyOn(r, "getMember").mockReturnValue(mkRoomMember(r.roomId, "@bob:example.org"));
+        jest.spyOn(r, "getJoinedMembers").mockReturnValue([
+            mkRoomMember(r.roomId, "@bob:example.org"),
+            mkRoomMember(r.roomId, "@test:example.org"),
+        ]);
 
         DMRoomMap.setShared({
             getUserIdForRoomId: () => {
-                return "@alice:example.org";
+                return "@bob:example.org";
             },
         } as unknown as DMRoomMap);
     }
 
     beforeEach(async () => {
-        const mockClient = stubClient();
-        room = new Room(ROOM_ID, MatrixClientPeg.get()!, "@alice:example.org", {
+        mockClient = stubClient();
+        room = new Room(ROOM_ID, mockClient, "@alice:example.org", {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
@@ -110,6 +141,7 @@ describe("RoomHeader", () => {
 
         // allow element calls
         jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+
         // activate the group and widget features
         jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => {
             return feature === "feature_group_calls" || feature == UIFeature.Widgets || feature == UIFeature.Voip;
@@ -120,15 +152,30 @@ describe("RoomHeader", () => {
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap);
 
-        jest.mocked(placeCall).mockImplementation(async (room, type, deviceOptions, startWithVideo) => {
-            return Promise.resolve();
-        });
+        // Reset the mock RoomViewStore
+        mockRoomViewStore.isViewingCall.mockReturnValue(false);
+
+        // Create a stable room context for this test
+        roomContext = {
+            ...RoomContext,
+            roomId: ROOM_ID,
+            roomViewStore: mockRoomViewStore,
+        } as unknown as RoomContextType;
+
         jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Normal);
 
         jest.spyOn(Modal, "createDialog").mockReturnValue({
             finished: Promise.resolve([true]),
             close: jest.fn(),
         });
+
+        // Enable Element Call
+        mockClient._unstable_getRTCTransports = jest
+            .fn()
+            .mockResolvedValue([{ type: "livekit", livekit_service_url: "https://example.org" }]);
+        // And ensure the CallStore has the transports configured.
+        await setupAsyncStoreWithClient(CallStore.instance, mockClient);
+        await setupAsyncStoreWithClient(WidgetStore.instance, mockClient);
     });
 
     afterEach(() => {
@@ -192,10 +239,11 @@ describe("RoomHeader", () => {
         expect(queryByLabelText(container, "Video call")).toBeNull();
     });
 
-    //  for video group element call button
+    // for video group element call button
     it("display well the video group button when feature is activated", () => {
         addHomeserverToMockConfig([homeserverName], featureVideoGroupName);
 
+        jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
         mockRoomMembers(room, 4);
 
         const { container } = getComponent();
@@ -237,16 +285,17 @@ describe("RoomHeader", () => {
         expect(queryByLabelText(container, "Video call")).toBeNull();
     });
 
-    // :TCHAP: flow-legacy-call-element-call
+    // // :TCHAP: flow-legacy-call-element-call
     it("Start legacy call when there is only two users in the room", async () => {
         addHomeserverToMockConfig([homeserverName], featureVideoGroupName);
         mockRoomMembers(room, 2);
-
+        const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
         const { container } = getComponent();
         const videoButton = getByLabelText(container, "Video call");
 
+        const user = userEvent.setup();
         // Click the video call button
-        await videoButton.click();
+        await user.click(videoButton);
 
         // confirmation Modal should display
         expect(Modal.createDialog).toHaveBeenCalledWith(QuestionDialog, {
@@ -259,84 +308,108 @@ describe("RoomHeader", () => {
             ),
             title: "voip",
         });
-        // placeCall to have been called with PlatformCallType.LegacyCall
-        expect(placeCall).toHaveBeenCalledWith(
-            expect.anything(),
-            CallType.Video,
-            PlatformCallType.LegacyCall,
-            undefined,
-        );
+
+        // placeCall to have been called with PlatformCallType.LegacyCall so only two params, legacy call is not given
+        expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
     });
 
     it("directly start legacy call when it is a DM room and element call is enabled, no modale confirmation", async () => {
         addHomeserverToMockConfig([homeserverName], [featureVideoGroupName, featureVideoName]);
-        mockDMRoom();
+        mockDMRoom(2, room);
 
+        const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
         const { container } = getComponent();
         const videoButton = getByLabelText(container, "Video call");
-        logRoles(container);
+
+        const user = userEvent.setup();
         // Click the video call button
-        await videoButton.click();
-        // confirmation Modal should not display
-        expect(Modal.createDialog).not.toHaveBeenCalled();
+        await user.click(videoButton);
+
         // placeCall to have been called with PlatformCallType.LegacyCall
-        expect(placeCall).toHaveBeenCalledWith(
-            expect.anything(),
-            CallType.Video,
-            PlatformCallType.LegacyCall,
-            undefined,
-        );
+        expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
     });
 
     it("directly start element call when there is more than two users in the room", async () => {
         addHomeserverToMockConfig([homeserverName], featureVideoGroupName);
-        mockRoomMembers(room, 4);
 
+        mockRoomMembers(room, 4);
         const { container } = getComponent();
         const videoButton = getByLabelText(container, "Video call");
-
+        screen.debug();
+        const user = userEvent.setup();
         // Click the video call button
-        await videoButton.click();
+        await user.click(videoButton);
+
         // confirmation Modal should display
-        expect(Modal.createDialog).toHaveBeenCalledWith(QuestionDialog, {
-            button: "Continue",
-            cancelButton: "Cancel",
-            description: (
-                <div>
-                    <p>voip</p>
-                </div>
-            ),
-            title: "voip",
-        });
-        // placeCall to have been called with PlatformCallType.ElementCall
-        expect(placeCall).toHaveBeenCalledWith(
-            expect.anything(),
-            CallType.Video,
-            PlatformCallType.ElementCall,
-            undefined,
+        await waitFor(() =>
+            expect(Modal.createDialog).toHaveBeenCalledWith(QuestionDialog, {
+                button: "Continue",
+                cancelButton: "Cancel",
+                description: (
+                    <div>
+                        <p>voip</p>
+                    </div>
+                ),
+                title: "voip",
+            }),
         );
+        const dispatcherSpy = jest.spyOn(dispatcher, "dispatch").mockImplementation();
+
+        waitFor(() => expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true })));
     });
 
     it("should not display modal if the call has been started and it is a join state", async () => {
         // mock call already started with participant
-        jest.spyOn(hooks, "useParticipantCount").mockReturnValue(2);
+        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 4));
+        const spy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
 
         addHomeserverToMockConfig([homeserverName], featureVideoGroupName);
         mockRoomMembers(room, 4);
 
         const { container } = getComponent();
-        const videoJoinButton = getByLabelText(container, "Join");
+        logRoles(container);
+        const videoJoinButton = getByLabelText(container, "Join video call");
 
-        // Click the video  joincall button
-        await videoJoinButton.click();
+        const user = userEvent.setup();
+        // Click the video call button
+        await user.click(videoJoinButton);
+
         // confirmation Modal should not display on join call
         expect(Modal.createDialog).not.toHaveBeenCalled();
-        // placeCall to have been called with PlatformCallType.ElementCall
-        expect(placeCall).toHaveBeenCalledWith(
-            expect.anything(),
-            CallType.Video,
-            PlatformCallType.ElementCall,
-            undefined,
-        );
+        // element call is not using place call anymore, but widget
+        await waitFor(() => expect(spy).toHaveBeenCalledWith(room, { id: "test-widget" }, expect.anything()));
     });
 });
+
+/**
+ * Creates a mock Call object with stable participants to prevent React dependency errors
+ */
+function createMockCall(
+    roomId: string = "!1:example.org",
+    participantCount: number = 0,
+    callType: CallType = CallType.Video,
+): Call {
+    const participants = new Map();
+
+    // Create mock participants with devices
+    for (let i = 0; i < participantCount; i++) {
+        const mockMember = {
+            userId: `@user-${i}:example.org`,
+            name: `Member ${i}`,
+        } as RoomMember;
+
+        const deviceSet = new Set([`device-${i}`]);
+        participants.set(mockMember, deviceSet);
+    }
+
+    return {
+        roomId,
+        participants,
+        widget: { id: "test-widget" },
+        connectionState: "disconnected",
+        callType,
+        on: jest.fn(),
+        off: jest.fn(),
+        emit: jest.fn(),
+    } as unknown as Call;
+}

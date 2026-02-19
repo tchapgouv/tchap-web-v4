@@ -87,9 +87,7 @@
         "ok": "Tamam",
         "open": "Aç",
         "open_menu": "Menüyü aç",
-        "pause": "Durdur",
         "pin": "PIN Kodu",
-        "play": "Oynat",
         "proceed": "İlerle",
         "quote": "Alıntı",
         "react": "Tepki ver",
@@ -131,7 +129,7 @@
         "unignore": "Yoksayma",
         "unpin": "Sabitlemeyi kaldır",
         "unsubscribe": "Abonelikten Çık",
-        "update": "Güncelleştirme",
+        "update": "Güncelleştir",
         "upgrade": "Yükselt",
         "upload": "Yükle",
         "upload_file": "Dosya Yükle",
@@ -884,7 +882,7 @@
                 "wrong_security_key": "Yanlış Güvenlik Anahtarı"
             },
             "restoring": "Anahtarları yedekten geri yükle",
-            "security_key_title": "Güvenlik anahtarı"
+            "security_key_title": "Kurtarma anahtarı"
         },
         "bootstrap_title": "Anahtarları ayarla",
         "confirm_encryption_setup_body": "Şifreleme kurulumunu onaylamak için aşağıdaki düğmeye tıklayın.",
@@ -1392,7 +1390,6 @@
         "upload_file": "Dosya yükle"
     },
     "labs": {
-        "allow_screen_share_only_mode": "Yalnızca ekran paylaşımına izin ver modu",
         "ask_to_join": "Katılma isteğini etkinleştir",
         "automatic_debug_logs": "Herhangi bir hatada otomatik olarak hata ayıklama günlükleri gönder",
         "automatic_debug_logs_decryption": "Şifre çözme hatalarında otomatik olarak hata ayıklama günlükleri gönder",
@@ -1858,7 +1855,6 @@
         "dm_invite_title": "%(user)s ile sohbet etmek ister misin?",
         "drop_file_prompt": "Yüklemek için dosyaları buraya bırakın",
         "edit_topic": "Başlığı Düzenle",
-        "error_3pid_invite_email_lookup": "Kullanıcı e-posta ile bulunamıyor",
         "error_cancel_knock_title": "İptal edilemedi",
         "error_join_403": "Bu odaya erişmek için bir davetiyeye ihtiyacınız var.",
         "error_join_404_1": "Sunucu listesi sağlamadan bir oda kimliği kullanarak katılmaya çalıştınız. Oda kimlikleri dahili tanımlayıcılardır ve ek bilgi olmadan bir odaya katılmak için kullanılamazlar.",
@@ -1981,18 +1977,6 @@
                 "other": "\"<query/>\" için %(count)s sonuç bulundu"
             },
             "this_room_button": "Bu odayı ara"
-        },
-        "status_bar": {
-            "delete_all": "Tümünü sil",
-            "exceeded_resource_limit": "Bu ana sunucu bir kaynak sınırını aştığı için mesajınız gönderilemedi. Hizmeti kullanmaya devam etmek için lütfen <a>hizmet yöneticinizle</a> iletişime geçin.",
-            "homeserver_blocked": "Bu ana sunucu yöneticisi tarafından engellendiği için mesajınız gönderilemedi. Hizmeti kullanmaya devam etmek için lütfen <a>hizmet yöneticinizle</a> iletişime geçin.",
-            "monthly_user_limit_reached": "Bu ana sunucu Aylık Aktif Kullanıcı Limitine ulaştığı için mesajınız gönderilmedi. Hizmeti kullanmaya devam etmek için lütfen <a>hizmet yöneticinizle</a> iletişime geçin.",
-            "requires_consent_agreement": "<consentLink>Şartlar ve koşullarımızı </consentLink> inceleyip kabul edene kadar herhangi bir mesaj gönderemezsiniz.",
-            "retry_all": "Tümünü yeniden dene",
-            "select_messages_to_retry": "Yeniden denemek veya silmek için mesajların hepsini seçebilir veya tek tek seçebilirsiniz",
-            "server_connectivity_lost_description": "Gönderilen iletiler bağlantınız geri gelene kadar saklanacak.",
-            "server_connectivity_lost_title": "Sunucuyla olan bağlantı kesildi.",
-            "some_messages_not_sent": "Bazı mesajlarınız gönderilmedi"
         },
         "unknown_status_code_for_timeline_jump": "bilinmeyen durum kodu",
         "unread_notifications_predecessor": {
@@ -2239,7 +2223,6 @@
             "error_join_rule_change_unknown": "Bilinmeyen hata",
             "guest_access_warning": "Desteklenen istemciye sahip kişiler, kayıtlı bir hesaba sahip olmadan odaya katılabilecekler.",
             "history_visibility_invited": "Sadece üyeler (davet edildiklerinden beri)",
-            "history_visibility_joined": "Sadece üyeler (katıldıklarından beri)",
             "history_visibility_legend": "Geçmişi kimler okuyabilir ?",
             "history_visibility_shared": "Sadece üyeler ( bu seçeneği seçtiğinizden itibaren)",
             "history_visibility_warning": "Geçmişi kimin okuyabileceğini değiştirmek yalnızca odadaki yeni iletileri etkiler. Var olan geçmiş değişmeden kalacaktır.",
@@ -2299,7 +2282,6 @@
             "error_update_guest_access": "Bu alanın misafir erişimi güncellenemedi",
             "error_update_history_visibility": "Bu alanın geçmiş görünürlüğü güncellenemedi",
             "guest_access_explainer": "Misafirler bir hesap oluşturmadan bir alana katılabilirler.",
-            "guest_access_explainer_public_space": "Bu, herkese açık alanlar için yararlı olabilir.",
             "guest_access_label": "Misafir erişimini etkinleştir",
             "history_visibility_anyone_space": "Alanı önizle",
             "history_visibility_anyone_space_description": "İnsanların katılmadan önce alanınızı önizlemesine izin verin.",
@@ -2504,7 +2486,7 @@
             "deactivate_confirm_content_6": "Eski mesajlarınız, geçmişte gönderdiğiniz e-postalar gibi, onları alan kişiler tarafından görülmeye devam eder. Gönderdiğiniz mesajları gelecekte odalara katılacak kişilerden gizlemek ister misiniz?",
             "deactivate_confirm_continue": "Hesap devre dışı bırakmayı onayla",
             "deactivate_confirm_erase_label": "Mesajlarımı yeni katılımcılardan gizle",
-            "deactivate_section": "Hesabı Devre Dışı Bırakma",
+            "deactivate_section": "Hesabı Devre Dışı Bırak",
             "deactivate_warning": "Hesabınızı devre dışı bırakmak kalıcı bir işlemdir - dikkatli olun!",
             "discovery_email_empty": "Bulunulabilirlik seçenekleri, yukarıya bir e-posta adresi ekleyince ortaya çıkacaktır.",
             "discovery_email_verification_instructions": "Gelen kutunuzdaki linki doğrulayın",
@@ -2675,7 +2657,7 @@
             "autocomplete_delay": "Oto tamamlama gecikmesi (ms)",
             "code_blocks_heading": "Kod blokları",
             "compact_modern": "Daha derli toplu 'Modern' düzeni kullan",
-            "composer_heading": "Yazan",
+            "composer_heading": "Yazma",
             "default_timezone": "Tarayıcı varsayılanı (%(timezone)s)",
             "dialog_title": "<strong>Ayarlar:</strong> Tercihler",
             "enable_hardware_acceleration": "Donanım hızlandırmayı etkinleştir",
@@ -2841,6 +2823,7 @@
         "show_chat_effects": "Sohbet efektlerini göster (ör. konfeti animasyonları)",
         "show_displayname_changes": "Görüntü adı değişikliklerini göster",
         "show_join_leave": "Katılma/ayrılma mesajlarını göster (davetler/çıkarmalar/engellemeler etkilenmez)",
+        "show_message_previews": "Mesaj önizlemelerini göster",
         "show_nsfw_content": "NSFW içeriği göster",
         "show_read_receipts": "Diğer kullanıcılar tarafından gönderilen okundu bilgisini göster",
         "show_redaction_placeholder": "Silinen mesajlar için bir yer tutucu göster",
@@ -3129,7 +3112,7 @@
     },
     "theme": {
         "light_high_contrast": "Yüksek ışık kontrastı",
-        "match_system": "Eşleşme sistemi"
+        "match_system": "Sistemle aynı"
     },
     "thread_view_back_action_label": "Konuya geri dön",
     "threads": {
@@ -3154,24 +3137,10 @@
         "no_rooms_with_unread_threads": "Henüz okunmamış mesaj dizilerinin bulunduğu odalarınız yok."
     },
     "time": {
-        "about_day_ago": "yaklaşık bir gün önce",
-        "about_hour_ago": "yaklaşık bir saat önce",
-        "about_minute_ago": "yaklaşık bir dakika önce",
         "date_at_time": "%(date)s e %(time)s",
-        "few_seconds_ago": "bir kaç saniye önce",
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss kaldı",
-        "in_about_day": "şu andan itibaren yaklaşık bir gün",
-        "in_about_hour": "şu andan itibaren yaklaşık bir saat",
-        "in_about_minute": "şu andan itibaren yaklaşık bir dakika",
-        "in_few_seconds": "şu andan itibaren bir kaç saniye",
-        "in_n_days": "şu andan itibaren %(num)s gün",
-        "in_n_hours": "şu andan itibaren %(num)s saat",
-        "in_n_minutes": "şu andan itibaren %(num)s dakika",
         "left": "%(timeRemaining)s kaldı",
         "minutes_seconds_left": "%(minutes)sm %(seconds)ss kaldı",
-        "n_days_ago": "%(num)s gün önce",
-        "n_hours_ago": "%(num)s saat önce",
-        "n_minutes_ago": "%(num)s dakika önce",
         "seconds_left": "%(seconds)s saniye kaldı",
         "short_days": "%(value)sd",
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3228,8 +3197,7 @@
         "m.audio": {
             "error_downloading_audio": "Ses dosyası indirilirken hata oluştu",
             "error_processing_audio": "Sesli mesaj işlenirken hata oluştu",
-            "error_processing_voice_message": "Sesli mesaj işlenirken hata oluştu",
-            "unnamed_audio": "İsimsiz ses"
+            "error_processing_voice_message": "Sesli mesaj işlenirken hata oluştu"
         },
         "m.beacon_info": {
             "view_live_location": "Canlı konumu görüntüle"
@@ -3287,7 +3255,6 @@
             }
         },
         "m.poll.end": {
-            "ended": "Anketi sonlandırdı",
             "sender_ended": "%(senderName)s anketi sonlandırdı"
         },
         "m.poll.start": "%(senderName)s bir anket başlattı - %(pollQuestion)s",
@@ -3797,7 +3764,6 @@
         "hide_sidebar_button": "Kenar çubuğunu gizle",
         "input_devices": "Giriş aygıtları",
         "jitsi_call": "Jitsi Konferansı",
-        "join_button_tooltip_call_full": "Üzgünüz - bu çağrı şu anda dolu",
         "legacy_call": "Eski Tip Çağrı",
         "maximise": "Ekranı kapla",
         "maximise_call": "Arama ekranı kapla",

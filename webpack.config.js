@@ -1,4 +1,10 @@
-/* eslint-disable max-len */
+/*
+Copyright 2025 Element Creations Ltd.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
 /* eslint-disable quote-props */
 
 const dotenv = require("dotenv");
@@ -211,8 +217,7 @@ module.exports = (env, argv) => {
                     __dirname,
                     "node_modules/@matrix-org/react-sdk-module-api",
                 ),
-                // and matrix-events-sdk & matrix-widget-api
-                "matrix-events-sdk": path.resolve(__dirname, "node_modules/matrix-events-sdk"),
+                // and matrix-widget-api
                 "matrix-widget-api": path.resolve(__dirname, "node_modules/matrix-widget-api"),
                 "oidc-client-ts": path.resolve(__dirname, "node_modules/oidc-client-ts"),
 
@@ -320,6 +325,9 @@ module.exports = (env, argv) => {
                 ),
                 // we use tchap own compound-web package
                 "@vector-im/compound-web": path.resolve(__dirname, "node_modules/compound-web-tchap"),
+                // end :TCHAP:
+                // Make shared-components imports resolve to EW counterpart
+                "counterpart": path.resolve(__dirname, "node_modules/counterpart"),
             },
             fallback: {
                 // Mock out the NodeFS module: The opus decoder imports this wrongly.
@@ -875,6 +883,9 @@ module.exports = (env, argv) => {
 
             // Disable host check
             allowedHosts: "all",
+            // :TCHAP:
+            port: 8088,
+            // end :TCHAP:
         },
     };
 };

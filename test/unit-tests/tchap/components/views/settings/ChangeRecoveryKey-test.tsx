@@ -127,21 +127,33 @@ describe("<ChangeRecoveryKey />", () => {
             mocked(matrixClient.getCrypto()!).bootstrapSecretStorage.mockRejectedValue(new Error("can't bootstrap"));
 
             const user = userEvent.setup();
-            renderComponent(false);
+            const { getByRole, getByText, getByTitle } = renderComponent(false);
 
             // Display the recovery key to save
-            await waitFor(() => user.click(screen.getByRole("button", { name: "Continue" })));
+            await waitFor(() => user.click(getByRole("button", { name: "Continue" })));
+
             // Display the form to confirm the recovery key
             // :TCHAP:  it is named action instead of Copy and continue because it is not loading the tchap translation overload
-            await waitFor(() => user.click(screen.getByRole("button", { name: "action" })));
+            await waitFor(() => user.click(getByRole("button", { name: "action" })));
 
-            await waitFor(() => expect(screen.getByText("Enter your recovery key to confirm")).toBeInTheDocument());
+            await waitFor(() => expect(getByText("Enter your recovery key to confirm")).toBeInTheDocument());
 
-            const finishButton = screen.getByRole("button", { name: "Finish set up" });
-            const input = screen.getByTitle("Enter recovery key");
-            await userEvent.type(input, "encoded private key");
+            const input = getByTitle("Enter recovery key");
+
+            input.focus();
+
+            await waitFor(() => user.paste("encoded private key"));
+
+            const finishButton = getByRole("button", { name: "Finish set up" });
+            await waitFor(() => {
+                expect(finishButton).not.toBeDisabled();
+            });
+
             await waitFor(() => user.click(finishButton));
 
+            await waitFor(() =>
+                expect(Modal.createDialog).toHaveBeenCalledWith(Spinner, undefined, "mx_Dialog_spinner"),
+            );
             // : TCHAP: compare to element, we already mocked the modal
             expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
                 title: "Failed to set up secret storage",

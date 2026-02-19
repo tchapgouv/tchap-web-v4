@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`<LegacyCallEvent> shows 'Report a problem' button if the call ended cleanly 1`] = `
 <div

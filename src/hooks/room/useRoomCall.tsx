@@ -9,12 +9,13 @@ Please see LICENSE files in the repository root for full details.
 import { type Room } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { logger as rootLogger } from "matrix-js-sdk/src/logger";
 
 import type React from "react";
 import { useFeatureEnabled, useSettingValue } from "../useSettings";
 import SdkConfig from "../../SdkConfig";
 import { useEventEmitter, useEventEmitterState } from "../useEventEmitter";
-import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
+import { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import { useWidgets } from "../../utils/WidgetUtils";
 import { WidgetType } from "../../widgets/WidgetType";
 import { useCall, useConnectionState, useParticipantCount } from "../useCall";
@@ -26,7 +27,6 @@ import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
 import { isManagedHybridWidget, isManagedHybridWidgetEnabled } from "../../widgets/ManagedHybrid";
 import { type IApp } from "../../stores/WidgetStore";
-import { SdkContextClass } from "../../contexts/SDKContext";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { type ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
@@ -37,6 +37,10 @@ import { UIFeature } from "../../settings/UIFeature";
 import { type InteractionName } from "../../PosthogTrackers";
 import { ElementCallMemberEventType } from "../../call-types";
 import { LocalRoom, LocalRoomState } from "../../models/LocalRoom";
+import { useScopedRoomContext } from "../../contexts/ScopedRoomContext";
+import { SdkContextClass } from "../../contexts/SDKContext";
+
+const logger = rootLogger.getChild("useRoomCall");
 
 export enum PlatformCallType {
     ElementCall,
@@ -67,6 +71,8 @@ export const getPlatformCallTypeProps = (
                 label: _t("voip|legacy_call"),
                 analyticsName: "WebVoipOptionLegacy",
             };
+        default:
+            throw Error(`Unexpected PlatformCallType ${platformCallType}`);
     }
 };
 
@@ -93,11 +99,15 @@ export const useRoomCall = (
     toggleCallMaximized: () => void;
     isViewingCall: boolean;
     isConnectedToCall: boolean;
-    hasActiveCallSession: boolean;
+    /**
+     * The type of call in progress, or `null` if no call is ongoing.
+     */
+    activeCallSessionType: CallType | null;
     callOptions: PlatformCallType[];
     showVideoCallButton: boolean;
     showVoiceCallButton: boolean;
 } => {
+    const roomViewStore = useScopedRoomContext("roomViewStore").roomViewStore;
     // settings
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const widgetsFeatureEnabled = useSettingValue(UIFeature.Widgets);
@@ -106,10 +116,25 @@ export const useRoomCall = (
         return SdkConfig.get("element_call").use_exclusively;
     }, []);
 
+    const serverIsConfiguredForElementCall = useEventEmitterState(
+        CallStore.instance,
+        CallStoreEvent.TransportsUpdated,
+        () =>
+            CallStore.instance.getConfiguredRTCTransports().some((s) => s.type === "livekit" && s.livekit_service_url),
+    );
+
+    useEffect(() => {
+        if (useElementCallExclusively && !serverIsConfiguredForElementCall) {
+            logger.warn(
+                "Element Call is configured to be used exclusively, but the server is not configured with a transport",
+            );
+        }
+    }, [useElementCallExclusively, serverIsConfiguredForElementCall]);
+
     const hasLegacyCall = useEventEmitterState(
-        LegacyCallHandler.instance,
+        SdkContextClass.instance.legacyCallHandler,
         LegacyCallHandlerEvent.CallsChanged,
-        () => LegacyCallHandler.instance.getCallForRoom(room.roomId) !== null,
+        () => SdkContextClass.instance.legacyCallHandler.getCallForRoom(room.roomId) !== null,
     );
     // settings
     const widgets = useWidgets(room);
@@ -122,20 +147,29 @@ export const useRoomCall = (
     const groupCall = useCall(room.roomId);
     const isConnectedToCall = useConnectionState(groupCall) === ConnectionState.Connected;
     const hasGroupCall = groupCall !== null;
-    const hasActiveCallSession = useParticipantCount(groupCall) > 0;
     const isViewingCall = useEventEmitterState(
-        SdkContextClass.instance.roomViewStore,
+        roomViewStore,
         UPDATE_EVENT,
-        () => SdkContextClass.instance.roomViewStore.isViewingCall() || isVideoRoom(room),
+        () => roomViewStore.isViewingCall() || isVideoRoom(room),
     );
+
+    const participantCount = useParticipantCount(groupCall);
+    const activeCallSessionType = useMemo(() => {
+        if (!groupCall || participantCount === 0) {
+            return null;
+        }
+        return groupCall.callType;
+    }, [participantCount, groupCall]);
 
     // room
     const memberCount = useRoomMemberCount(room);
 
-    const [mayEditWidgets, mayCreateElementCalls] = useRoomState(room, () => [
+    const [mayEditWidgets, mayCreateElementCallState] = useRoomState(room, () => [
         room.currentState.mayClientSendStateEvent("im.vector.modular.widgets", room.client),
         room.currentState.mayClientSendStateEvent(ElementCallMemberEventType.name, room.client),
     ]);
+
+    const mayCreateElementCalls = mayCreateElementCallState && serverIsConfiguredForElementCall;
 
     // The options provided to the RoomHeader.
     // If there are multiple options, the user will be prompted to choose.
@@ -145,12 +179,8 @@ export const useRoomCall = (
             options.push(PlatformCallType.LegacyCall);
             return options; // :TCHAP: flow-legacy-call-element-call in all case if 
                             // we are only two in the room we use legacy call, compatible with legacy mobile apps
-        }/* :TCHAP: remove-jitsi-option
-        else if (mayEditWidgets || hasJitsiWidget) {
-            options.push(PlatformCallType.JitsiCall);
-        }  
-        end :TCHAP:*/
-        
+        }
+
         if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
@@ -159,6 +189,14 @@ export const useRoomCall = (
                 return [PlatformCallType.ElementCall];
             }
         }
+        if (memberCount <= 2) {
+            options.push(PlatformCallType.LegacyCall);
+        }
+        /* :TCHAP: remove-jitsi-option
+        else if (mayEditWidgets || hasJitsiWidget) {
+            options.push(PlatformCallType.JitsiCall);
+        }
+        end :TCHAP:*/
         if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
             // only allow joining the ongoing Element call if there is one.
             return [PlatformCallType.ElementCall];
@@ -215,6 +253,10 @@ export const useRoomCall = (
         if (!callOptions.includes(PlatformCallType.LegacyCall) && !mayCreateElementCalls && !mayEditWidgets) {
             return State.NoPermission;
         }
+        // Catch-all for just not having any call options available.
+        if (!callOptions.length) {
+            return State.NoPermission;
+        }
         return State.NoCall;
     }, [
         callOptions,
@@ -235,7 +277,7 @@ export const useRoomCall = (
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-                placeCall(room, CallType.Voice, callPlatformType, evt?.shiftKey || undefined);
+                placeCall(room, CallType.Voice, callPlatformType, evt?.shiftKey || undefined, true);
             }
         },
         [promptPinWidget, room, widget],
@@ -248,7 +290,7 @@ export const useRoomCall = (
             } else {
                 // If we have pressed shift then always skip the lobby, otherwise `undefined` will defer
                 // to the defaults of the call implementation.
-                placeCall(room, CallType.Video, callPlatformType, evt?.shiftKey || undefined);
+                placeCall(room, CallType.Video, callPlatformType, evt?.shiftKey || undefined, false);
             }
         },
         [widget, promptPinWidget, room],
@@ -283,7 +325,13 @@ export const useRoomCall = (
     const roomDoesNotExist = room instanceof LocalRoom && room.state !== LocalRoomState.CREATED;
 
     // We hide the voice call button if it'd have the same effect as the video call button
-    let hideVoiceCallButton = isManagedHybridWidgetEnabled(room) || !callOptions.includes(PlatformCallType.LegacyCall);
+    let hideVoiceCallButton =
+        isManagedHybridWidgetEnabled(room) ||
+        // Disable voice calls if Legacy calls are disabled
+        (!callOptions.includes(PlatformCallType.LegacyCall) &&
+            // Disable voice calls in ECall if the room is a group (we only present video calls for groups of users)
+            (!callOptions.includes(PlatformCallType.ElementCall) || memberCount > 2));
+
     let hideVideoCallButton = false;
     // We hide both buttons if:
     // - they require widgets but widgets are disabled
@@ -305,7 +353,7 @@ export const useRoomCall = (
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
         isConnectedToCall: isConnectedToCall,
-        hasActiveCallSession: hasActiveCallSession,
+        activeCallSessionType: activeCallSessionType,
         callOptions,
         showVoiceCallButton: !hideVoiceCallButton,
         showVideoCallButton: !hideVideoCallButton,

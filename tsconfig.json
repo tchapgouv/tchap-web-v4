@@ -7,7 +7,7 @@
         "esModuleInterop": true,
         "useDefineForClassFields": true,
         "module": "es2022",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "target": "es2022",
         "noUnusedLocals": true,
         "sourceMap": false,
@@ -20,7 +20,8 @@
         "paths": {
             "~tchap-web/*": ["./*"],
             "jest-matrix-react": ["./test/test-utils/jest-matrix-react"],
-            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"]
+            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"],
+            "@vector-im/compound-web": ["./node_modules/compound-web-tchap"]
         },
         "types": ["node", "jest", "@testing-library/jest-dom"]
         /* end :TCHAP: */
@@ -33,11 +34,5 @@
         "./test/**/*.tsx",
         "./scripts/*.ts",
         "./declaration.d.ts"
-    ],
-    "ts-node": {
-        "files": true,
-        "moduleTypes": {
-            "*": "cjs"
-        }
-    }
+    ]
 }

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`VerificationRequestDialog After scanning QR, shows confirmation dialog 1`] = `
 <DocumentFragment>
@@ -32,13 +32,24 @@ exports[`VerificationRequestDialog After scanning QR, shows confirmation dialog 
         Check again on your other device to finish verification.
       </p>
       <div
-        class="mx_E2EIcon mx_E2EIcon_verified"
+        class="mx_E2EIcon"
         data-testid="e2e-icon"
         style="width: 128px; height: 128px;"
       >
-        <div
-          class="mx_E2EIcon_normal"
-        />
+        <svg
+          color="var(--cpd-color-icon-success-primary)"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M11.106 2.447a2 2 0 0 1 1.789 0l6 3A2 2 0 0 1 20 7.237V12c0 6.742-5.773 9.246-7.51 9.846-.32.111-.66.111-.98 0C9.774 21.246 4 18.743 4 12V7.236a2 2 0 0 1 1.105-1.789zm4.601 6.846a1 1 0 0 0-1.414 0L11 12.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0 0-1.414"
+            fill-rule="evenodd"
+          />
+        </svg>
       </div>
       <div
         class="mx_VerificationPanel_reciprocateButtons"
@@ -103,7 +114,7 @@ exports[`VerificationRequestDialog After we started verification here, says we a
       Once accepted you'll be able to continue with the verification.
     </div>
     <div
-      aria-describedby="«r6»"
+      aria-describedby="_r_6_"
       aria-label="Close dialog"
       class="mx_AccessibleButton mx_Dialog_cancelButton"
       role="button"
@@ -160,13 +171,24 @@ exports[`VerificationRequestDialog Initially, asks how you would like to verify 
             <div
               class="mx_Spinner"
             >
-              <div
+              <svg
                 aria-label="Loading…"
-                class="mx_Spinner_icon"
+                class="_icon_11k6c_18"
                 data-testid="spinner"
+                fill="currentColor"
+                height="1em"
                 role="progressbar"
                 style="width: 32px; height: 32px;"
-              />
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M12 4.031a8 8 0 1 0 8 8 1 1 0 0 1 2 0c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10a1 1 0 1 1 0 2"
+                  fill-rule="evenodd"
+                />
+              </svg>
             </div>
           </div>
         </div>
@@ -297,13 +319,24 @@ exports[`VerificationRequestDialog Shows a successful message if verification fi
         Now you can read or send messages securely, and anyone you chat with can also trust this device.
       </p>
       <div
-        class="mx_E2EIcon mx_E2EIcon_verified"
+        class="mx_E2EIcon"
         data-testid="e2e-icon"
         style="width: 128px; height: 128px;"
       >
-        <div
-          class="mx_E2EIcon_normal"
-        />
+        <svg
+          color="var(--cpd-color-icon-success-primary)"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M11.106 2.447a2 2 0 0 1 1.789 0l6 3A2 2 0 0 1 20 7.237V12c0 6.742-5.773 9.246-7.51 9.846-.32.111-.66.111-.98 0C9.774 21.246 4 18.743 4 12V7.236a2 2 0 0 1 1.105-1.789zm4.601 6.846a1 1 0 0 0-1.414 0L11 12.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0 0-1.414"
+            fill-rule="evenodd"
+          />
+        </svg>
       </div>
       <div
         class="mx_AccessibleButton mx_UserInfo_wideButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
@@ -369,6 +402,7 @@ exports[`VerificationRequestDialog When other device accepted emoji, displays em
             class="mx_VerificationShowSas_emojiSas_block"
           >
             <div
+              aria-hidden="true"
               class="mx_VerificationShowSas_emojiSas_emoji"
             >
               🐶
@@ -383,6 +417,7 @@ exports[`VerificationRequestDialog When other device accepted emoji, displays em
             class="mx_VerificationShowSas_emojiSas_block"
           >
             <div
+              aria-hidden="true"
               class="mx_VerificationShowSas_emojiSas_emoji"
             >
               🐱

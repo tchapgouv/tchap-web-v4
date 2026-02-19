@@ -36,7 +36,6 @@
     "room|header_untrusted_label",
     "room|status_bar|server_connectivity_lost_title",
     "room_settings|general|aliases_section",
-    "room_settings|security|public_without_alias_warning",
     "settings|key_backup|setup_secure_backup|download_or_copy",
     "welcome_to_element",
     "create_space|search_public_button",
@@ -59,9 +58,7 @@
     "encryption|set_up_toast_description",
     "auth|logout_dialog|use_key_backup",
     "settings|security|message_search_space_used",
-    "bug_reporting|download_logs",
     "create_space|private_only_heading",
-    "room_settings|security|join_rule_world_readable_description",
     "slash_command|no_active_call",
     "slash_command|holdcall",
     "slash_command|unholdcall",
@@ -72,5 +69,6 @@
     "slash_command|addwidget_missing_url",
     "slash_command|addwidget_iframe_missing_src",
     "slash_command|addwidget_no_permissions",
-    "slash_command|addwidget_invalid_protocol"
+    "slash_command|addwidget_invalid_protocol",
+    "settings|security|message_search_pending_rooms"
 ]

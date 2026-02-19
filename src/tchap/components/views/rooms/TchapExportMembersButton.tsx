@@ -7,11 +7,10 @@ import React from "react";
 import { FileDownloader } from "~tchap-web/src/utils/FileDownloader";
 import { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
 import { _t } from "~tchap-web/src/languageHandler";
-import { Icon as UserExportIcon } from "~tchap-web/res/img/tchap/user-export.svg";
+import { UserExportIcon }  from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { MemberWithSeparator, SEPARATOR } from "~tchap-web/src/components/viewmodels/memberlist/MemberListViewModel";
 import { Button, Tooltip } from "@vector-im/compound-web";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
 
 interface IProps {
   roomMembers: MemberWithSeparator[];

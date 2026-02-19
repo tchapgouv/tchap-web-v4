@@ -45,6 +45,8 @@ export default class TchapUrls {
 
     public static helpPopupSC = `${TchapUrls.helpBaseUrl}/fr/article/popup-persistante-demandant-le-code-de-recuperation-169ogzh/`;
 
+    public static helpCreateRoom = `${TchapUrls.helpBaseUrl}/fr/article/comment-creer-un-salon-web-11abmcr/`;
+
     public static openHelper = (uri: string) => {
         const platform = PlatformPeg.get();
         if (platform) {

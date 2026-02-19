@@ -11,23 +11,29 @@ export * from "./audio/Clock";
 export * from "./audio/PlayPauseButton";
 export * from "./audio/SeekBar";
 export * from "./avatar/AvatarWithDetails";
+export * from "./composer/Banner";
+export * from "./composer/HistoryVisibleBannerView";
 export * from "./event-tiles/TextualEventView";
 export * from "./message-body/MediaBody";
 export * from "./pill-input/Pill";
 export * from "./pill-input/PillInput";
+export * from "./room/RoomStatusBar";
 export * from "./rich-list/RichItem";
 export * from "./rich-list/RichList";
+export * from "./room-list/RoomListSearchView";
 export * from "./utils/Box";
 export * from "./utils/Flex";
 
 // Utils
 export * from "./utils/i18n";
+export * from "./utils/i18nContext";
 export * from "./utils/humanize";
 export * from "./utils/DateUtils";
 export * from "./utils/numbers";
+export * from "./utils/FormattingUtils";
+export * from "./utils/I18nApi";
 
 // MVVM
-export * from "./ViewWrapper";
-export type * from "./ViewModel";
+export * from "./viewmodel";
+export * from "./useMockedViewModel";
 export * from "./useViewModel";
-export * from "./MockViewModel";

@@ -138,7 +138,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
     // end :TCHAP:
 
-    private initExtension(keyFromCustomisations: Uint8Array): void {
+    private initExtension(keyFromCustomisations: Uint8Array<ArrayBuffer>): void {
         logger.log("CryptoSetupExtension: Created key via extension, jumping to bootstrap step");
         this.recoveryKey = {
             privateKey: keyFromCustomisations,
@@ -377,7 +377,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 outlined
             >
                 <div className="mx_CreateSecretStorageDialog_optionTitle">
-                    <span className="mx_CreateSecretStorageDialog_optionIcon mx_CreateSecretStorageDialog_optionIcon_secureBackup" />
                     {_t("settings|key_backup|setup_secure_backup|generate_security_key_title")}
                 </div>
                 <div>{_t("settings|key_backup|setup_secure_backup|generate_security_key_description")}</div>
@@ -396,7 +395,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 outlined
             >
                 <div className="mx_CreateSecretStorageDialog_optionTitle">
-                    <span className="mx_CreateSecretStorageDialog_optionIcon mx_CreateSecretStorageDialog_optionIcon_securePhrase" />
                     {_t("settings|key_backup|setup_secure_backup|enter_phrase_title")}
                 </div>
                 <div>{_t("settings|key_backup|setup_secure_backup|use_phrase_only_you_know")}</div>
@@ -739,19 +737,6 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
         let titleClass: string | string[] | undefined;
         switch (this.state.phase) {
-            case Phase.Passphrase:
-            case Phase.PassphraseConfirm:
-                titleClass = [
-                    "mx_CreateSecretStorageDialog_titleWithIcon",
-                    "mx_CreateSecretStorageDialog_securePhraseTitle",
-                ];
-                break;
-            case Phase.ShowKey:
-                titleClass = [
-                    "mx_CreateSecretStorageDialog_titleWithIcon",
-                    "mx_CreateSecretStorageDialog_secureBackupTitle",
-                ];
-                break;
             case Phase.ChooseKeyPassphrase:
                 titleClass = "mx_CreateSecretStorageDialog_centeredTitle";
                 break;

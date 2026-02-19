@@ -19,7 +19,18 @@ else
   echo "No config specified, using config.json."
 fi
 
-yarn clean
+# yarn clean
+
+echo "===== Installing shared components"
+pushd packages/shared-components
+ls -l
+yarn install --pure-lockfile
+
+# echo "preparing ..."
+# yarn prepare
+
+popd
+echo "===== Building app"
 yarn build
 
 mkdir -p dist

@@ -15,6 +15,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/matrix";
 import { type ImageContent } from "matrix-js-sdk/src/types";
 import { Tooltip } from "@vector-im/compound-web";
+import { ImageErrorIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
@@ -34,6 +35,7 @@ import MediaProcessingError from "./shared/MediaProcessingError";
 import { DecryptError, DownloadError } from "../../../utils/DecryptFile";
 import { HiddenMediaPlaceholder } from "./HiddenMediaPlaceholder";
 import { useMediaVisible } from "../../../hooks/useMediaVisible";
+import { isMimeTypeAllowed } from "../../../utils/blobs.ts";
 
 import MFileBody from "~tchap-web/src/tchap/components/views/messages/OriginalFileBody"; // :TCHAP: content-scanner
 
@@ -102,7 +104,16 @@ export class MImageBodyInner extends React.Component<IProps, IState> {
             }
 
             const content = this.props.mxEvent.getContent<ImageContent>();
-            const httpUrl = this.state.contentUrl;
+
+            let httpUrl = this.state.contentUrl;
+            if (
+                this.props.mediaEventHelper?.media.isEncrypted &&
+                !isMimeTypeAllowed(this.props.mediaEventHelper.sourceBlob.cachedValue?.type ?? "")
+            ) {
+                // contentUrl will be a blob URI mime-type=application/octet-stream so fall back to the thumbUrl instead
+                httpUrl = this.state.thumbUrl;
+            }
+
             if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
@@ -619,7 +630,7 @@ export class MImageBodyInner extends React.Component<IProps, IState> {
                 return <Blurhash className="mx_Blurhash" hash={blurhash} width={width} height={height} />;
             }
         }
-        return <Spinner w={32} h={32} />;
+        return <Spinner size={32} />;
     }
 
     // Overridden by MStickerBody
@@ -648,6 +659,15 @@ export class MImageBodyInner extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent<ImageContent>();
 
+        // Fall back to MFileBody if we are unable to render this image e.g. in the case of a blob svg
+        if (
+            this.props.mediaEventHelper?.media.isEncrypted &&
+            !isMimeTypeAllowed(content.info?.mimetype ?? "") &&
+            !content.info?.thumbnail_info
+        ) {
+            return <MFileBody {...this.props} />;
+        }
+
         if (this.state.error) {
             let errorText = _t("timeline|m.image|error");
             if (this.state.error instanceof DecryptError) {
@@ -656,7 +676,11 @@ export class MImageBodyInner extends React.Component<IProps, IState> {
                 errorText = _t("timeline|m.image|error_downloading");
             }
 
-            return <MediaProcessingError className="mx_MImageBody">{errorText}</MediaProcessingError>;
+            return (
+                <MediaProcessingError className="mx_MImageBody" Icon={ImageErrorIcon}>
+                    {errorText}
+                </MediaProcessingError>
+            );
         }
 
         let contentUrl = this.state.contentUrl;

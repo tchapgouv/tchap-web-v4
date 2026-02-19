@@ -22,13 +22,13 @@ import type { Config } from "jest";
 }
 */
 const config: Config = {
-    testEnvironment: "jsdom",
+    testEnvironment: "jest-fixed-jsdom",
     testEnvironmentOptions: {
         url: "http://localhost/",
         // This is needed to be able to load dual CJS/ESM WASM packages e.g. rust crypto & matrix-wywiwyg
         customExportConditions: ["browser", "node"],
     },
-    testMatch: ["<rootDir>/test/**/*-test.[tj]s?(x)", "<rootDir>/src/shared-components/**/*.test.[t]s?(x)"],
+    testMatch: ["<rootDir>/test/**/*-test.[tj]s?(x)"],
     globalSetup: "<rootDir>/test/globalSetup.ts",
     setupFiles: ["jest-canvas-mock", "web-streams-polyfill/polyfill"],
     setupFilesAfterEnv: ["<rootDir>/test/setupTests.ts"],
@@ -67,12 +67,14 @@ const config: Config = {
         // we use tchap own compound-web package
         "@vector-im/compound-web": "<rootDir>/node_modules/compound-web-tchap",
         // end :TCHAP:
+        "counterpart": "<rootDir>/node_modules/counterpart",
     },
     transformIgnorePatterns: [
-        "/node_modules/(?!(mime|matrix-js-sdk|uuid|p-retry|is-network-error|react-merge-refs)).+$",
+        "/node_modules/(?!(mime|matrix-js-sdk|uuid|p-retry|is-network-error|react-merge-refs|is-ip|ip-regex|super-regex|function-timeout|time-span|convert-hrtime|clone-regexp|is-regexp|matrix-web-i18n)).+$",
     ],
     collectCoverageFrom: [
         "<rootDir>/src/**/*.{js,ts,tsx}",
+        "<rootDir>/packages/**/*.{js,ts,tsx}",
         // getSessionLock is piped into a different JS context via stringification, and the coverage functionality is
         // not available in that contest. So, turn off coverage instrumentation for it.
         "!<rootDir>/src/utils/SessionLock.ts",

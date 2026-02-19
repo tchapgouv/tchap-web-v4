@@ -1,6 +1,6 @@
 import React from "react";
 import { render, cleanup, screen } from "jest-matrix-react";
-import fetchMock from "fetch-mock";
+import fetchMock from "@fetch-mock/jest";
 
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import Welcome from "~tchap-web/src/components/views/auth/Welcome";
@@ -24,7 +24,7 @@ describe("<Welcome />", () => {
 
         // we need to mock the call to the correct html page, since it is embeded in the component
         // we don't need to mock the other html page since it shouldnt call it, otherwise it will simply throw an error
-        fetchMock.get("/welcome_mas.html", { body: "<h1>MAS</h1>" });
+        fetchMock.get("welcome_mas.html", { body: "<h1>MAS</h1>" });
 
         renderWelcomePage();
         await flushPromises();
@@ -35,7 +35,7 @@ describe("<Welcome />", () => {
 
         // should have white background
         const authWrapper = document.getElementsByClassName("mx_AuthPage")[0];
-        expect(authWrapper).toHaveStyle({ "background-color": "white" });
+        expect(authWrapper).toHaveStyle({ "background-color": "rgb(255, 255, 255)" });
     });
 
     it("returns proconnect welcome html page without mas flow", async () => {
@@ -43,7 +43,7 @@ describe("<Welcome />", () => {
 
         // we need to mock the call to the correct html page, since it is embeded in the component
         // we don't need to mock the other html page since it shouldnt call it, otherwise it will simply throw an error
-        fetchMock.get("/welcome_with_proconnect.html", { body: "<h1>proconnect</h1>" });
+        fetchMock.get("welcome_with_proconnect.html", { body: "<h1>proconnect</h1>" });
 
         renderWelcomePage();
         await flushPromises();

@@ -9,7 +9,8 @@ import {
     ThreepidMedium,
     TweakName,
 } from "matrix-js-sdk/src/matrix";
-import { cleanup, fireEvent, render, screen } from "jest-matrix-react";
+import { cleanup, render, screen } from "jest-matrix-react";
+import { Form } from "@vector-im/compound-web";
 
 import Notifications from "~tchap-web/src/components/views/settings/Notifications";
 import {
@@ -159,7 +160,12 @@ describe("<Notifications />", () => {
     const featurethreadName: string = "feature_thread";
     const homeserverName: string = "my.home.server";
 
-    const getComponent = () => render(<Notifications />);
+    const getComponent = () =>
+        render(
+            <Form.Root>
+                <Notifications />
+            </Form.Root>,
+        );
 
     // get component, wait for async data and force a render
     const getComponentAndWait = async () => {
@@ -239,15 +245,9 @@ describe("<Notifications />", () => {
     it("display well the caption when email notification feature is activated", async () => {
         // activate email notification in the config, otherwise the section won't appear
         addHomeserverToMockConfig([homeserverName], [featureEmailName]);
-
         await getComponentAndWait();
 
-        const emailToggle = screen.getByTestId("notif-email-switch");
-
-        expect(emailToggle).toBeInTheDocument();
-
-        const caption = emailToggle.querySelector(".mx_Caption");
-        expect(caption).toHaveClass("mx_Caption");
+        expect(screen.getByLabelText(`Enable email notifications for ${testEmail}`)).toBeInTheDocument();
     });
 
     it("hides well the caption when email notification feature is deactivated for this homeserver", async () => {
@@ -255,11 +255,7 @@ describe("<Notifications />", () => {
 
         await getComponentAndWait();
 
-        fireEvent.click(screen.getByTestId("notif-master-switch"));
-
-        await flushPromises();
-
-        expect(screen.queryByTestId("notif-email-switch")).not.toBeInTheDocument();
+        expect(screen.queryByLabelText(`Enable email notifications for ${testEmail}`)).toBeNull();
     });
 
     it("hides well the caption when email notification feature is not activated for this homeserver", async () => {
@@ -267,11 +263,7 @@ describe("<Notifications />", () => {
 
         await getComponentAndWait();
 
-        fireEvent.click(screen.getByTestId("notif-master-switch"));
-
-        await flushPromises();
-
-        expect(screen.queryByTestId("notif-email-switch")).not.toBeInTheDocument();
+        expect(screen.queryByLabelText(`Enable email notifications for ${testEmail}`)).toBeNull();
     });
 
     it("display well the tac notification switch when feature is activated", async () => {

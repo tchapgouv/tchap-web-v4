@@ -84,7 +84,7 @@ class Helpers {
     /**
      * Return the system theme toggle
      */
-    getMatchSystemThemeCheckbox() {
+    getMatchSystemThemeSwitch() {
         return this.getThemePanel().getByRole("switch", { name: "Match system theme" });
     }
 
@@ -150,9 +150,10 @@ class Helpers {
     /**
      * Create and display a room named Test Room
      */
-    async createAndDisplayRoom() {
-        await this.app.client.createRoom({ name: "Test Room" });
+    async createAndDisplayRoom(): Promise<string> {
+        const roomId = await this.app.client.createRoom({ name: "Test Room" });
         await this.app.viewRoomByName("Test Room");
+        return roomId;
     }
 
     /**
@@ -216,9 +217,9 @@ class Helpers {
     }
 
     /**
-     * Return the compact layout checkbox
+     * Return the compact layout switch
      */
-    getCompactLayoutCheckbox() {
+    getCompactLayoutSwitch() {
         return this.getMessageLayoutPanel().getByRole("switch", { name: "Show compact text and messages" });
     }
 

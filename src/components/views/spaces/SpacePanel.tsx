@@ -22,6 +22,15 @@ import React, {
 import { DragDropContext, Draggable, Droppable, type DroppableProvidedProps } from "react-beautiful-dnd";
 import classNames from "classnames";
 import { type Room } from "matrix-js-sdk/src/matrix";
+import {
+    FavouriteSolidIcon,
+    HomeSolidIcon,
+    RoomIcon,
+    VideoCallSolidIcon,
+    UserProfileSolidIcon,
+    PlusIcon,
+    ChevronRightIcon,
+} from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
@@ -67,7 +76,8 @@ import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
 import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 import { KeyboardShortcut } from "../settings/KeyboardShortcut";
-import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
+import { ModuleApi } from "../../../modules/Api.ts";
+import { useModuleSpacePanelItems } from "../../../modules/ExtrasApi.ts";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: extend-remove-thread-buttons
 import TchapGaufre from "~tchap-web/src/tchap/components/views/common/Gaufre";
@@ -101,7 +111,6 @@ export const HomeButtonContextMenu: React.FC<ComponentProps<typeof SpaceContextM
             {!hideHeader && <div className="mx_SpacePanel_contextMenu_header">{_t("common|home")}</div>}
             <IconizedContextMenuOptionList first>
                 <IconizedContextMenuCheckbox
-                    iconClassName="mx_SpacePanel_noIcon"
                     label={_t("settings|sidebar|metaspaces_home_all_rooms")}
                     active={allRoomsInHome}
                     onClick={() => {
@@ -117,6 +126,7 @@ export const HomeButtonContextMenu: React.FC<ComponentProps<typeof SpaceContextM
 interface IMetaSpaceButtonProps extends ComponentProps<typeof SpaceButton> {
     selected: boolean;
     isPanelCollapsed: boolean;
+    icon: JSX.Element;
 }
 
 type MetaSpaceButtonProps = Pick<IMetaSpaceButtonProps, "selected" | "isPanelCollapsed">;
@@ -155,7 +165,6 @@ const HomeButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.Home}
-            className="mx_SpaceButton_home"
             selected={selected}
             isPanelCollapsed={isPanelCollapsed}
             label={getMetaSpaceName(MetaSpace.Home, allRoomsInHome)}
@@ -163,6 +172,7 @@ const HomeButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed
             ContextMenuComponent={HomeButtonContextMenu}
             contextMenuTooltip={_t("common|options")}
             size="32px"
+            icon={<HomeSolidIcon />}
         />
     );
 };
@@ -171,12 +181,12 @@ const FavouritesButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCol
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.Favourites}
-            className="mx_SpaceButton_favourites"
             selected={selected}
             isPanelCollapsed={isPanelCollapsed}
             label={getMetaSpaceName(MetaSpace.Favourites)}
             notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Favourites)}
             size="32px"
+            icon={<FavouriteSolidIcon />}
         />
     );
 };
@@ -185,12 +195,12 @@ const PeopleButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollaps
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.People}
-            className="mx_SpaceButton_people"
             selected={selected}
             isPanelCollapsed={isPanelCollapsed}
             label={getMetaSpaceName(MetaSpace.People)}
             notificationState={SpaceStore.instance.getNotificationState(MetaSpace.People)}
             size="32px"
+            icon={<UserProfileSolidIcon />}
         />
     );
 };
@@ -199,12 +209,12 @@ const OrphansButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollap
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.Orphans}
-            className="mx_SpaceButton_orphans"
             selected={selected}
             isPanelCollapsed={isPanelCollapsed}
             label={getMetaSpaceName(MetaSpace.Orphans)}
             notificationState={SpaceStore.instance.getNotificationState(MetaSpace.Orphans)}
             size="32px"
+            icon={<RoomIcon />}
         />
     );
 };
@@ -213,12 +223,12 @@ const VideoRoomsButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCol
     return (
         <MetaSpaceButton
             spaceKey={MetaSpace.VideoRooms}
-            className="mx_SpaceButton_videoRooms"
             selected={selected}
             isPanelCollapsed={isPanelCollapsed}
             label={getMetaSpaceName(MetaSpace.VideoRooms)}
             notificationState={SpaceStore.instance.getNotificationState(MetaSpace.VideoRooms)}
             size="32px"
+            icon={<VideoCallSolidIcon />}
         />
     );
 };
@@ -265,6 +275,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
                 isNarrow={isPanelCollapsed}
                 innerRef={handle}
                 size="32px"
+                icon={<PlusIcon />}
             />
 
             {contextMenu}
@@ -293,6 +304,8 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
     ({ children, isPanelCollapsed, setPanelCollapsed, isDraggingOver, innerRef, ...props }) => {
         const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
         const activeSpaces = activeSpace ? [activeSpace] : [];
+
+        const moduleSpaceItems = useModuleSpacePanelItems(ModuleApi.instance.extras);
 
         const metaSpacesSection = metaSpaces
             .filter((key) => !(key === MetaSpace.VideoRooms && !SettingsStore.getValue("feature_video_rooms")))
@@ -345,6 +358,27 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                     </Draggable>
                 ))}
                 {children}
+                {moduleSpaceItems.map((item) => (
+                    <li
+                        key={item.spaceKey}
+                        className={classNames("mx_SpaceItem", {
+                            collapsed: isPanelCollapsed,
+                        })}
+                        role="treeitem"
+                        aria-selected={false} // TODO
+                    >
+                        <SpaceButton
+                            {...item}
+                            isNarrow={isPanelCollapsed}
+                            size="32px"
+                            selected={activeSpace === item.spaceKey}
+                            onClick={() => {
+                                SpaceStore.instance.setActiveSpace(item.spaceKey);
+                                item.onSelected?.();
+                            }}
+                        />
+                    </li>
+                ))}
                 {shouldShowComponent(UIComponent.CreateSpaces) && (
                     <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
                 )}
@@ -384,83 +418,77 @@ const SpacePanel: React.FC = () => {
                         onDragEndHandler();
                     }}
                 >
-                    <ReleaseAnnouncement
-                        feature="newNotificationSounds"
-                        header={_t("settings|notifications|sounds_release_announcement|title")}
-                        description={_t("settings|notifications|sounds_release_announcement|description")}
-                        closeLabel={_t("action|ok")}
-                        displayArrow={false}
-                        placement="right-start"
+                    <nav
+                        className={classNames("mx_SpacePanel", {
+                            collapsed: isPanelCollapsed,
+                            newUi: newRoomListEnabled,
+                        })}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
+                                LandmarkNavigation.findAndFocusNextLandmark(
+                                    Landmark.ACTIVE_SPACE_BUTTON,
+                                    navAction === KeyBindingAction.PreviousLandmark,
+                                );
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+                            onKeyDownHandler(ev);
+                        }}
+                        ref={ref}
+                        aria-label={_t("common|spaces")}
                     >
-                        <nav
-                            className={classNames("mx_SpacePanel", {
-                                collapsed: isPanelCollapsed,
-                                newUi: newRoomListEnabled,
-                            })}
-                            onKeyDown={(ev) => {
-                                const navAction = getKeyBindingsManager().getNavigationAction(ev);
-                                if (
-                                    navAction === KeyBindingAction.NextLandmark ||
-                                    navAction === KeyBindingAction.PreviousLandmark
-                                ) {
-                                    LandmarkNavigation.findAndFocusNextLandmark(
-                                        Landmark.ACTIVE_SPACE_BUTTON,
-                                        navAction === KeyBindingAction.PreviousLandmark,
-                                    );
-                                    ev.stopPropagation();
-                                    ev.preventDefault();
-                                    return;
+
+                        {/* :TCHAP: */}
+                        <SpacePanelTchap isPanelCollapsed={isPanelCollapsed}/>
+                        {/* end :TCHAP: */}
+                        <UserMenu isPanelCollapsed={isPanelCollapsed}>
+                            <AccessibleButton
+                                className={classNames("mx_SpacePanel_toggleCollapse", {
+                                    expanded: !isPanelCollapsed,
+                                })}
+                                onClick={() => setPanelCollapsed(!isPanelCollapsed)}
+                                title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
+                                caption={
+                                    <KeyboardShortcut
+                                        value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
+                                        className="mx_SpacePanel_Tooltip_KeyboardShortcut"
+                                    />
                                 }
-                                onKeyDownHandler(ev);
-                            }}
-                            ref={ref}
-                            aria-label={_t("common|spaces")}
-                        >
-                            {/* :TCHAP: */}
-                            <SpacePanelTchap isPanelCollapsed={isPanelCollapsed}/>
-                            {/* end :TCHAP: */}
+                            >
+                                <ChevronRightIcon />
+                            </AccessibleButton>
+                        </UserMenu>
+                        <Droppable droppableId="top-level-spaces">
+                            {(provided, snapshot) => (
+                                <InnerSpacePanel
+                                    {...provided.droppableProps}
+                                    isPanelCollapsed={isPanelCollapsed}
+                                    setPanelCollapsed={setPanelCollapsed}
+                                    isDraggingOver={snapshot.isDraggingOver}
+                                    innerRef={provided.innerRef}
+                                >
+                                    {provided.placeholder}
+                                </InnerSpacePanel>
+                            )}
+                        </Droppable>
 
-                            <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                                <AccessibleButton
-                                    className={classNames("mx_SpacePanel_toggleCollapse", {
-                                        expanded: !isPanelCollapsed,
-                                    })}
-                                    onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                                    title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                    caption={
-                                        <KeyboardShortcut
-                                            value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
-                                            className="mx_SpacePanel_Tooltip_KeyboardShortcut"
-                                        />
-                                    }
-                                />
-                            </UserMenu>
-                            <Droppable droppableId="top-level-spaces">
-                                {(provided, snapshot) => (
-                                    <InnerSpacePanel
-                                        {...provided.droppableProps}
-                                        isPanelCollapsed={isPanelCollapsed}
-                                        setPanelCollapsed={setPanelCollapsed}
-                                        isDraggingOver={snapshot.isDraggingOver}
-                                        innerRef={provided.innerRef}
-                                    >
-                                        {provided.placeholder}
-                                    </InnerSpacePanel>
-                                )}
-                            </Droppable>
-
-                            {/* :TCHAP: extend-remove-thread-buttons <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> */}
-                            {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
-                            {/** end :TCHAP: */}
-                            
-                            {/* :TCHAP: improve-faq-visibility <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
-                            <QuickFaqButton isPanelCollapsed={isPanelCollapsed} />
-                            {/* end :TCHAP: */}
-                            {/* :TCHAP: lasuite-gaufre-integration */}
-                            <TchapGaufre isPanelCollapsed={isPanelCollapsed} />
-                            {/* end :TCHAP: */}
-                        </nav>
-                    </ReleaseAnnouncement>
+                        
+                        {/* :TCHAP: extend-remove-thread-buttons <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> */}
+                        {TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} /> : null}
+                        {/** end :TCHAP: */}
+                        
+                        {/* :TCHAP: improve-faq-visibility <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} /> */}
+                        <QuickFaqButton isPanelCollapsed={isPanelCollapsed} />
+                        {/* end :TCHAP: */}
+                        {/* :TCHAP: lasuite-gaufre-integration */}
+                        <TchapGaufre isPanelCollapsed={isPanelCollapsed} />
+                        {/* end :TCHAP: */}
+                    </nav>
                 </DragDropContext>
             )}
         </RovingTabIndexProvider>

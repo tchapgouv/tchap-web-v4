@@ -18,7 +18,6 @@ import React, {
     type ReactNode,
     useEffect,
 } from "react";
-import classNames from "classnames";
 import {
     RoomType,
     HistoryVisibility,
@@ -28,6 +27,7 @@ import {
     type ICreateRoomOpts,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { LockSolidIcon, PublicIcon, ChevronLeftIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
@@ -47,6 +47,7 @@ import { Filter } from "../dialogs/spotlight/Filter";
 import { type OpenSpotlightPayload } from "../../../dispatcher/payloads/OpenSpotlightPayload.ts";
 import { useSettingValue } from "../../../hooks/useSettings.ts";
 import { UIFeature } from "../../../settings/UIFeature.ts";
+import SpacePillButton from "../../structures/SpacePillButton.tsx";
 
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls"; // :TCHAP: space-remove-public-and-subspace
 import ExternalAccountHandler from "~tchap-web/src/tchap/lib/ExternalAccountHandler.ts";
@@ -87,20 +88,6 @@ export const createSpace = async (
         inlineErrors: true,
         ...otherOpts,
     });
-};
-
-const SpaceCreateMenuType: React.FC<{
-    title: string;
-    description: string;
-    className: string;
-    onClick(): void;
-}> = ({ title, description, className, onClick }) => {
-    return (
-        <AccessibleButton className={classNames("mx_SpaceCreateMenuType", className)} onClick={onClick}>
-            {title}
-            <div>{description}</div>
-        </AccessibleButton>
-    );
 };
 
 const spaceNameValidator = withValidation({
@@ -287,7 +274,7 @@ const SpaceCreateMenu: React.FC<{
         });
     };
 
-    let body;
+    // let body;
     // :TCHAP: space-remove-public-and-subspace
     // if (visibility === null) {
     //     body = (
@@ -295,24 +282,24 @@ const SpaceCreateMenu: React.FC<{
     //             <h2>{_t("create_space|label")}</h2>
     //             <p>{_t("create_space|explainer")}</p>
 
-    //             <SpaceCreateMenuType
-    //                 title={_t("common|public")}
-    //                 description={_t("create_space|public_description")}
-    //                 className="mx_SpaceCreateMenuType_public"
-    //                 onClick={() => setVisibility(Visibility.Public)}
-    //             />
-    //             <SpaceCreateMenuType
-    //                 title={_t("common|private")}
-    //                 description={_t("create_space|private_description")}
-    //                 className="mx_SpaceCreateMenuType_private"
-    //                 onClick={() => setVisibility(Visibility.Private)}
-    //             />
+            //     <SpacePillButton
+            //     icon={<PublicIcon />}
+            //     title={_t("common|public")}
+            //     description={_t("create_space|public_description")}
+            //     onClick={() => setVisibility(Visibility.Public)}
+            // />
+            // <SpacePillButton
+            //     icon={<LockSolidIcon />}
+            //     title={_t("common|private")}
+            //     description={_t("create_space|private_description")}
+            //     onClick={() => setVisibility(Visibility.Private)}
+            // />
 
-    //             {supportsSpaceFiltering && (
-    //                 <AccessibleButton kind="primary_outline" onClick={onSearchClick}>
-    //                     {_t("create_space|search_public_button")}
-    //                 </AccessibleButton>
-    //             )}
+                // {supportsSpaceFiltering && (
+                //     <AccessibleButton kind="primary_outline" onClick={onSearchClick}>
+                //         {_t("create_space|search_public_button")}
+                //     </AccessibleButton>
+                // )}
     //         </React.Fragment>
     //     );
     // } else {
@@ -358,7 +345,7 @@ const SpaceCreateMenu: React.FC<{
     //         </React.Fragment>
     //     );
     // }
-    body = (
+    const body = (
         <React.Fragment>
             <h2>
                 {_t("create_space|private_heading")}
@@ -366,7 +353,8 @@ const SpaceCreateMenu: React.FC<{
             <p>
                 {_t("create_space|add_details_prompt")} {_t("create_space|add_details_prompt_2", {}, {
                     a: (sub) => (
-                            <AccessibleButton kind="link_inline" onClick={() => {
+                            <AccessibleButton kind="link_inline"
+onClick={() => {
                                 TchapUrls.openHelper(TchapUrls.helpCreateSpace)
                             }}>
                                 {sub}

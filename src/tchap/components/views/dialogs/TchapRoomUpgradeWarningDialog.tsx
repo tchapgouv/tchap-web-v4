@@ -20,7 +20,6 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 import { _t } from "~tchap-web/src/languageHandler";
 import SdkConfig from "~tchap-web/src/SdkConfig";
-import LabelledToggleSwitch from "~tchap-web/src/components/views/elements/LabelledToggleSwitch";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 import Modal from "~tchap-web/src/Modal";
 import BugReportDialog from "~tchap-web/src/components/views/dialogs/BugReportDialog";

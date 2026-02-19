@@ -67,7 +67,7 @@ describe("TchapRoomLinkAccess", () => {
         expect(linkDisplay).toBeDefined();
 
         // should be disable because we dont change this settings for forum room
-        expect(switchLink).toHaveAttribute("aria-disabled", "true");
+        expect(switchLink).toBeDisabled();
     });
 
     it("should render correct initial value when joinrule is invite", async () => {
@@ -85,7 +85,7 @@ describe("TchapRoomLinkAccess", () => {
         expect(linkDisplay).toBe(null);
 
         // we should be able to click on the link to activate it
-        expect(switchLink).toHaveAttribute("aria-disabled", "false");
+        expect(switchLink).not.toBeDisabled();
     });
 
     it("should disable link if user is not admin", async () => {
@@ -104,7 +104,7 @@ describe("TchapRoomLinkAccess", () => {
         expect(linkDisplay).toBe(null);
 
         // the user should not be able to click on the button
-        expect(switchLink).toHaveAttribute("aria-disabled", "true");
+        expect(switchLink).toBeDisabled();
     });
 
     it("should disable link if room is a DM", async () => {
@@ -125,7 +125,7 @@ describe("TchapRoomLinkAccess", () => {
         expect(linkDisplay).toBe(null);
 
         // the user should not be able to click on the button
-        expect(switchLink).toHaveAttribute("aria-disabled", "true");
+        expect(switchLink).toBeDisabled();
     });
 
     it("should activate link when clicking on the switch", async () => {
@@ -160,7 +160,7 @@ describe("TchapRoomLinkAccess", () => {
         expect(room.client.sendStateEvent).toHaveBeenCalledTimes(3);
 
         await waitFor(() => {
-            expect(switchLink).toHaveAttribute("aria-checked", "true");
+            expect(switchLink).toBeChecked();
         });
     });
 
@@ -196,7 +196,7 @@ describe("TchapRoomLinkAccess", () => {
         logRoles(container);
 
         await waitFor(() => {
-            expect(switchLink).toHaveAttribute("aria-checked", "true");
+            expect(switchLink).toBeChecked();
         });
     });
 
@@ -224,7 +224,7 @@ describe("TchapRoomLinkAccess", () => {
                 { join_rule: JoinRule.Invite },
                 "",
             );
-            expect(switchLink).toHaveAttribute("aria-checked", "false");
+            expect(switchLink).not.toBeChecked();
         });
     });
 });

@@ -18,6 +18,7 @@ import {
     UserEvent,
 } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { PublicIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from "../rooms/NotificationBadge";
@@ -48,6 +49,7 @@ interface IProps {
     tooltipProps?: {
         tabIndex?: number;
     };
+    className?: string;
 }
 
 interface IState {
@@ -194,7 +196,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public render(): React.ReactNode {
         // Spread the remaining props to make it work with compound component
-        const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, ...props } = this.props;
+        const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, className, ...props } =
+            this.props;
 
         let badge: React.ReactNode;
         if (this.props.displayBadge && this.state.notificationState) {
@@ -213,36 +216,37 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
                 <div
                     tabIndex={this.props.tooltipProps?.tabIndex ?? 0}
                     className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
-                />
+                >
+                    {this.state.icon === Icon.Globe ? <PublicIcon /> : null}
+                </div>
             );
         }
 
-        const classes = classNames("mx_DecoratedRoomAvatar", {
-            mx_DecoratedRoomAvatar_cutout: icon,
-        });
+        const classes = classNames(
+            "mx_DecoratedRoomAvatar",
+            {
+                mx_DecoratedRoomAvatar_cutout: icon,
+            },
+            className,
+        );
 
         return (
-            <div className={classes} {...props }>
-                { /*:TCHAP: tchap-room-icons - extra div to fix positioning.
-                https://github.com/tchapgouv/tchap-web-v4/issues/890
-                Issue should be opened in element-web. */ }
-                <div className="mx_DecoratedRoomAvatar_positionedParent">
-                    { /*:TCHAP: tchap-room-icons - we add the tchap hook so that the icon is well updated on room creation*/ }
-                    <WithTchapIndicator room={this.props.room} size={this.props.size} tooltipProps={{ tabIndex: this.props.tooltipProps?.tabIndex }}>
-                        <RoomAvatar
-                            room={this.props.room}
-                            size={this.props.size}
-                        oobData={this.props.oobData}
-                        viewAvatarOnClick={this.props.viewAvatarOnClick}
-                        />
-                        {/* {icon && (
-                            <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
-                                {icon}
-                            </Tooltip>
-                        )} */}
-                        {badge}
-                    </WithTchapIndicator>
-                </div>
+            <div className={classes} {...props}>
+                { /*:TCHAP: tchap-room-icons - we add the tchap hook so that the icon is well updated on room creation*/ }
+                <WithTchapIndicator room={this.props.room} size={this.props.size} tooltipProps={{ tabIndex: this.props.tooltipProps?.tabIndex }}>
+                    <RoomAvatar
+                        room={this.props.room}
+                        size={this.props.size}
+                    oobData={this.props.oobData}
+                    viewAvatarOnClick={this.props.viewAvatarOnClick}
+                    />
+                    {/* {icon && (
+                        <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
+                            {icon}
+                        </Tooltip>
+                    )} */}
+                    {badge}
+                </WithTchapIndicator>
             </div>
         );
     }

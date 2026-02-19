@@ -89,7 +89,7 @@
     .mx_LegacyCallEvent {
       &.mx_LegacyCallEvent_voice {
         .mx_LegacyCallEvent_content_button_reportBug span::before {
-          mask-image: url("$(res)/img/warning.svg");
+          mask-image: url("@vector-im/compound-design-tokens/icons/warning.svg");
        }
       }
     }
@@ -97,7 +97,7 @@
 
 /* tchap green badge color on verification success */
 .mx_E2EIcon_verified::after {
-    mask-image: url("$(res)/img/e2e/verified.svg");
+    mask-image: url("@vector-im/compound-design-tokens/icons/verified.svg");
     background-color: var(--confirmation-color);
 }
 
@@ -130,32 +130,13 @@
     max-height: none;
 }
 
-/* tchap home page button */
-.mx_HomePage_default {
-    .mx_HomePage_default_buttons {
-        .mx_AccessibleButton {
-            &.mx_HomePage_button_sendDm::before {
-                mask-image: url("$(res)/img/tchap/guide.svg");
-            }
-            
-            &.mx_HomePage_button_explore::before {
-                mask-image: url("$(res)/img/tchap/backup.svg");
-            }
-            
-            &.mx_HomePage_button_createGroup::before {
-                mask-image: url("$(res)/img/tchap/installation.svg");
-            }
-        }
-    }
-}
-
 .mx_UserMenu_contextMenu {
     .mx_UserMenu_iconKey::before {
         mask-image: url("@vector-im/compound-design-tokens/icons/key-solid.svg");
     }
 
     .mx_UserMenu_iconBug::before {
-        mask-image: url("$(res)/img/feather-customised/bug.svg");
+        mask-image: url("@vector-im/compound-design-tokens/icons/bug.svg");
     }
 }
 

@@ -27,18 +27,23 @@ export const placeCall = async (
     room: Room,
     callType: CallType,
     platformCallType: PlatformCallType,
-    skipLobby?: boolean,
+    skipLobby: boolean | undefined,
+    voiceOnly: boolean,
 ): Promise<void> => {
     const { analyticsName } = getPlatformCallTypeProps(platformCallType);
     PosthogTrackers.trackInteraction(analyticsName);
 
+    console.log("*** platformCallType", platformCallType)
     if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
+        console.log("*** inside legacy")
         await LegacyCallHandler.instance.placeCall(room.roomId, callType);
     } else if (platformCallType == PlatformCallType.ElementCall) {
+        console.log("*** inside element")
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
             view_call: true,
+            voiceOnly,
             skipLobby,
             metricsTrigger: undefined,
         });

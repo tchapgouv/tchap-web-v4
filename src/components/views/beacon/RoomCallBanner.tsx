@@ -9,6 +9,7 @@ Please see LICENSE files in the repository root for full details.
 import React, { useCallback } from "react";
 import { type Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { VideoCallSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton, { type ButtonEvent } from "../elements/AccessibleButton";
@@ -20,7 +21,7 @@ import { useCall } from "../../../hooks/useCall";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
 import { SessionDuration } from "../voip/CallDuration";
-import { SdkContextClass } from "../../../contexts/SDKContext";
+import { useScopedRoomContext } from "../../../contexts/ScopedRoomContext";
 
 interface RoomCallBannerProps {
     roomId: Room["roomId"];
@@ -66,7 +67,10 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) =>
     return (
         <div className="mx_RoomCallBanner" onClick={onClick}>
             <div className="mx_RoomCallBanner_text">
-                <span className="mx_RoomCallBanner_label">{_t("voip|video_call")}</span>
+                <span className="mx_RoomCallBanner_label">
+                    <VideoCallSolidIcon />
+                    {_t("voip|video_call")}
+                </span>
                 <SessionDuration session={call.session} />
             </div>
 
@@ -83,7 +87,7 @@ interface Props {
 
 const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     const call = useCall(roomId);
-
+    const { roomViewStore } = useScopedRoomContext("roomViewStore");
     // this section is to check if we have a live location share. If so, we dont show the call banner
     const isMonitoringLiveLocation = useEventEmitterState(
         OwnBeaconStore.instance,
@@ -100,7 +104,7 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     }
 
     // Check if the call is already showing. No banner is needed in this case.
-    if (SdkContextClass.instance.roomViewStore.isViewingCall()) {
+    if (roomViewStore.isViewingCall()) {
         return null;
     }
 
