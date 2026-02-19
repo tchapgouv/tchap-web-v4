@@ -23,10 +23,11 @@ fi
 
 echo "===== Installing shared components"
 pushd packages/shared-components
-yarn ci --pure-lockfile
+ls -l
+yarn install --pure-lockfile
 
-echo "preparing ..."
-yarn prepare
+# echo "preparing ..."
+# yarn prepare
 
 popd
 echo "===== Building app"
