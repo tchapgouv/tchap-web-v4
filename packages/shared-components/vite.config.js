@@ -31,7 +31,7 @@ export default defineConfig({
                 "react-dom",
                 "@vector-im/compound-design-tokens",
                 "@vector-im/compound-web",
-                "compound-web-tchap",
+                "compound-web-tchap", // :TCHAP:
             ],
             output: {
                 // Provide global variables to use in the UMD build
@@ -47,6 +47,7 @@ export default defineConfig({
         alias: {
             // Alias used by i18n.tsx
             "$webapp": resolve(__dirname, "..", "..", "webapp"),
+            // :TCHAP:
             "@vector-im/compound-web": resolve(__dirname, "node_modules/compound-web-tchap"),
         },
     },
