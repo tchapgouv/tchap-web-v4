@@ -231,27 +231,22 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         );
 
         return (
-            <div className={classes} {...props }>
-                { /*:TCHAP: tchap-room-icons - extra div to fix positioning.
-                https://github.com/tchapgouv/tchap-web-v4/issues/890
-                Issue should be opened in element-web. */ }
-                <div className="mx_DecoratedRoomAvatar_positionedParent">
-                    { /*:TCHAP: tchap-room-icons - we add the tchap hook so that the icon is well updated on room creation*/ }
-                    <WithTchapIndicator room={this.props.room} size={this.props.size} tooltipProps={{ tabIndex: this.props.tooltipProps?.tabIndex }}>
-                        <RoomAvatar
-                            room={this.props.room}
-                            size={this.props.size}
-                        oobData={this.props.oobData}
-                        viewAvatarOnClick={this.props.viewAvatarOnClick}
-                        />
-                        {/* {icon && (
-                            <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
-                                {icon}
-                            </Tooltip>
-                        )} */}
-                        {badge}
-                    </WithTchapIndicator>
-                </div>
+            <div className={classes} {...props}>
+                { /*:TCHAP: tchap-room-icons - we add the tchap hook so that the icon is well updated on room creation*/ }
+                <WithTchapIndicator room={this.props.room} size={this.props.size} tooltipProps={{ tabIndex: this.props.tooltipProps?.tabIndex }}>
+                    <RoomAvatar
+                        room={this.props.room}
+                        size={this.props.size}
+                    oobData={this.props.oobData}
+                    viewAvatarOnClick={this.props.viewAvatarOnClick}
+                    />
+                    {/* {icon && (
+                        <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
+                            {icon}
+                        </Tooltip>
+                    )} */}
+                    {badge}
+                </WithTchapIndicator>
             </div>
         );
     }

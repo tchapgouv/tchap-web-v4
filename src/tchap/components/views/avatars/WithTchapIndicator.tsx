@@ -76,14 +76,14 @@ const calculateIcon = (room: Room): [JSX.Element | null, Icon] => {
 const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
     const [icon, iconText] = calculateIcon(room);
 
-    return <div className="mx_DecoratedRoomAvatar">
+    return <>
             {children}
             {icon && (
                 <Tooltip label={tooltipText(iconText)!} placement="bottom">
                     {icon}
                 </Tooltip>
             )}
-        </div>
+        </>
 };
 
 export default WithTchapIndicator;

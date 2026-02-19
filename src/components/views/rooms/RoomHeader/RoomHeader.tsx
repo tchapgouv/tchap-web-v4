@@ -499,9 +499,9 @@ export default function RoomHeader({
                 <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
                     {/* :TCHAP: customize-room-header-bar - add room type decoration */}
                      {/* <WithPresenceIndicator room={room} size="8px"> */}
-                     <WithTchapIndicator room={room} size="8px" tooltipProps={{ tabIndex: -1 }}>
+                    <div className="mx_DecoratedRoomAvatar">
+                        <WithTchapIndicator room={room} size="8px" tooltipProps={{ tabIndex: -1 }}>
                         {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y } */}
-                        <div className="mx_DecoratedRoomAvatar_positionedParent">
                             <RoomAvatar
                                 room={room}
                                 size="40px"
@@ -510,8 +510,8 @@ export default function RoomHeader({
                                 tabIndex={-1}
                                 aria-label={_t("room|header_avatar_open_settings_label")}
                             />
-                        </div>
-                    </WithTchapIndicator>
+                        </WithTchapIndicator>
+                    </div>
                     {/* </WithPresenceIndicator>  */}
                     {/* end :TCHAP: */}
                     {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}

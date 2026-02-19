@@ -9,23 +9,19 @@ exports[`RoomHeader should render as expected 1`] = `
     <div
       class="mx_DecoratedRoomAvatar"
     >
-      <div
-        class="mx_DecoratedRoomAvatar_positionedParent"
+      <button
+        aria-label="Open room settings"
+        aria-live="off"
+        class="_avatar_zysgz_8 mx_BaseAvatar _avatar-imageless_zysgz_55"
+        data-color="3"
+        data-testid="avatar-img"
+        data-type="round"
+        role="button"
+        style="--cpd-avatar-size: 40px;"
+        tabindex="-1"
       >
-        <button
-          aria-label="Open room settings"
-          aria-live="off"
-          class="_avatar_zysgz_8 mx_BaseAvatar _avatar-imageless_zysgz_55"
-          data-color="3"
-          data-testid="avatar-img"
-          data-type="round"
-          role="button"
-          style="--cpd-avatar-size: 40px;"
-          tabindex="-1"
-        >
-          !
-        </button>
-      </div>
+        !
+      </button>
       <svg
         aria-labelledby="_r_0_"
         class="mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_private"
