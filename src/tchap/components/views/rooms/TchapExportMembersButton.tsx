@@ -45,7 +45,7 @@ export default class MemberList extends React.Component<IProps, IState> {
   private getFilename = () => {
     const ts = (new Date()).getTime();
     const roomName = this.getFirstMember()?.roomId ?? "roomId";
-    return `export_${roomName}_${ts}`
+    return `export_${roomName}_${ts}.csv`
   }
 
   private onExportButtonClick = (ev: ButtonEvent): void => {
