@@ -398,6 +398,7 @@ const SpacePanel: React.FC = () => {
 
     useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
         if (payload.action === Action.ToggleSpacePanel) {
+            console.log("**** Action.ToggleSpacePanel")
             setPanelCollapsed(!isPanelCollapsed);
         }
     });
@@ -444,7 +445,7 @@ const SpacePanel: React.FC = () => {
                     >
 
                         {/* :TCHAP: */}
-                        <SpacePanelTchap isPanelCollapsed={isPanelCollapsed}/>
+                        <SpacePanelTchap isPanelCollapsed={isPanelCollapsed} />
                         {/* end :TCHAP: */}
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
                             <AccessibleButton
