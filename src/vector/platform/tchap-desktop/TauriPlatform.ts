@@ -472,4 +472,19 @@ export default class TauriPlatform extends BasePlatform {
     public openUrl(uri: string): void {
         openUrl(uri);
     }
+
+    public supportsSetting(settingName?: string): boolean {
+        return true;
+    }
+
+    public async getSettingValue(settingName: string): Promise<any> {
+        const isSettingEnabled = await this.ipc.call("settings_get_value", {name: settingName});
+        return isSettingEnabled;
+    }
+
+    public async setSettingValue(settingName: string, value: any): Promise<void> {
+        return this.ipc.call("settings_set_value", {name: settingName, value: value});
+    }
+
+
 }

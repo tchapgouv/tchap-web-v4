@@ -268,6 +268,20 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                         <SpellCheckSection />
                     </SettingsSubsection>
 
+                    {SettingsStore.canSetValue("Tauri.autoLaunch", null, SettingLevel.PLATFORM) && (
+                        <SettingsSubsection
+                            heading={_t("settings|preferences|startup_window_behaviour_label")}
+                            formWrap
+                        >
+                            <SettingsDropdown
+                                settingKey="Tauri.autoLaunch"
+                                label={_t("settings|start_automatically|label", { brand })}
+                                level={SettingLevel.PLATFORM}
+                                hideIfCannotSet
+                            />
+                        </SettingsSubsection>
+                    )}
+{/* 
                     {SettingsStore.canSetValue("Electron.autoLaunch", null, SettingLevel.PLATFORM) && (
                         <SettingsSubsection
                             heading={_t("settings|preferences|startup_window_behaviour_label")}
@@ -280,7 +294,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                                 hideIfCannotSet
                             />
                         </SettingsSubsection>
-                    )}
+                    )} */}
 
                     <SettingsSubsection heading={_t("settings|preferences|room_list_heading")} formWrap>
                         {!newRoomListEnabled && this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS)}
