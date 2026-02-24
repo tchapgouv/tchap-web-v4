@@ -244,5 +244,9 @@
     "error-tchap-is-down": {
         "issue": "",
         "files": ["packages/shared-components/src/room/RoomStatusBar/RoomStatusBarView.tsx"]
+    },
+    "tchapgouv-permalinks": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1378",
+        "files": "src/utils/permalinks/Permalinks.ts"
     }
 }
