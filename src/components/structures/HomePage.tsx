@@ -8,7 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 import React, { type JSX } from "react";
 import { useContext, useState } from "react";
-import { BackupIcon, ChatSolidIcon, ExploreIcon, GroupIcon, GuideIcon, InstallationIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { BackupIcon, GuideIcon, InstallationIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { getHomePageUrl } from "../../utils/pages";
@@ -25,9 +25,12 @@ import MatrixClientContext, { useMatrixClientContext } from "../../contexts/Matr
 import MiniAvatarUploader, { AVATAR_SIZE } from "../views/elements/MiniAvatarUploader";
 import PosthogTrackers from "../../PosthogTrackers";
 import EmbeddedPage from "./EmbeddedPage";
+import { UserTab } from "../views/dialogs/UserTab";
 
-import { accessSecretStorage } from "~tchap-web/src/SecurityManager"; // :TCHAP:
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls"; // :TCHAP:
+import { Action } from "~tchap-web/src/dispatcher/actions";
+import defaultDispatcher from "~tchap-web/src/dispatcher/dispatcher";
+import { type OpenToTabPayload } from "~tchap-web/src/dispatcher/payloads/OpenToTabPayload";
 
 /**
  * 
@@ -52,7 +55,9 @@ const onClickFAQ = (ev: ButtonEvent): void => {
 };
 
 const onClickActivateSecureStorage = (ev: ButtonEvent): void => {
-    accessSecretStorage();
+    // Directly open encryption settings
+    const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Encryption };
+    defaultDispatcher.dispatch(payload);
 };
 
 const onClickDownloadApps = (ev: ButtonEvent): void => {
