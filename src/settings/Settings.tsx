@@ -373,6 +373,9 @@ export interface Settings {
     "blockInvites": IBaseSetting<boolean>;
     "Developer.elementCallUrl": IBaseSetting<string>;
     "acknowledgedHistoryVisibility": IBaseSetting<boolean>;
+    // :TCHAP:
+    "Tauri.autoLaunch": IBaseSetting<"enabled" | "disabled">;
+
 }
 
 export type SettingKey = keyof Settings;
@@ -1502,5 +1505,15 @@ export const SETTINGS: Settings = {
     "acknowledgedHistoryVisibility": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: false,
+    },
+    // :TCHAP: desktop settings
+    "Tauri.autoLaunch": {
+        supportedLevels: [SettingLevel.PLATFORM],
+        displayName: _td("settings|start_automatically|label"),
+        options: [
+            { value: "enabled", label: _td("settings|start_automatically|enabled") },
+            { value: "disabled", label: _td("settings|start_automatically|disabled") }
+        ],
+        default: "disabled",
     },
 };
