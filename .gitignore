@@ -56,5 +56,6 @@ modules/tchap-translations/tmp/*
 storybook-static
 
 /packages/shared-components/node_modules
-/packages/shared-components/dist
+# :TCHAP: scalingo has difficulties building SC, so we include the dist folder
+# /packages/shared-components/dist
 /packages/shared-components/src/i18nKeys.d.ts

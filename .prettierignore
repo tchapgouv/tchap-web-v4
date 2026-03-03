@@ -38,6 +38,7 @@ patches_legacy/
 res/
 scripts/tchap
 /docs/changelogs
+/packages/shared-components/dist
 # ignore all the src files from the linter now that we merged with matrix-react-sdk
 src/
 
