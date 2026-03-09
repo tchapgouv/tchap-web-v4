@@ -36,3 +36,18 @@ div[data-floating-ui-portal] {
 .mx_RoomView_MessageList > li:nth-child(2) {
     --backgroundColor: transparent !important;
 }
+
+.mx_RoomHeader .mx_FacePile.mx_FacePile_toggled {
+    background: var(--cpd-color-bg-action-primary-rest);
+    color: var(--cpd-color-text-on-solid-primary);
+    font: var(--cpd-font-body-sm-semibold);
+}
+
+/* Alleger le Background d'une ligne de message au survol */
+.mx_EventTile[data-layout=bubble].mx_EventTile_selected:before, .mx_EventTile[data-layout=bubble]:hover:before {
+    background: var(--eventbubble-bg-hover, var(--cpd-color-gray-100));
+}
+
+.mx_ThreadSummary_chevron {
+    background: linear-gradient(270deg,  var(--cpd-color-bg-subtle-secondary) 50%, $system-transparent 100%) !important;
+}

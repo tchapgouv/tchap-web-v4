@@ -89,7 +89,21 @@
     .mx_LegacyCallEvent {
       &.mx_LegacyCallEvent_voice {
         .mx_LegacyCallEvent_content_button_reportBug span::before {
-          mask-image: url("@vector-im/compound-design-tokens/icons/warning.svg");
+            mask-size: 0px;
+            width: 0px;
+            height: 0px;
+            flex-shrink: 0;
+                
+       }
+      }
+
+      &.mx_LegacyCallEvent_video {
+        .mx_LegacyCallEvent_content_button_reportBug span::before {
+            mask-size: 0px;
+            width: 0px;
+            height: 0px;
+            flex-shrink: 0;
+                
        }
       }
     }

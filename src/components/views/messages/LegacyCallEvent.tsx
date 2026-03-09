@@ -11,7 +11,7 @@ import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { CallErrorCode, CallState } from "matrix-js-sdk/src/webrtc/call";
 import classNames from "classnames";
 import { Clock } from "@element-hq/web-shared-components";
-import { VolumeOffSolidIcon, VolumeOnSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { VolumeOffSolidIcon, VolumeOnSolidIcon, WarningIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -273,6 +273,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                 onClick={this.onReportBugClick}
                 kind="primary"
             >
+                <WarningIcon />
                 <span> {_t("Report a problem")} </span>
             </AccessibleButton>
         );
