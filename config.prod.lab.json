@@ -94,7 +94,7 @@
         "feature_rust_crypto": true,
         "feature_latex_maths": true,
         "feature_group_calls": true,
-        "feature_new_room_list": false
+        "feature_new_room_list": true
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -199,8 +199,8 @@
     ],
     "tchap_features": {
         "feature_email_notification": ["*"],
-        "feature_thread": ["agent.dinum.tchap.gouv.fr"],
-        "feature_space": ["agent.dinum.tchap.gouv.fr"],
+        "feature_thread": ["*"],
+        "feature_space": ["*"],
         "feature_audio_call": ["*"],
         "feature_video_call": ["*"],
         "feature_video_group_call": [
@@ -209,13 +209,16 @@
             "agent.culture.tchap.gouv.fr",
             "agent.agriculture.tchap.gouv.fr",
             "agent.justice.tchap.gouv.fr",
-            "agent.diplomatie.tchap.gouv.fr"
+            "agent.diplomatie.tchap.gouv.fr",
+            "agent.tchap.gouv.fr",
+            "agent.dev-durable.tchap.gouv.fr",
+            "agent.social.tchap.gouv.fr"
         ],
         "feature_screenshare_call": ["*"]
     },
     "tchap_mas_flow": {
-        "isActive": false,
-        "temp_is_MAS_migration": false
+        "isActive": true,
+        "temp_is_MAS_migration": true
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {

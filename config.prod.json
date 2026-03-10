@@ -199,7 +199,7 @@
     ],
     "tchap_features": {
         "feature_email_notification": ["*"],
-        "feature_thread": ["agent.dinum.tchap.gouv.fr"],
+        "feature_thread": ["*"],
         "feature_space": ["*"],
         "feature_audio_call": ["*"],
         "feature_video_call": ["*"],
@@ -209,13 +209,16 @@
             "agent.culture.tchap.gouv.fr",
             "agent.agriculture.tchap.gouv.fr",
             "agent.justice.tchap.gouv.fr",
-            "agent.diplomatie.tchap.gouv.fr"
+            "agent.diplomatie.tchap.gouv.fr",
+            "agent.tchap.gouv.fr",
+            "agent.dev-durable.tchap.gouv.fr",
+            "agent.social.tchap.gouv.fr"
         ],
         "feature_screenshare_call": ["*"]
     },
     "tchap_mas_flow": {
-        "isActive": false,
-        "temp_is_MAS_migration": false
+        "isActive": true,
+        "temp_is_MAS_migration": true
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
