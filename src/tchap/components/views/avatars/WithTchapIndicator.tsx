@@ -16,6 +16,7 @@ import { getJoinedNonFunctionalMembers } from "~tchap-web/src/utils/room/getJoin
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 import { PadlockExternalIcon, PadlockForumIcon, PadlockPrivateIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
 
 interface Props {
     room: Room;
@@ -46,7 +47,7 @@ function tooltipText(variant: Icon): string | undefined {
     }
 }
 
-const calculateIcon = (room: Room): [JSX.Element | null, Icon] => {
+const calculateIcon = (room: Room, roomType: TchapRoomType): [JSX.Element | null, Icon] => {
     let icon: JSX.Element | null = null;
     let iconText = Icon.None
     // We look at the DMRoomMap and not the tag here so that we don't exclude DMs in Favourites
@@ -54,7 +55,6 @@ const calculateIcon = (room: Room): [JSX.Element | null, Icon] => {
     if (otherUserId && getJoinedNonFunctionalMembers(room).length === 2) {
         return [null, Icon.None];
     }
-    const roomType: TchapRoomType = TchapRoomUtils.getTchapRoomType(room);
     switch(roomType) {
         case TchapRoomType.Forum:
             icon = <PadlockForumIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Forum.toLowerCase()}`} />;
@@ -74,8 +74,9 @@ const calculateIcon = (room: Room): [JSX.Element | null, Icon] => {
 }
 
 const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
-    const [icon, iconText] = calculateIcon(room);
-
+    const { currentRoomType } = useTchapRoom(room);
+    const [icon, iconText] = calculateIcon(room, currentRoomType);
+    
     return <>
             {children}
             {icon && (

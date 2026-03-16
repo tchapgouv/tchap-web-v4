@@ -1,6 +1,7 @@
 export enum TchapRoomType {
     Direct = "direct",
     Private = "private",
+    PrivateNonEncrypted = "private_no_encrypt",
     External = "external",
     Forum = "forum",
     Unknown = "unknown",

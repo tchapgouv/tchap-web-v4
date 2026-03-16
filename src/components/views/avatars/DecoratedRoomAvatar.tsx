@@ -82,12 +82,14 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     private isUnmounted = false;
     private isWatchingTimeline = false;
 
+    private tchapRoomType = TchapRoomType.Unknown;
+
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
             notificationState: RoomNotificationStateStore.instance.getRoomState(this.props.room),
-            icon: this.calculateIcon(),
+            icon: Icon.None,
         };
     }
 
@@ -96,6 +98,13 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
+
+    // :TCHAP: 
+    public async componentDidMount(): Promise<void> {
+        this.tchapRoomType = await TchapRoomUtils.getTchapRoomType(this.props.room);
+        this.setState({ icon :this.calculateIcon()});
+    }
+    // end :TCHAP:
 
     private get isPublicRoom(): boolean {
         return this.props.room.getJoinRule() === JoinRule.Public;
@@ -171,8 +180,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             //:tchap: tchap-room-icons - use custom icons for tchap room types
-            const roomType: TchapRoomType = TchapRoomUtils.getTchapRoomType(this.props.room);
-            switch(roomType) {
+            switch(this.tchapRoomType) {
                 case TchapRoomType.Forum:
                     icon = Icon.Forum;
                     break;
@@ -198,7 +206,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         // Spread the remaining props to make it work with compound component
         const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, className, ...props } =
             this.props;
-
+        
         let badge: React.ReactNode;
         if (this.props.displayBadge && this.state.notificationState) {
             badge = (

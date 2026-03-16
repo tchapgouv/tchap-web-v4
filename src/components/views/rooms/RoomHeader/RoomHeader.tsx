@@ -59,6 +59,7 @@ import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import WithTchapIndicator from "~tchap-web/src/tchap/components/views/avatars/WithTchapIndicator.tsx";
 import Modal from "~tchap-web/src/Modal.tsx";
+import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 
 
 
@@ -339,6 +340,9 @@ function RoomHeaderButtons({
         isVideoRoom ||
         roomContext.mainSplitContentType === MainSplitContentType.MaximisedWidget ||
         roomContext.mainSplitContentType === MainSplitContentType.Call;
+
+    // :TCHAP:
+    const { currentRoomType }  = useTchapRoom(room);
     return (
         <>
             {additionalButtons?.map((props) => {
@@ -369,7 +373,7 @@ function RoomHeaderButtons({
                     {!isVideoRoom && videoCallButton}
                     */ }
                     {!isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_group_call") &&
-                        TchapRoomUtils.getTchapRoomType(room) !== TchapRoomType.Forum &&
+                        currentRoomType !== TchapRoomType.Forum &&
                         !isVideoRoom && videoCallButton}
 
                     {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&

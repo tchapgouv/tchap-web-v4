@@ -2,36 +2,39 @@
  * Tchap Room utils.
  */
 
-import { EventTimeline, EventType, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, EventType, Room, Visibility } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
 import { GuestAccess, JoinRule } from "matrix-js-sdk/src/matrix";
-import { RoomPowerLevelsEventContent } from "matrix-js-sdk/src/types";
+
 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
-    static getTchapRoomType(room: Room): TchapRoomType {
+    static getTchapRoomType(room: Room): Promise<TchapRoomType> {
         const isEncrypted: boolean = this.isRoomEncrypted(room.roomId);
         const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
-        return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule);
+        return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule, room);
     }
 
-    static getTchapRoomTypeInternal(isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule): TchapRoomType {
+    static async getTchapRoomTypeInternal(isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule, room: Room): Promise<TchapRoomType> {
+        // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
+            const visibility = await this.getRoomVisibility(room);
+            if (visibility == Visibility.Private) {
+                return TchapRoomType.PrivateNonEncrypted;
+            }
             return TchapRoomType.Forum;
         }
-        if (!tchapRoomAccessRule) {
-            return TchapRoomType.Unknown;
+        switch(tchapRoomAccessRule) {
+            case TchapRoomAccessRule.Restricted:
+                return TchapRoomType.Private;
+            case TchapRoomAccessRule.Unrestricted:
+                return TchapRoomType.External;
+            default:
+                return TchapRoomType.Unknown;
         }
-        if (tchapRoomAccessRule === TchapRoomAccessRule.Restricted) {
-            return TchapRoomType.Private;
-        }
-        if (tchapRoomAccessRule === TchapRoomAccessRule.Unrestricted) {
-            return TchapRoomType.External;
-        }
-        return TchapRoomType.Unknown;
     }
 
     /**
@@ -91,5 +94,10 @@ export default class TchapRoomUtils {
         // At least one user as the pL 100 which means he is admin
         return userLevelValues.some((uL) => uL === 100);
 
+    }
+
+    static async getRoomVisibility(room: Room): Promise<Visibility> {
+        const visibility = await room.client.getRoomDirectoryVisibility(room.roomId);
+        return visibility.visibility;
     }
 }
