@@ -55,6 +55,7 @@ interface IProps {
 interface IState {
     notificationState?: NotificationState;
     icon: Icon;
+    tchapRoomType: TchapRoomType; //:TCHAP:
 }
 
 const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
@@ -83,14 +84,13 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     private isUnmounted = false;
     private isWatchingTimeline = false;
 
-    private tchapRoomType = TchapRoomType.Unknown;
-
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
             notificationState: RoomNotificationStateStore.instance.getRoomState(this.props.room),
             icon: Icon.None,
+            tchapRoomType: TchapRoomType.Unknown // :TCHAP:
         };
     }
 
@@ -102,9 +102,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     // :TCHAP: 
     public async componentDidMount(): Promise<void> {
-        this.tchapRoomType = await TchapRoomUtils.getTchapRoomType(this.props.room);
-        console.log("**** decoratedroomavatar tchapRoomType", this.tchapRoomType);
-        this.setState({ icon :this.calculateIcon()});
+        const tchapRoomType = await TchapRoomUtils.getTchapRoomType(this.props.room);
+        console.log("**** decoratedroomavatar tchapRoomType", tchapRoomType);
+        this.setState({ icon :this.calculateIcon(), tchapRoomType});
     }
     // end :TCHAP:
 
@@ -182,7 +182,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             //:tchap: tchap-room-icons - use custom icons for tchap room types
-            switch(this.tchapRoomType) {
+            switch(this.state.tchapRoomType) {
                 case TchapRoomType.Forum:
                     icon = Icon.Forum;
                     break;

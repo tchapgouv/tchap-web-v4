@@ -108,6 +108,27 @@ export default class TchapCreateRoom {
                 opts.historyVisibility = HistoryVisibility.Invited;
                 break;
             }
+             case TchapRoomType.PrivateNonEncrypted: {
+                // only difference with private is the visibility and encryption
+                createRoomOpts.visibility = Visibility.Public;
+                createRoomOpts.preset = Preset.PrivateChat;
+                createRoomOpts.initial_state.push({
+                    content: {
+                        rule: TchapRoomAccessRule.Restricted,
+                    },
+                    type: TchapRoomAccessRulesEventId,
+                    state_key: "",
+                });
+                //Open to space by default
+                if (parentSpace) {
+                    opts.joinRule = JoinRule.Restricted;
+                } else {
+                    opts.joinRule = JoinRule.Invite;
+                }
+                opts.encryption = false;
+                opts.historyVisibility = HistoryVisibility.Invited;
+                break;
+            }
         }
         return opts;
     }

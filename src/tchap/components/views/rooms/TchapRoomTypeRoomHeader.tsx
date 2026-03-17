@@ -9,12 +9,9 @@ export interface IProps {
     room?: Room;
 }
 
-export default function TchapRoomTypeRoomHeader({ room }: IProps) {
-    const { currentRoomType, getTchapRoomType }= useTchapRoom(room);
 
-    useEffect(() => {
-        getTchapRoomType();
-    }, [getTchapRoomType])
+export default function TchapRoomTypeRoomHeader({ room }: IProps) {
+    const { currentRoomType }= useTchapRoom(room);
 
     switch(currentRoomType) {
         case TchapRoomType.External:

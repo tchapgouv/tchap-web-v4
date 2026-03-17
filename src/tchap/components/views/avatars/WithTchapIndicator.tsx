@@ -74,19 +74,14 @@ const calculateIcon = (room: Room, roomType: TchapRoomType): [JSX.Element | null
         case TchapRoomType.PrivateNonEncrypted:
             icon = <LockOffIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.PrivateNonEncrypted.toLowerCase()}`} />;
             iconText = Icon.PrivateNonEncrypted;
+            break;
     }
 
     return [icon, iconText];
 }
 
 const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
-    const { currentRoomType, getTchapRoomType } = useTchapRoom(room);
-    
-    useEffect(() => {
-        getTchapRoomType();
-    }, [getTchapRoomType]);
-
-    console.log("***** withtchaindicator", currentRoomType);
+    const { currentRoomType } = useTchapRoom(room);
     const [icon, iconText] = calculateIcon(room, currentRoomType);
     
     return <>

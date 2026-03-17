@@ -23,17 +23,6 @@
     .tc_TchapRoomTypeSelector_private {
         .tc_TchapRoomTypeSelector_RadioButton_title {
             color: var(--private-color);
-            &::before {
-                width: 12px;
-                height: 16px;
-                content: "";
-                display: inline-block;
-                vertical-align: sub;
-                background-image: url("@vector-im/compound-design-tokens/icons/padlock-private.svg");
-                background-repeat: no-repeat;
-                background-size: 100%;
-                margin-right: 4px;
-            }
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
@@ -44,17 +33,6 @@
     .tc_TchapRoomTypeSelector_external {
         .tc_TchapRoomTypeSelector_RadioButton_title {
             color: var(--external-color);
-            &::before {
-                width: 12px;
-                height: 16px;
-                content: "";
-                display: inline-block;
-                vertical-align: sub;
-                background-image: url("@vector-im/compound-design-tokens/icons/padlock-external.svg");
-                background-repeat: no-repeat;
-                background-size: 100%;
-                margin-right: 4px;
-            }
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
@@ -64,32 +42,31 @@
 
     .tc_TchapRoomTypeSelector_forum {
         .tc_TchapRoomTypeSelector_RadioButton_title {
-            color: var(--forum-color);
-            &::before {
-                width: 12px;
-                height: 16px;
-                content: "";
-                display: inline-block;
-                vertical-align: sub;
-                background-image: url("@vector-im/compound-design-tokens/icons/padlock-forum.svg");
-                background-repeat: no-repeat;
-                background-size: 100%;
-                margin-right: 4px;
-            }
+            color: var(--timeline-text-color);
         }
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
-            border-color: var(--forum-color);
+            border-color: var(--timeline-text-color);
+        }
+    }
+    
+    .tc_TchapRoomTypeSelector_private_non_encrypted {
+        .tc_TchapRoomTypeSelector_RadioButton_title {
+            color: var(--timeline-text-color);
         }
 
-        .mx_SettingsFlag {
-            flex-direction: row;
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-            .mx_SettingsFlag_label {
-                padding-top: 0px;
-            }
+        &.tc_TchapRoomTypeSelector_RadioButton_selected {
+            border-color: var(--timeline-text-color);
+        }
+    }
+    
+    .mx_SettingsFlag {
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        .mx_SettingsFlag_label {
+            padding-top: 0px;
         }
     }
 }

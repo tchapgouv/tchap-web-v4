@@ -54,11 +54,11 @@ import { LocalRoom } from "../../../../models/LocalRoom.ts";
 import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
-import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import WithTchapIndicator from "~tchap-web/src/tchap/components/views/avatars/WithTchapIndicator.tsx";
 import Modal from "~tchap-web/src/Modal.tsx";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
+import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader.tsx"; // :TCHAP: customize-room-header-bar
 
 
 
@@ -341,11 +341,7 @@ function RoomHeaderButtons({
         roomContext.mainSplitContentType === MainSplitContentType.Call;
 
     // :TCHAP:
-    const { currentRoomType, getTchapRoomType }  = useTchapRoom(room);
-
-    useEffect(() => {
-        getTchapRoomType();
-    }, [getTchapRoomType]);
+    const { currentRoomType }  = useTchapRoom(room);
 
     return (
         <>

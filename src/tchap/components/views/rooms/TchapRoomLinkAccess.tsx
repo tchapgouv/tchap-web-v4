@@ -27,7 +27,7 @@ export default function TchapRoomLinkAccess({room, onUpdateParentView}: ITchapRo
     const [isLinkSharingActivated, setIsLinkSharingActivated] = useState(false);
     const [linkSharingUrl, setLinkSharingUrl] = useState("");
     const [disableLinkSharing, setDisableLinkSharing] = useState(false);
-    const { currentRoomType, getTchapRoomType } = useTchapRoom(room);
+    const { currentRoomType } = useTchapRoom(room);
 
     // Getting the initial value of the link. We need to check if it was previsouly activated or not
     const initialLinkSharingValue = async () => {
@@ -50,9 +50,8 @@ export default function TchapRoomLinkAccess({room, onUpdateParentView}: ITchapRo
     }
 
     useEffect(() => {
-        getTchapRoomType();
         initialLinkSharingValue();
-    }, [getTchapRoomType]);
+    }, []);
 
     // Create the permalink to share
     const _setUpRoomByLink = async () => {

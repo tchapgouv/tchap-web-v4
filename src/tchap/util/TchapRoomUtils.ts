@@ -13,16 +13,15 @@ export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
     static getTchapRoomType(room: Room): Promise<TchapRoomType> {
-        const isEncrypted: boolean = this.isRoomEncrypted(room.roomId);
         const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
-        return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule, room);
+        return this.getTchapRoomTypeInternal(tchapRoomAccessRule, room);
     }
 
-    static async getTchapRoomTypeInternal(isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule, room: Room): Promise<TchapRoomType> {
+    static async getTchapRoomTypeInternal(tchapRoomAccessRule: TchapRoomAccessRule, room: Room): Promise<TchapRoomType> {
+        const isEncrypted: boolean = await this.isRoomEncrypted(room.roomId);
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
             const visibility = await this.getRoomVisibility(room);
-            console.log("**** TCHAP visibility", visibility);
             if (visibility == Visibility.Private) {
                 return TchapRoomType.PrivateNonEncrypted;
             }
@@ -52,8 +51,9 @@ export default class TchapRoomUtils {
      * @param roomId
      * @returns true if room is encrypted, false if not
      */
-    static isRoomEncrypted(roomId: string): boolean {
-        return !!MatrixClientPeg.get()?.isRoomEncrypted(roomId);
+    static async  isRoomEncrypted(roomId: string): Promise<boolean> {
+        const isEncrypted = await MatrixClientPeg.get()?.getCrypto()?.isEncryptionEnabledInRoom(roomId);
+        return !!isEncrypted;
     }
 
     /**
