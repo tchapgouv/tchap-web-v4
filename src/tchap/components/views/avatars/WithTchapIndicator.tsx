@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { type JSX, type ReactNode } from "react";
+import React, { useEffect, type JSX, type ReactNode } from "react";
 import { type Room } from "matrix-js-sdk/src/matrix";
 import { Tooltip } from "@vector-im/compound-web";
 
@@ -15,7 +15,7 @@ import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import { getJoinedNonFunctionalMembers } from "~tchap-web/src/utils/room/getJoinedNonFunctionalMembers";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
-import { PadlockExternalIcon, PadlockForumIcon, PadlockPrivateIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { LockOffIcon, LockSolidIcon, PublicIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
 
 interface Props {
@@ -34,6 +34,7 @@ enum Icon {
     Forum = "FORUM",
     Private = "PRIVATE",
     External = "EXTERNAL",
+    PrivateNonEncrypted = "PRIVATE_NON_ENCRYPTED",
 }
 
 function tooltipText(variant: Icon): string | undefined {
@@ -44,6 +45,8 @@ function tooltipText(variant: Icon): string | undefined {
             return _t("This room is private");
         case Icon.External:
             return _t("This room is private and open to external users");
+        case Icon.PrivateNonEncrypted:
+            return _t("icon|private_non_encrypted");
     }
 }
 
@@ -57,24 +60,33 @@ const calculateIcon = (room: Room, roomType: TchapRoomType): [JSX.Element | null
     }
     switch(roomType) {
         case TchapRoomType.Forum:
-            icon = <PadlockForumIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Forum.toLowerCase()}`} />;
+            icon = <PublicIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon`}/>;
             iconText = Icon.Forum;
             break;
         case TchapRoomType.Private:
-            icon = <PadlockPrivateIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`} />
+            icon = <LockSolidIcon width="30px" color="var(--private-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`} />
             iconText = Icon.Private;
             break;
         case TchapRoomType.External:
-            icon = <PadlockExternalIcon width="24px" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`} />;
+            icon = <LockSolidIcon width="30px" color="var(--external-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`} />;
             iconText = Icon.External;
             break;
+        case TchapRoomType.PrivateNonEncrypted:
+            icon = <LockOffIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.PrivateNonEncrypted.toLowerCase()}`} />;
+            iconText = Icon.PrivateNonEncrypted;
     }
 
     return [icon, iconText];
 }
 
 const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
-    const { currentRoomType } = useTchapRoom(room);
+    const { currentRoomType, getTchapRoomType } = useTchapRoom(room);
+    
+    useEffect(() => {
+        getTchapRoomType();
+    }, [getTchapRoomType]);
+
+    console.log("***** withtchaindicator", currentRoomType);
     const [icon, iconText] = calculateIcon(room, currentRoomType);
     
     return <>

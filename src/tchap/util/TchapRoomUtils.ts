@@ -22,6 +22,7 @@ export default class TchapRoomUtils {
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
             const visibility = await this.getRoomVisibility(room);
+            console.log("**** TCHAP visibility", visibility);
             if (visibility == Visibility.Private) {
                 return TchapRoomType.PrivateNonEncrypted;
             }

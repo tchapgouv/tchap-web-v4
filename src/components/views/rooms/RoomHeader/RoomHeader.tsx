@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { type JSX, useCallback, useState } from "react";
+import React, { type JSX, useCallback, useEffect, useState } from "react";
 import { Text, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import VideoCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/video-call-solid";
 import VoiceCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/voice-call-solid";
@@ -54,8 +54,7 @@ import { LocalRoom } from "../../../../models/LocalRoom.ts";
 import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
-import TchapExternalRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapExternalRoomHeader"; // :TCHAP: customize-room-header-bar
-import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
+import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import WithTchapIndicator from "~tchap-web/src/tchap/components/views/avatars/WithTchapIndicator.tsx";
 import Modal from "~tchap-web/src/Modal.tsx";
@@ -342,7 +341,12 @@ function RoomHeaderButtons({
         roomContext.mainSplitContentType === MainSplitContentType.Call;
 
     // :TCHAP:
-    const { currentRoomType }  = useTchapRoom(room);
+    const { currentRoomType, getTchapRoomType }  = useTchapRoom(room);
+
+    useEffect(() => {
+        getTchapRoomType();
+    }, [getTchapRoomType]);
+
     return (
         <>
             {additionalButtons?.map((props) => {
@@ -519,7 +523,7 @@ export default function RoomHeader({
                     {/* </WithPresenceIndicator>  */}
                     {/* end :TCHAP: */}
                     {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
-                    <TchapExternalRoomHeader room={room} />
+                    <TchapRoomTypeRoomHeader room={room} />
                     {/* :tchap: end */}
                     <button
                         aria-label={_t("right_panel|room_summary_card|title")}

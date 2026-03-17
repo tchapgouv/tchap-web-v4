@@ -2,30 +2,27 @@
 Copyright 2022 DINUM
 */
 
-.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_forum::before{
-    background-color: var(--forum-color);
+.mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_private_non_encrypted::before{
+    background-color: var(--timeline-text-color);
+    color: var(--timeline-text-color);
     bottom: -13%;
     right: -30%;
-    width: 140%;
-    height: 140%;
 }
 
 .mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_private::before,
 .mx_ExtraTile .mx_DecoratedRoomAvatar_icon_private::before {
     background-color: var(--private-color);
+    color: var(--private-color);
     bottom: -13%;
     right: -30%;
-    width: 140%;
-    height: 140%;
 }
 
 .mx_DecoratedRoomAvatar .mx_DecoratedRoomAvatar_icon.mx_DecoratedRoomAvatar_icon_external::before,
 .mx_ExtraTile .mx_DecoratedRoomAvatar_icon_external::before {
     background-color: var(--external-color);
+    color:var(--external-color);
     bottom: -13%;
     right: -30%;
-    width: 140%;
-    height: 140%;
 }
 
 /* we have crop decorated icons lock if we don't add this */

@@ -67,6 +67,7 @@ enum Icon {
     Forum = "FORUM",
     Private = "PRIVATE",
     External = "EXTERNAL",
+    PrivateNonEncrypted = "PRIVATE_NON_ENCRYPTED",
     // end :TCHAP:
     PresenceOnline = "ONLINE",
     PresenceAway = "AWAY",
@@ -102,6 +103,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     // :TCHAP: 
     public async componentDidMount(): Promise<void> {
         this.tchapRoomType = await TchapRoomUtils.getTchapRoomType(this.props.room);
+        console.log("**** decoratedroomavatar tchapRoomType", this.tchapRoomType);
         this.setState({ icon :this.calculateIcon()});
     }
     // end :TCHAP:
@@ -189,6 +191,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
                     break;
                 case TchapRoomType.External:
                     icon = Icon.External;
+                    break;
+                case TchapRoomType.PrivateNonEncrypted:
+                    icon = Icon.PrivateNonEncrypted;
                     break;
                 default:
                     icon = Icon.None;

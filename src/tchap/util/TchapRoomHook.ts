@@ -3,12 +3,15 @@ import { useCallback, useState } from "react";
 import { TchapRoomType } from "../@types/tchap";
 import TchapRoomUtils from "./TchapRoomUtils";
 
-export const useTchapRoom = (room: Room ) => {
+export const useTchapRoom = (room: Room | undefined ) => {
     const [currentRoomType, setCurrentType] = useState(TchapRoomType.Unknown);
 
-    const currentTchapRoomType = useCallback(async () => {
+    const getTchapRoomType = useCallback(async () => {
 
         try {
+            if (!room) {
+                return currentRoomType;
+            }
             const result = await TchapRoomUtils.getTchapRoomType(room);
             setCurrentType(result);
             return result;
@@ -17,5 +20,5 @@ export const useTchapRoom = (room: Room ) => {
         }
     }, [TchapRoomUtils.getTchapRoomType]);
 
-  return { currentRoomType, currentTchapRoomType }
+  return { currentRoomType, getTchapRoomType }
 }

@@ -1117,5 +1117,13 @@
     "room_settings|security|history_visibility_warning": {
         "en": "Changes won't affect past messages, only new ones.",
         "fr": "Les changements n'affecteront pas les messages passés, juste les nouveaux."
+    },
+    "icon|private_non_encrypted": {
+        "en": "This room is private and non-encrypted",
+        "fr": "Ce salon est privé non chiffré"
+    },
+    "icon|private_non_encrypted_title": {
+        "en": "Private non encrypted",
+        "fr": "Privé non chiffré"
     }
 }
