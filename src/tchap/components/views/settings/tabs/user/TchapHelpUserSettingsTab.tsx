@@ -70,7 +70,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     }
 
     private getVersionInfo(): { appVersion: string; cryptoVersion: string } {
-        const brand = SdkConfig.get().brand;
+        // Add if it is desktop or not
+        const desktop = window.__TAURI__ ? " desktop" : "";
+        const brand = `${SdkConfig.get().brand}${desktop}`;
         const appVersion = this.state.appVersion || "unknown";
         const cryptoVersion = this.context.getCrypto()?.getVersion() ?? "<not-enabled>";
 
