@@ -3,7 +3,7 @@
     "short_name": "Tchap",
     "display": "standalone",
     "theme_color": "#162d58",
-    "start_url": "index.html",
+    "start_url": "/",
     "icons": [
         {
             "src": "/vector-icons/24.png",
