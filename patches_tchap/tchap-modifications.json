@@ -248,5 +248,9 @@
     "tchapgouv-permalinks": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1378",
         "files": "src/utils/permalinks/Permalinks.ts"
+    },
+    "flag-setting-change-ecnrypted-rooms": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1537",
+        "files": "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
     }
 }

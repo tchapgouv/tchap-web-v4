@@ -44,6 +44,8 @@ import { shouldForceDisableEncryption } from "../../../../../utils/crypto/should
 import { Caption } from "../../../typography/Caption";
 import { MEGOLM_ENCRYPTION_ALGORITHM } from "../../../../../utils/crypto";
 
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
+
 interface IProps {
     room: Room;
     closeSettingsFn: () => void;
@@ -543,6 +545,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     }}
                 >
                     <SettingsSection heading={_t("room_settings|security|title")}>
+                    {/* :TCHAP: */}
+                    { TchapUIFeature.showRoomEncryptionSetting ?
                         <SettingsFieldset
                             legend={_t("settings|security|encryption_section")}
                             description={
@@ -577,6 +581,8 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                                 </>
                             )}
                         </SettingsFieldset>
+                        : null
+                    }
                         {this.renderJoinRule()}
                         {historySection}
                     </SettingsSection>
