@@ -33,6 +33,11 @@ export default class TchapUIFeature {
     public static showWidgetsSettings = false;
 
     /**
+     * Hide or display the toggle to change a room encryption setting
+     */
+    public static showRoomEncryptionSetting = false;
+
+    /**
      * Whether the given feature is active on the current user's homeserver.
      * We get the list of homeservers where the feature should be activated from config.json
      * Example : add this in config.json
