@@ -220,6 +220,10 @@ export const showToast = (state: DeviceStateForToast): void => {
                 break;
             }
         }
+        // :TCHAP: keybackup-out-of-sync-hide-toast
+        // it will still re-appear after refresh if no action is done by the user
+        hideToast();
+        // end :TCHAP:
     };
 
     const onSecondaryClick = async (): Promise<void> => {
@@ -275,6 +279,10 @@ export const showToast = (state: DeviceStateForToast): void => {
             default:
                 DeviceListener.sharedInstance().dismissEncryptionSetup();
         }
+        // :TCHAP: keybackup-out-of-sync-hide-toast
+        // it will still re-appear after refresh if no action is done by the user
+        hideToast();
+        // end :TCHAP:
     };
 
     /**
