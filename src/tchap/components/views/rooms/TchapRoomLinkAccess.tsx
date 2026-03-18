@@ -51,7 +51,7 @@ export default function TchapRoomLinkAccess({room, onUpdateParentView}: ITchapRo
 
     useEffect(() => {
         initialLinkSharingValue();
-    }, []);
+    }, [currentRoomType]);
 
     // Create the permalink to share
     const _setUpRoomByLink = async () => {
