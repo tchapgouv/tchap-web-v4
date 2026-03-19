@@ -1,6 +1,6 @@
 import { listen } from '@tauri-apps/api/event';
 import { getVersion } from '@tauri-apps/api/app';
-import { getCurrentWindow } from '@tauri-apps/api/window';
+import { getCurrentWindow, UserAttentionType } from '@tauri-apps/api/window';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { check, type Update } from '@tauri-apps/plugin-updater';
 import { relaunch } from '@tauri-apps/plugin-process';
@@ -401,11 +401,13 @@ export default class TauriPlatform extends BasePlatform {
 
 
     public setNotificationCount(count: number): void {
-        if (this.notificationCount === count) return;
-        console.log("[Tauri plaforme] set notification badge count");
-        getCurrentWindow().setBadgeCount(count);
+        console.log("[Tauri plaforme] set notification badge count", count);
+        // From tauri doc, to remove the badge, the setbadge count needs to be undefined
+        const notifCount = !count || count == 0 ? undefined : count;
+        // Not working for windows
+        getCurrentWindow().setBadgeCount(notifCount);
+        // needs to use overlay icon
         super.setNotificationCount(count);
-        
     }
 
     public supportsNotifications(): boolean {
@@ -444,10 +446,7 @@ export default class TauriPlatform extends BasePlatform {
     }
 
     public async loudNotification(ev: MatrixEvent, room: Room): Promise<void> {
-        const focused = await getCurrentWindow().isFocused();
-        if (!focused) {
-            getCurrentWindow().show();
-        }
+        getCurrentWindow().requestUserAttention(UserAttentionType.Informational);
     }
 
     public checkSessionLockFree(): boolean {
