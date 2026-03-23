@@ -18,6 +18,7 @@ import {
     UserEvent,
 } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { Tooltip } from "@vector-im/compound-web";
 import { PublicIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import RoomAvatar from "./RoomAvatar";
@@ -30,10 +31,6 @@ import { _t } from "../../../languageHandler";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { type IOOBData } from "../../../stores/ThreepidInviteStore";
 import { getJoinedNonFunctionalMembers } from "../../../utils/room/getJoinedNonFunctionalMembers";
-
-import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
-import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
-import WithTchapIndicator from "~tchap-web/src/tchap/components/views/avatars/WithTchapIndicator";
 
 interface IProps {
     room: Room;
@@ -55,7 +52,6 @@ interface IProps {
 interface IState {
     notificationState?: NotificationState;
     icon: Icon;
-    tchapRoomType: TchapRoomType; //:TCHAP:
 }
 
 const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
@@ -64,16 +60,25 @@ enum Icon {
     // Note: the names here are used in CSS class names
     None = "NONE", // ... except this one
     Globe = "GLOBE",
-    // :TCHAP: tchap-room-icons - add icons for custom room types
-    Forum = "FORUM",
-    Private = "PRIVATE",
-    External = "EXTERNAL",
-    PrivateNonEncrypted = "PRIVATE_NON_ENCRYPTED",
-    // end :TCHAP:
     PresenceOnline = "ONLINE",
     PresenceAway = "AWAY",
     PresenceOffline = "OFFLINE",
     PresenceBusy = "BUSY",
+}
+
+function tooltipText(variant: Icon): string | undefined {
+    switch (variant) {
+        case Icon.Globe:
+            return _t("room|header|room_is_public");
+        case Icon.PresenceOnline:
+            return _t("presence|online");
+        case Icon.PresenceAway:
+            return _t("presence|away");
+        case Icon.PresenceOffline:
+            return _t("presence|offline");
+        case Icon.PresenceBusy:
+            return _t("presence|busy");
+    }
 }
 
 /**
@@ -89,8 +94,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
         this.state = {
             notificationState: RoomNotificationStateStore.instance.getRoomState(this.props.room),
-            icon: Icon.None,
-            tchapRoomType: TchapRoomType.Unknown // :TCHAP:
+            icon: this.calculateIcon(),
         };
     }
 
@@ -99,14 +103,6 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
-
-    // :TCHAP: 
-    public async componentDidMount(): Promise<void> {
-        const tchapRoomType = await TchapRoomUtils.getTchapRoomType(this.props.room);
-        console.log("**** decoratedroomavatar tchapRoomType", tchapRoomType);
-        this.setState({ icon :this.calculateIcon(), tchapRoomType});
-    }
-    // end :TCHAP:
 
     private get isPublicRoom(): boolean {
         return this.props.room.getJoinRule() === JoinRule.Public;
@@ -133,7 +129,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         if (this.isUnmounted) return;
         if (this.props.room.roomId !== room?.roomId) return;
 
-         if (ev.getType() === EventType.RoomJoinRules || ev.getType() === EventType.RoomMember) {
+        if (ev.getType() === EventType.RoomJoinRules || ev.getType() === EventType.RoomMember) {
             const newIcon = this.calculateIcon();
             if (newIcon !== this.state.icon) {
                 this.setState({ icon: newIcon });
@@ -180,25 +176,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             }
         } else {
             // Track publicity
-            //icon = this.isPublicRoom ? Icon.Globe : Icon.None;
-            //:tchap: tchap-room-icons - use custom icons for tchap room types
-            switch(this.state.tchapRoomType) {
-                case TchapRoomType.Forum:
-                    icon = Icon.Forum;
-                    break;
-                case TchapRoomType.Private:
-                    icon = Icon.Private;
-                    break;
-                case TchapRoomType.External:
-                    icon = Icon.External;
-                    break;
-                case TchapRoomType.PrivateNonEncrypted:
-                    icon = Icon.PrivateNonEncrypted;
-                    break;
-                default:
-                    icon = Icon.None;
-            }
-            //end :tchap:
+            icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             if (!this.isWatchingTimeline) {
                 this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
@@ -211,7 +189,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         // Spread the remaining props to make it work with compound component
         const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, className, ...props } =
             this.props;
-        
+
         let badge: React.ReactNode;
         if (this.props.displayBadge && this.state.notificationState) {
             badge = (
@@ -245,21 +223,18 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
         return (
             <div className={classes} {...props}>
-                { /*:TCHAP: tchap-room-icons - we add the tchap hook so that the icon is well updated on room creation*/ }
-                <WithTchapIndicator room={this.props.room} size={this.props.size} tooltipProps={{ tabIndex: this.props.tooltipProps?.tabIndex }}>
-                    <RoomAvatar
-                        room={this.props.room}
-                        size={this.props.size}
+                <RoomAvatar
+                    room={this.props.room}
+                    size={this.props.size}
                     oobData={this.props.oobData}
                     viewAvatarOnClick={this.props.viewAvatarOnClick}
-                    />
-                    {/* {icon && (
-                        <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
-                            {icon}
-                        </Tooltip>
-                    )} */}
-                    {badge}
-                </WithTchapIndicator>
+                />
+                {icon && (
+                    <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
+                        {icon}
+                    </Tooltip>
+                )}
+                {badge}
             </div>
         );
     }

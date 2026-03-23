@@ -1125,5 +1125,9 @@
     "icon|private_non_encrypted_title": {
         "en": "Private non encrypted",
         "fr": "Privé non chiffré"
+    },
+    "badge|external_guests": {
+        "en": "External guests",
+        "fr": "Invités externes"
     }
 }

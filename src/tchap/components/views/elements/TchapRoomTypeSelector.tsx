@@ -59,7 +59,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
             tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value === TchapRoomType.Forum,
         });
         const pNonEncryptedClasses = classNames("tc_TchapRoomTypeSelector_RadioButton", "tc_TchapRoomTypeSelector_private_non_encrypted", {
-            tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value === TchapRoomType.PrivateNonEncrypted,
+            tc_TchapRoomTypeSelector_RadioButton_selected: (this.props.value === TchapRoomType.PrivateNonEncrypted || this.props.value === TchapRoomType.PrivateNonEncryptedExternal),
         });
 
         let roomFederateOpt;

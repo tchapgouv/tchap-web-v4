@@ -35,6 +35,7 @@ enum Icon {
     Private = "PRIVATE",
     External = "EXTERNAL",
     PrivateNonEncrypted = "PRIVATE_NON_ENCRYPTED",
+    PrivateNonEncryptedExternal = "PRIVATE_NON_ENCRYPTED_EXTERNAL",
 }
 
 function tooltipText(variant: Icon): string | undefined {
@@ -46,6 +47,7 @@ function tooltipText(variant: Icon): string | undefined {
         case Icon.External:
             return _t("This room is private and open to external users");
         case Icon.PrivateNonEncrypted:
+        case Icon.PrivateNonEncryptedExternal:
             return _t("icon|private_non_encrypted");
     }
 }
@@ -72,6 +74,7 @@ const calculateIcon = (room: Room, roomType: TchapRoomType): [JSX.Element | null
             iconText = Icon.External;
             break;
         case TchapRoomType.PrivateNonEncrypted:
+        case TchapRoomType.PrivateNonEncryptedExternal:
             icon = <LockOffIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.PrivateNonEncrypted.toLowerCase()}`} />;
             iconText = Icon.PrivateNonEncrypted;
             break;

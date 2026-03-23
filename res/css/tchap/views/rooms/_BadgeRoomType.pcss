@@ -1,0 +1,24 @@
+.tc_badge {
+
+    span {
+        font-size: smaller;
+        margin-right: 2px;
+
+        &.description {
+            display: none;
+        }
+
+        /* Show text only on larger screens */
+        @media (min-width: 750px) {
+            &.description {
+                display: inline;
+            }
+        }
+    }
+
+    .external {
+        background-color: var(--badge-external-color);
+    }
+
+
+}

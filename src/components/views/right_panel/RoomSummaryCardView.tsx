@@ -51,9 +51,8 @@ import { Linkify, topicToHtml } from "../../../HtmlUtils.tsx";
 import { useRoomSummaryCardViewModel } from "../../viewmodels/right_panel/RoomSummaryCardViewModel.tsx";
 import { useRoomTopicViewModel } from "../../viewmodels/right_panel/RoomSummaryCardTopicViewModel.tsx";
 
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP: tchap-room-icons
-
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts"; // :TCHAP: copy-link-room-behavior
+import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader.tsx";
 
 
 interface IProps {
@@ -146,11 +145,7 @@ const RoomSummaryCardView: React.FC<IProps> = ({
 
     const roomInfo = (
         <header className="mx_RoomSummaryCard_container">
-            {/** :TCHAP: tchap-room-icons - decorate the avatar with the tchap lock icons
             <RoomAvatar room={room} size="80px" viewAvatarOnClick />
-            */}
-            <DecoratedRoomAvatar room={room} size="80px" viewAvatarOnClick />
-            {/* end :TCHAP: */}
             <RoomName room={room}>
                 {(name) => (
                     <Heading
@@ -174,9 +169,10 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                 {vm.alias}
             </Text>
 
-            {/* :TCHAP: tchap-room-icons - remove badges
             <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
-                {!vm.isDirectMessage && vm.roomJoinRule === JoinRule.Public && (
+                {/* :TCHAP: */}
+                <TchapRoomTypeRoomHeader room={room} />
+                {/* {!vm.isDirectMessage && vm.roomJoinRule === JoinRule.Public && (
                     <Badge kind="blue">
                         <PublicIcon width="1em" color="var(--cpd-color-icon-info-primary)" />
                         {_t("common|public_room")}
@@ -202,9 +198,8 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                         <ErrorSolidIcon width="1em" />
                         {_t("common|not_trusted")}
                     </Badge>
-                )}
+                )} */}
             </Flex>
-            */}
 
             <RoomTopic room={room} />
         </header>

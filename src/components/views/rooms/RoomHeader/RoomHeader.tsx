@@ -42,7 +42,7 @@ import { isVideoRoom as calcIsVideoRoom } from "../../../../utils/video-rooms.ts
 import { notificationLevelToIndicator } from "../../../../utils/notifications.ts";
 import { CallGuestLinkButton } from "./CallGuestLinkButton.tsx";
 import { type ButtonEvent } from "../../elements/AccessibleButton.tsx";
-import { useDmMember } from "../../avatars/WithPresenceIndicator.tsx";
+import WithPresenceIndicator, { useDmMember } from "../../avatars/WithPresenceIndicator.tsx";
 import { type IOOBData } from "../../../../stores/ThreepidInviteStore.ts";
 import { MainSplitContentType } from "../../../structures/RoomView.tsx";
 import defaultDispatcher from "../../../../dispatcher/dispatcher.ts";
@@ -55,7 +55,6 @@ import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
-import WithTchapIndicator from "~tchap-web/src/tchap/components/views/avatars/WithTchapIndicator.tsx";
 import Modal from "~tchap-web/src/Modal.tsx";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader.tsx"; // :TCHAP: customize-room-header-bar
@@ -501,26 +500,17 @@ export default function RoomHeader({
         <>
             <CurrentRightPanelPhaseContextProvider roomId={room.roomId}>
                 <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-                    {/* :TCHAP: customize-room-header-bar - add room type decoration */}
-                     {/* <WithPresenceIndicator room={room} size="8px"> */}
-                    <div className="mx_DecoratedRoomAvatar">
-                        <WithTchapIndicator room={room} size="8px" tooltipProps={{ tabIndex: -1 }}>
-                        {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y } */}
-                            <RoomAvatar
-                                room={room}
-                                size="40px"
-                                oobData={oobData}
-                                onClick={room instanceof LocalRoom ? undefined : onAvatarClick}
-                                tabIndex={-1}
-                                aria-label={_t("room|header_avatar_open_settings_label")}
-                            />
-                        </WithTchapIndicator>
-                    </div>
-                    {/* </WithPresenceIndicator>  */}
-                    {/* end :TCHAP: */}
-                    {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
-                    <TchapRoomTypeRoomHeader room={room} />
-                    {/* :tchap: end */}
+                    <WithPresenceIndicator room={room} size="8px">
+                    {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y } */}
+                        <RoomAvatar
+                            room={room}
+                            size="40px"
+                            oobData={oobData}
+                            onClick={room instanceof LocalRoom ? undefined : onAvatarClick}
+                            tabIndex={-1}
+                            aria-label={_t("room|header_avatar_open_settings_label")}
+                        />
+                    </WithPresenceIndicator>
                     <button
                         aria-label={_t("right_panel|room_summary_card|title")}
                         tabIndex={0}
@@ -542,7 +532,6 @@ export default function RoomHeader({
                                 className="mx_RoomHeader_heading"
                             >
                                 <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
-
                                 {/* :tchap: customize-room-header-bar - remove public forum icon
                                 {!isDirectMessage && joinRule === JoinRule.Public && (
                                     <Tooltip label={_t("common|public_room")} placement="right">
@@ -583,6 +572,9 @@ export default function RoomHeader({
                                 )}
                                 */}
                             </Text>
+                            {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
+                            <TchapRoomTypeRoomHeader room={room} />
+                            {/* :tchap: end */}
                         </Box>
                     </button>
                     {/* If the room is local-only then we don't want to show any additional buttons, as it won't work */}

@@ -23,6 +23,9 @@ export default class TchapRoomUtils {
         if (!isEncrypted) {
             const visibility = await this.getRoomVisibility(room);
             if (visibility == Visibility.Private) {
+                if (TchapRoomAccessRule.Unrestricted) {
+                    return TchapRoomType.PrivateNonEncryptedExternal;
+                }
                 return TchapRoomType.PrivateNonEncrypted;
             }
             return TchapRoomType.Forum;
