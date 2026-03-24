@@ -797,7 +797,8 @@ module.exports = (env, argv) => {
                     // Element Call embedded widget
                     {
                         from: "**",
-                        context: path.resolve(__dirname, "node_modules/@element-hq/element-call-embedded/dist"),
+                        // :TCHAP: context: path.resolve(__dirname, "node_modules/@element-hq/element-call-embedded/dist"),
+                        context: path.resolve(__dirname, "node_modules/element-call-embedded-tchap/dist"),
                         to: path.join(__dirname, "webapp", "widgets", "element-call"),
                     },
                     // Mobile guide assets
