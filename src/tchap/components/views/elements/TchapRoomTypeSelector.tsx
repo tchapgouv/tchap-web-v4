@@ -10,6 +10,7 @@ import StyledRadioButton from "~tchap-web/src/components/views/elements/StyledRa
 import { TchapRoomType } from "../../../@types/tchap";
 import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 import {LockSolidIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 
 interface IProps {
@@ -115,20 +116,23 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         </div>
                     </StyledRadioButton>
                 </label>
-                <label className={pNonEncryptedClasses}>
-                    <StyledRadioButton
-                        name="roomType"
-                        value={TchapRoomType.PrivateNonEncrypted}
-                        checked={this.props.value == TchapRoomType.PrivateNonEncrypted}
-                        onChange={this.onRoomTypeChange}
-                    >
-                        <div className="tc_TchapRoomTypeSelector_RadioButton_title">
-                            <LockOffIcon width="30px" color="var(--timeline-text-color)" />
-                            {_t("icon|private_non_encrypted_title")}
-                        </div>
-                        <div>{this.props.createRoomInSpace ? _t("Private discussions accessible to all users of this space.")  : _t("Accessible to all users by invitation from an administrator.")}</div>
-                    </StyledRadioButton>
-                </label>
+                {TchapUIFeature.activateCreationPrivateRoomNonEncrypted ?
+                    <label className={pNonEncryptedClasses}>
+                        <StyledRadioButton
+                            name="roomType"
+                            value={TchapRoomType.PrivateNonEncrypted}
+                            checked={this.props.value == TchapRoomType.PrivateNonEncrypted}
+                            onChange={this.onRoomTypeChange}
+                        >
+                            <div className="tc_TchapRoomTypeSelector_RadioButton_title">
+                                <LockOffIcon width="30px" color="var(--timeline-text-color)" />
+                                {_t("icon|private_non_encrypted_title")}
+                            </div>
+                            <div>{this.props.createRoomInSpace ? _t("Private discussions accessible to all users of this space.")  : _t("Accessible to all users by invitation from an administrator.")}</div>
+                        </StyledRadioButton>
+                    </label>
+                    : null
+                }
                 <label className={forumClasses}>
                     <StyledRadioButton
                         name="roomType"
