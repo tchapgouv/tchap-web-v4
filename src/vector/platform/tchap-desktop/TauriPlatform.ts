@@ -10,6 +10,7 @@ import { secureRandomString } from 'matrix-js-sdk/src/randomstring';
 import { type MatrixEvent, type Room, type MatrixClient, type SSOAction, type OidcRegistrationClientMetadata } from 'matrix-js-sdk/src/matrix';
 import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification';
 import { encodeParams } from 'matrix-js-sdk/src/utils';
+import { resolveResource } from '@tauri-apps/api/path';
 
 import BasePlatform, { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY, UpdateCheckStatus, type UpdateStatus } from "../../../BasePlatform";
 import dis from "../../../dispatcher/dispatcher";
@@ -400,12 +401,24 @@ export default class TauriPlatform extends BasePlatform {
     }
 
 
-    public setNotificationCount(count: number): void {
-        console.log("[Tauri plaforme] set notification badge count", count);
+    public async setNotificationCount(count: number): Promise<void> {
+
+        function getCorrectBadgeImagePath(count: number): string {
+            const countStr = (count > 9) ? 10 : count;
+            const badgePath = `images/icon_notification_${countStr}.png`;
+            return badgePath
+        }
+
+        console.log("[Tauri plaform] set notification badge count", count);
         // From tauri doc, to remove the badge, the setbadge count needs to be undefined
         const notifCount = !count || count == 0 ? undefined : count;
-        // Not working for windows
-        getCurrentWindow().setBadgeCount(notifCount);
+        
+        if (platformFriendlyName() == "Windows") {
+            const badgeSrc = notifCount ? await resolveResource(getCorrectBadgeImagePath(count)) : undefined;
+            getCurrentWindow().setOverlayIcon(badgeSrc)
+        } else {
+            getCurrentWindow().setBadgeCount(notifCount);
+        }
         // needs to use overlay icon
         super.setNotificationCount(count);
     }
