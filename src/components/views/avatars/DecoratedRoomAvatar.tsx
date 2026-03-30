@@ -32,9 +32,6 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import { type IOOBData } from "../../../stores/ThreepidInviteStore";
 import { getJoinedNonFunctionalMembers } from "../../../utils/room/getJoinedNonFunctionalMembers";
 
-import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
-import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
-
 interface IProps {
     room: Room;
     size: string;
@@ -55,7 +52,6 @@ interface IProps {
 interface IState {
     notificationState?: NotificationState;
     icon: Icon;
-    tchapRoomType: TchapRoomType;
 }
 
 const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
@@ -72,8 +68,8 @@ enum Icon {
 
 function tooltipText(variant: Icon): string | undefined {
     switch (variant) {
-        case Icon.Globe:
-            return _t("room|header|room_is_public");
+        // :TCHAP: case Icon.Globe:
+        //     return _t("room|header|room_is_public");
         case Icon.PresenceOnline:
             return _t("presence|online");
         case Icon.PresenceAway:
@@ -98,46 +94,18 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
         this.state = {
             notificationState: RoomNotificationStateStore.instance.getRoomState(this.props.room),
-            // :TCHAP: icon: this.calculateIcon(),
-            icon: Icon.None,
-            tchapRoomType: TchapRoomType.Unknown
+            icon: this.calculateIcon()
         };
     }
-
-    // :TCHAP:
-    public componentDidMount(): void {
-        // cannot use tchaphook in class component,
-        // So using the store and event emitter to get the info
-        TchapStore.instance.getRoomType(this.props.room);
-        TchapStore.instance.on(
-            TchapStore.getTchapTypeChangedEventName(this.props.room),
-            this.onTchapRoomTypeChanged.bind(this),
-        );
-    }
-    // end :TCHAP:
 
     public componentWillUnmount(): void {
         this.isUnmounted = true;
         if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
-        // :TCHAP:
-        TchapStore.instance.off(
-            TchapStore.getTchapTypeChangedEventName(this.props.room),
-            this.onTchapRoomTypeChanged.bind(this),
-        );
-        // end :TCHAP:
-    }
-
-    private onTchapRoomTypeChanged(roomType: TchapRoomType): void {
-        this.setState({tchapRoomType: roomType});
-        this.setState({
-            icon: this.calculateIcon()
-        })
     }
 
     private get isPublicRoom(): boolean {
-        // :TCHAP: return this.props.room.getJoinRule() === JoinRule.Public;
-        return this.state.tchapRoomType == TchapRoomType.Forum;
+        return this.props.room.getJoinRule() === JoinRule.Public;
     }
 
     private get dmUser(): User | null {
@@ -206,9 +174,12 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
                 this.dmUser = MatrixClientPeg.safeGet().getUser(otherUserId);
                 icon = this.getPresenceIcon();
             }
-        } else {
+        } 
+        else {
             // Track publicity
-            icon = this.isPublicRoom ? Icon.Globe : Icon.None;
+            // :TCHAP: remove forum icon
+            // icon = this.isPublicRoom ? Icon.Globe : Icon.None;
+            icon = Icon.None;
             if (!this.isWatchingTimeline) {
                 this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
