@@ -31,6 +31,12 @@ export default class TchapUIFeature {
      * Hide UI for widget and integration manager. We use a flag cause it may be useful for future usecase
      */
     public static showWidgetsSettings = false;
+    
+    /**
+     * Hide/show UI for creation of private non encrypted room
+     */
+    public static activateCreationPrivateRoomNonEncrypted = true;
+
 
     /**
      * Hide or display the toggle to change a room encryption setting
