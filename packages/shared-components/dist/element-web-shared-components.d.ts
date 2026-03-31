@@ -1,24 +1,24 @@
-import { ChangeEventHandler } from "react";
-import { ComponentProps } from "react";
-import { Context } from "react";
-import { default as default_2 } from "react";
-import { ElementType } from "react";
-import { EventEmitter } from "events";
-import { getNormalizedLanguageKeys } from "matrix-web-i18n";
-import { HTMLAttributes } from "react";
-import { HTMLProps } from "react";
-import { I18nApi as I18nApi_2 } from "@element-hq/element-web-module-api";
-import { JSX } from "react";
-import { JSXElementConstructor } from "react";
-import { KEY_SEPARATOR } from "matrix-web-i18n";
-import { KeyboardEventHandler } from "react";
-import { MouseEventHandler } from "react";
-import { normalizeLanguageKey } from "matrix-web-i18n";
-import { PropsWithChildren } from "react";
-import { ReactElement } from "react";
-import { ReactNode } from "react";
-import { Translations } from "@element-hq/element-web-module-api";
-import { Variables } from "@element-hq/element-web-module-api";
+import { ChangeEventHandler } from 'react';
+import { ComponentProps } from 'react';
+import { Context } from 'react';
+import { default as default_2 } from 'react';
+import { ElementType } from 'react';
+import { EventEmitter } from 'events';
+import { getNormalizedLanguageKeys } from 'matrix-web-i18n';
+import { HTMLAttributes } from 'react';
+import { HTMLProps } from 'react';
+import { I18nApi as I18nApi_2 } from '@element-hq/element-web-module-api';
+import { JSX } from 'react';
+import { JSXElementConstructor } from 'react';
+import { KEY_SEPARATOR } from 'matrix-web-i18n';
+import { KeyboardEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
+import { normalizeLanguageKey } from 'matrix-web-i18n';
+import { PropsWithChildren } from 'react';
+import { ReactElement } from 'react';
+import { ReactNode } from 'react';
+import { Translations } from '@element-hq/element-web-module-api';
+import { Variables } from '@element-hq/element-web-module-api';
 
 /**
  * AudioPlayer component displays an audio player with play/pause controls, seek bar, and media information.
@@ -100,14 +100,7 @@ export declare interface AudioPlayerViewSnapshot {
  * <AvatarWithDetails title="Room Name" details="10 participants" className="custom-class" />
  * ```
  */
-export declare function AvatarWithDetails<C extends default_2.ElementType = "div">({
-    as,
-    className,
-    details,
-    avatar,
-    title,
-    ...props
-}: PropsWithChildren<AvatarWithDetailsProps<C>>): JSX.Element;
+export declare function AvatarWithDetails<C extends default_2.ElementType = "div">({ as, className, details, avatar, title, ...props }: PropsWithChildren<AvatarWithDetailsProps<C>>): JSX.Element;
 
 declare type AvatarWithDetailsProps<C extends ElementType> = {
     /**
@@ -140,15 +133,7 @@ declare type AvatarWithDetailsProps<C extends ElementType> = {
  *   <Banner  onClose={onCloseHandler} />
  * ```
  */
-export declare function Banner({
-    type,
-    children,
-    avatar,
-    className,
-    actions,
-    onClose,
-    ...props
-}: PropsWithChildren<BannerProps & HTMLAttributes<HTMLDivElement>>): ReactElement;
+export declare function Banner({ type, children, avatar, className, actions, onClose, ...props }: PropsWithChildren<BannerProps & HTMLAttributes<HTMLDivElement>>): ReactElement;
 
 declare interface BannerProps {
     /**
@@ -175,7 +160,7 @@ export declare abstract class BaseViewModel<T, P> implements ViewModel<T> {
     protected props: P;
     protected disposables: Disposables;
     protected constructor(props: P, initialSnapshot: T);
-    subscribe: (listener: () => void) => () => void;
+    subscribe: (listener: () => void) => (() => void);
     /**
      * Returns the current snapshot of the view model.
      */
@@ -193,15 +178,7 @@ export declare abstract class BaseViewModel<T, P> implements ViewModel<T> {
 /**
  * A flex child helper
  */
-export declare function Box({
-    as,
-    flex,
-    shrink,
-    grow,
-    className,
-    children,
-    ...props
-}: default_2.PropsWithChildren<BoxProps>): JSX.Element;
+export declare function Box({ as, flex, shrink, grow, className, children, ...props }: default_2.PropsWithChildren<BoxProps>): JSX.Element;
 
 declare type BoxProps = {
     /**
@@ -261,11 +238,9 @@ export declare function defaultNumber(i: unknown, def: number): number;
  * - A function that does the disposing
  * - An object containing a dispose method which does the disposing
  */
-export declare type DisposableItem =
-    | {
-          dispose: () => void;
-      }
-    | (() => void);
+export declare type DisposableItem = {
+    dispose: () => void;
+} | (() => void);
 
 /**
  * This class provides a way for the view-model to track any resource
@@ -296,18 +271,7 @@ export declare class Disposables {
 /**
  * A flexbox container helper
  */
-export declare function Flex<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = "div">({
-    as,
-    display,
-    direction,
-    align,
-    justify,
-    gap,
-    wrap,
-    className,
-    children,
-    ...props
-}: default_2.PropsWithChildren<FlexProps<T>>): JSX.Element;
+export declare function Flex<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = "div">({ as, display, direction, align, justify, gap, wrap, className, children, ...props }: default_2.PropsWithChildren<FlexProps<T>>): JSX.Element;
 
 declare type FlexProps<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> = {
     /**
@@ -371,7 +335,7 @@ export declare function getLangsJson(): Promise<Languages>;
 
 export declare function getLocale(): string;
 
-export { getNormalizedLanguageKeys };
+export { getNormalizedLanguageKeys }
 
 /**
  * A component to alert that history is shared to new members of the room.
@@ -393,8 +357,7 @@ export declare interface HistoryVisibleBannerViewActions {
 /**
  * The view model for the banner.
  */
-export declare type HistoryVisibleBannerViewModel = ViewModel<HistoryVisibleBannerViewSnapshot> &
-    HistoryVisibleBannerViewActions;
+export declare type HistoryVisibleBannerViewModel = ViewModel<HistoryVisibleBannerViewSnapshot> & HistoryVisibleBannerViewActions;
 
 declare interface HistoryVisibleBannerViewProps {
     /**
@@ -442,7 +405,7 @@ export declare interface IVariables {
     [key: string]: SubstitutionValue;
 }
 
-export { KEY_SEPARATOR };
+export { KEY_SEPARATOR }
 
 declare type Languages = {
     [lang: string]: string;
@@ -462,12 +425,7 @@ export declare function lookupString(key: TranslationKey): string;
  * <MediaBody as="p" className="custom-class">Media body content</MediaBody>
  * ```
  */
-export declare function MediaBody<C extends default_2.ElementType = "div">({
-    as,
-    className,
-    children,
-    ...props
-}: PropsWithChildren<MediaBodyProps<C>>): JSX.Element;
+export declare function MediaBody<C extends default_2.ElementType = "div">({ as, className, children, ...props }: PropsWithChildren<MediaBodyProps<C>>): JSX.Element;
 
 declare type MediaBodyProps<C extends ElementType> = {
     /**
@@ -491,7 +449,7 @@ export declare class MockViewModel<T> implements ViewModel<T> {
     subscribe(listener: () => void): () => void;
 }
 
-export { normalizeLanguageKey };
+export { normalizeLanguageKey }
 
 export declare function percentageOf(val: number, min: number, max: number): number;
 
@@ -508,13 +466,7 @@ export declare function percentageWithin(pct: number, min: number, max: number):
  * </Pill>
  * ```
  */
-export declare function Pill({
-    className,
-    children,
-    label,
-    onClick,
-    ...props
-}: PropsWithChildren<PillProps>): JSX.Element;
+export declare function Pill({ className, children, label, onClick, ...props }: PropsWithChildren<PillProps>): JSX.Element;
 
 /**
  * An input component that can contain multiple child elements and an input field.
@@ -527,13 +479,7 @@ export declare function Pill({
  * </PillInput>
  * ```
  */
-export declare function PillInput({
-    className,
-    children,
-    onRemoveChildren,
-    inputProps,
-    ...props
-}: PropsWithChildren<PillInputProps>): JSX.Element;
+export declare function PillInput({ className, children, onRemoveChildren, inputProps, ...props }: PropsWithChildren<PillInputProps>): JSX.Element;
 
 declare interface PillInputProps extends HTMLAttributes<HTMLDivElement> {
     /**
@@ -578,12 +524,7 @@ declare type PlaybackState = "decoding" | "stopped" | "paused" | "playing" | "pr
  * <PlayPauseButton playing={true} togglePlay={() => {}} />
  * ```
  */
-export declare function PlayPauseButton({
-    disabled,
-    playing,
-    togglePlay,
-    ...rest
-}: Readonly<PlayPauseButtonProps>): JSX.Element;
+export declare function PlayPauseButton({ disabled, playing, togglePlay, ...rest }: Readonly<PlayPauseButtonProps>): JSX.Element;
 
 declare interface PlayPauseButtonProps extends HTMLAttributes<HTMLButtonElement> {
     /**
@@ -681,14 +622,7 @@ declare interface RichItemProps extends HTMLAttributes<HTMLLIElement> {
  * </RichList>
  * ```
  */
-export declare function RichList({
-    children,
-    title,
-    className,
-    titleAttributes,
-    isEmpty,
-    ...props
-}: PropsWithChildren<RichListProps>): JSX.Element;
+export declare function RichList({ children, title, className, titleAttributes, isEmpty, ...props }: PropsWithChildren<RichListProps>): JSX.Element;
 
 declare interface RichListProps extends HTMLProps<HTMLDivElement> {
     /**
@@ -861,13 +795,7 @@ declare interface RoomStatusBarViewProps {
     vm: RoomStatusBarViewModel;
 }
 
-export declare type RoomStatusBarViewSnapshot =
-    | RoomStatusBarNoConnection
-    | RoomStatusBarConsentState
-    | RoomStatusBarResourceLimitedState
-    | RoomStatusBarUnsentMessagesState
-    | RoomStatusBarLocalRoomError
-    | RoomStatusBarNotVisible;
+export declare type RoomStatusBarViewSnapshot = RoomStatusBarNoConnection | RoomStatusBarConsentState | RoomStatusBarResourceLimitedState | RoomStatusBarUnsentMessagesState | RoomStatusBarLocalRoomError | RoomStatusBarNotVisible;
 
 /**
  * Sanitizes unsafe text for the sanitizer, ensuring references to variables will not be considered
@@ -972,9 +900,7 @@ export declare type TranslatedString = string | default_2.ReactNode;
  * @example
  * const vm = useCreateAutoDisposedViewModel(() => new FooViewModel({prop1, prop2, ...});
  */
-export declare function useCreateAutoDisposedViewModel<B extends BaseViewModel<unknown, unknown>>(
-    vmCreator: VmCreator<B>,
-): B;
+export declare function useCreateAutoDisposedViewModel<B extends BaseViewModel<unknown, unknown>>(vmCreator: VmCreator<B>): B;
 
 /**
  * A hook to get the i18n API from the context. Will throw if no i18n context is found.
@@ -1025,7 +951,7 @@ export declare class ViewModelSubscriptions {
      * @param listener Will be called whenever the snapshot changes.
      * @returns A function to unsubscribe from the view model updates.
      */
-    add: (listener: () => void) => () => void;
+    add: (listener: () => void) => (() => void);
     /**
      * Emit an update to all subscribed listeners.
      */
@@ -1034,4 +960,4 @@ export declare class ViewModelSubscriptions {
 
 declare type VmCreator<B extends BaseViewModel<unknown, unknown>> = () => B;
 
-export {};
+export { }
