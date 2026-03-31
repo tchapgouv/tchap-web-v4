@@ -110,11 +110,12 @@ export default class TchapCreateRoom {
             }
              case TchapRoomType.PrivateNonEncrypted: {
                 // only difference with private is the visibility and encryption
-                createRoomOpts.visibility = Visibility.Public;
+                createRoomOpts.visibility = Visibility.Private;
                 createRoomOpts.preset = Preset.PrivateChat;
                 createRoomOpts.initial_state.push({
                     content: {
                         rule: TchapRoomAccessRule.Restricted,
+                        encrypted: false
                     },
                     type: TchapRoomAccessRulesEventId,
                     state_key: "",

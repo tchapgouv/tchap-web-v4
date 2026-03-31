@@ -5,7 +5,7 @@
 import { EventTimeline, EventType, Room, Visibility } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
+import { TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
 import { GuestAccess, JoinRule } from "matrix-js-sdk/src/matrix";
 
 
@@ -13,16 +13,16 @@ export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
     static getTchapRoomType(room: Room): Promise<TchapRoomType> {
-        const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
-        return this.getTchapRoomTypeInternal(tchapRoomAccessRule, room);
+        const tchapAccessRule = this.getTchapRoomAccessRule(room);
+        return this.getTchapRoomTypeInternal(tchapAccessRule, room);
     }
 
-    static async getTchapRoomTypeInternal(tchapRoomAccessRule: TchapRoomAccessRule, room: Room): Promise<TchapRoomType> {
+    static async getTchapRoomTypeInternal(tchapRoomAccessRule: TchapIAccessRuleEventContent | undefined, room: Room): Promise<TchapRoomType> {
         const isEncrypted: boolean = await this.isRoomEncrypted(room.roomId);
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
-            const visibility = await this.getRoomVisibility(room);
-            if (visibility == Visibility.Private) {
+            // Should be explicitly encrypted to false, private room does not have this value if the backend is not compatible or the data not well updated
+            if (tchapRoomAccessRule?.encrypted == false) {
                 if (TchapRoomAccessRule.Unrestricted) {
                     return TchapRoomType.PrivateNonEncryptedExternal;
                 }
@@ -30,7 +30,7 @@ export default class TchapRoomUtils {
             }
             return TchapRoomType.Forum;
         }
-        switch(tchapRoomAccessRule) {
+        switch(tchapRoomAccessRule?.rule) {
             case TchapRoomAccessRule.Restricted:
                 return TchapRoomType.Private;
             case TchapRoomAccessRule.Unrestricted:
@@ -45,8 +45,8 @@ export default class TchapRoomUtils {
      * @param room
      * @returns string that matches of one TchapRoomAccessRule //todo or null? or empty?
      */
-    static getTchapRoomAccessRule(room: Room): TchapRoomAccessRule {
-        return room.getLiveTimeline().getState(EventTimeline.FORWARDS)?.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent().rule;
+    static getTchapRoomAccessRule(room: Room): TchapIAccessRuleEventContent | undefined {
+        return room.getLiveTimeline().getState(EventTimeline.FORWARDS)?.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent();
     }
 
     /**

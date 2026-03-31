@@ -15,6 +15,7 @@ export enum TchapRoomAccessRule {
 
 export interface TchapIAccessRuleEventContent {
     rule: TchapRoomAccessRule; // eslint-disable-line camelcase
+    encrypted: boolean | undefined;
 }
 
 export const TchapRoomAccessRulesEventId = "im.vector.room.access_rules";
