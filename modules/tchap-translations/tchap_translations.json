@@ -97,7 +97,6 @@
         "fr": "Récupération des messages depuis le serveur…"
     },
     "Finish": { "en": "Finish", "fr": "Terminer" },
-    "Forum room": { "en": "Public room", "fr": "Forum" },
     "Frequently Asked Questions (FAQ)": { "en": "Frequently Asked Questions (FAQ)", "fr": "Foire Aux Questions (FAQ)" },
     "auth|logout_dialog|skip_key_backup": { "en": "Log out anyway", "fr": "Se déconnecter quand-même" },
     "I renewed the validity of my account": { "en": "Continue", "fr": "Continuer" },
@@ -148,23 +147,6 @@
     "Please tell us what went wrong in the \"Notes\" field.": {
         "en": "Please tell us what went wrong in the \"Notes\" field.",
         "fr": "Veuillez nous expliquer le problème dans le champ \"Notes\"."
-    },
-    "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.": {
-        "en": "Private discussions accessible to all users of this space and to external guests by invitation of an administrator.",
-        "fr": "Discussions privées accessibles à tous les membres de cet espace et aux utilisateurs externes sur invitation d'un administrateur."
-    },
-    "Private discussions accessible to all users of this space.": {
-        "en": "Private discussions accessible to all users of this space.",
-        "fr": "Discussions privées accessibles à tous les membres de cet espace"
-    },
-    "Private room": { "en": "Private room", "fr": "Salon" },
-    "Private room open to external users": {
-        "en": "Private room open to external users",
-        "fr": "Salon ouvert aux externes"
-    },
-    "Public discussion accessible to all users of this space or from a shared link.": {
-        "en": "Public discussion accessible to all users of this space or from a shared link.",
-        "fr": "Discussions publiques accessibles à tous les membres de cet espace ou depuis un lien de partage."
     },
     "Read the CGU": { "en": "Read the CGU", "fr": "Consultez les modalités d'utilisation" },
     "Read the FAQ": { "en": "Read the FAQ", "fr": "Consultez la FAQ" },
@@ -1118,16 +1100,49 @@
         "en": "Changes won't affect past messages, only new ones.",
         "fr": "Les changements n'affecteront pas les messages passés, juste les nouveaux."
     },
-    "icon|private_non_encrypted": {
+    "tooltip|private_non_encrypted": {
         "en": "This room is private and non-encrypted",
         "fr": "Ce salon est privé non chiffré"
     },
-    "icon|private_non_encrypted_title": {
-        "en": "Private non encrypted",
-        "fr": "Privé non chiffré"
+    "create|private_non_encrypted_title": {
+        "en": "Private room",
+        "fr": "Salon privé"
     },
+    "create|private_encrypted_title": {
+        "en": "Private secure room",
+        "fr": "Salon privé sécurisé"
+    },
+    "create|private_external_title": {
+        "en": "Private secure room with external guests",
+        "fr": "Salon privé sécurisé avec externes"
+    },
+    "create|public_room": { "en": "Public room", "fr": "Forum" },
     "badge|external_guests": {
         "en": "External guests",
         "fr": "Invités externes"
+    },
+    "create|encrypted": {
+        "en": "End to end encrypted",
+        "fr": "Chiffré de bout en bout"
+    },
+    "create|invitation": {
+        "en": "Accessible only by invitation",
+        "fr": "Accessible uniquement sur invitation"
+    },
+    "create|invitation_external": {
+        "en": "Accessible only by invitation even for external guests",
+        "fr": "Accessible uniquement sur invitation, y compris aux invité externes"
+    },
+    "create|invitation_public": {
+        "en": "Accessible from the list of rooms",
+        "fr": "Accessible depuis la liste des salons"
+    },
+    "create|max_members": {
+        "en": "Max 500 members recommended",
+        "fr": "Conseillé jusqu'à 500 membres "
+    },
+    "create|non_encrypted": {
+        "en": "Not encrypted",
+        "fr": "Non-chiffré"
     }
 }

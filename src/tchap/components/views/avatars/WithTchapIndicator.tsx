@@ -48,7 +48,7 @@ function tooltipText(variant: Icon): string | undefined {
             return _t("This room is private and open to external users");
         case Icon.PrivateNonEncrypted:
         case Icon.PrivateNonEncryptedExternal:
-            return _t("icon|private_non_encrypted");
+            return _t("tooltip|private_non_encrypted");
     }
 }
 
