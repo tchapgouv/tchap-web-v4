@@ -9,12 +9,11 @@ import { LockIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-to
 
 export interface IProps {
     room?: Room;
+    isDM?: boolean;
 }
 
 
-export default function TchapRoomTypeRoomHeader({ room }: IProps) {
-    const { currentRoomType }= useTchapRoom(room);
-
+export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
     const externalBadge = () => ( 
         <Badge kind="default" className="external">
             <PublicIcon width="1em"/>
@@ -50,6 +49,16 @@ export default function TchapRoomTypeRoomHeader({ room }: IProps) {
             </span>
         </Badge>
     )
+
+    if (isDM) {
+        return (
+            <div className="tc_badge">
+                {encryptedBadge()}
+            </div>
+        )
+    }
+
+    const { currentRoomType }= useTchapRoom(room);
 
     switch(currentRoomType) {
         case TchapRoomType.External:

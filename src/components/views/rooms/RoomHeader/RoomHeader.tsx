@@ -573,7 +573,7 @@ export default function RoomHeader({
                                 */}
                             </Text>
                             {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
-                            <TchapRoomTypeRoomHeader room={room} />
+                            <TchapRoomTypeRoomHeader room={room} isDM={isDirectMessage} />
                             {/* :tchap: end */}
                         </Box>
                     </button>

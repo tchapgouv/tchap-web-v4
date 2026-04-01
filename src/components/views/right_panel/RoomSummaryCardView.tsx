@@ -171,7 +171,7 @@ const RoomSummaryCardView: React.FC<IProps> = ({
 
             <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
                 {/* :TCHAP: */}
-                <TchapRoomTypeRoomHeader room={room} />
+                <TchapRoomTypeRoomHeader room={room} isDM={vm.isDirectMessage} />
                 {/* {!vm.isDirectMessage && vm.roomJoinRule === JoinRule.Public && (
                     <Badge kind="blue">
                         <PublicIcon width="1em" color="var(--cpd-color-icon-info-primary)" />
