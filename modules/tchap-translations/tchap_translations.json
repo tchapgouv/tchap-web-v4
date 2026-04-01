@@ -15,18 +15,6 @@
         "en": "Access your secure message history and set up secure messaging by entering your verification code.",
         "fr": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre code de vérification."
     },
-    "Accessible to all users and to external guests by invitation of an administrator.": {
-        "en": "Accessible to all users and to external guests by invitation of an administrator.",
-        "fr": "Accessible à tous les utilisateurs et aux invités externes sur invitation d'un administrateur."
-    },
-    "Accessible to all users by invitation from an administrator.": {
-        "en": "Accessible to all users by invitation from an administrator.",
-        "fr": "Accessible à tous les utilisateurs sur invitation d'un administrateur."
-    },
-    "Accessible to all users from the forum directory or from a shared link.": {
-        "en": "Accessible to all users from the forum directory or from a shared link.",
-        "fr": "Accessible à tous les utilisateurs à partir de la liste des forums ou d'un lien partagé."
-    },
     "Allow access to this room to all users, even outside \"%(domain)s\" domain": {
         "en": "Allow access to this room to all users, even outside \"%(domain)s\" domain",
         "fr": "Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
@@ -90,7 +78,6 @@
         "en": "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room.",
         "fr": "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon."
     },
-    "External users allowed": { "en": "external users allowed", "fr": "ouvert aux externes" },
     "Eye": { "en": "Eye", "fr": "OEil" },
     "restore_key_backup_dialog|key_fetch_in_progress": {
         "en": "Fetching messages from server…",

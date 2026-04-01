@@ -6,23 +6,19 @@ exports[`RoomHeader should render as expected 1`] = `
     class="_flex_4dswl_9 mx_RoomHeader light-panel"
     style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
   >
-    <div
-      class="mx_DecoratedRoomAvatar"
+    <button
+      aria-label="Open room settings"
+      aria-live="off"
+      class="_avatar_zysgz_8 mx_BaseAvatar _avatar-imageless_zysgz_55"
+      data-color="3"
+      data-testid="avatar-img"
+      data-type="round"
+      role="button"
+      style="--cpd-avatar-size: 40px;"
+      tabindex="-1"
     >
-      <button
-        aria-label="Open room settings"
-        aria-live="off"
-        class="_avatar_zysgz_8 mx_BaseAvatar _avatar-imageless_zysgz_55"
-        data-color="3"
-        data-testid="avatar-img"
-        data-type="round"
-        role="button"
-        style="--cpd-avatar-size: 40px;"
-        tabindex="-1"
-      >
-        !
-      </button>
-    </div>
+      !
+    </button>
     <button
       aria-label="Room info"
       class="mx_RoomHeader_infoWrapper"

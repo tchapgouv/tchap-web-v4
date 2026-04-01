@@ -25,7 +25,7 @@ export default class TchapRoomUtils {
         if (!isEncrypted) {
             // Should be explicitly encrypted to false, private room does not have this value if the backend is not compatible or the data not well updated
             if (tchapRoomAccessRule?.encrypted == false) {
-                if (TchapRoomAccessRule.Unrestricted) {
+                if (tchapRoomAccessRule?.rule == TchapRoomAccessRule.Unrestricted) {
                     return TchapRoomType.PrivateNonEncryptedExternal;
                 }
                 return TchapRoomType.PrivateNonEncrypted;

@@ -61,7 +61,6 @@ export class TchapStore extends AsyncStoreWithClient<EmptyObject> {
         this.emit(TchapStore.getTchapTypeChangedEventName(room), roomType);
 
         return roomType
-
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {

@@ -133,7 +133,7 @@ describe("Create room options", () => {
                     {
                         content: {
                             rule: "restricted",
-                            encrypted: false
+                            encrypted: false,
                         },
                         state_key: "",
                         type: "im.vector.room.access_rules",
@@ -148,36 +148,6 @@ describe("Create room options", () => {
             historyVisibility: "invited",
         };
         expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.PrivateNonEncrypted)).toStrictEqual(
-            pncRoomExpectedOpts,
-        );
-    });
-
-    it("builds option for private non encrypted room with external users accepted", () => {
-        const pncRoomExpectedOpts = {
-            createOpts: {
-                name: "testName",
-                creation_content: {
-                    "m.federate": true,
-                },
-                initial_state: [
-                    {
-                        content: {
-                            rule: "unrestricted",
-                            encrypted: false
-                        },
-                        state_key: "",
-                        type: "im.vector.room.access_rules",
-                    },
-                ],
-                visibility: "private",
-                preset: "private_chat",
-            },
-            guestAccess: false,
-            joinRule: "invite",
-            encryption: false,
-            historyVisibility: "invited",
-        };
-        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.PrivateNonEncryptedExternal)).toStrictEqual(
             pncRoomExpectedOpts,
         );
     });
