@@ -1117,5 +1117,21 @@
     "room_settings|security|history_visibility_warning": {
         "en": "Changes won't affect past messages, only new ones.",
         "fr": "Les changements n'affecteront pas les messages passés, juste les nouveaux."
+    },
+    "encryption|verification|confirm_identity_title": {
+        "en": "Verify your identity",
+        "fr": "Vérifiez votre identité"
+    },
+    "encryption|verification|cant_confirm": {
+        "en": "Impossible to verify ?",
+        "fr": "Vérification impossible ?"
+    },
+    "encryption|verification|cant_confirm_title": {
+        "en": "Impossible to verify",
+        "fr": "Vérification impossible"
+    },
+    "encryption|verification|cant_confirm_description": {
+        "en": "You don't have a verification code neither have other connected device, please proceed with the reinitialisation of the verification of your devices",
+        "fr": "Vous n'avez pas de code de vérification ni d'autre appareil connecté, veuillez remettre à zéro la vérification de vos appareils"
     }
 }
