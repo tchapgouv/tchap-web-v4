@@ -1131,5 +1131,17 @@
     "create|non_encrypted": {
         "en": "Not encrypted",
         "fr": "Non-chiffré"
+    },
+    "encryption|verification|verification_dialog_title_choose": {
+        "en": "Verify your identity",
+        "fr": "Vérification de votre identité"
+    },
+    "encryption|verification|sas_prompt": {
+        "en": "Compare a serie of emojis",
+        "fr": "Comparez une série d'émojis"
+    },
+    "encryption|verification|sas_description": {
+        "en": "Compare a list of unique emojis between your two devices in order to verify your identity",
+        "fr": "Comparez une liste unique d'émojis entre vos deux appareils pour vérifier votre identité"
     }
 }

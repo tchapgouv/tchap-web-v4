@@ -126,7 +126,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 ) : null;
             return (
                 <div>
-                    {_t("encryption|verification|verify_by_completing_one_of")}
+                    {/* :TCHAP: {_t("encryption|verification|verify_by_completing_one_of")} */}
                     <div className="mx_VerificationPanel_QRPhase_startOptions">
                         {qrBlockDialog}
                         {or}
