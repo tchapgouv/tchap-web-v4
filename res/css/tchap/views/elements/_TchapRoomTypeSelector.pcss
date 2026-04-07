@@ -1,7 +1,6 @@
 .tc_TchapRoomTypeSelector {
     display: flex;
     flex-direction: column;
-    gap: 24px;
 
     > .tc_TchapRoomTypeSelector_RadioButton {
         flex-grow: 0;
@@ -47,6 +46,10 @@
 
         &.tc_TchapRoomTypeSelector_RadioButton_selected {
             border-color: var(--timeline-text-color);
+        }
+
+        form {
+            padding-top: 10px;
         }
     }
     
