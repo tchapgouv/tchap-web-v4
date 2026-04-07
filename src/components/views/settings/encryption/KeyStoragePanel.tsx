@@ -16,7 +16,18 @@ import { useKeyStoragePanelViewModel } from "../../../viewmodels/settings/encryp
 import SdkConfig from "../../../../SdkConfig";
 
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
+import { useMatrixClientContext } from "~tchap-web/src/contexts/MatrixClientContext";
+import { useAsyncMemo } from "~tchap-web/src/hooks/useAsyncMemo";
 
+// :TCHAP: taken from recovery panel
+/**
+ * The possible states of the recovery panel.
+ * - `loading`: We are checking the recovery key and the secrets.
+ * - `missing_recovery_key`: The user has no recovery key.
+ * - `good`: The user has a recovery key and the secrets are cached.
+ */
+type State = "loading" | "missing_recovery_key" | "good";
+// end :TCHAP:
 interface Props {
     /**
      * Called when the user turns off the "allow key storage" toggle
@@ -31,6 +42,22 @@ interface Props {
  */
 export const KeyStoragePanel: React.FC<Props> = ({ onKeyStorageDisableClick }) => {
     const { isEnabled, setEnabled, loading, busy } = useKeyStoragePanelViewModel();
+
+    // :TCHAP: move this check from recoverypanel to here, since the section have been fused
+    const matrixClient = useMatrixClientContext();
+    
+    const state = useAsyncMemo<State>(
+        async () => {
+            // Check if the user has a recovery key
+            const hasRecoveryKey = Boolean(await matrixClient.secretStorage.getDefaultKeyId());
+            if (hasRecoveryKey) return "good";
+            else return "missing_recovery_key";
+        },
+        [matrixClient],
+        "loading",
+    );
+
+    const isMissingRecoveryKey = state === "missing_recovery_key";
 
     const onKeyBackupChange = useCallback(
         (e: FormEvent<HTMLInputElement>) => {
@@ -52,7 +79,8 @@ export const KeyStoragePanel: React.FC<Props> = ({ onKeyStorageDisableClick }) =
             legacy={false}
             heading={
                 <SettingsHeader
-                    hasRecommendedTag={isEnabled === false}
+                // :TCHAP: hasRecommendedTag={isEnabled === false}
+                    hasRecommendedTag={isEnabled === false || isMissingRecoveryKey}
                     label={_t("settings|encryption|key_storage|title")}
                 />
             }
