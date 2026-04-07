@@ -29,6 +29,7 @@ Tchap is a web app that allows you to chat through the matrix protocol for the F
     - "feature_video_call": Activate 1 to 1 video call
     - "feature_video_group_call": Activate group call on rooms, for this feature to work, the values of `UIFeature.widgets` and `feature_group_calls` needs to be true
     - "feature_screenshare_call": Activate 1 to 1 screenshare
+    - feature_create_room_non_encrypted : Activate option to create private non encrypted room
 - "tchap_sso_flow"
     - "isActive": Activate ProConnect SSO flow
 

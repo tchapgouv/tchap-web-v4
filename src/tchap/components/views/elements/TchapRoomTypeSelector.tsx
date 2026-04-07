@@ -124,7 +124,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         </ul>
                     </StyledRadioButton>
                 </label>
-                {TchapUIFeature.activateCreationPrivateRoomNonEncrypted ?
+                {TchapUIFeature.isFeatureActiveForHomeserver("feature_create_room_non_encrypted") ?
                     <label className={pNonEncryptedClasses}>
                         <StyledRadioButton
                             name="roomType"
