@@ -70,5 +70,6 @@
     "slash_command|addwidget_iframe_missing_src",
     "slash_command|addwidget_no_permissions",
     "slash_command|addwidget_invalid_protocol",
-    "settings|security|message_search_pending_rooms"
+    "settings|security|message_search_pending_rooms",
+    "encryption|verification|verify_by_completing_one_of"
 ]
