@@ -5,7 +5,7 @@ import { _t } from "~tchap-web/src/languageHandler";
 import { TchapRoomType } from "../../../@types/tchap";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
 import { Badge } from "compound-web-tchap";
-import { LockIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { LockIcon, PublicIcon, LockOffIcon, LockSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 export interface IProps {
     room?: Room;
@@ -15,7 +15,7 @@ export interface IProps {
 
 export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
     const externalBadge = () => ( 
-        <Badge kind="default" className="external">
+        <Badge kind="default" className="badge-content external">
             <PublicIcon width="1em"/>
             <span className="description">
                 {_t("badge|external_guests")}
@@ -24,8 +24,8 @@ export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
     )
 
     const encryptedBadge = () => (
-        <Badge kind="green">
-            <LockIcon width="1em"/>
+        <Badge kind="green" className="badge-content">
+            <LockSolidIcon width="1em"/>
             <span className="description">
                 {_t("common|encrypted")}
             </span>
@@ -33,7 +33,7 @@ export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
     )
 
     const unencryptedBadge = () => (
-        <Badge kind="grey">
+        <Badge kind="grey" className="badge-content">
             <LockOffIcon width="1em"/>
             <span className="description">
                 {_t("common|unencrypted")}
@@ -42,7 +42,7 @@ export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
     )
 
     const publicBadge = () => (
-        <Badge kind="grey">
+        <Badge kind="grey" className="badge-content">
             <PublicIcon width="1em"/>
             <span className="description">
                 {_t("common|public")}
@@ -64,8 +64,8 @@ export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
         case TchapRoomType.External:
             return (
                 <div className="tc_badge">
-                    {externalBadge()}
                     {encryptedBadge()}
+                    {externalBadge()}
                 </div>
             )
         case TchapRoomType.PrivateNonEncrypted: 
@@ -77,8 +77,8 @@ export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
         case TchapRoomType.PrivateNonEncryptedExternal: 
             return (
                 <div className="tc_badge">
-                    {externalBadge()}
                     {unencryptedBadge()}
+                    {externalBadge()}
                 </div>
             )
         case TchapRoomType.Private: 

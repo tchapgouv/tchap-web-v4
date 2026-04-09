@@ -1,12 +1,15 @@
 .tc_badge {
 
+    display: flex;
+    gap: 5px;
+
+
     span {
         font-size: smaller;
-        margin-right: 7px;
         text-transform: uppercase;
         border-radius: 4px;
-        font-weight: 700;
-        padding: 2px var(--cpd-space-1x) !important;
+        font-weight: 1000;
+        padding: 1px 2px 1px 2px !important;
 
         &.description {
             display: none;
@@ -23,7 +26,11 @@
     .external {
         background-color: var(--badge-external-color);
         border: 0px !important;
+        color: #5b3620 !important;
     }
 
-
+    .badge-content {
+        display: flex;
+        gap: 0px;
+    }
 }
