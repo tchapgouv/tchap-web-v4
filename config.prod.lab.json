@@ -213,7 +213,8 @@
             "agent.tchap.gouv.fr",
             "agent.dev-durable.tchap.gouv.fr",
             "agent.social.tchap.gouv.fr",
-            "agent.finances.tchap.gouv.fr"
+            "agent.finances.tchap.gouv.fr",
+            "agent.education.tchap.gouv.fr"
         ],
         "feature_screenshare_call": ["*"]
     },
