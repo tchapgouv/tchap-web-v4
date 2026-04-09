@@ -248,7 +248,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                         {tchapHelpButton}
                             {/* end :TCHAP: */}
                         <Button kind="secondary" onClick={this.onCantConfirmClick}>
-                            {_t("encryption|verification|cant_confirm")}
+                            {_t("encryption|verification|reset_all")}
                         </Button>
                         {signOutButton}
                     </EncryptionCardButtons>
