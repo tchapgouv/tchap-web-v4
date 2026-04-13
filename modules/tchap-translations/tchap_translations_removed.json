@@ -51,7 +51,6 @@
     "unsupported_browser|description",
     "unsupported_browser",
     "common|not_trusted",
-    "voip|video_call_using",
     "room_settings|permissions|m.call",
     "encryption|verification|reset_proceed_prompt",
     "settings|security|key_backup_connect",

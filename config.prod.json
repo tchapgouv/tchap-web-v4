@@ -213,10 +213,12 @@
             "agent.tchap.gouv.fr",
             "agent.dev-durable.tchap.gouv.fr",
             "agent.social.tchap.gouv.fr",
-            "agent.finances.tchap.gouv.fr"
+            "agent.finances.tchap.gouv.fr",
+            "agent.education.tchap.gouv.fr"
         ],
         "feature_screenshare_call": ["*"],
-        "feature_create_room_non_encrypted": []
+        "feature_create_room_non_encrypted": [],
+        "feature_use_ec_in_dm": []
     },
     "tchap_mas_flow": {
         "isActive": true,
@@ -229,7 +231,6 @@
     },
     "element_call": {
         "url": "https://call.tchap.gouv.fr/",
-        "participant_limit": 25,
         "brand": "Appel de groupe"
     },
     "logout_redirect_url": "#/welcome"
