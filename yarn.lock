@@ -5714,10 +5714,10 @@ commonmark@^0.31.0:
     mdurl "~1.0.1"
     minimist "~1.2.8"
 
-compound-web-tchap@4.18.4:
-  version "4.18.4"
-  resolved "https://registry.yarnpkg.com/compound-web-tchap/-/compound-web-tchap-4.18.4.tgz#059381f97aadb5c283d89d4961882137e53d6be6"
-  integrity sha512-bJGxdmcJDiWokQ/1gFqfZ0KeIjriDFH104nuzngptvyzW0gQNR6KsGpYNQQLzqekeFvJM2ePQw6/opM6Nsy/6A==
+compound-web-tchap@5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/compound-web-tchap/-/compound-web-tchap-5.0.5.tgz#ce7d01e6a436a774d5768984d5b75fab570f6c3f"
+  integrity sha512-nGo7Dd6ThhWu6R+PoPvtgv3x5XhlRNzKuxmgoJJiRj1gPwW7+sRX24Hjjf9TV3yKIw+F5b4P6j7mit9BjEimTw==
   dependencies:
     "@floating-ui/react" "^0.27.0"
     "@radix-ui/react-context-menu" "^2.2.16"
