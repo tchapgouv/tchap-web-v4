@@ -34,7 +34,7 @@ describe("TchapRoomLinkAccess", () => {
     SdkConfig.put(config);
 
     beforeEach(() => {
-        mockedTchapRoomUtils.getTchapRoomType.mockImplementation(() => TchapRoomType.Private);
+        mockedTchapRoomUtils.getTchapRoomType.mockImplementation(() => Promise.resolve(TchapRoomType.Private));
         mockedTchapRoomUtils.getRoomJoinRule.mockImplementation(() => JoinRule.Invite);
         mockedTchapRoomUtils.isUserAdmin.mockImplementation(() => true);
         mockedTchapRoomUtils.getRoomGuessAccessRule.mockImplementation(() => GuestAccess.CanJoin);
@@ -54,7 +54,7 @@ describe("TchapRoomLinkAccess", () => {
 
     it("should render correct initial value when joinrule is public", async () => {
         mockedTchapRoomUtils.getRoomJoinRule.mockImplementation(() => JoinRule.Public);
-        mockedTchapRoomUtils.getTchapRoomType.mockImplementation(() => TchapRoomType.Forum);
+        mockedTchapRoomUtils.getTchapRoomType.mockImplementation(() => Promise.resolve(TchapRoomType.Forum));
 
         getComponent();
 

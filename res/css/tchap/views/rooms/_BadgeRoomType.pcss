@@ -1,0 +1,36 @@
+.tc_badge {
+
+    display: flex;
+    gap: 5px;
+
+
+    span {
+        font-size: smaller;
+        text-transform: uppercase;
+        border-radius: 4px;
+        font-weight: 1000;
+        padding: 1px 2px 1px 2px !important;
+
+        &.description {
+            display: none;
+        }
+
+        /* Show text only on larger screens */
+        @media (min-width: 750px) {
+            &.description {
+                display: inline;
+            }
+        }
+    }
+
+    .external {
+        background-color: var(--badge-external-color);
+        border: 0px !important;
+        color: #5b3620 !important;
+    }
+
+    .badge-content {
+        display: flex;
+        gap: 0px;
+    }
+}

@@ -95,7 +95,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         (content) => cli.sendStateEvent(room.roomId, TchapRoomAccessRulesEventId, content, ""),
         onError,
     );
-    const { rule: accessRule = undefined } = contentTchapAccessRule || {};
+    const { rule: accessRule = undefined, encrypted = undefined } = contentTchapAccessRule || {};
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
@@ -188,7 +188,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         });
         const [ confirmed ] = await finished;
         if (!confirmed) return;
-        setTchapAccessRule({ rule: TchapRoomAccessRule.Unrestricted });
+        setTchapAccessRule({ rule: TchapRoomAccessRule.Unrestricted, encrypted });
     };
 
 

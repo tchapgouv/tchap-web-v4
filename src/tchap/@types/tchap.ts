@@ -1,6 +1,8 @@
 export enum TchapRoomType {
     Direct = "direct",
     Private = "private",
+    PrivateNonEncrypted = "private_no_encrypt",
+    PrivateNonEncryptedExternal = "private_no_encrypt_external",
     External = "external",
     Forum = "forum",
     Unknown = "unknown",
@@ -13,6 +15,7 @@ export enum TchapRoomAccessRule {
 
 export interface TchapIAccessRuleEventContent {
     rule: TchapRoomAccessRule; // eslint-disable-line camelcase
+    encrypted: boolean | undefined;
 }
 
 export const TchapRoomAccessRulesEventId = "im.vector.room.access_rules";

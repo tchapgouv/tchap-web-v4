@@ -121,7 +121,8 @@
         "feature_audio_call": ["*"],
         "feature_video_call": ["*"],
         "feature_video_group_call": ["*"],
-        "feature_screenshare_call": ["*"]
+        "feature_screenshare_call": ["*"],
+        "feature_create_room_non_encrypted": ["*"]
     },
     "tchap_mas_flow": {
         "isActive": true,

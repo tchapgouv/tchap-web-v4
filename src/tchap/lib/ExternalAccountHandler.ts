@@ -15,13 +15,13 @@ class ExpiredAccountHandler {
         return !!externesHs.base_url.includes(client.getDomain());
     }
 
-    public static joinRoomError(room: Room): void{
+    public static async joinRoomError(room: Room): Promise<void>{
         if (!room) {
             this.displayModal(_t("room|error_join_title"), _t("room|error_join_generic_external"));
             return;
         }
-
-        if (TchapRoomUtils.getTchapRoomType(room) == TchapRoomType.Forum) {
+        const roomType = await TchapRoomUtils.getTchapRoomType(room)
+        if (roomType == TchapRoomType.Forum) {
             this.displayModal(_t("room|error_join_title"), _t("room|error_join_public_external"));
             return;
         }

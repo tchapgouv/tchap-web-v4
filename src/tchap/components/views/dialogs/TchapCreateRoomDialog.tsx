@@ -12,7 +12,7 @@ Note on imports : because this file will be copied to a different directory by t
 mechanism, imports must use absolute paths.
 Except when importing from other customisation files. Then imports must use relative paths.
 */
-import React, { ChangeEvent, createRef, KeyboardEvent } from "react";
+import React, { ChangeEvent, createRef, FormEvent, KeyboardEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import withValidation, { IFieldState } from "~tchap-web/src/components/views/elements/Validation";
 import { _t } from "~tchap-web/src/languageHandler";
@@ -70,6 +70,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
     }
 
     private onCancel = () => {
+        this.setState({ nameIsValid: true });
         this.props.onFinished(false);
     };
 
@@ -118,7 +119,9 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             : true;
     };
 
-    private onOk = async () => {
+    private onOk = async (event?: FormEvent) => {
+        event?.preventDefault();
+
         const activeElement = document.activeElement as HTMLElement;
         if (activeElement) {
             activeElement.blur();
@@ -160,6 +163,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 onFinished={this.onOk}
                 title={title}
                 screenName="CreateRoom"
+                hasCancel={false}
             >
                 <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
                     <div className="mx_Dialog_content">
@@ -186,6 +190,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                 <DialogButtons
                     primaryButton={_t("Create Room")}
                     onPrimaryButtonClick={this.onOk}
+                    cancelButtonClass="tc_modal_cancel"
                     onCancel={this.onCancel}
                 />
             </BaseDialog>
