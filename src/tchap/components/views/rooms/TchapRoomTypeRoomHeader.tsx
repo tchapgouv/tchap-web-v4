@@ -90,6 +90,7 @@ export default function TchapRoomTypeRoomHeader({ room, isDM }: IProps) {
         case TchapRoomType.Forum: 
             return (
                 <div className="tc_badge">
+                    {unencryptedBadge()}
                     {publicBadge()}
                 </div>
             )
