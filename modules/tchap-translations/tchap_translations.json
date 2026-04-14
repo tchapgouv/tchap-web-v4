@@ -218,7 +218,7 @@
         "en": "This code will allow you to always restore your messages.",
         "fr": "Ce code vous permettra de toujours récupérer vos messages."
     },
-    "This room is a public forum": { "en": "This room is a public forum", "fr": "Ce salon est un forum public" },
+    "This room is a public forum": { "en": "This room is a public room", "fr": "Ce salon est un salon public" },
     "This room is private": { "en": "This room is private", "fr": "Ce salon est privé" },
     "This room is private and open to external users": {
         "en": "This room is private and open to external users",
@@ -271,7 +271,7 @@
     },
     "a number": { "en": "a number", "fr": "un chiffre" },
     "a symbol": { "en": "a symbol", "fr": "un caractère spécial" },
-    "action|explore_public_rooms": { "en": "Explore public rooms", "fr": "Rejoindre un forum" },
+    "action|explore_public_rooms": { "en": "Explore public rooms", "fr": "Rejoindre un salon public" },
     "action|start_chat": { "en": "New direct message", "fr": "Nouveau message direct" },
     "an uppercase letter": { "en": "an uppercase letter", "fr": "une lettre majuscule" },
     "auth|check_email_wrong_email_button": { "en": "Re-enter email address", "fr": "Re-saisir l'adresse mail" },
@@ -321,7 +321,7 @@
         "en": "Verify your email to continue",
         "fr": "Vérifiez vos mails avant de continuer"
     },
-    "common|public_room": { "en": "Public room", "fr": "Forum" },
+    "common|public_room": { "en": "Public room", "fr": "Salon public" },
     "common|secure_backup": { "en": "Automatic Backup of Messages", "fr": "Sauvegarde automatique des messages" },
     "common|unverified": { "en": "Unverified", "fr": "Non vérifié" },
     "common|verified": { "en": "Verified ", "fr": "Vérifié" },
@@ -386,7 +386,7 @@
         "en": "Messages will be sent when your connection returns.",
         "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie."
     },
-    "room_list|join_public_room_label": { "en": "Join a public room", "fr": "Rejoindre un forum" },
+    "room_list|join_public_room_label": { "en": "Join a public room", "fr": "Rejoindre un salon public" },
     "room_settings|permissions|ban": {
         "en": "Ban users",
         "fr": "Interdire aux utilisateurs l’accès au salon (définitif)"
@@ -1103,7 +1103,7 @@
         "en": "Private secure room with external guests",
         "fr": "Salon privé sécurisé avec externes"
     },
-    "create|public_room": { "en": "Public room", "fr": "Forum" },
+    "create|public_room": { "en": "Public room", "fr": "Salon public" },
     "badge|external_guests": {
         "en": "External guests",
         "fr": "Invités externes"

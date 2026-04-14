@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { useDmMember, usePresence, type Presence } from "../../views/avatars/WithPresenceIndicator";
 import { DefaultTagID } from "../../../stores/room-list/models";
+import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
+import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 
 export enum AvatarBadgeDecoration {
     LowPriority = "LowPriority",
@@ -40,7 +42,10 @@ export function useRoomAvatarViewModel(room: Room): RoomAvatarViewState {
     const isVideoRoom = room.isElementVideoRoom() || room.isCallRoom();
     const roomMember = useDmMember(room);
     const presence = usePresence(room, roomMember);
-    const isPublic = useIsPublic(room);
+    // :TCHAP:
+    // const isPublic = useIsPublic(room);
+    const { currentRoomType } = useTchapRoom(room);
+    // end :TCHAP:
     const isLowPriority = !!room.tags[DefaultTagID.LowPriority];
 
     let badgeDecoration: AvatarBadgeDecoration | undefined;
@@ -48,7 +53,7 @@ export function useRoomAvatarViewModel(room: Room): RoomAvatarViewState {
         badgeDecoration = AvatarBadgeDecoration.LowPriority;
     } else if (isVideoRoom) {
         badgeDecoration = AvatarBadgeDecoration.VideoRoom;
-    } else if (isPublic) {
+    } else if (currentRoomType == TchapRoomType.Forum) {
         badgeDecoration = AvatarBadgeDecoration.PublicRoom;
     } else if (presence) {
         badgeDecoration = AvatarBadgeDecoration.Presence;
