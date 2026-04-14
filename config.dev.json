@@ -123,7 +123,8 @@
         "feature_video_call": ["*"],
         "feature_video_group_call": ["*"],
         "feature_screenshare_call": ["*"],
-        "feature_create_room_non_encrypted": ["*"]
+        "feature_create_room_non_encrypted": ["*"],
+        "feature_use_ec_in_dm": ["*"]
     },
     "tchap_mas_flow": {
         "isActive": true,
@@ -132,7 +133,6 @@
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "element_call": {
         "url": "https://element-call.tchap.incubateur.net/",
-        "participant_limit": 25,
         "brand": "Appel de groupe"
     },
     "posthog": {

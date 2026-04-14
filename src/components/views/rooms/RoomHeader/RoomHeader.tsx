@@ -25,7 +25,7 @@ import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStore
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext.tsx";
 import { useRoomMemberCount, useRoomMembers } from "../../../../hooks/useRoomMembers.ts";
 import { _t } from "../../../../languageHandler.tsx";
-import { useRoomCall } from "../../../../hooks/room/useRoomCall.tsx";
+import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/useRoomCall.tsx";
 import { useRoomThreadNotifications } from "../../../../hooks/room/useRoomThreadNotifications.ts";
 import { useGlobalNotificationState } from "../../../../hooks/useGlobalNotificationState.ts";
 import { useFeatureEnabled } from "../../../../hooks/useSettings.ts";
@@ -199,63 +199,50 @@ function RoomHeaderButtons({
     );
 
     const startVideoCallButton = (
-        // :TCHAP: flow-legacy-call-element-call
-        // We don't show the user a selection of different type of calls, we make the descision based on the number of members in the room
-        // <>
-        //     {/* Can be either a menu or just a button depending on the number of call options.*/}
-        //     {callOptions.length > 1 ? (
-        //         <Menu
-        //             open={menuOpen}
-        //             onOpenChange={onOpenChange}
-        //             title={_t("voip|video_call_using")}
-        //             trigger={
-        //                 <IconButton
-        //                     disabled={!!videoCallDisabledReason}
-        //                     aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-        //                 >
-        //                     {callIconWithTooltip}
-        //                 </IconButton>
-        //             }
-        //             side="left"
-        //             align="start"
-        //         >
-        //             {callOptions.map((option) => {
-        //                 const { label, children } = getPlatformCallTypeProps(option);
-        //                 return (
-        //                     <MenuItem
-        //                         key={option}
-        //                         label={label}
-        //                         aria-label={label}
-        //                         children={children}
-        //                         className="mx_RoomHeader_videoCallOption"
-        //                         onClick={(ev) => videoCallClick(ev, option)}
-        //                         Icon={VideoCallIcon}
-        //                         onSelect={() => {} /* Dummy handler since we want the click event.*/}
-        //                     />
-        //                 );
-        //             })}
-        //         </Menu>
-        //     ) : (
-        //         <IconButton
-        //             disabled={!!videoCallDisabledReason}
-        //             aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-        //             onClick={videoClick}
-        //         >
-        //             {callIconWithTooltip}
-        //         </IconButton>
-        //     )}
-        // </>
-
         <>
-            <IconButton
-                disabled={!!videoCallDisabledReason}
-                aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-                onClick={videoClick}
-            >
-                {videoCallIconWithTooltip}
-            </IconButton>
+            {/* Can be either a menu or just a button depending on the number of call options.*/}
+            {callOptions.length > 1 ? (
+                <Menu
+                    open={videoMenuOpen}
+                    onOpenChange={onVideoOpenChange}
+                    title={_t("voip|video_call_using")}
+                    trigger={
+                        <IconButton
+                            disabled={!!videoCallDisabledReason}
+                            aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
+                        >
+                            {videoCallIconWithTooltip}
+                        </IconButton>
+                    }
+                    side="left"
+                    align="start"
+                >
+                    {callOptions.map((option) => {
+                        const { label, children } = getPlatformCallTypeProps(option);
+                        return (
+                            <MenuItem
+                                key={option}
+                                label={label}
+                                aria-label={label}
+                                children={children}
+                                className="mx_RoomHeader_videoCallOption"
+                                onClick={(ev) => videoCallClick(ev, option)}
+                                Icon={VideoCallIcon}
+                                onSelect={() => {} /* Dummy handler since we want the click event.*/}
+                            />
+                        );
+                    })}
+                </Menu>
+            ) : (
+                <IconButton
+                    disabled={!!videoCallDisabledReason}
+                    aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
+                    onClick={videoClick}
+                >
+                    {videoCallIconWithTooltip}
+                </IconButton>
+            )}
         </>
-        // end :TCHAP:
     );
     const startVoiceCallButton = (
         <>
@@ -277,7 +264,7 @@ function RoomHeaderButtons({
                     align="start"
                 >
                     {callOptions.map((option) => {
-                        const { label, children } = getPlatformCallTypeProps(option);
+                        const { label, children } = getPlatformCallTypeProps(option, true);
                         return (
                             <MenuItem
                                 key={option}

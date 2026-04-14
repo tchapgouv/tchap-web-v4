@@ -122,7 +122,8 @@
         "feature_video_call": ["*"],
         "feature_video_group_call": ["*"],
         "feature_screenshare_call": ["*"],
-        "feature_create_room_non_encrypted": ["*"]
+        "feature_create_room_non_encrypted": ["*"],
+        "feature_use_ec_in_dm": ["*"]
     },
     "tchap_mas_flow": {
         "isActive": true,
@@ -135,7 +136,6 @@
     },
     "element_call": {
         "url": "https://call.preprod.tchap.gouv.fr/",
-        "participant_limit": 25,
         "brand": "Appel de groupe"
     },
     "logout_redirect_url": "#/welcome"
