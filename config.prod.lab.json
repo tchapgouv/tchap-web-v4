@@ -215,7 +215,8 @@
             "agent.social.tchap.gouv.fr",
             "agent.finances.tchap.gouv.fr",
             "agent.education.tchap.gouv.fr",
-            "agent.collectivites.tchap.gouv.fr"
+            "agent.collectivites.tchap.gouv.fr",
+            "agent.interieur.tchap.gouv.fr"
         ],
         "feature_screenshare_call": ["*"],
         "feature_create_room_non_encrypted": [],
