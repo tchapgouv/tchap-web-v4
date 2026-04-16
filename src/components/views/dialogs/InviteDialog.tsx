@@ -66,6 +66,9 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { type UserProfilesStore } from "../../../stores/UserProfilesStore";
 import InviteProgressBody from "./InviteProgressBody.tsx";
 
+import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
+import { type TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
+
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
 
@@ -257,6 +260,12 @@ interface IInviteDialogState {
 
     /** Error from the last attempt to send invites. */
     errorText?: string;
+
+    // :TCHAP:
+    shouldDisplayExternalWarning?: boolean;
+    shouldDisplayForumNoExternal?: boolean;
+    tchapRoomType?: TchapRoomType;
+    // end :TCHAP
 }
 
 export default class InviteDialog extends React.PureComponent<Props, IInviteDialogState> {
@@ -271,6 +280,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     private unmounted = false;
     private encryptionByDefault = false;
     private profilesStore: UserProfilesStore;
+    private tchapAccessRule: TchapIAccessRuleEventContent | undefined;
 
     public constructor(props: Props) {
         super(props);
@@ -299,6 +309,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 // exclude users from external servers
                 this.excludeExternals(ourHomeserver, excludedIds);
             }
+            this.tchapAccessRule = TchapRoomUtils.getTchapRoomAccessRule(room);
         }
 
         this.state = {
@@ -319,13 +330,26 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
             // These two flags are used for the 'Go' button to communicate what is going on.
             busy: false,
+
+            // :TCHAP:
+            shouldDisplayExternalWarning: false,
+            tchapRoomType: undefined
+            // end :TCHAP
         };
     }
 
     public componentDidMount(): void {
-        this.unmounted = false;
-        this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.safeGet());
 
+        this.unmounted = false;
+        // :TCHAP: this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.safeGet());
+        const cli = MatrixClientPeg.safeGet();
+        const room = cli.getRoom(this.props.roomId);
+        this.encryptionByDefault = privateShouldBeEncrypted(cli);
+
+        TchapRoomUtils.getTchapRoomType(room).then(roomType => {
+            this.setState({ tchapRoomType : roomType });
+        });
+        // end :TCHAP:
         if (this.props.initialText) {
             this.updateSuggestions(this.props.initialText);
         }
@@ -463,8 +487,23 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (!newMember) return this.state.targets;
 
         const newTargets = [...(this.state.targets || []), newMember];
-        this.setState({ targets: newTargets, filterText: "" });
+        // :TCHAP: check if it is an external user
+        const containAnExternal = this.doesTargetsContainsExternal(newTargets);
+        // end :TCHAP:
+
+        this.setState({ targets: newTargets, filterText: "", shouldDisplayExternalWarning: containAnExternal});
         return newTargets;
+    }
+
+    private doesTargetsContainsExternal(members: Member[]) : boolean {
+        // if the room is already open to external users, don't need to show warning
+        if (this.tchapAccessRule?.rule === TchapRoomAccessRule.Unrestricted) {
+            return false;
+        }
+        // If at least one of the selected member is external, we return true
+        return members.some(m => {
+            return m instanceof ThreepidMember || Email.looksValid(m.name)
+        });
     }
 
     /**
@@ -541,6 +580,27 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             return;
         }
 
+        // :TCHAP:
+        if (this.state.shouldDisplayExternalWarning) {
+            // Before continuing we should alert the user that this is irreversible action 
+            const { finished } = Modal.createDialog(QuestionDialog, {
+                title: _t("Allow external users to join this room"),
+                description:
+                    _t("This action is irreversible.") +
+                    " " +
+                    _t("Are you sure you want to allow the externals to join this room ?"),
+                button: _t("action|ok"),
+            });
+            const [ confirmed ] = await finished;
+            if (!confirmed) return;
+            cli.sendStateEvent(
+                room.roomId, 
+                TchapRoomAccessRulesEventId, 
+                { rule: TchapRoomAccessRule.Unrestricted, encrypted: this.tchapAccessRule?.encrypted },
+                ""
+            );
+        }
+        // end :TCHAP:
         try {
             const result = await inviteMultipleToRoom(cli, this.props.roomId, targetIds, {
                 // We show our own progress body, so don't pop up a separate dialog.
@@ -762,7 +822,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 targets.push(member);
                 filterText = ""; // clear the filter when the user accepts a suggestion
             }
-            this.setState({ targets, filterText });
+            //
+            // :TCHAP: this.setState({ targets, filterText });
+            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets);
+            this.setState({ targets, filterText, shouldDisplayExternalWarning });
+            // end :TCHAP:
 
             if (this.editorRef && this.editorRef.current) {
                 this.editorRef.current.focus();
@@ -775,7 +839,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const idx = targets.indexOf(member);
         if (idx >= 0) {
             targets.splice(idx, 1);
-            this.setState({ targets });
+            // :TCHAP: this.setState({ targets });
+            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets);
+            this.setState({ targets, shouldDisplayExternalWarning });
+            // end :TCHAP:
         }
 
         if (this.editorRef && this.editorRef.current) {
@@ -901,6 +968,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         dis.fire(Action.ViewUserSettings);
         this.props.onFinished(false);
     };
+
+    // :TCHAP:
+    private renderWarningExternal(): ReactNode {
+        return this.state.shouldDisplayExternalWarning ? 
+        <div> Going to be open to external users </div> :
+        null;
+    }
+    // end :TCHAP:
 
     private renderSection(kind: "recents" | "suggestions"): ReactNode {
         let sourceMembers = kind === "recents" ? this.state.recents : this.state.suggestions;
@@ -1340,7 +1415,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     kind="primary"
                     onClick={goButtonFn}
                     className="mx_InviteDialog_goButton"
-                    disabled={this.state.busy || !this.hasSelection()}
+                    disabled={this.state.busy || !this.hasSelection() || }
                 >
                     {buttonText}
                 </AccessibleButton>
@@ -1353,6 +1428,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     {this.renderEditor()}
                     {goButton}
                 </div>
+                {this.renderWarningExternal()}
                 {this.state.busy ? <InviteProgressBody /> : this.renderSuggestions()}
             </React.Fragment>
         );
