@@ -65,7 +65,6 @@ export default class TauriPlatform extends BasePlatform {
     private readonly ipc = new IPCManager();
     private readonly eventIndexManager: BaseEventIndexManager = new TauriSeshatIndexManager(this);
     protected tauriSecureStorage: TauriSecureStorage;
-    private protocol!: string;
 
     // this is the opaque token we pass to the HS which when we get it in our callback we can resolve to a profile
     private readonly ssoID: string = secureRandomString(32);
@@ -75,7 +74,6 @@ export default class TauriPlatform extends BasePlatform {
         if (!window.__TAURI__) {
             throw new Error("Cannot instantiate TauriPlatform, window.__TAURI__ is not set");
         }
-        this.protocol = "tchap";
 
         dis.register(onAction);
 
@@ -300,11 +298,12 @@ export default class TauriPlatform extends BasePlatform {
 
 
     public getSSOCallbackUrl(fragmentAfterLogin?: string): URL {
+        const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;        
         const href = window.location.href;
-        const urlTchap = href.replace(/^https?/, this.protocol);
+        const urlTchap = href.replace(/^https?/, scheme);
         const url = new URL(urlTchap);
         url.hash = fragmentAfterLogin ?? "";
-        url.protocol = this.protocol; // only using this is not working to change the protocol, dont know why...
+        url.protocol = scheme; // only using this is not working to change the protocol, dont know why...
         url.searchParams.set(SSO_ID_KEY, this.ssoID);
         return url;
     }
@@ -353,13 +352,14 @@ export default class TauriPlatform extends BasePlatform {
      * The URL to return to after a successful OIDC authentication
      */
     public getOidcCallbackUrl(): URL {
+        const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;
         const href = window.location.href;
-        const urlTchap = href.replace(/^https?/, this.protocol);
+        const urlTchap = href.replace(/^https?/, scheme);
         const url = new URL(urlTchap);
         // The redirect URL has to exactly match that registered at the OIDC server, so
         // ensure that the fragment part of the URL is empty.
         url.hash = "";
-        url.protocol = this.protocol;
+        url.protocol = scheme;
         // Trim the double slash into a single slash to comply with https://datatracker.ietf.org/doc/html/rfc8252#section-7.1
         if (url.href.startsWith(`${url.protocol}//`)) {
             url.href = url.href.replace("://", ":/");
