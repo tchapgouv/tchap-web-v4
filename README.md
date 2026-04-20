@@ -33,6 +33,8 @@ Tchap is a web app that allows you to chat through the matrix protocol for the F
     - feature_use_ec_in_dm: give options to use Element call in DM room
 - "tchap_sso_flow"
     - "isActive": Activate ProConnect SSO flow
+- tchap_desktop: 
+    - "deep_link_scheme": Determine the value of the scheme depending on the environment, used by tchap-desktop
 
 ## File structures
 
