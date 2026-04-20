@@ -503,31 +503,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             />
         );
         */
-
-        /*
-        :tchap: disable sso during mas migration
-        */
-        const isMASmigration = TchapUIFeature.isMASmigration();
-        const isMASFlowActive = TchapUIFeature.isMASFlowActive();
-
-        if (!this.isBusy() && !this.state.busyLoggingIn) {
-            if (isMASFlowActive) {
-                // If we are still in migration mode, we have to display PC button
-                return (isMASmigration ? <>
-                    <ProconnectButton client={this.loginLogic.createTemporaryClient()} />
-                    <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
-                </> :
-                <></>
-                )
-            }
-            return <div style={{marginBottom: "25px", position: "relative", top: "-15px"}}>
-                <p style={{textAlign: "center", fontWeight: "bold"}}>{_t("auth|proconnect|or")}</p>
-                <ProconnectButton />
-            </div>;
-        }
-        return <></>;
-        //end :tchap:
-        // end :TCHAP:
     };
 
     public render(): React.ReactNode {
@@ -585,24 +560,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 </span>
             );
         }
-        // :TCHAP:
-        if (TchapUIFeature.isMASFlowActive()) {
-            return (
-                <AuthPage addBlur={false}>
-                  <AuthBody>
-                        <h1>
-                            {_t("action|sign_in")}
-                            {loader}
-                        </h1>
-                        {errorTextSection}
-                        {serverDeadSection}
-                        {this.renderLoginComponentForFlows()}
-                        {footer}
-                    </AuthBody>
-                </AuthPage>
-            )
-        }
-        // end :TCHAP:
+
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />

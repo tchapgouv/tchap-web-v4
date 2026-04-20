@@ -125,10 +125,6 @@
         "feature_create_room_non_encrypted": ["*"],
         "feature_use_ec_in_dm": ["*"]
     },
-    "tchap_mas_flow": {
-        "isActive": true,
-        "temp_is_MAS_migration": true
-    },
     "tchap_desktop": {
         "deep_link_scheme": "tchap-preprod"
     },

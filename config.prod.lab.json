@@ -222,10 +222,6 @@
         "feature_create_room_non_encrypted": [],
         "feature_use_ec_in_dm": ["agent.dinum.tchap.gouv.fr"]
     },
-    "tchap_mas_flow": {
-        "isActive": true,
-        "temp_is_MAS_migration": true
-    },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
         "project_api_key": "phc_gm2O25mu8NTQtKpozdoVwZCixWqdq7PUHLLjDNDzVIe",

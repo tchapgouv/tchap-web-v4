@@ -53,11 +53,9 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
 
         const backgroundImage = `center/cover fixed url(${AuthPage.getWelcomeBackgroundUrl()})`;
 
-        const pageStyle = TchapUIFeature.isMASFlowActive() ?  {
+        const pageStyle = {
             backgroundColor: "white",
-        } : {
-            background: backgroundImage
-        };
+        }
 
         const modalStyle: React.CSSProperties = {
             position: "relative",

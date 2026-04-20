@@ -129,10 +129,6 @@
     "tchap_desktop": {
         "deep_link_scheme": "tchap-dev"
     },
-    "tchap_mas_flow": {
-        "isActive": true,
-        "temp_is_MAS_migration": true
-    },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "element_call": {
         "url": "https://element-call.tchap.incubateur.net/",
