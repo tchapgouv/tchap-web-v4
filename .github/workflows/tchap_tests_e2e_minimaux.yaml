@@ -1,0 +1,81 @@
+#Run the tests
+name: Tchap tests e2e minimaux
+on:
+    pull_request: {}
+    push:
+        branches: [develop_tchap]
+env:
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
+jobs:
+    tests:
+        name: Test e2e minimaux
+        runs-on: ubuntu-latest
+        container:
+          image: mcr.microsoft.com/playwright:v1.59.1-noble
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Get Node Version
+              id: node_version
+              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
+            - name: Yarn cache
+              uses: actions/setup-node@v4
+              with:
+                  cache: "yarn"
+                  node-version: ${{ steps.node_version.outputs.node_version }}
+            - name: Install Dependencies
+              run: "yarn install --pure-lockfile"
+          
+            - name: Build tchap-web
+              run: |
+                yarn build
+
+            - name: Checkout to tchap e2e repo
+              uses: actions/checkout@v4
+              with:
+                repository: tchapgouv/tchap-e2e-playwright
+                ref: modify-forum-wording
+                path: test-e2e
+            
+            - name : Move build files to tchap-e2e folder
+              run : "mv webapp test-e2e/dist"
+
+            - name: Install deps
+              run: |
+                npm ci
+                ls -l
+              working-directory: test-e2e
+              
+            - name: Remove some env in .env.dev01 file
+              run: |
+                grep -v -E '^(MAILPIT_PWD|SYNAPSE_ADMIN_TOKEN|ELEMENT_URL)=' .env.dev01 > .env.dev01.tmp || true
+                mv .env.dev01.tmp .env.dev01
+                cat .env.dev01
+              working-directory: test-e2e
+              
+            - name: Replace env by github env secrets
+              run: |
+                {
+                echo "MAILPIT_PWD=${{ secrets.MAILPIT_PWD }}"
+                echo "SYNAPSE_ADMIN_TOKEN=${{ secrets.SYNAPSE_ADMIN_TOKEN }}"
+                echo "ELEMENT_URL=http://localhost:8088"
+                } >> .env.dev01
+              working-directory: test-e2e
+
+            - name: Install serve
+              run: "npm install -g serve"
+              working-directory: test-e2e
+
+            - name: Use playwirght CI config
+              run: "mv playwright.ci.config.ts playwright.config.ts"
+              working-directory: test-e2e
+
+            - name: Run tests
+              run: "npm run test:dev01"
+              working-directory: test-e2e
+
+            
+
+            

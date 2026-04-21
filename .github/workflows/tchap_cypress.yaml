@@ -1,5 +1,5 @@
 # This is a tchap-specific file, inspired from the one in matrix-react-sdk
-name: Build + E2E Tests
+name: Tchap Build + E2E Tests
 
 on:
     workflow_dispatch: # for running action manually
