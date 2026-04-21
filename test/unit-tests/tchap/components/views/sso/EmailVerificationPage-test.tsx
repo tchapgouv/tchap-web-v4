@@ -1,14 +1,13 @@
 import React from "react";
 import { render, fireEvent, screen, act } from "jest-matrix-react";
 import { mocked, type MockedObject } from "jest-mock";
-import { SSOAction, type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import type BasePlatform from "~tchap-web/src/BasePlatform";
 
 import EmailVerificationPage from "~tchap-web/src/tchap/components/views/sso/EmailVerificationPage";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
-import { flushPromises } from "~tchap-web/test/test-utils";
+import { flushPromises, mockPlatformPeg } from "~tchap-web/test/test-utils";
 import Login from "~tchap-web/src/Login";
 import * as authorize from "~tchap-web/src/utils/oidc/authorize";
 import * as routing from "~tchap-web/src/vector/routing";
@@ -69,6 +68,9 @@ describe("Tests sso and oidc native flow", () => {
         beforeEach(() => {
             // Dans le beforeEach du bloc "MAS flow activated"
             jest.spyOn(authorize, "startOidcLogin").mockImplementation(jest.fn());
+            PlatformPegMocked = mockPlatformPeg({
+                startSingleSignOn: jest.fn(),
+            });
 
             mockedLogin.mockImplementation(() => ({
                 hsUrl: defaultHsUrl,
