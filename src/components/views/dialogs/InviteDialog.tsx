@@ -68,6 +68,8 @@ import InviteProgressBody from "./InviteProgressBody.tsx";
 
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
 import { type TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
+import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
+import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore.ts";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -341,15 +343,9 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     public componentDidMount(): void {
 
         this.unmounted = false;
-        // :TCHAP: this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.safeGet());
         const cli = MatrixClientPeg.safeGet();
-        const room = cli.getRoom(this.props.roomId);
-        this.encryptionByDefault = privateShouldBeEncrypted(cli);
+        this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.safeGet());
 
-        TchapRoomUtils.getTchapRoomType(room).then(roomType => {
-            this.setState({ tchapRoomType : roomType });
-        });
-        // end :TCHAP:
         if (this.props.initialText) {
             this.updateSuggestions(this.props.initialText);
         }
@@ -491,7 +487,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const containAnExternal = this.doesTargetsContainsExternal(newTargets);
         // end :TCHAP:
 
-        this.setState({ targets: newTargets, filterText: "", shouldDisplayExternalWarning: containAnExternal});
+        this.setState({ targets: newTargets, filterText: "", shouldDisplayExternalWarning: containAnExternal && this.canInviteExternalMembers()});
         return newTargets;
     }
 
@@ -504,6 +500,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         return members.some(m => {
             return m instanceof ThreepidMember || Email.looksValid(m.name)
         });
+    }
+
+    private canInviteExternalMembers(): boolean {
+        return this.state.tchapRoomType !== TchapRoomType.Forum;
     }
 
     /**
@@ -824,7 +824,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             }
             //
             // :TCHAP: this.setState({ targets, filterText });
-            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets);
+            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets) && this.canInviteExternalMembers();
             this.setState({ targets, filterText, shouldDisplayExternalWarning });
             // end :TCHAP:
 
@@ -840,7 +840,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (idx >= 0) {
             targets.splice(idx, 1);
             // :TCHAP: this.setState({ targets });
-            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets);
+            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets) && this.canInviteExternalMembers();
             this.setState({ targets, shouldDisplayExternalWarning });
             // end :TCHAP:
         }
@@ -971,9 +971,19 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
     // :TCHAP:
     private renderWarningExternal(): ReactNode {
-        return this.state.shouldDisplayExternalWarning ? 
-        <div> Going to be open to external users </div> :
-        null;
+        if (this.state.tchapRoomType !== TchapRoomType.External 
+            && this.state.tchapRoomType !== TchapRoomType.PrivateNonEncryptedExternal
+            && this.state.shouldDisplayExternalWarning) {
+            return <span> {_t("invite|warning_external")}</span>
+        }
+        return null;
+    }
+    
+    private renderWarningCantInviteExternal(): ReactNode {
+        return (!this.canInviteExternalMembers() && this.doesTargetsContainsExternal(this.state.targets)?
+            <span> {_t("invite|external_not_allowed")}</span> :
+            null
+        )
     }
     // end :TCHAP:
 
@@ -1367,7 +1377,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             const roomId = this.props.roomId;
             const room = MatrixClientPeg.get()?.getRoom(roomId);
             const isSpace = room?.isSpaceRoom();
-
             let helpTextUntranslated;
             if (isSpace) {
                 if (identityServersEnabled) {
@@ -1415,7 +1424,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     kind="primary"
                     onClick={goButtonFn}
                     className="mx_InviteDialog_goButton"
-                    disabled={this.state.busy || !this.hasSelection() || }
+                    disabled={this.state.busy || !this.hasSelection() || (!this.canInviteExternalMembers() && this.doesTargetsContainsExternal(this.state.targets))}
                 >
                     {buttonText}
                 </AccessibleButton>
@@ -1429,6 +1438,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     {goButton}
                 </div>
                 {this.renderWarningExternal()}
+                {this.renderWarningCantInviteExternal()}
                 {this.state.busy ? <InviteProgressBody /> : this.renderSuggestions()}
             </React.Fragment>
         );
@@ -1446,6 +1456,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         } else if (this.props.kind === InviteKind.Invite) {
             const roomId = this.props.roomId;
             const room = MatrixClientPeg.get()?.getRoom(roomId);
+            // :TCHAP:
+            TchapStore.instance.getRoomType(room!).then(roomType => {
+                this.setState({ tchapRoomType : roomType });
+            })
+            // end :TCHAP:
             const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("invite|to_space", {

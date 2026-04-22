@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "jest-matrix-react";
+import { act, logRoles, render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
 import { type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { type Mocked } from "jest-mock";
@@ -14,6 +14,9 @@ import { SdkContextClass } from "~tchap-web/src/contexts/SDKContext";
 import { type IProfileInfo } from "~tchap-web/src/hooks/useProfileInfo";
 import Modal from "~tchap-web/src/Modal";
 import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
+import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
+import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
+import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -46,6 +49,11 @@ const bobProfileInfo: IProfileInfo = {
     user_id: bobId,
     display_name: "Bob",
 };
+
+const externalEmail = "imexternal@test.fr";
+const externalWarning =
+    "You are going to invite people external to the public sector. If you continue, from now on this room will be open to external people on invite.";
+const cantAddExternalWarning = "It is not possible to add external people from the public sector in a public room.";
 
 describe("InviteDialog", () => {
     let mockClient: Mocked<MatrixClient>;
@@ -96,7 +104,9 @@ describe("InviteDialog", () => {
         });
         SdkConfig.put({ validated_server_config: {} as ValidatedServerConfig } as IConfigOptions);
         DMRoomMap.makeShared(mockClient);
-        jest.clearAllMocks();
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
 
         room = new Room(roomId, mockClient, mockClient.getSafeUserId());
 
@@ -105,7 +115,6 @@ describe("InviteDialog", () => {
         });
         mockClient.getRooms.mockReturnValue([room]);
         mockClient.getRoom.mockReturnValue(room);
-
         SdkContextClass.instance.client = mockClient;
     });
 
@@ -184,5 +193,53 @@ describe("InviteDialog", () => {
         await pasteIntoSearchField("");
 
         expect(input).toHaveValue("");
+    });
+
+    it("should display external warning when a user email is selected in private room", async () => {
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.getByText(externalWarning)).toBeDefined();
+
+            const externalPillDelete = screen.getByRole("button", { name: "Delete" });
+            act(() => {
+                externalPillDelete.click();
+            });
+
+            expect(screen.findByText(externalWarning)).toBeUndefined();
+        });
+    });
+
+    it("should not display external warning when room is already open to external users", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.External;
+        });
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.findByText(externalWarning)).toBeUndefined();
+        });
+    });
+
+    it("should warn when room is public so not possible to add external", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Forum;
+        });
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.findByText(cantAddExternalWarning)).toBeDefined();
+        });
     });
 });

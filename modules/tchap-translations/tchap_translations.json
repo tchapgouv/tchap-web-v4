@@ -1151,5 +1151,13 @@
     "encryption|verification|reset_all": {
         "en": "Reinitialize all",
         "fr": "Tout réinitialiser"
+    },
+    "invite|warning_external": {
+        "en": "You are going to invite people external to the public sector. If you continue, from now on this room will be open to external people on invite.",
+        "fr": "Vous allez inviter des personnes externes au secteur public. Si vous continuez, ce salon sera désormais ouvert aux invités externes par invitation."
+    },
+    "invite|external_not_allowed": {
+        "en": "It is not possible to add external people from the public sector in a public room.",
+        "fr": "Il n'est pas possible d'inviter des personnes externes aux secteur publique dans un salon publique."
     }
 }
