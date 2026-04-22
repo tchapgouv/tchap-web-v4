@@ -511,19 +511,17 @@ export default class ForgotPassword extends React.Component<Props, State> {
         }
 
         // :TCHAP:
-        if (TchapUIFeature.isMASFlowActive()) {
-            return (
-                <AuthPage addBlur={false}>
-                    <AuthBody className="mx_AuthBody_forgot-password">{resetPasswordJsx}</AuthBody>
-                </AuthPage>
-            )
-        }
-        // end :TCHAP:
+        // return (
+        //     <AuthPage>
+        //         <AuthHeader />
+        //         <AuthBody className="mx_AuthBody_forgot-password">{resetPasswordJsx}</AuthBody>
+        //     </AuthPage>
+        // );
         return (
-            <AuthPage>
-                <AuthHeader />
+            <AuthPage addBlur={false}>
                 <AuthBody className="mx_AuthBody_forgot-password">{resetPasswordJsx}</AuthBody>
             </AuthPage>
-        );
+        )
+        // end :TCHAP:
     }
 }

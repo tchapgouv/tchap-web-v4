@@ -42,39 +42,37 @@ export default class Welcome extends React.PureComponent<EmptyObject> {
             const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
             replaceMap["$logoUrl"] = logoUrl;
             // :TCHAP: sso-agentconnect-flow - pageUrl = "welcome.html"; 
-            pageUrl = TchapUIFeature.isMASFlowActive() ? "welcome_mas.html" : "welcome_with_proconnect.html";
+            pageUrl = "welcome_mas.html";
             replaceMap["$proconnectFaq"] = TchapUrls.helpProconnectInstances;
             // end :TCHAP:
         }
 
         // :TCHAP:
-        if (TchapUIFeature.isMASFlowActive()) {
-            return (
-                <AuthPage addBlur={false}>
-                    <div
-                        className={classNames("mx_Welcome", {
-                            mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
-                        })}
-                        data-testid="mx_welcome_screen_mas"
-                    >
-                        <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
-                    </div>
-                </AuthPage>
-            )
-        }
-        // end :TCHAP:
+        // return (
+        //     <AuthPage>
+        //         <div
+        //             className={classNames("mx_Welcome", {
+        //                 mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
+        //             })}
+        //             data-testid="mx_welcome_screen"
+        //         >
+        //             <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
+        //             <LanguageSelector />
+        //         </div>
+        //     </AuthPage>
+        // );
         return (
-            <AuthPage>
+            <AuthPage addBlur={false}>
                 <div
                     className={classNames("mx_Welcome", {
                         mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
                     })}
-                    data-testid="mx_welcome_screen"
+                    data-testid="mx_welcome_screen_mas"
                 >
                     <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
-                    <LanguageSelector />
                 </div>
             </AuthPage>
-        );
+        )
+        // end :TCHAP:
     }
 }

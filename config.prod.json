@@ -225,10 +225,6 @@
     "tchap_desktop": {
         "deep_link_scheme": "tchap"
     },
-    "tchap_mas_flow": {
-        "isActive": true,
-        "temp_is_MAS_migration": true
-    },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
         "project_api_key": "phc_gm2O25mu8NTQtKpozdoVwZCixWqdq7PUHLLjDNDzVIe",
