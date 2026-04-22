@@ -28,6 +28,9 @@ jobs:
             - name: Install Dependencies
               run: "yarn install --pure-lockfile"
           
+            - name: "Copy the config file at the right place"
+              run: "cp config.dev.json config.json"
+
             - name: Build tchap-web
               run: |
                 yarn build
