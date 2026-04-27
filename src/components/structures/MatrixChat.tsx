@@ -127,7 +127,7 @@ import RovingSpotlightDialog from "../views/dialogs/spotlight/SpotlightDialog";
 import { findDMForUser } from "../../utils/dm/findDMForUser";
 import { getHtmlText, Linkify } from "../../HtmlUtils";
 import { NotificationLevel } from "../../stores/notifications/NotificationLevel";
-import { type UserTab } from "../views/dialogs/UserTab";
+import { UserTab } from "../views/dialogs/UserTab";
 import { shouldSkipSetupEncryption } from "../../utils/crypto/shouldSkipSetupEncryption";
 import { Filter } from "../views/dialogs/spotlight/Filter";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
@@ -1893,22 +1893,32 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         //:tchap: end
 
         if (screen === "register") {
+            //  :TCHAP: 
+            // dis.dispatch({
+            //     action: "start_registration",
+            //     params: params,
+            // });
+            // PerformanceMonitor.instance.start(PerformanceEntryNames.REGISTER);
             dis.dispatch({
-                action: "start_registration",
-                params: params,
+                action: "email_precheck_sso"
             });
-            PerformanceMonitor.instance.start(PerformanceEntryNames.REGISTER);
+            // end :TCHAP: 
         } else if (screen === "mobile_register") {
             dis.dispatch({
                 action: "start_mobile_registration",
                 params: params,
             });
         } else if (screen === "login") {
+            // :TCHAP:
+            // dis.dispatch({
+            //     action: "start_login",
+            //     params: params,
+            // });
+            // PerformanceMonitor.instance.start(PerformanceEntryNames.LOGIN);
             dis.dispatch({
-                action: "start_login",
-                params: params,
+                action: "email_precheck_sso"
             });
-            PerformanceMonitor.instance.start(PerformanceEntryNames.LOGIN);
+            // end :TCHAP: 
         } else if (screen === "forgot_password") {
             dis.dispatch({
                 action: "start_password_recovery",
@@ -2339,8 +2349,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             view = (
                 <EmailVerificationPage 
                     onServerConfigChange={this.onServerConfigChange}
-                    onLoginClick={(params) => this.viewLogin(undefined, params?.tchapEmailHint)}
-                    onRegisterClick={(params) => this.startRegistration({ tchapEmailHint: params?.tchapEmailHint })}
                 />
             )
         // end :TCHAP:
