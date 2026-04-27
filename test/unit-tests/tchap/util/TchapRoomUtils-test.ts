@@ -2,7 +2,7 @@ import { type Mocked, mocked } from "jest-mock";
 import { type CryptoApi } from "matrix-js-sdk/src/crypto-api";
 import { type Room, Visibility, type MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { TchapRoomAccessRule, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
+import { TchapRoomAccessRule, TchapRoomAccessRuleVisibility, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 import { mkRoom, stubClient } from "~tchap-web/test/test-utils";
 
@@ -37,7 +37,11 @@ describe("Provides utils method to get room type and state", () => {
         jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
 
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
-            { rule: TchapRoomAccessRule.Unrestricted, encrypted: false },
+            {
+                rule: TchapRoomAccessRule.Unrestricted,
+                encrypted: false,
+                visibility: TchapRoomAccessRuleVisibility.Private,
+            },
             room,
         );
         expect(result).toStrictEqual(TchapRoomType.PrivateNonEncryptedExternal);
@@ -48,7 +52,11 @@ describe("Provides utils method to get room type and state", () => {
         jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
 
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
-            { rule: TchapRoomAccessRule.Restricted, encrypted: false },
+            {
+                rule: TchapRoomAccessRule.Restricted,
+                encrypted: false,
+                visibility: TchapRoomAccessRuleVisibility.Private,
+            },
             room,
         );
         expect(result).toStrictEqual(TchapRoomType.PrivateNonEncrypted);
