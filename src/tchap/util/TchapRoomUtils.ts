@@ -5,7 +5,7 @@
 import { EventTimeline, EventType, Room, Visibility } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 
-import { TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
+import { TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomAccessRuleVisibility, TchapRoomType } from "../@types/tchap";
 import { GuestAccess, JoinRule } from "matrix-js-sdk/src/matrix";
 
 
@@ -24,7 +24,7 @@ export default class TchapRoomUtils {
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
             // Should be explicitly encrypted to false, private room does not have this value if the backend is not compatible or the data not well updated
-            if (tchapRoomAccessRule?.encrypted == false) {
+            if (tchapRoomAccessRule?.encrypted == false && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
                 if (tchapRoomAccessRule?.rule == TchapRoomAccessRule.Unrestricted) {
                     return TchapRoomType.PrivateNonEncryptedExternal;
                 }
