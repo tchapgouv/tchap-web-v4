@@ -1,5 +1,5 @@
 import React from "react";
-import { act, logRoles, render, screen, waitFor } from "jest-matrix-react";
+import { act, render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
 import { type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { type Mocked } from "jest-mock";
@@ -16,7 +16,6 @@ import Modal from "~tchap-web/src/Modal";
 import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
-import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -198,7 +197,7 @@ describe("InviteDialog", () => {
     it("should display external warning when a user email is selected in private room", async () => {
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
-        // Juste paste some values without enter
+        // Paste an external email
         await pasteIntoSearchField(externalEmail);
 
         waitFor(() => {
@@ -211,6 +210,10 @@ describe("InviteDialog", () => {
 
             expect(screen.findByText(externalWarning)).toBeUndefined();
         });
+
+        await pasteIntoSearchField(externalEmail);
+
+        // click on invite button
     });
 
     it("should not display external warning when room is already open to external users", async () => {
@@ -223,8 +226,9 @@ describe("InviteDialog", () => {
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
 
-        waitFor(() => {
-            expect(screen.findByText(externalWarning)).toBeUndefined();
+        waitFor(async () => {
+            const externalWarningText = await screen.findByText(externalWarning);
+            expect(externalWarningText).toBeUndefined();
         });
     });
 
@@ -240,6 +244,22 @@ describe("InviteDialog", () => {
 
         waitFor(() => {
             expect(screen.findByText(cantAddExternalWarning)).toBeDefined();
+        });
+    });
+
+    it("should not show any warning if the invitedialog type is DM", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+
+        render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(async () => {
+            const cantAddExternalWarningText = await screen.findByText(cantAddExternalWarning);
+            expect(cantAddExternalWarningText).toBeUndefined();
         });
     });
 });

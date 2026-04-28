@@ -1159,5 +1159,13 @@
     "invite|external_not_allowed": {
         "en": "It is not possible to add external people from the public sector in a public room.",
         "fr": "Il n'est pas possible d'inviter des personnes externes aux secteur publique dans un salon publique."
+    },
+    "invite|irreversible": {
+        "en": "This modification is final and not reversible",
+        "fr": "Cette modification est définitive et irréversible."
+    },
+    "invite|accessible_to_external": {
+        "en": "By inviting an external partner, this room will become accessible to external guests",
+        "fr": "En invitant un partenaire externe, ce salon deviendra accessible aux utilisateurs externes."
     }
 }

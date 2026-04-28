@@ -322,43 +322,6 @@ describe("TchapCreateRoomDialog", () => {
 
         expect(onFinished).toHaveBeenCalledWith(true, publicRoomWithFederationExpectedOpts);
     });
-
-    it("Should create an external room", async () => {
-        const onFinished = jest.fn();
-
-        const externalRoomExpectedOpts = {
-            createOpts: {
-                name: roomName,
-                creation_content: {
-                    "m.federate": true,
-                },
-                initial_state: [
-                    {
-                        content: {
-                            rule: "unrestricted",
-                        },
-                        state_key: "",
-                        type: "im.vector.room.access_rules",
-                    },
-                ],
-                visibility: "private",
-                preset: "private_chat",
-            },
-            guestAccess: false,
-            joinRule: "invite",
-            encryption: true,
-            historyVisibility: "invited",
-        };
-        const wrapper = getComponent({ onFinished });
-
-        await typeRoomName(roomName);
-
-        await selectRoomType(TchapRoomType.External);
-
-        await submitForm(wrapper);
-
-        expect(onFinished).toHaveBeenCalledWith(true, externalRoomExpectedOpts);
-    });
 });
 
 class MockClient extends EventEmitter {

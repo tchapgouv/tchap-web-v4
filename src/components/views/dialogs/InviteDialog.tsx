@@ -581,18 +581,25 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
 
         // :TCHAP:
+
         if (this.state.shouldDisplayExternalWarning) {
             // Before continuing we should alert the user that this is irreversible action 
             const { finished } = Modal.createDialog(QuestionDialog, {
-                title: _t("Allow external users to join this room"),
+                title: _t("badge|external_guests"),
                 description:
-                    _t("This action is irreversible.") +
+                    _t("invite|accessible_to_external") +
                     " " +
-                    _t("Are you sure you want to allow the externals to join this room ?"),
+                    _t("invite|irreversible"),
                 button: _t("action|ok"),
             });
             const [ confirmed ] = await finished;
-            if (!confirmed) return;
+            if (!confirmed) {
+                //cancel the invitation
+                this.setState({
+                    busy: false,
+                });
+                return;
+            };
             cli.sendStateEvent(
                 room.roomId, 
                 TchapRoomAccessRulesEventId, 
@@ -973,17 +980,30 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     private renderWarningExternal(): ReactNode {
         if (this.state.tchapRoomType !== TchapRoomType.External 
             && this.state.tchapRoomType !== TchapRoomType.PrivateNonEncryptedExternal
-            && this.state.shouldDisplayExternalWarning) {
-            return <span> {_t("invite|warning_external")}</span>
+            && this.state.shouldDisplayExternalWarning
+            // if it is a DM we don't show the warning
+            && this.props.kind !== InviteKind.Dm) {
+            return (
+                <div className="tc_live_warning_section">
+                    <span> {_t("invite|warning_external")}</span>
+                </div>
+            )
         }
         return null;
     }
     
     private renderWarningCantInviteExternal(): ReactNode {
-        return (!this.canInviteExternalMembers() && this.doesTargetsContainsExternal(this.state.targets)?
-            <span> {_t("invite|external_not_allowed")}</span> :
-            null
+        if (!this.canInviteExternalMembers() 
+            && this.doesTargetsContainsExternal(this.state.targets)
+            // if it is a DM we don't show the warning
+            && this.props.kind !== InviteKind.Dm
         )
+        return (
+            <div className="tc_live_warning_section">
+                <span> {_t("invite|external_not_allowed")}</span>
+            </div>
+        )
+        return null
     }
     // end :TCHAP:
 
