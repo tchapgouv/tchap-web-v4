@@ -39,6 +39,7 @@ import { ElementCallMemberEventType } from "../../call-types";
 import { LocalRoom, LocalRoomState } from "../../models/LocalRoom";
 import { useScopedRoomContext } from "../../contexts/ScopedRoomContext";
 import { SdkContextClass } from "../../contexts/SDKContext";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 const logger = rootLogger.getChild("useRoomCall");
 
@@ -50,6 +51,9 @@ export enum PlatformCallType {
 
 export const getPlatformCallTypeProps = (
     platformCallType: PlatformCallType,
+    // :TCHAP: add legacy distinction between voice and video
+    isLegacyVoice?: boolean
+    // end :TCHAP:
 ): {
     label: string;
     children?: ReactNode;
@@ -67,6 +71,12 @@ export const getPlatformCallTypeProps = (
                 analyticsName: "WebVoipOptionJitsi",
             };
         case PlatformCallType.LegacyCall:
+            if (isLegacyVoice) {
+                return {
+                label: _t("voip|voice_call"),
+                analyticsName: "WebVoipOptionLegacy",
+            };
+            }
             return {
                 label: _t("voip|legacy_call"),
                 analyticsName: "WebVoipOptionLegacy",
@@ -177,6 +187,9 @@ export const useRoomCall = (
         const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
+            if (TchapUIFeature.isFeatureActiveForHomeserver("feature_use_ec_in_dm")) {
+                options.push(PlatformCallType.ElementCall);
+            }
             return options; // :TCHAP: flow-legacy-call-element-call in all case if 
                             // we are only two in the room we use legacy call, compatible with legacy mobile apps
         }

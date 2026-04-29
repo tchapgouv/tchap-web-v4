@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, SyntheticEvent } from "react";
+import React, { JSX, ReactNode, SyntheticEvent } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
@@ -57,7 +57,7 @@ interface IState {
 export default class RoomUpgradeWarningDialog extends React.Component<IProps, IState> {
     private readonly isPrivate: boolean;
     private readonly currentVersion?: string;
-    private readonly tchapRoomType: TchapRoomType;
+    private tchapRoomType: TchapRoomType;
 
     public constructor(props: IProps) {
         super(props);
@@ -66,11 +66,20 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         const joinRules = room?.currentState.getStateEvents(EventType.RoomJoinRules, "");
         this.isPrivate = joinRules?.getContent()["join_rule"] !== JoinRule.Public ?? true;
         this.currentVersion = room?.getVersion();
-        this.tchapRoomType = TchapRoomUtils.getTchapRoomType(room);
+        
+        this.tchapRoomType = TchapRoomType.Unknown;
+
         this.state = {
             inviteUsersToNewRoom: true,
         };
     }
+
+    // :TCHAP:
+    public async componentDidMount(): Promise<void> {
+        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
+        this.tchapRoomType = await TchapRoomUtils.getTchapRoomType(room);
+    }
+    // end :TCHAP:
 
     private onProgressCallback = (text: string, progress: number, total: number): void => {
         this.setState({

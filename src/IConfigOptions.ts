@@ -231,6 +231,9 @@ export interface ISsoRedirectOptions {
 export interface IConfigOptions {
     tchap_features?: {
         feature_email_notification?:[string]//activate email notification on a list of home servers, ie : "dev01.tchap.incubateur.net"
+    },
+    tchap_desktop: {
+        deep_link_scheme: string
     }
 }
 //end :tchap:

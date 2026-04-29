@@ -2,36 +2,44 @@
  * Tchap Room utils.
  */
 
-import { EventTimeline, EventType, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, EventType, Room, Visibility } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
+import { TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomAccessRuleVisibility, TchapRoomType } from "../@types/tchap";
 import { GuestAccess, JoinRule } from "matrix-js-sdk/src/matrix";
-import { RoomPowerLevelsEventContent } from "matrix-js-sdk/src/types";
+
 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
     //direct type is not handled yet
-    static getTchapRoomType(room: Room): TchapRoomType {
-        const isEncrypted: boolean = this.isRoomEncrypted(room.roomId);
-        const tchapRoomAccessRule: TchapRoomAccessRule = this.getTchapRoomAccessRule(room);
-        return this.getTchapRoomTypeInternal(isEncrypted, tchapRoomAccessRule);
+    static getTchapRoomType(room: Room): Promise<TchapRoomType> {
+        const tchapAccessRule = this.getTchapRoomAccessRule(room);
+        console.log("*** tchapAccessRule", tchapAccessRule);
+        console.log("*** tchapAccessRule room", room.roomId);
+        return this.getTchapRoomTypeInternal(tchapAccessRule, room);
     }
 
-    static getTchapRoomTypeInternal(isEncrypted: boolean, tchapRoomAccessRule: TchapRoomAccessRule): TchapRoomType {
+    static async getTchapRoomTypeInternal(tchapRoomAccessRule: TchapIAccessRuleEventContent | undefined, room: Room): Promise<TchapRoomType> {
+        const isEncrypted: boolean = await this.isRoomEncrypted(room.roomId);
+        // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
+            // Should be explicitly encrypted to false, private room does not have this value if the backend is not compatible or the data not well updated
+            if (tchapRoomAccessRule?.encrypted == false && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
+                if (tchapRoomAccessRule?.rule == TchapRoomAccessRule.Unrestricted) {
+                    return TchapRoomType.PrivateNonEncryptedExternal;
+                }
+                return TchapRoomType.PrivateNonEncrypted;
+            }
             return TchapRoomType.Forum;
         }
-        if (!tchapRoomAccessRule) {
-            return TchapRoomType.Unknown;
+        switch(tchapRoomAccessRule?.rule) {
+            case TchapRoomAccessRule.Restricted:
+                return TchapRoomType.Private;
+            case TchapRoomAccessRule.Unrestricted:
+                return TchapRoomType.External;
+            default:
+                return TchapRoomType.Unknown;
         }
-        if (tchapRoomAccessRule === TchapRoomAccessRule.Restricted) {
-            return TchapRoomType.Private;
-        }
-        if (tchapRoomAccessRule === TchapRoomAccessRule.Unrestricted) {
-            return TchapRoomType.External;
-        }
-        return TchapRoomType.Unknown;
     }
 
     /**
@@ -39,8 +47,8 @@ export default class TchapRoomUtils {
      * @param room
      * @returns string that matches of one TchapRoomAccessRule //todo or null? or empty?
      */
-    static getTchapRoomAccessRule(room: Room): TchapRoomAccessRule {
-        return room.getLiveTimeline().getState(EventTimeline.FORWARDS)?.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent().rule;
+    static getTchapRoomAccessRule(room: Room): TchapIAccessRuleEventContent | undefined {
+        return room.getLiveTimeline().getState(EventTimeline.FORWARDS)?.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent();
     }
 
     /**
@@ -48,8 +56,9 @@ export default class TchapRoomUtils {
      * @param roomId
      * @returns true if room is encrypted, false if not
      */
-    static isRoomEncrypted(roomId: string): boolean {
-        return !!MatrixClientPeg.get()?.isRoomEncrypted(roomId);
+    static async  isRoomEncrypted(roomId: string): Promise<boolean> {
+        const isEncrypted = await MatrixClientPeg.get()?.getCrypto()?.isEncryptionEnabledInRoom(roomId);
+        return !!isEncrypted;
     }
 
     /**
@@ -91,5 +100,10 @@ export default class TchapRoomUtils {
         // At least one user as the pL 100 which means he is admin
         return userLevelValues.some((uL) => uL === 100);
 
+    }
+
+    static async getRoomVisibility(room: Room): Promise<Visibility> {
+        const visibility = await room.client.getRoomDirectoryVisibility(room.roomId);
+        return visibility.visibility;
     }
 }

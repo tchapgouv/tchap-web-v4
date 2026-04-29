@@ -41,23 +41,20 @@ function onHashChange(): void {
     }
 
     // :TCHAP:
-    //deactivate this check
-    
     // When MAS is activated we don't want to display login or register page
 
-    //only for migration
-    const activateLoginLegacyDuringMASMigration= TchapUIFeature.isMASmigration();
-
-    if (TchapUIFeature.isMASFlowActive() && !activateLoginLegacyDuringMASMigration) {
-        logger.log("onHashChange MAS active", window.location.hash, lastLocationHashSet);
-        if (["#/login", "#/register"].includes(window.location.hash)) {
-            logger.log("onHashChange MAS active, replacing with email-precheck-sso");
-            window.location.replace("#/email-precheck-sso");
-            routeUrl(window.location);
-            return;
-         }
+    if (["#/login"].includes(window.location.hash)) {
+        logger.log("onHashChange MAS active, replacing with email-precheck-sso");
+        window.location.replace("#/email-precheck-sso");
+        routeUrl(window.location);
+        return;
     }
-    
+    if (["#/register"].includes(window.location.hash)) {
+        logger.log("onHashChange MAS active, replacing with email-precheck-sso?createAccount=true");
+        window.location.replace("#/email-precheck-sso?createAccount=true");
+        routeUrl(window.location);
+        return;
+    }
     // end :TCHAP:
     routeUrl(window.location);
 }

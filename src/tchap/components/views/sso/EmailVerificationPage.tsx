@@ -40,8 +40,6 @@ import AuthHeader from "~tchap-web/src/components/views/auth/AuthHeader";
 interface IProps {
     //propagate the server config change
     onServerConfigChange(config: ValidatedServerConfig): void;
-    onLoginClick(params?: { [key: string]: any }): void;
-    onRegisterClick(params?: { [key: string]: any }): void;
 }
 
 //This page is map to EMAIL_PRECHECK_SSO
@@ -53,11 +51,8 @@ export default function EmailVerificationPage(props: IProps) {
     const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<string>("");
 
-    const isMASFlow= TchapUIFeature.isMASFlowActive();
-    const isMASmigration= TchapUIFeature.isMASmigration();
-
-    const submitButtonLabel = isMASFlow ? _t("action|continue") : _t("auth|proconnect|continue");
-    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : submitButtonLabel;
+    const submitButtonLabel = _t("action|continue");
+    const submitButtonChild = loading ? <Spinner size={16} /> : submitButtonLabel;
     const params = getScreenFromLocation(window.location).params;
     const isCreateAccount: boolean = params.createAccount ? true : false;
 
@@ -114,66 +109,25 @@ export default function EmailVerificationPage(props: IProps) {
                 return
             }
             /* use oidcNativeFlow */
-            if(isMASFlow){
+            const login = new Login(hs.base_url, hs.base_url, null, {
+                delegatedAuthentication: validatedServerConfig.delegatedAuthentication,
+            });
+            
+            const loginFlows = await login.getFlows(false);
 
-                const login = new Login(hs.base_url, hs.base_url, null, {
-                    delegatedAuthentication: validatedServerConfig.delegatedAuthentication,
-                });
-                
-                const loginFlows = await login.getFlows(false);
-
-                //only usefull during synapse + MAS migration
-                //when homeserver is not MAS ready
-                //propagate the serverConfig and switch to legacy login page
-                //activateLoginLegacyDuringMASMigration code can be cleared after MAS migration
-                if(isMASmigration && 
-                    loginFlows?.find((flow: Record<string, any>) => flow.type === "m.login.password")){
-                    //console.log("Synapse support lm.ogin.password, use legacy flows");
-                    props.onServerConfigChange(validatedServerConfig);
-                    if (isCreateAccount) {
-                        onRegisterByPasswordClick();
-                    } else {
-                        onLoginByPasswordClick();
-                    }
-                    return;
-                }
-
-                let oidcNativeFlow: OidcNativeFlow | undefined;
-                oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
-                
-                await startOidcLogin(
-                    validatedServerConfig.delegatedAuthentication!,
-                    oidcNativeFlow.clientId,
-                    validatedServerConfig.hsUrl,
-                    validatedServerConfig.isUrl,
-                    isCreateAccount,
-                    email
-                );
-                
-                setLoading(false);
-
-                return;
-                
-            }
-
-            //MAS Flow is not active
-            //legacy sso code
-            const login = new Login(hs.base_url, hs.base_url, null, {});
-
-            const matrixClient= login.createTemporaryClient();
-
-            // check if oidc is activated on HS
-            const canSSO = await isSSOFlowActive(login);
-            if (!canSSO) {
-                displayError(_t("auth|proconnect|error_sso_inactive"));
-                return
-            }
-
-            // start SSO flow since we got the homeserver
-            PlatformPeg.get()?.startSingleSignOn(matrixClient, "sso", "/home", "", SSOAction.LOGIN, email);
-
+            let oidcNativeFlow: OidcNativeFlow | undefined;
+            oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
+            
+            await startOidcLogin(
+                validatedServerConfig.delegatedAuthentication!,
+                oidcNativeFlow.clientId,
+                validatedServerConfig.hsUrl,
+                validatedServerConfig.isUrl,
+                isCreateAccount,
+                email
+            );
+            
             setLoading(false);
-
         } catch(err) {
             displayError(_t("auth|proconnect|error"));
         }
@@ -186,118 +140,37 @@ export default function EmailVerificationPage(props: IProps) {
         setButtonDisabled(!isEmailValid);
     }
 
-    const onLoginByPasswordClick = () => {
-        // Used for mas migration only, where both legacy and mas login/register are available
-        props.onLoginClick({ tchapEmailHint: email });
-    }
-    
-    const onRegisterByPasswordClick = () => {
-        // Used for mas migration only, where both legacy and mas login/register are available
-        props.onRegisterClick({ tchapEmailHint: email });
-    }
-
-    const getTitleLabel = () => {
-        if (isMASFlow) {
-            if (isCreateAccount) {
-                return _t("auth|create_account_title")
-            }
-            return _t("action|sign_in");
-        }
-        return _t("auth|proconnect|email_title");
-    }
-
     const getButtonGroup = () => {
-        if (isMASFlow) {
-            return (
-                <AccessibleButton
-                        type="submit"
-                        data-testid="mas-submit"
-                        title={_t("action|continue")}
-                        className="tc_ButtonParent tc_ButtonProconnect"
-                        element="button"
-                        kind="link"
-                        disabled={buttonDisabled}
-                        onClick={(e: ButtonEvent) => {
-                            onSubmit(e);
-                        }}
-                    >
-                        {submitButtonChild}
-                </AccessibleButton>
-            )
-        }
-        return <>
+        return (
             <AccessibleButton
-                type="submit"
-                data-testid="proconnect-submit"
-                title={_t("auth|proconnect|continue")}
-                className="tc_ButtonParent tc_ButtonProconnect tc_Button_iconPC"
-                element="button"
-                kind="link"
-                disabled={buttonDisabled}
-                onClick={(e: ButtonEvent) => {
-                    onSubmit(e);
-                }}
-            >
-                {submitButtonChild}
-            </AccessibleButton>
-            <div className="mx_AuthBody_button-container tc_bottomButton">
-                <AccessibleButton
-                    className="mx_AuthBody_sign-in-instead-button"
+                    type="submit"
+                    data-testid="mas-submit"
+                    title={_t("action|continue")}
+                    className="tc_ButtonParent tc_ButtonProconnect"
                     element="button"
                     kind="link"
+                    disabled={buttonDisabled}
                     onClick={(e: ButtonEvent) => {
-                        e.preventDefault();
-                        onLoginByPasswordClick();
+                        onSubmit(e);
                     }}
                 >
-                    {_t("auth|proconnect|sign_in_password_instead")}
-                </AccessibleButton>
-            </div>
-        </>
+                    {submitButtonChild}
+            </AccessibleButton>
+        )
     }
 
-    if (isMASFlow) {
-        return (
-            <AuthPage addBlur={false}>
-                <AuthBody>
-                    <section className="tc-verification-page_header">
-                        <div className="tc-verification-page_header_img">
-                            <img src="/themes/tchap/img/logos/tchap-logo.svg" alt="" width="64" height="64"></img>
-                        </div>
-                        <h1>
-                            {_t("auth|email_verification_title")}
-                        </h1>
-                        <p> {_t("auth|email_verification_description")} </p>
-                    </section>
-                    <form onSubmit={onSubmit} className="tc_pronnect">
-                        <fieldset disabled={loading} className="tc_login">
-                            <div className="mx_AuthBody_fieldRow">
-                                <EmailField
-                                    name="check_email" // define a name so browser's password autofill gets less confused
-                                    label={_td("auth|proconnect|email_placeholder")}
-                                    labelRequired={_td("auth|forgot_password_email_required")}
-                                    labelInvalid={_td("auth|forgot_password_email_invalid")}
-                                    value={email}
-                                    autoFocus={true}
-                                    onChange={(event: React.FormEvent<HTMLInputElement>) => onInputChanged(event)}
-                                    fieldRef={emailFieldRef}
-                                />
-                            </div>
-                            {errorText && <ErrorMessage message={errorText} />}
-                            {getButtonGroup()}
-                        </fieldset>
-                    </form>
-                </AuthBody>
-            </AuthPage>
-        );
-    }
     return (
-        <AuthPage>
-            <AuthHeader />
+        <AuthPage addBlur={false}>
             <AuthBody>
-                <h1>
-                    {getTitleLabel()}
-                </h1>
+                <section className="tc-verification-page_header">
+                    <div className="tc-verification-page_header_img">
+                        <img src="/themes/tchap/img/logos/tchap-logo.svg" alt="" width="64" height="64"></img>
+                    </div>
+                    <h1>
+                        {_t("auth|email_verification_title")}
+                    </h1>
+                    <p> {_t("auth|email_verification_description")} </p>
+                </section>
                 <form onSubmit={onSubmit} className="tc_pronnect">
                     <fieldset disabled={loading} className="tc_login">
                         <div className="mx_AuthBody_fieldRow">

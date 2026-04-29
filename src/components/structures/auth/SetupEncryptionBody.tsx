@@ -204,6 +204,30 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                         {_t("common|help")}
                 </AccessibleButton>
             )
+
+            // :TCHAP: if has neither correct/setup verification code or other verified device
+            // display another panel view
+            if (!store.keyInfo && !store.hasDevicesToVerifyAgainst) {
+                return (
+                    <EncryptionCard
+                        title={_t("encryption|verification|cant_confirm_title")}
+                        Icon={LockIcon}
+                        className="mx_EncryptionCard_noBorder mx_SetupEncryptionBody"
+                    >
+                        <EncryptionCardEmphasisedContent>
+                            <span>{_t("encryption|verification|cant_confirm_description")}</span>
+                        </EncryptionCardEmphasisedContent>
+                        <EncryptionCardButtons>
+                            <Button kind="destructive" onClick={this.onCantConfirmClick}>
+                                {_t("encryption|verification|cant_confirm")}
+                            </Button>
+                            {tchapHelpButton}
+                            {signOutButton}
+                        </EncryptionCardButtons>
+                    </EncryptionCard>
+                );
+            }
+            // end :TCHAP:
             
             return (
                 <EncryptionCard
@@ -224,7 +248,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                         {tchapHelpButton}
                             {/* end :TCHAP: */}
                         <Button kind="secondary" onClick={this.onCantConfirmClick}>
-                            {_t("encryption|verification|cant_confirm")}
+                            {_t("encryption|verification|reset_all")}
                         </Button>
                         {signOutButton}
                     </EncryptionCardButtons>
