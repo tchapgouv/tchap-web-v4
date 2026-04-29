@@ -603,7 +603,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             cli.sendStateEvent(
                 room.roomId, 
                 TchapRoomAccessRulesEventId, 
-                { rule: TchapRoomAccessRule.Unrestricted, encrypted: this.tchapAccessRule?.encrypted },
+                { rule: TchapRoomAccessRule.Unrestricted, encrypted: this.tchapAccessRule?.encrypted, visibility: this.tchapAccessRule?.visibility },
                 ""
             );
         }
@@ -623,6 +623,15 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 busy: false,
                 errorText: _t("invite|error_invite"),
             });
+            // an error occured, we need to go back to original state
+            if (this.state.shouldDisplayExternalWarning) {
+                cli.sendStateEvent(
+                room.roomId, 
+                TchapRoomAccessRulesEventId, 
+                { rule: TchapRoomAccessRule.Restricted, encrypted: this.tchapAccessRule?.encrypted, visibility: this.tchapAccessRule?.visibility },
+                ""
+            );
+            }
         }
     };
 

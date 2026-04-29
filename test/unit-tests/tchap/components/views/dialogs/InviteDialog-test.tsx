@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen, waitFor } from "jest-matrix-react";
+import { act, logRoles, render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
 import { type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { type Mocked } from "jest-mock";
@@ -16,6 +16,7 @@ import Modal from "~tchap-web/src/Modal";
 import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
+import * as roomInvite from "~tchap-web/src/RoomInvite";
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -200,20 +201,24 @@ describe("InviteDialog", () => {
         // Paste an external email
         await pasteIntoSearchField(externalEmail);
 
-        waitFor(() => {
+        waitFor(async () => {
             expect(screen.getByText(externalWarning)).toBeDefined();
 
             const externalPillDelete = screen.getByRole("button", { name: "Delete" });
             act(() => {
                 externalPillDelete.click();
             });
-
+            // when clicking on the pill delete, the warning should be removed
             expect(screen.findByText(externalWarning)).toBeUndefined();
+            await pasteIntoSearchField(externalEmail);
+
+            // click on invite button
+            screen.getByRole("button", { name: "Invite" }).click();
+
+            // Modal should display with ok button
+            // Modal to confirm we are going to invite external people should display
+            expect(screen.getByRole("button", { name: "Ok" })).toBeInTheDocument();
         });
-
-        await pasteIntoSearchField(externalEmail);
-
-        // click on invite button
     });
 
     it("should not display external warning when room is already open to external users", async () => {
@@ -260,6 +265,30 @@ describe("InviteDialog", () => {
         waitFor(async () => {
             const cantAddExternalWarningText = await screen.findByText(cantAddExternalWarning);
             expect(cantAddExternalWarningText).toBeUndefined();
+        });
+    });
+
+    it("should go back to restricted if error during invite", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(roomInvite, "inviteMultipleToRoom").mockRejectedValue(new Error("An error during invite occured"));
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            // click on invite button
+            screen.getByRole("button", { name: "Invite" }).click();
+
+            // Modal should display with ok button
+            // Modal to confirm we are going to invite external people should display
+            screen.getByRole("button", { name: "Ok" }).click();
+
+            // should revert unrestricted access rules value
+            expect(mockClient.sendStateEvent).toHaveBeenCalled();
         });
     });
 });
