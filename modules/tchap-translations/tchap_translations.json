@@ -1151,5 +1151,9 @@
     "encryption|verification|reset_all": {
         "en": "Reinitialize all",
         "fr": "Tout réinitialiser"
+    },
+    "room|intro|private_unencrypted_warning": {
+        "en": "Reinitialize all",
+        "fr": "Vous avez choisie "
     }
 }
