@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`InviteDialog should display external warning when a user email is selected in private room 1`] = `
+HTMLCollection [
+  <div
+    class="tc_live_warning_section"
+  >
+    <span>
+       
+      invite
+    </span>
+  </div>,
+]
+`;
+
+exports[`InviteDialog should warn when room is public so not possible to add external 1`] = `
+HTMLCollection [
+  <div
+    class="tc_live_warning_section"
+  >
+    <span>
+       
+      invite
+    </span>
+  </div>,
+]
+`;

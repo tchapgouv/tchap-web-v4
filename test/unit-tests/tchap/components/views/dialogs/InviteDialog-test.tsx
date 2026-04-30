@@ -1,5 +1,5 @@
 import React from "react";
-import { act, logRoles, render, screen, waitFor } from "jest-matrix-react";
+import { act, render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
 import { type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { type Mocked } from "jest-mock";
@@ -51,9 +51,6 @@ const bobProfileInfo: IProfileInfo = {
 };
 
 const externalEmail = "imexternal@test.fr";
-const externalWarning =
-    "You are going to invite people external to the public sector. If you continue, from now on this room will be open to external people on invite.";
-const cantAddExternalWarning = "It is not possible to add external people from the public sector in a public room.";
 
 describe("InviteDialog", () => {
     let mockClient: Mocked<MatrixClient>;
@@ -115,6 +112,8 @@ describe("InviteDialog", () => {
         });
         mockClient.getRooms.mockReturnValue([room]);
         mockClient.getRoom.mockReturnValue(room);
+        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
+        mockClient.lookupThreePid.mockResolvedValue({});
         SdkContextClass.instance.client = mockClient;
     });
 
@@ -122,6 +121,7 @@ describe("InviteDialog", () => {
         Modal.closeCurrentModal();
         SdkContextClass.instance.onLoggedOut();
         SdkContextClass.instance.client = undefined;
+        jest.resetAllMocks();
     });
 
     afterAll(() => {
@@ -129,9 +129,6 @@ describe("InviteDialog", () => {
     });
 
     it("should entered values as lowercase", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
-
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         const input = getSearchField();
@@ -150,9 +147,6 @@ describe("InviteDialog", () => {
     });
 
     it("should add pasted email values as lowercase", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
-
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         // Juste paste some values without enter
@@ -168,9 +162,6 @@ describe("InviteDialog", () => {
     });
 
     it("should not crash if empty values are entered", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
-
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         const input = getSearchField();
@@ -183,9 +174,6 @@ describe("InviteDialog", () => {
     });
 
     it("should not crash if empty values are pasted", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
-
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
         const input = getSearchField();
 
@@ -196,28 +184,15 @@ describe("InviteDialog", () => {
     });
 
     it("should display external warning when a user email is selected in private room", async () => {
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        const { container } = render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         // Paste an external email
         await pasteIntoSearchField(externalEmail);
-
-        waitFor(async () => {
-            expect(screen.getByText(externalWarning)).toBeDefined();
-
-            const externalPillDelete = screen.getByRole("button", { name: "Delete" });
-            act(() => {
-                externalPillDelete.click();
-            });
-            // when clicking on the pill delete, the warning should be removed
-            expect(screen.findByText(externalWarning)).toBeUndefined();
-            await pasteIntoSearchField(externalEmail);
-
-            // click on invite button
-            screen.getByRole("button", { name: "Invite" }).click();
-
-            // Modal should display with ok button
-            // Modal to confirm we are going to invite external people should display
-            expect(screen.getByRole("button", { name: "Ok" })).toBeInTheDocument();
+        await waitFor(() => {
+            expect(container.getElementsByClassName("tc_live_warning_section")).toMatchSnapshot();
         });
     });
 
@@ -226,14 +201,14 @@ describe("InviteDialog", () => {
             return TchapRoomType.External;
         });
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        const { container } = render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
+        console.log("*** container", container);
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
 
         waitFor(async () => {
-            const externalWarningText = await screen.findByText(externalWarning);
-            expect(externalWarningText).toBeUndefined();
+            expect(container.getElementsByClassName("tc_live_warning_section")).toEqual([]);
         });
     });
 
@@ -242,13 +217,13 @@ describe("InviteDialog", () => {
             return TchapRoomType.Forum;
         });
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        const { container } = render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
 
         waitFor(() => {
-            expect(screen.findByText(cantAddExternalWarning)).toBeDefined();
+            expect(container.getElementsByClassName("tc_live_warning_section")).toMatchSnapshot();
         });
     });
 
@@ -257,14 +232,13 @@ describe("InviteDialog", () => {
             return TchapRoomType.Private;
         });
 
-        render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+        const { container } = render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
 
         waitFor(async () => {
-            const cantAddExternalWarningText = await screen.findByText(cantAddExternalWarning);
-            expect(cantAddExternalWarningText).toBeUndefined();
+            expect(container.getElementsByClassName("tc_live_warning_section")).toEqual([]);
         });
     });
 
@@ -279,16 +253,17 @@ describe("InviteDialog", () => {
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
 
-        waitFor(() => {
+        waitFor(async () => {
             // click on invite button
             screen.getByRole("button", { name: "Invite" }).click();
 
             // Modal should display with ok button
             // Modal to confirm we are going to invite external people should display
-            screen.getByRole("button", { name: "Ok" }).click();
-
-            // should revert unrestricted access rules value
-            expect(mockClient.sendStateEvent).toHaveBeenCalled();
+            await act(() => {
+                screen.getByRole("button", { name: "Ok" }).click();
+                // should revert unrestricted access rules value
+                expect(mockClient.sendStateEvent).toHaveBeenCalled();
+            });
         });
     });
 });

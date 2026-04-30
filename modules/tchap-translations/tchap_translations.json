@@ -1087,10 +1087,6 @@
         "en": "Private secure room",
         "fr": "Salon privé sécurisé"
     },
-    "create|private_external_title": {
-        "en": "Private secure room with external guests",
-        "fr": "Salon privé sécurisé avec externes"
-    },
     "create|public_room": { "en": "Public room", "fr": "Salon public" },
     "badge|external_guests": {
         "en": "External guests",
@@ -1103,10 +1099,6 @@
     "create|invitation": {
         "en": "Accessible only by invitation",
         "fr": "Accessible uniquement sur invitation"
-    },
-    "create|invitation_external": {
-        "en": "Accessible only by invitation even for external guests",
-        "fr": "Accessible uniquement sur invitation, y compris aux invité externes"
     },
     "create|invitation_public": {
         "en": "Accessible from the list of rooms",
