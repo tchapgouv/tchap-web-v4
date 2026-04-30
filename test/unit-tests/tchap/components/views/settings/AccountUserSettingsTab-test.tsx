@@ -16,6 +16,7 @@ import {
     mockClientMethodsUser,
     mockPlatformPeg,
 } from "~tchap-web/test/test-utils";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 jest.mock(
     "~tchap-web/src/components/views/settings/ChangePassword",
@@ -83,6 +84,15 @@ describe("<AccountUserSettingsTab />", () => {
 
     describe("common view snapshot", () => {
         it("should render section when account deactivation feature is enabled", () => {
+            const { container } = render(getComponent());
+
+            expect(container).toMatchSnapshot();
+        });
+
+        it("should render red list section feature is enabled", () => {
+            jest.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockImplementation(
+                (featureName: string) => featureName === "feature_red_list",
+            );
             const { container } = render(getComponent());
 
             expect(container).toMatchSnapshot();
