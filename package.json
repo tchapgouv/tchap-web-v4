@@ -127,7 +127,7 @@
         "browserslist": "^4.23.2",
         "classnames": "^2.2.6",
         "commonmark": "^0.31.0",
-        "compound-web-tchap": "5.0.5",
+        "compound-web-tchap": "5.0.6",
         "css-tree": "^3.0.0",
         "diff-dom": "^5.0.0",
         "diff-match-patch": "^1.0.5",

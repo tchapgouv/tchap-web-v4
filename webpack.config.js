@@ -33,7 +33,7 @@ const cssThemes = {
     // "theme-legacy-light": "./res/themes/legacy-light/css/legacy-light.pcss",
     // "theme-legacy-dark": "./res/themes/legacy-dark/css/legacy-dark.pcss",
     // "theme-light": "./res/themes/light/css/light.pcss",
-    "theme-light-high-contrast": "./res/themes/light-high-contrast/css/light-high-contrast.pcss",
+    "theme-light-high-contrast": "./res/themes/tchap-light-high-contrast/css/tchap-light-high-contrast.pcss",
     // "theme-dark": "./res/themes/dark/css/dark.pcss",
     // "theme-light-custom": "./res/themes/light-custom/css/light-custom.pcss",
     // "theme-dark-custom": "./res/themes/dark-custom/css/dark-custom.pcss",
