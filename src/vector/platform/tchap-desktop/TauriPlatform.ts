@@ -25,8 +25,6 @@ import type BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexMa
 
 import Modal from '~tchap-web/src/Modal';
 import Spinner from '~tchap-web/src/components/views/elements/Spinner';
-import ToastStore from '~tchap-web/src/stores/ToastStore';
-import GenericExpiringToast from '~tchap-web/src/components/views/toasts/GenericExpiringToast';
 import { hideToast as hideUpdateToast, showToast as showUpdateToast} from '~tchap-web/src/toasts/UpdateToast';
 import { type CheckUpdatesPayload } from '~tchap-web/src/dispatcher/payloads/CheckUpdatesPayload';
 import { Action } from '~tchap-web/src/dispatcher/actions';
@@ -87,32 +85,8 @@ export default class TauriPlatform extends BasePlatform {
     public onDownloadFinish(): void {
         listen("download-finished", (event) => {
             const path  = event.payload as string;
-
-            const key = `DOWNLOAD_TOAST_${Date.now()}`;
-            
-            const onAccept = (): void => {
-                this.ipc.call("user_download_action", { path });
-                ToastStore.sharedInstance().dismissToast(key);
-            };
-
-            const onDismiss = (): void => {
-                ToastStore.sharedInstance().dismissToast(key);
-            };
-
-            ToastStore.sharedInstance().addOrReplaceToast({
-                key,
-                title: _t("download_completed"),
-                props: {
-                    description: path,
-                    primaryLabel: _t("action|open"),
-                    onPrimaryClick: onAccept,
-                    dismissLabel: _t("action|dismiss"),
-                    onDismiss,
-                    numSeconds: 10,
-                },
-                component: GenericExpiringToast,
-                priority: 99,
-            });
+            // Open the confirmation modal directly from tauri 
+            this.ipc.call("user_download_action", { path });
         });
     }
     public async checkDeepLinkOpen(): Promise<void> {
