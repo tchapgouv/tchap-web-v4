@@ -221,7 +221,8 @@
         ],
         "feature_screenshare_call": ["*"],
         "feature_create_room_non_encrypted": [],
-        "feature_use_ec_in_dm": ["agent.dinum.tchap.gouv.fr"]
+        "feature_use_ec_in_dm": ["agent.dinum.tchap.gouv.fr"],
+        "feature_red_list": []
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
