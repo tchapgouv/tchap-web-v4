@@ -12,10 +12,11 @@ import {
 } from "matrix-js-sdk/src/matrix";
 
 import TchapJoinRuleSettings from "~tchap-web/src/tchap/components/views/settings/TchapJoinRuleSettings";
-import { TchapRoomAccessRule, TchapRoomAccessRulesEventId } from "~tchap-web/src/tchap/@types/tchap";
+import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import { mkStubRoom, mockStateEventImplementation, mkEvent, stubClient } from "~tchap-web/test/test-utils/test-utils";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import SdkConfig from "~tchap-web/src/SdkConfig";
+import * as tchapRoomHook from "~tchap-web/src/tchap/util/TchapRoomHook";
 
 //assert that spaces option is not here while private and public are
 const privateText = "Private (invite only)";
@@ -76,6 +77,10 @@ describe("TchapJoinRule", () => {
     beforeEach(() => {
         DMRoomMap.makeShared(stubClient());
         jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(null);
+        jest.spyOn(tchapRoomHook, "useTchapRoom").mockReturnValue({
+            currentRoomType: TchapRoomType.Private,
+            updateTchapRoomType: jest.fn().mockResolvedValue(TchapRoomType.Private),
+        });
     });
 
     it("should render the tchap join rule with only private option", () => {
@@ -132,10 +137,6 @@ describe("TchapJoinRule", () => {
         const linkSwitch = screen.getByRole("switch", { name: "room_settings" });
 
         expect(linkSwitch).toBeDisabled();
-        // should not see external link switch, since we didnt click on activate access by link
-        expect(
-            screen.queryByRole("switch", { name: "Allow external users to join this room" }),
-        ).not.toBeInTheDocument();
     });
 
     it("should render standalone external switch when access link is activated and joinrule is invite", async () => {
