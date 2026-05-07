@@ -1,7 +1,7 @@
 import React from "react";
 import { act, render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
-import { type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { type Mocked } from "jest-mock";
 
 import InviteDialog from "~tchap-web/src/components/views/dialogs/InviteDialog";
@@ -106,6 +106,10 @@ describe("InviteDialog", () => {
         });
 
         room = new Room(roomId, mockClient, mockClient.getSafeUserId());
+
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
 
         jest.spyOn(DMRoomMap.shared(), "getUniqueRoomsWithIndividuals").mockReturnValue({
             [aliceId]: room,
@@ -224,6 +228,26 @@ describe("InviteDialog", () => {
 
         waitFor(() => {
             expect(container.getElementsByClassName("tc_live_warning_section")).toMatchSnapshot();
+        });
+    });
+
+    it("should invite button be disable when user doesnt have permission to change to external room", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+
+        // No permission to change access_rules
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            false,
+        );
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.getByRole("button", { name: "Invite" })).toBeDisabled();
         });
     });
 

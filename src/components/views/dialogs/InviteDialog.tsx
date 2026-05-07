@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { createRef, type JSX, type ReactNode, type SyntheticEvent } from "react";
-import { EventType, MatrixError, type Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, EventType, MatrixError, type Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { type MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -265,7 +265,6 @@ interface IInviteDialogState {
 
     // :TCHAP:
     shouldDisplayExternalWarning?: boolean;
-    shouldDisplayForumNoExternal?: boolean;
     tchapRoomType?: TchapRoomType;
     // end :TCHAP
 }
@@ -503,7 +502,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     }
 
     private canInviteExternalMembers(): boolean {
-        return this.state.tchapRoomType !== TchapRoomType.Forum;
+        if (this.props.kind === InviteKind.Invite) {
+            const cli = MatrixClientPeg.safeGet();
+            const room = cli.getRoom(this.props.roomId);
+            // user has the right or no to update the external access_rule state event
+            const canUpdateExternalStateEvent = room?.getLiveTimeline()?.getState(EventTimeline.FORWARDS)?.mayClientSendStateEvent(TchapRoomAccessRulesEventId, cli);
+            return this.state.tchapRoomType !== TchapRoomType.Forum && !!canUpdateExternalStateEvent;
+        }
+        return false
     }
 
     /**
@@ -958,14 +964,24 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             });
         }
 
+        // :TCHAP: check if it is an external user
+        const containAnExternal = this.doesTargetsContainsExternal(toAdd);
+        // end :TCHAP:
+
         if (unableToAddMore) {
             this.setState({
                 filterText: unableToAddMore.join(" "),
                 targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                // :TCHAP:
+                shouldDisplayExternalWarning: containAnExternal && this.canInviteExternalMembers()
+                // end :TCHAP:
             });
         } else {
             this.setState({
                 targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                // :TCHAP:
+                shouldDisplayExternalWarning: containAnExternal && this.canInviteExternalMembers()
+                // end :TCHAP:
             });
         }
     };
