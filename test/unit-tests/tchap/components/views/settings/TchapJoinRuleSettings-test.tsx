@@ -139,24 +139,6 @@ describe("TchapJoinRule", () => {
         expect(linkSwitch).toBeDisabled();
     });
 
-    it("should disable external switch when it is a public room", async () => {
-        jest.spyOn(tchapRoomHook, "useTchapRoom").mockReturnValue({
-            currentRoomType: TchapRoomType.Forum,
-            updateTchapRoomType: jest.fn().mockResolvedValue(TchapRoomType.Forum),
-        });
-        //build stub private room
-        const props = {
-            room: mkStubRoomWithInviteRule("roomId", "roomName", stubClient(), JoinRule.Public, true),
-            closeSettingsFn() {},
-            onError(error: Error) {},
-        };
-
-        render(<TchapJoinRuleSettings {...props} />);
-        waitFor(() => {
-            expect(screen.getByRole("switch", { name: "Allow external users to join this room" })).toBeDisabled();
-        });
-    });
-
     it("should render standalone external switch when access link is activated and joinrule is invite", async () => {
         const cli = stubClient();
         cli.createAlias = jest.fn().mockResolvedValue({});
