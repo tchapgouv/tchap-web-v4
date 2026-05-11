@@ -287,7 +287,8 @@ const NewRoomIntro: React.FC = () => {
     const subtitle = (
         <span>
             {" "}
-            {subText} {subButton}{" "}
+            {/* :TCHAP: {subText} {subButton}{" "} */}
+            {subText}
         </span>
     );
 

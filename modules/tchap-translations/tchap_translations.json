@@ -1151,5 +1151,9 @@
     "encryption|verification|reset_all": {
         "en": "Reinitialize all",
         "fr": "Tout réinitialiser"
+    },
+    "room|intro|private_unencrypted_warning": {
+        "en": "This room is unencrypted and only accessible by invitation. Avoid sharing sensitive data.",
+        "fr": "Ce salon non chiffré est accessible uniquement sur invitation. Évitez d’y partager des informations sensibles."
     }
 }
