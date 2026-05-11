@@ -497,7 +497,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
         // If at least one of the selected member is external, we return true
         return members.some(m => {
-            return m instanceof ThreepidMember || Email.looksValid(m.name)
+            console.log("in doesTargetsContainsExternal member", m)
+            // get homeserver
+            const userIdArray = m.userId.split(":");
+            const hs = userIdArray.pop() || "";
+            return m instanceof ThreepidMember
+                || Email.looksValid(m.name)
+                || ["externe.tchap.gouv.fr", "e.tchap.gouv.fr", "ext01.tchap.incubateur.net"].includes(hs);
+
         });
     }
 
@@ -589,7 +596,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         // :TCHAP:
 
         if (this.state.shouldDisplayExternalWarning) {
-            // Before continuing we should alert the user that this is irreversible action 
+            // Before continuing we should alert the user that this is irreversible action
             const { finished } = Modal.createDialog(QuestionDialog, {
                 title: _t("badge|external_guests"),
                 description:
@@ -607,8 +614,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 return;
             };
             cli.sendStateEvent(
-                room.roomId, 
-                TchapRoomAccessRulesEventId, 
+                room.roomId,
+                TchapRoomAccessRulesEventId,
                 { rule: TchapRoomAccessRule.Unrestricted, encrypted: this.tchapAccessRule?.encrypted, visibility: this.tchapAccessRule?.visibility },
                 ""
             );
@@ -632,8 +639,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             // an error occured, we need to go back to original state
             if (this.state.shouldDisplayExternalWarning) {
                 cli.sendStateEvent(
-                room.roomId, 
-                TchapRoomAccessRulesEventId, 
+                room.roomId,
+                TchapRoomAccessRulesEventId,
                 { rule: TchapRoomAccessRule.Restricted, encrypted: this.tchapAccessRule?.encrypted, visibility: this.tchapAccessRule?.visibility },
                 ""
             );
@@ -1003,7 +1010,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
     // :TCHAP:
     private renderWarningExternal(): ReactNode {
-        if (this.state.tchapRoomType !== TchapRoomType.External 
+        if (this.state.tchapRoomType !== TchapRoomType.External
             && this.state.tchapRoomType !== TchapRoomType.PrivateNonEncryptedExternal
             && this.state.shouldDisplayExternalWarning
             // if it is a DM we don't show the warning
@@ -1016,9 +1023,9 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
         return null;
     }
-    
+
     private renderWarningCantInviteExternal(): ReactNode {
-        if (!this.canInviteExternalMembers() 
+        if (!this.canInviteExternalMembers()
             && this.doesTargetsContainsExternal(this.state.targets)
             // if it is a DM we don't show the warning
             && this.props.kind !== InviteKind.Dm
