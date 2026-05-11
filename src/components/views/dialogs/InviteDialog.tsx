@@ -1009,7 +1009,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             // if it is a DM we don't show the warning
             && this.props.kind !== InviteKind.Dm) {
             return (
-                <div className="tc_live_warning_section">
+                <div className="tc_live_warning_section" data-testid="tc_warning">
                     <span> {_t("invite|warning_external")}</span>
                 </div>
             )
@@ -1024,7 +1024,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             && this.props.kind !== InviteKind.Dm
         )
         return (
-            <div className="tc_live_warning_section">
+            <div className="tc_live_warning_section" data-testid="tc_warning">
                 <span> {_t("invite|external_not_allowed")}</span>
             </div>
         )
@@ -1463,13 +1463,16 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             goButtonFn = this.inviteUsers;
         }
 
+        // :TCHAP: dont disable invite button if its external and DM
+        const externalDisableInvite = this.props.kind == InviteKind.Invite && !this.canInviteExternalMembers() && this.doesTargetsContainsExternal(this.state.targets)
+
         const goButton =
             this.props.kind == InviteKind.CallTransfer ? null : (
                 <AccessibleButton
                     kind="primary"
                     onClick={goButtonFn}
                     className="mx_InviteDialog_goButton"
-                    disabled={this.state.busy || !this.hasSelection() || (!this.canInviteExternalMembers() && this.doesTargetsContainsExternal(this.state.targets))}
+                    disabled={this.state.busy || !this.hasSelection() || externalDisableInvite}
                 >
                     {buttonText}
                 </AccessibleButton>
