@@ -578,8 +578,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     private inviteUsers = async (): Promise<void> => {
         if (this.props.kind !== InviteKind.Invite) return;
         this.setState({ busy: true });
-        this.convertFilter();
+
         const targets = this.convertFilter();
+        // :TCHAP: check again, not sure state already propagated properly at this time
+        const containAnExternal = this.doesTargetsContainsExternal(targets);
+        // end :TCHAP:
         const targetIds = targets.map((t) => t.userId);
 
         const cli = MatrixClientPeg.safeGet();
@@ -595,7 +598,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         // :TCHAP:
 
-        if (this.state.shouldDisplayExternalWarning) {
+        if (this.state.shouldDisplayExternalWarning || (containAnExternal && this.canInviteExternalMembers())) {
             // Before continuing we should alert the user that this is irreversible action
             const { finished } = Modal.createDialog(QuestionDialog, {
                 title: _t("badge|external_guests"),
