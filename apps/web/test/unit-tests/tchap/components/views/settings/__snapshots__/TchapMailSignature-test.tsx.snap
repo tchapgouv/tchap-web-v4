@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TchapMailSignature should render correctly snapshot 1`] = `
+<a
+  href="https://tchap.gouv.fr"
+  style="sans-serif;color:#000091; font-weight: bold; text-decoration: none;"
+>
+  Contactez-moi sur Tchap
+</a>
+`;

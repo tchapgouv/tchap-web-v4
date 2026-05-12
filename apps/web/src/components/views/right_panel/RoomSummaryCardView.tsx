@@ -167,12 +167,6 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                 {vm.alias}
             </Text>
 
-<<<<<<< HEAD:src/components/views/right_panel/RoomSummaryCardView.tsx
-            <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
-                {/* :TCHAP: */}
-                <TchapRoomTypeRoomHeader room={room} isDM={vm.isDirectMessage} />
-                {/* {!vm.isDirectMessage && vm.roomJoinRule === JoinRule.Public && (
-=======
             <Flex
                 as="section"
                 justify="center"
@@ -180,8 +174,10 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                 wrap="wrap"
                 className="mx_RoomSummaryCard_badges"
             >
+                {/* :TCHAP: */}
+                <TchapRoomTypeRoomHeader room={room} isDM={vm.isDirectMessage} />
+                {/*
                 {!vm.isDirectMessage && vm.roomJoinRule === JoinRule.Public && (
->>>>>>> v1.12.17:apps/web/src/components/views/right_panel/RoomSummaryCardView.tsx
                     <Badge kind="blue">
                         <PublicIcon width="1rem" height="1rem" color="var(--cpd-color-icon-info-primary)" />
                         {_t("common|public_room")}
@@ -207,13 +203,10 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                         <ErrorSolidIcon width="1rem" height="1rem" />
                         {_t("common|not_trusted")}
                     </Badge>
-<<<<<<< HEAD:src/components/views/right_panel/RoomSummaryCardView.tsx
-                )} */}
-=======
                 )}
-
+                        
+                {/* :TCHAP: */}
                 <HistoryVisibilityBadge historyVisibility={vm.historyVisibility} />
->>>>>>> v1.12.17:apps/web/src/components/views/right_panel/RoomSummaryCardView.tsx
             </Flex>
 
             <RoomTopic room={room} />

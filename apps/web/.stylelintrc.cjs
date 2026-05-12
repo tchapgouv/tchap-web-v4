@@ -61,23 +61,15 @@ module.exports = {
                     { from: "res/css/views/elements/_ToggleSwitch.pcss", type: "css" },
                     { from: "res/css/views/settings/tabs/_SettingsTab.pcss", type: "css" },
                     { from: "res/css/structures/_RoomView.pcss", type: "css" },
-                    // Compound vars
-<<<<<<< HEAD:.stylelintrc.js
-                    "node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-base.css",
-                    "node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-semantic.css",
-                    "node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-base-mq.css",
-                    "node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-semantic-mq.css",
-
                     // :TCHAP:
                     { from: "res/themes/tchap-light/css/_tchap_custom_vars.pcss", type: "css" },
                     { from: "res/themes/tchap-dark/css/_tchap_custom_vars.pcss", type: "css" },
                     // end :TCHAP:
-=======
+                    // Compound vars
                     "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-base.css",
                     "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-semantic.css",
                     "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-base-mq.css",
                     "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-semantic-mq.css",
->>>>>>> v1.12.17:apps/web/.stylelintrc.cjs
                 ],
             },
         ],

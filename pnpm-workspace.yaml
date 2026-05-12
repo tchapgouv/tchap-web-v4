@@ -16,7 +16,8 @@ catalog:
     "@playwright/test": 1.59.1
     "playwright-core": 1.59.1
     # Compound
-    "@vector-im/compound-design-tokens": 10.1.0
+    # "@vector-im/compound-design-tokens": 10.1.0
+    "@vector-im/compound-design-tokens": https://github.com/tchapgouv/compound-design-tokens.git#main
     "@vector-im/compound-web": 9.2.0
     # i18n
     matrix-web-i18n: 3.6.0

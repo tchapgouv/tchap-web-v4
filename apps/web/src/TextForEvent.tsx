@@ -38,12 +38,8 @@ import RightPanelStore from "./stores/right-panel/RightPanelStore";
 import { highlightEvent, isLocationEvent } from "./utils/EventUtils";
 import { getSenderName } from "./utils/event/getSenderName";
 import PosthogTrackers from "./PosthogTrackers.ts";
-<<<<<<< HEAD:src/TextForEvent.tsx
-import { ElementCallMemberEventType } from "./call-types.ts"; // :TCHAP:
-=======
 import { ElementCallEventType } from "./call-types.ts";
 import Spoiler from "./components/views/elements/Spoiler.tsx";
->>>>>>> v1.12.17:apps/web/src/TextForEvent.tsx
 
 function getRoomMemberDisplayname(client: MatrixClient, event: MatrixEvent, userId = event.getSender()): string {
     const roomId = event.getRoomId();
@@ -917,8 +913,8 @@ for (const evType of ALL_RULE_TYPES) {
 
 // Add both stable and unstable m.call events
 // :TCHAP: deprecated-call-event-permissions
-// for (const evType of ElementCallEventType.names) {
-for (const evType of ElementCallMemberEventType.names) {
+// for (const evType of ElementCallMemberEventType.names) {
+for (const evType of ElementCallEventType.names) {
     stateHandlers[evType] = textForCallEvent;
 }
 

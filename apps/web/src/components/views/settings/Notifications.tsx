@@ -706,16 +706,12 @@ export default class Notifications extends React.PureComponent<EmptyObject, ISta
                         </>
                     )}
 
-<<<<<<< HEAD:src/components/views/settings/Notifications.tsx
-                {/* :TCHAP: tchap-features-from-config - show button only if feature is active on homeserver
-                {emailSwitches}
-                */}
-                { TchapUIFeature.isFeatureActiveForHomeserver("feature_email_notification") ? emailSwitches : null}
-                {/* :TCHAP: end */}
-=======
+                    {/* :TCHAP: tchap-features-from-config - show button only if feature is active on homeserver
                     {emailSwitches}
+                    */}
+                    { TchapUIFeature.isFeatureActiveForHomeserver("feature_email_notification") ? emailSwitches : null}
+                    {/* :TCHAP: end */}
                 </Form.Root>
->>>>>>> v1.12.17:apps/web/src/components/views/settings/Notifications.tsx
             </SettingsSubsection>
         );
     }

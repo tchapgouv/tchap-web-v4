@@ -17,13 +17,8 @@
         "types": ["storybook-addon-vis/matcher"],
         "strict": true,
         "paths": {
-<<<<<<< HEAD
-            "jest-matrix-react": ["./src/test/utils/jest-matrix-react"],
-            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"],
+            "@test-utils": ["./src/test/utils/index"],
             "@vector-im/compound-web": ["./node_modules/compound-web-tchap"]
-=======
-            "@test-utils": ["./src/test/utils/index"]
->>>>>>> v1.12.17
         }
     },
     "include": ["./src/**/*.ts", "./src/**/*.tsx", ".storybook/*.ts", ".storybook/*.tsx"],

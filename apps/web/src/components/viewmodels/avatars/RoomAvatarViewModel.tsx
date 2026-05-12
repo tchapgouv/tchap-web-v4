@@ -10,13 +10,9 @@ import { useEffect, useState } from "react";
 
 import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import { useDmMember, usePresence, type Presence } from "../../views/avatars/WithPresenceIndicator";
-<<<<<<< HEAD:src/components/viewmodels/avatars/RoomAvatarViewModel.tsx
-import { DefaultTagID } from "../../../stores/room-list/models";
+import { DefaultTagID } from "../../../stores/room-list-v3/skip-list/tag";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
-=======
-import { DefaultTagID } from "../../../stores/room-list-v3/skip-list/tag";
->>>>>>> v1.12.17:apps/web/src/components/viewmodels/avatars/RoomAvatarViewModel.tsx
 
 export enum AvatarBadgeDecoration {
     LowPriority = "LowPriority",
@@ -46,16 +42,11 @@ export function useRoomAvatarViewModel(room: Room): RoomAvatarViewState {
     const isVideoRoom = room.isElementVideoRoom() || room.isCallRoom();
     const roomMember = useDmMember(room);
     const presence = usePresence(room, roomMember);
-<<<<<<< HEAD:src/components/viewmodels/avatars/RoomAvatarViewModel.tsx
     // :TCHAP:
     // const isPublic = useIsPublic(room);
     const { currentRoomType } = useTchapRoom(room);
     // end :TCHAP:
-    const isLowPriority = !!room.tags[DefaultTagID.LowPriority];
-=======
-    const isPublic = useIsPublic(room);
     const isLowPriority = useTypedEventEmitterState(room, RoomEvent.Tags, () => !!room.tags[DefaultTagID.LowPriority]);
->>>>>>> v1.12.17:apps/web/src/components/viewmodels/avatars/RoomAvatarViewModel.tsx
 
     let badgeDecoration: AvatarBadgeDecoration | undefined;
     if (isLowPriority) {

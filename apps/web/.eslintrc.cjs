@@ -196,12 +196,7 @@ module.exports = {
     },
     overrides: [
         {
-<<<<<<< HEAD:.eslintrc.js
-            // :TCHAP: also lint our cypress files, copied from react-sdk, because react-sdk lints them.
-            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "scripts/tchap/*.ts", "playwright/**/*.ts"],
-=======
-            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "playwright/**/*.ts", "*.ts"],
->>>>>>> v1.12.17:apps/web/.eslintrc.cjs
+            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "playwright/**/*.ts", "*.ts", "scripts/tchap/*.ts"],
             extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
             rules: {
                 "@typescript-eslint/unbound-method": ["error", { ignoreStatic: true }],

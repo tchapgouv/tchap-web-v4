@@ -11,10 +11,6 @@ import React from "react";
 import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
-<<<<<<< HEAD:src/components/views/messages/MVoiceMessageBody.tsx
-=======
-import MAudioBody from "./MAudioBody";
->>>>>>> v1.12.17:apps/web/src/components/views/messages/MVoiceMessageBody.tsx
 import MediaProcessingError from "./shared/MediaProcessingError";
 import { isVoiceMessage } from "../../../utils/EventUtils";
 import { PlaybackQueue } from "../../../audio/PlaybackQueue";

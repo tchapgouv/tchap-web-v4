@@ -10,17 +10,10 @@ import { RestartIcon, DeleteIcon } from "@vector-im/compound-design-tokens/asset
 import { Button, InlineSpinner, Text } from "@vector-im/compound-web";
 
 import styles from "./RoomStatusBarView.module.css";
-<<<<<<< HEAD
-import { useViewModel } from "../../useViewModel";
-import { type ViewModel } from "../../viewmodel";
-import { useI18n } from "../../utils/i18nContext";
-import { _t as _translateAndSubstitute} from "../../utils/i18n";
-import { Banner } from "../../composer/Banner";
-=======
 import { type ViewModel, useViewModel } from "../../core/viewmodel";
 import { useI18n } from "../../core/i18n/i18nContext";
+import { _t as _translateAndSubstitute } from "../../core/i18n/i18n";
 import { Banner } from "../composer/Banner";
->>>>>>> v1.12.17
 export interface RoomStatusBarViewActions {
     /**
      * Called when the user clicks on the 'resend all' button in the 'unsent messages' bar.
@@ -124,6 +117,7 @@ interface RoomStatusBarViewProps {
  * ```tsx
  * <RoomStatusBarView vm={RoomStatusBarViewModel} />
  * ```
+ * ```
  */
 export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX.Element | null {
     const { translate: _t } = useI18n();
@@ -170,10 +164,9 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                 // :TCHAP: <Banner type="critical" role="status" aria-labelledby={bannerTitleId}>
                 <Banner type="info" role="status" aria-labelledby={bannerTitleId}>
                     <div className={styles.container}>
-<<<<<<< HEAD
-                        <Text id={bannerTitleId} weight="semibold">
+                        <Text className={styles.title} id={bannerTitleId} weight="medium">
                             {/* :TCHAP: error-tchap-is-down - _t("room|status_bar|server_connectivity_lost_title") */}
-                            {_translateAndSubstitute("tchap|server_connectivity_lost_title", {}, {
+                            {_translateAndSubstitute("tchap|server_connectivity_lost_title", undefined, {
                                 a: (sub: string) => (
                                     <a
                                         target="_blank"
@@ -185,10 +178,6 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                                 ),
                             })}
                             {/* end :TCHAP: */}
-=======
-                        <Text className={styles.title} id={bannerTitleId} weight="medium">
-                            {_t("room|status_bar|server_connectivity_lost_title")}
->>>>>>> v1.12.17
                         </Text>
                         <Text className={styles.description}>
                             {_t("room|status_bar|server_connectivity_lost_description")}
@@ -323,10 +312,9 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                     aria-labelledby={bannerTitleId}
                 >
                     <div className={styles.container}>
-<<<<<<< HEAD
-                        <Text id={bannerTitleId} weight="semibold">
+                        <Text className={styles.title} id={bannerTitleId} weight="medium">
                             {/* :TCHAP: error-tchap-is-down - {_t("room|status_bar|some_messages_not_sent")} */}
-                            {_translateAndSubstitute("tchap|server_connectivity_lost_title", {
+                            {_translateAndSubstitute("tchap|server_connectivity_lost_title", undefined, {
                                 a: (sub: string) => (
                                     <a
                                         target="_blank"
@@ -338,10 +326,6 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                                 ),
                             })}
                             {/* end :TCHAP: */}
-=======
-                        <Text className={styles.title} id={bannerTitleId} weight="medium">
-                            {_t("room|status_bar|some_messages_not_sent")}
->>>>>>> v1.12.17
                         </Text>
                         <Text className={styles.description}>{_t("room|status_bar|select_messages_to_retry")}</Text>
                     </div>

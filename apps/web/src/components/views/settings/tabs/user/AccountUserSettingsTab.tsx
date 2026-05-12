@@ -183,7 +183,6 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
 
     return (
         <SettingsTab data-testid="mx_AccountUserSettingsTab">
-<<<<<<< HEAD:src/components/views/settings/tabs/user/AccountUserSettingsTab.tsx
             <SettingsSection>
                 <UserProfileSettings
                     externalAccountManagementUrl={externalAccountManagementUrl}
@@ -210,21 +209,6 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
                 }
                 {/* end :TCHAP: */}
             </SettingsSection>
-=======
-            <UserProfileSettings
-                externalAccountManagementUrl={externalAccountManagementUrl}
-                canSetDisplayName={canSetDisplayName}
-                canSetAvatar={canSetAvatar}
-            />
-            {(!isAccountManagedExternally || canMake3pidChanges) && (
-                <UserPersonalInfoSettings canMake3pidChanges={canMake3pidChanges} />
-            )}
-            <AccountSection
-                canChangePassword={canChangePassword}
-                onPasswordChanged={onPasswordChanged}
-                onPasswordChangeError={onPasswordChangeError}
-            />
->>>>>>> v1.12.17:apps/web/src/components/views/settings/tabs/user/AccountUserSettingsTab.tsx
             {accountManagementSection}
         </SettingsTab>
     );

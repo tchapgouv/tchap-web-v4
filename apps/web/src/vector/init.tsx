@@ -25,11 +25,8 @@ import PWAPlatform from "./platform/PWAPlatform";
 import WebPlatform from "./platform/WebPlatform";
 import { initRageshake, initRageshakeStore } from "./rageshakesetup";
 import { ModuleApi } from "../modules/Api.ts";
-<<<<<<< HEAD:src/vector/init.tsx
 import TauriPlatform from "./platform/tchap-desktop/TauriPlatform";
-=======
 import { type URLParams } from "./url_utils.ts";
->>>>>>> v1.12.17:apps/web/src/vector/init.tsx
 
 export const rageshakePromise = initRageshake();
 

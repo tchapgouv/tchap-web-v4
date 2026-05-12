@@ -32,14 +32,11 @@ import AccessibleButton, { type ButtonEvent } from "../../views/elements/Accessi
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
-<<<<<<< HEAD:src/components/structures/auth/Login.tsx
 import TchapUtils from '~tchap-web/src/tchap/util/TchapUtils'; // :TCHAP: login
 import Tchapi18nUtils from '~tchap-web/src/tchap/i18n/Tchapi18nUtils'; // :TCHAP: login
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import ProconnectButton from "~tchap-web/src/tchap/components/views/sso/ProconnectButton";
-=======
 import { ModuleApi } from "../../../modules/Api.ts";
->>>>>>> v1.12.17:apps/web/src/components/structures/auth/Login.tsx
 
 interface IProps {
     serverConfig: ValidatedServerConfig;

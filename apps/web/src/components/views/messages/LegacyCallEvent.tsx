@@ -11,9 +11,6 @@ import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { CallErrorCode, CallState } from "matrix-js-sdk/src/webrtc/call";
 import classNames from "classnames";
 import { Clock } from "@element-hq/web-shared-components";
-<<<<<<< HEAD:src/components/views/messages/LegacyCallEvent.tsx
-import { VolumeOffSolidIcon, VolumeOnSolidIcon, WarningIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
-=======
 import {
     EndCallIcon,
     VideoCallDeclinedSolidIcon,
@@ -24,7 +21,6 @@ import {
     VolumeOffSolidIcon,
     VolumeOnSolidIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
->>>>>>> v1.12.17:apps/web/src/components/views/messages/LegacyCallEvent.tsx
 
 import { _t } from "../../../languageHandler";
 import MemberAvatar from "../avatars/MemberAvatar";

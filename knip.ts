@@ -39,50 +39,9 @@ export default {
                 "process",
                 "util",
                 // Embedded into webapp
-                "@element-hq/element-call-embedded",
+                // :TCHAP: "@element-hq/element-call-embedded",
+                "element-call-embedded-tchap",
 
-<<<<<<< HEAD
-        "packages/**/*",
-    ],
-    ignoreDependencies: [
-        // Required for `action-validator`
-        "@action-validator/*",
-        // Used for git pre-commit hooks
-        "husky",
-        // Used by jest
-        "babel-jest",
-        // Used by babel
-        "@babel/runtime",
-        "@babel/plugin-transform-class-properties",
-        // Referenced in PCSS
-        "github-markdown-css",
-        // False positive
-        "sw.js",
-        // Used by webpack
-        "process",
-        "util",
-        // Embedded into webapp
-        // :TCHAP: "@element-hq/element-call-embedded",
-        "element-call-embedded-tchap",
-        // Transitive dep of jest
-        "@jest/globals",
-        "vitest-environment-jest-fixed-jsdom",
-
-        // Used by matrix-js-sdk, which means we have to include them as a
-        // dependency so that // we can run `tsc` (since we import the typescript
-        // source of js-sdk, rather than the transpiled and annotated JS like you
-        // would with a normal library).
-        "@types/content-type",
-        "@types/sdp-transform",
-
-        // Used in EW but failed because of "link:"
-        "@element-hq/web-shared-components",
-    ],
-    ignoreBinaries: [
-        // Used in scripts & workflows
-        "jq",
-    ],
-=======
                 // Used by matrix-js-sdk, which means we have to include them as a
                 // dependency so that // we can run `tsc` (since we import the typescript
                 // source of js-sdk, rather than the transpiled and annotated JS like you
@@ -104,7 +63,6 @@ export default {
             entry: ["scripts/**", "docs/**"],
         },
     },
->>>>>>> v1.12.17
     ignoreExportsUsedInFile: true,
     compilers: {
         pcss: (text: string) =>

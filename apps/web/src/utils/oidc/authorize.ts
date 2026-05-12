@@ -13,11 +13,8 @@ import { type IdTokenClaims } from "oidc-client-ts";
 
 import { OidcClientError } from "./error";
 import PlatformPeg from "../../PlatformPeg";
-<<<<<<< HEAD:src/utils/oidc/authorize.ts
 import type TauriPlatform from "~tchap-web/src/vector/platform/tchap-desktop/TauriPlatform";
-=======
 import { type URLParams } from "../../vector/url_utils.ts";
->>>>>>> v1.12.17:apps/web/src/utils/oidc/authorize.ts
 
 /**
  * Start OIDC authorization code flow
@@ -55,13 +52,10 @@ export const startOidcLogin = async (
         nonce,
         prompt,
         urlState: PlatformPeg.get()?.getOidcClientState(),
-<<<<<<< HEAD:src/utils/oidc/authorize.ts
         //:tchap:
-        loginHint
+        loginHint,
         //:tchap: end
-=======
         responseMode: delegatedAuthConfig.response_modes_supported?.includes("fragment") ? "fragment" : "query",
->>>>>>> v1.12.17:apps/web/src/utils/oidc/authorize.ts
     });
 
     // :TCHAP: desktop-tauri-browser

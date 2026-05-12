@@ -2334,11 +2334,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     onForgotPasswordClick={showPasswordReset ? this.onForgotPasswordClick : undefined}
                     onServerConfigChange={this.onServerConfigChange}
                     fragmentAfterLogin={fragmentAfterLogin}
-<<<<<<< HEAD:src/components/structures/MatrixChat.tsx
-                    defaultUsername={this.props.startingFragmentQueryParams?.defaultUsername as string | undefined || this.state.tchapEmailHint}
-=======
-                    defaultUsername={this.props.urlParams?.defaults?.defaultUsername}
->>>>>>> v1.12.17:apps/web/src/components/structures/MatrixChat.tsx
+                    defaultUsername={this.props.urlParams?.defaults?.defaultUsername || this.state.tchapEmailHint} // :TCHAP:
                     {...this.getServerProperties()}
                 />
             );

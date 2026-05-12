@@ -15,14 +15,7 @@ import CloseCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/cl
 import ThreadsIcon from "@vector-im/compound-design-tokens/assets/web/icons/threads-solid";
 import RoomInfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info-solid";
 import NotificationsIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications-solid";
-<<<<<<< HEAD:src/components/views/rooms/RoomHeader/RoomHeader.tsx
-import { type Room } from "matrix-js-sdk/src/matrix";
-=======
-import VerifiedIcon from "@vector-im/compound-design-tokens/assets/web/icons/verified";
-import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error-solid";
-import PublicIcon from "@vector-im/compound-design-tokens/assets/web/icons/public";
 import { HistoryVisibility, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
->>>>>>> v1.12.17:apps/web/src/components/views/rooms/RoomHeader/RoomHeader.tsx
 import { type ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 import { Flex, Box } from "@element-hq/web-shared-components";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
@@ -59,8 +52,8 @@ import { useScopedRoomContext } from "../../../../contexts/ScopedRoomContext.tsx
 import { ToggleableIcon } from "./toggle/ToggleableIcon.tsx";
 import { CurrentRightPanelPhaseContextProvider } from "../../../../contexts/CurrentRightPanelPhaseContext.tsx";
 import { LocalRoom } from "../../../../models/LocalRoom.ts";
-<<<<<<< HEAD:src/components/views/rooms/RoomHeader/RoomHeader.tsx
 import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
+import { useIsEncrypted } from "../../../../hooks/useIsEncrypted.ts";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
@@ -69,9 +62,6 @@ import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader.tsx"; // :TCHAP: customize-room-header-bar
 
 
-=======
-import { useIsEncrypted } from "../../../../hooks/useIsEncrypted.ts";
->>>>>>> v1.12.17:apps/web/src/components/views/rooms/RoomHeader/RoomHeader.tsx
 
 function RoomHeaderButtons({
     room,
@@ -614,12 +604,9 @@ export default function RoomHeader({
                                         />
                                     </Tooltip>
                                 )}
-<<<<<<< HEAD:src/components/views/rooms/RoomHeader/RoomHeader.tsx
                                 */}
-=======
 
                                 {isRoomEncrypted && historySharingEnabled && historyVisibilityIcon(historyVisibility)}
->>>>>>> v1.12.17:apps/web/src/components/views/rooms/RoomHeader/RoomHeader.tsx
                             </Text>
                             {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
                             <TchapRoomTypeRoomHeader room={room} isDM={isDirectMessage} />

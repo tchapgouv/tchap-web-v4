@@ -11,12 +11,7 @@ Please see LICENSE files in the repository root for full details.
 import { logger } from "matrix-js-sdk/src/logger";
 import { type QueryDict } from "matrix-js-sdk/src/utils";
 
-<<<<<<< HEAD:src/vector/routing.ts
-import { parseQsFromFragment } from "./url_utils";
-import TchapUIFeature from "../tchap/util/TchapUIFeature";
-=======
 import { parseQsFromFragment, searchParamsToQueryDict } from "./url_utils";
->>>>>>> v1.12.17:apps/web/src/vector/routing.ts
 
 let lastLocationHashSet: string | null = null;
 

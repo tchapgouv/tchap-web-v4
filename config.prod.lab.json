@@ -150,7 +150,7 @@
         "UIFeature.urlPreviews": false,
         "UIFeature.widgets": true,
         "UIFeature.shareQrCode": false,
-        "UIFeature.thirdPartyId": true,
+        "UIFeature.thirdPartyId": false,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
         "UIFeature.locationSharing": true,

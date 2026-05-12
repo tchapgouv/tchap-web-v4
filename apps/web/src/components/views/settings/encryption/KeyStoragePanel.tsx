@@ -87,16 +87,12 @@ export const KeyStoragePanel: React.FC<Props> = ({ onKeyStorageDisableClick }) =
             subHeading={_t("settings|encryption|key_storage|description", undefined, {
                 // :TCHAP:
                 // a: (sub) => (
-                //     <a href={SdkConfig.get("help_encryption_url")} target="_blank" rel="noreferrer noopener">
+                // <Link href={SdkConfig.get("help_key_storage_url")} target="_blank">
                 //         {sub}
-                //     </a>
+                //     </Link>
                 // ),
                 a: (sub) => (
-<<<<<<< HEAD:src/components/views/settings/encryption/KeyStoragePanel.tsx
-                    <a href={TchapUrls.helpSecureStorage} target="_blank" rel="noreferrer noopener">
-=======
-                    <Link href={SdkConfig.get("help_key_storage_url")} target="_blank">
->>>>>>> v1.12.17:apps/web/src/components/views/settings/encryption/KeyStoragePanel.tsx
+                    <Link href={TchapUrls.helpSecureStorage} target="_blank">
                         {sub}
                     </Link>
                 ),

@@ -26,23 +26,16 @@ export default defineConfig({
             // make sure to externalize deps that shouldn't be bundled
             // into your library
             external: [
-<<<<<<< HEAD:packages/shared-components/vite.config.js
-                "react",
-                "react-dom",
-                "@vector-im/compound-design-tokens",
-                "@vector-im/compound-web",
-                "compound-web-tchap", // :TCHAP:
-=======
                 "@vector-im/compound-design-tokens",
                 "@vector-im/compound-web",
                 "react-virtuoso",
                 "react-resizable-panels",
+                "compound-web-tchap", // :TCHAP:
             ],
             plugins: [
                 esmExternalRequirePlugin({
                     external: ["react", "react-dom"],
                 }),
->>>>>>> v1.12.17:packages/shared-components/vite.config.ts
             ],
             output: {
                 // Provide global variables to use in the UMD build
@@ -57,17 +50,13 @@ export default defineConfig({
             },
         },
     },
-<<<<<<< HEAD:packages/shared-components/vite.config.js
+    // :TCHAP:
     resolve: {
         alias: {
-            // Alias used by i18n.tsx
-            "$webapp": resolve(__dirname, "..", "..", "webapp"),
-            // :TCHAP:
             "@vector-im/compound-web": resolve(__dirname, "node_modules/compound-web-tchap"),
         },
     },
-=======
->>>>>>> v1.12.17:packages/shared-components/vite.config.ts
+    // end :TCHAP:
     plugins: [
         dts({
             rollupTypes: true,

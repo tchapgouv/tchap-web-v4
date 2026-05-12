@@ -393,15 +393,8 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     {secureBackup}
                     {eventIndex}
                 </SettingsSection>
-<<<<<<< HEAD:src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
                 end :TCHAP: */}
-                <SettingsSection heading={_t("common|privacy")}>
-                    {/* <DiscoverySettings /> :TCHAP: metrics-call we remove the discovery settings that appear when posthog is enabled */}
-                    {posthogSection}
-                </SettingsSection>
-=======
                 {privacySection}
->>>>>>> v1.12.17:apps/web/src/components/views/settings/tabs/user/SecurityUserSettingsTab.tsx
                 {advancedSection}
             </SettingsTab>
         );

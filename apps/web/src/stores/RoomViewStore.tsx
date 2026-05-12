@@ -594,11 +594,8 @@ export class RoomViewStore extends EventEmitter {
         }
     }
 
-<<<<<<< HEAD:src/stores/RoomViewStore.tsx
-    public showJoinRoomError(err: MatrixError, roomId: string): void {
-        let description: ReactNode = err.message ? err.message : JSON.stringify(err);
-        logger.log("Failed to join room:", description);
-
+    public showJoinRoomError(err: unknown, roomId: string | null): void {
+        let description: ReactNode = err instanceof Error && err.message ? err.message : JSON.stringify(err);
         /* :TCHAP: add-translations-for-server-errors - add this for a translation */
         if (typeof description === 'string' && description.includes('You are not invited to this room')) {
             description = _t("Access possible only by invitation of a member of the room.");
@@ -606,20 +603,15 @@ export class RoomViewStore extends EventEmitter {
         /* end :TCHAP: */
         // :TCHAP: externals-error-messages
         const cli = MatrixClientPeg.safeGet();
-        if (ExternalAccountHandler.isUserExternal(cli)) {
+        if (ExternalAccountHandler.isUserExternal(cli) && roomId) {
             ExternalAccountHandler.joinRoomError(cli.getRoom(roomId)!);
             return;
         }
         // end :TCHAP: 
 
-        if (err.name === "ConnectionError") {
-=======
-    public showJoinRoomError(err: unknown, roomId: string | null): void {
-        let description: ReactNode = err instanceof Error && err.message ? err.message : JSON.stringify(err);
         if (err instanceof MatrixError === false) {
             // This isn't a MatrixError so just show the error verbatim.
         } else if (err.name === "ConnectionError") {
->>>>>>> v1.12.17:apps/web/src/stores/RoomViewStore.tsx
             description = _t("room|error_join_connection");
         } else if (err.errcode === "M_INCOMPATIBLE_ROOM_VERSION") {
             description = (

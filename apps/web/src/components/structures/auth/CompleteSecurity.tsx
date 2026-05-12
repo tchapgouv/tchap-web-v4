@@ -7,12 +7,8 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React from "react";
-<<<<<<< HEAD:src/components/structures/auth/CompleteSecurity.tsx
-import { Glass  } from "@vector-im/compound-web";
-=======
 import { Glass } from "@vector-im/compound-web";
 import { CloseIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
->>>>>>> v1.12.17:apps/web/src/components/structures/auth/CompleteSecurity.tsx
 
 import { _t } from "../../../languageHandler";
 import { Phase, SetupEncryptionStore } from "../../../stores/SetupEncryptionStore";

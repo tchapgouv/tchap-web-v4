@@ -1,8 +1,10 @@
 {
     "name": "element-web",
-    "version": "1.12.17",
+    "productName": "Tchap",
+    "version": "4.19.7",
+    "version-element-web": "1.12.9",
     "description": "Element: the future of secure communication",
-    "author": "New Vector Ltd.",
+    "author": "DINUM",
     "repository": {
         "type": "git",
         "url": "https://github.com/element-hq/element-web"
@@ -14,6 +16,7 @@
     ],
     "scripts": {
         "i18n": "matrix-gen-i18n src res && pnpm i18n:sort && pnpm i18n:lint",
+        "i18n-tchap": "./scripts/tchap/translations/check-translations.sh",
         "i18n:sort": "matrix-sort-i18n src/i18n/strings/en_EN.json",
         "i18n:lint": "matrix-i18n-lint && prettier --log-level=silent --write src/i18n/strings/ --ignore-path /dev/null",
         "i18n:diff": "cp src/i18n/strings/en_EN.json src/i18n/strings/en_EN_orig.json && pnpm i18n && matrix-compare-i18n-files src/i18n/strings/en_EN_orig.json src/i18n/strings/en_EN.json",
@@ -23,18 +26,25 @@
         "vendor:modernizr": "modernizr -c .modernizr.json -d src/vector/modernizr.js && mv src/vector/modernizr.js src/vector/modernizr.cjs",
         "vendor:jitsi": "curl -s https://meet.element.io/libs/external_api.min.js > ./res/jitsi_external_api.min.js",
         "dist": "./scripts/package.sh",
+        "scalingo-postbuild": "scripts/tchap/package-tchap.sh",
         "start": "nx start",
         "lint": "pnpm lint:types && pnpm lint:js && pnpm lint:style",
+        "lint:js:tchap": "eslint --max-warnings 100 test/unit-tests/tchap module_system && prettier --check .",
         "lint:js": "eslint --max-warnings 0 src test playwright module_system",
         "lint:js-fix": "eslint --fix src test playwright module_system",
         "lint:types": "nx lint:types",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "nx test:unit",
+        "test:tchap": "nx test:unit unit-tests/tchap/",
         "test:playwright": "nx test:playwright --",
         "test:playwright:open": "nx test:playwright -- --ui",
         "test:playwright:screenshots": "nx test:playwright:screenshots --",
         "coverage": "pnpm test --coverage",
-        "analyse:webpack-bundles": "webpack-bundle-analyzer webpack-stats.json webapp"
+        "analyse:webpack-bundles": "webpack-bundle-analyzer webpack-stats.json webapp",
+        "patch-package": "patch-package",
+        "patches-reapply": "cd ./yarn-linked-dependencies/matrix-js-sdk; git checkout .; cd ../..; ./scripts/tchap/apply_patches.sh",
+        "patch-make": "node scripts/tchap/makePatch.ts",
+        "postinstall": "./scripts/tchap/postinstall.sh"
     },
     "dependencies": {
         "@babel/runtime": "^7.12.5",
@@ -49,7 +59,7 @@
         "@sentry/browser": "^10.0.0",
         "@types/png-chunks-extract": "^1.0.2",
         "@vector-im/compound-design-tokens": "catalog:",
-        "@vector-im/compound-web": "catalog:",
+        "compound-web-tchap": "5.0.6",
         "@vector-im/matrix-wysiwyg": "2.40.0",
         "@zxcvbn-ts/core": "^3.0.4",
         "@zxcvbn-ts/language-common": "^3.0.4",

@@ -24,13 +24,7 @@ import { RecoveryPanelOutOfSync } from "../../encryption/RecoveryPanelOutOfSync"
 import { useTypedEventEmitterState } from "../../../../../hooks/useEventEmitter";
 import { KeyStoragePanel } from "../../encryption/KeyStoragePanel";
 import { DeleteKeyStoragePanel } from "../../encryption/DeleteKeyStoragePanel";
-<<<<<<< HEAD:src/components/views/settings/tabs/user/EncryptionUserSettingsTab.tsx
-import { SettingsSubsection } from "../../shared/SettingsSubsection";
-import EventIndexPanel from "../../EventIndexPanel";
-import DeviceListener, { DeviceListenerEvents, type DeviceState } from "../../../../../DeviceListener";
-=======
 import { DeviceListener, CurrentDeviceEvents, type DeviceState } from "../../../../../device-listener";
->>>>>>> v1.12.17:apps/web/src/components/views/settings/tabs/user/EncryptionUserSettingsTab.tsx
 import { useKeyStoragePanelViewModel } from "../../../../viewmodels/settings/encryption/KeyStoragePanelViewModel";
 
 /**

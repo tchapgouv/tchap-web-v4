@@ -15,11 +15,8 @@ import { AudioPlayerView, useCreateAutoDisposedViewModel } from "@element-hq/web
 import { type Playback } from "../../../audio/Playback";
 import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
-<<<<<<< HEAD:src/components/views/messages/MAudioBody.tsx
 import MFileBody from "~tchap-web/src/tchap/components/views/messages/OriginalFileBody"; // :TCHAP: content-scanner
 // import MFileBody from "./MFileBody";// :TCHAP: content-scanner
-=======
->>>>>>> v1.12.17:apps/web/src/components/views/messages/MAudioBody.tsx
 import { type IBodyProps } from "./IBodyProps";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";

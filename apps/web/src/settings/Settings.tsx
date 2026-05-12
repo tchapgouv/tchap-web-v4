@@ -374,15 +374,11 @@ export interface Settings {
     "inviteRules": IBaseSetting<ComputedInviteConfig>;
     "blockInvites": IBaseSetting<boolean>;
     "Developer.elementCallUrl": IBaseSetting<string>;
-<<<<<<< HEAD:src/settings/Settings.tsx
-    "acknowledgedHistoryVisibility": IBaseSetting<boolean>;
     // :TCHAP:
     "Tauri.autoLaunch": IBaseSetting<"enabled" | "disabled">;
-
-=======
+    // end :TCHAP:
     "RoomList.CustomSectionData": IBaseSetting<CustomSectionsData>;
     "RoomList.OrderedCustomSections": IBaseSetting<OrderedCustomSections>;
->>>>>>> v1.12.17:apps/web/src/settings/Settings.tsx
 }
 
 export type SettingKey = keyof Settings;
@@ -1514,11 +1510,6 @@ export const SETTINGS: Settings = {
         displayName: _td("devtools|settings|elementCallUrl"),
         default: "",
     },
-<<<<<<< HEAD:src/settings/Settings.tsx
-    "acknowledgedHistoryVisibility": {
-        supportedLevels: [SettingLevel.ROOM_ACCOUNT],
-        default: false,
-    },
     // :TCHAP: desktop settings
     "Tauri.autoLaunch": {
         supportedLevels: [SettingLevel.PLATFORM],
@@ -1529,6 +1520,4 @@ export const SETTINGS: Settings = {
         ],
         default: "disabled",
     },
-=======
->>>>>>> v1.12.17:apps/web/src/settings/Settings.tsx
 };

@@ -19,12 +19,7 @@ src/modules.js
 /playwright/test-results/
 /playwright/html-report/
 
-<<<<<<< HEAD:.eslintignore
-# :TCHAP:
-/packages/shared-components/dist
-=======
 # Shared components generated files
 /packages/shared-components/dist/
 /packages/shared-components/src/i18n/i18nKeys.d.ts
 /packages/shared-components/typedoc/
->>>>>>> v1.12.17:apps/web/.eslintignore
