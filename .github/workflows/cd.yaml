@@ -1,0 +1,75 @@
+name: CD # Continuous Delivery
+on:
+    push:
+        branches: [master, staging, develop]
+        paths:
+            - "**/Dockerfile"
+            - "**/dockerbuild"
+            - "**/docker"
+            - "**/docker-*"
+            - "pnpm-lock.yaml"
+
+concurrency: ${{ github.workflow }}-${{ github.ref_name }}
+
+permissions: {}
+env:
+    NX_DEFAULT_OUTPUT_STYLE: stream-without-prefixes
+
+jobs:
+    docker:
+        name: Docker Bake
+        runs-on: ubuntu-24.04
+        permissions:
+            id-token: write # needed for signing the images with GitHub OIDC Token
+            packages: write # needed for publishing packages to GHCR
+            # Needed for nx-set-shas
+            contents: read
+            actions: read
+        steps:
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+              with:
+                  persist-credentials: false
+
+            - name: Install Cosign
+              uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
+
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4
+
+            - name: Set up Docker Buildx
+              id: builder
+              uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
+
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+              with:
+                  node-version-file: package.json
+                  cache: "pnpm"
+
+            - name: Install Deps
+              run: "pnpm install --frozen-lockfile"
+
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - run: pnpm nx run-many --nxBail -t docker:build
+              id: build
+              env:
+                  INPUT_PUSH: true
+                  INPUT_LOAD: false
+                  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  INPUT_BUILDER: ${{ steps.builder.outputs.name }}
+
+            - name: Sign the images with GitHub OIDC token
+              run: |
+                  shopt -s globstar
+
+                  for FILE in ./node_modules/.cache/nx-container/**/metadata; do
+                      TARGET=$(jq -r '(.["image.name"] | split(",") | last) + "@" + .["containerimage.digest"]' "$FILE")
+                      echo "Signing $TARGET..."
+                      cosign sign --yes "$TARGET"
+                  done

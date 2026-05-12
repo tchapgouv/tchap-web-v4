@@ -3,25 +3,18 @@
 /dist
 /key.pem
 /lib
-/node_modules
-/webapp
+node_modules
 /.npmrc
 /*.log
 package-lock.json
 .DS_Store
-electron/dist
-electron/pub
 **/.idea
-/config.json
-/config.json.*
-/config.local*.json
-# Legacy skinning file that some people might still have
-/src/component-index.js
-/.tmp
 /webpack-stats.json
+/.tmp
 .vscode
 .vscode/
 .env
+<<<<<<< HEAD
 /coverage
 # yarn links dependencies (generated with /scripts/layered...sh)
 /matrix-react-sdk
@@ -37,6 +30,10 @@ electron/pub
 /src/modules.ts
 #/build_config.yaml # :TCHAP: writes this by hand.
 /book
+=======
+.env.*
+coverage
+>>>>>>> v1.12.17
 /index.html
 
 /cypress/videos
@@ -51,6 +48,7 @@ electron/pub
 modules/tchap-translations/tmp/*
 # version file and tarball created by `npm pack` / `yarn pack`
 /git-revision.txt
+jest-sonar.xml
 
 *storybook.log
 storybook-static
@@ -59,3 +57,18 @@ storybook-static
 # :TCHAP: scalingo has difficulties building SC, so we include the dist folder
 # /packages/shared-components/dist
 /packages/shared-components/src/i18nKeys.d.ts
+/packages/shared-components/.vitest-attachments
+
+# TSC incremental compilation information
+*.tsbuildinfo
+
+/.link-config
+
+.nx/cache
+.nx/workspace-data
+
+.pnpm-store
+
+# vitepress
+/docs/.vitepress/dist
+/docs/.vitepress/cache

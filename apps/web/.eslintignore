@@ -1,0 +1,30 @@
+src/vector/modernizr.cjs
+test/end-to-end-tests/node_modules/
+test/end-to-end-tests/element/
+test/end-to-end-tests/synapse/
+test/end-to-end-tests/lib/
+# Legacy skinning file that some people might still have
+src/component-index.js
+# Auto-generated file
+src/modules.ts
+
+# remove those files from eslint
+test/.eslintrc.js
+test/setupTests.js
+patches/patches.json
+patches_legacy/patches.json
+src/tchap
+src/modules.js
+# Test result files
+/playwright/test-results/
+/playwright/html-report/
+
+<<<<<<< HEAD:.eslintignore
+# :TCHAP:
+/packages/shared-components/dist
+=======
+# Shared components generated files
+/packages/shared-components/dist/
+/packages/shared-components/src/i18n/i18nKeys.d.ts
+/packages/shared-components/typedoc/
+>>>>>>> v1.12.17:apps/web/.eslintignore

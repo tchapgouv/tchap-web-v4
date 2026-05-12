@@ -1,0 +1,52 @@
+{
+    "compilerOptions": {
+        "allowImportingTsExtensions": true,
+        "experimentalDecorators": false,
+        "emitDecoratorMetadata": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "useDefineForClassFields": true,
+<<<<<<< HEAD:tsconfig.json
+        "module": "es2022",
+=======
+        "module": "preserve",
+>>>>>>> v1.12.17:apps/web/tsconfig.json
+        "moduleResolution": "bundler",
+        "target": "es2022",
+        "noUnusedLocals": true,
+        "sourceMap": false,
+        "outDir": "./lib",
+        "declaration": true,
+        "jsx": "react",
+        "lib": ["es2022", "es2024.promise", "dom", "dom.iterable"],
+        "strict": true,
+<<<<<<< HEAD:tsconfig.json
+        /* :TCHAP: */
+=======
+        "types": ["node"],
+>>>>>>> v1.12.17:apps/web/tsconfig.json
+        "paths": {
+            "~tchap-web/*": ["./*"],
+            "jest-matrix-react": ["./test/test-utils/jest-matrix-react"],
+<<<<<<< HEAD:tsconfig.json
+            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"],
+            "@vector-im/compound-web": ["./node_modules/compound-web-tchap"]
+        },
+        "types": ["node", "jest", "@testing-library/jest-dom"]
+        /* end :TCHAP: */
+=======
+            "rollup/parseAst": ["../../node_modules/rollup/dist/parseAst"]
+        }
+>>>>>>> v1.12.17:apps/web/tsconfig.json
+    },
+    "include": [
+        "../../node_modules/matrix-js-sdk/src/@types/*.d.ts",
+        "./src/**/*.ts",
+        "./src/**/*.tsx",
+        "./test/**/*.ts",
+        "./test/**/*.tsx",
+        "./scripts/*.ts",
+        "./@types/*.d.ts",
+        "./webpack.config.ts"
+    ]
+}

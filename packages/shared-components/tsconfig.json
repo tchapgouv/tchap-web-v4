@@ -11,16 +11,21 @@
         "target": "es2022",
         "noUnusedLocals": true,
         "sourceMap": false,
-        "outDir": "./lib",
         "declaration": true,
         "jsx": "react",
         "lib": ["es2022", "es2024.promise", "dom", "dom.iterable"],
+        "types": ["storybook-addon-vis/matcher"],
         "strict": true,
         "paths": {
+<<<<<<< HEAD
             "jest-matrix-react": ["./src/test/utils/jest-matrix-react"],
             "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"],
             "@vector-im/compound-web": ["./node_modules/compound-web-tchap"]
+=======
+            "@test-utils": ["./src/test/utils/index"]
+>>>>>>> v1.12.17
         }
     },
-    "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+    "include": ["./src/**/*.ts", "./src/**/*.tsx", ".storybook/*.ts", ".storybook/*.tsx"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }
