@@ -1087,10 +1087,6 @@
         "en": "Private secure room",
         "fr": "Salon privé sécurisé"
     },
-    "create|private_external_title": {
-        "en": "Private secure room with external guests",
-        "fr": "Salon privé sécurisé avec externes"
-    },
     "create|public_room": { "en": "Public room", "fr": "Salon public" },
     "badge|external_guests": {
         "en": "External guests",
@@ -1103,10 +1099,6 @@
     "create|invitation": {
         "en": "Accessible only by invitation",
         "fr": "Accessible uniquement sur invitation"
-    },
-    "create|invitation_external": {
-        "en": "Accessible only by invitation even for external guests",
-        "fr": "Accessible uniquement sur invitation, y compris aux invité externes"
     },
     "create|invitation_public": {
         "en": "Accessible from the list of rooms",
@@ -1151,6 +1143,22 @@
     "encryption|verification|reset_all": {
         "en": "Reinitialize all",
         "fr": "Tout réinitialiser"
+    },
+    "invite|warning_external": {
+        "en": "You are going to invite people external to the public sector. If you continue, from now on this room will be open to external people on invite.",
+        "fr": "Vous allez inviter des personnes externes au secteur public. Si vous continuez, ce salon sera désormais ouvert aux invités externes par invitation."
+    },
+    "invite|external_not_allowed": {
+        "en": "You do not have permission to add external people from the public sector in this room.",
+        "fr": "Vous n'avez pas la permission d'inviter des personnes externes aux secteur publique dans ce salon."
+    },
+    "invite|irreversible": {
+        "en": "This modification is final and not reversible.",
+        "fr": "Cette modification est définitive et irréversible."
+    },
+    "invite|accessible_to_external": {
+        "en": "By inviting an external partner, this room will become accessible to external guests.",
+        "fr": "En invitant un partenaire externe, ce salon deviendra accessible aux utilisateurs externes."
     },
     "room|intro|private_unencrypted_warning": {
         "en": "This room is unencrypted and only accessible by invitation. Avoid sharing sensitive data.",

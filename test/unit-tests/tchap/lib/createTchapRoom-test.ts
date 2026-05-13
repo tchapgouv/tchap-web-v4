@@ -93,35 +93,6 @@ describe("Create room options", () => {
         );
     });
 
-    it("builds option for external room", () => {
-        const externalRoomExpectedOpts = {
-            createOpts: {
-                name: "testName",
-                creation_content: {
-                    "m.federate": true,
-                },
-                initial_state: [
-                    {
-                        content: {
-                            rule: "unrestricted",
-                        },
-                        state_key: "",
-                        type: "im.vector.room.access_rules",
-                    },
-                ],
-                visibility: "private",
-                preset: "private_chat",
-            },
-            guestAccess: false,
-            joinRule: "invite",
-            encryption: true,
-            historyVisibility: "invited",
-        };
-        expect(TchapCreateRoom.roomCreateOptions("testName", TchapRoomType.External)).toStrictEqual(
-            externalRoomExpectedOpts,
-        );
-    });
-
     it("builds option for private non encrypted room", () => {
         const pncRoomExpectedOpts = {
             createOpts: {

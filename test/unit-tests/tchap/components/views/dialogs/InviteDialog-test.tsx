@@ -1,7 +1,7 @@
 import React from "react";
-import { render, screen } from "jest-matrix-react";
+import { cleanup, render, screen, waitFor } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
-import { type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { type Mocked } from "jest-mock";
 
 import InviteDialog from "~tchap-web/src/components/views/dialogs/InviteDialog";
@@ -14,6 +14,8 @@ import { SdkContextClass } from "~tchap-web/src/contexts/SDKContext";
 import { type IProfileInfo } from "~tchap-web/src/hooks/useProfileInfo";
 import Modal from "~tchap-web/src/Modal";
 import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
+import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
+import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -46,6 +48,8 @@ const bobProfileInfo: IProfileInfo = {
     user_id: bobId,
     display_name: "Bob",
 };
+
+const externalEmail = "imexternal@test.fr";
 
 describe("InviteDialog", () => {
     let mockClient: Mocked<MatrixClient>;
@@ -96,7 +100,6 @@ describe("InviteDialog", () => {
         });
         SdkConfig.put({ validated_server_config: {} as ValidatedServerConfig } as IConfigOptions);
         DMRoomMap.makeShared(mockClient);
-        jest.clearAllMocks();
 
         room = new Room(roomId, mockClient, mockClient.getSafeUserId());
 
@@ -105,23 +108,27 @@ describe("InviteDialog", () => {
         });
         mockClient.getRooms.mockReturnValue([room]);
         mockClient.getRoom.mockReturnValue(room);
-
+        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
+        mockClient.lookupThreePid.mockResolvedValue({});
         SdkContextClass.instance.client = mockClient;
     });
 
     afterEach(() => {
         Modal.closeCurrentModal();
+        cleanup();
         SdkContextClass.instance.onLoggedOut();
         SdkContextClass.instance.client = undefined;
-    });
-
-    afterAll(() => {
-        jest.restoreAllMocks();
+        jest.resetAllMocks();
     });
 
     it("should entered values as lowercase", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
 
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
@@ -141,9 +148,12 @@ describe("InviteDialog", () => {
     });
 
     it("should add pasted email values as lowercase", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
-
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
         // Juste paste some values without enter
@@ -159,8 +169,12 @@ describe("InviteDialog", () => {
     });
 
     it("should not crash if empty values are entered", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
 
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
@@ -174,8 +188,12 @@ describe("InviteDialog", () => {
     });
 
     it("should not crash if empty values are pasted", async () => {
-        mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
-        mockClient.lookupThreePid.mockResolvedValue({});
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
 
         render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
         const input = getSearchField();
@@ -184,5 +202,94 @@ describe("InviteDialog", () => {
         await pasteIntoSearchField("");
 
         expect(input).toHaveValue("");
+    });
+
+    it("should display external warning when a user email is selected in private room", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Paste an external email
+        await pasteIntoSearchField(externalEmail);
+        await waitFor(() => {
+            expect(screen.getByTestId("tc_warning")).toMatchSnapshot();
+        });
+    });
+
+    it("should not display external warning when room is already open to external users", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.External;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.getByTestId("tc_warning")).toBeUndefined();
+        });
+    });
+
+    it("should warn when room is public so not possible to add external", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Forum;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.getByTestId("tc_warning")).toMatchSnapshot();
+        });
+    });
+
+    it("should invite button be disable when user doesnt have permission to change to external room", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+
+        // No permission to change access_rules
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            false,
+        );
+
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.getByRole("button", { name: "Invite" })).toBeDisabled();
+        });
+    });
+
+    it("should not show any warning if the invitedialog type is DM", async () => {
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
+
+        render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+
+        // Juste paste some values without enter
+        await pasteIntoSearchField(externalEmail);
+
+        waitFor(() => {
+            expect(screen.getByTestId("tc_warning")).toBeUndefined();
+        });
     });
 });

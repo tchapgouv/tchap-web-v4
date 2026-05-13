@@ -29,7 +29,10 @@ export const useTchapRoom = (room: Room | undefined ) => {
             }
             console.log("*** in event emitter tchap room hook updating room", room.roomId);
             const result = await TchapStore.instance.getRoomType(room);
-            setCurrentType(result);
+            // if nothing change, dont need to update
+            if (result != currentRoomType) {
+                setCurrentType(result);
+            }
             
             return result;
         } catch (err) {

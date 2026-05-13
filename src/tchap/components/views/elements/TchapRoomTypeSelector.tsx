@@ -49,13 +49,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         const privateClasses = classNames("tc_TchapRoomTypeSelector_RadioButton", "tc_TchapRoomTypeSelector_private", {
             tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value == TchapRoomType.Private,
         });
-        const externalClasses = classNames(
-            "tc_TchapRoomTypeSelector_RadioButton",
-            "tc_TchapRoomTypeSelector_external",
-            {
-                tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value == TchapRoomType.External,
-            },
-        );
+
         const forumClasses = classNames("tc_TchapRoomTypeSelector_RadioButton", "tc_TchapRoomTypeSelector_forum", {
             tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value === TchapRoomType.Forum,
         });
@@ -101,25 +95,6 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         <ul>
                             <li>{_t("create|encrypted")} </li>
                             <li>{_t("create|invitation")} </li>
-                            <li>{_t("create|max_members")} </li>
-                        </ul>
-                    </StyledRadioButton>
-                </label>
-                <label className={externalClasses}>
-                    <StyledRadioButton
-                        name="roomType"
-                        value={TchapRoomType.External}
-                        checked={this.props.value == TchapRoomType.External}
-                        onChange={this.onRoomTypeChange}
-                    >
-                        <div className="tc_TchapRoomTypeSelector_RadioButton_title">
-                            <LockSolidIcon width="30px"  color="var(--external-color)"/>
-                            {_t("create|private_external_title")}
-                        </div>
-                            {/* {this.props.createRoomInSpace ? _t("Private discussions accessible to all users of this space and to external guests by invitation of an administrator.") : _t("Accessible to all users and to external guests by invitation of an administrator.")} */}
-                        <ul>
-                            <li>{_t("create|encrypted")} </li>
-                            <li>{_t("create|invitation_external")} </li>
                             <li>{_t("create|max_members")} </li>
                         </ul>
                     </StyledRadioButton>
