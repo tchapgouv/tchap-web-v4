@@ -37,12 +37,13 @@ import { doesRoomVersionSupport, PreferredRoomVersions } from "~tchap-web/src/ut
 import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
 
 import TchapUIFeature from "../../../util/TchapUIFeature";
-import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId } from "../../../@types/tchap";
+import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId, TchapRoomType } from "../../../@types/tchap";
 import TchapRoomLinkAccess from "../rooms/TchapRoomLinkAccess";
 import TchapRoomUtils from "../../../util/TchapRoomUtils";
 import { RoomJoinRulesEventContent } from "matrix-js-sdk/src/types";
 import { RoomSettingsTab } from "~tchap-web/src/components/views/dialogs/RoomSettingsDialog";
 import { Form, SettingsToggleInput } from "@vector-im/compound-web";
+import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
 
 interface JoinRuleSettingsProps {
     room: Room;
@@ -78,7 +79,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         !roomSupportsRestricted && promptUpgrade ? PreferredRoomVersions.RestrictedRooms : undefined;
 
     const disabled = !room.currentState.mayClientSendStateEvent(EventType.RoomJoinRules, cli);
-
+    
     const [content, setContent] = useLocalEcho<RoomJoinRulesEventContent | undefined, RoomJoinRulesEventContent>(
         () => room.currentState.getStateEvents(EventType.RoomJoinRules, "")?.getContent(),
         (content) => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
@@ -90,6 +91,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
             ? content?.allow?.filter((o) => o.type === RestrictedAllowType.RoomMembership).map((o) => o.room_id)
             : undefined;
 
+    const { currentRoomType } = useTchapRoom(room);
     const [contentTchapAccessRule, setTchapAccessRule] = useLocalEcho<TchapIAccessRuleEventContent>(
         () => room.currentState.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent(),
         (content) => cli.sendStateEvent(room.roomId, TchapRoomAccessRulesEventId, content, ""),
@@ -177,6 +179,9 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
     };
 
     const openedToExternalUsers = accessRule === TchapRoomAccessRule.Unrestricted;
+    // should not authorize external user in forum
+    const disableOpenToExternalUsers = openedToExternalUsers || currentRoomType === TchapRoomType.Forum;
+
     const onExternalAccessChange = async () => {
         const { finished } = Modal.createDialog(QuestionDialog, {
             title: _t("Allow external users to join this room"),
@@ -206,7 +211,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
                 label={_t("Allow external users to join this room")}
                 onChange={onExternalAccessChange}
                 checked={openedToExternalUsers}
-                disabled={disabled || openedToExternalUsers}
+                disabled={disableOpenToExternalUsers}
                 helpMessage={_t("room_settings|security|link_sharing_caption")}
             />
         </Form.Root>

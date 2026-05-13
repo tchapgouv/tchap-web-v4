@@ -252,5 +252,9 @@
     "flag-setting-change-ecnrypted-rooms": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1537",
         "files": "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
+    },
+    "remove-mxid-onpill": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1560",
+        "files": ["src/autocomplete/UserProvider.tsx"]
     }
 }

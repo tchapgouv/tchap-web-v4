@@ -29,6 +29,7 @@ import { useMatrixClientContext } from "../../../../../contexts/MatrixClientCont
 import TchapRedListSettings from "~tchap-web/src/tchap/components/views/settings/tabs/user/TchapRedListSettings"; // :TCHAP: red-list-settings
 import TchapMailSignature from "~tchap-web/src/tchap/components/views/settings/tabs/user/TchapMailSignature";
 import { makeUserPermalink } from "~tchap-web/src/utils/permalinks/Permalinks"; // :TCHAP: mail-signature
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -202,7 +203,10 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
                 <TchapMailSignature userPermalink={makeUserPermalink(cli.getUserId() ?? "")} />
                 {/* end :TCHAP: */}
                 {/* :TCHAP: red-list-settings */}
-                <TchapRedListSettings />
+                {TchapUIFeature.isFeatureActiveForHomeserver("feature_red_list") ? 
+                    <TchapRedListSettings />
+                    : null
+                }
                 {/* end :TCHAP: */}
             </SettingsSection>
             {accountManagementSection}

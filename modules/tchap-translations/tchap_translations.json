@@ -1159,5 +1159,9 @@
     "invite|accessible_to_external": {
         "en": "By inviting an external partner, this room will become accessible to external guests.",
         "fr": "En invitant un partenaire externe, ce salon deviendra accessible aux utilisateurs externes."
+    },
+    "room|intro|private_unencrypted_warning": {
+        "en": "This room is unencrypted and only accessible by invitation. Avoid sharing sensitive data.",
+        "fr": "Ce salon non chiffré est accessible uniquement sur invitation. Évitez d’y partager des informations sensibles."
     }
 }
