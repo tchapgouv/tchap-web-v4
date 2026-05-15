@@ -13,6 +13,7 @@ export default {
     //thumbnailParams: "?width=800&height=600&method=scale", not used
     //lookupUrl: "/_matrix/client/unstable/account/3pid/lookup", this endpoint is deleted from the mainlining
     accountValidityResendEmailUrl: "/_matrix/client/unstable/account_validity/send_mail",
+    profileUrl: "/_matrix/client/v3/profile/",
     passwordRulesUrl: "/_matrix/client/r0/password_policy",
     //expiredInfoUrl: "/_matrix/client/r0/user/", not used
 };

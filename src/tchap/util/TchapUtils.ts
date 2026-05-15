@@ -7,7 +7,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import TchapApi from "./TchapApi";
 import { ClientConfig } from "matrix-js-sdk/src/autodiscovery";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 /**
  * Tchap utils.
@@ -195,22 +194,70 @@ export default class TchapUtils {
     }
 
     /**
+     * Credentials captured at account-expiry time, scoped strictly to the two
+     * account_validity endpoints (renew-email + expiry re-check). They are kept
+     * here so the renewal flow keeps working *after* the authenticated Matrix
+     * client and its in-memory (decrypted) store have been fully torn down by
+     * stopMatrixClient(true) on expiry. See ExpiredAccountHandler.
+     */
+    private static expiredAccountCredentials: {
+        homeserverUrl: string;
+        accessToken: string;
+        userId: string;
+    } | null = null;
+
+    /**
+     * Store (or clear, by passing null) the minimal credentials needed by the
+     * account_validity endpoints once the Matrix client has been torn down.
+     */
+    static setExpiredAccountCredentials(
+        creds: { homeserverUrl: string; accessToken: string; userId: string } | null,
+    ): void {
+        this.expiredAccountCredentials = creds;
+    }
+
+    /**
+     * Resolve the credentials for the account_validity endpoints: prefer the
+     * ones captured at expiry time; otherwise fall back to a still-live client
+     * (e.g. when called outside the expiry flow).
+     */
+    private static getAccountValidityCredentials(): {
+        homeserverUrl: string;
+        accessToken: string;
+        userId: string;
+    } | null {
+        if (this.expiredAccountCredentials) {
+            return this.expiredAccountCredentials;
+        }
+        const client = MatrixClientPeg.get();
+        if (client) {
+            return {
+                homeserverUrl: client.getHomeserverUrl(),
+                accessToken: client.getAccessToken() ?? "",
+                userId: client.getUserId() ?? "",
+            };
+        }
+        return null;
+    }
+
+    /**
      * Request a new validity email for a user account (expired or not).
      * @returns true if the mail was sent succesfully, false otherwise
      */
     static async requestNewExpiredAccountEmail(): Promise<boolean> {
         logger.debug(":tchap: Requesting an email to renew to account");
 
-        // safeGet will throw if client is not initialised. We don't handle it because we don't know when this would happen.
-        const client = MatrixClientPeg.safeGet();
+        const creds = this.getAccountValidityCredentials();
+        if (!creds?.accessToken) {
+            logger.error(":tchap: no credentials available to request a renewal email");
+            return false;
+        }
 
-        const homeserverUrl = client.getHomeserverUrl();
-        const accessToken = client.getAccessToken();
-        const url = `${homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
+        const url = `${creds.homeserverUrl}${TchapApi.accountValidityResendEmailUrl}`;
         const options = {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${creds.accessToken}`,
             },
         };
 
@@ -226,26 +273,32 @@ export default class TchapUtils {
     }
 
     /**
-     * Verify if the currently logged in account is expired.
-     * It executes an API call (to getProfileInfo) and checks whether the call throws a ORG_MATRIX_EXPIRED_ACCOUNT
+     * Verify if the account is expired.
+     * Performs a raw authenticated profile request (no Matrix client / in-memory
+     * store required) and checks for the ORG_MATRIX_EXPIRED_ACCOUNT errcode, so
+     * this still works after the client has been torn down on expiry.
      * @returns true if account is expired, false otherwise
      */
     static async isAccountExpired(): Promise<boolean> {
-        const client = MatrixClientPeg.safeGet();
-        const matrixId: string | null = client.credentials.userId;
-        if (!matrixId) {
+        const creds = this.getAccountValidityCredentials();
+        if (!creds?.userId || !creds.accessToken) {
             // user is not logged in. Or something went wrong.
             return false;
         }
         try {
-            await client.getProfileInfo(matrixId!);
-        } catch (error) {
-            const err = error as MatrixError;
-            if (err.errcode === "ORG_MATRIX_EXPIRED_ACCOUNT") {
-                return true;
+            const response = await fetch(
+                `${creds.homeserverUrl}${TchapApi.profileUrl}${encodeURIComponent(creds.userId)}`,
+                { method: "GET", headers: { Authorization: `Bearer ${creds.accessToken}` } },
+            );
+            if (response.ok) {
+                return false;
             }
+            const body = (await response.json().catch(() => ({}))) as { errcode?: string };
+            return body?.errcode === "ORG_MATRIX_EXPIRED_ACCOUNT";
+        } catch (error) {
+            logger.error(":tchap: isAccountExpired check failed", error);
+            return false;
         }
-        return false;
     }
 
     /**

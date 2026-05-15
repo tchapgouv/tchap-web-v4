@@ -54,9 +54,25 @@ class ExpiredAccountHandler {
         if (this.isPanelOpen) {
             return;
         }
-        //shutdown all matrix react services, but without unsetting the client
-        stopMatrixClient(false);
-        logger.debug(":tchap: matrix react services have been shutdown");
+
+        // Capture the minimal credentials needed by the account_validity
+        // endpoints (renew-email + expiry re-check) *before* tearing the client
+        // down, so the renewal flow keeps working without a live Matrix client.
+        const cli = MatrixClientPeg.get();
+        if (cli) {
+            TchapUtils.setExpiredAccountCredentials({
+                homeserverUrl: cli.getHomeserverUrl(),
+                accessToken: cli.getAccessToken() ?? "",
+                userId: cli.getUserId() ?? "",
+            });
+        }
+
+        // Fully shut down AND unset the Matrix client (unsetClient=true). This
+        // destroys the in-memory (decrypted) room/crypto store and removes the
+        // client peg, so an expired account can no longer read already-synced
+        // content or reuse the still-authenticated client.
+        stopMatrixClient(true);
+        logger.debug(":tchap: matrix client has been stopped and unset");
 
         //should we sent the email directly? Normally they should have received already an email 7 days earlier
         this.showExpirationPanel();
