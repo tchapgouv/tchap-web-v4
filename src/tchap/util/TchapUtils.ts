@@ -67,6 +67,28 @@ export default class TchapUtils {
     };
 
     /**
+     * Returns the MXID domain(s) of the "external" homeserver(s) declared in the
+     * runtime config (the homeserver_list entries whose server_name contains
+     * "Externes"). The domain is derived from base_url (stripping the scheme and
+     * the leading "matrix." label) so it stays correct across environments
+     * (prod / preprod / dev) instead of relying on a hardcoded list that can
+     * drift from the deployed config.
+     * @returns {string[]} The external homeserver domains, e.g. ["agent.externe.tchap.gouv.fr"].
+     */
+    static getExternalHomeServerDomains = (): string[] => {
+        const homeServerList = SdkConfig.get()["homeserver_list"] ?? [];
+        return homeServerList
+            .filter((hs) => typeof hs?.server_name === "string" && hs.server_name.includes("Externes"))
+            .map((hs) =>
+                String(hs?.base_url ?? "")
+                    .replace(/^https?:\/\//, "")
+                    .replace(/^matrix\./, "")
+                    .replace(/\/+$/, ""),
+            )
+            .filter(Boolean);
+    };
+
+    /**
      * Find the homeserver corresponding to the given email.
      * @param email Note : if email is invalid, this function still works and returns the externs server. (todo : fix)
      * @returns

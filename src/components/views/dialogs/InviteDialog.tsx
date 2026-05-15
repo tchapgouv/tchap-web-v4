@@ -67,6 +67,7 @@ import { type UserProfilesStore } from "../../../stores/UserProfilesStore";
 import InviteProgressBody from "./InviteProgressBody.tsx";
 
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
+import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils.ts";
 import { type TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore.ts";
@@ -496,15 +497,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             return false;
         }
         // If at least one of the selected member is external, we return true
+        const externalHomeServerDomains = TchapUtils.getExternalHomeServerDomains();
         return members.some(m => {
-            console.log("in doesTargetsContainsExternal member", m)
             // get homeserver
             const userIdArray = m.userId.split(":");
             const hs = userIdArray.pop() || "";
             return m instanceof ThreepidMember
                 || Email.looksValid(m.name)
-                || ["externe.tchap.gouv.fr", "e.tchap.gouv.fr", "ext01.tchap.incubateur.net"].includes(hs);
-
+                || externalHomeServerDomains.includes(hs);
         });
     }
 
