@@ -21,11 +21,11 @@ describe("Provides utils method to get room type and state", () => {
         jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
         jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
         const resultRestricted = await TchapRoomUtils.getTchapRoomTypeInternal(
-            { rule: TchapRoomAccessRule.Restricted, encrypted: undefined },
+            { rule: TchapRoomAccessRule.Restricted},
             room,
         );
         const resultUnRestricted = await TchapRoomUtils.getTchapRoomTypeInternal(
-            { rule: TchapRoomAccessRule.Unrestricted, encrypted: undefined },
+            { rule: TchapRoomAccessRule.Unrestricted},
             room,
         );
         expect(resultRestricted).toStrictEqual(TchapRoomType.Private);
@@ -39,7 +39,7 @@ describe("Provides utils method to get room type and state", () => {
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
             {
                 rule: TchapRoomAccessRule.Unrestricted,
-                encrypted: false,
+                force_unencrypted_at_creation: true,
                 visibility: TchapRoomAccessRuleVisibility.Private,
             },
             room,
@@ -54,7 +54,7 @@ describe("Provides utils method to get room type and state", () => {
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
             {
                 rule: TchapRoomAccessRule.Restricted,
-                encrypted: false,
+                force_unencrypted_at_creation: true,
                 visibility: TchapRoomAccessRuleVisibility.Private,
             },
             room,
@@ -66,7 +66,7 @@ describe("Provides utils method to get room type and state", () => {
         jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Public });
         jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
-            { rule: TchapRoomAccessRule.Restricted, encrypted: undefined },
+            { rule: TchapRoomAccessRule.Restricted},
             room,
         );
         expect(result).toStrictEqual(TchapRoomType.Forum);
@@ -76,7 +76,7 @@ describe("Provides utils method to get room type and state", () => {
         jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
         jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
-            { rule: TchapRoomAccessRule.Unrestricted, encrypted: undefined },
+            { rule: TchapRoomAccessRule.Unrestricted},
             room,
         );
         expect(result).toStrictEqual(TchapRoomType.External);

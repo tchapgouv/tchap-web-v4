@@ -23,8 +23,8 @@ export default class TchapRoomUtils {
         const isEncrypted: boolean = await this.isRoomEncrypted(room.roomId);
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
-            // Should be explicitly encrypted to false, private room does not have this value if the backend is not compatible or the data not well updated
-            if (tchapRoomAccessRule?.encrypted == false && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
+            // Should be explicitly force_unencrypted_at_creation to true, private room does not have this value if the backend is not compatible or the data not well updated
+            if (tchapRoomAccessRule?.force_unencrypted_at_creation == true && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
                 if (tchapRoomAccessRule?.rule == TchapRoomAccessRule.Unrestricted) {
                     return TchapRoomType.PrivateNonEncryptedExternal;
                 }

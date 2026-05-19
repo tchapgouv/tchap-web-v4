@@ -104,7 +104,7 @@ describe("Create room options", () => {
                     {
                         content: {
                             rule: "restricted",
-                            encrypted: false,
+                            force_unencrypted_at_creation: true,
                         },
                         state_key: "",
                         type: "im.vector.room.access_rules",
