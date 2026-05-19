@@ -56,15 +56,16 @@ src/
 /apps/web/playwright/logs/
 /apps/web/playwright/snapshots/
 
-/apps/desktop/.hak/
-/apps/desktop/dist/
-/apps/desktop/build/
-/apps/desktop/dockerbuild/
-/apps/desktop/deploys/
-/apps/desktop/lib/
-/apps/desktop/webapp
-/apps/desktop/playwright/html-report
-/apps/desktop/playwright/test-results
+# :TCHAP:
+# /apps/desktop/.hak/
+# /apps/desktop/dist/
+# /apps/desktop/build/
+# /apps/desktop/dockerbuild/
+# /apps/desktop/deploys/
+# /apps/desktop/lib/
+# /apps/desktop/webapp
+# /apps/desktop/playwright/html-report
+# /apps/desktop/playwright/test-results
 
 # Shared components generated files
 /packages/shared-components/dist/

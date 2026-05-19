@@ -35,7 +35,7 @@
         "lint:types": "nx lint:types",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "nx test:unit",
-        "test:tchap": "nx test:unit unit-tests/tchap/",
+        "test:tchap": "nx test:unit:tchap",
         "test:playwright": "nx test:playwright --",
         "test:playwright:open": "nx test:playwright -- --ui",
         "test:playwright:screenshots": "nx test:playwright:screenshots --",
@@ -246,6 +246,14 @@
         "webpack-retry-chunk-load-plugin": "^3.1.1",
         "webpack-version-file-plugin": "^0.5.0",
         "yaml": "^2.3.3"
+    },
+    "devDependencies-comments": {
+        "tchap-added": {
+            "@tauri-apps/api": "^2.2.0",
+            "@tauri-apps/plugin-stronghold": "^2.2.0",
+            "@tauri-apps/plugin-process": "^2.2.0",
+            "@tauri-apps/plugin-updater": "^2.6.0"
+        }
     },
     "@casualbot/jest-sonar-reporter": {
         "outputDirectory": "coverage",

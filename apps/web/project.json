@@ -54,6 +54,15 @@
             },
             "dependsOn": ["^build"]
         },
+        "test:unit:tchap": {
+            "executor": "@nx/jest:jest",
+            "options": {
+                "jestConfig": "{projectRoot}/jest.config.ts",
+                "testPathPattern": "tests/unit-tests/tchap",
+                "cwd": "apps/web"
+            },
+            "dependsOn": ["^build"]
+        },
         "test:playwright": {
             "command": "playwright test",
             "options": { "cwd": "apps/web" },
