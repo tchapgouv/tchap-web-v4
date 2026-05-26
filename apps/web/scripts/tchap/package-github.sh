@@ -20,8 +20,8 @@ else
   echo "No config specified, using config.json."
 fi
 
-yarn install
-yarn build:github
+pnpm install
+pnpm build:github
 
 mkdir -p dist
 cp -r webapp tchap-$version

@@ -14,7 +14,7 @@ crawl () {
     # Then it writes key:value in OUTPUT_FILE.
     export INPUT_FILE=$1 # var read by matrix-gen-i18n, don't rename
     export OUTPUT_FILE=$2 # var read by matrix-gen-i18n, don't rename
-    yarn matrix-gen-i18n src res;
+    pnpm matrix-gen-i18n src res;
     retVal=$?
     if [ $retVal -ne 0 ]; then
         echo "gen-i18n failed. Aborting."

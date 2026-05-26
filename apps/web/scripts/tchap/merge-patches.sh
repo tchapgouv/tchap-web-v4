@@ -3,7 +3,7 @@
 set -e
 # it is better to run this script with docker image
 # docker run -ti -v "$(pwd):/home/node" node:16 /bin/bash
-# yarn install must be executed to have yarn patch-package working
+# pnpm install must be executed to have pnpm patch-package working
 
 # usage
 
@@ -30,7 +30,7 @@ function merge_patches() {
   function merge_one_patch() {
       local PATCH_PATH=$1
       local PATCH_DIR=$(basename "$(dirname "$PATCH_PATH")")
-      local PATCH_FILE=$(basename $PATCH_PATH)    
+      local PATCH_FILE=$(basename $PATCH_PATH)
       local PACKAGE_NAME=$(echo "$PATCH_FILE" | cut -d'+' -f1)
       local PACKAGE_VERSION=$(python -c "import json; f = open('$PACKAGE_JSON'); data = json.load(f); f.close(); print(data['dependencies'].get('$PACKAGE_NAME', 'null'))")
       echo "# Manage $PATCH_PATH"
@@ -58,8 +58,8 @@ function merge_patches() {
       # Install the package in the package subfolder
       cd "$PACKAGE_TEMP_DIR"
       echo '{ }' > package.json
-      yarn add "$PACKAGE_NAME@$PACKAGE_VERSION" >> $LOG_FILE 2>&1
-      yarn add patch-package <> $LOG_FILE 2>&1
+      pnpm add "$PACKAGE_NAME@$PACKAGE_VERSION" >> $LOG_FILE 2>&1
+      pnpm add patch-package <> $LOG_FILE 2>&1
 
       # Apply the patch with --merge option
       patch -p1 --no-backup-if-mismatch --input="$PATCH_PATH" --forward --merge 2>&1 >> $LOG_FILE || true
@@ -78,7 +78,7 @@ function merge_patches() {
         # If there are no conflicts, generate a new patch file
         # TODO : would it be nicer if we don't generate a new patch, but keep the old one to avoid unnecessary patches commit
         # EDIT : in github PR, the files appear as renamed without modifications
-        yarn patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
+        pnpm patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
 
         # Move the new patch file to the old patch file's location
         mv patches/*.patch "$(dirname $PATCH_PATH)"
@@ -138,7 +138,7 @@ function continue_patches() {
     else
       # If there are no conflicts, generate a new patch file
       cd "$PACKAGE_TEMP_DIR"
-      yarn patch-package "$PACKAGE_NAME" 2>&1 >> $LOG_FILE || true
+      pnpm patch-package "$PACKAGE_NAME" 2>&1 >> $LOG_FILE || true
 
       # Move the new patch file to the old patch file's location; edit copy instead
       cp patches/*.patch "$PATCH_DIR"
@@ -198,4 +198,3 @@ else
   echo "Invalid command. Usage: $0 {merge|continue|clean}"
   exit 1
 fi
-

@@ -19,13 +19,13 @@ fi
 # Check if the branch already exists and delete it if it does
 if git branch --list | grep -q "bump-to-${VERSION}"; then
     echo "Branch bump-to-${VERSION} already exists."
-    
+
     # Check if we are currently on this branch
     if git branch --show-current | grep -q "bump-to-${VERSION}"; then
         echo "Currently on this branch. Switching to develop_tchap first..."
         git checkout develop_tchap
     fi
-    
+
     echo "Deleting branch bump-to-${VERSION}..."
     git branch -D "bump-to-${VERSION}"
 fi
@@ -44,7 +44,7 @@ git checkout -b bump-to-${VERSION} develop_tchap
 npm version ${VERSION} --no-commit-hooks --no-git-tag-version
 
 # Generate the yarn.lock
-yarn install
+pnpm install
 
 
 # Commit only the package.json and yarn.lock changes

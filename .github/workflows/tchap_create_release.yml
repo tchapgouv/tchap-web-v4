@@ -21,19 +21,25 @@ jobs:
               with:
                   node-version: ${{ steps.node_version.outputs.node_version }}
             - name: Install Dependencies
-              run: "yarn install"
+              run: "pnpm install"
+
             - name: Get Tchap Web Version
+              working-directory: apps/web
               id: version
               run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
+
             - name: Build the archive ${{ steps.version.outputs.version }} for dev
+              working-directory: apps/web
               run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: dev
             - name: Build the archive ${{ steps.version.outputs.version }} for preprod
+              working-directory: apps/web
               run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: preprod
             - name: Build the archive ${{ steps.version.outputs.version }} for prod
+              working-directory: apps/web
               run: scripts/tchap/package-tchap.sh
               env:
                   CONFIG: prod

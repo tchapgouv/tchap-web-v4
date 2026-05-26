@@ -5,4 +5,4 @@ set -x
 ./scripts/tchap/apply_patches.sh
 
 # Apply element patches from patches folder
-yarn patch-package
+pnpm patch-package

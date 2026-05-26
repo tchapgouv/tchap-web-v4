@@ -13,4 +13,4 @@ export CRAWLED=`realpath modules/tchap-translations/tmp/crawled.json`
 # Diff the two.
 echo "Comparing:"
 echo "diff $REFERENCE_TRANSLATIONS $CRAWLED"
-yarn matrix-compare-i18n-files $REFERENCE_TRANSLATIONS $CRAWLED
+pnpm matrix-compare-i18n-files $REFERENCE_TRANSLATIONS $CRAWLED

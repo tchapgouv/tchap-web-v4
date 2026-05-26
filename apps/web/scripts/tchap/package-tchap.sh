@@ -19,19 +19,19 @@ else
   echo "No config specified, using config.json."
 fi
 
-# yarn clean
+# pnpm clean
 
 echo "===== Installing shared components"
 pushd packages/shared-components
 ls -l
-yarn install --pure-lockfile
+pnpm install
 
 # echo "preparing ..."
-# yarn prepare
+# pnpm prepare
 
 popd
 echo "===== Building app"
-yarn build
+pnpm build
 
 mkdir -p dist
 cp -r webapp tchap-$version

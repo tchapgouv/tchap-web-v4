@@ -10,7 +10,7 @@
 
 ## The translation-checking script
 
-Call it with `yarn i18n-tchap`. See `scripts/tchap/translations/check-translations.sh` for code.
+Call it with `pnpm i18n-tchap`. See `scripts/tchap/translations/check-translations.sh` for code.
 
 Based on element's translation-checking tools, but with the added complication that our code for both react-sdk and web is in the web repo (our react-sdk code is in the shape of patches and customisations).
 

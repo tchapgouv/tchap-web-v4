@@ -8,12 +8,12 @@ set -e
 version=$(npm pkg get version | sed 's/"//g')
 #version=$(grep '"version"' package.json | cut -d '"' -f 4 | head -n 1)
 
-yarn clean
+pnpm clean
 
 # build shared components
-yarn --cwd packages/shared-components build
+pnpm --cwd packages/shared-components build
 
-VERSION=$version yarn build
+VERSION=$version pnpm build
 
 # FIXME use a dedicated config
 cp config.sample.json webapp/config.json
