@@ -19,7 +19,7 @@
         "lint:workflows": "find .github/workflows -type f \\( -iname '*.yaml' -o -iname '*.yml' \\) -print -exec action-validator {} ';'",
         "lint:knip": "knip",
         "install:git-hooks": "husky",
-        "postinstall": "node scripts/pnpm-link.ts && pnpm run -r sane-postinstall",
+        "postinstall": "node scripts/pnpm-link.ts",
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs",
         "docs:preview": "vitepress preview docs"
@@ -65,8 +65,7 @@
             "jsdom": "patches/jsdom.patch",
             "rollup": "patches/rollup.patch",
             "postcss-mixins": "patches/postcss-mixins.patch",
-            "knip": "patches/knip.patch",
-            "plist": "patches/plist.patch"
+            "knip": "patches/knip.patch"
         },
         "peerDependencyRules": {
             "allowedVersions": {

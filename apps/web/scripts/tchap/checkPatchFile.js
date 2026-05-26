@@ -1,4 +1,4 @@
-const fs = require("fs");
+import * as fs from "fs";
 
 function checkForDuplicateFiles(patchFile) {
     console.log("Checking patch file for files that are patched twice...");

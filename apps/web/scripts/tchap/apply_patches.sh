@@ -7,6 +7,6 @@ node scripts/tchap/checkPatchFile.js
 
 for d in patches_tchap/*/ ; do
     echo "Patching $d..."
-    yarn patch-package --patch-dir "$d" --error-on-fail
+    pnpm patch-package --patch-dir "$d" --error-on-fail
     echo "...$d done."
 done

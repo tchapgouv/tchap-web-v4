@@ -1,4 +1,4 @@
-const patchFile = require("../../patches_tchap/patches.json");
+import * as patchFile from "../../patches_tchap/patches.json";
 
 if (process.argv.length !== 3) {
     console.log("\nMissing patch name.");
