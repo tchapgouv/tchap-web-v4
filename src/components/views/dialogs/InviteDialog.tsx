@@ -619,7 +619,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             cli.sendStateEvent(
                 room.roomId,
                 TchapRoomAccessRulesEventId,
-                { rule: TchapRoomAccessRule.Unrestricted, visibility: this.tchapAccessRule?.visibility },
+                { 
+                rule: TchapRoomAccessRule.Unrestricted, 
+                visibility: this.tchapAccessRule?.visibility,
+                force_unencrypted_at_creation: this.tchapAccessRule?.force_unencrypted_at_creation
+                },
                 ""
             );
         }
