@@ -83,3 +83,28 @@ To get the version of Conflicted.tsx corresponding to the branch you just checke
 ```
 pnpm patches-reapply
 ```
+
+
+## Doing manually with pnpm
+```bash
+# 1. Find which patch to update (look at package name in the .patch filename)
+# Example: matrix-js-sdk+40.1.0.patch → package is "matrix-js-sdk"
+
+# 2. Create an editable copy with the new package version
+pnpm patch matrix-js-sdk@VERSION
+
+# 3. Reapply your changes from old patch to the editable copy
+cd PROJECT_ROOT/node_modules/.pnpm_patches
+patch -p 3 -i PATH_TO_OLD_PATCH
+
+# 6. Commit the updated patch (in .pnpm_patches)
+pnpm patch-commit /path/to/editable/copy
+
+# 7. A new patch file is generated at .pnpm/patches/
+#    Move it to the correct folder in patches_tchap/
+mv .pnpm/patches/matrix-js-sdk+*.patch \
+   apps/web/patches_tchap/activate-expired-account-panel/
+
+# 8
+
+```

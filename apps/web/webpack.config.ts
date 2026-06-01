@@ -255,7 +255,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 "$webapp": path.resolve(__dirname, "webapp"),
 
                 // :TCHAP:
-                "~tchap-web": getPackageRoot(__dirname, "."),
+                "~tchap-web": path.resolve(__dirname, "./apps/web"),
                 // Hack in order to include the fonts declare in tchap compound-design-tokens
                 "./Marianne-Thin.woff2": getPackageRoot(
                     __dirname,

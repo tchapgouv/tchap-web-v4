@@ -40,11 +40,7 @@
         "test:playwright:open": "nx test:playwright -- --ui",
         "test:playwright:screenshots": "nx test:playwright:screenshots --",
         "coverage": "pnpm test --coverage",
-        "analyse:webpack-bundles": "webpack-bundle-analyzer webpack-stats.json webapp",
-        "patch-package": "patch-package",
-        "patches-reapply": "cd ./yarn-linked-dependencies/matrix-js-sdk; git checkout .; cd ../..; ./scripts/tchap/apply_patches.sh",
-        "patch-make": "node scripts/tchap/makePatch.ts",
-        "postinstall": "./scripts/tchap/postinstall.sh"
+        "analyse:webpack-bundles": "webpack-bundle-analyzer webpack-stats.json webapp"
     },
     "dependencies": {
         "@babel/runtime": "^7.12.5",
@@ -53,13 +49,19 @@
         "@fontsource/fira-code": "^5",
         "@fontsource/inter": "catalog:",
         "@formatjs/intl-segmenter": "^12.0.0",
+        "@gouvfr-lasuite/integration": "^1.0.3",
         "@matrix-org/analytics-events": "^0.33.0",
         "@matrix-org/emojibase-bindings": "^1.5.0",
         "@matrix-org/react-sdk-module-api": "^2.4.0",
         "@sentry/browser": "^10.0.0",
+        "@tauri-apps/api": "^2.11.0",
+        "@tauri-apps/plugin-deep-link": "^2.4.9",
+        "@tauri-apps/plugin-notification": "^2.3.3",
+        "@tauri-apps/plugin-opener": "^2.5.4",
+        "@tauri-apps/plugin-process": "^2.3.1",
+        "@tauri-apps/plugin-updater": "^2.10.1",
         "@types/png-chunks-extract": "^1.0.2",
         "@vector-im/compound-design-tokens": "catalog:",
-        "compound-web-tchap": "5.0.6",
         "@vector-im/matrix-wysiwyg": "2.40.0",
         "@zxcvbn-ts/core": "^3.0.4",
         "@zxcvbn-ts/language-common": "^3.0.4",
@@ -70,6 +72,7 @@
         "browserslist": "^4.23.2",
         "classnames": "^2.2.6",
         "commonmark": "^0.31.0",
+        "compound-web-tchap": "5.0.6",
         "css-tree": "^3.0.0",
         "diff-dom": "^5.0.0",
         "diff-match-patch": "^1.0.5",
@@ -262,6 +265,9 @@
     },
     "engines": {
         "node": ">=22.18"
+    },
+    "optionalDependencies": {
+        "tchap-translations": "file:./modules/tchap-translations"
     },
     "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
     "private": true

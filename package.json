@@ -19,10 +19,13 @@
         "lint:workflows": "find .github/workflows -type f \\( -iname '*.yaml' -o -iname '*.yml' \\) -print -exec action-validator {} ';'",
         "lint:knip": "knip",
         "install:git-hooks": "husky",
-        "postinstall": "node scripts/pnpm-link.ts",
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs",
-        "docs:preview": "vitepress preview docs"
+        "docs:preview": "vitepress preview docs",
+        "patch-package": "npx patch-package",
+        "patch-make": "node scripts/tchap/makePatch.ts",
+        "merge-patches": "./scripts/tchap/merge-patches.sh",
+        "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh"
     },
     "devDependencies": {
         "@action-validator/cli": "^0.6.0",
@@ -40,6 +43,7 @@
         "mermaid": "^11.13.0",
         "minimist": "^1.2.6",
         "nx": "22.6.5",
+        "patch-package": "^8.0.1",
         "prettier": "3.8.1",
         "typescript": "catalog:",
         "vitepress": "^1.6.4",
@@ -110,9 +114,6 @@
         "2022-11-07": "matrix-js-sdk requires >=16.0.0. SSL librairies do not work with 18 and 19. 17 has incompatibilities with some deps.",
         "2023-08-29": "matrix-js-sdk requires >=18.0.0",
         "2024-11-25": "change engine node to fix 20.0.0, because scalingo doesnt like semver >= "
-    },
-    "optionalDependencies": {
-        "tchap-translations": "file:./modules/tchap-translations"
     },
     "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
     "private": true

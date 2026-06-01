@@ -16,10 +16,10 @@ index 3869145..fb79144 100644
              throw error;
          }
 diff --git a/node_modules/matrix-js-sdk/src/http-api/interface.ts b/node_modules/matrix-js-sdk/src/http-api/interface.ts
-index 40100a5..7d655ea 100644
+index 3b11584..4ca1b35 100644
 --- a/node_modules/matrix-js-sdk/src/http-api/interface.ts
 +++ b/node_modules/matrix-js-sdk/src/http-api/interface.ts
-@@ -150,6 +150,10 @@ export interface IContentUri {
+@@ -155,6 +155,10 @@ export interface IContentUri {
  export enum HttpApiEvent {
      SessionLoggedOut = "Session.logged_out",
      NoConsent = "no_consent",
@@ -30,7 +30,7 @@ index 40100a5..7d655ea 100644
  }
  
  export type HttpApiEventHandlerMap = {
-@@ -177,6 +181,9 @@ export type HttpApiEventHandlerMap = {
+@@ -182,6 +186,9 @@ export type HttpApiEventHandlerMap = {
       * ```
       */
      [HttpApiEvent.NoConsent]: (message: string, consentUri: string) => void;
@@ -41,7 +41,7 @@ index 40100a5..7d655ea 100644
  
  export interface UploadProgress {
 diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index 0eba8a4..64eab88 100644
+index 6097094..180aef2 100644
 --- a/node_modules/matrix-js-sdk/src/sync.ts
 +++ b/node_modules/matrix-js-sdk/src/sync.ts
 @@ -593,6 +593,14 @@ export class SyncApi {

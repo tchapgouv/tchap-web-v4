@@ -6,10 +6,11 @@
  *
  */
 
-import { dirname, resolve } from "node:path";
+import path, { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, esmExternalRequirePlugin } from "vite";
 import dts from "vite-plugin-dts";
+import alias from "@rollup/plugin-alias";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -27,12 +28,16 @@ export default defineConfig({
             // into your library
             external: [
                 "@vector-im/compound-design-tokens",
-                "@vector-im/compound-web",
+                // "@vector-im/compound-web",
                 "react-virtuoso",
                 "react-resizable-panels",
                 "compound-web-tchap", // :TCHAP:
             ],
             plugins: [
+                // :TCHAP: Alias @vector-im/compound-web to compound-web-tchap at build time
+                alias({
+                    entries: [{ find: "@vector-im/compound-web", replacement: "compound-web-tchap" }],
+                }),
                 esmExternalRequirePlugin({
                     external: ["react", "react-dom"],
                 }),
@@ -53,7 +58,7 @@ export default defineConfig({
     // :TCHAP:
     resolve: {
         alias: {
-            "@vector-im/compound-web": resolve(__dirname, "node_modules/compound-web-tchap"),
+            "@vector-im/compound-web": resolve(__dirname, "../../node_modules/compound-web-tchap"),
         },
     },
     // end :TCHAP:

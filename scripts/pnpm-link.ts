@@ -11,7 +11,7 @@ Please see LICENSE files in the repository root for full details.
 // to enable rapid development of libraries like matrix-js-sdk using symlinks/directory junctions
 // reads .link-config file for DEPENDENCY=PATH values and removes those dependencies from node_modules,
 // replacing them with a symlink/directory junction.
-// This tool is a helpful substitute to `pnpm link` as that modifies the package.json & pnpm-lock.yaml files.
+// This tool is a helpful substitute to `yarn link` as that modifies the package.json & pnpm-lock.yaml files.
 
 import * as fs from "node:fs/promises";
 import { join, dirname } from "node:path";

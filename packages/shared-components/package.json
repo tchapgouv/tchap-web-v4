@@ -75,6 +75,7 @@
         "@fontsource/inter": "catalog:",
         "@matrix-org/react-sdk-module-api": "^2.5.0",
         "@playwright/test": "catalog:",
+        "@rollup/plugin-alias": "^6.0.0",
         "@storybook/addon-a11y": "^10.0.7",
         "@storybook/addon-designs": "^11.0.1",
         "@storybook/addon-docs": "^10.0.7",

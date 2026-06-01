@@ -20,7 +20,7 @@ set -e
 # Variables
 PROJECT_DIR=$(pwd)
 PACKAGE_JSON="$PROJECT_DIR/package.json"
-PATCHES_DIR="$PROJECT_DIR/patches"
+PATCHES_DIR="$PROJECT_DIR/patches_tchap"
 TEMP_DIR="$PROJECT_DIR/patches_temp"
 
 
@@ -58,11 +58,11 @@ function merge_patches() {
       # Install the package in the package subfolder
       cd "$PACKAGE_TEMP_DIR"
       echo '{ }' > package.json
-      pnpm add "$PACKAGE_NAME@$PACKAGE_VERSION" >> $LOG_FILE 2>&1
-      pnpm add patch-package <> $LOG_FILE 2>&1
+      npm add "$PACKAGE_NAME@$PACKAGE_VERSION" --no-lockfile >> $LOG_FILE 2>&1
+      npm add patch-package --no-lockfile >> $LOG_FILE 2>&1
 
       # Apply the patch with --merge option
-      patch -p1 --no-backup-if-mismatch --input="$PATCH_PATH" --forward --merge 2>&1 >> $LOG_FILE || true
+      patch -p 1 --no-backup-if-mismatch --input="$PATCH_PATH" --forward --merge 2>&1 >> $LOG_FILE || true
 
       # Check for conflicts
       CONFLICTS=$(grep -lr "<<<<<<<" node_modules/"$PACKAGE_NAME") || true
@@ -78,7 +78,7 @@ function merge_patches() {
         # If there are no conflicts, generate a new patch file
         # TODO : would it be nicer if we don't generate a new patch, but keep the old one to avoid unnecessary patches commit
         # EDIT : in github PR, the files appear as renamed without modifications
-        pnpm patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
+        npx patch-package "$PACKAGE_NAME" >> $LOG_FILE 2>&1
 
         # Move the new patch file to the old patch file's location
         mv patches/*.patch "$(dirname $PATCH_PATH)"
@@ -124,6 +124,7 @@ function continue_patches() {
     echo "# Manage $PATCH_PATH"
     echo "PACKAGE_NAME=$PACKAGE_NAME"
     echo "PACKAGE_TEMP_DIR=$PACKAGE_TEMP_DIR"
+    echo "PACKAGE_DIR=$PACKAGE_DIR"
 
     # Check for conflicts
     local CONFLICTS=$(grep -lr "<<<<<<<" "$PACKAGE_TEMP_DIR/node_modules/$PACKAGE_NAME") || true
