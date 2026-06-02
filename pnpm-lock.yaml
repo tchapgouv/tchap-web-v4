@@ -13,11 +13,11 @@ catalogs:
       specifier: 1.59.1
       version: 1.59.1
     '@vector-im/compound-design-tokens':
-      specifier: https://github.com/tchapgouv/compound-design-tokens.git#main
-      version: 6.10.0
-    '@vector-im/compound-web':
-      specifier: 9.2.0
-      version: 9.2.0
+      specifier: https://github.com/tchapgouv/compound-design-tokens.git#web-10.1.0
+      version: 10.1.0
+    compound-web-tchap:
+      specifier: 6.0.0
+      version: 6.0.0
     matrix-web-i18n:
       specifier: 3.6.0
       version: 3.6.0
@@ -221,7 +221,7 @@ importers:
         version: 1.0.2
       '@vector-im/compound-design-tokens':
         specifier: 'catalog:'
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5)
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5)
       '@vector-im/matrix-wysiwyg':
         specifier: 2.40.0
         version: 2.40.0(patch_hash=7bdf6150f2905bc2f055a6bcaa7b9d78fa7ffde82e800bcc454ac7b0096bd65e)(react@19.2.5)
@@ -254,7 +254,7 @@ importers:
         version: 0.31.2
       compound-web-tchap:
         specifier: 5.0.6
-        version: 5.0.6(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 5.0.6(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       css-tree:
         specifier: ^3.0.0
         version: 3.2.1
@@ -267,6 +267,9 @@ importers:
       domutils:
         specifier: ^4.0.0
         version: 4.0.2
+      element-call-embedded-tchap:
+        specifier: ^0.1.0
+        version: 0.1.0
       emojibase-regex:
         specifier: ^17.0.0
         version: 17.0.0
@@ -894,13 +897,10 @@ importers:
         version: 1.16.0
       '@vector-im/compound-design-tokens':
         specifier: 'catalog:'
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5)
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
-      compound-web-tchap:
-        specifier: 4.18.4
-        version: 4.18.4(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       counterpart:
         specifier: ^0.18.6
         version: 0.18.6
@@ -1007,15 +1007,15 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.53.1
         version: 8.58.0(eslint@8.57.1)(typescript@5.9.3)
-      '@vector-im/compound-web':
-        specifier: 'catalog:'
-        version: 9.2.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@vitest/browser-playwright':
         specifier: ^4.0.17
         version: 4.1.2(playwright@1.59.1)(vite@8.0.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@22.19.19)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.12))(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vitest@4.1.2)
       '@vitest/coverage-v8':
         specifier: ^4.0.17
         version: 4.1.2(@vitest/browser@4.1.2(vite@8.0.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@22.19.19)(esbuild@0.27.4)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.12))(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))(vitest@4.1.2))(vitest@4.1.2)
+      compound-web-tchap:
+        specifier: 'catalog:'
+        version: 6.0.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       eslint:
         specifier: '8'
         version: 8.57.1
@@ -5229,9 +5229,9 @@ packages:
   '@upsetjs/venn.js@2.0.0':
     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}
 
-  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73':
-    resolution: {tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73}
-    version: 6.10.0
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b':
+    resolution: {tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b}
+    version: 10.1.0
     peerDependencies:
       '@types/react': ^19.2.10
       react: ^17 || ^18 || ^19.0.0
@@ -5239,19 +5239,6 @@ packages:
       '@types/react':
         optional: true
       react:
-        optional: true
-
-  '@vector-im/compound-web@9.2.0':
-    resolution: {integrity: sha512-jHbABGEQ2yqNtm5xRIkklQs198VEfSk9AJQolI+e4WSJ0xg8Ozyv9t9KIuKQAmjdSV9aow5G6hDE861XB6DQgw==}
-    version: 9.2.0
-    peerDependencies:
-      '@fontsource/inconsolata': ^5
-      '@fontsource/inter': ^5
-      '@types/react': ^19.2.10
-      '@vector-im/compound-design-tokens': '>=1.6.1 <11.0.0'
-      react: ^18 || ^19.0.0
-    peerDependenciesMeta:
-      '@types/react':
         optional: true
 
   '@vector-im/matrix-wysiwyg@2.40.0':
@@ -6287,9 +6274,9 @@ packages:
   compare-versions@6.1.1:
     resolution: {integrity: sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==}
 
-  compound-web-tchap@4.18.4:
-    resolution: {integrity: sha512-bJGxdmcJDiWokQ/1gFqfZ0KeIjriDFH104nuzngptvyzW0gQNR6KsGpYNQQLzqekeFvJM2ePQw6/opM6Nsy/6A==}
-    version: 4.18.4
+  compound-web-tchap@5.0.6:
+    resolution: {integrity: sha512-A4lo2ACDANh5keA9RXIBNYsibKKqqzxojB4MTAwG0NAFy5k4Qer1SGaS4/ngzntO3EomTvTWiePfexgjFXMGIQ==}
+    version: 5.0.6
     peerDependencies:
       '@fontsource/inconsolata': ^5
       '@fontsource/inter': ^5
@@ -6300,14 +6287,14 @@ packages:
       '@types/react':
         optional: true
 
-  compound-web-tchap@5.0.6:
-    resolution: {integrity: sha512-A4lo2ACDANh5keA9RXIBNYsibKKqqzxojB4MTAwG0NAFy5k4Qer1SGaS4/ngzntO3EomTvTWiePfexgjFXMGIQ==}
-    version: 5.0.6
+  compound-web-tchap@6.0.0:
+    resolution: {integrity: sha512-2IdPL0sQ7l2AXG+Y76SOuQmjwqqz0c8DIPP6N1SRIw905/HeHLHismg6Ywoi4/NwUG/hc4ZiWOduebjTUuJVEA==}
+    version: 6.0.0
     peerDependencies:
       '@fontsource/inconsolata': ^5
       '@fontsource/inter': ^5
       '@types/react': ^19.2.10
-      '@vector-im/compound-design-tokens': '>=1.6.1 <7.0.0'
+      '@vector-im/compound-design-tokens': git+https://github.com/tchapgouv/compound-design-tokens.git#web-10.1.0
       react: ^18 || ^19.0.0
     peerDependenciesMeta:
       '@types/react':
@@ -7056,6 +7043,9 @@ packages:
 
   electron-to-chromium@1.5.332:
     resolution: {integrity: sha512-7OOtytmh/rINMLwaFTbcMVvYXO3AUm029X0LcyfYk0B557RlPkdpTpnH9+htMlfu5dKwOmT0+Zs2Aw+lnn6TeQ==}
+
+  element-call-embedded-tchap@0.1.0:
+    resolution: {integrity: sha512-bgiucdnk7AZhAiVyOLyTEf/3wI2lz6gQLdGXTFjaE2i557Z/xTZhTXx5uynZ/A4lsmxmC+F6ZOEm4k+4FsVcuQ==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -16665,31 +16655,10 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
-  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5)':
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5)':
     optionalDependencies:
       '@types/react': 19.2.10
       react: 19.2.5
-
-  '@vector-im/compound-web@9.2.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
-    dependencies:
-      '@floating-ui/react': 0.27.17(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@fontsource/inconsolata': 5.2.8
-      '@fontsource/inter': 5.2.8
-      '@radix-ui/react-context-menu': 2.2.16(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@radix-ui/react-dropdown-menu': 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@radix-ui/react-form': 0.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@radix-ui/react-slot': 1.2.4(@types/react@19.2.10)(react@19.2.5)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5)
-      classnames: 2.5.1
-      react: 19.2.5
-      vaul: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-    optionalDependencies:
-      '@types/react': 19.2.10
-    transitivePeerDependencies:
-      - '@types/react-dom'
-      - react-dom
 
   '@vector-im/matrix-wysiwyg@2.40.0(patch_hash=7bdf6150f2905bc2f055a6bcaa7b9d78fa7ffde82e800bcc454ac7b0096bd65e)(react@19.2.5)':
     dependencies:
@@ -17985,7 +17954,7 @@ snapshots:
 
   compare-versions@6.1.1: {}
 
-  compound-web-tchap@4.18.4(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  compound-web-tchap@5.0.6(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
     dependencies:
       '@floating-ui/react': 0.27.17(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@fontsource/inconsolata': 5.2.8
@@ -17996,7 +17965,7 @@ snapshots:
       '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@radix-ui/react-slot': 1.2.4(@types/react@19.2.10)(react@19.2.5)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5)
+      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5)
       classnames: 2.5.1
       react: 19.2.5
       vaul: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -18006,7 +17975,7 @@ snapshots:
       - '@types/react-dom'
       - react-dom
 
-  compound-web-tchap@5.0.6(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  compound-web-tchap@6.0.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.2.8)(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
     dependencies:
       '@floating-ui/react': 0.27.17(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@fontsource/inconsolata': 5.2.8
@@ -18017,7 +17986,7 @@ snapshots:
       '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@radix-ui/react-slot': 1.2.4(@types/react@19.2.10)(react@19.2.5)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/3ce8111a4e659af3118ea6a7b5207809929b1d73(@types/react@19.2.10)(react@19.2.5)
+      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/b86aad801c6817b5194d5982c242f555b1a3bd6b(@types/react@19.2.10)(react@19.2.5)
       classnames: 2.5.1
       react: 19.2.5
       vaul: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -18819,6 +18788,8 @@ snapshots:
   ejs@5.0.1: {}
 
   electron-to-chromium@1.5.332: {}
+
+  element-call-embedded-tchap@0.1.0: {}
 
   elliptic@6.6.1:
     dependencies:

@@ -255,106 +255,9 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 "$webapp": path.resolve(__dirname, "webapp"),
 
                 // :TCHAP:
-                "~tchap-web": path.resolve(__dirname, "./apps/web"),
-                // Hack in order to include the fonts declare in tchap compound-design-tokens
-                "./Marianne-Thin.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Thin.woff2",
-                ),
-                "./Marianne-Thin.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Thin.woff",
-                ),
-                "./Marianne-Thin_Italic.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Thin_Italic.woff2",
-                ),
-                "./Marianne-Thin_Italic.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Thin_Italic.woff",
-                ),
-                "./Marianne-Light.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Light.woff2",
-                ),
-                "./Marianne-Light.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Light.woff",
-                ),
-                "./Marianne-Light_Italic.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Light_Italic.woff2",
-                ),
-                "./Marianne-Light_Italic.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Light_Italic.woff",
-                ),
-                "./Marianne-Regular.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Regular.woff2",
-                ),
-                "./Marianne-Regular.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Regular.woff",
-                ),
-                "./Marianne-Regular_Italic.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Regular_Italic.woff2",
-                ),
-                "./Marianne-Regular_Italic.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Regular_Italic.woff",
-                ),
-                "./Marianne-Medium.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Medium.woff2",
-                ),
-                "./Marianne-Medium.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Medium.woff",
-                ),
-                "./Marianne-Medium_Italic.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Medium_Italic.woff2",
-                ),
-                "./Marianne-Medium_Italic.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Medium_Italic.woff",
-                ),
-                "./Marianne-Bold.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Bold.woff2",
-                ),
-                "./Marianne-Bold.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Bold.woff",
-                ),
-                "./Marianne-Bold_Italic.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Bold_Italic.woff2",
-                ),
-                "./Marianne-Bold_Italic.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-Bold_Italic.woff",
-                ),
-                "./Marianne-ExtraBold.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-ExtraBold.woff2",
-                ),
-                "./Marianne-ExtraBold.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-ExtraBold.woff",
-                ),
-                "./Marianne-ExtraBold_Italic.woff2": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-ExtraBold_Italic.woff2",
-                ),
-                "./Marianne-ExtraBold_Italic.woff": getPackageRoot(
-                    __dirname,
-                    "./node_modules/@vector-im/compound-design-tokens/assets/web/fonts/Marianne-ExtraBold_Italic.woff",
-                ),
+                "~tchap-web": path.resolve(__dirname, "."),
                 // we use tchap own compound-web package
-                "@vector-im/compound-web": getPackageRoot(__dirname, "node_modules/compound-web-tchap"),
+                "@vector-im/compound-web": path.resolve(__dirname, "../../node_modules/compound-web-tchap"),
                 // end :TCHAP:
                 // Make shared-components imports resolve to EW counterpart
                 "counterpart": getPackageRoot(__dirname, "node_modules/counterpart"),
@@ -829,7 +732,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     {
                         from: "**",
                         // :TCHAP: context: getPackageRoot(__dirname, "node_modules/@element-hq/element-call-embedded/dist"),
-                        context: getPackageRoot(__dirname, "node_modules/element-call-embedded-tchap/dist"),
+                        context: getPackageRoot("element-call-embedded-tchap", "dist"),
                         to: path.join(__dirname, "webapp", "widgets", "element-call"),
                     },
                     // Mobile guide assets

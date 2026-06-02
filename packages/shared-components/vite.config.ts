@@ -11,7 +11,6 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, esmExternalRequirePlugin } from "vite";
 import dts from "vite-plugin-dts";
 import alias from "@rollup/plugin-alias";
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
@@ -23,6 +22,7 @@ export default defineConfig({
             fileName: "element-web-shared-components",
         },
         outDir: "dist",
+        cssCodeSplit: false,
         rolldownOptions: {
             // make sure to externalize deps that shouldn't be bundled
             // into your library
