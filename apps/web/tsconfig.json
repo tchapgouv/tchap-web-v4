@@ -19,10 +19,11 @@
         "types": ["node"],
         "paths": {
             "~tchap-web/*": ["./*"],
-            "@vector-im/compound-web": ["./node_modules/compound-web-tchap"],
+            "@vector-im/compound-web": ["../../node_modules/compound-web-tchap"],
+            "@vector-im/compound-web/*": ["../../node_modules/compound-web-tchap/*"],
             "jest-matrix-react": ["./test/test-utils/jest-matrix-react"],
-            "rollup/parseAst": ["../../node_modules/rollup/dist/parseAst"]
-        }
+            "rollup/parseAst": ["../../node_modules/rollup/dist/parseAst"],
+        },
     },
     "include": [
         "../../node_modules/matrix-js-sdk/src/@types/*.d.ts",
@@ -32,6 +33,6 @@
         "./test/**/*.tsx",
         "./scripts/*.ts",
         "./@types/*.d.ts",
-        "./webpack.config.ts"
-    ]
+        "./webpack.config.ts",
+    ],
 }

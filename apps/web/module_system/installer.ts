@@ -15,6 +15,9 @@ import { type BuildConfig } from "./BuildConfig.ts";
 
 const moduleApiDepName = "@matrix-org/react-sdk-module-api";
 
+// ;TCHAP: add workspace root
+const WORKSPACE_ROOT = "../../";
+
 const MODULES_TS_HEADER = `
 /*
  * THIS FILE IS AUTO-GENERATED
@@ -41,7 +44,6 @@ export function installer(config: BuildConfig): void {
     // run `pnpm add` without creating extra committed files for people. We restore
     // these files by simply overwriting them when we're done.
     const packageDeps = readCurrentPackageDetails();
-
     // Record which optional dependencies there are currently, if any, so we can exclude
     // them from our "must be a module" assumption later on.
     // :TCHAP: unused // const currentOptDeps = getOptionalDepNames(packageDeps.packageJson);
@@ -141,13 +143,13 @@ type RawDependencies = {
 
 function readCurrentPackageDetails(): RawDependencies {
     return {
-        lockfile: fs.readFileSync("./pnpm-lock.yaml", "utf-8"),
+        lockfile: fs.readFileSync(WORKSPACE_ROOT + "pnpm-lock.yaml", "utf-8"),
         packageJson: fs.readFileSync("./package.json", "utf-8"),
     };
 }
 
 function writePackageDetails(deps: RawDependencies): void {
-    fs.writeFileSync("./pnpm-lock.yaml", deps.lockfile, "utf-8");
+    fs.writeFileSync(WORKSPACE_ROOT + "pnpm-lock.yaml", deps.lockfile, "utf-8");
     fs.writeFileSync("./package.json", deps.packageJson, "utf-8");
 }
 
@@ -178,6 +180,7 @@ function getTopLevelDependencyVersion(dep: string): string {
     const dependencyTree = JSON.parse(
         childProcess
             .execSync(`npm list ${dep} --depth=0 --json`, {
+                cwd: WORKSPACE_ROOT,
                 env: process.env,
                 stdio: ["inherit", "pipe", "pipe"],
             })
@@ -204,7 +207,7 @@ function getTopLevelDependencyVersion(dep: string): string {
 function getModuleApiVersionFor(moduleName: string): string {
     // We'll just pretend that this isn't highly problematic...
     // pnpm is fairly stable in putting modules in a flat hierarchy, at least.
-    const pkgJsonStr = fs.readFileSync(`./node_modules/${moduleName}/package.json`, "utf-8");
+    const pkgJsonStr = fs.readFileSync(WORKSPACE_ROOT + `node_modules/${moduleName}/package.json`, "utf-8");
     return findDepVersionInPackageJson(moduleApiDepName, pkgJsonStr);
 }
 
