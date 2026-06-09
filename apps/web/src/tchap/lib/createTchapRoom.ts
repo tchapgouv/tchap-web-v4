@@ -115,7 +115,7 @@ export default class TchapCreateRoom {
                 createRoomOpts.initial_state.push({
                     content: {
                         rule: TchapRoomAccessRule.Restricted,
-                        encrypted: false
+                        force_unencrypted_at_creation: true
                     },
                     type: TchapRoomAccessRulesEventId,
                     state_key: "",

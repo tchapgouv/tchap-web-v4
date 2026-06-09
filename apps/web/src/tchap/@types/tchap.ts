@@ -20,7 +20,7 @@ export enum TchapRoomAccessRuleVisibility {
 
 export interface TchapIAccessRuleEventContent {
     rule: TchapRoomAccessRule; // eslint-disable-line camelcase
-    encrypted?: boolean | undefined;
+    force_unencrypted_at_creation?: boolean | undefined;
     visibility?: TchapRoomAccessRuleVisibility | undefined
 }
 
