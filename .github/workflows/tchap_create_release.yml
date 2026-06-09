@@ -30,17 +30,17 @@ jobs:
 
             - name: Build the archive ${{ steps.version.outputs.version }} for dev
               working-directory: apps/web
-              run: scripts/tchap/package-tchap.sh
+              run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: dev
             - name: Build the archive ${{ steps.version.outputs.version }} for preprod
               working-directory: apps/web
-              run: scripts/tchap/package-tchap.sh
+              run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: preprod
             - name: Build the archive ${{ steps.version.outputs.version }} for prod
               working-directory: apps/web
-              run: scripts/tchap/package-tchap.sh
+              run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: prod
             - name: Get current date

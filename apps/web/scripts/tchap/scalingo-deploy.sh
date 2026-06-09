@@ -11,7 +11,9 @@ version=$(npm pkg get version | sed 's/"//g')
 pnpm clean
 
 # build shared components
-pnpm --cwd packages/shared-components build
+pnpm install
+
+pushd ./apps/web
 
 VERSION=$version pnpm build
 
