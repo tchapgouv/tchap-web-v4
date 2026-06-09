@@ -14,6 +14,14 @@ import alias from "@rollup/plugin-alias";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+    // :TCHAP:
+    // Use for vite during local dev
+    resolve: {
+        alias: {
+            "@vector-im/compound-web": resolve(__dirname, "../../node_modules/compound-web-tchap"),
+        },
+    },
+    // end :TCHAP:
     build: {
         lib: {
             entry: resolve(__dirname, "src/index.ts"),
@@ -28,13 +36,13 @@ export default defineConfig({
             // into your library
             external: [
                 "@vector-im/compound-design-tokens",
-                // "@vector-im/compound-web",
+                "@vector-im/compound-web",
                 "react-virtuoso",
                 "react-resizable-panels",
-                "compound-web-tchap", // :TCHAP:
             ],
             plugins: [
-                // :TCHAP: Alias @vector-im/compound-web to compound-web-tchap at build time
+                // needs to transform at build time the import from compound-web to compound-web-tchap
+                // since it is marked as an external dependencies which
                 alias({
                     entries: [{ find: "@vector-im/compound-web", replacement: "compound-web-tchap" }],
                 }),
@@ -48,20 +56,13 @@ export default defineConfig({
                 globals: {
                     "react": "react",
                     "@vector-im/compound-design-tokens": "compoundDesignTokens",
-                    "@vector-im/compound-web": "compoundWeb",
+                    "compound-web-tchap": "compoundWeb",
                     "react-virtuoso": "reactVirtuoso",
                     "react-resizable-panels": "reactResizablePanels",
                 },
             },
         },
     },
-    // :TCHAP:
-    resolve: {
-        alias: {
-            "@vector-im/compound-web": resolve(__dirname, "../../node_modules/compound-web-tchap"),
-        },
-    },
-    // end :TCHAP:
     plugins: [
         dts({
             rollupTypes: true,
