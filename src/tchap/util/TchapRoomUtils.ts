@@ -14,8 +14,6 @@ export default class TchapRoomUtils {
     //direct type is not handled yet
     static getTchapRoomType(room: Room): Promise<TchapRoomType> {
         const tchapAccessRule = this.getTchapRoomAccessRule(room);
-        console.log("*** tchapAccessRule", tchapAccessRule);
-        console.log("*** tchapAccessRule room", room.roomId);
         return this.getTchapRoomTypeInternal(tchapAccessRule, room);
     }
 
@@ -63,8 +61,8 @@ export default class TchapRoomUtils {
 
     /**
      * Get if current is admin of the room
-     * @param room 
-     * @returns 
+     * @param room
+     * @returns
      */
     static isUserAdmin(room: Room) : boolean {
         const userId = room.client.getSafeUserId();
