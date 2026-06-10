@@ -30,7 +30,7 @@ import { type CheckUpdatesPayload } from '~tchap-web/src/dispatcher/payloads/Che
 import { Action } from '~tchap-web/src/dispatcher/actions';
 
 const SSO_ID_KEY = "tchap-desktop-ssoid";
-const POKE_RATE_MS = 60 * 60 * 1000; // Check every hour for a new update 
+const POKE_RATE_MS = 10 * 60 * 1000; // Check every 10min for a new update
 const UPDATE_DEFER_KEY = "mx_defer_update";
 
 function onAction(payload: ActionPayload): void {
@@ -85,7 +85,7 @@ export default class TauriPlatform extends BasePlatform {
     public onDownloadFinish(): void {
         listen("download-finished", (event) => {
             const path  = event.payload as string;
-            // Open the confirmation modal directly from tauri 
+            // Open the confirmation modal directly from tauri
             this.ipc.call("user_download_action", { path });
         });
     }
@@ -102,7 +102,7 @@ export default class TauriPlatform extends BasePlatform {
                     window.postMessage("authDone", "*");
                     return;
                 }
-                // callback return from sso connexion 
+                // callback return from sso connexion
                 if (loginToken) window.location.replace(`/?loginToken=${loginToken}`);
                 if (code && state) window.location.replace(`/?code=${code}&state=${state}`)
             }
@@ -113,10 +113,11 @@ export default class TauriPlatform extends BasePlatform {
         showUpdate: (currentVersion: string, mostRecentVersion: string) => void,
         showNoUpdate?: () => void,
     ): Promise<UpdateStatus> => {
+        console.log("[PollForUpdate] checking an update");
         return check().then(
             (update: Update | null) => {
-                console.log("[PollForUpdate] checking an update", update);
                 if(update) {
+                console.log("[PollForUpdate] Update found", update);
                     const mostRecentVersion = update.version;
                     if (this.shouldShowUpdate(mostRecentVersion)) {
                         console.log("Update available to " + mostRecentVersion + ", will notify user");
@@ -143,6 +144,7 @@ export default class TauriPlatform extends BasePlatform {
     }
 
     public startUpdater(): void {
+        console.log("Starting the updater for Tauri");
         setInterval(() => this.pollForUpdate(showUpdateToast, hideUpdateToast), POKE_RATE_MS);
     }
 
@@ -182,7 +184,7 @@ export default class TauriPlatform extends BasePlatform {
                 logger.error('Error checking for updates', e);
             })
     }
-    
+
 
     // Used by manual update check on the user settings
     public startUpdateCheck(): void {
@@ -194,6 +196,14 @@ export default class TauriPlatform extends BasePlatform {
             });
         });
     }
+
+    // Used by manual update button in setting
+    public async canSelfUpdate(): Promise<boolean> {
+        const canUpdate = await this.ipc.call("can_self_update");
+        console.log('*** [Tauri] canUpdate', Boolean(canUpdate));
+        return Boolean(canUpdate);
+    }
+
 
     /**
      * Ignore the pending update and don't prompt about this version
@@ -258,13 +268,13 @@ export default class TauriPlatform extends BasePlatform {
         try {
             await super.clearStorage();
             await this.ipc.call("clear_storage");
-        } catch {}  
+        } catch {}
     }
-      
+
     public getEventIndexingManager(): BaseEventIndexManager | null {
         return this.eventIndexManager;
     }
-    
+
     public get baseUrl(): string {
         // This configuration is element-desktop specific so the types here do not know about it
         return (SdkConfig.get() as unknown as Record<string, string>)["web_base_url"] ?? SdkConfig.get("permalink_prefix")!;
@@ -272,7 +282,7 @@ export default class TauriPlatform extends BasePlatform {
 
 
     public getSSOCallbackUrl(fragmentAfterLogin?: string): URL {
-        const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;        
+        const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;
         const href = window.location.href;
         const urlTchap = href.replace(/^https?/, scheme);
         const url = new URL(urlTchap);
@@ -281,7 +291,7 @@ export default class TauriPlatform extends BasePlatform {
         url.searchParams.set(SSO_ID_KEY, this.ssoID);
         return url;
     }
-       
+
     public async getOidcClientMetadata(): Promise<OidcRegistrationClientMetadata> {
         const baseMetadata = await super.getOidcClientMetadata();
         return {
@@ -289,7 +299,7 @@ export default class TauriPlatform extends BasePlatform {
             applicationType: "native",
         };
     }
-    
+
 
     public startSingleSignOn(
         mxClient: MatrixClient,
@@ -386,7 +396,7 @@ export default class TauriPlatform extends BasePlatform {
         console.log("[Tauri plaform] set notification badge count", count);
         // From tauri doc, to remove the badge, the setbadge count needs to be undefined
         const notifCount = !count || count == 0 ? undefined : count;
-        
+
         if (platformFriendlyName() == "Windows") {
             const badgeSrc = notifCount ? await resolveResource(getCorrectBadgeImagePath(count)) : undefined;
             getCurrentWindow().setOverlayIcon(badgeSrc)
@@ -448,7 +458,7 @@ export default class TauriPlatform extends BasePlatform {
         openUrl(authorizationUrl).then(
             () => {
                 Modal.createDialog(Spinner, { message: _t("auth|desktop_waiting_sso")});
-            }, 
+            },
             (rejected) => {
                 console.log("rejected", rejected);
             }
