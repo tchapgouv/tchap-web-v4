@@ -103,6 +103,30 @@ export default class TchapUtils {
     };
 
     /**
+     * Check if a server name is the external server.
+     * @param serverName The server name to check (e.g., "externes" or "Externes")
+     * @returns true if the server is the external server, false otherwise
+     */
+    static isExternalHomeserver(serverName: string): boolean {
+        return /\bexternes\b/i.test(serverName);
+    }
+
+    /**
+     * Check if an email belongs to an external homeserver by fetching its homeserver information.
+     * This is an async operation that queries the identity server.
+     * @param email The email address to check
+     * @returns true if the email belongs to an external homeserver, false otherwise
+     */
+    static async checkIfEmailIsExternal(email: string): Promise<boolean> {
+        const homeserver = await this.fetchHomeserverForEmail(email);
+        console.log("*** checkIfEmailIsExternal", homeserver);
+        if (!homeserver || !homeserver.server_name) {
+            return false;
+        }
+        return this.isExternalHomeserver(homeserver.server_name);
+    }
+
+    /**
      * Make a ValidatedServerConfig from the server urls.
      * Todo : merge this function with fetchHomeserverForEmail, they are always used together anyway.
      * @param

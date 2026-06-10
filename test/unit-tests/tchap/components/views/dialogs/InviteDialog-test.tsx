@@ -16,6 +16,10 @@ import Modal from "~tchap-web/src/Modal";
 import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
+import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
+
+// Mock TchapUtils to control checkIfEmailIsExternal in tests
+jest.mock("~tchap-web/src/tchap/util/TchapUtils");
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -111,6 +115,9 @@ describe("InviteDialog", () => {
         mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
         mockClient.lookupThreePid.mockResolvedValue({});
         SdkContextClass.instance.client = mockClient;
+
+        // Default: emails are not external
+        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(false);
     });
 
     afterEach(() => {
@@ -205,6 +212,9 @@ describe("InviteDialog", () => {
     });
 
     it("should display external warning when a user email is selected in private room", async () => {
+        // Mock checkIfEmailIsExternal to return true for external emails
+        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+
         jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
@@ -215,12 +225,17 @@ describe("InviteDialog", () => {
 
         // Paste an external email
         await pasteIntoSearchField(externalEmail);
+        await flushPromises();
+
         await waitFor(() => {
             expect(screen.getByTestId("tc_warning")).toMatchSnapshot();
         });
     });
 
     it("should not display external warning when room is already open to external users", async () => {
+        // Mock checkIfEmailIsExternal to return true for external emails
+        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+
         jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.External;
         });
@@ -231,13 +246,17 @@ describe("InviteDialog", () => {
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
+        await flushPromises();
 
-        waitFor(() => {
-            expect(screen.getByTestId("tc_warning")).toBeUndefined();
+        await waitFor(() => {
+            expect(screen.queryByTestId("tc_warning")).not.toBeInTheDocument();
         });
     });
 
     it("should warn when room is public so not possible to add external", async () => {
+        // Mock checkIfEmailIsExternal to return true for external emails
+        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+
         jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Forum;
         });
@@ -249,13 +268,17 @@ describe("InviteDialog", () => {
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
+        await flushPromises();
 
-        waitFor(() => {
+        await waitFor(() => {
             expect(screen.getByTestId("tc_warning")).toMatchSnapshot();
         });
     });
 
     it("should invite button be disable when user doesnt have permission to change to external room", async () => {
+        // Mock checkIfEmailIsExternal to return true for external emails
+        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+
         jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
@@ -269,13 +292,17 @@ describe("InviteDialog", () => {
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
+        await flushPromises();
 
-        waitFor(() => {
-            expect(screen.getByRole("button", { name: "Invite" })).toBeDisabled();
+        await waitFor(() => {
+            expect(screen.getByRole("button", { name: "Invite" })).toHaveAttribute("aria-disabled", "true");
         });
     });
 
     it("should not show any warning if the invitedialog type is DM", async () => {
+        // Mock checkIfEmailIsExternal to return true for external emails
+        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+
         jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
@@ -287,9 +314,10 @@ describe("InviteDialog", () => {
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
+        await flushPromises();
 
-        waitFor(() => {
-            expect(screen.getByTestId("tc_warning")).toBeUndefined();
+        await waitFor(() => {
+            expect(screen.queryByTestId("tc_warning")).not.toBeInTheDocument();
         });
     });
 });

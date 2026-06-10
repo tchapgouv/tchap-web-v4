@@ -1151,7 +1151,7 @@
     },
     "invite|external_not_allowed": {
         "en": "You do not have permission to add external people from the public sector in this room.",
-        "fr": "Vous n'avez pas la permission d'inviter des personnes externes aux secteur publique dans ce salon."
+        "fr": "Vous n'avez pas la permission d'inviter des personnes externes au secteur public dans ce salon."
     },
     "invite|irreversible": {
         "en": "This modification is final and not reversible.",
