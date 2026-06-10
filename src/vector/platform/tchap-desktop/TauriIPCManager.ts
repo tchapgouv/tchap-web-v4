@@ -10,12 +10,9 @@ export class TauriIPCManager {
     }
 
     public async call(name: string, args?: Record<string, any>): Promise<any> {
-        // Maybe add a timeout to these? Probably not necessary.
-        logger.info("[Tauri] IPCManager calling name", name);
-        logger.info("[Tauri] IPCManager calling args", args);
         try {
             const result = await invoke(name, args);
-        
+
             return result;
         } catch(e) {
             logger.error(e);
