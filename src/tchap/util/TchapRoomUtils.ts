@@ -38,7 +38,7 @@ export default class TchapRoomUtils {
             case TchapRoomAccessRule.Unrestricted:
                 return TchapRoomType.External;
             default:
-                return TchapRoomType.Unknown;
+                return TchapRoomType.Private;
         }
     }
 
@@ -63,8 +63,8 @@ export default class TchapRoomUtils {
 
     /**
      * Get if current is admin of the room
-     * @param room 
-     * @returns 
+     * @param room
+     * @returns
      */
     static isUserAdmin(room: Room) : boolean {
         const userId = room.client.getSafeUserId();
