@@ -988,10 +988,18 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         // :TCHAP: check if it is an external user
         this.doesTargetsContainsExternal(toAdd).then(containAnExternal => {
-            this.setState({
-                ...this.state, shouldDisplayExternalWarning: containAnExternal,
-                shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
-            })
+            if (unableToAddMore) {
+                this.setState({
+                    filterText: unableToAddMore.join(" "),
+                    targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+                });
+            } else {
+                this.setState({
+                    targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+                });
+            }
         });
         // end :TCHAP:
 
