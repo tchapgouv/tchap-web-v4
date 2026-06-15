@@ -23,6 +23,7 @@ import { type ClientApi } from "./client.ts";
 import { type WidgetLifecycleApi } from "./widget-lifecycle.ts";
 import { type WidgetApi } from "./widget.ts";
 import { type CustomisationsApi } from "./customisations.ts";
+import { type MediaScanningApi } from "./media-scanning.ts";
 
 /**
  * Module interface for modules to implement.
@@ -158,6 +159,13 @@ export interface Api
      * @alpha Subject to change.
      */
     readonly customisations: CustomisationsApi;
+
+    /**
+     * :TCHAP:
+     * API for modules to scan media files before they are downloaded or used.
+     * @alpha Subject to change.
+     */
+    readonly mediaCustomisations: MediaScanningApi;
 
     /**
      * Create a ReactDOM root for rendering React components.

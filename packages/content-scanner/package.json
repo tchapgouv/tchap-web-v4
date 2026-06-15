@@ -1,0 +1,30 @@
+{
+    "name": "content-scanner",
+    "version": "0.0.0",
+    "description": "Content scanner Module",
+    "author": "DINUM",
+    "license": "MIT",
+    "scripts": {
+        "build": "nx build"
+    },
+    "dependencies": {
+        "@element-hq/element-web-module-api": "workspace:*",
+        "compound-web-tchap": "catalog:",
+        "matrix-js-sdk": "41.4.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.7",
+        "@types/react": "^19",
+        "@types/react-dom": "^19.0.4",
+        "rollup-plugin-external-globals": "^0.13.0",
+        "typescript": "^5.7.3",
+        "vite": "^7.3.2",
+        "vite-plugin-dts": "^4.5.0",
+        "vitest": "^4.0.0"
+    },
+    "peerDependencies": {
+        "@element-hq/element-web-module-api": "*"
+    },
+    "main": "src/ContentScannerModule.tsx",
+    "types": "types.d.ts"
+}

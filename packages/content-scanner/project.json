@@ -1,0 +1,18 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "root": "packages/content-scanner",
+    "targets": {
+        "build": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "inputs": ["src"],
+            "outputs": ["{projectRoot}/lib"],
+            "options": {
+                "commands": ["vite build"],
+                "parallel": false,
+                "cwd": "packages/content-scanner"
+            }
+        }
+    }
+}

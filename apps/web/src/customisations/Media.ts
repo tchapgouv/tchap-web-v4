@@ -9,10 +9,11 @@
 import { type MatrixClient, parseErrorResponse, type ResizeMethod } from "matrix-js-sdk/src/matrix";
 import { type MediaEventContent } from "matrix-js-sdk/src/types";
 
-import type { MediaCustomisations, Media } from "@element-hq/element-web-module-api";
+import type { MediaCustomisations, Media, CustomMediaFactory } from "@element-hq/element-web-module-api";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { type IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
 import { UserFriendlyError } from "../languageHandler";
+import { type ModuleApi } from "../modules/Api";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -27,13 +28,18 @@ import { UserFriendlyError } from "../languageHandler";
  */
 class MediaImplementation implements Media {
     private client: MatrixClient;
+    // : TCHAP:
+    private moduleApi: ModuleApi;
 
+    // end :TCHAP:
     // Per above, this constructor signature can be whatever is helpful for you.
     public constructor(
         private prepared: IPreparedMedia,
         client?: MatrixClient,
     ) {
         this.client = client ?? MatrixClientPeg.safeGet();
+        this.moduleApi = (window as any).mxModuleApi;
+
         if (!this.client) {
             throw new Error("No possible MatrixClient for media resolution. Please provide one or log in.");
         }
@@ -72,6 +78,9 @@ class MediaImplementation implements Media {
      * The HTTP URL for the source media.
      */
     public get srcHttp(): string | null {
+        if (this.getModuleCustomisation()) {
+            return this.getModuleCustomisation().urlForMxc(this.srcMxc);
+        }
         // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.srcMxc, undefined, undefined, undefined, false, true) || null;
     }
@@ -82,6 +91,9 @@ class MediaImplementation implements Media {
      */
     public get thumbnailHttp(): string | null {
         if (!this.hasThumbnail) return null;
+        if (this.getModuleCustomisation()) {
+            return this.getModuleCustomisation().urlForMxc(this.thumbnailMxc!);
+        }
         // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.thumbnailMxc!, undefined, undefined, undefined, false, true);
     }
@@ -99,6 +111,9 @@ class MediaImplementation implements Media {
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
+        if (this.getModuleCustomisation()) {
+            return this.getModuleCustomisation().urlForMxc(this.thumbnailMxc!, width, height, mode);
+        }
         // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode, false, true);
     }
@@ -114,6 +129,9 @@ class MediaImplementation implements Media {
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
+        if (this.getModuleCustomisation()) {
+            return this.getModuleCustomisation().urlForMxc(this.srcMxc, width, height, mode);
+        }
         // eslint-disable-next-line no-restricted-properties
         return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode, false, true);
     }
@@ -137,6 +155,9 @@ class MediaImplementation implements Media {
      * @returns {Promise<Response>} Resolves to the server's response for chaining.
      */
     public async downloadSource(): Promise<Response> {
+        if (this.getModuleCustomisation()) {
+            return this.getModuleCustomisation().download(this.srcMxc, this.prepared.file);
+        }
         const src = this.srcHttp;
         if (!src) {
             throw new UserFriendlyError("error|download_media");
@@ -146,6 +167,11 @@ class MediaImplementation implements Media {
             throw parseErrorResponse(res, await res.text());
         }
         return res;
+    }
+
+    // :TCHAP:
+    public getModuleCustomisation(): CustomMediaFactory | undefined {
+        return this.moduleApi.mediaCustomisations.getCustomMediaFactory();
     }
 }
 
@@ -162,7 +188,21 @@ type BaseMedia = MediaCustomisations<Partial<MediaEventContent>, MatrixClient, I
 export const mediaFromContent: BaseMedia["mediaFromContent"] = (
     content: Partial<MediaEventContent>,
     client?: MatrixClient,
-): Media => new MediaImplementation(prepEventContentAsMedia(content), client);
+): Media => {
+    // :TCHAP:
+    // Check if a module has registered a custom media factory
+    const moduleApi = (window as any).mxModuleApi;
+    if (moduleApi?.mediaScanning?.getCustomMediaFactory) {
+        const customFactory = moduleApi.mediaScanning.getCustomMediaFactory();
+        if (customFactory) {
+            return customFactory(prepEventContentAsMedia(content), client);
+        }
+    }
+
+    // end :TCHAP:
+    // Default implementation
+    return new MediaImplementation(prepEventContentAsMedia(content), client);
+}
 
 /**
  * Creates a media object from an MXC URI.
