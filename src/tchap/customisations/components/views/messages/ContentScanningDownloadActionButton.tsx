@@ -22,7 +22,7 @@ import { FileDownloader } from "~tchap-web/src/utils/FileDownloader";
 import { _t } from "~tchap-web/src/languageHandler";
 import Spinner from "~tchap-web/src/components/views/elements/Spinner";
 import { RovingAccessibleButton } from "~tchap-web/src/accessibility/RovingTabIndex";
-import { DownloadIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { DownloadIcon, RotateRightIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { type Media } from "../../../ContentScanningMedia";
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
@@ -134,9 +134,10 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
                 icon = this.renderBlockedIcon();
                 tooltip = _t("Content blocked");
                 break;
+            // Display retry icon when an error as occured 
             case DownloadState.Error:
-                icon = this.renderBlockedIcon();
-                tooltip = _t("Scan unavailable");
+                icon = this.renderRetryIcon();
+                tooltip = _t("action|retry");
                 break;
         }
 
@@ -163,11 +164,15 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
     }
 
     private renderSpinner(): JSX.Element {
-        return <Spinner w={18} h={18} />;
+        return <Spinner size={18}/>;
+    }
+
+    private renderRetryIcon(): JSX.Element {
+        return <RotateRightIcon />
     }
 
     private get disabled(): boolean {
-        return [DownloadState.Scanning, DownloadState.Error, DownloadState.Untrusted].includes(
+        return [DownloadState.Scanning, DownloadState.Untrusted].includes(
             this.state.downloadState,
         );
     }

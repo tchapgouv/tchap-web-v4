@@ -152,7 +152,7 @@
         "en": "Save your Tchap Keys (encryption keys)",
         "fr": "Sauvegardez vos Clés Tchap (clés de chiffrement)"
     },
-    "Scan unavailable": { "en": "Scan unavailable", "fr": "Scan unavailable" },
+    "Scan unavailable": { "en": "Scan unavailable. Please try again later.", "fr": "Scan non disponible. Veuillez réessayer ultérieurement." },
     "Scanning": { "en": "Scanning", "fr": "Scanning" },
     "encryption|access_secret_storage_dialog|security_key_title": {
         "en": "Verification Code",
