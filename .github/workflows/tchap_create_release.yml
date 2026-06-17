@@ -1,4 +1,4 @@
-name: Build archives and create release for tchap-web on tag "tchap-"
+name: Tchap Build archives and create release for tchap-web on tag "tchap-"
 
 on:
     push:
