@@ -23,7 +23,7 @@ import SecurityRecommendations from "../../devices/SecurityRecommendations";
 import { type ExtendedDevice } from "../../devices/types";
 import { deleteDevicesWithInteractiveAuth } from "../../devices/deleteDevices";
 import SettingsTab from "../SettingsTab";
-// import LoginWithQRSection from "../../devices/LoginWithQRSection"; // :TCHAP: remove-link-new-device-qr-code
+import LoginWithQRSection from "../../devices/LoginWithQRSection"; // :TCHAP: remove-link-new-device-qr-code
 import { Mode } from "../../../auth/LoginWithQR-types";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
@@ -280,12 +280,12 @@ const SessionManagerTab: React.FC<{
         <SettingsTab>
             <SettingsSection>
                 {/* :TCHAP: remove-link-new-device-qr-code */}
-                {/* <LoginWithQRSection
+                <LoginWithQRSection
                     onShowQr={onShowQrClicked}
                     versions={clientVersions}
                     oidcClientConfig={oidcClientConfig}
                     isCrossSigningReady={isCrossSigningReady}
-                /> */}
+                />
                 {/* end :TCHAP: */}
                 <SecurityRecommendations
                     devices={devices}

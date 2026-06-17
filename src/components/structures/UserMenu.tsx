@@ -343,7 +343,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             <IconizedContextMenuOptionList>
                 {homeButton}
                 {/* :TCHAP: remove-link-new-device-qr-code */}
-                {/* {linkNewDeviceButton} */}
+                {linkNewDeviceButton}
                 {/* end :TCHAP: */}
                 <IconizedContextMenuOption
                     icon={<NotificationsSolidIcon />}
