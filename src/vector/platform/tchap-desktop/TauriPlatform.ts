@@ -219,7 +219,7 @@ export default class TauriPlatform extends BasePlatform {
 
     public getSecureStorageInstance(): TauriSecureStorage {
         if (!this.tauriSecureStorage) {
-            this.tauriSecureStorage = new TauriSecureStorage(this.baseUrl, this.ipc);
+            this.tauriSecureStorage = new TauriSecureStorage(this.ipc);
             return this.tauriSecureStorage
         }
         return this.tauriSecureStorage;
@@ -231,9 +231,10 @@ export default class TauriPlatform extends BasePlatform {
 
     public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
+            const tauriSecureStorage = this.getSecureStorageInstance();
             const key = `${userId}|${deviceId}`;
             // Read a record from store
-            const value = await this.tauriSecureStorage?.getItem(key);
+            const value = await tauriSecureStorage?.getItem(key);
             return value;
         } catch {
             // if we can't connect to the password storage, assume there's no
@@ -244,12 +245,14 @@ export default class TauriPlatform extends BasePlatform {
 
     public async createPickleKey(userId: string, deviceId: string): Promise<string | null> {
         try {
+            const tauriSecureStorage = this.getSecureStorageInstance();
             const key = `${userId}|${deviceId}`;
-            const value = this.tauriSecureStorage.getRandom32BytesEncoded();
+            const value = tauriSecureStorage.getRandom32BytesEncoded();
             // Insert a record to the store
-            await this.tauriSecureStorage.createItem(key, value);
+            await tauriSecureStorage.createItem(key, value);
             return value;
-        } catch {
+        } catch(e) {
+            console.error("[Tauri] could not create pickle key", e);
             // if we can't connect to the password storage, assume there's no
             // pickle key
             return null;
@@ -258,9 +261,10 @@ export default class TauriPlatform extends BasePlatform {
 
     public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
+            const tauriSecureStorage = this.getSecureStorageInstance();
             const key = `${userId}|${deviceId}`;
             // Remove a record from store
-            await this.tauriSecureStorage.removeItem(key);
+            await tauriSecureStorage.removeItem(key);
         } catch {}
     }
 
