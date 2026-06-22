@@ -84,11 +84,16 @@ export default class TauriPlatform extends BasePlatform {
 
     public onDownloadFinish(): void {
         listen("download-finished", (event) => {
-            const path  = event.payload as string;
+            const path = event.payload as string;
+            // Extract filename from path (works for Windows, Linux, macOS)
+            const filename = path.split(/[/\\]/).pop() || path;
+            console.log("*** [Tauri] download finish", event);
+            console.log("*** [Tauri] download finish filename", filename);
             // Open the confirmation modal directly from tauri
-            this.ipc.call("user_download_action", { path });
+            this.ipc.call("user_download_action", { filename });
         });
     }
+
     public async checkDeepLinkOpen(): Promise<void> {
         await onOpenUrl((urls) => {
             console.log('***** deep link:', urls)
