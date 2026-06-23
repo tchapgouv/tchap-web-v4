@@ -14,8 +14,6 @@ export default class TchapRoomUtils {
     //direct type is not handled yet
     static getTchapRoomType(room: Room): Promise<TchapRoomType> {
         const tchapAccessRule = this.getTchapRoomAccessRule(room);
-        console.log("*** tchapAccessRule", tchapAccessRule);
-        console.log("*** tchapAccessRule room", room.roomId);
         return this.getTchapRoomTypeInternal(tchapAccessRule, room);
     }
 
@@ -23,8 +21,8 @@ export default class TchapRoomUtils {
         const isEncrypted: boolean = await this.isRoomEncrypted(room.roomId);
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
-            // Should be explicitly encrypted to false, private room does not have this value if the backend is not compatible or the data not well updated
-            if (tchapRoomAccessRule?.encrypted == false && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
+            // Should be explicitly force_unencrypted_at_creation to true, private room does not have this value if the backend is not compatible or the data not well updated
+            if (tchapRoomAccessRule?.force_unencrypted_at_creation == true && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
                 if (tchapRoomAccessRule?.rule == TchapRoomAccessRule.Unrestricted) {
                     return TchapRoomType.PrivateNonEncryptedExternal;
                 }
@@ -38,7 +36,7 @@ export default class TchapRoomUtils {
             case TchapRoomAccessRule.Unrestricted:
                 return TchapRoomType.External;
             default:
-                return TchapRoomType.Unknown;
+                return TchapRoomType.Private;
         }
     }
 
@@ -63,8 +61,8 @@ export default class TchapRoomUtils {
 
     /**
      * Get if current is admin of the room
-     * @param room 
-     * @returns 
+     * @param room
+     * @returns
      */
     static isUserAdmin(room: Room) : boolean {
         const userId = room.client.getSafeUserId();

@@ -68,8 +68,8 @@ import InviteProgressBody from "./InviteProgressBody.tsx";
 
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
 import { type TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
-import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore.ts";
+import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils.ts";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -265,6 +265,7 @@ interface IInviteDialogState {
 
     // :TCHAP:
     shouldDisplayExternalWarning?: boolean;
+    shouldDisableInviteButton?: boolean;
     tchapRoomType?: TchapRoomType;
     // end :TCHAP
 }
@@ -334,6 +335,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
             // :TCHAP:
             shouldDisplayExternalWarning: false,
+            shouldDisableInviteButton: false,
             tchapRoomType: undefined
             // end :TCHAP
         };
@@ -483,40 +485,19 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         const newTargets = [...(this.state.targets || []), newMember];
         // :TCHAP: check if it is an external user
-        const containAnExternal = this.doesTargetsContainsExternal(newTargets);
+        this.doesTargetsContainsExternal(newTargets).then(containAnExternal => {
+            console.log("doesTargetsContainsExternal", containAnExternal);
+            this.setState({
+                targets: newTargets,
+                filterText: "",
+                shouldDisplayExternalWarning: containAnExternal,
+                shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+            })
+        });
         // end :TCHAP:
 
-        this.setState({ targets: newTargets, filterText: "", shouldDisplayExternalWarning: containAnExternal && this.canInviteExternalMembers()});
+        this.setState({ targets: newTargets, filterText: ""});
         return newTargets;
-    }
-
-    private doesTargetsContainsExternal(members: Member[]) : boolean {
-        // if the room is already open to external users, don't need to show warning
-        if (this.tchapAccessRule?.rule === TchapRoomAccessRule.Unrestricted) {
-            return false;
-        }
-        // If at least one of the selected member is external, we return true
-        return members.some(m => {
-            console.log("in doesTargetsContainsExternal member", m)
-            // get homeserver
-            const userIdArray = m.userId.split(":");
-            const hs = userIdArray.pop() || "";
-            return m instanceof ThreepidMember
-                || Email.looksValid(m.name)
-                || ["externe.tchap.gouv.fr", "e.tchap.gouv.fr", "ext01.tchap.incubateur.net"].includes(hs);
-
-        });
-    }
-
-    private canInviteExternalMembers(): boolean {
-        if (this.props.kind === InviteKind.Invite) {
-            const cli = MatrixClientPeg.safeGet();
-            const room = cli.getRoom(this.props.roomId);
-            // user has the right or no to update the external access_rule state event
-            const canUpdateExternalStateEvent = room?.getLiveTimeline()?.getState(EventTimeline.FORWARDS)?.mayClientSendStateEvent(TchapRoomAccessRulesEventId, cli);
-            return this.state.tchapRoomType !== TchapRoomType.Forum && !!canUpdateExternalStateEvent;
-        }
-        return false
     }
 
     /**
@@ -581,7 +562,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         const targets = this.convertFilter();
         // :TCHAP: check again, not sure state already propagated properly at this time
-        const containAnExternal = this.doesTargetsContainsExternal(targets);
+        const containAnExternal = await this.doesTargetsContainsExternal(targets);
         // end :TCHAP:
         const targetIds = targets.map((t) => t.userId);
 
@@ -598,7 +579,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         // :TCHAP:
 
-        if (this.state.shouldDisplayExternalWarning || (containAnExternal && this.canInviteExternalMembers())) {
+        if (this.state.shouldDisplayExternalWarning || (containAnExternal)) {
             // Before continuing we should alert the user that this is irreversible action
             const { finished } = Modal.createDialog(QuestionDialog, {
                 title: _t("badge|external_guests"),
@@ -616,12 +597,39 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 });
                 return;
             };
-            cli.sendStateEvent(
-                room.roomId,
-                TchapRoomAccessRulesEventId,
-                { rule: TchapRoomAccessRule.Unrestricted, encrypted: this.tchapAccessRule?.encrypted, visibility: this.tchapAccessRule?.visibility },
-                ""
-            );
+            try {
+                await cli.sendStateEvent(
+                    room.roomId,
+                    TchapRoomAccessRulesEventId,
+                    {
+                    rule: TchapRoomAccessRule.Unrestricted,
+                    visibility: this.tchapAccessRule?.visibility,
+                    force_unencrypted_at_creation: this.tchapAccessRule?.force_unencrypted_at_creation
+                    },
+                    ""
+                );
+                const result = await inviteMultipleToRoom(cli, this.props.roomId, targetIds, {
+                    // We show our own progress body, so don't pop up a separate dialog.
+                    inhibitProgressDialog: true,
+                });
+                if (!this.shouldAbortAfterInviteError(result, room)) {
+                    // handles setting error message too
+                    this.props.onFinished(true);
+                }
+            } catch (err) {
+                logger.error(err);
+                // an error occured, we need to go back to original state
+                this.setState({
+                    busy: false,
+                    errorText: _t("invite|error_invite"),
+                });
+                cli.sendStateEvent(
+                    room.roomId,
+                    TchapRoomAccessRulesEventId,
+                    { rule: TchapRoomAccessRule.Restricted, encrypted: this.tchapAccessRule?.force_unencrypted_at_creation, visibility: this.tchapAccessRule?.visibility },
+                    "")
+            }
+            return;
         }
         // end :TCHAP:
         try {
@@ -639,15 +647,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 busy: false,
                 errorText: _t("invite|error_invite"),
             });
-            // an error occured, we need to go back to original state
-            if (this.state.shouldDisplayExternalWarning) {
-                cli.sendStateEvent(
-                room.roomId,
-                TchapRoomAccessRulesEventId,
-                { rule: TchapRoomAccessRule.Restricted, encrypted: this.tchapAccessRule?.encrypted, visibility: this.tchapAccessRule?.visibility },
-                ""
-            );
-            }
         }
     };
 
@@ -854,10 +853,18 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 targets.push(member);
                 filterText = ""; // clear the filter when the user accepts a suggestion
             }
-            //
+
             // :TCHAP: this.setState({ targets, filterText });
-            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets) && this.canInviteExternalMembers();
-            this.setState({ targets, filterText, shouldDisplayExternalWarning });
+            // Using promise to not modify original function
+            this.doesTargetsContainsExternal(targets).then(containsExternal => {
+                this.setState({
+                    targets,
+                    filterText,
+                    shouldDisplayExternalWarning: containsExternal,
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containsExternal)
+                });
+            })
+            this.setState({ targets, filterText });
             // end :TCHAP:
 
             if (this.editorRef && this.editorRef.current) {
@@ -872,8 +879,13 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (idx >= 0) {
             targets.splice(idx, 1);
             // :TCHAP: this.setState({ targets });
-            const shouldDisplayExternalWarning = this.doesTargetsContainsExternal(targets) && this.canInviteExternalMembers();
-            this.setState({ targets, shouldDisplayExternalWarning });
+            this.doesTargetsContainsExternal(targets).then(containsExternal => {
+                this.setState({
+                    targets, shouldDisplayExternalWarning: containsExternal,
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containsExternal)
+                })
+            })
+            this.setState({ targets });
             // end :TCHAP:
         }
 
@@ -975,23 +987,30 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
 
         // :TCHAP: check if it is an external user
-        const containAnExternal = this.doesTargetsContainsExternal(toAdd);
+        this.doesTargetsContainsExternal(toAdd).then(containAnExternal => {
+            if (unableToAddMore) {
+                this.setState({
+                    filterText: unableToAddMore.join(" "),
+                    targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+                });
+            } else {
+                this.setState({
+                    targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+                });
+            }
+        });
         // end :TCHAP:
 
         if (unableToAddMore) {
             this.setState({
                 filterText: unableToAddMore.join(" "),
-                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
-                // :TCHAP:
-                shouldDisplayExternalWarning: containAnExternal && this.canInviteExternalMembers()
-                // end :TCHAP:
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
             });
         } else {
             this.setState({
-                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
-                // :TCHAP:
-                shouldDisplayExternalWarning: containAnExternal && this.canInviteExternalMembers()
-                // end :TCHAP:
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
             });
         }
     };
@@ -1016,6 +1035,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (this.state.tchapRoomType !== TchapRoomType.External
             && this.state.tchapRoomType !== TchapRoomType.PrivateNonEncryptedExternal
             && this.state.shouldDisplayExternalWarning
+            && this.canInviteExternalMembers()
             // if it is a DM we don't show the warning
             && this.props.kind !== InviteKind.Dm) {
             return (
@@ -1027,9 +1047,11 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         return null;
     }
 
+    // This warning should be displayed when  user cant invite in the room
+    // And that the list of invitees contain at least an external
     private renderWarningCantInviteExternal(): ReactNode {
         if (!this.canInviteExternalMembers()
-            && this.doesTargetsContainsExternal(this.state.targets)
+            && this.state.shouldDisplayExternalWarning
             // if it is a DM we don't show the warning
             && this.props.kind !== InviteKind.Dm
         )
@@ -1040,6 +1062,39 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         )
         return null
     }
+
+
+    private checkDisableInviteButton(containsExternal: boolean): boolean {
+        return this.props.kind == InviteKind.Invite && !this.canInviteExternalMembers() && containsExternal;
+    }
+
+    private async doesTargetsContainsExternal(members: Member[]) : Promise<boolean> {
+        // if the room is already open to external users, don't need to show warning
+        if (this.tchapAccessRule?.rule === TchapRoomAccessRule.Unrestricted) {
+            return false;
+        }
+        // If at least one of the selected member is external, we return true
+        for (const m of members) {
+            // For email targets, validate against identity server
+            if (Email.looksValid(m.name)) {
+                const isExternal = await TchapUtils.checkIfEmailIsExternal(m.name);
+                return isExternal;
+            }
+        }
+        return false;
+    }
+
+    private canInviteExternalMembers(): boolean {
+        if (this.props.kind === InviteKind.Invite) {
+            const cli = MatrixClientPeg.safeGet();
+            const room = cli.getRoom(this.props.roomId);
+            // user has the right or no to update the external access_rule state event
+            const canUpdateExternalStateEvent = room?.getLiveTimeline()?.getState(EventTimeline.FORWARDS)?.mayClientSendStateEvent(TchapRoomAccessRulesEventId, cli);
+            return this.state.tchapRoomType !== TchapRoomType.Forum && !!canUpdateExternalStateEvent;
+        }
+        return false
+    }
+
     // end :TCHAP:
 
     private renderSection(kind: "recents" | "suggestions"): ReactNode {
@@ -1473,16 +1528,13 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             goButtonFn = this.inviteUsers;
         }
 
-        // :TCHAP: dont disable invite button if its external and DM
-        const externalDisableInvite = this.props.kind == InviteKind.Invite && !this.canInviteExternalMembers() && this.doesTargetsContainsExternal(this.state.targets)
-
         const goButton =
             this.props.kind == InviteKind.CallTransfer ? null : (
                 <AccessibleButton
                     kind="primary"
                     onClick={goButtonFn}
                     className="mx_InviteDialog_goButton"
-                    disabled={this.state.busy || !this.hasSelection() || externalDisableInvite}
+                    disabled={this.state.busy || !this.hasSelection() || this.state.shouldDisableInviteButton}
                 >
                     {buttonText}
                 </AccessibleButton>
