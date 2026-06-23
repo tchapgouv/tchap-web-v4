@@ -1527,6 +1527,11 @@
   resolved "https://registry.yarnpkg.com/@dual-bundle/import-meta-resolve/-/import-meta-resolve-4.2.1.tgz#cd0b25b3808cd9e684cd6cd549bbf8e1dcf05ee7"
   integrity sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==
 
+"@element-hq/element-call-embedded@^0.20.2":
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/@element-hq/element-call-embedded/-/element-call-embedded-0.20.2.tgz#1c5fee65e216552244bf58de64da7e096b03be05"
+  integrity sha512-sAJHML6aBGOl8gHbCLmJabFiLZ82rKmFmVulq3P9rxD6mkO/6ph9IGI/XHjnpd/nqhns+iF6M61004APjY942g==
+
 "@element-hq/element-web-module-api@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@element-hq/element-web-module-api/-/element-web-module-api-1.9.0.tgz#2e4fcc8809418c8670d4f0576bc4a9a235bc6c50"
@@ -4385,7 +4390,7 @@
   resolved "https://registry.yarnpkg.com/@vector-im/matrix-wysiwyg/-/matrix-wysiwyg-2.40.0.tgz#53c9ca5ea907d91e4515da64f20a82e5586b882c"
   integrity sha512-8LRFLs5PEKYs4lOL7aJ4lL/hGCrvEvOYkCR3JggXYXDVMtX4LmfdlKYucSAe98pCmqAAbLRvlRcR1bTOYvM8ug==
   dependencies:
-    "@vector-im/matrix-wysiwyg-wasm" "link:../../.cache/yarn/v6/npm-@vector-im-matrix-wysiwyg-2.40.0-53c9ca5ea907d91e4515da64f20a82e5586b882c-integrity/node_modules/bindings/wysiwyg-wasm"
+    "@vector-im/matrix-wysiwyg-wasm" "link:../../../Library/Caches/Yarn/v6/npm-@vector-im-matrix-wysiwyg-2.40.0-53c9ca5ea907d91e4515da64f20a82e5586b882c-integrity/node_modules/bindings/wysiwyg-wasm"
 
 "@vitest/expect@3.2.4":
   version "3.2.4"
@@ -6510,11 +6515,6 @@ electron-to-chromium@^1.5.263:
   version "1.5.302"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.302.tgz#032a5802b31f7119269959c69fe2015d8dad5edb"
   integrity sha512-sM6HAN2LyK82IyPBpznDRqlTQAtuSaO+ShzFiWTvoMJLHyZ+Y39r8VMfHzwbU8MVBzQ4Wdn85+wlZl2TLGIlwg==
-
-element-call-embedded-tchap@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/element-call-embedded-tchap/-/element-call-embedded-tchap-0.1.0.tgz#85ee5b92d21cece5a43603380ce8291ab8fe428a"
-  integrity sha512-bgiucdnk7AZhAiVyOLyTEf/3wI2lz6gQLdGXTFjaE2i557Z/xTZhTXx5uynZ/A4lsmxmC+F6ZOEm4k+4FsVcuQ==
 
 emittery@^0.13.1:
   version "0.13.1"
