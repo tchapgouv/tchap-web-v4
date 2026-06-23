@@ -797,7 +797,7 @@ module.exports = (env, argv) => {
                     // Element Call embedded widget
                     {
                         from: "**",
-                        // :TCHAP: 
+                        // :TCHAP:
                         //context: path.resolve(__dirname, "node_modules/element-call-embedded-tchap/dist"),
                         context: path.resolve(__dirname, "node_modules/@element-hq/element-call-embedded/dist"),
                         // :tchap end
