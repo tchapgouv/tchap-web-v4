@@ -18,14 +18,13 @@ import React from "react";
 import { IBodyProps } from "~tchap-web/src/components/views/messages/IBodyProps";
 
 import { Media } from "../../../ContentScanningMedia";
-import ContentScanningFileBody from "./ContentScanningFileBody";
 import OriginalAudioBody from "../../../../components/views/messages/OriginalAudioBody";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
+import { FileBodyFactory } from "~tchap-web/src/components/views/messages/MBodyFactory";
+import { type ContentScannerMediaHelper, ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 interface State {
-    isScanning: boolean;
-    isSafe: boolean;
-    hasError: boolean;
+    scanState: ScanState
 }
 
 /**
@@ -40,30 +39,29 @@ export default class ContentScanningAudioBody extends React.PureComponent<IBodyP
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
-            isScanning: true,
-            isSafe: false,
-            hasError: false,
+            scanState: "scanning"
         };
 
-        Promise.all([this.media.scanSource(), this.media.scanThumbnail()])
-            .then(async ([ok1, ok2]) => {
-                const isSafe = ok1 && ok2;
-                this.setState({
-                    isScanning: false,
-                    isSafe,
-                });
+        if (props.mediaEventHelper) {
+            (props.mediaEventHelper as any as ContentScannerMediaHelper).onScanStateChange(() => {
+                const scanState = props.mediaEventHelper.getScanState();
+                console.log("*** scanState", scanState);
+                if (this.state.scanState !== scanState) {
+                    this.setState({
+                        scanState
+                    })
+                }
             })
-            .catch(() => {
-                this.setState({
-                    isScanning: false,
-                    hasError: true,
-                });
-            });
+        } else {
+            this.state = {
+                scanState: "done"
+            };
+        }
     }
 
     public render() {
-        if (this.state.isScanning || !this.state.isSafe) {
-            return <ContentScanningFileBody {...this.props} />;
+        if (this.state.scanState !== "done") {
+            return <FileBodyFactory {...this.props} />
         }
 
         return (

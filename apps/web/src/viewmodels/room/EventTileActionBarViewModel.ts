@@ -45,6 +45,9 @@ import Modal from "../../Modal";
 import ErrorDialog from "../../components/views/dialogs/ErrorDialog";
 import { ModuleApi } from "../../modules/Api";
 
+import { ContentScannerMediaHelper } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
+
+
 /** Props for the event-tile action bar view model. */
 export interface EventTileActionBarViewModelProps {
     /** The event whose available actions are being resolved. */
@@ -96,6 +99,9 @@ interface DerivedMediaState {
     showDownload: boolean;
     isDownloadEncrypted: boolean;
     isDownloadLoading: boolean;
+    // :TCHAP: content-scanner
+     downloadScanState?: "scanning" | "unsafe" | "error" | "done";
+     // end :TCHAP:
 }
 
 /** View model for the timeline event action bar shown on event tiles. */
@@ -111,6 +117,11 @@ export class EventTileActionBarViewModel
     private readonly downloader = new FileDownloader();
     private downloadedBlob?: Blob;
 
+    // :TCHAP: content-scanner
+    private scannerMediaHelper?: ContentScannerMediaHelper;
+    // end :TCHAP:
+
+
     public constructor(props: EventTileActionBarViewModelProps) {
         super(
             props,
@@ -125,10 +136,16 @@ export class EventTileActionBarViewModel
     private static buildSnapshot(
         props: EventTileActionBarViewModelProps,
         localState: LocalActionBarState,
+        // :TCHAP: content-scanner
+        scannerMediaHelper?: ContentScannerMediaHelper,
+        // end :TCHAP:
     ): ActionBarViewSnapshot {
         const client = MatrixClientPeg.safeGet();
         const eventState = EventTileActionBarViewModel.getDerivedEventState(props, client);
-        const mediaState = EventTileActionBarViewModel.getDerivedMediaState(props.mxEvent, client, localState);
+        // const mediaState = EventTileActionBarViewModel.getDerivedMediaState(props.mxEvent, client, localState);
+        // :TCHAP: content-scanner
+        const mediaState = EventTileActionBarViewModel.getDerivedMediaState(props.mxEvent, client, localState, scannerMediaHelper);
+        // end :TCHAP:
 
         return {
             actions: EventTileActionBarViewModel.resolveActions(eventState, mediaState),
@@ -138,6 +155,9 @@ export class EventTileActionBarViewModel
             isPinned: eventState.isPinned,
             isQuoteExpanded: eventState.isQuoteExpanded,
             isThreadReplyAllowed: eventState.isThreadReplyAllowed,
+            // :TCHAP: content-scanner
+            ...(mediaState.downloadScanState && { downloadScanState: mediaState.downloadScanState }),
+            // end :TCHAP:
         };
     }
 
@@ -217,15 +237,25 @@ export class EventTileActionBarViewModel
         mxEvent: MatrixEvent,
         client: ReturnType<typeof MatrixClientPeg.safeGet>,
         localState: LocalActionBarState,
+        // :TCHAP: content-scanner
+        scannerMediaHelper?: ContentScannerMediaHelper,
+        // end :TCHAP:
     ): DerivedMediaState {
         const contentActionable = isContentActionable(mxEvent);
-        const mediaHelper = MediaEventHelper.isEligible(mxEvent) ? new MediaEventHelper(mxEvent) : undefined;
+        // :TCHAP: content-scanner - use ContentScannerMediaHelper for scanning
+        // const mediaHelper = MediaEventHelper.isEligible(mxEvent) ? new MediaEventHelper(mxEvent) : undefined;
 
+        // :TCHAP: content-scanner
+        const mediaHelper = scannerMediaHelper ?? (MediaEventHelper.isEligible(mxEvent) ? new MediaEventHelper(mxEvent) : undefined);
+        // end :TCHAP:
         return {
             showDownload: contentActionable && Boolean(mediaHelper) && localState.canDownload,
             showHide: contentActionable && MediaEventHelper.canHide(mxEvent) && getMediaVisibility(mxEvent, client),
             isDownloadEncrypted: mediaHelper?.media.isEncrypted ?? false,
             isDownloadLoading: localState.isDownloadLoading,
+            // :TCHAP: content-scanner
+             downloadScanState: scannerMediaHelper?.getScanState(),
+             // end :TCHAP:
         };
     }
 
@@ -233,7 +263,7 @@ export class EventTileActionBarViewModel
         return EventTileActionBarViewModel.buildSnapshot(this.props, {
             canDownload: this.canDownload,
             isDownloadLoading: this.isDownloadLoading,
-        });
+        }, this.scannerMediaHelper);
     }
 
     private static canShowReplyInThreadAction(props: EventTileActionBarViewModelProps): boolean {
@@ -265,6 +295,16 @@ export class EventTileActionBarViewModel
             this.addListenerCleanup(() => roomState.off(RoomStateEvent.Events, this.onRoomEvent));
         }
 
+        // :TCHAP: content-scanner - create once per event, subscribe to scan state
+        if (MediaEventHelper.isEligible(mxEvent)) {
+            this.scannerMediaHelper = new ContentScannerMediaHelper(mxEvent);
+            this.addListenerCleanup(
+                this.scannerMediaHelper.onScanStateChange(this.refreshSnapshot),
+            );
+        } else {
+            this.scannerMediaHelper = undefined;
+        }
+        // end :TCHAP:
         MatrixClientPeg.safeGet().decryptEventIfNeeded(mxEvent);
         void this.updateDownloadPermission(++this.downloadPermissionRequestId);
     }
@@ -433,13 +473,41 @@ export class EventTileActionBarViewModel
         const requestId = ++this.downloadRequestId;
         const { mxEvent } = this.props;
 
+        // use contentscanner mediaeventhelper to scan file before download
+        // :TCHAP: content-scanner - use ContentScannerMediaHelper for transparent scanning
         try {
             if (!this.setDownloadLoading(requestId, mxEvent, true)) return;
-            const mediaEventHelper = new MediaEventHelper(mxEvent);
+            const mediaEventHelper = new ContentScannerMediaHelper(mxEvent);
+
+            // Check if content needs scanning or has failed scan
+            const scanState = mediaEventHelper.getScanState();
+            if (scanState === "unsafe" || scanState === "error") {
+                if (!this.isCurrentDownloadRequest(requestId, mxEvent)) return;
+                Modal.createDialog(ErrorDialog, {
+                    title: scanState === "unsafe" ? _t("Content blocked") : _t("Scan unavailable"),
+                    description: scanState === "unsafe"
+                        ? _t("The content has been blocked by the content scanner")
+                        : _t("The content scanner is currently unavailable"),
+                });
+                return;
+            }
 
             if (!this.downloadedBlob) {
                 const downloadedBlob = await mediaEventHelper.sourceBlob.value;
                 if (!this.isCurrentDownloadRequest(requestId, mxEvent)) return;
+
+                // Check scan result after blob access (scanning happens transparently)
+                const finalScanState = mediaEventHelper.getScanState();
+                if (finalScanState === "unsafe" || finalScanState === "error") {
+                    Modal.createDialog(ErrorDialog, {
+                        title: finalScanState === "unsafe" ? _t("Content blocked") : _t("Scan unavailable"),
+                        description: finalScanState === "unsafe"
+                            ? _t("The content has been blocked by the content scanner")
+                            : _t("The content scanner is currently unavailable"),
+                    });
+                    return;
+                }
+
                 this.downloadedBlob = downloadedBlob;
             }
 
@@ -456,6 +524,31 @@ export class EventTileActionBarViewModel
         } finally {
             this.setDownloadLoading(requestId, mxEvent, false);
         }
+
+        // end :TCHAP:
+        // try {
+        //     if (!this.setDownloadLoading(requestId, mxEvent, true)) return;
+        //     const mediaEventHelper = new MediaEventHelper(mxEvent);
+
+        //     if (!this.downloadedBlob) {
+        //         const downloadedBlob = await mediaEventHelper.sourceBlob.value;
+        //         if (!this.isCurrentDownloadRequest(requestId, mxEvent)) return;
+        //         this.downloadedBlob = downloadedBlob;
+        //     }
+
+        //     await this.downloader.download({
+        //         blob: this.downloadedBlob,
+        //         name: mediaEventHelper.fileName ?? _t("common|image"),
+        //     });
+        // } catch (e) {
+        //     if (!this.isCurrentDownloadRequest(requestId, mxEvent)) return;
+        //     Modal.createDialog(ErrorDialog, {
+        //         title: _t("timeline|download_failed"),
+        //         description: `${_t("timeline|download_failed_description")}\n\n${String(e)}`,
+        //     });
+        // } finally {
+        //     this.setDownloadLoading(requestId, mxEvent, false);
+        // }
     };
 
     /** Hides the media preview for the current event. */

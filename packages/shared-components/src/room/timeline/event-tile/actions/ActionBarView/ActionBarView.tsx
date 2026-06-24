@@ -24,6 +24,7 @@ import {
     DownloadIcon,
     OverflowHorizontalIcon,
     ReactionAddIcon,
+    BlockIcon
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { InlineSpinner } from "@vector-im/compound-web";
 
@@ -54,6 +55,10 @@ export interface ActionBarViewSnapshot {
     isQuoteExpanded: boolean;
     /** Whether starting or replying in a thread is allowed for this event. */
     isThreadReplyAllowed: boolean;
+
+    // :TCHAP: content-scanner
+    downloadScanState: "scanning" | "done" | "error" | "unsafe"
+    // end :TCHAP:
 }
 
 /**
@@ -140,6 +145,7 @@ export function ActionBarView({ vm, className }: Readonly<ActionBarViewProps>): 
         isDownloadLoading,
         isPinned,
         isQuoteExpanded,
+        downloadScanState
     } = useViewModel(vm);
 
     // Track the live button element for each action and keep the callback refs stable
@@ -234,6 +240,13 @@ export function ActionBarView({ vm, className }: Readonly<ActionBarViewProps>): 
             ? _t("timeline|download_action_decrypting")
             : _t("timeline|download_action_downloading");
     }
+    // :TCHAP: content-scanner
+    const downloadIcon = (): React.ComponentType<React.SVGAttributes<SVGElement>> => {
+        if (isDownloadLoading || downloadScanState === "scanning") return InlineSpinner;
+        if (downloadScanState === "unsafe") return BlockIcon;
+        return DownloadIcon;
+    }
+    // end :TCHAP:
     actionButtons[ActionBarAction.Download] = (
         <ActionBarButton
             key={ActionBarAction.Download}
@@ -241,8 +254,11 @@ export function ActionBarView({ vm, className }: Readonly<ActionBarViewProps>): 
             buttonRef={actionButtonRefSetters[ActionBarAction.Download]}
             label={downloadTitle}
             onActivate={vm.onDownloadClick}
-            icon={isDownloadLoading ? InlineSpinner : DownloadIcon}
-            disabled={isDownloadLoading}
+            // :TCHAP: icon={isDownloadLoading ? InlineSpinner : DownloadIcon}
+            // disabled={isDownloadLoading}
+            icon={downloadIcon()}
+            disabled={isDownloadLoading || downloadScanState === "unsafe"}
+            // end :TCHAP:
         />
     );
 

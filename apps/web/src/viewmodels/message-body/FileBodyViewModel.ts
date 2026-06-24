@@ -137,6 +137,13 @@ export class FileBodyViewModel
         const media = mediaFromContent(content);
         const isEncrypted = props.mediaEventHelper?.media.isEncrypted === true;
 
+        // :TCHAP: content-scanner
+        let scanningState: "scanning" | "unsafe" | "error" | "done" | undefined;
+        if ("getScanState" in (props.mediaEventHelper || {})) {
+            scanningState = (props.mediaEventHelper as any).getScanState?.();
+            console.log("***scanningState", scanningState);
+        }
+        // end :TCHAP:
         //Whether or not to show the default placeholder for the file. Defaults to true.
         const showFileInfo = props.showFileInfo ?? true;
 
@@ -167,6 +174,9 @@ export class FileBodyViewModel
                 infoTooltip: fileInfoTooltip,
                 infoIcon: fileInfoIcon,
                 infoHref: content.file?.url || content.url,
+                // :TCHAP: content-scanner
+                ...(scanningState && { scanningState }),
+                // end :TCHAP:
             };
         }
 
@@ -182,6 +192,9 @@ export class FileBodyViewModel
                 showDownload,
                 downloadLabel,
                 downloadTitle: downloadTitle,
+                // :TCHAP: content-scanner
+                ...(scanningState && { scanningState }),
+                // end :TCHAP:
             };
         }
 
@@ -196,6 +209,9 @@ export class FileBodyViewModel
                 downloadLabel,
                 downloadTitle: downloadTitle,
                 downloadHref: media.srcHttp,
+                // :TCHAP: content-scanner
+                ...(scanningState && { scanningState }),
+                // end :TCHAP:
             };
         }
 
@@ -206,6 +222,9 @@ export class FileBodyViewModel
             infoTooltip: fileInfoTooltip,
             infoIcon: fileInfoIcon,
             infoHref: content.file?.url || content.url,
+            // :TCHAP: content-scanner
+            ...(scanningState && { scanningState }),
+            // end :TCHAP:
         };
     }
 
@@ -222,7 +241,11 @@ export class FileBodyViewModel
     }
 
     private downloadFile(fileName: string, text: string): void {
+        console.log("*** download file")
         if (!this.decryptedBlob) return;
+        // :TCHAP: content-scanner
+        // this.snapshot.set(FileBodyViewModel.computeSnapshot(this.props, this.decryptedBlob, ));
+        // end :TCHAP:
 
         this.fileDownloader.download({
             blob: this.decryptedBlob,
@@ -238,6 +261,7 @@ export class FileBodyViewModel
     }
 
     private decryptFile = async (): Promise<void> => {
+        console.log("*** decryptFile");
         if (this.decryptedBlob || !this.props.mediaEventHelper) {
             return;
         }

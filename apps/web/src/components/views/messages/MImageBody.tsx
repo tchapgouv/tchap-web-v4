@@ -38,7 +38,6 @@ import { useMediaVisible } from "../../../hooks/useMediaVisible";
 import { isMimeTypeAllowed } from "../../../utils/blobs.ts";
 import { FileBodyFactory, renderMBody } from "./MBodyFactory";
 
-import MFileBody from "~tchap-web/src/tchap/components/views/messages/OriginalFileBody"; // :TCHAP: content-scanner
 
 enum Placeholder {
     NoImage,

@@ -90,6 +90,9 @@ export interface FileBodyViewSnapshot {
      * Optional URL used for `UNENCRYPTED` download links.
      */
     downloadHref?: string;
+    // :TCHAP: content-scanner
+    scanningState?: "scanning" | "unsafe" | "error" | "done";
+    // end :TCHAP:
 }
 
 export interface FileBodyViewActions {

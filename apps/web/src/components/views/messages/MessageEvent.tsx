@@ -42,6 +42,8 @@ import {
     renderMBody,
 } from "./MBodyFactory";
 
+import { ContentScannerMediaHelper } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
+
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
     /* overrides for the msgtype-specific components, used by ReplyTile to override file rendering */
@@ -90,7 +92,9 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         super(props);
 
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
-            this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+            // :TCHAP: this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+            this.mediaHelper = new ContentScannerMediaHelper(this.props.mxEvent) as any as MediaEventHelper;
+            // end :TCHAP:
         }
 
         this.updateComponentMaps();
@@ -108,7 +112,9 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     public componentDidUpdate(prevProps: Readonly<IProps>): void {
         if (this.props.mxEvent !== prevProps.mxEvent && MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper?.destroy();
-            this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+            // :TCHAP: this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+            this.mediaHelper = new ContentScannerMediaHelper(this.props.mxEvent) as any as MediaEventHelper;
+            // end :TCHAP:
         }
 
         this.updateComponentMaps();
@@ -138,7 +144,9 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         // Recheck MediaEventHelper eligibility as it can change when the event gets decrypted
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper?.destroy();
-            this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+            // :TCHAP: this.mediaHelper = new MediaEventHelper(this.props.mxEvent);
+            this.mediaHelper = new ContentScannerMediaHelper(this.props.mxEvent) as any as MediaEventHelper;
+            // end :TCHAP:
         }
     };
 

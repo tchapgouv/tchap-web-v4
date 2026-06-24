@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { type JSX, type RefObject, useContext, useEffect, useRef } from "react";
+import React, { type JSX, type RefObject, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MsgType } from "matrix-js-sdk/src/matrix";
 import {
     DecryptionFailureBodyView,
@@ -14,6 +14,7 @@ import {
     VideoBodyView,
     useCreateAutoDisposedViewModel,
 } from "@element-hq/web-shared-components";
+import { type MediaEventContent } from "matrix-js-sdk/src/types";
 
 import { type IBodyProps } from "./IBodyProps";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
@@ -23,6 +24,11 @@ import { DecryptionFailureBodyViewModel } from "../../../viewmodels/room/timelin
 import { FileBodyViewModel } from "../../../viewmodels/message-body/FileBodyViewModel";
 import { RedactedBodyViewModel } from "../../../viewmodels/message-body/RedactedBodyViewModel";
 import { VideoBodyViewModel } from "../../../viewmodels/message-body/VideoBodyViewModel";
+
+import { ContentScanningFileBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningFileBodyView";
+// import { useScanningMediaHelper } from "~tchap-web/src/tchap/customisations/components/views/messages/useScanningMediaHelper";
+import { ContentScannerMediaHelper, type ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
+import { ContentScanningVideoBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVideoBodyView";
 
 type MBodyComponent = React.ComponentType<IBodyProps>;
 
@@ -35,12 +41,30 @@ export function FileBodyFactory({
     const { timelineRenderingType } = useContext(RoomContext);
     const refIFrame = useRef<HTMLIFrameElement>(null) as RefObject<HTMLIFrameElement>;
     const refLink = useRef<HTMLAnchorElement>(null) as RefObject<HTMLAnchorElement>;
+    // Replace MediaEventHelper with ContentScannerMediaHelper
+    // :TCHAP: content-scanner
+    const [scanState, setScanState] = useState<ScanState>("scanning");
+    const scanningMediaHelper = useMemo(
+        () => {
+                    console.log("*** creating NEW helper");
+                    return new ContentScannerMediaHelper(mxEvent);
+                },
+        [mxEvent],
+    ) as any as typeof mediaEventHelper;
 
+    const content = mxEvent.getContent<MediaEventContent>();
+    scanningMediaHelper.onScanStateChange(() => {
+        if (scanState !== scanningMediaHelper.getScanState()) {
+            setScanState(scanningMediaHelper.getScanState())
+        }
+    });
+    //  end :TCHAP:
     const vm = useCreateAutoDisposedViewModel(
         () =>
             new FileBodyViewModel({
                 mxEvent,
-                mediaEventHelper,
+                // :TCHAP: - mediaEventHelper,
+                mediaEventHelper: scanningMediaHelper,
                 forExport,
                 showFileInfo,
                 timelineRenderingType,
@@ -52,14 +76,17 @@ export function FileBodyFactory({
     useEffect(() => {
         vm.setProps({
             mxEvent,
-            mediaEventHelper,
+            // :TCHAP: - mediaEventHelper,
+            mediaEventHelper : scanningMediaHelper,
             forExport,
             showFileInfo,
             timelineRenderingType,
         });
-    }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, vm]);
+    }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, vm, scanningMediaHelper ]);
 
-    return <FileBodyView vm={vm} refIFrame={refIFrame} refLink={refLink} className="mx_MFileBody" />;
+
+    // :TCHAP: return <FileBodyView vm={vm} refIFrame={refIFrame} refLink={refLink} className="mx_MFileBody" />;
+    return <ContentScanningFileBodyView vm={vm} refIFrame={refIFrame} refLink={refLink} content={content} scanState={scanState} />;
 }
 
 export function VideoBodyFactory({
@@ -72,11 +99,29 @@ export function VideoBodyFactory({
     const [mediaVisible, setMediaVisible] = useMediaVisible(mxEvent);
     const videoRef = useRef<HTMLVideoElement>(null);
 
+    // :TCHAP: content-scanner
+    const [scanState, setScanState] = useState<ScanState>("scanning");
+    const scanningMediaHelper = useMemo(
+        () => {
+                    console.log("*** creating NEW helper");
+                    return new ContentScannerMediaHelper(mxEvent);
+                },
+        [mxEvent],
+    ) as any as typeof mediaEventHelper;
+
+    const content = mxEvent.getContent<MediaEventContent>();
+    scanningMediaHelper.onScanStateChange(() => {
+        if (scanState !== scanningMediaHelper.getScanState()) {
+            setScanState(scanningMediaHelper.getScanState())
+        }
+    });
+    //  end :TCHAP:
+    //
     const vm = useCreateAutoDisposedViewModel(
         () =>
             new VideoBodyViewModel({
                 mxEvent,
-                mediaEventHelper,
+                mediaEventHelper: scanningMediaHelper,
                 forExport,
                 inhibitInteraction,
                 mediaVisible,
@@ -116,11 +161,11 @@ export function VideoBodyFactory({
         timelineRenderingType !== TimelineRenderingType.Search;
 
     return (
-        <VideoBodyView
+        <ContentScanningVideoBodyView
             vm={vm}
-            className="mx_MVideoBody"
-            containerClassName="mx_MVideoBody_container"
             videoRef={videoRef}
+            scanState={scanState}
+            content={content}
         >
             {showFileBody ? (
                 <FileBodyFactory
@@ -130,7 +175,7 @@ export function VideoBodyFactory({
                     showFileInfo={false}
                 />
             ) : null}
-        </VideoBodyView>
+        </ContentScanningVideoBodyView>
     );
 }
 

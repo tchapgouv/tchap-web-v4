@@ -25,42 +25,39 @@ import OriginalImageReplyBody from "../../../../components/views/messages/Origin
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 import { Media } from "../../../ContentScanningMedia";
+import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 const FORCED_IMAGE_HEIGHT = 44;
 
 interface State {
-    isScanning: boolean;
-    isSafe: boolean;
-    hasError: boolean;
+    scanState: ScanState
 }
-
 export default class ContentScanningImageReplyBody extends React.PureComponent<IBodyProps, State> {
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
-            isScanning: true,
-            isSafe: false,
-            hasError: false,
+            scanState: "scanning"
         };
 
-        Promise.all([this.media.scanSource(), this.media.scanThumbnail()])
-            .then(async ([ok1, ok2]) => {
-                const isSafe = ok1 && ok2;
-                this.setState({
-                    isScanning: false,
-                    isSafe,
-                });
+        if (props.mediaEventHelper) {
+            (props.mediaEventHelper as any as ContentScannerMediaHelper).onScanStateChange(() => {
+                const scanState = props.mediaEventHelper.getScanState();
+                console.log("*** scanState", scanState);
+                if (this.state.scanState !== scanState) {
+                    this.setState({
+                        scanState
+                    })
+                }
             })
-            .catch(() => {
-                this.setState({
-                    isScanning: false,
-                    hasError: true,
-                });
-            });
+        } else {
+            this.state = {
+                scanState: "done"
+            };
+        }
     }
 
     public render() {
-        if (this.state.isScanning) {
+        if (this.state.scanState === "scanning") {
             return (
                 <>
                     <div className="mx_MImageBody mx_MImageBody_pending" style={{ height: FORCED_IMAGE_HEIGHT }}>
@@ -69,7 +66,7 @@ export default class ContentScanningImageReplyBody extends React.PureComponent<I
                     <ContentScanningStatus fileName={this.fileName} status="scanning" />
                 </>
             );
-        } else if (this.state.hasError) {
+        } else if (this.state.scanState === "error") {
             return (
                 <>
                     <div className="mx_MImageBody mx_MImageBody_error" style={{ height: FORCED_IMAGE_HEIGHT }}>
@@ -78,7 +75,7 @@ export default class ContentScanningImageReplyBody extends React.PureComponent<I
                     <ContentScanningStatus fileName={this.fileName} status="error" />
                 </>
             );
-        } else if (!this.state.isSafe) {
+        } else if (this.state.scanState === "unsafe") {
             return (
                 <>
                     <div className="mx_MImageBody mx_MImageBody_unsafe" style={{ height: FORCED_IMAGE_HEIGHT }}>

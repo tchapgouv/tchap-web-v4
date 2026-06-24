@@ -1,6 +1,6 @@
 import * as e from "react";
 import t, { Children as n, cloneElement as r, createContext as i, forwardRef as a, isValidElement as o, memo as s, useCallback as c, useContext as l, useEffect as u, useId as d, useLayoutEffect as f, useMemo as p, useRef as m, useState as h, useSyncExternalStore as g, version as _ } from "react";
-import { Badge as v, Button as y, ChatFilter as b, CheckboxMenuItem as x, ContextMenu as S, Field as C, H1 as w, Heading as T, IconButton as E, InlineSpinner as D, Link as O, Menu as k, MenuItem as A, MenuTitle as ee, RadioMenuItem as j, Root as te, Separator as ne, SubMenu as re, Submit as ie, Text as M, TextControl as ae, Toast as oe, ToggleMenuItem as se, Tooltip as N, Unread as ce, UnreadCounter as le } from "@vector-im/compound-web";
+import { Badge as v, Button as y, ChatFilter as b, CheckboxMenuItem as x, ContextMenu as S, Field as C, H1 as w, Heading as T, IconButton as E, InlineSpinner as D, Link as O, Menu as k, MenuItem as A, MenuTitle as ee, RadioMenuItem as j, Root as te, Separator as ne, SubMenu as M, Submit as re, Text as N, TextControl as ie, Toast as ae, ToggleMenuItem as oe, Tooltip as se, Unread as ce, UnreadCounter as le } from "@vector-im/compound-web";
 import { Virtuoso as ue, VirtuosoMockContext as de } from "react-virtuoso";
 import { Group as fe, Group as pe, Panel as me, Panel as he, Separator as ge, Separator as _e, usePanelCallbackRef as ve } from "react-resizable-panels";
 //#region \0rolldown/runtime.js
@@ -3384,7 +3384,7 @@ var hp = /* @__PURE__ */ P(((e) => {
 				var m = Object.keys(n).filter(function(e) {
 					return e !== "key";
 				});
-				o = 0 < m.length ? "{key: someKey, " + m.join(": ..., ") + ": ...}" : "{key: someKey}", M[p + o] || (m = 0 < m.length ? "{" + m.join(": ..., ") + ": ...}" : "{}", console.error("A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />", o, p, m, p), M[p + o] = !0);
+				o = 0 < m.length ? "{key: someKey, " + m.join(": ..., ") + ": ...}" : "{key: someKey}", N[p + o] || (m = 0 < m.length ? "{" + m.join(": ..., ") + ": ...}" : "{}", console.error("A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />", o, p, m, p), N[p + o] = !0);
 			}
 			if (p = null, i !== void 0 && (r(i), p = "" + i), s(n) && (r(n.key), p = "" + n.key), "key" in n) for (var h in i = {}, n) h !== "key" && (i[h] = n[h]);
 			else i = n;
@@ -3402,13 +3402,13 @@ var hp = /* @__PURE__ */ P(((e) => {
 		m = { react_stack_bottom_frame: function(e) {
 			return e();
 		} };
-		var te, ne = {}, re = m.react_stack_bottom_frame.bind(m, o)(), ie = j(i(o)), M = {};
+		var te, ne = {}, M = m.react_stack_bottom_frame.bind(m, o)(), re = j(i(o)), N = {};
 		e.Fragment = _, e.jsx = function(e, t, n) {
 			var r = 1e4 > k.recentlyCreatedOwnerStacks++;
-			return d(e, t, n, !1, r ? Error("react-stack-top-frame") : re, r ? j(i(e)) : ie);
+			return d(e, t, n, !1, r ? Error("react-stack-top-frame") : M, r ? j(i(e)) : re);
 		}, e.jsxs = function(e, t, n) {
 			var r = 1e4 > k.recentlyCreatedOwnerStacks++;
-			return d(e, t, n, !0, r ? Error("react-stack-top-frame") : re, r ? j(i(e)) : ie);
+			return d(e, t, n, !0, r ? Error("react-stack-top-frame") : M, r ? j(i(e)) : re);
 		};
 	})();
 })), H = (/* @__PURE__ */ P(((e, t) => {
@@ -5181,17 +5181,17 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 		"%URIErrorPrototype%": ["URIError", "prototype"],
 		"%WeakMapPrototype%": ["WeakMap", "prototype"],
 		"%WeakSetPrototype%": ["WeakSet", "prototype"]
-	}, re = Sx(), ie = Ax(), M = re.call(k, Array.prototype.concat), ae = re.call(O, Array.prototype.splice), oe = re.call(k, String.prototype.replace), se = re.call(k, String.prototype.slice), N = re.call(k, RegExp.prototype.exec), ce = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g, le = /\\(\\)?/g, ue = function(e) {
-		var t = se(e, 0, 1), n = se(e, -1);
+	}, M = Sx(), re = Ax(), N = M.call(k, Array.prototype.concat), ie = M.call(O, Array.prototype.splice), ae = M.call(k, String.prototype.replace), oe = M.call(k, String.prototype.slice), se = M.call(k, RegExp.prototype.exec), ce = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g, le = /\\(\\)?/g, ue = function(e) {
+		var t = oe(e, 0, 1), n = oe(e, -1);
 		if (t === "%" && n !== "%") throw new c("invalid intrinsic syntax, expected closing `%`");
 		if (n === "%" && t !== "%") throw new c("invalid intrinsic syntax, expected opening `%`");
 		var r = [];
-		return oe(e, ce, function(e, t, n, i) {
-			r[r.length] = n ? oe(i, le, "$1") : t || e;
+		return ae(e, ce, function(e, t, n, i) {
+			r[r.length] = n ? ae(i, le, "$1") : t || e;
 		}), r;
 	}, de = function(e, t) {
 		var n = e, r;
-		if (ie(ne, n) && (r = ne[n], n = "%" + r[0] + "%"), ie(j, n)) {
+		if (re(ne, n) && (r = ne[n], n = "%" + r[0] + "%"), re(j, n)) {
 			var i = j[n];
 			if (i === A && (i = te(n)), i === void 0 && !t) throw new l("intrinsic " + e + " exists, but is not available. Please file an issue!");
 			return {
@@ -5205,13 +5205,13 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 	t.exports = function(e, t) {
 		if (typeof e != "string" || e.length === 0) throw new l("intrinsic name must be a non-empty string");
 		if (arguments.length > 1 && typeof t != "boolean") throw new l("\"allowMissing\" argument must be a boolean");
-		if (N(/^%?[^%]*%?$/, e) === null) throw new c("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
+		if (se(/^%?[^%]*%?$/, e) === null) throw new c("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
 		var n = ue(e), r = n.length > 0 ? n[0] : "", i = de("%" + r + "%", t), a = i.name, o = i.value, s = !1, u = i.alias;
-		u && (r = u[0], ae(n, M([0, 1], u)));
+		u && (r = u[0], ie(n, N([0, 1], u)));
 		for (var d = 1, f = !0; d < n.length; d += 1) {
-			var p = n[d], m = se(p, 0, 1), h = se(p, -1);
+			var p = n[d], m = oe(p, 0, 1), h = oe(p, -1);
 			if ((m === "\"" || m === "'" || m === "`" || h === "\"" || h === "'" || h === "`") && m !== h) throw new c("property names with quotes must have matching quotes");
-			if ((p === "constructor" || !f) && (s = !0), r += "." + p, a = "%" + r + "%", ie(j, a)) o = j[a];
+			if ((p === "constructor" || !f) && (s = !0), r += "." + p, a = "%" + r + "%", re(j, a)) o = j[a];
 			else if (o != null) {
 				if (!(p in o)) {
 					if (!t) throw new l("base intrinsic for " + e + " exists, but the property is not available.");
@@ -5220,7 +5220,7 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 				if (b && d + 1 >= n.length) {
 					var g = b(o, p);
 					f = !!g, o = f && "get" in g && !("originalValue" in g.get) ? g.get : o[p];
-				} else f = ie(o, p), o = o[p];
+				} else f = re(o, p), o = o[p];
 				f && !s && (j[a] = o);
 			}
 		}
@@ -5505,7 +5505,7 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 	}
 	e.isPromise = h;
 	function g(e) {
-		return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? ArrayBuffer.isView(e) : i(e) || oe(e);
+		return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? ArrayBuffer.isView(e) : i(e) || ae(e);
 	}
 	e.isArrayBufferView = g;
 	function _(e) {
@@ -5580,32 +5580,32 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 		return c(e) === "[object WeakSet]";
 	}
 	ne.working = typeof WeakSet < "u" && ne(/* @__PURE__ */ new WeakSet());
-	function re(e) {
+	function M(e) {
 		return ne(e);
 	}
-	e.isWeakSet = re;
-	function ie(e) {
+	e.isWeakSet = M;
+	function re(e) {
 		return c(e) === "[object ArrayBuffer]";
 	}
-	ie.working = typeof ArrayBuffer < "u" && ie(/* @__PURE__ */ new ArrayBuffer());
-	function M(e) {
-		return typeof ArrayBuffer > "u" ? !1 : ie.working ? ie(e) : e instanceof ArrayBuffer;
+	re.working = typeof ArrayBuffer < "u" && re(/* @__PURE__ */ new ArrayBuffer());
+	function N(e) {
+		return typeof ArrayBuffer > "u" ? !1 : re.working ? re(e) : e instanceof ArrayBuffer;
 	}
-	e.isArrayBuffer = M;
-	function ae(e) {
+	e.isArrayBuffer = N;
+	function ie(e) {
 		return c(e) === "[object DataView]";
 	}
-	ae.working = typeof ArrayBuffer < "u" && typeof DataView < "u" && ae(new DataView(/* @__PURE__ */ new ArrayBuffer(1), 0, 1));
-	function oe(e) {
-		return typeof DataView > "u" ? !1 : ae.working ? ae(e) : e instanceof DataView;
+	ie.working = typeof ArrayBuffer < "u" && typeof DataView < "u" && ie(new DataView(/* @__PURE__ */ new ArrayBuffer(1), 0, 1));
+	function ae(e) {
+		return typeof DataView > "u" ? !1 : ie.working ? ie(e) : e instanceof DataView;
 	}
-	e.isDataView = oe;
-	var se = typeof SharedArrayBuffer < "u" ? SharedArrayBuffer : void 0;
-	function N(e) {
+	e.isDataView = ae;
+	var oe = typeof SharedArrayBuffer < "u" ? SharedArrayBuffer : void 0;
+	function se(e) {
 		return c(e) === "[object SharedArrayBuffer]";
 	}
 	function ce(e) {
-		return se === void 0 ? !1 : (N.working === void 0 && (N.working = N(new se())), N.working ? N(e) : e instanceof se);
+		return oe === void 0 ? !1 : (se.working === void 0 && (se.working = se(new oe())), se.working ? se(e) : e instanceof oe);
 	}
 	e.isSharedArrayBuffer = ce;
 	function le(e) {
@@ -5653,7 +5653,7 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 	}
 	e.isBoxedPrimitive = ye;
 	function be(e) {
-		return typeof Uint8Array < "u" && (M(e) || ce(e));
+		return typeof Uint8Array < "u" && (N(e) || ce(e));
 	}
 	e.isAnyArrayBuffer = be, [
 		"isProxy",
@@ -5948,13 +5948,13 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 	function ne(e, t) {
 		return Object.prototype.hasOwnProperty.call(e, t);
 	}
-	var re = typeof Symbol < "u" ? Symbol("util.promisify.custom") : void 0;
+	var M = typeof Symbol < "u" ? Symbol("util.promisify.custom") : void 0;
 	e.promisify = function(e) {
 		if (typeof e != "function") throw TypeError("The \"original\" argument must be of type Function");
-		if (re && e[re]) {
-			var n = e[re];
+		if (M && e[M]) {
+			var n = e[M];
 			if (typeof n != "function") throw TypeError("The \"util.promisify.custom\" argument must be of type Function");
-			return Object.defineProperty(n, re, {
+			return Object.defineProperty(n, M, {
 				value: n,
 				enumerable: !1,
 				writable: !1,
@@ -5975,21 +5975,21 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 			}
 			return r;
 		}
-		return Object.setPrototypeOf(n, Object.getPrototypeOf(e)), re && Object.defineProperty(n, re, {
+		return Object.setPrototypeOf(n, Object.getPrototypeOf(e)), M && Object.defineProperty(n, M, {
 			value: n,
 			enumerable: !1,
 			writable: !1,
 			configurable: !0
 		}), Object.defineProperties(n, t(e));
-	}, e.promisify.custom = re;
-	function ie(e, t) {
+	}, e.promisify.custom = M;
+	function re(e, t) {
 		if (!e) {
 			var n = /* @__PURE__ */ Error("Promise was rejected with a falsy value");
 			n.reason = e, e = n;
 		}
 		return t(e);
 	}
-	function M(e) {
+	function N(e) {
 		if (typeof e != "function") throw TypeError("The \"original\" argument must be of type Function");
 		function n() {
 			for (var t = [], n = 0; n < arguments.length; n++) t.push(arguments[n]);
@@ -6001,12 +6001,12 @@ var Yb = "|", Xb = /* @__PURE__ */ P(((e, t) => {
 			e.apply(this, t).then(function(e) {
 				process.nextTick(a.bind(null, null, e));
 			}, function(e) {
-				process.nextTick(ie.bind(null, e, a));
+				process.nextTick(re.bind(null, e, a));
 			});
 		}
 		return Object.setPrototypeOf(n, Object.getPrototypeOf(e)), Object.defineProperties(n, t(e)), n;
 	}
-	e.callbackify = M;
+	e.callbackify = N;
 })), $x = /* @__PURE__ */ P(((e) => {
 	(function() {
 		var t = {
@@ -8139,7 +8139,7 @@ function HT({ children: e, className: n, onLinkClick: r, ...i }) {
 	});
 	return /* @__PURE__ */ t.createElement(Jw, {
 		className: (0, V.default)(Yw.container, n),
-		as: M,
+		as: N,
 		options: {
 			...a,
 			render: O
@@ -8168,11 +8168,11 @@ function UT({ onImageClick: e, ...n }) {
 		target: "_blank",
 		rel: "noreferrer noopener"
 	}, n.title);
-	return /* @__PURE__ */ t.createElement("div", { className: (0, V.default)(HS.container) }, /* @__PURE__ */ t.createElement("div", { className: HS.wrapImageCaption }, o, /* @__PURE__ */ t.createElement("div", { className: HS.caption }, /* @__PURE__ */ t.createElement(M, {
+	return /* @__PURE__ */ t.createElement("div", { className: (0, V.default)(HS.container) }, /* @__PURE__ */ t.createElement("div", { className: HS.wrapImageCaption }, o, /* @__PURE__ */ t.createElement("div", { className: HS.caption }, /* @__PURE__ */ t.createElement(N, {
 		type: "body",
 		size: "md",
 		className: HS.title
-	}, i ? /* @__PURE__ */ t.createElement(N, { label: i }, s) : s, n.siteName && /* @__PURE__ */ t.createElement(M, {
+	}, i ? /* @__PURE__ */ t.createElement(se, { label: i }, s) : s, n.siteName && /* @__PURE__ */ t.createElement(N, {
 		as: "span",
 		size: "md",
 		weight: "regular"
@@ -10579,7 +10579,7 @@ function yO({ vm: e, className: n, ref: r }) {
 		className: vO.icon,
 		"aria-hidden": "true"
 	}), /* @__PURE__ */ t.createElement("span", null, i));
-	return a ? /* @__PURE__ */ t.createElement(N, { description: a }, o) : o;
+	return a ? /* @__PURE__ */ t.createElement(se, { description: a }, o) : o;
 }
 var bO = {
 	content: "_content_f1s5h_8",
@@ -10605,7 +10605,7 @@ function TO(e) {
 	return e === wO.AUDIO ? _O : e === wO.DOWNLOAD ? VE : e === wO.VIDEO ? sO : yE;
 }
 function EO({ vm: e, refIFrame: n, refLink: r, className: i }) {
-	let { translate: a } = U(), { state: o, showInfo: s, infoLabel: c, infoTooltip: l, infoIcon: u, infoHref: d, showDownload: f, downloadLabel: p, downloadTitle: m, downloadHref: h } = J(e), g = c ?? a("common|attachment"), _ = l ?? g, v = TO(u), b = s ? /* @__PURE__ */ t.createElement(N, {
+	let { translate: a } = U(), { state: o, showInfo: s, infoLabel: c, infoTooltip: l, infoIcon: u, infoHref: d, showDownload: f, downloadLabel: p, downloadTitle: m, downloadHref: h } = J(e), g = c ?? a("common|attachment"), _ = l ?? g, v = TO(u), b = s ? /* @__PURE__ */ t.createElement(se, {
 		description: _,
 		placement: "right"
 	}, /* @__PURE__ */ t.createElement(SO, { "data-type": "info" }, /* @__PURE__ */ t.createElement(y, {
@@ -10857,7 +10857,7 @@ function tk({ vm: e, className: n, children: r }) {
 		maxWidth: m,
 		maxHeight: g,
 		loadingLabel: i("common|loading")
-	}), re = ne !== null, ie = a === QO.HIDDEN ? /* @__PURE__ */ t.createElement("div", { style: {
+	}), M = ne !== null, re = a === QO.HIDDEN ? /* @__PURE__ */ t.createElement("div", { style: {
 		width: m,
 		height: g
 	} }, /* @__PURE__ */ t.createElement("button", {
@@ -10872,18 +10872,18 @@ function tk({ vm: e, className: n, children: r }) {
 		onLoad: e.onImageLoad,
 		onMouseEnter: () => T(!0),
 		onMouseLeave: () => T(!1)
-	}) : null, M = a === QO.READY && b && O ? /* @__PURE__ */ t.createElement("span", { className: ZO.banner }, b) : null, ae = a === QO.READY && y && !O ? /* @__PURE__ */ t.createElement("p", { className: ZO.gifLabel }, y) : null, oe = /* @__PURE__ */ t.createElement("div", {
+	}) : null, N = a === QO.READY && b && O ? /* @__PURE__ */ t.createElement("span", { className: ZO.banner }, b) : null, ie = a === QO.READY && y && !O ? /* @__PURE__ */ t.createElement("p", { className: ZO.gifLabel }, y) : null, ae = /* @__PURE__ */ t.createElement("div", {
 		className: ZO.thumbnailContainer,
 		style: j
-	}, re && /* @__PURE__ */ t.createElement("div", { className: (0, V.default)(ZO.placeholder, { [ZO.placeholderBlurhash]: f === $O.BLURHASH && !!p }) }, ne), /* @__PURE__ */ t.createElement("div", {
+	}, M && /* @__PURE__ */ t.createElement("div", { className: (0, V.default)(ZO.placeholder, { [ZO.placeholderBlurhash]: f === $O.BLURHASH && !!p }) }, ne), /* @__PURE__ */ t.createElement("div", {
 		className: ZO.mediaContent,
 		style: te
-	}, ie, ae, M));
-	return x && (oe = /* @__PURE__ */ t.createElement(N, {
+	}, re, ie, N));
+	return x && (ae = /* @__PURE__ */ t.createElement(se, {
 		description: x,
 		placement: "right",
 		isTriggerInteractive: !0
-	}, oe)), a === QO.READY && S && (oe = /* @__PURE__ */ t.createElement("a", {
+	}, ae)), a === QO.READY && S && (ae = /* @__PURE__ */ t.createElement("a", {
 		href: S,
 		target: C,
 		rel: C === "_blank" ? "noreferrer noopener" : void 0,
@@ -10891,7 +10891,7 @@ function tk({ vm: e, className: n, children: r }) {
 		onClick: e.onLinkClick,
 		onFocus: () => D(!0),
 		onBlur: () => D(!1)
-	}, oe)), /* @__PURE__ */ t.createElement("div", { className: k }, oe, r);
+	}, ae)), /* @__PURE__ */ t.createElement("div", { className: k }, ae, r);
 }
 var nk = {
 	root: "_root_mntwr_1",
@@ -10986,7 +10986,7 @@ function lk({ vm: e, body: n, bodyRef: r, urlPreviews: i, className: a }) {
 			className: (0, V.default)(ak.annotation, ak.editedMarker),
 			onClick: b
 		}, /* @__PURE__ */ t.createElement("span", null, f));
-		x.push(p ? /* @__PURE__ */ t.createElement(N, {
+		x.push(p ? /* @__PURE__ */ t.createElement(se, {
 			key: "edited-marker",
 			description: p,
 			caption: m,
@@ -11173,7 +11173,7 @@ function Ck({ vm: e }) {
 			type: "info",
 			role: "status",
 			"aria-labelledby": i
-		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(M, {
+		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(N, {
 			className: xk.title,
 			id: i,
 			weight: "medium"
@@ -11181,7 +11181,7 @@ function Ck({ vm: e }) {
 			target: "_blank",
 			rel: "noreferrer noopener",
 			href: "https://status.tchap.numerique.gouv.fr"
-		}, e) })), /* @__PURE__ */ t.createElement(M, { className: xk.description }, n("room|status_bar|server_connectivity_lost_description"))));
+		}, e) })), /* @__PURE__ */ t.createElement(N, { className: xk.description }, n("room|status_bar|server_connectivity_lost_description"))));
 		case Sk.NeedsConsent: return /* @__PURE__ */ t.createElement(OS, {
 			type: "info",
 			role: "status",
@@ -11196,7 +11196,7 @@ function Ck({ vm: e }) {
 				target: "_blank",
 				rel: "noreferrer noopener"
 			}, n("terms|tac_button"))
-		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(M, {
+		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(N, {
 			className: xk.title,
 			id: i,
 			weight: "medium"
@@ -11213,14 +11213,14 @@ function Ck({ vm: e }) {
 				target: "_blank",
 				rel: "noreferrer noopener"
 			}, "Contact admin")
-		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(M, {
+		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(N, {
 			className: xk.title,
 			id: i,
 			weight: "medium"
 		}, {
 			monthly_active_user: n("room|status_bar|monthly_user_limit_reached_title"),
 			hs_disabled: n("room|status_bar|homeserver_blocked_title")
-		}[r.resourceLimit] || n("room|status_bar|exceeded_resource_limit_title")), /* @__PURE__ */ t.createElement(M, { className: xk.description }, n("room|status_bar|exceeded_resource_limit_description"))));
+		}[r.resourceLimit] || n("room|status_bar|exceeded_resource_limit_title")), /* @__PURE__ */ t.createElement(N, { className: xk.description }, n("room|status_bar|exceeded_resource_limit_description"))));
 		case Sk.LocalRoomFailed: return /* @__PURE__ */ t.createElement(OS, {
 			role: "status",
 			type: "info",
@@ -11232,7 +11232,7 @@ function Ck({ vm: e }) {
 				Icon: UD,
 				onClick: s
 			}, n("action|retry"))
-		}, /* @__PURE__ */ t.createElement(M, {
+		}, /* @__PURE__ */ t.createElement(N, {
 			className: xk.title,
 			id: i,
 			weight: "medium"
@@ -11254,7 +11254,7 @@ function Ck({ vm: e }) {
 				className: xk.primaryAction
 			}, n("room|status_bar|retry_all"))),
 			"aria-labelledby": i
-		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(M, {
+		}, /* @__PURE__ */ t.createElement("div", { className: xk.container }, /* @__PURE__ */ t.createElement(N, {
 			className: xk.title,
 			id: i,
 			weight: "medium"
@@ -11262,7 +11262,7 @@ function Ck({ vm: e }) {
 			target: "_blank",
 			rel: "noreferrer noopener",
 			href: "https://status.tchap.numerique.gouv.fr"
-		}, e) })), /* @__PURE__ */ t.createElement(M, { className: xk.description }, n("room|status_bar|select_messages_to_retry"))));
+		}, e) })), /* @__PURE__ */ t.createElement(N, { className: xk.description }, n("room|status_bar|select_messages_to_retry"))));
 		default: return null;
 	}
 }
@@ -11404,7 +11404,7 @@ var zk = {
 	}, /* @__PURE__ */ t.createElement(C, {
 		name: "jump-to-date-field",
 		className: zk.picker_input
-	}, /* @__PURE__ */ t.createElement(ae, {
+	}, /* @__PURE__ */ t.createElement(ie, {
 		ref: p,
 		id: c,
 		type: "date",
@@ -11414,7 +11414,7 @@ var zk = {
 		value: l,
 		max: fp(/* @__PURE__ */ new Date()),
 		className: zk.picker_input_date
-	})), /* @__PURE__ */ t.createElement(ie, {
+	})), /* @__PURE__ */ t.createElement(re, {
 		ref: g,
 		className: zk.picker_button,
 		type: "submit",
@@ -11470,7 +11470,7 @@ var zk = {
 	}));
 }, Uk = a(function({ label: e, tooltipOpen: n, className: r, ...i }, a) {
 	let { translate: o } = U();
-	return /* @__PURE__ */ t.createElement(N, {
+	return /* @__PURE__ */ t.createElement(se, {
 		description: o("room|jump_to_date"),
 		placement: "right",
 		open: n
@@ -11531,7 +11531,7 @@ function Kk({ presentation: e, buttonRef: n, label: r, onActivate: i, icon: a, d
 	let d = e === "icon", f = (e) => {
 		e.preventDefault(), e.stopPropagation(), i?.(e.currentTarget);
 	};
-	return /* @__PURE__ */ t.createElement(N, {
+	return /* @__PURE__ */ t.createElement(se, {
 		description: l ?? r,
 		caption: u,
 		placement: "top"
@@ -11557,179 +11557,181 @@ var $ = /* @__PURE__ */ function(e) {
 	return e.Cancel = "cancel", e.CopyLink = "copyLink", e.Download = "download", e.Edit = "edit", e.Expand = "expand", e.Hide = "hide", e.Options = "options", e.Pin = "pin", e.React = "react", e.Remove = "remove", e.Reply = "reply", e.ReplyInThread = "replyInThread", e.Resend = "resend", e.ViewInRoom = "viewInRoom", e.ViewSource = "viewSource", e;
 }({});
 function qk({ vm: e, className: n }) {
-	let { translate: r } = U(), [i, a] = h(0), { actions: o, presentation: s = "icon", isThreadReplyAllowed: l, isDownloadEncrypted: u, isDownloadLoading: d, isPinned: g, isQuoteExpanded: _ } = J(e), v = m({}), y = p(() => Object.fromEntries(Object.values($).map((e) => [e, (t) => {
-		v.current[e] = t;
-	}])), []), b = {};
-	b[$.Edit] = /* @__PURE__ */ t.createElement(Kk, {
+	let { translate: r } = U(), [i, a] = h(0), { actions: o, presentation: s = "icon", isThreadReplyAllowed: l, isDownloadEncrypted: u, isDownloadLoading: d, isPinned: g, isQuoteExpanded: _, downloadScanState: v } = J(e), y = m({}), b = p(() => Object.fromEntries(Object.values($).map((e) => [e, (t) => {
+		y.current[e] = t;
+	}])), []), x = {};
+	x[$.Edit] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Edit,
 		presentation: s,
-		buttonRef: y[$.Edit],
+		buttonRef: b[$.Edit],
 		label: r("action|edit"),
 		onActivate: e.onEditClick,
 		icon: GE
 	});
-	let x = r(g ? "action|unpin" : "action|pin");
-	b[$.Pin] = /* @__PURE__ */ t.createElement(Kk, {
+	let S = r(g ? "action|unpin" : "action|pin");
+	x[$.Pin] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Pin,
 		presentation: s,
-		buttonRef: y[$.Pin],
-		label: x,
+		buttonRef: b[$.Pin],
+		label: S,
 		onActivate: e.onPinClick,
 		icon: g ? tO : ND,
 		ariaPressed: g
-	}), b[$.Cancel] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.Cancel] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Cancel,
 		presentation: s,
-		buttonRef: y[$.Cancel],
+		buttonRef: b[$.Cancel],
 		label: r("action|delete"),
 		onActivate: e.onCancelClick,
 		icon: LE
-	}), b[$.CopyLink] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.CopyLink] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.CopyLink,
 		presentation: s,
-		buttonRef: y[$.CopyLink],
+		buttonRef: b[$.CopyLink],
 		label: r("timeline|mab|copy_link_thread"),
 		onActivate: e.onCopyLinkClick,
 		icon: hD
-	}), b[$.Reply] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.Reply] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Reply,
 		presentation: s,
-		buttonRef: y[$.Reply],
+		buttonRef: b[$.Reply],
 		label: r("action|reply"),
 		onActivate: e.onReplyClick,
 		icon: VD
-	}), b[$.React] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.React] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.React,
 		presentation: s,
-		buttonRef: y[$.React],
+		buttonRef: b[$.React],
 		label: r("action|react"),
 		onActivate: e.onReactionsClick,
 		icon: zD
 	});
-	let S = r("action|download");
-	d && (S = r(u ? "timeline|download_action_decrypting" : "timeline|download_action_downloading")), b[$.Download] = /* @__PURE__ */ t.createElement(Kk, {
+	let C = r("action|download");
+	d && (C = r(u ? "timeline|download_action_decrypting" : "timeline|download_action_downloading"));
+	let w = () => d || v === "scanning" ? D : v === "unsafe" ? xE : VE;
+	x[$.Download] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Download,
 		presentation: s,
-		buttonRef: y[$.Download],
-		label: S,
+		buttonRef: b[$.Download],
+		label: C,
 		onActivate: e.onDownloadClick,
-		icon: d ? D : VE,
-		disabled: d
-	}), b[$.Hide] = /* @__PURE__ */ t.createElement(Kk, {
+		icon: w(),
+		disabled: d || v === "unsafe"
+	}), x[$.Hide] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Hide,
 		presentation: s,
-		buttonRef: y[$.Hide],
+		buttonRef: b[$.Hide],
 		label: r("action|hide"),
 		onActivate: e.onHideClick,
 		icon: dO
 	});
-	let C = r(l ? "action|reply_in_thread" : "threads|error_start_thread_existing_relation");
-	b[$.ReplyInThread] = /* @__PURE__ */ t.createElement(Kk, {
+	let T = r(l ? "action|reply_in_thread" : "threads|error_start_thread_existing_relation");
+	x[$.ReplyInThread] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.ReplyInThread,
 		presentation: s,
-		buttonRef: y[$.ReplyInThread],
+		buttonRef: b[$.ReplyInThread],
 		label: r("action|reply_in_thread"),
-		tooltipDescription: C,
+		tooltipDescription: T,
 		onActivate: e.onReplyInThreadClick,
 		icon: $D,
 		disabled: !l
-	}), b[$.Resend] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.Resend] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Resend,
 		presentation: s,
-		buttonRef: y[$.Resend],
+		buttonRef: b[$.Resend],
 		label: r("action|retry"),
 		onActivate: e.onResendClick,
 		icon: UD
 	});
-	let w = r(_ ? "timeline|mab|collapse_reply_chain" : "timeline|mab|expand_reply_chain");
-	b[$.Expand] = /* @__PURE__ */ t.createElement(Kk, {
+	let E = r(_ ? "timeline|mab|collapse_reply_chain" : "timeline|mab|expand_reply_chain");
+	x[$.Expand] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Expand,
 		presentation: s,
-		buttonRef: y[$.Expand],
-		label: w,
+		buttonRef: b[$.Expand],
+		label: E,
 		tooltipCaption: `${r("keyboard|shift")} + ${r("action|click")}`,
 		onActivate: e.onToggleThreadExpanded,
 		icon: _ ? NE : ZE,
 		ariaExpanded: _
-	}), b[$.Options] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.Options] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Options,
 		presentation: s,
-		buttonRef: y[$.Options],
+		buttonRef: b[$.Options],
 		label: r("common|options"),
 		onActivate: e.onOptionsClick,
 		icon: kD
-	}), b[$.Remove] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.Remove] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.Remove,
 		presentation: s,
-		buttonRef: y[$.Remove],
+		buttonRef: b[$.Remove],
 		label: r("action|remove"),
 		onActivate: e.onRemoveClick,
 		icon: LE
-	}), b[$.ViewInRoom] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.ViewInRoom] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.ViewInRoom,
 		presentation: s,
-		buttonRef: y[$.ViewInRoom],
+		buttonRef: b[$.ViewInRoom],
 		label: r("timeline|mab|view_in_room"),
 		onActivate: e.onViewInRoomClick,
 		icon: pO
-	}), b[$.ViewSource] = /* @__PURE__ */ t.createElement(Kk, {
+	}), x[$.ViewSource] = /* @__PURE__ */ t.createElement(Kk, {
 		key: $.ViewSource,
 		presentation: s,
-		buttonRef: y[$.ViewSource],
+		buttonRef: b[$.ViewSource],
 		label: r("action|view_source"),
 		onActivate: e.onViewSourceClick,
 		icon: dD
 	});
-	let T = c((e) => {
+	let O = c((e) => {
 		switch (e) {
 			case $.Download: return d;
 			case $.ReplyInThread: return !l;
 			default: return !1;
 		}
-	}, [d, l]), E = p(() => o.map((e) => ({
+	}, [d, l]), k = p(() => o.map((e) => ({
 		action: e,
-		disabled: T(e)
-	})), [o, T]), O = E.map((e, t) => e.disabled ? -1 : t).filter((e) => e >= 0), k = O[0] ?? 0, A = E[i] && !E[i].disabled ? i : k;
+		disabled: O(e)
+	})), [o, O]), A = k.map((e, t) => e.disabled ? -1 : t).filter((e) => e >= 0), ee = A[0] ?? 0, j = k[i] && !k[i].disabled ? i : ee;
 	f(() => {
-		a(A), E.forEach(({ action: e }, t) => {
-			let n = v.current[e] ?? null;
-			n && (n.tabIndex = t === A ? 0 : -1);
+		a(j), k.forEach(({ action: e }, t) => {
+			let n = y.current[e] ?? null;
+			n && (n.tabIndex = t === j ? 0 : -1);
 		});
-	}, [A, E]);
-	let ee = (e) => {
-		let t = E[e]?.action, n = t ? v.current[t] ?? null : null;
+	}, [j, k]);
+	let te = (e) => {
+		let t = k[e]?.action, n = t ? y.current[t] ?? null : null;
 		n && (a(e), n.focus());
-	}, j = (e) => {
-		if (O.length === 0) return;
-		let t = E.findIndex(({ action: e }) => v.current[e] === document.activeElement), n = t >= 0 ? t : A;
+	}, ne = (e) => {
+		if (A.length === 0) return;
+		let t = k.findIndex(({ action: e }) => y.current[e] === document.activeElement), n = t >= 0 ? t : j;
 		switch (e.key) {
 			case "ArrowRight":
-				e.preventDefault(), ee(O.find((e) => e > n) ?? O[0]);
+				e.preventDefault(), te(A.find((e) => e > n) ?? A[0]);
 				break;
 			case "ArrowLeft":
-				e.preventDefault(), ee([...O].reverse().find((e) => e < n) ?? O[O.length - 1]);
+				e.preventDefault(), te([...A].reverse().find((e) => e < n) ?? A[A.length - 1]);
 				break;
 			case "Home":
-				e.preventDefault(), ee(O[0]);
+				e.preventDefault(), te(A[0]);
 				break;
 			case "End":
-				e.preventDefault(), ee(O[O.length - 1]);
+				e.preventDefault(), te(A[A.length - 1]);
 				break;
 		}
-	}, te = () => {
-		let e = E.findIndex(({ action: e }) => v.current[e] === document.activeElement);
+	}, M = () => {
+		let e = k.findIndex(({ action: e }) => y.current[e] === document.activeElement);
 		e >= 0 && e !== i && a(e);
 	};
-	return E.length === 0 ? null : /* @__PURE__ */ t.createElement(K, {
+	return k.length === 0 ? null : /* @__PURE__ */ t.createElement(K, {
 		display: "inline-flex",
 		direction: "row",
 		role: "toolbar",
 		"aria-label": r("timeline|mab|label"),
 		"aria-live": "off",
-		onKeyDown: j,
-		onFocusCapture: te,
+		onKeyDown: ne,
+		onFocusCapture: M,
 		className: (0, V.default)(n, Gk.toolbar)
-	}, E.map((e) => b[e.action]));
+	}, k.map((e) => x[e.action]));
 }
 var Jk = {
 	disambiguatedProfile: "_disambiguatedProfile_oa3at_8",
@@ -11969,7 +11971,7 @@ function pA({ vm: e, className: n, children: r }) {
 		type: "button",
 		className: fA.showAllButton,
 		onClick: e.onShowAllClick
-	}, s), c && /* @__PURE__ */ t.createElement(N, {
+	}, s), c && /* @__PURE__ */ t.createElement(se, {
 		description: l,
 		placement: "right"
 	}, h));
@@ -11978,7 +11980,7 @@ function pA({ vm: e, className: n, children: r }) {
 //#region src/room/timeline/event-tile/reactions/ReactionsRowButtonTooltip/ReactionsRowButtonTooltipView.tsx
 function mA({ vm: e, children: n }) {
 	let { formattedSenders: r, caption: i, tooltipOpen: a } = J(e);
-	return r ? /* @__PURE__ */ t.createElement(N, {
+	return r ? /* @__PURE__ */ t.createElement(se, {
 		description: r,
 		caption: i,
 		placement: "right",
@@ -12044,7 +12046,7 @@ function vA({ vm: e, className: n }) {
 		role: e.onClick ? "link" : void 0,
 		"aria-live": "off",
 		tabIndex: e.onClick || !s ? 0 : void 0
-	}, i), s ? f : /* @__PURE__ */ t.createElement(N, {
+	}, i), s ? f : /* @__PURE__ */ t.createElement(se, {
 		description: u,
 		caption: d
 	}, f);
@@ -12830,13 +12832,13 @@ function rj({ vm: e }) {
 		onSelect: e.onMarkAsUnread,
 		onClick: (e) => e.stopPropagation(),
 		hideChevron: !0
-	}), /* @__PURE__ */ t.createElement(se, {
+	}), /* @__PURE__ */ t.createElement(oe, {
 		checked: n.isFavourite,
 		Icon: tD,
 		label: q("room_list|more_options|favourited"),
 		onSelect: e.onToggleFavorite,
 		onClick: (e) => e.stopPropagation()
-	}), /* @__PURE__ */ t.createElement(se, {
+	}), /* @__PURE__ */ t.createElement(oe, {
 		checked: n.isLowPriority,
 		Icon: hE,
 		label: q("room_list|more_options|low_priority"),
@@ -12854,7 +12856,7 @@ function rj({ vm: e }) {
 		onSelect: e.onCopyRoomLink,
 		onClick: (e) => e.stopPropagation(),
 		hideChevron: !0
-	}), n.canMoveToSection && /* @__PURE__ */ t.createElement(re, { trigger: /* @__PURE__ */ t.createElement(A, {
+	}), n.canMoveToSection && /* @__PURE__ */ t.createElement(M, { trigger: /* @__PURE__ */ t.createElement(A, {
 		Icon: _E,
 		label: q("room_list|more_options|move_to_section"),
 		onSelect: null
@@ -12997,7 +12999,7 @@ var uj = s(function({ vm: e, isSelected: n, isFocused: r, onFocus: i, isFirstIte
 		className: oj.roomName,
 		title: d.name,
 		"data-testid": "room-name"
-	}, d.name), d.messagePreview && /* @__PURE__ */ t.createElement(M, {
+	}, d.name), d.messagePreview && /* @__PURE__ */ t.createElement(N, {
 		as: "div",
 		size: "sm",
 		className: oj.ellipsis,
@@ -13124,7 +13126,7 @@ function gj({ type: e, onClose: n }) {
 			};
 			break;
 	}
-	return /* @__PURE__ */ t.createElement(oe, {
+	return /* @__PURE__ */ t.createElement(ae, {
 		className: hj.toast,
 		Icon: i.icon,
 		onClose: n,
@@ -13196,7 +13198,7 @@ function Cj({ vm: e, className: n }) {
 		onFocus: e.onFocus,
 		onBlur: e.onBlur,
 		"aria-label": r("left_panel|separator_label")
-	}, /* @__PURE__ */ t.createElement(N, {
+	}, /* @__PURE__ */ t.createElement(se, {
 		description: r("left_panel|separator_label"),
 		placement: "right"
 	}, /* @__PURE__ */ t.createElement(UE, {

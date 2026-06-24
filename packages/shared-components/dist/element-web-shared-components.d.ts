@@ -887,6 +887,7 @@ export declare interface FileBodyViewSnapshot {
      * Optional URL used for `UNENCRYPTED` download links.
      */
     downloadHref?: string;
+    scanningState?: "scanning" | "unsafe" | "error" | "done";
 }
 
 /**
@@ -1208,7 +1209,7 @@ export declare class I18nApi implements I18nApi_2 {
     humanizeTime: (timeMillis: number) => string;
 }
 
-export declare const I18nContext: Context<I18nApi_2 | null>;
+export declare const I18nContext: Context<any>;
 
 /**
  * Renders the body of an image message with ready, hidden, and error states.
