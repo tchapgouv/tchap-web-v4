@@ -81,8 +81,8 @@
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
     "element_call": {
-        "url": "https://call.element.io",
-        "brand": "Element Call"
+        "brand": "Appel de groupe",
+        "use_exclusively": true
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "permalink_prefix": "https://www.beta.tchap.gouv.fr"
