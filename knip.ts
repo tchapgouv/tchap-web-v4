@@ -41,8 +41,9 @@ export default {
         "process",
         "util",
         // Embedded into webapp
-        // :TCHAP: "@element-hq/element-call-embedded",
-        "element-call-embedded-tchap",
+        // :TCHAP:
+        "@element-hq/element-call-embedded",
+        //"element-call-embedded-tchap",
         // Transitive dep of jest
         "@jest/globals",
         "vitest-environment-jest-fixed-jsdom",

@@ -132,8 +132,8 @@
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "element_call": {
-        "url": "https://element-call.tchap.incubateur.net/",
-        "brand": "Appel de groupe"
+        "brand": "Appel de groupe",
+        "use_exclusively": true
     },
     "posthog": {
         "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",

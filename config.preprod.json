@@ -135,8 +135,8 @@
         "api_host": "https://posthog.preprod.tchap.numerique.gouv.fr"
     },
     "element_call": {
-        "url": "https://call.preprod.tchap.gouv.fr/",
-        "brand": "Appel de groupe"
+        "brand": "Appel de groupe",
+        "use_exclusively": true
     },
     "logout_redirect_url": "#/welcome"
 }
