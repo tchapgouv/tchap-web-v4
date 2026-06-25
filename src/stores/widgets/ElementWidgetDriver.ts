@@ -125,7 +125,11 @@ export class ElementWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add(MatrixCapabilities.MSC4157SendDelayedEvent);
             this.allowedCapabilities.add(MatrixCapabilities.MSC4157UpdateDelayedEvent);
             this.allowedCapabilities.add(MatrixCapabilities.MSC4354SendStickyEvent);
-
+            // :TCHAP: auto accept new event from updated EC .TODO remove after upgrade is done and aligned
+            this.allowedCapabilities.add(MatrixCapabilities.MSC4407SendStickyEvent);
+            this.allowedCapabilities.add(MatrixCapabilities.MSC4407ReceiveStickyEvent);
+            this.allowedCapabilities.add(MatrixCapabilities.MSC4039DownloadFile);
+            // end :TCHAP:
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomName).raw,
             );
