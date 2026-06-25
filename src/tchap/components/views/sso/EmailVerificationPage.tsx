@@ -99,7 +99,7 @@ export default function EmailVerificationPage(props: IProps) {
             // get user homeserver from his email
             const hs: Record<string, any> | void = await TchapUtils.fetchHomeserverForEmail(email);
             if (!hs) {
-                displayError("This email address cannot be used in Tchap");
+                displayError(`Impossible de trouver un homeserver pour cette adresse email: "${email}", merci de contacter support@tchap.beta.gouv.fr`);
                 return;
             }
 
