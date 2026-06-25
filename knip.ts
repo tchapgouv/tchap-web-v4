@@ -39,8 +39,8 @@ export default {
                 "process",
                 "util",
                 // Embedded into webapp
-                // :TCHAP: "@element-hq/element-call-embedded",
-                "element-call-embedded-tchap",
+                "@element-hq/element-call-embedded",
+                // "element-call-embedded-tchap",
 
                 // Used by matrix-js-sdk, which means we have to include them as a
                 // dependency so that // we can run `tsc` (since we import the typescript

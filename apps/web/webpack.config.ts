@@ -731,8 +731,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     // Element Call embedded widget
                     {
                         from: "**",
-                        // :TCHAP: context: getPackageRoot(__dirname, "node_modules/@element-hq/element-call-embedded/dist"),
-                        context: getPackageRoot("element-call-embedded-tchap", "dist"),
+                        context: getPackageRoot("@element-hq/element-call-embedded", "dist"),
                         to: path.join(__dirname, "webapp", "widgets", "element-call"),
                     },
                     // Mobile guide assets
