@@ -6,4 +6,4 @@
 /src/component-index.js
 # Auto-generated file
 /src/modules.js
-/build_config.yaml
+# /build_config.yaml // :TCHAP: still using the legacy module system
