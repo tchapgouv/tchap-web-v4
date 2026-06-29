@@ -26,6 +26,8 @@ import { KeyStoragePanel } from "../../encryption/KeyStoragePanel";
 import { DeleteKeyStoragePanel } from "../../encryption/DeleteKeyStoragePanel";
 import { DeviceListener, CurrentDeviceEvents, type DeviceState } from "../../../../../device-listener";
 import { useKeyStoragePanelViewModel } from "../../../../viewmodels/settings/encryption/KeyStoragePanelViewModel";
+import { SettingsSubsection } from "../../shared/SettingsSubsection";
+import EventIndexPanel from "../../EventIndexPanel";
 
 /**
  * The state in the encryption settings tab.

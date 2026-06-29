@@ -32,7 +32,7 @@ import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import { SettingsSubsection, SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import { useOwnDevices } from "../../devices/useOwnDevices";
-// import { DiscoverySettings } from "../../discovery/DiscoverySettings"; // :TCHAP: metrics-call
+import { DiscoverySettings } from "../../discovery/DiscoverySettings"; // :TCHAP: metrics-call
 import SetIntegrationManager from "../../SetIntegrationManager";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
@@ -297,7 +297,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     public render(): React.ReactNode {
-        
+
         /* :TCHAP:
         //secureBackup is for dehydrated device which we do not use in Tchap
         const secureBackup = <SecureBackup />;

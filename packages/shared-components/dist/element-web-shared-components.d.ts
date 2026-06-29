@@ -137,6 +137,7 @@ export declare interface ActionBarViewSnapshot {
     isQuoteExpanded: boolean;
     /** Whether starting or replying in a thread is allowed for this event. */
     isThreadReplyAllowed: boolean;
+    downloadScanState: "scanning" | "done" | "error" | "unsafe";
 }
 
 /**
