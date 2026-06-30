@@ -486,8 +486,8 @@ export class EventTileActionBarViewModel
                 Modal.createDialog(ErrorDialog, {
                     title: scanState === "unsafe" ? _t("Content blocked") : _t("Scan unavailable"),
                     description: scanState === "unsafe"
-                        ? _t("The content has been blocked by the content scanner")
-                        : _t("The content scanner is currently unavailable"),
+                        ? _t("Content blocked")
+                        : _t("Scan unavailable"),
                 });
                 return;
             }
@@ -502,8 +502,8 @@ export class EventTileActionBarViewModel
                     Modal.createDialog(ErrorDialog, {
                         title: finalScanState === "unsafe" ? _t("Content blocked") : _t("Scan unavailable"),
                         description: finalScanState === "unsafe"
-                            ? _t("The content has been blocked by the content scanner")
-                            : _t("The content scanner is currently unavailable"),
+                            ? _t("Content blocked")
+                            : _t("Scan unavailable"),
                     });
                     return;
                 }

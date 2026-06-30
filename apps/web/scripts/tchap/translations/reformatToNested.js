@@ -21,29 +21,32 @@
   }
 */
 
-const parseArgs = require("minimist");
+import parseArgs from "minimist";
 
 const argv = parseArgs(process.argv.slice(2), {});
-const tchapTranslations = require(argv.file);
 
-const reformat = (translations) => {
-  for (const [key, value] of Object.entries(translations)) {
-    // Split "aa|bb|cc" into "aa" and "bb|cc"
-    let [parentKey, ...restOfKey] = key.split('|');
-    restOfKey = restOfKey.join('|');
-    if (restOfKey === '') { // no "|" in key
-      // do nothing, it's already in the right format.
-    } else {
-      // initialize translations[parentKey] if not exist
-      if (!(parentKey in translations)) {
-        translations[parentKey] = {};
-      }
-      translations[parentKey][restOfKey] = value;
-      delete translations[key];
-      reformat(translations[parentKey]);
-    }
-  }
-}
+Promise.all([import(argv.file, { with: { type: "json" } })]).then(([{ default: tchapTranslations }]) => {
+    // Move your code here
+    const reformat = (translations) => {
+        for (const [key, value] of Object.entries(translations)) {
+            // Split "aa|bb|cc" into "aa" and "bb|cc"
+            let [parentKey, ...restOfKey] = key.split("|");
+            restOfKey = restOfKey.join("|");
+            if (restOfKey === "") {
+                // no "|" in key
+                // do nothing, it's already in the right format.
+            } else {
+                // initialize translations[parentKey] if not exist
+                if (!(parentKey in translations)) {
+                    translations[parentKey] = {};
+                }
+                translations[parentKey][restOfKey] = value;
+                delete translations[key];
+                reformat(translations[parentKey]);
+            }
+        }
+    };
 
-reformat(tchapTranslations);
-console.log(JSON.stringify(tchapTranslations, null, 4));
+    reformat(tchapTranslations);
+    console.log(JSON.stringify(tchapTranslations, null, 4));
+});

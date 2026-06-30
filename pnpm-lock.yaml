@@ -98,10 +98,6 @@ patchedDependencies:
 importers:
 
   .:
-    dependencies:
-      compound-web-tchap:
-        specifier: link:../compound-web
-        version: link:../compound-web
     devDependencies:
       '@action-validator/cli':
         specifier: ^0.6.0

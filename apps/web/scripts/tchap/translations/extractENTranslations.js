@@ -7,21 +7,22 @@
  cat $TCHAP_TRANSLATION_FILE | jq  'to_entries[] | { (.key): .value.en }' | jq -n '[inputs] | add' > $TCHAP_TRANSLATION_EN_FILE # no nested keys
 */
 
-const parseArgs = require("minimist");
+import parseArgs from "minimist";
 
 const argv = parseArgs(process.argv.slice(2), {});
-const tchapTranslations = require(argv.file);
 
-// Change the translation object in place, recursively.
-const reformat = (translations) => {
-  for (const key of Object.keys(translations)) {
-    if ('en' in translations[key]) {
-      translations[key] = translations[key].en;
-    } else {
-      reformat(translations[key]);
-    }
-  }
-}
+Promise.all([import(argv.file, { with: { type: "json" } })]).then(([{ default: tchapTranslations }]) => {
+    // Change the translation object in place, recursively.
+    const reformat = (translations) => {
+        for (const key of Object.keys(translations)) {
+            if ("en" in translations[key]) {
+                translations[key] = translations[key].en;
+            } else {
+                reformat(translations[key]);
+            }
+        }
+    };
 
-reformat(tchapTranslations);
-console.log(JSON.stringify(tchapTranslations));
+    reformat(tchapTranslations);
+    console.log(JSON.stringify(tchapTranslations));
+});

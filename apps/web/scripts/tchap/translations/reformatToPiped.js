@@ -21,21 +21,22 @@
   }
   */
 
-const parseArgs = require("minimist");
+import parseArgs from "minimist";
 
+console.log("parseArgs", parseArgs);
 const argv = parseArgs(process.argv.slice(2), {});
-const tchapTranslations = require(argv.file);
+Promise.all([import(argv.file, { with: { type: "json" } })]).then(([{ default: tchapTranslations }]) => {
+    const output = {};
+    const reformat = (translations, parentKey) => {
+        for (const key of Object.keys(translations)) {
+            if ("en" in translations[key]) {
+                output[parentKey + key] = translations[key];
+            } else {
+                reformat(translations[key], parentKey + key + "|");
+            }
+        }
+    };
 
-const output = {};
-const reformat = (translations, parentKey) => {
-  for (const key of Object.keys(translations)) {
-    if ('en' in translations[key]) {
-      output[parentKey + key] = translations[key];
-    } else {
-      reformat(translations[key], parentKey + key + '|');
-    }
-  }
-}
-
-reformat(tchapTranslations, "");
-console.log(JSON.stringify(output, null, 4));
+    reformat(tchapTranslations, "");
+    console.log(JSON.stringify(output, null, 4));
+});

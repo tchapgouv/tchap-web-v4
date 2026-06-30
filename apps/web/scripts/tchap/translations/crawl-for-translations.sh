@@ -34,7 +34,7 @@ export CRAWLED=$2
 crawl $REFERENCE_TRANSLATIONS $CRAWLED
 
 # Merge with SC file, no need to crawl, since everything is referenced in en_EN directly
-export ELEMENT_WEB_SC_TRANSLATION_FILE=`realpath packages/shared-components/src/i18n/strings/en_EN.json`
+export ELEMENT_WEB_SC_TRANSLATION_FILE=`realpath ../../packages/shared-components/src/i18n/strings/en_EN.json`
 merge_json_files $CRAWLED $ELEMENT_WEB_SC_TRANSLATION_FILE $CRAWLED
 
 # Extra hack : config.json is not crawled by matrix-gen-i18n, so the terms_and_conditions_links are missing. Add them in.
