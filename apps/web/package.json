@@ -1,7 +1,7 @@
 {
     "name": "element-web",
     "productName": "Tchap",
-    "version": "4.19.9",
+    "version": "4.20.0",
     "version-element-web": "1.12.9",
     "description": "Element: the future of secure communication",
     "author": "DINUM",
@@ -254,7 +254,6 @@
     "devDependencies-comments": {
         "tchap-added": {
             "@tauri-apps/api": "^2.2.0",
-            "@tauri-apps/plugin-stronghold": "^2.2.0",
             "@tauri-apps/plugin-process": "^2.2.0",
             "@tauri-apps/plugin-updater": "^2.6.0"
         }

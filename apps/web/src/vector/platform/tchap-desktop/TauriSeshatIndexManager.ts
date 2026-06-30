@@ -33,9 +33,8 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
 
         if (!passphrase) {
             logger.debug("[init_event_index] Passphrase was not found, creating new one");
-            // Stronghold needs a Uint32 bytes array
             const ramdom32BytesEncoded: string = this.platform.getSecureStorageInstance().getRandom32BytesEncoded();
-            
+
             this.platform.getSecureStorageInstance().createItem(key, ramdom32BytesEncoded);
             passphrase = ramdom32BytesEncoded;
         }

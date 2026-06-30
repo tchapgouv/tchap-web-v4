@@ -221,7 +221,7 @@ interface IState {
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props
-    
+
     // :TCHAP:
     tchapEmailHint?: string;
     // end :TCHAP:
@@ -979,7 +979,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewEmailPrecheckSSO(payload.params || {});
                 break;
             // desktop-auto-update - For tauri desktop auto update
-            case Action.LoadingUpdate: 
+            case Action.LoadingUpdate:
                 // it should be the last view before reloading the app with the update.
                 this.setState({ view: Views.LOADING });
             // end :TCHAP:
@@ -1156,8 +1156,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         const uri = params && params.createAccount ? `email-precheck-sso?createAccount=${params.createAccount}` : "email-precheck-sso"
         this.notifyNewScreen(uri);
-        ThemeController.isLogin = true;
-        this.themeWatcher?.recheck();
     }
     // end :TCHAP:
 
@@ -1898,7 +1896,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         //:tchap: end
 
         if (screen === "register") {
-            //  :TCHAP: 
+            //  :TCHAP:
             // dis.dispatch({
             //     action: "start_registration",
             //     params: params,
@@ -1907,7 +1905,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: "email_precheck_sso"
             });
-            // end :TCHAP: 
+            // end :TCHAP:
         } else if (screen === "mobile_register") {
             dis.dispatch({
                 action: "start_mobile_registration",
@@ -1923,7 +1921,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: "email_precheck_sso"
             });
-            // end :TCHAP: 
+            // end :TCHAP:
         } else if (screen === "forgot_password") {
             dis.dispatch({
                 action: "start_password_recovery",
@@ -2352,7 +2350,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (this.state.view === Views.EMAIL_PRECHECK_SSO) {
             //propagate onServerConfigChange
             view = (
-                <EmailVerificationPage 
+                <EmailVerificationPage
                     onServerConfigChange={this.onServerConfigChange}
                 />
             )
