@@ -58,7 +58,6 @@
             "executor": "@nx/jest:jest",
             "options": {
                 "jestConfig": "{projectRoot}/jest.config.ts",
-                "testPathPattern": "tests/unit-tests/tchap",
                 "cwd": "apps/web"
             },
             "dependsOn": ["^build"]

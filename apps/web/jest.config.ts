@@ -53,7 +53,6 @@ const config: Config = {
         "workers/(.+)Factory": "<rootDir>/__mocks__/workerFactoryMock.js",
         "^!!raw-loader!.*": "jest-raw-loader",
         "recorderWorkletFactory": "<rootDir>/__mocks__/empty.js",
-        "^fetch-mock$": "<rootDir>/node_modules/fetch-mock",
         // :TCHAP:
         "MImageBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageBody.tsx",
         "MImageReplyBody":
@@ -68,7 +67,7 @@ const config: Config = {
         "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
         "~tchap-web/(.*)": "<rootDir>/$1",
         // we use tchap own compound-web package
-        "@vector-im/compound-web": "<rootDir>/node_modules/compound-web-tchap",
+        "@vector-im/compound-web": "<rootDir>/../../node_modules/compound-web-tchap",
         // end :TCHAP:
         "counterpart": "<rootDir>/../../node_modules/counterpart",
     },

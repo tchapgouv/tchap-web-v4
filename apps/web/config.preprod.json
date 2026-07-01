@@ -61,7 +61,7 @@
         "UIFeature.urlPreviews": false,
         "UIFeature.widgets": true,
         "UIFeature.shareQrCode": false,
-        "UIFeature.thirdPartyId": false,
+        "UIFeature.thirdPartyId": true,
         "UIFeature.identityServer": true,
         "UIFeature.advancedEncryption": false,
         "UIFeature.locationSharing": true,

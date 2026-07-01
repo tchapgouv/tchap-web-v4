@@ -36,7 +36,7 @@
         "lint:types": "nx lint:types",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "nx test:unit",
-        "test:tchap": "nx test:unit:tchap",
+        "test:tchap": "nx test:unit:tchap --testPathPatterns=test/unit-tests/tchap/*/",
         "test:playwright": "nx test:playwright --",
         "test:playwright:open": "nx test:playwright -- --ui",
         "test:playwright:screenshots": "nx test:playwright:screenshots --",

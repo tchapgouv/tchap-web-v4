@@ -260,7 +260,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
     public componentDidMount(): void {
 
         this.unmounted = false;
-        const cli = MatrixClientPeg.safeGet();
         this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.safeGet());
 
         if (this.props.initialText) {
@@ -497,11 +496,12 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     },
                     ""
                 );
-                const result = await inviteMultipleToRoom(cli, this.props.roomId, targetIds, {
+                const inviter = new MultiInviter(cli, this.props.roomId, {
                     // We show our own progress body, so don't pop up a separate dialog.
                     inhibitProgressDialog: true,
                 });
-                if (!this.shouldAbortAfterInviteError(result, room)) {
+                const states = await inviter.invite(targetIds);
+                if (!this.shouldAbortAfterInviteError(states, inviter, room)) {
                     // handles setting error message too
                     this.props.onFinished(true);
                 }
@@ -1419,18 +1419,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             throw new Error("Unknown InviteDialog kind: " + this.props.kind);
         }
 
-        const goButton =
-            this.props.kind == InviteKind.CallTransfer ? null : (
-                <AccessibleButton
-                    kind="primary"
-                    onClick={goButtonFn}
-                    className="mx_InviteDialog_goButton"
-                    disabled={this.state.busy || !this.hasSelection() || this.state.shouldDisableInviteButton}
-                >
-                    {buttonText}
-                </AccessibleButton>
-            );
-
         return (
             <React.Fragment>
                 <p className="mx_InviteDialog_helpText">{helpText}</p>
@@ -1440,7 +1428,8 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                         kind="primary"
                         onClick={goButtonFn}
                         className="mx_InviteDialog_goButton"
-                        disabled={this.state.busy || !this.hasSelection()}
+                        // :TCHAP: disabled={this.state.busy || !this.hasSelection()}
+                        disabled={this.state.busy || !this.hasSelection() || this.state.shouldDisableInviteButton}
                     >
                         {buttonText}
                     </AccessibleButton>

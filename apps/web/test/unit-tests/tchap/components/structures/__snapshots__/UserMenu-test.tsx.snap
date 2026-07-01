@@ -25,24 +25,31 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
           @userId:matrix.org
         </span>
       </div>
-      <div
-        aria-label="Switch to dark mode"
-        class="mx_AccessibleButton mx_UserMenu_contextMenu_themeButton"
+      <button
+        aria-labelledby="_r_0_"
+        class="_icon-button_1215g_8 mx_UserMenu_contextMenu_themeButton"
+        data-kind="secondary"
         role="button"
+        style="--cpd-icon-button-size: 32px;"
         tabindex="-1"
       >
-        <svg
-          fill="currentColor"
-          height="16px"
-          viewBox="0 0 24 24"
-          width="16px"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="_indicator-icon_147l5_17"
+          style="--cpd-icon-button-size: 100%;"
         >
-          <path
-            d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10m1-17.93c3.94.49 7 3.85 7 7.93s-3.05 7.44-7 7.93z"
-          />
-        </svg>
-      </div>
+          <svg
+            fill="currentColor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10m1-17.93c3.94.49 7 3.85 7 7.93s-3.05 7.44-7 7.93z"
+            />
+          </svg>
+        </div>
+      </button>
     </div>
     <div
       class="mx_IconizedContextMenu_optionList mx_IconizedContextMenu_optionList_notFirst"
@@ -118,7 +125,7 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         </span>
       </li>
       <li
-        aria-label="Sign out"
+        aria-label="Remove this device"
         class="mx_AccessibleButton mx_IconizedContextMenu_option_red mx_IconizedContextMenu_item"
         role="menuitem"
         tabindex="-1"
@@ -140,7 +147,7 @@ exports[`<UserMenu> <UserMenu> UI should render as expected 1`] = `
         <span
           class="mx_IconizedContextMenu_label"
         >
-          Sign out
+          Remove this device
         </span>
       </li>
     </div>
