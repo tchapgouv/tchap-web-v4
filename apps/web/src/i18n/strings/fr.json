@@ -2413,7 +2413,7 @@
             "error_update_guest_access": "Échec de la mise à jour de l’accès visiteur de cet espace",
             "error_update_history_visibility": "Échec de la mise à jour de la visibilité de l’historique pour cet espace",
             "guest_access_disabled": "Vous n'êtes pas autorisé à modifier les accès invités.",
-            "guest_access_explainer": "Les visiteurs peuvent rejoindre un espace sans disposer d’un compte. Ceci est utile pour les espaces publiques.",
+            "guest_access_explainer": "Les visiteurs peuvent rejoindre un espace sans disposer d’un compte. Ceci est utile pour les espaces publics.",
             "guest_access_label": "Activer l’accès visiteur",
             "history_visibility_anyone_space": "Aperçu de l'espace",
             "history_visibility_anyone_space_description": "Permettre aux personnes d’avoir un aperçu de l’espace avant de le rejoindre.",
@@ -3769,7 +3769,7 @@
         "unavailable": "Indisponible"
     },
     "update_room_access_modal": {
-        "description": "Pour créer un lien de partage, rendez ce salon <b>publique</b> ou activer l 'option permettant aux utilisateurs de <b>demander à rejoindre</b>. Cela permet aux invités de participer sans être invités.",
+        "description": "Pour créer un lien de partage, rendez ce salon <b>public</b> ou activer l 'option permettant aux utilisateurs de <b>demander à rejoindre</b>. Cela permet aux invités de participer sans être invités.",
         "dont_change_description": "Si vous ne souhaitez pas modifier l'accès à ce salon, vous pouvez créer un nouveau salon pour le lien d'appel.",
         "no_change": "Je ne souhaite pas modifier le niveau d'accès.",
         "revert_access_description": "(Ceci peut être rétabli à sa valeur précédente dans les paramètres du salon : <b> Sécurité et confidentialité</b>/<b>Accès</b>)",
