@@ -22,19 +22,15 @@ import AuthBody from "~tchap-web/src/components/views/auth/AuthBody";
 import EmailField from "~tchap-web/src/components/views/auth/EmailField";
 import Field from "~tchap-web/src/components/views/elements/Field";
 import Spinner from "~tchap-web/src/components/views/elements/Spinner";
-import AccessibleButton, { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
-import PlatformPeg from "~tchap-web/src/PlatformPeg";
-
+import { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
+import { Button } from "@vector-im/compound-web";
 import { ErrorMessage } from "~tchap-web/src/components/structures/ErrorMessage";
-import { SSOAction } from "matrix-js-sdk/src/matrix";
 import Login, { OidcNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
-import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import { startOidcLogin } from "../../../../utils/oidc/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
-import AuthHeader from "~tchap-web/src/components/views/auth/AuthHeader";
 
 interface IProps {
     //propagate the server config change
@@ -140,20 +136,19 @@ export default function EmailVerificationPage(props: IProps) {
 
     const getButtonGroup = () => {
         return (
-            <AccessibleButton
-                type="submit"
+            <Button
                 data-testid="mas-submit"
                 title={_t("action|continue")}
-                className="tc_ButtonParent tc_ButtonProconnect"
-                element="button"
-                kind="link"
+                className="mx_Login_fullWidthButton"
+                size="lg"
+                kind="primary"
                 disabled={buttonDisabled}
                 onClick={(e: ButtonEvent) => {
                     onSubmit(e);
                 }}
             >
                 {submitButtonChild}
-            </AccessibleButton>
+            </Button>
         );
     };
 
