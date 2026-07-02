@@ -137,7 +137,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
                     this.state.name,
                     this.state.tchapRoomType,
                     this.isSelectedRoomFederated(),
-                    this.props.parentSpace
+                    this.props.parentSpace,
                 ),
             );
         } else {

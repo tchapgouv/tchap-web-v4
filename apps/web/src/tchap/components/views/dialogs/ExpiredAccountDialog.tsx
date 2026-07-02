@@ -31,7 +31,7 @@ enum ProcessState {
 /**
  * ExpiredAccountDialog is displayed when the user account is expired. It can not be canceled until the account is renewed.
  * This panel is exclusively opened by the listener ExpiredAccountHandler
-* This component is required when activating the plugin synapse-email-account-validity on the server side:  https://github.com/matrix-org/synapse-email-account-validity
+ * This component is required when activating the plugin synapse-email-account-validity on the server side:  https://github.com/matrix-org/synapse-email-account-validity
  */
 export default class ExpiredAccountDialog extends React.Component<IProps, IState> {
     constructor(props: IProps) {
@@ -79,7 +79,7 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
         //send the new email requested
         this.setState({
             ProcessState: ProcessState.SENDING_EMAIL,
-        })
+        });
         this.props.onRequestNewEmail().then((success) => {
             this.setState({
                 newEmailSentTimestamp: success ? Date.now() : this.state.newEmailSentTimestamp,
@@ -94,29 +94,41 @@ export default class ExpiredAccountDialog extends React.Component<IProps, IState
             <p>{_t("An email has been sent to you. Click on the link it contains, click below.")}</p>
         );
         let alertMessage = null;
-        let requestNewEmailButton = <button onClick={this.onRequestEmail} data-testid="dialog-send-email-button">{_t("Request a renewal email")}</button>;
+        let requestNewEmailButton = (
+            <button onClick={this.onRequestEmail} data-testid="dialog-send-email-button">
+                {_t("Request a renewal email")}
+            </button>
+        );
         let okButtonText = _t("I renewed the validity of my account");
 
         switch (this.state.ProcessState) {
             case ProcessState.SENDING_EMAIL:
-                alertMessage = <InlineSpinner />
+                alertMessage = <InlineSpinner />;
                 break;
             case ProcessState.EMAIL_MUST_WAIT:
                 //don't know which class should decorate this message, it is not really an error
                 //its goal is to avoid users to click twice or more on the button and spam themselves
                 alertMessage = (
                     <p className="" data-testid="dialog-email-wait-message">
-                        {_t("Wait for at least %(wait)s seconds between two emails", { wait: this.state.emailDelaySecs })}
+                        {_t("Wait for at least %(wait)s seconds between two emails", {
+                            wait: this.state.emailDelaySecs,
+                        })}
                     </p>
                 );
                 break;
             case ProcessState.EMAIL_FAILURE:
                 alertMessage = (
-                    <p className="text-error" data-testid="dialog-email-failure-message">{_t("The email was not sent sucessfully, please retry in a moment")}</p>
+                    <p className="text-error" data-testid="dialog-email-failure-message">
+                        {_t("The email was not sent sucessfully, please retry in a moment")}
+                    </p>
                 );
                 break;
             case ProcessState.EMAIL_SUCCESS:
-                alertMessage = <p className="text-success" data-testid="dialog-email-sent-message">{_t("A new email has been sent")}</p>;
+                alertMessage = (
+                    <p className="text-success" data-testid="dialog-email-sent-message">
+                        {_t("A new email has been sent")}
+                    </p>
+                );
                 break;
             case ProcessState.ACCOUNT_STILL_EXPIRED:
                 alertMessage = (

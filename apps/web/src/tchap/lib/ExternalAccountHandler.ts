@@ -7,7 +7,6 @@ import Modal from "~tchap-web/src/Modal";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 
 class ExpiredAccountHandler {
-
     public static isUserExternal(client: MatrixClient): boolean {
         const hsList = SdkConfig.get()["homeserver_list"] ?? [];
         const externesHs = hsList.find((hs: Record<string, any>) => hs.server_name.includes("Externes"));
@@ -15,12 +14,12 @@ class ExpiredAccountHandler {
         return !!externesHs.base_url.includes(client.getDomain());
     }
 
-    public static async joinRoomError(room: Room): Promise<void>{
+    public static async joinRoomError(room: Room): Promise<void> {
         if (!room) {
             this.displayModal(_t("room|error_join_title"), _t("room|error_join_generic_external"));
             return;
         }
-        const roomType = await TchapRoomUtils.getTchapRoomType(room)
+        const roomType = await TchapRoomUtils.getTchapRoomType(room);
         if (roomType == TchapRoomType.Forum) {
             this.displayModal(_t("room|error_join_title"), _t("room|error_join_public_external"));
             return;

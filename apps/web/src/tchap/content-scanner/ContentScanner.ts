@@ -59,8 +59,8 @@ export class ContentScanner {
 
     public getAuthHeaders() {
         const cli = MatrixClientPeg.safeGet();
-        const accessToken = cli.getAccessToken()
-        return { Authorization : `Bearer ${accessToken}` };
+        const accessToken = cli.getAccessToken();
+        return { Authorization: `Bearer ${accessToken}` };
     }
 
     public urlForMxc(mxc: string, width?: number, height?: number, method?: ResizeMethod): string {
@@ -78,7 +78,7 @@ export class ContentScanner {
             await this.fetchKey();
         }
 
-        const encryptedData = this.encryptData(file); 
+        const encryptedData = this.encryptData(file);
         return fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/download_encrypted", {
             method: "POST",
             body: JSON.stringify({
@@ -86,7 +86,7 @@ export class ContentScanner {
             }),
             headers: {
                 "Content-Type": "application/json",
-                ...authHeaders
+                ...authHeaders,
             },
         });
     }
@@ -111,22 +111,22 @@ export class ContentScanner {
             if (!this.publicKey) {
                 await this.fetchKey();
             }
-            const encryptedData = this.encryptData(file); 
+            const encryptedData = this.encryptData(file);
             response = await fetch(this.scannerUrl + "/_matrix/media_proxy/unstable/scan_encrypted", {
                 method: "POST",
                 body: JSON.stringify({
-                    encrypted_body: encryptedData
+                    encrypted_body: encryptedData,
                 }),
                 headers: {
                     "Content-Type": "application/json",
-                    ...authHeaders
+                    ...authHeaders,
                 },
             });
         } else {
             const url = this.scannerUrl + `/_matrix/media_proxy/unstable/scan/${mxc.substring("mxc://".length)}`;
             response = await fetch(url, {
                 method: "GET",
-                headers: authHeaders
+                headers: authHeaders,
             });
         }
 
@@ -143,7 +143,7 @@ export class ContentScanner {
 
     private encryptData(file: EncryptedFile) {
         const crypto = MatrixClientPeg.get()?.getCrypto();
-        const encryptedData = crypto?.pkEncryptString(this.publicKey!, JSON.stringify({ file }))
+        const encryptedData = crypto?.pkEncryptString(this.publicKey!, JSON.stringify({ file }));
         return encryptedData;
     }
     /**
@@ -165,4 +165,3 @@ export class ContentScanner {
         );
     }
 }
-

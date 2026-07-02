@@ -66,7 +66,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         const joinRules = room?.currentState.getStateEvents(EventType.RoomJoinRules, "");
         this.isPrivate = joinRules?.getContent()["join_rule"] !== JoinRule.Public ?? true;
         this.currentVersion = room?.getVersion();
-        
+
         this.tchapRoomType = TchapRoomType.Unknown;
 
         this.state = {
@@ -140,15 +140,14 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
             externalNotice = (
                 <p className="text-warning">
                     {_t(
-                        "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room"
+                        "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room",
                     )}
                 </p>
             );
         }
 
-
         //const title = this.isPrivate ? _t("Upgrade private room") : _t("Upgrade public room");
-        const title =_t("Upgrade private room");
+        const title = _t("Upgrade private room");
         /*
         let bugReports = (
             <p>
@@ -160,7 +159,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
             </p>
         );
         */
-       /*
+        /*
         if (SdkConfig.get().bug_report_endpoint_url) {
             bugReports = (
                 <p>
@@ -213,10 +212,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                 title={title}
             >
                 <div>
-                    <p>
-                        {this.props.description ||
-                            _t("room_settings|advanced|upgrade_warning_dialog_description")}
-                    </p>
+                    <p>{this.props.description || _t("room_settings|advanced|upgrade_warning_dialog_description")}</p>
                     <p>
                         {_t(
                             "<b>Please note upgrading will make a new version of the room</b>. " +
@@ -233,7 +229,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                     do not show bug reports
                     {bugReports}
                     */}
-                        {/*
+                    {/*
                     <p>
                         {_t(
                             "You'll upgrade this room from <oldVersion /> to <newVersion />.",

@@ -68,7 +68,7 @@ export default class ContentScanningDownloadActionButton extends React.PureCompo
         if (this.state.downloadState === DownloadState.Scanning) {
             return;
         }
-        
+
         if (this.state.blob) {
             // Cheat and trigger a download, again.
             return this.doDownload(this.state.blob);

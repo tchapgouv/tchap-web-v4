@@ -6,7 +6,6 @@ import TchapVersionManagement from "../util/TchapVersionManagement";
 import TchapUserSettings from "../util/TchapUserSettings";
 import ExpiredAccountHandler from "../lib/ExpiredAccountHandler";
 
-
 /**
  * Force refresh after the client has started
  */
@@ -51,4 +50,4 @@ export default {
     saveAppVersionInLocalStorage,
     queueOverideUserSettings,
     queueClearCacheAndReload,
-}
+};

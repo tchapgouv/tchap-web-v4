@@ -7,7 +7,6 @@ import PerformanceMonitor from "~tchap-web/src/performance";
 import { logger } from "matrix-js-sdk/src/logger";
 
 export default class TchapPosthog {
-
     private static internalInstance: TchapPosthog;
 
     private TCHAP_CALL = "TCHAP_CALL";
@@ -21,7 +20,6 @@ export default class TchapPosthog {
         return TchapPosthog.internalInstance;
     }
 
-
     async trackCallStart(call: MatrixCall): Promise<void> {
         try {
             this.startTimer(call.callId);
@@ -34,7 +32,7 @@ export default class TchapPosthog {
                 isVideo: call.type == CallType.Video,
                 numParticipants: 2,
             });
-        } catch(e) {
+        } catch (e) {
             logger.error(`${this.LOG_PREFIX}_trackCallStart error`, e);
         }
     }
@@ -42,7 +40,7 @@ export default class TchapPosthog {
     async trackCallEnded(call: MatrixCall): Promise<void> {
         try {
             const durationMs = this.stopTimer(call.callId);
-            
+
             logger.debug(`${this.LOG_PREFIX}_trackCallEnded`, call);
 
             PosthogAnalytics.instance.trackEvent<CallEndedEvent>({
@@ -52,19 +50,19 @@ export default class TchapPosthog {
                 durationMs: durationMs,
                 numParticipants: 2,
             });
-        } catch(e) {
+        } catch (e) {
             logger.error(`${this.LOG_PREFIX}_trackCallStart error`, e);
         }
     }
 
-    private startTimer(id : string): void {
+    private startTimer(id: string): void {
         PerformanceMonitor.instance.start(this.TCHAP_CALL, id);
     }
 
     private stopTimer(id: string): number {
         const perfMonitor = PerformanceMonitor.instance;
 
-        const measurement =  perfMonitor.stop(this.TCHAP_CALL, id);
+        const measurement = perfMonitor.stop(this.TCHAP_CALL, id);
 
         return measurement ? measurement.duration : 0;
     }

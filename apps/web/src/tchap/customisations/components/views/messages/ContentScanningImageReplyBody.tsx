@@ -30,13 +30,13 @@ import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMe
 const FORCED_IMAGE_HEIGHT = 44;
 
 interface State {
-    scanState: ScanState
+    scanState: ScanState;
 }
 export default class ContentScanningImageReplyBody extends React.PureComponent<IBodyProps, State> {
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
-            scanState: "scanning"
+            scanState: "scanning",
         };
 
         if (props.mediaEventHelper) {
@@ -45,13 +45,13 @@ export default class ContentScanningImageReplyBody extends React.PureComponent<I
                 console.log("*** scanState", scanState);
                 if (this.state.scanState !== scanState) {
                     this.setState({
-                        scanState
-                    })
+                        scanState,
+                    });
                 }
-            })
+            });
         } else {
             this.state = {
-                scanState: "done"
+                scanState: "done",
             };
         }
     }

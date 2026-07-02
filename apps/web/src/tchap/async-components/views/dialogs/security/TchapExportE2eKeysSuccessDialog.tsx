@@ -64,10 +64,7 @@ export default class TchapExportE2eKeysSuccessDialog extends React.Component<IPr
                             {},
                             {
                                 a: (sub) => (
-                                    <TchapAnchor
-                                        href={TchapUrls.helpManuallyImportKeys}
-                                        openInNewTab
-                                    >
+                                    <TchapAnchor href={TchapUrls.helpManuallyImportKeys} openInNewTab>
                                         {sub}
                                     </TchapAnchor>
                                 ),

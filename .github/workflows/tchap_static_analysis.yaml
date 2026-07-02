@@ -92,6 +92,25 @@ jobs:
               working-directory: apps/web
               run: "pnpm i18n-tchap"
 
+    prettier:
+        name: "Prettier check"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+              with:
+                  cache: "pnpm"
+                  node-version-file: package.json
+
+            # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
+            - name: Install Dependencies
+              run: "pnpm install"
+
+            - name: Run i18n-tchap
+              working-directory: apps/web
+              run: "pnpm prettier:tchap"
+
     # tchap : fix this https://github.com/tchapgouv/tchap-web-v4/issues/767
     # analyse_dead_code:
     #    name: "Analyse Dead Code"

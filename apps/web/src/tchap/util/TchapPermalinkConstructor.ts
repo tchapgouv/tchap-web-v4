@@ -1,6 +1,5 @@
 import PermalinkConstructor, { PermalinkParts } from "~tchap-web/src/utils/permalinks/PermalinkConstructor";
 
-
 export const host = "tchap.gouv.fr";
 export const baseUrl = `https://${host}`;
 // Needs to remove legacy uri from this check => /#/room/ and /#/user/
@@ -8,9 +7,9 @@ export const baseUrl = `https://${host}`;
 export const baseUrlPattern = (tchapPrefix: string | undefined = baseUrl) => {
     const url = new URL(tchapPrefix);
     // remove protocole
-    const urlWithoutProtocole = url.href.replace(url.protocol + '//', '');
+    const urlWithoutProtocole = url.href.replace(url.protocol + "//", "");
     return `^(?:https?://)?${urlWithoutProtocole.replace(".", "\\.")}#/(?!room/|user/)(.*)`;
-}
+};
 
 /**
  * Generates tchap permalinks based on matrixTopermalinkconstructor
@@ -18,7 +17,7 @@ export const baseUrlPattern = (tchapPrefix: string | undefined = baseUrl) => {
 export default class TchapToPermalinkConstructor extends PermalinkConstructor {
     private tchapUrl: string;
 
-    public constructor(tchapUrl: string | undefined  = baseUrl) {
+    public constructor(tchapUrl: string | undefined = baseUrl) {
         super();
         this.tchapUrl = tchapUrl;
     }

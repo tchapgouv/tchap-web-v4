@@ -21,10 +21,13 @@ import { Media } from "../../../ContentScanningMedia";
 import OriginalAudioBody from "../../../../components/views/messages/OriginalAudioBody";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 import { FileBodyFactory } from "~tchap-web/src/components/views/messages/MBodyFactory";
-import { type ContentScannerMediaHelper, ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
+import {
+    type ContentScannerMediaHelper,
+    ScanState,
+} from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 interface State {
-    scanState: ScanState
+    scanState: ScanState;
 }
 
 /**
@@ -39,7 +42,7 @@ export default class ContentScanningAudioBody extends React.PureComponent<IBodyP
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
-            scanState: "scanning"
+            scanState: "scanning",
         };
 
         if (props.mediaEventHelper) {
@@ -48,20 +51,20 @@ export default class ContentScanningAudioBody extends React.PureComponent<IBodyP
                 console.log("*** scanState", scanState);
                 if (this.state.scanState !== scanState) {
                     this.setState({
-                        scanState
-                    })
+                        scanState,
+                    });
                 }
-            })
+            });
         } else {
             this.state = {
-                scanState: "done"
+                scanState: "done",
             };
         }
     }
 
     public render() {
         if (this.state.scanState !== "done") {
-            return <FileBodyFactory {...this.props} />
+            return <FileBodyFactory {...this.props} />;
         }
 
         return (

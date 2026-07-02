@@ -9,13 +9,12 @@ const getRandomChar = (): string => {
 };
 
 const generateSegment = (length: number): string => {
-    return Array.from({length}, () => getRandomChar()).join('');
+    return Array.from({ length }, () => getRandomChar()).join("");
 };
 
 const visioCommand = (): string => {
     PosthogTrackers.trackInteraction("WebTchapVisioCommand" as InteractionName);
     return `${LASUITE_VISIO_URL}${generateSegment(3)}-${generateSegment(4)}-${generateSegment(3)}`;
 };
-
 
 export { visioCommand };

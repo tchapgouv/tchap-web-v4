@@ -49,9 +49,9 @@ export default class TchapUIFeature {
      *         }
      *         ..
      *     }
-    */
-    public static isFeatureActiveForHomeserver(feature:string):boolean {
-        const homeserversWithFeature:[string] = SdkConfig.get("tchap_features")?.[feature] || [];
+     */
+    public static isFeatureActiveForHomeserver(feature: string): boolean {
+        const homeserversWithFeature: [string] = SdkConfig.get("tchap_features")?.[feature] || [];
 
         if (homeserversWithFeature.indexOf("*") > -1) {
             return true;

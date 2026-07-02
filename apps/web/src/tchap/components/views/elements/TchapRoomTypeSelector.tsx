@@ -9,9 +9,8 @@ import StyledRadioButton from "~tchap-web/src/components/views/elements/StyledRa
 
 import { TchapRoomType } from "../../../@types/tchap";
 import { Form, SettingsToggleInput } from "@vector-im/compound-web";
-import {LockSolidIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { LockSolidIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
-
 
 interface IProps {
     value: TchapRoomType;
@@ -53,28 +52,34 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
         const forumClasses = classNames("tc_TchapRoomTypeSelector_RadioButton", "tc_TchapRoomTypeSelector_forum", {
             tc_TchapRoomTypeSelector_RadioButton_selected: this.props.value === TchapRoomType.Forum,
         });
-        const pNonEncryptedClasses = classNames("tc_TchapRoomTypeSelector_RadioButton", "tc_TchapRoomTypeSelector_private_non_encrypted", {
-            tc_TchapRoomTypeSelector_RadioButton_selected: (this.props.value === TchapRoomType.PrivateNonEncrypted || this.props.value === TchapRoomType.PrivateNonEncryptedExternal),
-        });
+        const pNonEncryptedClasses = classNames(
+            "tc_TchapRoomTypeSelector_RadioButton",
+            "tc_TchapRoomTypeSelector_private_non_encrypted",
+            {
+                tc_TchapRoomTypeSelector_RadioButton_selected:
+                    this.props.value === TchapRoomType.PrivateNonEncrypted ||
+                    this.props.value === TchapRoomType.PrivateNonEncryptedExternal,
+            },
+        );
 
         let roomFederateOpt;
         if (this.props.showFederateSwitch) {
             roomFederateOpt = (
                 <Form.Root
-                onSubmit={(evt) => {
-                    evt.preventDefault();
-                    evt.stopPropagation();
-                }}
-            >
-                <SettingsToggleInput
-                    name="only_joined_members"
-                    label={_t('Allow access to this room to all users, even outside "%(domain)s" domain', {
-                        domain: this.props.shortDomain,
-                    })}
-                    onChange={(e) => this.props.setForumFederationSwitchValue(e.target.checked)}
-                    checked={this.props.forumFederationSwitchValue}
-                />
-            </Form.Root>
+                    onSubmit={(evt) => {
+                        evt.preventDefault();
+                        evt.stopPropagation();
+                    }}
+                >
+                    <SettingsToggleInput
+                        name="only_joined_members"
+                        label={_t('Allow access to this room to all users, even outside "%(domain)s" domain', {
+                            domain: this.props.shortDomain,
+                        })}
+                        onChange={(e) => this.props.setForumFederationSwitchValue(e.target.checked)}
+                        checked={this.props.forumFederationSwitchValue}
+                    />
+                </Form.Root>
             );
         }
 
@@ -99,7 +104,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         </ul>
                     </StyledRadioButton>
                 </label>
-                {TchapUIFeature.isFeatureActiveForHomeserver("feature_create_room_non_encrypted") ?
+                {TchapUIFeature.isFeatureActiveForHomeserver("feature_create_room_non_encrypted") ? (
                     <label className={pNonEncryptedClasses}>
                         <StyledRadioButton
                             name="roomType"
@@ -118,8 +123,7 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                             </ul>
                         </StyledRadioButton>
                     </label>
-                    : null
-                }
+                ) : null}
                 <label className={forumClasses}>
                     <StyledRadioButton
                         name="roomType"

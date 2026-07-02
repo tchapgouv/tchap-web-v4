@@ -54,40 +54,61 @@ function tooltipText(variant: Icon): string | undefined {
 
 const calculateIcon = (room: Room, roomType: TchapRoomType): [JSX.Element | null, Icon] => {
     let icon: JSX.Element | null = null;
-    let iconText = Icon.None
+    let iconText = Icon.None;
     // We look at the DMRoomMap and not the tag here so that we don't exclude DMs in Favourites
     const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
     if (otherUserId && getJoinedNonFunctionalMembers(room).length === 2) {
         return [null, Icon.None];
     }
-    switch(roomType) {
+    switch (roomType) {
         case TchapRoomType.Forum:
-            icon = <PublicIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon`}/>;
+            icon = (
+                <PublicIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon`} />
+            );
             iconText = Icon.Forum;
             break;
         case TchapRoomType.Private:
-            icon = <LockSolidIcon width="30px" color="var(--private-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`} />
+            icon = (
+                <LockSolidIcon
+                    width="30px"
+                    color="var(--private-color)"
+                    className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.Private.toLowerCase()}`}
+                />
+            );
             iconText = Icon.Private;
             break;
         case TchapRoomType.External:
-            icon = <LockSolidIcon width="30px" color="var(--external-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`} />;
+            icon = (
+                <LockSolidIcon
+                    width="30px"
+                    color="var(--external-color)"
+                    className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.External.toLowerCase()}`}
+                />
+            );
             iconText = Icon.External;
             break;
         case TchapRoomType.PrivateNonEncrypted:
         case TchapRoomType.PrivateNonEncryptedExternal:
-            icon = <LockOffIcon width="30px" color="var(--timeline-text-color)" className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.PrivateNonEncrypted.toLowerCase()}`} />;
+            icon = (
+                <LockOffIcon
+                    width="30px"
+                    color="var(--timeline-text-color)"
+                    className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${Icon.PrivateNonEncrypted.toLowerCase()}`}
+                />
+            );
             iconText = Icon.PrivateNonEncrypted;
             break;
     }
 
     return [icon, iconText];
-}
+};
 
 const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
     const { currentRoomType } = useTchapRoom(room);
     const [icon, iconText] = calculateIcon(room, currentRoomType);
-    
-    return <>
+
+    return (
+        <>
             {children}
             {icon && (
                 <Tooltip label={tooltipText(iconText)!} placement="bottom">
@@ -95,7 +116,7 @@ const WithTchapIndicator: React.FC<Props> = ({ room, size, tooltipProps, childre
                 </Tooltip>
             )}
         </>
+    );
 };
 
 export default WithTchapIndicator;
-

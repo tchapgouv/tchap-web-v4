@@ -11,7 +11,7 @@ interface IProps {
     ref?: React.Ref<HTMLDivElement>;
 }
 
-const TchapUnknownBody = ({ mxEvent, children, ref }: IProps) =>  {
+const TchapUnknownBody = ({ mxEvent, children, ref }: IProps) => {
     // :TCHAP: user-friendly message in the case of lost keys
     const content = mxEvent.getContent();
     if (content.msgtype && content.msgtype === "m.bad.encrypted") {

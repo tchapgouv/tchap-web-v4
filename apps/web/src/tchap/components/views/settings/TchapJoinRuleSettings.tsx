@@ -37,7 +37,12 @@ import { doesRoomVersionSupport, PreferredRoomVersions } from "~tchap-web/src/ut
 import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
 
 import TchapUIFeature from "../../../util/TchapUIFeature";
-import { TchapRoomAccessRule, TchapIAccessRuleEventContent, TchapRoomAccessRulesEventId, TchapRoomType } from "../../../@types/tchap";
+import {
+    TchapRoomAccessRule,
+    TchapIAccessRuleEventContent,
+    TchapRoomAccessRulesEventId,
+    TchapRoomType,
+} from "../../../@types/tchap";
 import TchapRoomLinkAccess from "../rooms/TchapRoomLinkAccess";
 import TchapRoomUtils from "../../../util/TchapRoomUtils";
 import { RoomJoinRulesEventContent } from "matrix-js-sdk/src/types";
@@ -57,8 +62,7 @@ interface JoinRuleSettingsProps {
     recommendedOption?: JoinRule;
 }
 
-
-const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
+const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
     room,
     promptUpgrade,
     aliasWarning,
@@ -79,7 +83,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         !roomSupportsRestricted && promptUpgrade ? PreferredRoomVersions.RestrictedRooms : undefined;
 
     const disabled = !room.currentState.mayClientSendStateEvent(EventType.RoomJoinRules, cli);
-    
+
     const [content, setContent] = useLocalEcho<RoomJoinRulesEventContent | undefined, RoomJoinRulesEventContent>(
         () => room.currentState.getStateEvents(EventType.RoomJoinRules, "")?.getContent(),
         (content) => cli.sendStateEvent(room.roomId, EventType.RoomJoinRules, content, ""),
@@ -191,33 +195,31 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
                 _t("Are you sure you want to allow the externals to join this room ?"),
             button: _t("action|ok"),
         });
-        const [ confirmed ] = await finished;
+        const [confirmed] = await finished;
         if (!confirmed) return;
         setTchapAccessRule({ rule: TchapRoomAccessRule.Unrestricted, encrypted });
     };
 
-
     const renderStandaloneExternalButton = () => {
         return (
             <Form.Root
-            className="tc_JoinRuleSettings_externs_switch"
-            onSubmit={(evt) => {
-                evt.preventDefault();
-                evt.stopPropagation();
-            }}
-        >
-            <SettingsToggleInput
-                name="open_to_external_switch"
-                label={_t("Allow external users to join this room")}
-                onChange={onExternalAccessChange}
-                checked={openedToExternalUsers}
-                disabled={disableOpenToExternalUsers}
-                helpMessage={_t("room_settings|security|link_sharing_caption")}
-            />
-        </Form.Root>
-        )
-    }
-
+                className="tc_JoinRuleSettings_externs_switch"
+                onSubmit={(evt) => {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }}
+            >
+                <SettingsToggleInput
+                    name="open_to_external_switch"
+                    label={_t("Allow external users to join this room")}
+                    onChange={onExternalAccessChange}
+                    checked={openedToExternalUsers}
+                    disabled={disableOpenToExternalUsers}
+                    helpMessage={_t("room_settings|security|link_sharing_caption")}
+                />
+            </Form.Root>
+        );
+    };
 
     /* code from element web
     const definitions: IDefinition<JoinRule>[] = [{
@@ -246,9 +248,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
             privateRoomDescription = (
                 <div>
                     <div>{_t("room_settings|security|join_rule_invite_description")}</div>
-                    <span>
-                        {renderStandaloneExternalButton()}
-                    </span>
+                    <span>{renderStandaloneExternalButton()}</span>
                 </div>
             );
         }
@@ -280,7 +280,9 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
             let upgradeRequiredPill;
             if (preferredRestrictionVersion) {
                 upgradeRequiredPill = (
-                    <span className="mx_JoinRuleSettings_upgradeRequired">{_t("room_settings|security|join_rule_upgrade_required")}</span>
+                    <span className="mx_JoinRuleSettings_upgradeRequired">
+                        {_t("room_settings|security|join_rule_upgrade_required")}
+                    </span>
                 );
             }
 
@@ -389,7 +391,6 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
                         {/* :tchap: do not show the pill upgrade room as it is not user friendly
                         https://github.com/tchapgouv/tchap-web-v4/issues/578
                          {upgradeRequiredPill} */}
-
                     </>
                 ),
                 description,
@@ -418,11 +419,7 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
                     (roomId) => !cli.getRoom(roomId)?.currentState.maySendStateEvent(EventType.SpaceChild, userId),
                 );
                 if (unableToUpdateSomeParents) {
-                    warning = (
-                        <b>
-                            {_t("room_settings|security|join_rule_restricted_upgrade_warning")}
-                        </b>
-                    );
+                    warning = <b>{_t("room_settings|security|join_rule_restricted_upgrade_warning")}</b>;
                 }
 
                 upgradeRequiredDialog(
@@ -463,32 +460,34 @@ const JoinRuleSettings : React.FC<JoinRuleSettingsProps> = ({
         // hide or display the join rules
         setIsLinkSharingActivated(checked);
 
-        // if its the initialisation phase we dont need to do anything more other than hide or not the join options 
+        // if its the initialisation phase we dont need to do anything more other than hide or not the join options
         if (init) return;
 
         // deactivating the share link
         if (!checked) {
             const currentJoinRule = TchapRoomUtils.getRoomJoinRule(room);
-            setContent(currentJoinRule ? { join_rule: JoinRule.Invite } : {} as RoomJoinRulesEventContent);
+            setContent(currentJoinRule ? { join_rule: JoinRule.Invite } : ({} as RoomJoinRulesEventContent));
         }
-    }
+    };
 
     const renderLinkSharing = () => {
-        return <TchapRoomLinkAccess room={room} onUpdateParentView={activateLinkSharingChange}></TchapRoomLinkAccess>
-    }
+        return <TchapRoomLinkAccess room={room} onUpdateParentView={activateLinkSharingChange}></TchapRoomLinkAccess>;
+    };
 
     return (
         <>
-            {!isShareLinkActivated && <StyledRadioGroup
-                name="joinRule"
-                value={joinRule}
-                onChange={onChange}
-                definitions={definitions}
-                disabled={disabled}
-                className="mx_JoinRuleSettings_radioButton"
-            />}
-            { isShareLinkActivated && renderStandaloneExternalButton() }
-            { renderLinkSharing() }
+            {!isShareLinkActivated && (
+                <StyledRadioGroup
+                    name="joinRule"
+                    value={joinRule}
+                    onChange={onChange}
+                    definitions={definitions}
+                    disabled={disabled}
+                    className="mx_JoinRuleSettings_radioButton"
+                />
+            )}
+            {isShareLinkActivated && renderStandaloneExternalButton()}
+            {renderLinkSharing()}
         </>
     );
 };

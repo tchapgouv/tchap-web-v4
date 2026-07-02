@@ -19,7 +19,7 @@ export default class TchapCreateRoom {
         name: string,
         tchapRoomType: TchapRoomType,
         federate: boolean = DEFAULT_FEDERATE_VALUE,
-        parentSpace?: Room
+        parentSpace?: Room,
     ): IOpts {
         const opts: IOpts = {};
         const createRoomOpts: ICreateRoomOpts = {};
@@ -32,7 +32,7 @@ export default class TchapCreateRoom {
         createRoomOpts.creation_content = { "m.federate": federate };
         createRoomOpts.initial_state = createRoomOpts.initial_state || [];
 
-        if(parentSpace) {
+        if (parentSpace) {
             opts.parentSpace = parentSpace;
         }
 
@@ -41,7 +41,8 @@ export default class TchapCreateRoom {
                 // Space "Forum" only for space members and not encrypted
                 if (parentSpace) {
                     createRoomOpts.visibility = Visibility.Private;
-                } else {      //"Forum" only for tchap members and not encrypted
+                } else {
+                    //"Forum" only for tchap members and not encrypted
                     createRoomOpts.visibility = Visibility.Public;
                 }
                 createRoomOpts.preset = Preset.PublicChat;
@@ -108,14 +109,14 @@ export default class TchapCreateRoom {
                 opts.historyVisibility = HistoryVisibility.Invited;
                 break;
             }
-             case TchapRoomType.PrivateNonEncrypted: {
+            case TchapRoomType.PrivateNonEncrypted: {
                 // only difference with private is the visibility and encryption
                 createRoomOpts.visibility = Visibility.Private;
                 createRoomOpts.preset = Preset.PrivateChat;
                 createRoomOpts.initial_state.push({
                     content: {
                         rule: TchapRoomAccessRule.Restricted,
-                        force_unencrypted_at_creation: true
+                        force_unencrypted_at_creation: true,
                     },
                     type: TchapRoomAccessRulesEventId,
                     state_key: "",

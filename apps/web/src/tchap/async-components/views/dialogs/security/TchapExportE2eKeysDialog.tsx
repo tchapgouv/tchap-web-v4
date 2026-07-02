@@ -98,12 +98,9 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
             })
             .then(async () => {
                 // :TCHAP: added a confirmation modal
-                const { finished } = Modal.createDialog(
-                    TchapExportE2eKeysSuccessDialog,
-                    {
-                        allowLogout: this.props.allowLogout,
-                    },
-                );
+                const { finished } = Modal.createDialog(TchapExportE2eKeysSuccessDialog, {
+                    allowLogout: this.props.allowLogout,
+                });
                 const [success] = await finished;
                 if (success) {
                     this.props.onFinished(true);

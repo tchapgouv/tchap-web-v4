@@ -36,7 +36,6 @@ import { startOidcLogin } from "../../../../utils/oidc/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
 import AuthHeader from "~tchap-web/src/components/views/auth/AuthHeader";
 
-
 interface IProps {
     //propagate the server config change
     onServerConfigChange(config: ValidatedServerConfig): void;
@@ -45,7 +44,6 @@ interface IProps {
 //This page is map to EMAIL_PRECHECK_SSO
 //It aims at selecting the homeserver based on user email input, then it redirects to MAS
 export default function EmailVerificationPage(props: IProps) {
-
     const [loading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
     const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -56,33 +54,31 @@ export default function EmailVerificationPage(props: IProps) {
     const params = getScreenFromLocation(window.location).params;
     const isCreateAccount: boolean = params.createAccount ? true : false;
 
-
     const emailFieldRef = useRef<Field>(null);
 
-    const checkEmailField = async (fieldString: string = email) : Promise<boolean> => {
+    const checkEmailField = async (fieldString: string = email): Promise<boolean> => {
         const fieldOk = await emailFieldRef.current?.validate({ allowEmpty: false, focused: true });
         return !!fieldOk && Email.looksValid(fieldString);
-    }
+    };
 
     const displayError = (errorString: string): void => {
         setErrorText(errorString);
-        setLoading(false); 
-    }
+        setLoading(false);
+    };
 
     const setUpCurrentHs = async (hs: Record<string, any>): Promise<ValidatedServerConfig | null> => {
         try {
             const validatedServerConfig: ValidatedServerConfig = await TchapUtils.makeValidatedServerConfig(hs);
-            return validatedServerConfig; 
-        } catch(err) {
-            return null
+            return validatedServerConfig;
+        } catch (err) {
+            return null;
         }
-
-    }
+    };
 
     const isSSOFlowActive = async (login: Login): Promise<boolean> => {
         const flows = await login.getFlows();
         return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.sso");
-    }
+    };
 
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
@@ -94,70 +90,72 @@ export default function EmailVerificationPage(props: IProps) {
             return;
         }
 
-         // check email domain and start sso with agentconnect
-         try {
+        // check email domain and start sso with agentconnect
+        try {
             // get user homeserver from his email
             const hs: Record<string, any> | void = await TchapUtils.fetchHomeserverForEmail(email);
             if (!hs) {
-                displayError(`Impossible de trouver un homeserver pour cette adresse email: "${email}", merci de contacter support@tchap.beta.gouv.fr`);
+                displayError(
+                    `Impossible de trouver un homeserver pour cette adresse email: "${email}", merci de contacter support@tchap.beta.gouv.fr`,
+                );
                 return;
             }
 
             const validatedServerConfig = await setUpCurrentHs(hs);
             if (!validatedServerConfig) {
                 displayError(_t("auth|proconnect|error_homeserver"));
-                return
+                return;
             }
             /* use oidcNativeFlow */
             const login = new Login(hs.base_url, hs.base_url, null, {
                 delegatedAuthentication: validatedServerConfig.delegatedAuthentication,
             });
-            
+
             const loginFlows = await login.getFlows(false);
 
             let oidcNativeFlow: OidcNativeFlow | undefined;
             oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
-            
+
             await startOidcLogin(
                 validatedServerConfig.delegatedAuthentication!,
                 oidcNativeFlow.clientId,
                 validatedServerConfig.hsUrl,
                 validatedServerConfig.isUrl,
                 isCreateAccount,
-                email
+                email,
             );
-            
+
             setLoading(false);
-        } catch(err) {
+        } catch (err) {
             displayError(_t("auth|proconnect|error"));
         }
-    }
+    };
 
     const onInputChanged = async (event: React.FormEvent<HTMLInputElement>) => {
-        const emailString = event.currentTarget.value
+        const emailString = event.currentTarget.value;
         setEmail(emailString);
         const isEmailValid = await checkEmailField(emailString);
         setButtonDisabled(!isEmailValid);
-    }
+    };
 
     const getButtonGroup = () => {
         return (
             <AccessibleButton
-                    type="submit"
-                    data-testid="mas-submit"
-                    title={_t("action|continue")}
-                    className="tc_ButtonParent tc_ButtonProconnect"
-                    element="button"
-                    kind="link"
-                    disabled={buttonDisabled}
-                    onClick={(e: ButtonEvent) => {
-                        onSubmit(e);
-                    }}
-                >
-                    {submitButtonChild}
+                type="submit"
+                data-testid="mas-submit"
+                title={_t("action|continue")}
+                className="tc_ButtonParent tc_ButtonProconnect"
+                element="button"
+                kind="link"
+                disabled={buttonDisabled}
+                onClick={(e: ButtonEvent) => {
+                    onSubmit(e);
+                }}
+            >
+                {submitButtonChild}
             </AccessibleButton>
-        )
-    }
+        );
+    };
 
     return (
         <AuthPage addBlur={false}>
@@ -166,9 +164,7 @@ export default function EmailVerificationPage(props: IProps) {
                     <div className="tc-verification-page_header_img">
                         <img src="/themes/tchap/img/logos/tchap-logo.svg" alt="" width="64" height="64"></img>
                     </div>
-                    <h1>
-                        {_t("auth|email_verification_title")}
-                    </h1>
+                    <h1>{_t("auth|email_verification_title")}</h1>
                     <p> {_t("auth|email_verification_description")} </p>
                 </section>
                 <form onSubmit={onSubmit} className="tc_pronnect">

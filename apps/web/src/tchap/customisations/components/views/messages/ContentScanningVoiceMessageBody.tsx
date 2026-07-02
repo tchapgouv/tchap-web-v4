@@ -24,7 +24,7 @@ import { ContentScanningStatus } from "../../../../components/views/elements/Con
 import { ContentScannerMediaHelper, ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 interface State {
-    scanState: ScanState
+    scanState: ScanState;
 }
 
 /**
@@ -40,7 +40,7 @@ export default class ContentScanningVoiceMessageBody extends React.PureComponent
         super(props);
 
         this.state = {
-            scanState: "scanning"
+            scanState: "scanning",
         };
 
         if (props.mediaEventHelper) {
@@ -49,13 +49,13 @@ export default class ContentScanningVoiceMessageBody extends React.PureComponent
                 console.log("*** scanState", scanState);
                 if (this.state.scanState !== scanState) {
                     this.setState({
-                        scanState
-                    })
+                        scanState,
+                    });
                 }
-            })
+            });
         } else {
             this.state = {
-                scanState: "done"
+                scanState: "done",
             };
         }
     }

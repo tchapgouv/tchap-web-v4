@@ -5,7 +5,7 @@ import { TchapRoomAccessRulesEventId, TchapRoomType } from "../@types/tchap";
 import { useEventEmitter, useTypedEventEmitter } from "~tchap-web/src/hooks/useEventEmitter";
 import { TchapStore } from "./TchapStore";
 
-export const useTchapRoom = (room: Room | undefined ) => {
+export const useTchapRoom = (room: Room | undefined) => {
     const [currentRoomType, setCurrentType] = useState(TchapRoomType.Unknown);
 
     // //listen to events to refresh the value if needed
@@ -22,7 +22,7 @@ export const useTchapRoom = (room: Room | undefined ) => {
     });
 
     // initilize tchap room type value
-    const updateTchapRoomType = useCallback(async ()  => {
+    const updateTchapRoomType = useCallback(async () => {
         try {
             if (!room) {
                 return currentRoomType;
@@ -36,13 +36,13 @@ export const useTchapRoom = (room: Room | undefined ) => {
             return result;
         } catch (err) {
             console.error("TCHAP: Error getting tchap type", err);
-            return TchapRoomType.Unknown
+            return TchapRoomType.Unknown;
         }
     }, [room]);
 
     useEffect(() => {
-        updateTchapRoomType()
-    }, [updateTchapRoomType])
+        updateTchapRoomType();
+    }, [updateTchapRoomType]);
 
-  return { currentRoomType, updateTchapRoomType }
-}
+    return { currentRoomType, updateTchapRoomType };
+};

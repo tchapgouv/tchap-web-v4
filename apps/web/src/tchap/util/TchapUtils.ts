@@ -304,16 +304,15 @@ export default class TchapUtils {
         }
     }
 
-    static async getUserRedListInfo() : Promise<boolean> {
+    static async getUserRedListInfo(): Promise<boolean> {
         const client = MatrixClientPeg.safeGet();
-        const accountData = await client.getAccountData('im.vector.hide_profile');
-        console.log('accountData', accountData?.getContent());
+        const accountData = await client.getAccountData("im.vector.hide_profile");
+        console.log("accountData", accountData?.getContent());
         return !!accountData?.getContent().hide_profile;
     }
 
-    static async setUserRedListInfo(isOnRedList: boolean) : Promise<void> {
+    static async setUserRedListInfo(isOnRedList: boolean): Promise<void> {
         const client = MatrixClientPeg.safeGet();
-        client.setAccountData('im.vector.hide_profile', {hide_profile: isOnRedList});
+        client.setAccountData("im.vector.hide_profile", { hide_profile: isOnRedList });
     }
-
 }

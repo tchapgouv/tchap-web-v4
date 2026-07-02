@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 import React from "react";
 import { IBodyProps } from "~tchap-web/src/components/views/messages/IBodyProps";
 import Spinner from "~tchap-web/src/components/views/elements/Spinner";
@@ -28,10 +27,10 @@ import OriginalImageBody from "../../../../components/views/messages/OriginalIma
 import { Media } from "../../../ContentScanningMedia";
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
-import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper"
+import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 interface State {
-    scanState: ScanState
+    scanState: ScanState;
 }
 
 /**
@@ -42,7 +41,7 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
     public constructor(props: IBodyProps) {
         super(props);
         this.state = {
-            scanState: "scanning"
+            scanState: "scanning",
         };
 
         if (props.mediaEventHelper) {
@@ -51,13 +50,13 @@ export default class ContentScanningImageBody extends React.Component<IBodyProps
                 console.log("*** scanState", scanState);
                 if (this.state.scanState !== scanState) {
                     this.setState({
-                        scanState
-                    })
+                        scanState,
+                    });
                 }
-            })
+            });
         } else {
             this.state = {
-                scanState: "done"
+                scanState: "done",
             };
         }
     }

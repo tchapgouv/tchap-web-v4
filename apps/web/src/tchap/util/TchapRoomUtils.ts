@@ -5,9 +5,14 @@
 import { EventTimeline, EventType, Room, Visibility } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 
-import { TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomAccessRuleVisibility, TchapRoomType } from "../@types/tchap";
+import {
+    TchapIAccessRuleEventContent,
+    TchapRoomAccessRule,
+    TchapRoomAccessRulesEventId,
+    TchapRoomAccessRuleVisibility,
+    TchapRoomType,
+} from "../@types/tchap";
 import { GuestAccess, JoinRule } from "matrix-js-sdk/src/matrix";
-
 
 export default class TchapRoomUtils {
     //inspired by https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
@@ -17,12 +22,18 @@ export default class TchapRoomUtils {
         return this.getTchapRoomTypeInternal(tchapAccessRule, room);
     }
 
-    static async getTchapRoomTypeInternal(tchapRoomAccessRule: TchapIAccessRuleEventContent | undefined, room: Room): Promise<TchapRoomType> {
+    static async getTchapRoomTypeInternal(
+        tchapRoomAccessRule: TchapIAccessRuleEventContent | undefined,
+        room: Room,
+    ): Promise<TchapRoomType> {
         const isEncrypted: boolean = await this.isRoomEncrypted(room.roomId);
         // need to have visibility private or public to know if it is a forum or not
         if (!isEncrypted) {
             // Should be explicitly force_unencrypted_at_creation to true, private room does not have this value if the backend is not compatible or the data not well updated
-            if (tchapRoomAccessRule?.force_unencrypted_at_creation == true && tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private) {
+            if (
+                tchapRoomAccessRule?.force_unencrypted_at_creation == true &&
+                tchapRoomAccessRule.visibility == TchapRoomAccessRuleVisibility.Private
+            ) {
                 if (tchapRoomAccessRule?.rule == TchapRoomAccessRule.Unrestricted) {
                     return TchapRoomType.PrivateNonEncryptedExternal;
                 }
@@ -30,7 +41,7 @@ export default class TchapRoomUtils {
             }
             return TchapRoomType.Forum;
         }
-        switch(tchapRoomAccessRule?.rule) {
+        switch (tchapRoomAccessRule?.rule) {
             case TchapRoomAccessRule.Restricted:
                 return TchapRoomType.Private;
             case TchapRoomAccessRule.Unrestricted:
@@ -46,7 +57,11 @@ export default class TchapRoomUtils {
      * @returns string that matches of one TchapRoomAccessRule //todo or null? or empty?
      */
     static getTchapRoomAccessRule(room: Room): TchapIAccessRuleEventContent | undefined {
-        return room.getLiveTimeline().getState(EventTimeline.FORWARDS)?.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent();
+        return room
+            .getLiveTimeline()
+            .getState(EventTimeline.FORWARDS)
+            ?.getStateEvents(TchapRoomAccessRulesEventId, "")
+            ?.getContent();
     }
 
     /**
@@ -54,7 +69,7 @@ export default class TchapRoomUtils {
      * @param roomId
      * @returns true if room is encrypted, false if not
      */
-    static async  isRoomEncrypted(roomId: string): Promise<boolean> {
+    static async isRoomEncrypted(roomId: string): Promise<boolean> {
         const isEncrypted = await MatrixClientPeg.get()?.getCrypto()?.isEncryptionEnabledInRoom(roomId);
         return !!isEncrypted;
     }
@@ -64,21 +79,21 @@ export default class TchapRoomUtils {
      * @param room
      * @returns
      */
-    static isUserAdmin(room: Room) : boolean {
+    static isUserAdmin(room: Room): boolean {
         const userId = room.client.getSafeUserId();
-        return room.getMember(userId)?.powerLevel == 100
+        return room.getMember(userId)?.powerLevel == 100;
     }
 
-    static getRoomJoinRule(room: Room): JoinRule|undefined {
+    static getRoomJoinRule(room: Room): JoinRule | undefined {
         return room
             .getLiveTimeline()
             .getState(EventTimeline.FORWARDS)
             ?.getStateEvents(EventType.RoomJoinRules, "")
-            ?.getContent().join_rule
+            ?.getContent().join_rule;
     }
 
     static getRoomGuessAccessRule(room: Room): GuestAccess {
-        const event : GuestAccess = room
+        const event: GuestAccess = room
             .getLiveTimeline()
             .getState(EventTimeline.FORWARDS)
             ?.getStateEvents(EventType.RoomGuestAccess, "")
@@ -92,12 +107,11 @@ export default class TchapRoomUtils {
     }
 
     // check at least one admin in the list
-    static roomHasAtLeastOneAdmin(usersLevels: Record<string, number>) : boolean{
+    static roomHasAtLeastOneAdmin(usersLevels: Record<string, number>): boolean {
         const userLevelValues = Object.values(usersLevels);
 
         // At least one user as the pL 100 which means he is admin
         return userLevelValues.some((uL) => uL === 100);
-
     }
 
     static async getRoomVisibility(room: Room): Promise<Visibility> {

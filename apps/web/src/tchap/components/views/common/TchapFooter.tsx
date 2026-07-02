@@ -11,33 +11,53 @@ const TchapFooter = (): ReactElement => {
         { text: "Mastodon", url: "https://mastodon.matrix.org/@Element" },
         { text: "GitHub", url: "https://github.com/element-hq/element-web" },
     ];
-    
+
     const authFooterLinks: JSX.Element[] = [];
     const authFooterBottomLinks: JSX.Element[] = [];
-
 
     for (const linkEntry of links) {
         if (["Modalités d'utilisation", "FAQ"].includes(linkEntry.text)) {
             authFooterBottomLinks.push(
                 <li className="fr-footer__bottom-item">
-                    <a className="fr-footer__bottom-link" target="_blank" rel="noreferrer external" title={linkEntry.text} href={linkEntry.url}>{linkEntry.text}</a>
-                </li>
+                    <a
+                        className="fr-footer__bottom-link"
+                        target="_blank"
+                        rel="noreferrer external"
+                        title={linkEntry.text}
+                        href={linkEntry.url}
+                    >
+                        {linkEntry.text}
+                    </a>
+                </li>,
+            );
+        } else {
+            authFooterLinks.push(
+                <li className="fr-footer__content-item">
+                    <a
+                        href={linkEntry.url}
+                        title={linkEntry.text}
+                        key={linkEntry.text}
+                        target="_blank"
+                        rel="noreferrer external"
+                        className="fr-footer__content-link"
+                    >
+                        {linkEntry.text}
+                    </a>
+                </li>,
             );
         }
-         else {
-             authFooterLinks.push(
-                 <li className="fr-footer__content-item">
-                     <a href={linkEntry.url} title={linkEntry.text} key={linkEntry.text} target="_blank" rel="noreferrer external" className="fr-footer__content-link">
-                         {linkEntry.text}
-                     </a>
-                 </li>
-             );
-         }
     }
     authFooterBottomLinks.push(
         <li className="fr-footer__bottom-item">
-            <a className="fr-footer__bottom-link" href={TchapUrls.helpPrivacyPolicy} target="_blank" rel="noreferrer external">Politique de confidentialité</a>
-        </li>
+            <a
+                className="fr-footer__bottom-link"
+                href={TchapUrls.helpPrivacyPolicy}
+                target="_blank"
+                rel="noreferrer external"
+            >
+                Politique de confidentialité
+            </a>
+        </li>,
     );
 
     return (
@@ -47,7 +67,8 @@ const TchapFooter = (): ReactElement => {
                     <div className="fr-footer__brand">
                         <p className="fr-logo">
                             République
-                            <br />Française
+                            <br />
+                            Française
                         </p>
                     </div>
                     <div className="fr-footer__content">
@@ -55,7 +76,14 @@ const TchapFooter = (): ReactElement => {
                         <ul className="fr-footer__content-list">
                             {authFooterLinks}
                             <li className="fr-footer__content-item">
-                                <a href="https://matrix.org" target="_blank" title="matrix.org" id="footer__content-link-7366" rel="noreferrer external" className="fr-footer__content-link">
+                                <a
+                                    href="https://matrix.org"
+                                    target="_blank"
+                                    title="matrix.org"
+                                    id="footer__content-link-7366"
+                                    rel="noreferrer external"
+                                    className="fr-footer__content-link"
+                                >
                                     {_t("powered_by_matrix")}
                                 </a>
                             </li>
@@ -63,13 +91,10 @@ const TchapFooter = (): ReactElement => {
                     </div>
                 </div>
                 <div className="fr-footer__bottom">
-                    <ul className="fr-footer__bottom-list">
-                        {authFooterBottomLinks}
-                    </ul>
+                    <ul className="fr-footer__bottom-list">{authFooterBottomLinks}</ul>
                 </div>
             </div>
         </footer>
-
     );
 };
 

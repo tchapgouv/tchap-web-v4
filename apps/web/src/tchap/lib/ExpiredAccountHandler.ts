@@ -66,7 +66,8 @@ class ExpiredAccountHandler {
     private async showExpirationPanel() {
         Modal.createDialog(
             ExpiredAccountDialog,
-            { /* props */
+            {
+                /* props */
                 onRequestNewEmail: () => {
                     return TchapUtils.requestNewExpiredAccountEmail();
                 },
@@ -80,7 +81,8 @@ class ExpiredAccountHandler {
             undefined /* className */,
             false /* isPriorityModal */,
             true /* isStaticModal */,
-            { /* options */
+            {
+                /* options */
                 //close panel only if account is not expired
                 onBeforeClose: async () => {
                     //verify that the account is not expired anymore

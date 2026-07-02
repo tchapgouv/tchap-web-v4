@@ -16,9 +16,7 @@ interface IProps {
 
 interface IState {}
 
-
 export default class UserMenu extends React.Component<IProps, IState> {
-
     public constructor(props: IProps) {
         super(props);
     }
@@ -42,7 +40,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
             name = <div className="mx_UserMenu_name">{displayName}</div>;
         }
 
-        
         return (
             <div className="mx_UserMenu">
                 <div className="mx_UserMenu_userAvatar">

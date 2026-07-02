@@ -1,7 +1,4 @@
-import {
-    type Room,
-    type EmptyObject,
-} from "matrix-js-sdk/src/matrix";
+import { type Room, type EmptyObject } from "matrix-js-sdk/src/matrix";
 
 import { AsyncStoreWithClient } from "../../stores/AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -16,7 +13,6 @@ import { ActionPayload } from "~tchap-web/src/dispatcher/payloads";
 const ROOM_TCHAP_TYPE_CHANGED = "room_tchap_type_changed";
 
 export class TchapStore extends AsyncStoreWithClient<EmptyObject> {
-
     // null indicates the preview is empty / irrelevant
     private roomTypeList = new Map<string, TchapRoomType | null>();
 
@@ -33,7 +29,6 @@ export class TchapStore extends AsyncStoreWithClient<EmptyObject> {
         return new TchapStore();
     }
 
-
     private constructor() {
         super(defaultDispatcher, {});
     }
@@ -43,7 +38,7 @@ export class TchapStore extends AsyncStoreWithClient<EmptyObject> {
     }
 
     public static getTchapTypeChangedEventName(room: Room | undefined): string {
-        if (!room) return `${ROOM_TCHAP_TYPE_CHANGED}:undefined`
+        if (!room) return `${ROOM_TCHAP_TYPE_CHANGED}:undefined`;
         return `${ROOM_TCHAP_TYPE_CHANGED}:${room?.roomId}`;
     }
 
@@ -60,7 +55,7 @@ export class TchapStore extends AsyncStoreWithClient<EmptyObject> {
         this.emit(UPDATE_EVENT, this);
         this.emit(TchapStore.getTchapTypeChangedEventName(room), roomType);
 
-        return roomType
+        return roomType;
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {
