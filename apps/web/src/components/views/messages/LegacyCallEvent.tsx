@@ -20,6 +20,7 @@ import {
     VoiceCallSolidIcon,
     VolumeOffSolidIcon,
     VolumeOnSolidIcon,
+    WarningIcon
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";

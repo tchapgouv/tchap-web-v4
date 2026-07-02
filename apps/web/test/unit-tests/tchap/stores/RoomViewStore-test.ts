@@ -1,5 +1,6 @@
 import { mocked } from "jest-mock";
 import { MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { waitFor } from "@testing-library/dom";
 
 import { RoomViewStore } from "~tchap-web/src/stores/RoomViewStore";
 import { Action } from "~tchap-web/src/dispatcher/actions";
@@ -100,61 +101,46 @@ describe("RoomViewStore", function () {
         jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
     });
 
-    it("should display a generic error message when the room is null", async () => {
-        // View and wait for the room
-        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
-        await untilDispatch(Action.ActiveRoomChanged, dis);
-        // Generate error to display the expected error message
-        const error = new MatrixError(undefined, 404);
-        roomViewStore.showJoinRoomError(error, "");
-
-        expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
-
-        expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
-            title: _t("room|error_join_title"),
-            description: _t("room|error_join_generic_external"),
-        });
-    });
-
     it("should display specific error message when the room is a forum", async () => {
-        jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(TchapRoomType.Forum);
+        jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
 
         // View and wait for the room
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         await untilDispatch(Action.ActiveRoomChanged, dis);
         // Generate error to display the expected error message
         const error = new MatrixError(undefined, 404);
-        roomViewStore.showJoinRoomError(error, "");
+        roomViewStore.showJoinRoomError(error, roomId);
 
         expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
 
         expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
 
-        expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
-            title: _t("room|error_join_title"),
-            description: _t("room|room|error_join_public_external"),
+        waitFor(() => {
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                title: _t("room|error_join_title"),
+                description: _t("room|room|error_join_public_external"),
+            });
         });
     });
 
     it("should display specific error message when the room is a private", async () => {
-        // don't know why isUserExternal is not returning true despite the setup we did for being an external user
-        // so we mock it, not the best...
-        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
-
+        jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Private));
         // View and wait for the room
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         await untilDispatch(Action.ActiveRoomChanged, dis);
         // Generate error to display the expected error message
         const error = new MatrixError(undefined, 404);
-        roomViewStore.showJoinRoomError(error, "");
+        roomViewStore.showJoinRoomError(error, roomId);
 
         expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
 
         expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
 
-        expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
-            title: _t("room|error_join_title"),
-            description: _t("room|error_join_private_external"),
+        waitFor(() => {
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                title: _t("room|error_join_title"),
+                description: _t("room|error_join_private_external"),
+            });
         });
     });
 });

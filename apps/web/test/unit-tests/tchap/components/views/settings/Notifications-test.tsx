@@ -9,8 +9,7 @@ import {
     ThreepidMedium,
     TweakName,
 } from "matrix-js-sdk/src/matrix";
-import { cleanup, render, screen } from "jest-matrix-react";
-import { Form } from "@vector-im/compound-web";
+import { cleanup, render, screen, waitForElementToBeRemoved } from "jest-matrix-react";
 
 import Notifications from "~tchap-web/src/components/views/settings/Notifications";
 import {
@@ -160,19 +159,12 @@ describe("<Notifications />", () => {
     const featurethreadName: string = "feature_thread";
     const homeserverName: string = "my.home.server";
 
-    const getComponent = () =>
-        render(
-            <Form.Root>
-                <Notifications />
-            </Form.Root>,
-        );
+    const getComponent = () => render(<Notifications />);
 
     // get component, wait for async data and force a render
     const getComponentAndWait = async () => {
         const component = getComponent();
-
-        await flushPromises();
-
+        await waitForElementToBeRemoved(() => component.queryAllByRole("progressbar"));
         return component;
     };
 

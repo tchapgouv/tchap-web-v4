@@ -12,8 +12,8 @@ import {
 } from "~tchap-web/src/components/views/context_menus/RoomGeneralContextMenu";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
-import { DefaultTagID } from "~tchap-web/src/stores/room-list/models";
-import RoomListStore from "~tchap-web/src/stores/room-list/RoomListStore";
+import { DefaultTagID } from "~tchap-web/src/stores/room-list-v3/skip-list/tag";
+import * as getTagsForRoomUtils from "~tchap-web/src/utils/room/getTagsForRoom";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 
@@ -61,7 +61,7 @@ describe("RoomGeneralContextMenu", () => {
         } as unknown as DMRoomMap;
         DMRoomMap.setShared(dmRoomMap);
 
-        jest.spyOn(RoomListStore.instance, "getTagsForRoom").mockReturnValueOnce([
+        jest.spyOn(getTagsForRoomUtils, "getTagsForRoom").mockReturnValueOnce([
             DefaultTagID.DM,
             DefaultTagID.Favourite,
         ]);
