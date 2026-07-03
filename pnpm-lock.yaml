@@ -601,9 +601,6 @@ importers:
       dotenv:
         specifier: ^17.0.0
         version: 17.4.0
-      element-call-embedded-tchap:
-        specifier: 0.1.0
-        version: 0.1.0
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -7030,9 +7027,6 @@ packages:
 
   electron-to-chromium@1.5.332:
     resolution: {integrity: sha512-7OOtytmh/rINMLwaFTbcMVvYXO3AUm029X0LcyfYk0B557RlPkdpTpnH9+htMlfu5dKwOmT0+Zs2Aw+lnn6TeQ==}
-
-  element-call-embedded-tchap@0.1.0:
-    resolution: {integrity: sha512-bgiucdnk7AZhAiVyOLyTEf/3wI2lz6gQLdGXTFjaE2i557Z/xTZhTXx5uynZ/A4lsmxmC+F6ZOEm4k+4FsVcuQ==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -18759,8 +18753,6 @@ snapshots:
   ejs@5.0.1: {}
 
   electron-to-chromium@1.5.332: {}
-
-  element-call-embedded-tchap@0.1.0: {}
 
   elliptic@6.6.1:
     dependencies:
