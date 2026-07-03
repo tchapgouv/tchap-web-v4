@@ -1,27 +1,5 @@
 # Playwright in Element Web
 
-## Contents
-
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Running the Tests](#running-the-tests)
-    - [Element Web E2E Tests](#element-web-e2e-tests)
-    - [Shared Components Tests](#shared-components-tests)
-    - [Projects](#projects)
-- [How the Tests Work](#how-the-tests-work)
-    - [Test Structure](#test-structure)
-    - [Homeserver Setup](#homeserver-setup)
-    - [Fixtures](#fixtures)
-- [Writing Tests](#writing-tests)
-    - [Getting a Homeserver](#getting-a-homeserver)
-    - [Logging In](#logging-in)
-    - [Joining a Room](#joining-a-room)
-    - [Using matrix-js-sdk](#using-matrix-js-sdk)
-    - [Best Practices](#best-practices)
-- [Visual Testing](#visual-testing)
-- [Test Tags](#test-tags)
-- [Supported Container Runtimes](#supported-container-runtimes)
-
 ## Overview
 
 Element Web contains two sets of Playwright tests:
@@ -43,7 +21,7 @@ Follow the Playwright installation instructions:
 - **System dependencies:** <https://playwright.dev/docs/browsers#install-system-dependencies>
 
 ```sh
-yarn playwright install --with-deps
+pnpm playwright install --with-deps
 ```
 
 ### 2. Container Runtime
@@ -56,7 +34,7 @@ Element Web E2E tests require an instance running on `http://localhost:8080` (co
 
 You can either:
 
-- **Run manually:** `yarn start` in a separate terminal (not working for screenshot tests running in a docker environment).
+- **Run manually:** `pnpm start` in a separate terminal (not working for screenshot tests running in a docker environment).
 - **Auto-start:** Playwright will start the webserver automatically if it's not already running
 
 ## Running the Tests
@@ -68,19 +46,19 @@ Our main Playwright tests run against a full Element Web instance with Synapse/D
 **Run all E2E tests:**
 
 ```sh
-yarn run test:playwright
+pnpm run test:playwright
 ```
 
 **Run a specific test file:**
 
 ```sh
-yarn run test:playwright playwright/e2e/register/register.spec.ts
+pnpm run test:playwright playwright/e2e/register/register.spec.ts
 ```
 
 **Run tests interactively with Playwright UI:**
 
 ```sh
-yarn run test:playwright:open
+pnpm run test:playwright:open
 ```
 
 **Run screenshot tests only:**
@@ -89,7 +67,7 @@ yarn run test:playwright:open
 > This command run the playwright tests in a docker environment.
 
 ```sh
-yarn run test:playwright:screenshots
+pnpm run test:playwright:screenshots
 ```
 
 For more information about visual testing, see [Visual Testing](playwright#visual-testing).
@@ -98,30 +76,7 @@ For more information about visual testing, see [Visual Testing](playwright#visua
 
 ### Shared Components Tests
 
-The shared-components package uses Playwright (via Storybook test runner) to validate component rendering across different states and configurations.
-
-**Run Storybook tests:**
-
-```sh
-cd packages/shared-components
-yarn test:storybook
-```
-
-**Run Storybook tests in CI mode:**
-
-```sh
-cd packages/shared-components
-yarn test:storybook:ci
-```
-
-**Update Storybook screenshots:**
-
-```sh
-cd packages/shared-components
-yarn test:storybook:update
-```
-
-This uses the same Docker-based screenshot rendering as Element Web to ensure consistency across platforms.
+See the [Shared Components README](../packages/shared-components/README.md#visual-regression-tests) for instructions on running the shared components Playwright tests.
 
 ### Projects
 
@@ -147,13 +102,6 @@ Misc:
 - `playwright/snapshots/` - Visual regression test screenshots
 - `playwright/pages/` - Page object models
 - `playwright/plugins/` - Custom Playwright plugins
-
-**Shared components tests** are located in `packages/shared-components/`:
-
-- `packages/shared-components/playwright/snapshots/` - Storybook screenshot baselines
-- `packages/shared-components/.storybook/` - Storybook configuration
-
-The shared components use Storybook's test runner (powered by Playwright) to validate component rendering across different states and configurations.
 
 ### Homeserver Setup
 
@@ -417,7 +365,7 @@ This command runs only tests tagged with `@screenshot` in the Docker environment
 When you need to update screenshot baselines (e.g., after intentional UI changes):
 
 ```sh
-yarn run test:playwright:screenshots
+pnpm run test:playwright:screenshots
 ```
 
 **Important:** Always use this command to update screenshots rather than running tests locally with `--update-snapshots`.
@@ -477,10 +425,3 @@ export TMPDIR=/tmp/colima
 # or
 export TMPDIR=$HOME/tmp
 ```
-
-**macOS users:**
-
-Docker Desktop and Colima are both well-supported on macOS.
-
-> [!CAUTION]
-> Do not set `DOCKER_HOST` when running tests. Element Web uses [element-web-playwright-common](https://github.com/element-hq/element-modules/tree/main/packages/element-web-playwright-common), and setting `DOCKER_HOST` causes issues with testcontainers when running in the container VM.

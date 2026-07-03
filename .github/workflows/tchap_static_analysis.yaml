@@ -40,60 +40,76 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
-            - uses: actions/setup-node@v3
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
               with:
-                  cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  cache: "pnpm"
+                  node-version-file: package.json
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
-              run: "yarn install --frozen-lockfile"
+              run: "pnpm install --frozen-lockfile"
 
             - name: Run Linter
-              run: "yarn run lint:js:tchap"
+              working-directory: apps/web
+              run: "pnpm lint:js:tchap"
 
     style_lint:
         name: "Style Lint"
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
-            - uses: actions/setup-node@v3
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
               with:
-                  cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  cache: "pnpm"
+                  node-version-file: package.json
 
             # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
             - name: Install Dependencies
-              run: "yarn install --frozen-lockfile"
+              run: "pnpm install"
 
             - name: Run Linter
-              run: "yarn run lint:style"
+              working-directory: apps/web
+              run: "pnpm lint:style"
 
     i18n:
         name: "i18n check"
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
-            - uses: actions/setup-node@v3
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
               with:
-                  cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  cache: "pnpm"
+                  node-version-file: package.json
 
             # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
             - name: Install Dependencies
-              run: "yarn install --frozen-lockfile"
+              run: "pnpm install"
 
             - name: Run i18n-tchap
-              run: "yarn i18n-tchap"
+              working-directory: apps/web
+              run: "pnpm i18n-tchap"
+
+    prettier:
+        name: "Prettier check"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+              with:
+                  cache: "pnpm"
+                  node-version-file: package.json
+
+            # Needs branch matching as it inherits .stylelintrc.js from matrix-react-sdk
+            - name: Install Dependencies
+              run: "pnpm install"
+
+            - name: Run i18n-tchap
+              working-directory: apps/web
+              run: "pnpm prettier:tchap"
 
     # tchap : fix this https://github.com/tchapgouv/tchap-web-v4/issues/767
     # analyse_dead_code:

@@ -1,0 +1,76 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "targets": {
+        "prebuild:module_system": {
+            "cache": true,
+            "command": "node module_system/scripts/install.ts",
+            "inputs": ["{projectRoot}/build_config.yaml"],
+            "outputs": ["{projectRoot}/src/modules.js", "{projectRoot}/package.json", "{workspaceRoot}/pnpm-lock.yaml"],
+            "options": { "cwd": "apps/web" }
+        },
+        "prebuild:rethemendex": {
+            "cache": true,
+            "executor": "nx:run-script",
+            "options": {
+                "script": "rethemendex",
+                "cwd": "apps/web"
+            },
+            "inputs": ["{projectRoot}/res/css/**/*"],
+            "outputs": ["{projectRoot}/res/css/_components.pcss"]
+        },
+        "build": {
+            "command": "webpack-cli --progress --mode production",
+            "outputs": ["{projectRoot}/webapp"],
+            "options": { "cwd": "apps/web" }
+        },
+        "start": {
+            "command": "webpack-dev-server --output-path webapp --output-filename=bundles/_dev_/[name].js --output-chunk-filename=bundles/_dev_/[name].js --mode development",
+            "dependsOn": ["prebuild:module_system", "prebuild:rethemendex", "^start"],
+            "continuous": true,
+            "options": { "cwd": "apps/web" }
+        },
+        "lint:types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    // We indirect via `pnpm exec` to stop knip interpreting the
+                    // commandline and declaring `playwright` and `./tsconfig.module_system.json`
+                    // as unlisted dependencies.
+                    "pnpm exec tsc --noEmit --project ./tsconfig.module_system.json",
+                    "pnpm exec tsc --noEmit",
+                    "pnpm exec tsc --noEmit --project playwright"
+                ],
+                "parallel": false,
+                "cwd": "apps/web"
+            },
+            "dependsOn": ["^build", "^build:playwright"]
+        },
+        "test:unit": {
+            "executor": "@nx/jest:jest",
+            "options": {
+                "jestConfig": "{projectRoot}/jest.config.ts",
+                "cwd": "apps/web"
+            },
+            "dependsOn": ["^build"]
+        },
+        "test:unit:tchap": {
+            "executor": "@nx/jest:jest",
+            "options": {
+                "jestConfig": "{projectRoot}/jest.config.ts",
+                "cwd": "apps/web"
+            },
+            "dependsOn": ["^build"]
+        },
+        "test:playwright": {
+            "command": "playwright test",
+            "options": { "cwd": "apps/web" },
+            "dependsOn": ["^build:playwright"]
+        },
+        "test:playwright:screenshots": {
+            "command": "playwright-screenshots playwright test --update-snapshots --project=Chrome --grep @screenshot",
+            "options": { "cwd": "apps/web" },
+            "dependsOn": ["^build:playwright"]
+        }
+    }
+}

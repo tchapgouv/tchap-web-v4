@@ -12,10 +12,9 @@ import SearchIcon from "@vector-im/compound-design-tokens/assets/web/icons/searc
 import DialPadIcon from "@vector-im/compound-design-tokens/assets/web/icons/dial-pad";
 
 import styles from "./RoomListSearchView.module.css";
-import { type ViewModel } from "../../viewmodel/ViewModel";
-import { useViewModel } from "../../useViewModel";
-import { Flex } from "../../utils/Flex";
-import { useI18n } from "../../utils/i18nContext";
+import { type ViewModel, useViewModel } from "../../core/viewmodel";
+import { Flex } from "../../core/utils/Flex";
+import { useI18n } from "../../core/i18n/i18nContext";
 
 export interface RoomListSearchViewSnapshot {
     /**
@@ -51,7 +50,7 @@ export interface RoomListSearchViewActions {
 /**
  * The view model for the room list search component.
  */
-export type RoomListSearchViewModel = ViewModel<RoomListSearchViewSnapshot> & RoomListSearchViewActions;
+export type RoomListSearchViewModel = ViewModel<RoomListSearchViewSnapshot, RoomListSearchViewActions>;
 
 interface RoomListSearchViewProps {
     /**

@@ -1,0 +1,1598 @@
+/*
+Copyright 2024 New Vector Ltd.
+Copyright 2019-2023 The Matrix.org Foundation C.I.C.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+import React, { createRef, type JSX, type ReactNode, type SyntheticEvent } from "react";
+import { EventTimeline, EventType, type Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
+import { type MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { logger } from "matrix-js-sdk/src/logger";
+import { uniqBy } from "lodash";
+import { Pill, PillInput, RichList } from "@element-hq/web-shared-components";
+import { DialPadIcon, UserProfileSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+
+import { _t, _td } from "../../../languageHandler";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
+import DMRoomMap from "../../../utils/DMRoomMap";
+import * as Email from "../../../email";
+import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
+import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
+import { abbreviateUrl } from "../../../utils/UrlUtils";
+import IdentityAuthClient from "../../../IdentityAuthClient";
+import { showAnyInviteErrors } from "../../../RoomInvite";
+import { Action } from "../../../dispatcher/actions";
+import { DefaultTagID } from "../../../stores/room-list-v3/skip-list/tag";
+import RoomListStore from "../../../stores/room-list/RoomListStore";
+import SettingsStore from "../../../settings/SettingsStore";
+import { UIFeature } from "../../../settings/UIFeature";
+import { SearchResultAvatar } from "../avatars/SearchResultAvatar";
+import AccessibleButton, { type ButtonEvent } from "../elements/AccessibleButton";
+import { selectText } from "../../../utils/strings";
+import Field from "../elements/Field";
+import TabbedView, { Tab, TabLocation } from "../../structures/TabbedView";
+import Dialpad from "../voip/DialPad";
+import QuestionDialog from "./QuestionDialog";
+import BaseDialog from "./BaseDialog";
+import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
+import LegacyCallHandler from "../../../LegacyCallHandler";
+import CopyableText from "../elements/CopyableText";
+import { type ScreenName } from "../../../PosthogTrackers";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import {
+    DirectoryMember,
+    type IDMUserTileProps,
+    type Member,
+    startDmOnFirstMessage,
+    ThreepidMember,
+} from "../../../utils/direct-messages";
+import { InviteKind } from "./InviteDialogTypes";
+import Modal from "../../../Modal";
+import dis from "../../../dispatcher/dispatcher";
+import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import { type NonEmptyArray } from "../../../@types/common";
+import { SdkContextClass } from "../../../contexts/SDKContext";
+import { type UserProfilesStore } from "../../../stores/UserProfilesStore";
+import InviteProgressBody from "./InviteProgressBody.tsx";
+import MultiInviter, { type CompletionStates as MultiInviterCompletionStates } from "../../../utils/MultiInviter.ts";
+import { DMRoomTile } from "./invite/DMRoomTile.tsx";
+
+import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
+import { type TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
+import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore.ts";
+import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils.ts";
+
+// we have a number of types defined from the Matrix spec which can't reasonably be altered here.
+/* eslint-disable camelcase */
+
+interface Result {
+    userId: string;
+    user: Member;
+    lastActive?: number;
+}
+
+const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
+const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked
+
+enum TabId {
+    UserDirectory = "users",
+    DialPad = "dialpad",
+}
+
+class DMUserTile extends React.PureComponent<IDMUserTileProps> {
+    private onRemove = (e: ButtonEvent): void => {
+        // Stop the browser from highlighting text
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.props.onRemove!(this.props.member);
+    };
+
+    public render(): React.ReactNode {
+        const avatarSize = "20px";
+        const avatar = <SearchResultAvatar user={this.props.member} size={avatarSize} />;
+
+        return (
+            <Pill label={this.props.member.name} onClick={this.onRemove}>
+                {avatar}
+            </Pill>
+        );
+    }
+}
+
+/**
+ * Converts a RoomMember to a Member.
+ * Returns the Member if it is already a Member.
+ */
+const toMember = (member: RoomMember | Member): Member => {
+    return member instanceof RoomMember
+        ? new DirectoryMember({
+              user_id: member.userId,
+              display_name: member.name,
+              avatar_url: member.getMxcAvatarUrl(),
+          })
+        : member;
+};
+
+interface BaseProps {
+    // Takes a boolean which is true if a user / users were invited /
+    // a call transfer was initiated or false if the dialog was cancelled
+    // with no action taken.
+    onFinished: (success?: boolean) => void;
+
+    // Initial value to populate the filter with
+    initialText?: string;
+}
+
+interface InviteDMProps extends BaseProps {
+    // The kind of invite being performed. Assumed to be InviteKind.Dm if not provided.
+    kind?: InviteKind.Dm;
+}
+
+interface InviteRoomProps extends BaseProps {
+    kind: InviteKind.Invite;
+
+    // The room ID this dialog is for. Only required for InviteKind.Invite.
+    roomId: string;
+}
+
+function isRoomInvite(props: Props): props is InviteRoomProps {
+    return props.kind === InviteKind.Invite;
+}
+
+interface InviteCallProps extends BaseProps {
+    kind: InviteKind.CallTransfer;
+
+    // The call to transfer. Only required for InviteKind.CallTransfer.
+    call: MatrixCall;
+}
+
+type Props = InviteDMProps | InviteRoomProps | InviteCallProps;
+
+interface IInviteDialogState {
+    targets: Member[]; // array of Member objects (see interface above)
+    filterText: string;
+    recents: Result[];
+    numRecentsShown: number;
+    suggestions: Result[];
+    numSuggestionsShown: number;
+    serverResultsMixin: Result[];
+    threepidResultsMixin: Result[];
+    canUseIdentityServer: boolean;
+    tryingIdentityServer: boolean;
+    consultFirst: boolean;
+    dialPadValue: string;
+    currentTabId: TabId;
+
+    /**
+     * True if we are sending the invites.
+     *
+     * We will grey out the action button, hide the suggestions, and display a spinner.
+     */
+    busy: boolean;
+
+    /** Error from the last attempt to send invites. */
+    errorText?: string;
+
+    // :TCHAP:
+    shouldDisplayExternalWarning?: boolean;
+    shouldDisableInviteButton?: boolean;
+    tchapRoomType?: TchapRoomType;
+    // end :TCHAP
+}
+
+export default class InviteDialog extends React.PureComponent<Props, IInviteDialogState> {
+    public static defaultProps: Partial<Props> = {
+        kind: InviteKind.Dm,
+        initialText: "",
+    };
+
+    private debounceTimer: number | null = null; // actually number because we're in the browser
+    private editorRef = createRef<HTMLInputElement>();
+    private numberEntryFieldRef = createRef<Field>();
+    private unmounted = false;
+    private encryptionByDefault = false;
+    private profilesStore: UserProfilesStore;
+    private tchapAccessRule: TchapIAccessRuleEventContent | undefined;
+
+    public constructor(props: Props) {
+        super(props);
+
+        if (props.kind === InviteKind.Invite && !props.roomId) {
+            throw new Error("When using InviteKind.Invite a roomId is required for an InviteDialog");
+        } else if (props.kind === InviteKind.CallTransfer && !props.call) {
+            throw new Error("When using InviteKind.CallTransfer a call is required for an InviteDialog");
+        }
+
+        this.profilesStore = SdkContextClass.instance.userProfilesStore;
+        const cli = MatrixClientPeg.safeGet();
+
+        const excludedIds = new Set([cli.getSafeUserId()]);
+        if (isRoomInvite(props)) {
+            const room = cli.getRoom(props.roomId);
+            if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
+            const isFederated = room?.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent()["m.federate"];
+            room.getMembersWithMembership(KnownMembership.Invite).forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Join).forEach((m) => excludedIds.add(m.userId));
+            // add banned users, so we don't try to invite them
+            room.getMembersWithMembership(KnownMembership.Ban).forEach((m) => excludedIds.add(m.userId));
+            const ourHomeserver = cli.getDomain();
+            if (isFederated === false && ourHomeserver) {
+                // If this room isn't federated, we must be on the same server.
+                // exclude users from external servers
+                this.excludeExternals(ourHomeserver, excludedIds);
+            }
+            this.tchapAccessRule = TchapRoomUtils.getTchapRoomAccessRule(room);
+        }
+
+        this.state = {
+            targets: [], // array of Member objects (see interface above)
+            filterText: this.props.initialText || "",
+            // Mutates alreadyInvited set so that buildSuggestions doesn't duplicate any users
+            recents: InviteDialog.buildRecents(excludedIds),
+            numRecentsShown: INITIAL_ROOMS_SHOWN,
+            suggestions: this.buildSuggestions(excludedIds),
+            numSuggestionsShown: INITIAL_ROOMS_SHOWN,
+            serverResultsMixin: [],
+            threepidResultsMixin: [],
+            canUseIdentityServer: !!cli.getIdentityServerUrl(),
+            tryingIdentityServer: false,
+            consultFirst: false,
+            dialPadValue: "",
+            currentTabId: TabId.UserDirectory,
+
+            // These two flags are used for the 'Go' button to communicate what is going on.
+            busy: false,
+
+            // :TCHAP:
+            shouldDisplayExternalWarning: false,
+            shouldDisableInviteButton: false,
+            tchapRoomType: undefined
+            // end :TCHAP
+        };
+    }
+
+    public componentDidMount(): void {
+
+        this.unmounted = false;
+        this.encryptionByDefault = privateShouldBeEncrypted(MatrixClientPeg.safeGet());
+
+        if (this.props.initialText) {
+            this.updateSuggestions(this.props.initialText);
+        }
+    }
+
+    public componentWillUnmount(): void {
+        this.unmounted = true;
+    }
+
+    private onConsultFirstChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ consultFirst: ev.target.checked });
+    };
+
+    private excludeExternals(homeserver: string, excludedTargetIds: Set<string>): void {
+        const client = MatrixClientPeg.safeGet();
+        // users with room membership
+        const members = Object.values(buildMemberScores(client)).map(({ member }) => member.userId);
+        // users with dm membership
+        const roomMembers = Object.keys(DMRoomMap.shared().getUniqueRoomsWithIndividuals());
+        roomMembers.forEach((id) => members.push(id));
+        // filter duplicates and user IDs from external servers
+        const externals = new Set(members.filter((id) => !id.includes(homeserver)));
+        externals.forEach((id) => excludedTargetIds.add(id));
+    }
+
+    public static buildRecents(excludedTargetIds: Set<string>): Result[] {
+        const rooms = DMRoomMap.shared().getUniqueRoomsWithIndividuals(); // map of userId => js-sdk Room
+
+        // Also pull in all the rooms tagged as DefaultTagID.DM so we don't miss anything. Sometimes the
+        // room list doesn't tag the room for the DMRoomMap, but does for the room list.
+        const dmTaggedRooms = RoomListStore.instance.orderedLists[DefaultTagID.DM] || [];
+        const myUserId = MatrixClientPeg.safeGet().getUserId();
+        for (const dmRoom of dmTaggedRooms) {
+            const otherMembers = dmRoom.getJoinedMembers().filter((u) => u.userId !== myUserId);
+            for (const member of otherMembers) {
+                if (rooms[member.userId]) continue; // already have a room
+
+                logger.warn(`Adding DM room for ${member.userId} as ${dmRoom.roomId} from tag, not DM map`);
+                rooms[member.userId] = dmRoom;
+            }
+        }
+
+        const recents: {
+            userId: string;
+            user: Member;
+            lastActive: number;
+        }[] = [];
+
+        for (const userId in rooms) {
+            // Filter out user IDs that are already in the room / should be excluded
+            if (excludedTargetIds.has(userId)) {
+                logger.warn(`[Invite:Recents] Excluding ${userId} from recents`);
+                continue;
+            }
+
+            const room = rooms[userId];
+            const roomMember = room.getMember(userId);
+            if (!roomMember) {
+                // just skip people who don't have memberships for some reason
+                logger.warn(`[Invite:Recents] ${userId} is missing a member object in their own DM (${room.roomId})`);
+                continue;
+            }
+
+            // Find the last timestamp for a message event
+            const searchTypes = ["m.room.message", "m.room.encrypted", "m.sticker"];
+            const maxSearchEvents = 20; // to prevent traversing history
+            let lastEventTs = 0;
+            if (room.timeline && room.timeline.length) {
+                for (let i = room.timeline.length - 1; i >= 0; i--) {
+                    const ev = room.timeline[i];
+                    if (searchTypes.includes(ev.getType())) {
+                        lastEventTs = ev.getTs();
+                        break;
+                    }
+                    if (room.timeline.length - i > maxSearchEvents) break;
+                }
+            }
+            if (!lastEventTs) {
+                // something weird is going on with this room
+                logger.warn(`[Invite:Recents] ${userId} (${room.roomId}) has a weird last timestamp: ${lastEventTs}`);
+                continue;
+            }
+
+            recents.push({ userId, user: toMember(roomMember), lastActive: lastEventTs });
+            // We mutate the given set so that any later callers avoid duplicating these users
+            excludedTargetIds.add(userId);
+        }
+        if (recents.length === 0) logger.warn("[Invite:Recents] No recents to suggest!");
+
+        // Sort the recents by last active to save us time later
+        recents.sort((a, b) => b.lastActive - a.lastActive);
+
+        return recents;
+    }
+
+    private buildSuggestions(excludedTargetIds: Set<string>): { userId: string; user: Member }[] {
+        const cli = MatrixClientPeg.safeGet();
+        const activityScores = buildActivityScores(cli);
+        const memberScores = buildMemberScores(cli);
+
+        const memberComparator = compareMembers(activityScores, memberScores);
+
+        return Object.values(memberScores)
+            .map(({ member }) => member)
+            .filter((member) => !excludedTargetIds.has(member.userId))
+            .sort(memberComparator)
+            .map((member) => ({ userId: member.userId, user: toMember(member) }));
+    }
+
+    private shouldAbortAfterInviteError(
+        states: MultiInviterCompletionStates,
+        inviter: MultiInviter,
+        room: Room,
+    ): boolean {
+        this.setState({ busy: false });
+        const userMap = new Map<string, Member>(this.state.targets.map((member) => [member.userId, member]));
+        return !showAnyInviteErrors(states, room, inviter, userMap);
+    }
+
+    private convertFilter(): Member[] {
+        // Check to see if there's anything to convert first
+        if (!this.state.filterText || !this.state.filterText.includes("@")) return this.state.targets || [];
+
+        if (!this.canInviteMore()) {
+            // There should only be one third-party invite → do not allow more targets
+            return this.state.targets;
+        }
+
+        let newMember: Member | undefined;
+        if (this.state.filterText.startsWith("@")) {
+            // Assume mxid
+            newMember = new DirectoryMember({ user_id: this.state.filterText });
+        } else if (SettingsStore.getValue(UIFeature.IdentityServer)) {
+            // Assume email
+            if (this.canInviteThirdParty()) {
+                newMember = new ThreepidMember(this.state.filterText);
+            }
+        }
+        if (!newMember) return this.state.targets;
+
+        const newTargets = [...(this.state.targets || []), newMember];
+        // :TCHAP: check if it is an external user
+        this.doesTargetsContainsExternal(newTargets).then(containAnExternal => {
+            console.log("doesTargetsContainsExternal", containAnExternal);
+            this.setState({
+                targets: newTargets,
+                filterText: "",
+                shouldDisplayExternalWarning: containAnExternal,
+                shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+            })
+        });
+        // end :TCHAP:
+
+        this.setState({ targets: newTargets, filterText: ""});
+        return newTargets;
+    }
+
+
+
+    private startDm = async (): Promise<void> => {
+        this.setBusy(true);
+
+        try {
+            const cli = MatrixClientPeg.safeGet();
+            const targets = this.convertFilter();
+            await startDmOnFirstMessage(cli, targets);
+            this.props.onFinished(true);
+        } catch (err) {
+            logger.error(err);
+            this.setState({
+                busy: false,
+                errorText: _t("invite|error_dm"),
+            });
+        }
+    };
+
+    private setBusy(busy: boolean): void {
+        this.setState({
+            busy,
+        });
+    }
+
+    private inviteUsers = async (): Promise<void> => {
+        if (this.props.kind !== InviteKind.Invite) return;
+        this.setState({ busy: true });
+
+        const targets = this.convertFilter();
+        // :TCHAP: check again, not sure state already propagated properly at this time
+        const containAnExternal = await this.doesTargetsContainsExternal(targets);
+        // end :TCHAP:
+        const targetIds = targets.map((t) => t.userId);
+
+        const cli = MatrixClientPeg.safeGet();
+        const room = cli.getRoom(this.props.roomId);
+        if (!room) {
+            logger.error("Failed to find the room to invite users to");
+            this.setState({
+                busy: false,
+                errorText: _t("invite|error_find_room"),
+            });
+            return;
+        }
+
+        // :TCHAP:
+
+        if (this.state.shouldDisplayExternalWarning || (containAnExternal)) {
+            // Before continuing we should alert the user that this is irreversible action
+            const { finished } = Modal.createDialog(QuestionDialog, {
+                title: _t("badge|external_guests"),
+                description:
+                    _t("invite|accessible_to_external") +
+                    " " +
+                    _t("invite|irreversible"),
+                button: _t("action|ok"),
+            });
+            const [ confirmed ] = await finished;
+            if (!confirmed) {
+                //cancel the invitation
+                this.setState({
+                    busy: false,
+                });
+                return;
+            };
+            try {
+                await cli.sendStateEvent(
+                    room.roomId,
+                    TchapRoomAccessRulesEventId,
+                    {
+                    rule: TchapRoomAccessRule.Unrestricted,
+                    visibility: this.tchapAccessRule?.visibility,
+                    force_unencrypted_at_creation: this.tchapAccessRule?.force_unencrypted_at_creation
+                    },
+                    ""
+                );
+                const inviter = new MultiInviter(cli, this.props.roomId, {
+                    // We show our own progress body, so don't pop up a separate dialog.
+                    inhibitProgressDialog: true,
+                });
+                const states = await inviter.invite(targetIds);
+                if (!this.shouldAbortAfterInviteError(states, inviter, room)) {
+                    // handles setting error message too
+                    this.props.onFinished(true);
+                }
+            } catch (err) {
+                logger.error(err);
+                // an error occured, we need to go back to original state
+                this.setState({
+                    busy: false,
+                    errorText: _t("invite|error_invite"),
+                });
+                cli.sendStateEvent(
+                    room.roomId,
+                    TchapRoomAccessRulesEventId,
+                    { rule: TchapRoomAccessRule.Restricted, encrypted: this.tchapAccessRule?.force_unencrypted_at_creation, visibility: this.tchapAccessRule?.visibility },
+                    "")
+            }
+            return;
+        }
+        // end :TCHAP:
+        try {
+            const inviter = new MultiInviter(cli, this.props.roomId, {
+                // We show our own progress body, so don't pop up a separate dialog.
+                inhibitProgressDialog: true,
+            });
+            const states = await inviter.invite(targetIds);
+            if (!this.shouldAbortAfterInviteError(states, inviter, room)) {
+                // handles setting error message too
+                this.props.onFinished(true);
+            }
+        } catch (err) {
+            logger.error(err);
+            this.setState({
+                busy: false,
+                errorText: _t("invite|error_invite"),
+            });
+        }
+    };
+
+    private transferCall = async (): Promise<void> => {
+        if (this.props.kind !== InviteKind.CallTransfer) return;
+        if (this.state.currentTabId == TabId.UserDirectory) {
+            this.convertFilter();
+            const targets = this.convertFilter();
+            const targetIds = targets.map((t) => t.userId);
+            if (targetIds.length > 1) {
+                this.setState({
+                    errorText: _t("invite|error_transfer_multiple_target"),
+                });
+                return;
+            }
+
+            LegacyCallHandler.instance.startTransferToMatrixID(this.props.call, targetIds[0], this.state.consultFirst);
+        } else {
+            LegacyCallHandler.instance.startTransferToPhoneNumber(
+                this.props.call,
+                this.state.dialPadValue,
+                this.state.consultFirst,
+            );
+        }
+        this.props.onFinished(true);
+    };
+
+    private onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+        if (this.state.busy) return;
+
+        let handled = false;
+        const value = e.currentTarget.value.trim();
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+
+        switch (action) {
+            case KeyBindingAction.Space:
+                if (!value || !value.includes("@") || value.includes(" ")) break;
+
+                // when the user hits space and their input looks like an e-mail/MXID then try to convert it
+                this.convertFilter();
+                handled = true;
+                break;
+            case KeyBindingAction.Enter:
+                if (!value) break;
+
+                // when the user hits enter with something in their field try to convert it
+                this.convertFilter();
+                handled = true;
+                break;
+        }
+
+        if (handled) {
+            e.preventDefault();
+        }
+    };
+
+    private onCancel = (): void => {
+        this.props.onFinished(false);
+    };
+
+    private updateSuggestions = async (term: string): Promise<void> => {
+        MatrixClientPeg.safeGet()
+            .searchUserDirectory({ term })
+            .then(async (r): Promise<void> => {
+                if (term !== this.state.filterText) {
+                    // Discard the results - we were probably too slow on the server-side to make
+                    // these results useful. This is a race we want to avoid because we could overwrite
+                    // more accurate results.
+                    return;
+                }
+
+                if (!r.results) r.results = [];
+
+                // While we're here, try and autocomplete a search result for the mxid itself
+                // if there's no matches (and the input looks like a mxid).
+                if (term[0] === "@" && term.indexOf(":") > 1) {
+                    try {
+                        const profile = await this.profilesStore.getOrFetchProfile(term, { shouldThrow: true });
+
+                        if (profile) {
+                            // If we have a profile, we have enough information to assume that
+                            // the mxid can be invited - add it to the list. We stick it at the
+                            // top so it is most obviously presented to the user.
+                            r.results.splice(0, 0, {
+                                user_id: term,
+                                display_name: profile["displayname"],
+                                avatar_url: profile["avatar_url"],
+                            });
+                        }
+                    } catch (e) {
+                        logger.warn("Non-fatal error trying to make an invite for a user ID", e);
+                    }
+                }
+
+                this.setState({
+                    serverResultsMixin: r.results.map((u) => ({
+                        userId: u.user_id,
+                        user: new DirectoryMember(u),
+                    })),
+                });
+            })
+            .catch((e) => {
+                logger.error("Error searching user directory:");
+                logger.error(e);
+                this.setState({ serverResultsMixin: [] }); // clear results because it's moderately fatal
+            });
+
+        // Whenever we search the directory, also try to search the identity server. It's
+        // all debounced the same anyways.
+        if (!this.state.canUseIdentityServer) {
+            // The user doesn't have an identity server set - warn them of that.
+            this.setState({ tryingIdentityServer: true });
+            return;
+        }
+        if (Email.looksValid(term) && this.canInviteThirdParty() && SettingsStore.getValue(UIFeature.IdentityServer)) {
+            // Start off by suggesting the plain email while we try and resolve it
+            // to a real account.
+            this.setState({
+                // per above: the userId is a lie here - it's just a regular identifier
+                threepidResultsMixin: [{ user: new ThreepidMember(term), userId: term }],
+            });
+            try {
+                const authClient = new IdentityAuthClient();
+                const token = await authClient.getAccessToken();
+                // No token → unable to try a lookup
+                if (!token) return;
+
+                if (term !== this.state.filterText) return; // abandon hope
+
+                const lookup = await MatrixClientPeg.safeGet().lookupThreePid("email", term, token);
+                if (term !== this.state.filterText) return; // abandon hope
+
+                if (!lookup || !("mxid" in lookup)) {
+                    // We weren't able to find anyone - we're already suggesting the plain email
+                    // as an alternative, so do nothing.
+                    return;
+                }
+
+                // We append the user suggestion to give the user an option to click
+                // the email anyways, and so we don't cause things to jump around. In
+                // theory, the user would see the user pop up and think "ah yes, that
+                // person!"
+                const profile = await this.profilesStore.getOrFetchProfile(lookup.mxid);
+                if (term !== this.state.filterText || !profile) return; // abandon hope
+                this.setState({
+                    threepidResultsMixin: [
+                        ...this.state.threepidResultsMixin,
+                        {
+                            user: new DirectoryMember({
+                                user_id: lookup.mxid,
+                                display_name: profile.displayname,
+                                avatar_url: profile.avatar_url,
+                            }),
+                            // Use the search term as identifier, so that it shows up in suggestions.
+                            userId: term,
+                        },
+                    ],
+                });
+            } catch (e) {
+                logger.error("Error searching identity server:");
+                logger.error(e);
+                this.setState({ threepidResultsMixin: [] }); // clear results because it's moderately fatal
+            }
+        }
+    };
+
+    private updateFilter = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        // :TCHAP: lowercase-invite - const term = e.target.value;
+        const term = e.target.value?.toLowerCase();
+        // end :TCHAP:
+
+        this.setState({ filterText: term });
+
+        // Debounce server lookups to reduce spam. We don't clear the existing server
+        // results because they might still be vaguely accurate, likewise for races which
+        // could happen here.
+        if (this.debounceTimer) {
+            clearTimeout(this.debounceTimer);
+        }
+        this.debounceTimer = window.setTimeout(() => {
+            this.updateSuggestions(term);
+        }, 150); // 150ms debounce (human reaction time + some)
+    };
+
+    private showMoreRecents = (): void => {
+        this.setState({ numRecentsShown: this.state.numRecentsShown + INCREMENT_ROOMS_SHOWN });
+    };
+
+    private showMoreSuggestions = (): void => {
+        this.setState({ numSuggestionsShown: this.state.numSuggestionsShown + INCREMENT_ROOMS_SHOWN });
+    };
+
+    private toggleMember = (member: Member): void => {
+        if (!this.state.busy) {
+            let filterText = this.state.filterText;
+            let targets = this.state.targets.map((t) => t); // cheap clone for mutation
+            const idx = targets.findIndex((m) => m.userId === member.userId);
+            if (idx >= 0) {
+                targets.splice(idx, 1);
+            } else {
+                if (this.props.kind === InviteKind.CallTransfer && targets.length > 0) {
+                    targets = [];
+                }
+                targets.push(member);
+                filterText = ""; // clear the filter when the user accepts a suggestion
+            }
+
+            // :TCHAP: this.setState({ targets, filterText });
+            // Using promise to not modify original function
+            this.doesTargetsContainsExternal(targets).then(containsExternal => {
+                this.setState({
+                    targets,
+                    filterText,
+                    shouldDisplayExternalWarning: containsExternal,
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containsExternal)
+                });
+            })
+            this.setState({ targets, filterText });
+            // end :TCHAP:
+
+            if (this.editorRef && this.editorRef.current) {
+                this.editorRef.current.focus();
+            }
+        }
+    };
+
+    private removeMember = (member: Member): void => {
+        const targets = this.state.targets.map((t) => t); // cheap clone for mutation
+        const idx = targets.indexOf(member);
+        if (idx >= 0) {
+            targets.splice(idx, 1);
+            // :TCHAP: this.setState({ targets });
+            this.doesTargetsContainsExternal(targets).then(containsExternal => {
+                this.setState({
+                    targets, shouldDisplayExternalWarning: containsExternal,
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containsExternal)
+                })
+            })
+            this.setState({ targets });
+            // end :TCHAP:
+        }
+
+        if (this.editorRef && this.editorRef.current) {
+            this.editorRef.current.focus();
+        }
+    };
+
+    private parseFilter(filter: string): string[] {
+        return filter
+            .split(/[\s,]+/)
+            .map((p) => p.trim())
+            .filter((p) => !!p); // filter empty strings
+    }
+
+    private onPaste = async (e: React.ClipboardEvent): Promise<void> => {
+        if (this.state.filterText) {
+            // if the user has already typed something, just let them
+            // paste normally.
+            return;
+        }
+        // :TCHAP: lowercase-invite - const text = e.clipboardData.getData("text");
+        const text = e.clipboardData.getData("text")?.toLowerCase();
+        // end :TCHAP:
+        const potentialAddresses = this.parseFilter(text);
+        // one search term which is not a mxid or email address
+        if (potentialAddresses.length === 1 && !potentialAddresses[0].includes("@")) {
+            return;
+        }
+
+        // Prevent the text being pasted into the input
+        e.preventDefault();
+
+        // Process it as a list of addresses to add instead
+        const possibleMembers = [
+            // If we can avoid hitting the profile endpoint, we should.
+            ...this.state.recents,
+            ...this.state.suggestions,
+            ...this.state.serverResultsMixin,
+            ...this.state.threepidResultsMixin,
+        ];
+        const toAdd: Member[] = [];
+        const failed: string[] = [];
+
+        // Addresses that could not be added.
+        // Will be displayed as filter text to provide feedback.
+        const unableToAddMore: string[] = [];
+
+        for (const address of potentialAddresses) {
+            const member = possibleMembers.find((m) => m.userId === address);
+            if (member) {
+                if (this.canInviteMore([...this.state.targets, ...toAdd])) {
+                    toAdd.push(member.user);
+                } else {
+                    // Invite not possible for current targets and pasted targets.
+                    unableToAddMore.push(address);
+                }
+                continue;
+            }
+
+            if (Email.looksValid(address)) {
+                if (this.canInviteThirdParty([...this.state.targets, ...toAdd])) {
+                    toAdd.push(new ThreepidMember(address));
+                } else {
+                    // Third-party invite not possible for current targets and pasted targets.
+                    unableToAddMore.push(address);
+                }
+                continue;
+            }
+
+            if (address[0] !== "@") {
+                failed.push(address); // not a user ID
+                continue;
+            }
+
+            try {
+                const profile = await this.profilesStore.getOrFetchProfile(address);
+                toAdd.push(
+                    new DirectoryMember({
+                        user_id: address,
+                        display_name: profile?.displayname,
+                        avatar_url: profile?.avatar_url,
+                    }),
+                );
+            } catch (e) {
+                logger.error("Error looking up profile for " + address);
+                logger.error(e);
+                failed.push(address);
+            }
+        }
+        if (this.unmounted) return;
+
+        if (failed.length > 0) {
+            Modal.createDialog(QuestionDialog, {
+                title: _t("invite|error_find_user_title"),
+                description: _t("invite|error_find_user_description", { csvNames: failed.join(", ") }),
+                button: _t("action|ok"),
+            });
+        }
+
+        // :TCHAP: check if it is an external user
+        this.doesTargetsContainsExternal(toAdd).then(containAnExternal => {
+            if (unableToAddMore) {
+                this.setState({
+                    filterText: unableToAddMore.join(" "),
+                    targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+                });
+            } else {
+                this.setState({
+                    targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
+                });
+            }
+        });
+        // end :TCHAP:
+
+        if (unableToAddMore) {
+            this.setState({
+                filterText: unableToAddMore.join(" "),
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
+            });
+        } else {
+            this.setState({
+                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
+            });
+        }
+    };
+
+    private onUseDefaultIdentityServerClick = (e: ButtonEvent): void => {
+        e.preventDefault();
+
+        // Update the IS in account data. Actually using it may trigger terms.
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        setToDefaultIdentityServer(MatrixClientPeg.safeGet());
+        this.setState({ canUseIdentityServer: true, tryingIdentityServer: false });
+    };
+
+    private onManageSettingsClick = (e: ButtonEvent): void => {
+        e.preventDefault();
+        dis.fire(Action.ViewUserSettings);
+        this.props.onFinished(false);
+    };
+
+    // :TCHAP:
+    private renderWarningExternal(): ReactNode {
+        if (this.state.tchapRoomType !== TchapRoomType.External
+            && this.state.tchapRoomType !== TchapRoomType.PrivateNonEncryptedExternal
+            && this.state.shouldDisplayExternalWarning
+            && this.canInviteExternalMembers()
+            // if it is a DM we don't show the warning
+            && this.props.kind !== InviteKind.Dm) {
+            return (
+                <div className="tc_live_warning_section" data-testid="tc_warning">
+                    <span> {_t("invite|warning_external")}</span>
+                </div>
+            )
+        }
+        return null;
+    }
+
+    // This warning should be displayed when  user cant invite in the room
+    // And that the list of invitees contain at least an external
+    private renderWarningCantInviteExternal(): ReactNode {
+        if (!this.canInviteExternalMembers()
+            && this.state.shouldDisplayExternalWarning
+            // if it is a DM we don't show the warning
+            && this.props.kind !== InviteKind.Dm
+        )
+        return (
+            <div className="tc_live_warning_section" data-testid="tc_warning">
+                <span> {_t("invite|external_not_allowed")}</span>
+            </div>
+        )
+        return null
+    }
+
+
+    private checkDisableInviteButton(containsExternal: boolean): boolean {
+        return this.props.kind == InviteKind.Invite && !this.canInviteExternalMembers() && containsExternal;
+    }
+
+    private async doesTargetsContainsExternal(members: Member[]) : Promise<boolean> {
+        // if the room is already open to external users, don't need to show warning
+        if (this.tchapAccessRule?.rule === TchapRoomAccessRule.Unrestricted) {
+            return false;
+        }
+        // If at least one of the selected member is external, we return true
+        for (const m of members) {
+            // For email targets, validate against identity server
+            if (Email.looksValid(m.name)) {
+                const isExternal = await TchapUtils.checkIfEmailIsExternal(m.name);
+                return isExternal;
+            }
+        }
+        return false;
+    }
+
+    private canInviteExternalMembers(): boolean {
+        if (this.props.kind === InviteKind.Invite) {
+            const cli = MatrixClientPeg.safeGet();
+            const room = cli.getRoom(this.props.roomId);
+            // user has the right or no to update the external access_rule state event
+            const canUpdateExternalStateEvent = room?.getLiveTimeline()?.getState(EventTimeline.FORWARDS)?.mayClientSendStateEvent(TchapRoomAccessRulesEventId, cli);
+            return this.state.tchapRoomType !== TchapRoomType.Forum && !!canUpdateExternalStateEvent;
+        }
+        return false
+    }
+
+    // end :TCHAP:
+
+    private renderSection(kind: "recents" | "suggestions"): ReactNode {
+        let sourceMembers = kind === "recents" ? this.state.recents : this.state.suggestions;
+        let showNum = kind === "recents" ? this.state.numRecentsShown : this.state.numSuggestionsShown;
+        const showMoreFn = kind === "recents" ? this.showMoreRecents.bind(this) : this.showMoreSuggestions.bind(this);
+        const lastActive = (m: Result): number | undefined => (kind === "recents" ? m.lastActive : undefined);
+        let sectionName = kind === "recents" ? _t("invite|recents_section") : _t("common|suggestions");
+
+        if (this.props.kind === InviteKind.Invite) {
+            sectionName = kind === "recents" ? _t("invite|suggestions_section") : _t("common|suggestions");
+        }
+
+        // Mix in the server results if we have any, but only if we're searching. We track the additional
+        // members separately because we want to filter sourceMembers but trust the mixin arrays to have
+        // the right members in them.
+        let priorityAdditionalMembers: Result[] = []; // Shows up before our own suggestions, higher quality
+        let otherAdditionalMembers: Result[] = []; // Shows up after our own suggestions, lower quality
+        const hasMixins = this.state.serverResultsMixin || this.state.threepidResultsMixin;
+        if (this.state.filterText && hasMixins && kind === "suggestions") {
+            // We don't want to duplicate members though, so just exclude anyone we've already seen.
+            // The type of u is a pain to define but members of both mixins have the 'userId' property
+            const notAlreadyExists = (u: any): boolean => {
+                return (
+                    !this.state.recents.some((m) => m.userId === u.userId) &&
+                    !sourceMembers.some((m) => m.userId === u.userId) &&
+                    !priorityAdditionalMembers.some((m) => m.userId === u.userId) &&
+                    !otherAdditionalMembers.some((m) => m.userId === u.userId)
+                );
+            };
+
+            otherAdditionalMembers = this.state.serverResultsMixin.filter(notAlreadyExists);
+            priorityAdditionalMembers = this.state.threepidResultsMixin.filter(notAlreadyExists);
+        }
+        const hasAdditionalMembers = priorityAdditionalMembers.length > 0 || otherAdditionalMembers.length > 0;
+
+        // Hide the section if there's nothing to filter by
+        if (sourceMembers.length === 0 && !hasAdditionalMembers) return null;
+
+        if (!this.canInviteThirdParty()) {
+            // It is currently not allowed to add more third-party invites. Filter them out.
+            priorityAdditionalMembers = priorityAdditionalMembers.filter((s) => s instanceof ThreepidMember);
+        }
+
+        // Do some simple filtering on the input before going much further. If we get no results, say so.
+        if (this.state.filterText) {
+            const filterBy = this.state.filterText.toLowerCase();
+            sourceMembers = sourceMembers.filter(
+                (m) => m.user.name.toLowerCase().includes(filterBy) || m.userId.toLowerCase().includes(filterBy),
+            );
+
+            if (sourceMembers.length === 0 && !hasAdditionalMembers) {
+                return (
+                    <div className="mx_InviteDialog_section">
+                        <RichList
+                            title={sectionName}
+                            titleAttributes={{ "role": "heading", "aria-level": 3 }}
+                            isEmpty={true}
+                        >
+                            {_t("common|no_results")}
+                        </RichList>
+                    </div>
+                );
+            }
+        }
+
+        // Now we mix in the additional members. Again, we presume these have already been filtered. We
+        // also assume they are more relevant than our suggestions and prepend them to the list.
+        sourceMembers = [...priorityAdditionalMembers, ...sourceMembers, ...otherAdditionalMembers];
+
+        // If we're going to hide one member behind 'show more', just use up the space of the button
+        // with the member's tile instead.
+        if (showNum === sourceMembers.length - 1) showNum++;
+
+        // .slice() will return an incomplete array but won't error on us if we go too far
+        const toRender = sourceMembers.slice(0, showNum);
+        const hasMore = toRender.length < sourceMembers.length;
+
+        let showMore: JSX.Element | undefined;
+        if (hasMore) {
+            showMore = (
+                <div className="mx_InviteDialog_section_showMore">
+                    <AccessibleButton onClick={showMoreFn} kind="link">
+                        {_t("common|show_more")}
+                    </AccessibleButton>
+                </div>
+            );
+        }
+
+        const tiles = toRender.map((r) => (
+            <DMRoomTile
+                member={r.user}
+                lastActiveTs={lastActive(r)}
+                key={r.user.userId}
+                onToggle={this.toggleMember}
+                isSelected={this.state.targets.some((t) => t.userId === r.userId)}
+            />
+        ));
+
+        return (
+            <div className="mx_InviteDialog_section">
+                <RichList title={sectionName} titleAttributes={{ "role": "heading", "aria-level": 3 }}>
+                    {tiles}
+                </RichList>
+                {showMore}
+            </div>
+        );
+    }
+
+    private renderEditor(): JSX.Element {
+        const targets = this.state.targets.map((t) => (
+            <DMUserTile member={t} onRemove={this.state.busy ? undefined : this.removeMember} key={t.userId} />
+        ));
+
+        return (
+            <PillInput
+                data-testid="invite-dialog-input-wrapper"
+                className="mx_InviteDialog_editor"
+                inputProps={{
+                    "ref": this.editorRef,
+                    "value": this.state.filterText,
+                    "onKeyDown": this.onKeyDown,
+                    "onChange": this.updateFilter,
+                    "onPaste": this.onPaste,
+                    "placeholder": _t("action|search"),
+                    "autoFocus": true,
+                    "disabled":
+                        this.state.busy ||
+                        (this.props.kind == InviteKind.CallTransfer && this.state.targets.length > 0),
+                    "data-testid": "invite-dialog-input",
+                }}
+                onRemoveChildren={() =>
+                    !this.state.busy && this.removeMember(this.state.targets[this.state.targets.length - 1])
+                }
+            >
+                {targets}
+            </PillInput>
+        );
+    }
+
+    private renderIdentityServerWarning(): ReactNode {
+        if (
+            !this.state.tryingIdentityServer ||
+            this.state.canUseIdentityServer ||
+            !SettingsStore.getValue(UIFeature.IdentityServer)
+        ) {
+            return null;
+        }
+
+        const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
+        if (defaultIdentityServerUrl) {
+            return (
+                <div className="mx_InviteDialog_identityServer">
+                    {_t(
+                        "invite|email_use_default_is",
+                        {
+                            defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
+                        },
+                        {
+                            default: (sub) => (
+                                <AccessibleButton kind="link_inline" onClick={this.onUseDefaultIdentityServerClick}>
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                            settings: (sub) => (
+                                <AccessibleButton kind="link_inline" onClick={this.onManageSettingsClick}>
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                        },
+                    )}
+                </div>
+            );
+        } else {
+            return (
+                <div className="mx_InviteDialog_identityServer">
+                    {_t(
+                        "invite|email_use_is",
+                        {},
+                        {
+                            settings: (sub) => (
+                                <AccessibleButton kind="link_inline" onClick={this.onManageSettingsClick}>
+                                    {sub}
+                                </AccessibleButton>
+                            ),
+                        },
+                    )}
+                </div>
+            );
+        }
+    }
+
+    private onDialFormSubmit = (ev: SyntheticEvent): void => {
+        ev.preventDefault();
+        this.transferCall();
+    };
+
+    private onDialChange = (ev: React.ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ dialPadValue: ev.currentTarget.value });
+    };
+
+    private onDigitPress = (digit: string, ev: ButtonEvent): void => {
+        this.setState({ dialPadValue: this.state.dialPadValue + digit });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
+    };
+
+    private onDeletePress = (ev: ButtonEvent): void => {
+        if (this.state.dialPadValue.length === 0) return;
+        this.setState({ dialPadValue: this.state.dialPadValue.slice(0, -1) });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
+    };
+
+    private onTabChange = (tabId: TabId): void => {
+        this.setState({ currentTabId: tabId });
+    };
+
+    private async onLinkClick(this: void, e: React.MouseEvent<HTMLAnchorElement>): Promise<void> {
+        e.preventDefault();
+        selectText(e.currentTarget);
+    }
+
+    private get screenName(): ScreenName | undefined {
+        switch (this.props.kind) {
+            case InviteKind.Dm:
+                return "StartChat";
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * If encryption by default is enabled, third-party invites should be encrypted as well.
+     * For encryption to work, the other side requires a device.
+     * To achieve this Element implements a waiting room until all have joined.
+     * Waiting for many users degrades the UX → only one email invite is allowed at a time.
+     *
+     * @param targets - Optional member list to check. Uses targets from state if not provided.
+     */
+    private canInviteMore(targets?: (Member | RoomMember)[]): boolean {
+        targets = targets || this.state.targets;
+        return this.canInviteThirdParty(targets) || !targets.some((t) => t instanceof ThreepidMember);
+    }
+
+    /**
+     * A third-party invite is possible if
+     * - this is a non-DM dialog or
+     * - there are no invites yet or
+     * - encryption by default is not enabled
+     *
+     * Also see {@link InviteDialog#canInviteMore}.
+     *
+     * @param targets - Optional member list to check. Uses targets from state if not provided.
+     */
+    private canInviteThirdParty(targets?: (Member | RoomMember)[]): boolean {
+        targets = targets || this.state.targets;
+        return this.props.kind !== InviteKind.Dm || targets.length === 0 || !this.encryptionByDefault;
+    }
+
+    private hasFilterAtLeastOneEmail(): boolean {
+        if (!this.state.filterText) return false;
+
+        return this.parseFilter(this.state.filterText).some((address: string) => {
+            return Email.looksValid(address);
+        });
+    }
+
+    private hasSelection(): boolean {
+        return this.state.targets.length > 0 || (!!this.state.filterText && this.state.filterText.includes("@"));
+    }
+
+    /**
+     * Render the "suggestions" section, which shows a list of people you might want to invite, together with any
+     * errors from the previous iteration.
+     */
+    private renderSuggestions(): JSX.Element {
+        // If we're starting a DM, add a footer which showing our matrix.to link, for copying & pasting.
+        let footer;
+        if (this.props.kind === InviteKind.Dm) {
+            const link = makeUserPermalink(MatrixClientPeg.safeGet().getSafeUserId());
+            footer = (
+                <div className="mx_InviteDialog_footer">
+                    <h3>{_t("invite|send_link_prompt")}</h3>
+                    <CopyableText getTextToCopy={() => makeUserPermalink(MatrixClientPeg.safeGet().getSafeUserId())}>
+                        <a className="mx_InviteDialog_footer_link" href={link} onClick={this.onLinkClick}>
+                            {link}
+                        </a>
+                    </CopyableText>
+                </div>
+            );
+        }
+
+        let results: React.ReactNode | null = null;
+        let onlyOneThreepidNote: React.ReactNode | null = null;
+
+        if (!this.canInviteMore() || (this.hasFilterAtLeastOneEmail() && !this.canInviteThirdParty())) {
+            // We are in DM case here, because of the checks in canInviteMore() / canInviteThirdParty().
+            // Show a note saying "Invites by email can only be sent one at a time".
+            onlyOneThreepidNote = <div className="mx_InviteDialog_oneThreepid">{_t("invite|email_limit_one")}</div>;
+        } else {
+            let extraSection;
+            if (this.props.kind === InviteKind.Dm) {
+                // Some extra words saying "Some suggestions may be hidden for privacy"
+                extraSection = (
+                    <div className="mx_InviteDialog_section_hidden_suggestions_disclaimer">
+                        <span>{_t("invite|suggestions_disclaimer")}</span>
+                        <p>{_t("invite|suggestions_disclaimer_prompt")}</p>
+                    </div>
+                );
+            }
+
+            results = (
+                <div className="mx_InviteDialog_userSections">
+                    {this.renderSection("recents")}
+                    {this.renderSection("suggestions")}
+                    {extraSection}
+                </div>
+            );
+        }
+
+        return (
+            <React.Fragment>
+                {this.renderIdentityServerWarning()}
+                <div className="error">{this.state.errorText}</div>
+                {onlyOneThreepidNote}
+                {results}
+                {footer}
+            </React.Fragment>
+        );
+    }
+
+    /**
+     * Render content of the "users" that is used for both invites and "start chat".
+     */
+    private renderMainTab(): JSX.Element {
+        let helpText;
+        let buttonText;
+        let goButtonFn: (() => Promise<void>) | null = null;
+
+        const identityServersEnabled = SettingsStore.getValue(UIFeature.IdentityServer);
+
+        const cli = MatrixClientPeg.safeGet();
+        const userId = cli.getUserId()!;
+        if (this.props.kind === InviteKind.Dm) {
+            if (identityServersEnabled) {
+                helpText = _t(
+                    "invite|start_conversation_name_email_mxid_prompt",
+                    {},
+                    {
+                        userId: () => {
+                            return (
+                                <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">
+                                    {userId}
+                                </a>
+                            );
+                        },
+                    },
+                );
+            } else {
+                helpText = _t(
+                    "invite|start_conversation_name_mxid_prompt",
+                    {},
+                    {
+                        userId: () => {
+                            return (
+                                <a href={makeUserPermalink(userId)} rel="noreferrer noopener" target="_blank">
+                                    {userId}
+                                </a>
+                            );
+                        },
+                    },
+                );
+            }
+
+            buttonText = _t("action|go");
+            goButtonFn = this.startDm;
+        } else if (this.props.kind === InviteKind.Invite) {
+            const roomId = this.props.roomId;
+            const room = MatrixClientPeg.get()?.getRoom(roomId);
+            const isSpace = room?.isSpaceRoom();
+            let helpTextUntranslated;
+            if (isSpace) {
+                if (identityServersEnabled) {
+                    helpTextUntranslated = _td("invite|name_email_mxid_share_space");
+                } else {
+                    helpTextUntranslated = _td("invite|name_mxid_share_space");
+                }
+            } else {
+                if (identityServersEnabled) {
+                    helpTextUntranslated = _td("invite|name_email_mxid_share_room");
+                } else {
+                    helpTextUntranslated = _td("invite|name_mxid_share_room");
+                }
+            }
+
+            helpText = _t(
+                helpTextUntranslated,
+                {},
+                {
+                    userId: () => (
+                        <a
+                            className="mx_InviteDialog_helpText_userId"
+                            href={makeUserPermalink(userId)}
+                            rel="noreferrer noopener"
+                            target="_blank"
+                        >
+                            {userId}
+                        </a>
+                    ),
+                    a: (sub) => (
+                        <a href={makeRoomPermalink(cli, roomId)} rel="noreferrer noopener" target="_blank">
+                            {sub}
+                        </a>
+                    ),
+                },
+            );
+
+            buttonText = _t("action|invite");
+            goButtonFn = this.inviteUsers;
+        } else {
+            throw new Error("Unknown InviteDialog kind: " + this.props.kind);
+        }
+
+        return (
+            <React.Fragment>
+                <p className="mx_InviteDialog_helpText">{helpText}</p>
+                <div className="mx_InviteDialog_addressBar">
+                    {this.renderEditor()}
+                    <AccessibleButton
+                        kind="primary"
+                        onClick={goButtonFn}
+                        className="mx_InviteDialog_goButton"
+                        // :TCHAP: disabled={this.state.busy || !this.hasSelection()}
+                        disabled={this.state.busy || !this.hasSelection() || this.state.shouldDisableInviteButton}
+                    >
+                        {buttonText}
+                    </AccessibleButton>
+                </div>
+                {this.renderWarningExternal()}
+                {this.renderWarningCantInviteExternal()}
+                {this.state.busy ? <InviteProgressBody /> : this.renderSuggestions()}
+            </React.Fragment>
+        );
+    }
+
+    /**
+     * Render the complete dialog, given this is not a call transfer dialog.
+     *
+     * See also: {@link renderCallTransferDialog}.
+     */
+    private renderRegularDialog(): React.ReactNode {
+        let title;
+        if (this.props.kind === InviteKind.Dm) {
+            title = _t("space|add_existing_room_space|dm_heading");
+        } else if (this.props.kind === InviteKind.Invite) {
+            const roomId = this.props.roomId;
+            const room = MatrixClientPeg.get()?.getRoom(roomId);
+            // :TCHAP:
+            TchapStore.instance.getRoomType(room!).then(roomType => {
+                this.setState({ tchapRoomType : roomType });
+            })
+            // end :TCHAP:
+            const isSpace = room?.isSpaceRoom();
+            title = isSpace
+                ? _t("invite|to_space", {
+                      spaceName: room?.name || _t("common|unnamed_space"),
+                  })
+                : _t("invite|to_room", {
+                      roomName: room?.name || _t("common|unnamed_room"),
+                  });
+        }
+
+        return (
+            <BaseDialog
+                className="mx_InviteDialog_other"
+                hasCancel={true}
+                onFinished={this.props.onFinished}
+                title={title}
+                screenName={this.screenName}
+            >
+                <div className="mx_InviteDialog_content">{this.renderMainTab()}</div>
+            </BaseDialog>
+        );
+    }
+
+    /**
+     * Render the complete call transfer dialog.
+     *
+     * See also: {@link renderRegularDialog}.
+     */
+    private renderCallTransferDialog(): React.ReactNode {
+        const usersSection = (
+            <React.Fragment>
+                <div className="mx_InviteDialog_addressBar">{this.renderEditor()}</div>
+                {this.state.busy ? <InviteProgressBody /> : this.renderSuggestions()}
+            </React.Fragment>
+        );
+
+        const tabs: NonEmptyArray<Tab<TabId>> = [
+            new Tab(
+                TabId.UserDirectory,
+                _td("invite|transfer_user_directory_tab"),
+                <UserProfileSolidIcon />,
+                usersSection,
+            ),
+        ];
+
+        const backspaceButton = <DialPadBackspaceButton onBackspacePress={this.onDeletePress} />;
+
+        // Only show the backspace button if the field has content
+        let dialPadField;
+        if (this.state.dialPadValue.length !== 0) {
+            dialPadField = (
+                <Field
+                    ref={this.numberEntryFieldRef}
+                    className="mx_InviteDialog_dialPadField"
+                    id="dialpad_number"
+                    value={this.state.dialPadValue}
+                    autoFocus={true}
+                    onChange={this.onDialChange}
+                    postfixComponent={backspaceButton}
+                />
+            );
+        } else {
+            dialPadField = (
+                <Field
+                    ref={this.numberEntryFieldRef}
+                    className="mx_InviteDialog_dialPadField"
+                    id="dialpad_number"
+                    value={this.state.dialPadValue}
+                    autoFocus={true}
+                    onChange={this.onDialChange}
+                />
+            );
+        }
+
+        const dialPadSection = (
+            <div className="mx_InviteDialog_dialPad">
+                <form onSubmit={this.onDialFormSubmit}>{dialPadField}</form>
+                <Dialpad hasDial={false} onDigitPress={this.onDigitPress} onDeletePress={this.onDeletePress} />
+            </div>
+        );
+        tabs.push(new Tab(TabId.DialPad, _td("invite|transfer_dial_pad_tab"), <DialPadIcon />, dialPadSection));
+
+        const consultConnectSection = (
+            <div className="mx_InviteDialog_transferConsultConnect">
+                <label>
+                    <input type="checkbox" checked={this.state.consultFirst} onChange={this.onConsultFirstChange} />
+                    {_t("voip|transfer_consult_first_label")}
+                </label>
+                <AccessibleButton
+                    kind="secondary"
+                    onClick={this.onCancel}
+                    className="mx_InviteDialog_transferConsultConnect_pushRight"
+                >
+                    {_t("action|cancel")}
+                </AccessibleButton>
+                <AccessibleButton
+                    kind="primary"
+                    onClick={this.transferCall}
+                    disabled={!this.hasSelection() && this.state.dialPadValue === ""}
+                >
+                    {_t("action|transfer")}
+                </AccessibleButton>
+            </div>
+        );
+
+        const dialogContent = (
+            <React.Fragment>
+                <TabbedView<TabId>
+                    tabs={tabs}
+                    activeTabId={this.state.currentTabId}
+                    tabLocation={TabLocation.TOP}
+                    onChange={this.onTabChange}
+                />
+                {consultConnectSection}
+            </React.Fragment>
+        );
+
+        return (
+            <BaseDialog
+                className="mx_InviteDialog_transfer"
+                hasCancel={true}
+                onFinished={this.props.onFinished}
+                title={_t("action|transfer")}
+                screenName={this.screenName}
+            >
+                <div className="mx_InviteDialog_content">{dialogContent}</div>
+            </BaseDialog>
+        );
+    }
+
+    public render(): React.ReactNode {
+        if (this.props.kind === InviteKind.CallTransfer) {
+            return this.renderCallTransferDialog();
+        } else {
+            return this.renderRegularDialog();
+        }
+    }
+}

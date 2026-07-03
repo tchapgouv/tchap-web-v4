@@ -20,27 +20,29 @@ jobs:
         env:
             TEST_TAG: vectorim/element-web:test
         steps:
-            - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
               with:
                   fetch-depth: 0 # needed for docker-package to be able to calculate the version
+                  persist-credentials: false
 
             - name: Install Cosign
               uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
               if: github.event_name != 'pull_request'
 
             - name: Set up QEMU
-              uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+              uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4
 
             - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+              uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
               with:
                   install: true
 
             - name: Build and load
               id: test-build
-              uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
+              uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7
               with:
                   context: .
+                  file: apps/web/Dockerfile
                   load: true
 
             - name: Test the image
@@ -81,7 +83,7 @@ jobs:
 
             - name: Docker meta
               id: meta
-              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
+              uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6
               if: github.event_name != 'pull_request'
               with:
                   images: |
@@ -95,14 +97,14 @@ jobs:
                       latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
 
             - name: Login to Docker Hub
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
+              uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
               if: github.event_name != 'pull_request'
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             - name: Login to GitHub Container Registry
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
+              uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
               if: github.event_name != 'pull_request'
               with:
                   registry: ghcr.io
@@ -110,7 +112,7 @@ jobs:
                   password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Connect to Tailscale
-              uses: tailscale/github-action@53acf823325fe9ca47f4cdaa951f90b4b0de5bb9 # v4
+              uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4
               if: github.event_name != 'pull_request'
               with:
                   oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
@@ -138,7 +140,7 @@ jobs:
                       services/web-repositories/secret/data/oci.element.io password | OCI_PASSWORD ;
 
             - name: Login to oci.element.io Registry
-              uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
+              uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
               if: github.event_name != 'pull_request'
               with:
                   registry: oci-push.vpn.infra.element.io
@@ -147,10 +149,11 @@ jobs:
 
             - name: Build and push
               id: build-and-push
-              uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
+              uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7
               if: github.event_name != 'pull_request'
               with:
                   context: .
+                  file: apps/web/Dockerfile
                   push: true
                   platforms: linux/amd64,linux/arm64
                   tags: ${{ steps.meta.outputs.tags }}

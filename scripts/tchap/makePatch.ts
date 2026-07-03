@@ -1,4 +1,4 @@
-const patchFile = require("../../patches_tchap/patches.json");
+import * as patchFile from "../../patches_tchap/patches.json";
 
 if (process.argv.length !== 3) {
     console.log("\nMissing patch name.");
@@ -22,7 +22,7 @@ if (!patchInfo) {
 }
 
 const fileList = patchInfo.files.join("|");
-const command = `yarn patch-package --patch-dir patches_tchap/${patchName} --include "${fileList}"  ${patchInfo.package}`;
+const command = `pnpm patch-package --patch-dir patches_tchap/${patchName} --include "${fileList}"  ${patchInfo.package}`;
 
 var child = require("child_process").exec(command);
 // use event hooks to provide a callback to execute when data are available:

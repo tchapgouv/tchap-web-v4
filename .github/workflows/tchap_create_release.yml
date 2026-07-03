@@ -13,28 +13,33 @@ jobs:
         steps:
             #Build artifacts for dev, preprod and prod
             - uses: actions/checkout@v3
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
-            - name: Use Node.js ${{ steps.node_version.outputs.node_version }}
-              uses: actions/setup-node@v3
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
               with:
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  cache: "pnpm"
+                  node-version-file: package.json
+
             - name: Install Dependencies
-              run: "yarn install"
+              run: "pnpm install --frozen-lockfile"
+
             - name: Get Tchap Web Version
+              working-directory: apps/web
               id: version
               run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
+
             - name: Build the archive ${{ steps.version.outputs.version }} for dev
-              run: scripts/tchap/package-tchap.sh
+              working-directory: apps/web
+              run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: dev
             - name: Build the archive ${{ steps.version.outputs.version }} for preprod
-              run: scripts/tchap/package-tchap.sh
+              working-directory: apps/web
+              run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: preprod
             - name: Build the archive ${{ steps.version.outputs.version }} for prod
-              run: scripts/tchap/package-tchap.sh
+              working-directory: apps/web
+              run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: prod
             - name: Get current date

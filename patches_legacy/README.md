@@ -2,7 +2,7 @@
 
 -   Make some changes to dependencies files (matrix-react-sdk or matrix-js-sdk) : in node_modules/matrix-react-sdk, or in the yarn-linked repo if you are using yarn links.
 -   add the info for your new patch `my-new-patch-name` in `patches/patches.json`
--   run `yarn patch-make my-new-patch-name`
+-   run `pnpm patch-make my-new-patch-name`
 
 Wwhen you have made edits to the files, recreate the patch by running again : `yarn patch-make my-new-patch-name`
 

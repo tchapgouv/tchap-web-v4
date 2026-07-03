@@ -20,20 +20,19 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            - name: Get Node Version
-              id: node_version
-              run: echo ::set-output name=node_version::$(node -e 'console.log(require("./package.json").engines.node)')
-            - name: Yarn cache
-              uses: actions/setup-node@v4
+            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+            - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
               with:
-                  cache: "yarn"
-                  node-version: ${{ steps.node_version.outputs.node_version }}
+                  cache: "pnpm"
+                  node-version-file: package.json
+
             - name: Install Dependencies
-              run: "yarn install --pure-lockfile"
+              run: "pnpm install --frozen-lockfile"
 
             - name: Get number of CPU cores
               id: cpu-cores
               uses: SimenB/github-actions-cpu-cores@97ba232459a8e02ff6121db9362b09661c875ab8 # v2
 
-            - name: Run tests with coverage
-              run: "yarn coverage:tchap --ci"
+            - name: Run tests tchap unit tests
+              working-directory: apps/web
+              run: "pnpm test:tchap"

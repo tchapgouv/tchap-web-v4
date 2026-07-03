@@ -1,4 +1,6 @@
-const fs = require("fs");
+import * as fs from "fs";
+
+import patchFile from "../../patches_tchap/patches.json" with { type: "json" };
 
 function checkForDuplicateFiles(patchFile) {
     console.log("Checking patch file for files that are patched twice...");
@@ -69,7 +71,6 @@ const getPatchDirs = () => {
         .map((dir) => dir.name);
 };
 
-const patchFile = require("../../patches_tchap/patches.json");
 const patchDirs = getPatchDirs();
 checkForDuplicateFiles(patchFile);
 checkForMissingPatchDirs(patchFile, patchDirs);

@@ -28,27 +28,31 @@ First clone and build `matrix-js-sdk`:
 ```bash
 git clone https://github.com/matrix-org/matrix-js-sdk.git
 pushd matrix-js-sdk
-yarn link
-yarn install
+pnpm install
 popd
 ```
 
-Clone the repo and switch to the `element-web` directory:
+Clone the repo and switch to the `element-web/apps/web` directory:
 
 ```bash
 git clone https://github.com/element-hq/element-web.git
-cd element-web
+cd element-web/apps/web
 ```
 
 Configure the app by copying `config.sample.json` to `config.json` and
 modifying it. See the [configuration docs](docs/config.md) for details.
 
+Set up your local development link by creating a `.link-config` file with contents like:
+
+```
+matrix-js-sdk=/path/to/matrix-js-sdk
+```
+
 Finally, build and start Element itself:
 
 ```bash
-yarn link matrix-js-sdk
-yarn install
-yarn start
+pnpm install
+pnpm start
 ```
 
 Wait a few seconds for the initial build to finish; you should see something like:
@@ -104,7 +108,7 @@ There are a number of application-level tests in the `tests` directory; these
 are designed to run with Jest and JSDOM. To run them
 
 ```
-yarn test
+pnpm test
 ```
 
 ### End-to-End tests
@@ -121,6 +125,7 @@ See [`docs/playwright.md`](./docs/playwright.md) for how to run the end-to-end t
 
 New code should be committed as follows:
 
-- All new components: https://github.com/element-hq/element-web/tree/develop/src/components
+- New UI components that are reusable, could be used by other Element projects (Element Desktop, Aurora, Element modules...), or don't have tight coupling to specific application logic: [`packages/shared-components`](./packages/shared-components/README.md) (see the [contributing guide](./CONTRIBUTING.md#shared-components))
+- All other new components: https://github.com/element-hq/element-web/tree/develop/src/components
 - CSS: https://github.com/element-hq/element-web/tree/develop/res/css
 - Theme specific CSS & resources: https://github.com/element-hq/element-web/tree/develop/res/themes
