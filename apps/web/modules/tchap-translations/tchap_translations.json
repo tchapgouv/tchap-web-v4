@@ -892,6 +892,10 @@
         "en": "Save your verification code somewhere safe",
         "fr": "Sauvegardez votre code de vérification dans un endroit sûr"
     },
+    "settings|encryption|recovery|set_up_recovery": {
+        "en": "Setup automatic backup",
+        "fr": "Configurer la sauvegarde"
+    },
     "settings|encryption|recovery|set_up_recovery_save_key_description": {
         "en": "Write down this verification code somewhere safe, like a password manager, encrypted note, or a physical safe.",
         "fr": "Recopier ce code de vérification dans un endroit sûr, comme un gestionnaire de mots de passe, une note chiffrée ou un coffre-fort physique."
