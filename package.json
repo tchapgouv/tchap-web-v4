@@ -25,7 +25,8 @@
         "patch-package": "npx patch-package",
         "patch-make": "node scripts/tchap/makePatch.ts",
         "merge-patches": "./scripts/tchap/merge-patches.sh",
-        "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh"
+        "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh",
+        "scalingo-postbuild": "apps/web/scripts/tchap/package-tchap.sh"
     },
     "devDependencies": {
         "@action-validator/cli": "^0.6.0",

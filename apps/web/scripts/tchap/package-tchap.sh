@@ -7,14 +7,14 @@ set -e
 
 today=$(date +%Y%m%d)
 
-version=$(./scripts/tchap/get-version-from-package-json.sh)
+version=$(.apps/web/scripts/tchap/get-version-from-package-json.sh)
 export VERSION=$version
 echo "VERSION is set to $VERSION"
 
 if [[ -n "$CONFIG" ]]; then
   echo "CONFIG=$CONFIG"
-  cp "config.$CONFIG.json" config.json
-  echo "Using config.$CONFIG.json"
+  cp "apps/web/config.$CONFIG.json" apps/web/config.json
+  echo "Using apps/web/config.$CONFIG.json"
 else
   echo "No config specified, using config.json."
 fi
