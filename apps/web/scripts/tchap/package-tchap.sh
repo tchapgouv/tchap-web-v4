@@ -7,7 +7,7 @@ set -e
 
 today=$(date +%Y%m%d)
 
-version=$(.apps/web/scripts/tchap/get-version-from-package-json.sh)
+version=$(./apps/web/scripts/tchap/get-version-from-package-json.sh)
 export VERSION=$version
 echo "VERSION is set to $VERSION"
 
@@ -31,12 +31,15 @@ pnpm build
 
 popd
 
+
 pushd ./apps/web
 echo "===== Building app"
 pnpm build
 
+popd
+
 mkdir -p dist
-cp -r webapp tchap-$version
+cp -r apps/web/webapp tchap-$version
 
 # if $version looks like semver with leading v, strip it before writing to file
 if [[ ${version} =~ ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(-.+)?$ ]]; then

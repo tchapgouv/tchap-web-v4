@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/tchapgouv">
-    <img alt="tchap-logo" src="./res/themes/tchap/img/logos/tchap-logo.svg" width="300" />
+    <img alt="tchap-logo" src=".apps/web/res/themes/tchap/img/logos/tchap-logo.svg" width="300" />
   </a>
 </p>
 
@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://tchap.numerique.gouv.fr">
     Site web de présentation
-  </a> - 
+  </a> -
   <a href="contact@tchap.beta.gouv.fr">
     Contactez-nous
   </a>
@@ -46,8 +46,9 @@ Tchap is a web app that allows you to chat through the matrix protocol for the F
 ## Local dev installation
 
 ```
-yarn install
-yarn start
+cd apps/web
+pnpm install
+pnpm start
 ```
 
 ## Dev guidelines
