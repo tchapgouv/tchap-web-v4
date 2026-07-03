@@ -25,7 +25,8 @@
         "patch-package": "npx patch-package",
         "patch-make": "node scripts/tchap/makePatch.ts",
         "merge-patches": "./scripts/tchap/merge-patches.sh",
-        "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh"
+        "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh",
+        "scalingo-postbuild": "apps/web/scripts/tchap/package-tchap.sh"
     },
     "devDependencies": {
         "@action-validator/cli": "^0.6.0",
@@ -108,7 +109,7 @@
         }
     },
     "engines": {
-        "node": ">=22.18"
+        "node": "24"
     },
     "engines-comment": {
         "2022-11-07": "matrix-js-sdk requires >=16.0.0. SSL librairies do not work with 18 and 19. 17 has incompatibilities with some deps.",

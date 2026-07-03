@@ -7,14 +7,14 @@ set -e
 
 today=$(date +%Y%m%d)
 
-version=$(./scripts/tchap/get-version-from-package-json.sh)
+version=$(./apps/web/scripts/tchap/get-version-from-package-json.sh)
 export VERSION=$version
 echo "VERSION is set to $VERSION"
 
 if [[ -n "$CONFIG" ]]; then
   echo "CONFIG=$CONFIG"
-  cp "config.$CONFIG.json" config.json
-  echo "Using config.$CONFIG.json"
+  cp "apps/web/config.$CONFIG.json" apps/web/config.json
+  echo "Using apps/web/config.$CONFIG.json"
 else
   echo "No config specified, using config.json."
 fi
@@ -31,12 +31,15 @@ pnpm build
 
 popd
 
+
 pushd ./apps/web
 echo "===== Building app"
 pnpm build
 
+popd
+
 mkdir -p dist
-cp -r webapp tchap-$version
+cp -r apps/web/webapp tchap-$version
 
 # if $version looks like semver with leading v, strip it before writing to file
 if [[ ${version} =~ ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(-.+)?$ ]]; then
