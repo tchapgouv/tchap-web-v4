@@ -186,12 +186,14 @@ export const useRoomCall = (
     const callOptions = useMemo((): PlatformCallType[] => {
         const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
-            options.push(PlatformCallType.LegacyCall);
+            // :TCHAP:
             if (TchapUIFeature.isFeatureActiveForHomeserver("feature_use_ec_in_dm")) {
                 options.push(PlatformCallType.ElementCall);
+            } else {
+                options.push(PlatformCallType.LegacyCall);
             }
-            return options; // :TCHAP: flow-legacy-call-element-call in all case if 
-                            // we are only two in the room we use legacy call, compatible with legacy mobile apps
+            return options;
+            // end :TCHAP:
         }
 
         if (groupCallsEnabled) {
@@ -202,10 +204,10 @@ export const useRoomCall = (
                 return [PlatformCallType.ElementCall];
             }
         }
+        /* :TCHAP: remove-jitsi-option
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
         }
-        /* :TCHAP: remove-jitsi-option
         else if (mayEditWidgets || hasJitsiWidget) {
             options.push(PlatformCallType.JitsiCall);
         }
