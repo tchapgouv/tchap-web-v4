@@ -1,1 +1,1 @@
-echo `node -e 'console.log(require("./package.json").version)'`
+echo `node -e 'console.log(require("./apps/web/package.json").version)'`

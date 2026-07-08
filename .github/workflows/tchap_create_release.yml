@@ -28,17 +28,14 @@ jobs:
               run: echo ::set-output name=version::$(node -e 'console.log(require("./package.json").version)')
 
             - name: Build the archive ${{ steps.version.outputs.version }} for dev
-              working-directory: apps/web
               run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: dev
             - name: Build the archive ${{ steps.version.outputs.version }} for preprod
-              working-directory: apps/web
               run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: preprod
             - name: Build the archive ${{ steps.version.outputs.version }} for prod
-              working-directory: apps/web
               run: apps/web/scripts/tchap/package-tchap.sh
               env:
                   CONFIG: prod
