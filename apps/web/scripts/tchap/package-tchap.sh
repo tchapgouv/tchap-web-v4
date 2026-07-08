@@ -19,7 +19,6 @@ else
   echo "No config specified, using config.json."
 fi
 
-pnpm clean
 pnpm install
 
 echo "===== Installing shared components"
