@@ -35,7 +35,9 @@ jobs:
 
             - name: Build
               working-directory: apps/web
-              run: "pnpm build"
+              env:
+                  CI_PACKAGE: true
+              run: "VERSION=$(scripts/get-version-from-git.sh) pnpm run build"
 
             - name: Upload build in artifact
               uses: actions/upload-artifact@v4
