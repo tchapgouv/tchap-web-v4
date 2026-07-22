@@ -88,9 +88,9 @@ export class ContentScannerMediaHelper implements IDestroyable {
             ]);
             this.scanState = sourceClean && thumbnailClean ? "done" : "unsafe";
 
-            // workaround: when users click on image, image preview is not available because, 
+            // workaround: when users click on image, image preview is not available because,
             // sourceBlob has no value yet
-            // pre-fetch sourceBlob and thumbnailBlob if scanning is sucessful            
+            // pre-fetch sourceBlob and thumbnailBlob if scanning is sucessful
             if (this.scanState === "done") {
                 await this.sourceBlob.value;
                 await this.thumbnailBlob.value;
