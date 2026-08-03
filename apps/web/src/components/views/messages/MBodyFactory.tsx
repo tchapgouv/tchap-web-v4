@@ -111,12 +111,13 @@ export function VideoBodyFactory({
 
     const content = mxEvent.getContent<MediaEventContent>();
     scanningMediaHelper.onScanStateChange(() => {
-        if (scanState !== scanningMediaHelper.getScanState()) {
-            setScanState(scanningMediaHelper.getScanState())
+        const newScanState = scanningMediaHelper.getScanState();
+        if (scanState !== newScanState) {
+            setScanState(newScanState)
         }
     });
     //  end :TCHAP:
-    //
+
     const vm = useCreateAutoDisposedViewModel(
         () =>
             new VideoBodyViewModel({

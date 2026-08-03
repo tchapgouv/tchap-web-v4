@@ -28,8 +28,8 @@ export class ContentScannerMediaHelper implements IDestroyable {
         this.media = this.inner.media as unknown as Media;
 
         // Proxy URLs directly - no scan needed to display previews
-        this.sourceUrl = this.inner.sourceUrl;
-        this.thumbnailUrl = this.inner.thumbnailUrl;
+        this.sourceUrl = new LazyValue(this.prepareSourceUrl);
+        this.thumbnailUrl = new LazyValue(this.prepareThumbnailUrl);
 
         // Guard blob access behind scan gate
         this.sourceBlob = new LazyValue(async () => {
@@ -46,6 +46,27 @@ export class ContentScannerMediaHelper implements IDestroyable {
 
         void this.startScan();
     }
+
+    // Taken from initial Media Helper
+    private prepareSourceUrl = async (): Promise<string | null> => {
+        if (this.media.isEncrypted) {
+            const blob = await this.sourceBlob.value;
+            return URL.createObjectURL(blob);
+        } else {
+            return this.media.srcHttp;
+        }
+    };
+
+    // Taken from initial Media Helper
+    private prepareThumbnailUrl = async (): Promise<string | null> => {
+        if (this.media.isEncrypted) {
+            const blob = await this.thumbnailBlob.value;
+            if (blob === null) return null;
+            return URL.createObjectURL(blob);
+        } else {
+            return this.media.thumbnailHttp;
+        }
+    };
 
     public get fileName(): string {
         return this.inner.fileName;
@@ -73,10 +94,23 @@ export class ContentScannerMediaHelper implements IDestroyable {
     private waitForScan(): Promise<void> {
         if (this.scanState !== "scanning") return Promise.resolve();
         return new Promise((resolve) => {
+            let completed = false;
+
             const unsubscribe = this.onScanStateChange(() => {
+                if (completed) return;
+                completed = true;
                 unsubscribe();
                 resolve();
             });
+
+            // Double-check in case state changed while registering
+            if (this.scanState !== "scanning") {
+                if (!completed) {
+                    completed = true;
+                    unsubscribe();
+                    resolve();
+                }
+            }
         });
     }
 
@@ -87,14 +121,6 @@ export class ContentScannerMediaHelper implements IDestroyable {
                 this.media.scanThumbnail(),
             ]);
             this.scanState = sourceClean && thumbnailClean ? "done" : "unsafe";
-
-            // workaround: when users click on image, image preview is not available because,
-            // sourceBlob has no value yet
-            // pre-fetch sourceBlob and thumbnailBlob if scanning is sucessful
-            if (this.scanState === "done") {
-                await this.sourceBlob.value;
-                await this.thumbnailBlob.value;
-            }
         } catch (error) {
             logger.warn("ContentScannerMediaHelper: scan error:", error);
             this.scanState = "error";
