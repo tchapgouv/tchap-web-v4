@@ -27,7 +27,7 @@ import OriginalImageBody from "../../../../components/views/messages/OriginalIma
 import { Media } from "../../../ContentScanningMedia";
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
-import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
+import { ContentScannerMediaHelper, ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 interface State {
     scanState: ScanState;

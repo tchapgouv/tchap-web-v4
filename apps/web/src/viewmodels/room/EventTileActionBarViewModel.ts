@@ -246,7 +246,7 @@ export class EventTileActionBarViewModel
         // const mediaHelper = MediaEventHelper.isEligible(mxEvent) ? new MediaEventHelper(mxEvent) : undefined;
 
         // :TCHAP: content-scanner
-        const mediaHelper = scannerMediaHelper ?? (MediaEventHelper.isEligible(mxEvent) ? new MediaEventHelper(mxEvent) : undefined);
+        const mediaHelper = scannerMediaHelper ?? (MediaEventHelper.isEligible(mxEvent) ? new ContentScannerMediaHelper(mxEvent) : undefined);
         // end :TCHAP:
         return {
             showDownload: contentActionable && Boolean(mediaHelper) && localState.canDownload,

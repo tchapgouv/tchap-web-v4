@@ -145,7 +145,9 @@ export function ActionBarView({ vm, className }: Readonly<ActionBarViewProps>): 
         isDownloadLoading,
         isPinned,
         isQuoteExpanded,
+        // :TCHAP:
         downloadScanState
+        // end :TCHAP:
     } = useViewModel(vm);
 
     // Track the live button element for each action and keep the callback refs stable
