@@ -1518,6 +1518,6 @@ export const SETTINGS: Settings = {
             { value: "enabled", label: _td("settings|start_automatically|enabled") },
             { value: "disabled", label: _td("settings|start_automatically|disabled") }
         ],
-        default: "disabled",
+        default: "enabled",
     },
 };
