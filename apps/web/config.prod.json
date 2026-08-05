@@ -221,7 +221,7 @@
         ],
         "feature_screenshare_call": ["*"],
         "feature_create_room_non_encrypted": ["*"],
-        "feature_use_ec_in_dm": ["*"],
+        "feature_use_ec_in_dm": [""],
         "feature_red_list": ["*"]
     },
     "tchap_desktop": {
