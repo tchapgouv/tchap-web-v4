@@ -10,6 +10,7 @@ import React from "react";
 import SearchIcon from "@vector-im/compound-design-tokens/assets/web/icons/search";
 import CloseIcon from "@vector-im/compound-design-tokens/assets/web/icons/close";
 import { IconButton, Link } from "@vector-im/compound-web";
+import { WarningIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import { PosthogScreenTracker } from "../../../PosthogTrackers";
@@ -23,6 +24,25 @@ interface Props {
     onSearchScopeChange(this: void, scope: SearchScope): void;
     onCancelClick(this: void): void;
 }
+
+// :TCHAP: search-no-results-warning
+const displayTchapWarning = (
+    searchInfo: SearchInfo | undefined,
+    isRoomEncrypted: boolean,
+): React.ReactElement | undefined => {
+
+    if ((searchInfo?.count === undefined || searchInfo?.count === 0) && isRoomEncrypted) {
+        console.log("*** should display tchap warning search")
+        return (
+            <div className="tc_search_warning" data-testid="tchap-search-warning-box">
+                <WarningIcon width="24px" height="24px" />
+                <SearchWarning kind={WarningKind.Search} isRoomEncrypted={isRoomEncrypted} showLogo={false} />
+            </div>
+        );
+    }
+    return;
+};
+// end :TCHAP:
 
 const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSearchScopeChange, onCancelClick }) => {
     const scope = searchInfo?.scope ?? SearchScope.Room;
@@ -45,7 +65,9 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                         ) : (
                             <InlineSpinner />
                         )}
-                        <SearchWarning kind={WarningKind.Search} isRoomEncrypted={isRoomEncrypted} showLogo={false} />
+                        {/* :TCHAP */}
+                        {/* <SearchWarning kind={WarningKind.Search} isRoomEncrypted={isRoomEncrypted} showLogo={false} />*/}
+                        {/* end :TCHAP */}
                     </div>
                 </div>
                 <div className="mx_RoomSearchAuxPanel_buttons">
@@ -69,6 +91,9 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                     </IconButton>
                 </div>
             </div>
+            {/*:TCHAP search-no-results-warning */}
+            {displayTchapWarning(searchInfo, isRoomEncrypted)}
+            {/* end :TCHAP: */}
         </>
     );
 };

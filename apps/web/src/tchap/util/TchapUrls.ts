@@ -47,6 +47,8 @@ export default class TchapUrls {
 
     public static helpCreateRoom = `${TchapUrls.helpBaseUrl}/fr/article/comment-creer-un-salon-web-11abmcr/`;
 
+    public static helpSearchMessage = `${TchapUrls.helpBaseUrl}/fr/article/tchap-windows-recherche-dans-un-salon-prive-6s153i/`;
+
     public static openHelper = (uri: string) => {
         const platform = PlatformPeg.get();
         if (platform) {

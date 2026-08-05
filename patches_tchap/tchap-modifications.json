@@ -256,5 +256,12 @@
     "remove-mxid-onpill": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1560",
         "files": ["src/autocomplete/UserProvider.tsx"]
+    },
+    "search-no-results-warning": {
+        "issue": "https://github.com/tchapgouv/tchap-desktop/issues/226",
+        "files": [
+            "src/components/views/rooms/RoomSearchAuxPanel.tsx",
+            "src/components/views/elements/SearchWarning.tsx"
+        ]
     }
 }

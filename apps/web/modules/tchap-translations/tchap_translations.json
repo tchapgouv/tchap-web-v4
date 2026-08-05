@@ -1168,5 +1168,9 @@
     "room|intro|private_unencrypted_warning": {
         "en": "This room is unencrypted and only accessible by invitation. Avoid sharing sensitive data.",
         "fr": "Ce salon non chiffré est accessible uniquement sur invitation. Évitez d’y partager des informations sensibles."
+    },
+    "search|summary|warning": {
+        "en": "It is possible that your messages were not cached yet hence not accessible for search. <a> Learn more </a>",
+        "fr": "Il est possible que vos messages n'aient pas encore été mis en cache et soient donc inaccessibles par la recherche. <a> En savoir plus </a>"
     }
 }

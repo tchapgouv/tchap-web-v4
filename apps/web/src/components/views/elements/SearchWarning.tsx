@@ -17,6 +17,8 @@ import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserTab";
 import AccessibleButton, { type ButtonEvent } from "./AccessibleButton";
 
+import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
+
 export enum WarningKind {
     Files,
     Search,
@@ -30,7 +32,7 @@ interface IProps {
 
 export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true }: IProps): JSX.Element {
     if (!isRoomEncrypted) return <></>;
-    if (EventIndexPeg.get()) return <></>;
+    // :TCHAP: search-no-results-warning- if (EventIndexPeg.get()) return <></>;
 
     if (EventIndexPeg.error) {
         return (
@@ -46,7 +48,8 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true }
                                     evt.preventDefault();
                                     dis.dispatch({
                                         action: Action.ViewUserSettings,
-                                        initialTabId: UserTab.Security,
+                                        // :TCHAP: initialTabId: UserTab.Security,
+                                        initialTabId: UserTab.Encryption,
                                     });
                                 }}
                             >
@@ -58,6 +61,24 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true }
             </div>
         );
     }
+
+    // :TCHAP: search-no-results-warning we don't display usage warning if it is web build
+    if (EventIndexPeg.get()) {
+        console.log("*** in search warning")
+        return _t("search|summary|warning", null, {
+            a: (sub: string) => (
+                <a
+                    href={TchapUrls.helpSearchMessage}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label={`${sub} (opens in new tab)`}
+                >
+                    {sub}
+                </a>
+            ),
+        })
+    }
+    // end :TCHAP:
 
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
