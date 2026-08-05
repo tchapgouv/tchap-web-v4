@@ -32,7 +32,6 @@ const displayTchapWarning = (
 ): React.ReactElement | undefined => {
 
     if ((searchInfo?.count === undefined || searchInfo?.count === 0) && isRoomEncrypted) {
-        console.log("*** should display tchap warning search")
         return (
             <div className="tc_search_warning" data-testid="tchap-search-warning-box">
                 <WarningIcon width="24px" height="24px" />

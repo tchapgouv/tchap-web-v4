@@ -64,19 +64,21 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true }
 
     // :TCHAP: search-no-results-warning we don't display usage warning if it is web build
     if (EventIndexPeg.get()) {
-        console.log("*** in search warning")
-        return _t("search|summary|warning", null, {
-            a: (sub: string) => (
-                <a
-                    href={TchapUrls.helpSearchMessage}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={`${sub} (opens in new tab)`}
-                >
-                    {sub}
-                </a>
-            ),
-        })
+        return (
+            <>
+                {_t("search|summary|warning", null, {
+                    a: (sub: string) => (
+                        <a
+                            href={TchapUrls.helpSearchMessage}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            aria-label={`${sub} (opens in new tab)`}
+                        >
+                            {sub}
+                        </a>
+                    ),
+                })}
+            </>);
     }
     // end :TCHAP:
 
