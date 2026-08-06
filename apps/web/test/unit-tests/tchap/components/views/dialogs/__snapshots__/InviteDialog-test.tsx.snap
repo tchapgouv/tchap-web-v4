@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`InviteDialog should display external warning when a text is mxId in encrypted room 1`] = `
+<div
+  class="tc_live_warning_section"
+  data-testid="tc_warning"
+>
+  <span>
+     
+    invite
+  </span>
+</div>
+`;
+
 exports[`InviteDialog should display external warning when a user email is selected in private room 1`] = `
 <div
   class="tc_live_warning_section"

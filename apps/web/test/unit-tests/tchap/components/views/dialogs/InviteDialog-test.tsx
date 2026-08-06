@@ -320,4 +320,24 @@ describe("InviteDialog", () => {
             expect(screen.queryByTestId("tc_warning")).not.toBeInTheDocument();
         });
     });
+
+    it("should display external warning when a text is mxId in encrypted room", async () => {
+        (TchapUtils.isExternalHomeserver as jest.Mock).mockResolvedValue(true);
+
+        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+            return TchapRoomType.Private;
+        });
+        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+            true,
+        );
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+
+        // Paste an external email
+        await pasteIntoSearchField("@user.test-yopext.tchap.incubateur.net:ext01.tchap.incubateur.net");
+        await flushPromises();
+
+        await waitFor(() => {
+            expect(screen.getByTestId("tc_warning")).toMatchSnapshot();
+        });
+    });
 });

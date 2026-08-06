@@ -405,7 +405,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const newTargets = [...(this.state.targets || []), newMember];
         // :TCHAP: check if it is an external user
         this.doesTargetsContainsExternal(newTargets).then(containAnExternal => {
-            console.log("doesTargetsContainsExternal", containAnExternal);
             this.setState({
                 targets: newTargets,
                 filterText: "",
@@ -969,6 +968,12 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             if (Email.looksValid(m.name)) {
                 const isExternal = await TchapUtils.checkIfEmailIsExternal(m.name);
                 return isExternal;
+            }
+
+            // For mxid, check if the homeserver is external
+            if (m.userId && m.userId.startsWith("@")) {
+                const hs = m.userId.split(":")[1];
+                return TchapUtils.isExternalHomeserver(hs);
             }
         }
         return false;
