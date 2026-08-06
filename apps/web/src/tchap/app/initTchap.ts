@@ -2,9 +2,9 @@ import defaultDispatcher from "~tchap-web/src/dispatcher/dispatcher";
 import { ActionPayload } from "~tchap-web/src/dispatcher/payloads";
 import PlatformPeg from "~tchap-web/src/PlatformPeg";
 
-import TchapVersionManagement from "../util/TchapVersionManagement";
-import TchapUserSettings from "../util/TchapUserSettings";
-import ExpiredAccountHandler from "../lib/ExpiredAccountHandler";
+import TchapVersionManagement from "~tchap-web/src/tchap/util/TchapVersionManagement";
+import TchapUserSettings from "~tchap-web/src/tchap/util/TchapUserSettings";
+import ExpiredAccountHandler from "~tchap-web/src/tchap/lib/ExpiredAccountHandler";
 
 /**
  * Force refresh after the client has started
