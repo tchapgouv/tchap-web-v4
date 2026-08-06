@@ -881,27 +881,30 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 this.setState({
                     filterText: unableToAddMore.join(" "),
                     targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisplayExternalWarning: containAnExternal,
                     shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
                 });
             } else {
                 this.setState({
                     targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId),
+                    shouldDisplayExternalWarning: containAnExternal,
                     shouldDisableInviteButton: this.checkDisableInviteButton(containAnExternal)
                 });
             }
         });
-        // end :TCHAP:
 
-        if (unableToAddMore) {
-            this.setState({
-                filterText: unableToAddMore.join(" "),
-                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
-            });
-        } else {
-            this.setState({
-                targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
-            });
-        }
+        // if (unableToAddMore) {
+        //     this.setState({
+        //         filterText: unableToAddMore.join(" "),
+        //         targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
+        //     });
+        // } else {
+        //     this.setState({
+        //         targets: uniqBy([...this.state.targets, ...toAdd], (t) => t.userId)
+        //     });
+        // }
+        //
+        // end :TCHAP:
     };
 
     private onUseDefaultIdentityServerClick = (e: ButtonEvent): void => {
@@ -969,7 +972,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 const isExternal = await TchapUtils.checkIfEmailIsExternal(m.name);
                 return isExternal;
             }
-
             // For mxid, check if the homeserver is external
             if (m.userId && m.userId.startsWith("@")) {
                 const hs = m.userId.split(":")[1];
