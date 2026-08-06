@@ -104,11 +104,11 @@ export default class TchapUtils {
 
     /**
      * Check if a server name is the external server.
-     * @param serverName The server name to check (e.g., "externes" or "Externes")
+     * @param serverBaseUrl The server homeserver baseurl
      * @returns true if the server is the external server, false otherwise
      */
-    static isExternalHomeserver(serverName: string): boolean {
-        return /\bexternes\b/i.test(serverName);
+    static isExternalHomeserver(serverBaseUrl: string): boolean {
+        return /(^|\.)(externe|ext01|e)(\.|$)/i.test(serverBaseUrl);
     }
 
     /**
@@ -120,10 +120,10 @@ export default class TchapUtils {
     static async checkIfEmailIsExternal(email: string): Promise<boolean> {
         const homeserver = await this.fetchHomeserverForEmail(email);
         console.log("*** checkIfEmailIsExternal", homeserver);
-        if (!homeserver || !homeserver.server_name) {
+        if (!homeserver || !homeserver.base_url) {
             return false;
         }
-        return this.isExternalHomeserver(homeserver.server_name);
+        return this.isExternalHomeserver(homeserver.base_url);
     }
 
     /**
