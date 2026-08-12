@@ -62,6 +62,7 @@ import { goto, join } from "./join";
 import { manuallyVerifyDevice } from "../components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import upgraderoom from "./upgraderoom/upgraderoom";
 import { emoticon } from "./emoticon";
+import { visioCommand } from '../tchap/util/TchapCommands'; // :TCHAP:
 
 export { CommandCategories, Command };
 
@@ -195,7 +196,7 @@ export const Commands = [
         category: CommandCategories.actions,
         renderingTypes: [TimelineRenderingType.Room],
     }),
-    // :TCHAP: 
+    // :TCHAP:
     // new Command({
     //     command: "myroomavatar",
     //     args: "[<mxc_url>]",
