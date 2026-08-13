@@ -2,7 +2,7 @@ import { mocked, type MockedObject } from "jest-mock";
 import { HttpApiEvent, type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import ExpiredAccountDialog from "~tchap-web/src/tchap/components/views/dialogs/ExpiredAccountDialog";
-import ExpiredAccountHandler from "~tchap-web/src/tchap/lib/ExpiredAccountHandler";
+import ExpiredAccountHandler from "~tchap-web/src/tchap/ext/ExpiredAccountHandler";
 import Modal from "~tchap-web/src/Modal";
 import defaultDispatcher from "~tchap-web/src/dispatcher/dispatcher";
 import { getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";

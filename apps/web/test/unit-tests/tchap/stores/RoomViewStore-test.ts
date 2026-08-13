@@ -11,7 +11,7 @@ import { PosthogAnalytics } from "~tchap-web/src/PosthogAnalytics";
 import { MatrixDispatcher } from "~tchap-web/src/dispatcher/dispatcher";
 import { SpaceStoreClass } from "~tchap-web/src/stores/spaces/SpaceStore";
 import Modal from "~tchap-web/src/Modal";
-import ExternalAccountHandler from "~tchap-web/src/tchap/lib/ExternalAccountHandler";
+import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
 import { _t } from "~tchap-web/src/languageHandler";
 import ErrorDialog from "~tchap-web/src/components/views/dialogs/ErrorDialog";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";

@@ -1,7 +1,7 @@
 import { mocked, type MockedObject } from "jest-mock";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import ExternalAccountHandler from "~tchap-web/src/tchap/lib/ExternalAccountHandler";
+import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
 import Modal from "~tchap-web/src/Modal";
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "~tchap-web/test/test-utils";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";

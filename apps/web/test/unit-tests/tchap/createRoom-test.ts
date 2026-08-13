@@ -8,7 +8,7 @@ import {
     stubClient,
 } from "~tchap-web/test/test-utils";
 import createRoom from "~tchap-web/src/createRoom";
-import ExternalAccountHandler from "~tchap-web/src/tchap/lib/ExternalAccountHandler";
+import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import Modal from "~tchap-web/src/Modal";
 
