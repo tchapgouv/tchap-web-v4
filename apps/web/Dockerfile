@@ -12,7 +12,11 @@ ARG JS_SDK_BRANCH="master"
 WORKDIR /src
 
 # Install dependencies
-COPY --parents package.json pnpm-lock.yaml pnpm-workspace.yaml patches patches_tchap scripts **/package.json /src/
+COPY --parents package.json pnpm-lock.yaml pnpm-workspace.yaml patches scripts **/package.json /src/
+#:tchap: copy tchap things
+COPY --parents patches_tchap /src/
+COPY --parents apps/web/modules /src/
+#:tchap:end
 RUN corepack enable
 RUN --mount=type=bind,source=.git,target=/src/.git /src/scripts/docker-link-repos.sh
 RUN pnpm install
