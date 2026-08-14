@@ -50,7 +50,7 @@ import { UIFeature } from "../../../settings/UIFeature.ts";
 import SpacePillButton from "../../structures/SpacePillButton.tsx";
 
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls"; // :TCHAP: space-remove-public-and-subspace
-import ExternalAccountHandler from "~tchap-web/src/tchap/lib/ExternalAccountHandler.ts";
+import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler.ts";
 
 export const createSpace = async (
     client: MatrixClient,

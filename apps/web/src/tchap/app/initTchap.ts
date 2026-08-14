@@ -4,7 +4,7 @@ import PlatformPeg from "~tchap-web/src/PlatformPeg";
 
 import TchapVersionManagement from "~tchap-web/src/tchap/util/TchapVersionManagement";
 import TchapUserSettings from "~tchap-web/src/tchap/util/TchapUserSettings";
-import ExpiredAccountHandler from "~tchap-web/src/tchap/lib/ExpiredAccountHandler";
+import ExpiredAccountHandler from "~tchap-web/src/tchap/ext/ExpiredAccountHandler";
 
 /**
  * Force refresh after the client has started

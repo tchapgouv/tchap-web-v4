@@ -47,7 +47,7 @@ import { waitForMember } from "./utils/membership";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "./utils/PreferredRoomVersions";
 import SettingsStore from "./settings/SettingsStore";
 import { MEGOLM_ENCRYPTION_ALGORITHM } from "./utils/crypto";
-import ExternalAccountHandler from "./tchap/lib/ExternalAccountHandler";
+import ExternalAccountHandler from "./tchap/ext/ExternalAccountHandler";
 import { ElementCallMemberEventType } from "./call-types";
 import { htmlSerializeFromMdIfNeeded } from "./editor/serialize";
 
