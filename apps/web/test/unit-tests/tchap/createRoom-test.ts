@@ -12,7 +12,7 @@ import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHand
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import Modal from "~tchap-web/src/Modal";
 
-jest.mock("~tchap-web/src/tchap/lib/ExternalAccountHandler.ts");
+jest.mock("~tchap-web/src/tchap/ext/ExternalAccountHandler.ts");
 
 describe("createRoom", () => {
     mockPlatformPeg();
