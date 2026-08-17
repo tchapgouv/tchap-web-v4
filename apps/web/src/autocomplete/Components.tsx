@@ -75,7 +75,13 @@ export const PillCompletion = (props: IPillCompletionProps): JSX.Element => {
             {children}
             <span className="mx_Autocomplete_Completion_title">{title}</span>
             <span className="mx_Autocomplete_Completion_subtitle">{subtitle}</span>
-            <span className="mx_Autocomplete_Completion_description">{description}</span>
+            {/* :TCHAP: remove-mxid-onpill completly remove component if no description given; so that title can take full place*/}
+            {/*<span className="mx_Autocomplete_Completion_description">{description}</span>*/}
+            {description ?
+                <span className="mx_Autocomplete_Completion_description">{description}</span>
+                : null
+            }
+            {/* end :TCHAP: */}
         </div>
     );
 };
