@@ -22,6 +22,7 @@ import { _t } from "../../../languageHandler";
 import { TauriSeshatIndexManager } from './TauriSeshatIndexManager';
 import { TauriSecureStorage } from './TauriSecureStorage';
 import type BaseEventIndexManager from '~tchap-web/src/indexing/BaseEventIndexManager';
+import { parseAppUrl } from '../../url_utils';
 
 import Modal from '~tchap-web/src/Modal';
 import Spinner from '~tchap-web/src/components/views/elements/Spinner';
@@ -29,7 +30,7 @@ import { hideToast as hideUpdateToast, showToast as showUpdateToast} from '~tcha
 import { type CheckUpdatesPayload } from '~tchap-web/src/dispatcher/payloads/CheckUpdatesPayload';
 import { Action } from '~tchap-web/src/dispatcher/actions';
 
-const SSO_ID_KEY = "tchap-desktop-ssoid";
+// const SSO_ID_KEY = "tchap-desktop-ssoid";
 const POKE_RATE_MS = 10 * 60 * 1000; // Check every 10min for a new update
 const UPDATE_DEFER_KEY = "mx_defer_update";
 
@@ -96,20 +97,23 @@ export default class TauriPlatform extends BasePlatform {
 
     public async checkDeepLinkOpen(): Promise<void> {
         await onOpenUrl((urls) => {
-            console.log('***** deep link:', urls)
+            console.log('*** [Tauri] deep link:', urls)
             if (urls[0]) {
                 const url = new URL(urls[0]);
-                const loginToken = url.searchParams.get("loginToken"); // for SSO
-                const code  = url.searchParams.get("code"); // for native OIDC
-                const state = url.searchParams.get("state"); // for native OIDC
                 // When coming back from UIA reset cross signing action
                 if (url.href.includes("reset-cross-signing.success")) {
                     window.postMessage("authDone", "*");
                     return;
                 }
+
+                const parsedParams = parseAppUrl(url);
+
+                console.log('*** [Tauri] deeplin params:', parsedParams.params);
                 // callback return from sso connexion
-                if (loginToken) window.location.replace(`/?loginToken=${loginToken}`);
-                if (code && state) window.location.replace(`/?code=${code}&state=${state}`)
+                if (parsedParams.params.legacy_sso) window.location.replace(`/?loginToken=${parsedParams.params.legacy_sso.loginToken}`);
+                // note : removing the no_universal_links in this case, freeze the app.
+                if (parsedParams.params.oidc_fragment) window.location.replace(`/?no_universal_links=true#state=${parsedParams.params.oidc_fragment.state}&code=${parsedParams.params.oidc_fragment.code}&`)
+                if (parsedParams.params.oidc_query) window.location.replace(`/?no_universal_links=true&state=${parsedParams.params.oidc_query.state}&code=${parsedParams.params.oidc_query.code}&`)
             }
         });
     }
@@ -297,7 +301,7 @@ export default class TauriPlatform extends BasePlatform {
         const url = new URL(urlTchap);
         url.hash = fragmentAfterLogin ?? "";
         url.protocol = scheme; // only using this is not working to change the protocol, dont know why...
-        url.searchParams.set(SSO_ID_KEY, this.ssoID);
+        // url.searchParams.set(SSO_ID_KEY, this.ssoID); No need in tchap, only a single instance, and its breaking params parsing
         return url;
     }
 
@@ -337,9 +341,10 @@ export default class TauriPlatform extends BasePlatform {
         this.openAuthorizationInBrowser(ssoLoginUrl);
     }
 
-    public getOidcClientState(): string {
-        return `:${SSO_ID_KEY}:${this.ssoID}`;
-    }
+    // No need in tchap, only a single instance, and its breaking params parsing
+    // public getOidcClientState(): string {
+    //     return `:${SSO_ID_KEY}:${this.ssoID}`;
+    // }
 
     /**
      * The URL to return to after a successful OIDC authentication

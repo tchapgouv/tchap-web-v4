@@ -296,7 +296,8 @@ async function attemptOidcNativeLogin(
     urlParams: NonNullable<URLParams["oidc_fragment"]>,
     responseMode: "fragment" | "query",
 ): Promise<boolean> {
-    console.log("We have OIDC params - attempting OIDC login");
+    console.log("We have OIDC params - attempting OIDC login", urlParams);
+    console.log("We have OIDC params - attempting OIDC login responseMode", responseMode);
 
     try {
         const { accessToken, refreshToken, homeserverUrl, identityServerUrl, idToken, clientId, issuer } =
@@ -962,16 +963,33 @@ let _isLoggingOut = false;
  * @param oidcClientStore
  */
 async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore): Promise<void> {
+    // :TCHAP: logout from MAS
     if (oidcClientStore?.isUserAuthenticatedWithOidc) {
-        // :TCHAP: logout from MAS
+        // Only send premanent logout request to MAS if in web platform
+        if (window.__TAURI__) {
+            // standard element web, signout only current device
+            const accessToken = client.getAccessToken() ?? undefined;
+            const refreshToken = client.getRefreshToken() ?? undefined;
+
+            await oidcClientStore.revokeTokens(accessToken, refreshToken);
+            return;
+        }
+
         const signoutRequest = (await oidcClientStore.createSignoutRequest()).url;
         if (signoutRequest) {
+            console.log("**** Doing signout request logout to MAS");
             window.location.href = signoutRequest;
+        } else {
+            // fallback to standard element web, signout only current device
+            const accessToken = client.getAccessToken() ?? undefined;
+            const refreshToken = client.getRefreshToken() ?? undefined;
+
+            await oidcClientStore.revokeTokens(accessToken, refreshToken);
         }
-        // end :TCHAP: 
     } else {
         await client.logout(true);
     }
+    // end :TCHAP:
 }
 
 /**
@@ -1159,12 +1177,12 @@ export async function clearStorage(opts?: { deleteEverything?: boolean, delegate
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
         const registrationTime = window.localStorage.getItem("mx_registration_time");
 
-        // :TCHAP: desktop-tauri-browser https://github.com/tchapgouv/tchap-desktop/issues/82 
-        // try to save hs and idp for delegated auth in order to avoid error 
+        // :TCHAP: desktop-tauri-browser https://github.com/tchapgouv/tchap-desktop/issues/82
+        // try to save hs and idp for delegated auth in order to avoid error
         const hs = window.localStorage.getItem(SSO_HOMESERVER_URL_KEY);
         const idpServer = window.localStorage.getItem(SSO_ID_SERVER_URL_KEY);
         const idpId = window.localStorage.getItem(SSO_IDP_ID_KEY);
-        // end :TCHAP: 
+        // end :TCHAP:
 
         window.localStorage.clear();
 
