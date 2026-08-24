@@ -8,6 +8,7 @@ import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 import PosthogTrackers, { InteractionName } from "~tchap-web/src/PosthogTrackers";
 import AccessibleButton, { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
 import classNames from "classnames";
+import { CopyIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 interface TchapMailSignatureProps {
     userPermalink: string;
@@ -57,9 +58,10 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 // This is based on the CopyText component from Element Web, but we don't  want to copy plain html, so we need to override the default behavior
-export const CopyBrutButton: React.FC<Pick<IProps, "getElementToCopy" | "className">> = ({
+export const CopyBrutButton: React.FC<Pick<IProps, "getElementToCopy" | "className" | "children">> = ({
     getElementToCopy,
     className,
+    children,
 }) => {
     const [tooltip, setTooltip] = useState<string | undefined>(undefined);
 
@@ -94,13 +96,16 @@ export const CopyBrutButton: React.FC<Pick<IProps, "getElementToCopy" | "classNa
 
     return (
         <AccessibleButton
+            element="button"
             title={tooltip ?? _t("action|copy")}
             onClick={onCopyClickInternal}
             className={className}
             onTooltipOpenChange={(open) => {
                 if (!open) onHideTooltip();
             }}
-        />
+        >
+            {children}
+        </AccessibleButton>
     );
 };
 
@@ -112,7 +117,9 @@ const CopyableBrut: React.FC<IProps> = ({ children, getElementToCopy, border = t
     return (
         <div className={combinedClassName} {...props}>
             {children}
-            <CopyBrutButton getElementToCopy={getElementToCopy} className="mx_CopyableText_copyButton" />
+            <CopyBrutButton getElementToCopy={getElementToCopy} className="mx_CopyableText_copyButton">
+                <CopyIcon />
+            </CopyBrutButton>
         </div>
     );
 };
