@@ -367,10 +367,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             }
         }
 
-        let discoverySection;
-        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
-            discoverySection = <DiscoverySettings />;
-        }
+        // :TCHAP: UIFeature.ThirdPartyID is true in conf so that invite by email work (render send email invite suggestion in dialog)
+        const discoverySection = null;
+        // let discoverySection = null;
+        // if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
+        //     discoverySection = <DiscoverySettings />;
+        // }
+        // end :TCHAP:
+
 
         let privacySection;
         if (discoverySection || posthogSection) {
