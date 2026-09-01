@@ -180,13 +180,11 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
     }
 }
 
-/* eslint-disable camelcase */
 interface IRecaptchaAuthEntryProps extends IAuthEntryProps {
     stageParams?: {
         public_key?: string;
     };
 }
-/* eslint-enable camelcase */
 
 export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps> {
     public static LOGIN_TYPE = AuthType.Recaptcha;
@@ -997,7 +995,7 @@ export class MasUnlockCrossSigningAuthEntry extends FallbackAuthEntry<{
     };
 
     private onRetryClick = (): void => {
-        this.props.submitAuthDict({});
+        this.props.submitAuthDict({ type: MasUnlockCrossSigningAuthEntry.LOGIN_TYPE });
     };
 
     public render(): React.ReactNode {

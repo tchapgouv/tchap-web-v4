@@ -8,9 +8,18 @@ Please see LICENSE files in the repository root for full details.
 export { ModuleLoader, ModuleIncompatibleError } from "./loader";
 export type { Api, Module, ModuleFactory } from "./api";
 export type { Config, ConfigApi } from "./api/config";
-export type { I18nApi, Variables, Translations, SubstitutionValue, Tags } from "./api/i18n";
+export type {
+    I18nApi,
+    Variables,
+    StringVariables,
+    RichVariables,
+    Translations,
+    SubstitutionValue,
+    Tags,
+} from "./api/i18n";
 export type * from "./models/event";
 export type * from "./models/Room";
+export type * from "./api/composer";
 export type * from "./api/custom-components";
 export type * from "./api/extras";
 export type * from "./api/legacy-modules";
@@ -26,5 +35,7 @@ export type * from "./api/widget-lifecycle";
 export type * from "./api/widget";
 export type * from "./api/customisations";
 export { UIComponent } from "./api/customisations";
+export type * from "./api/storage-helper";
+export type * from "./api/settings";
 export * from "./api/watchable";
 export type * from "./utils";

@@ -9,7 +9,7 @@ Please see LICENSE files in the repository root for full details.
 import { type CallType } from "matrix-js-sdk/src/webrtc/call";
 import { type Room } from "matrix-js-sdk/src/matrix";
 
-import LegacyCallHandler from "../../LegacyCallHandler";
+import type LegacyCallHandler from "../../LegacyCallHandler";
 import { getPlatformCallTypeProps, PlatformCallType } from "../../hooks/room/useRoomCall";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { type ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
@@ -24,6 +24,7 @@ import PosthogTrackers from "../../PosthogTrackers";
  * @param skipLobby Has the user indicated they would like to skip the lobby. Otherwise, defer to platform defaults.
  */
 export const placeCall = async (
+    legacyCallHandler: LegacyCallHandler,
     room: Room,
     callType: CallType,
     platformCallType: PlatformCallType,
@@ -35,8 +36,7 @@ export const placeCall = async (
 
     console.log("*** platformCallType", platformCallType)
     if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
-        console.log("*** inside legacy")
-        await LegacyCallHandler.instance.placeCall(room.roomId, callType);
+        await legacyCallHandler.placeCall(room.roomId, callType);
     } else if (platformCallType == PlatformCallType.ElementCall) {
         console.log("*** inside element")
         defaultDispatcher.dispatch<ViewRoomPayload>({

@@ -7,6 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import { type Locator, type Page, type Request } from "@playwright/test";
+import { rejectToast } from "@element-hq/element-web-playwright-common";
 
 import { test as base, expect } from "../../element-web-test";
 import type { ElementAppPage } from "../../pages/ElementAppPage";
@@ -24,7 +25,7 @@ const test = base.extend<{
     joinedBot: async ({ app, bot, testRoom }, use) => {
         const roomId = testRoom.roomId;
         await bot.prepareClient();
-        const bobUserId = await bot.evaluate((client) => client.getUserId());
+        const bobUserId = await bot.evaluate((client) => client.getSafeUserId());
         await app.client.evaluate(
             async (client, { bobUserId, roomId }) => {
                 await client.invite(roomId, bobUserId);
@@ -71,8 +72,9 @@ test.describe("Sliding Sync", () => {
     });
 
     // Load the user fixture for all tests
-    test.beforeEach(async ({ app, user }) => {
-        await app.closeNotificationToast();
+    test.beforeEach(async ({ app, page, user }) => {
+        await rejectToast(page, "Verify this device");
+        await rejectToast(page, "Notifications");
     });
 
     test("should render the Rooms list in reverse chronological order by default and allowing sorting A-Z", async ({
@@ -228,7 +230,7 @@ test.describe("Sliding Sync", () => {
         joinedBot: bot,
         testRoom,
     }) => {
-        const clientUserId = await app.client.evaluate((client) => client.getUserId());
+        const clientUserId = await app.client.evaluate((client) => client.getSafeUserId());
 
         // invite bot into 3 rooms:
         // - roomJoin: will join this room
@@ -276,11 +278,12 @@ test.describe("Sliding Sync", () => {
             { roomRescind, clientUserId },
         );
 
+        // toggle the invites filter off again so we see all the rooms again
+        await primaryFilters.getByRole("option", { name: "Invites" }).click();
+
         await page.getByRole("option", { name: "Open room Room to Rescind" }).click();
 
         await page.locator(".mx_RoomView").getByRole("button", { name: "Forget this room", exact: true }).click();
-
-        await primaryFilters.getByRole("option", { name: "Invites" }).click();
 
         // Wait for the rescind to take effect and check the joined list once more
         await expect(page.getByTestId("room-list").getByRole("option")).toHaveCount(2);
@@ -288,7 +291,7 @@ test.describe("Sliding Sync", () => {
         await checkOrder(["Room to Join", "Test Room"], page);
     });
 
-    test("should show a favourite DM only in the favourite sublist", async ({ page, app }) => {
+    test("should show a favourite DM only in the favourite section", async ({ page, app }) => {
         const roomId = await app.client.createRoom({
             name: "Favourite DM",
             is_direct: true,
@@ -297,12 +300,9 @@ test.describe("Sliding Sync", () => {
             await client.setRoomTag(roomId, "m.favourite", { order: 0.5 });
         }, roomId);
 
-        await getFilterExpandButton(page).click();
+        await expect(page.getByRole("button", { name: "Favourite DM" })).toBeVisible();
+
         const primaryFilters = getPrimaryFilters(page);
-        await primaryFilters.getByRole("option", { name: "Favourites" }).click();
-
-        await expect(page.getByRole("option", { name: "Favourite DM" })).toBeVisible();
-
         await primaryFilters.getByRole("option", { name: "People" }).click();
 
         await expect(page.getByRole("option", { name: "Favourite DM" })).not.toBeAttached();

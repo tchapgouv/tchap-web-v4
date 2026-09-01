@@ -69,9 +69,7 @@ const cssThemes = {
 };
 
 // See docs/customisations.md
-let fileOverrides = {
-    /* {[file: string]: string} */
-};
+let fileOverrides = {/* {[file: string]: string} */};
 try {
     const customisationsFile = fs.readFileSync("./customisations.json", "utf-8");
     fileOverrides = JSON.parse(customisationsFile);
@@ -220,10 +218,16 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
             minimizer: enableMinification
                 ? [
                       new TerserPlugin({
-                          // Already minified and includes an auto-generated license comment
-                          // that the plugin would otherwise pointlessly extract into a separate
-                          // file. We add the actual license using CopyWebpackPlugin below.
-                          exclude: "jitsi_external_api.min.js",
+                          exclude: [
+                              // Already minified and includes an auto-generated license comment
+                              // that the plugin would otherwise pointlessly extract into a separate
+                              // file. We add the actual license using CopyWebpackPlugin below.
+                              "jitsi_external_api.min.js",
+                              // Already minified by Element Call's build process (and Terser has
+                              // issues with some Unicode characters found within)
+                              // https://github.com/terser/terser/issues/1677
+                              "widgets/element-call/",
+                          ],
                       }),
                       new CssMinimizerPlugin(),
                   ]
@@ -249,18 +253,14 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 "@matrix-org/react-sdk-module-api": getPackageRoot("@matrix-org/react-sdk-module-api"),
                 // and matrix-widget-api
                 "matrix-widget-api": getPackageRoot("matrix-widget-api"),
-                "oidc-client-ts": getPackageRoot("oidc-client-ts"),
-
-                // Define a variable so the i18n stuff can load
-                "$webapp": path.resolve(__dirname, "webapp"),
 
                 // :TCHAP:
                 "~tchap-web": path.resolve(__dirname, "."),
                 // we use tchap own compound-web package
-                "@vector-im/compound-web": path.resolve(__dirname, "../../node_modules/compound-web-tchap"),
+                // Make shared-components imports resolve to EW deps
+                // "@vector-im/compound-web": getPackageRoot("@vector-im/compound-web", ""),
+                "@vector-im/compound-web": getPackageRoot("compound-web-tchap", "")
                 // end :TCHAP:
-                // Make shared-components imports resolve to EW counterpart
-                "counterpart": getPackageRoot(__dirname, "node_modules/counterpart"),
             },
             fallback: {
                 // Mock out the NodeFS module: The opus decoder imports this wrongly.
@@ -268,6 +268,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 "net": false,
                 "tls": false,
                 "crypto": false,
+                "events": import.meta.resolve("events/"),
 
                 // Polyfill needed by counterpart
                 "util": import.meta.resolve("util/"),
@@ -301,6 +302,12 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 /highlight\.js[\\/]lib[\\/]languages/,
             ],
             rules: [
+                {
+                    // Match imports containing the ?raw query string
+                    resourceQuery: /raw/,
+                    // Instruct Webpack to emit the file source as a string
+                    type: "asset/source",
+                },
                 {
                     test: /\.js$/,
                     enforce: "pre" as const,
@@ -338,6 +345,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 },
                 {
                     test: /\.css$/,
+                    resourceQuery: { not: [/raw/] },
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
@@ -506,61 +514,54 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 {
                     test: /\.svg$/,
                     issuer: /\.(js|ts|jsx|tsx|html)$/,
-                    use: [
-                        {
-                            loader: "@svgr/webpack",
-                            options: {
-                                namedExport: "Icon",
-                                svgProps: {
-                                    "role": "presentation",
-                                    "aria-hidden": true,
-                                },
-                                // props set on the svg will override defaults
-                                expandProps: "end",
-                                svgoConfig: {
-                                    plugins: [
-                                        {
-                                            name: "preset-default",
-                                            params: {
-                                                overrides: {
-                                                    removeViewBox: false,
-                                                },
-                                            },
+                    resourceQuery: /react/,
+                    loader: "@svgr/webpack",
+                    options: {
+                        svgProps: {
+                            "role": "presentation",
+                            "aria-hidden": true,
+                        },
+                        // props set on the svg will override defaults
+                        expandProps: "end",
+                        svgoConfig: {
+                            plugins: [
+                                {
+                                    name: "preset-default",
+                                    params: {
+                                        overrides: {
+                                            removeViewBox: false,
                                         },
-                                        // generates a viewbox if missing
-                                        { name: "removeDimensions" },
-                                        // https://github.com/facebook/docusaurus/issues/8297
-                                        { name: "prefixIds" },
-                                    ],
+                                    },
                                 },
-                                /**
-                                 * Forwards the React ref to the root SVG element
-                                 * Useful when using things like `asChild` in
-                                 * radix-ui
-                                 */
-                                ref: true,
-                                esModule: false,
-                                name: "[name].[hash:7].[ext]",
-                                outputPath: getAssetOutputPath,
-                                publicPath: function (url: string, resourcePath: string) {
-                                    const outputPath = getAssetOutputPath(url, resourcePath);
-                                    return toPublicPath(outputPath);
-                                },
-                            },
+                                // generates a viewbox if missing
+                                { name: "removeDimensions" },
+                                // https://github.com/facebook/docusaurus/issues/8297
+                                { name: "prefixIds" },
+                            ],
                         },
-                        {
-                            loader: "file-loader",
-                            options: {
-                                esModule: false,
-                                name: "[name].[hash:7].[ext]",
-                                outputPath: getAssetOutputPath,
-                                publicPath: function (url: string, resourcePath: string) {
-                                    const outputPath = getAssetOutputPath(url, resourcePath);
-                                    return toPublicPath(outputPath);
-                                },
-                            },
+                        /**
+                         * Forwards the React ref to the root SVG element
+                         * Useful when using things like `asChild` in
+                         * radix-ui
+                         */
+                        ref: true,
+                        esModule: false,
+                    },
+                },
+                {
+                    test: /\.svg$/,
+                    issuer: /\.(js|ts|jsx|tsx|html)$/,
+                    resourceQuery: { not: [/raw/, /react/] },
+                    loader: "file-loader",
+                    options: {
+                        esModule: false,
+                        name: "[name].[hash:7].[ext]",
+                        outputPath: getAssetOutputPath,
+                        publicPath: function (url: string, resourcePath: string) {
+                            const outputPath = getAssetOutputPath(url, resourcePath);
+                            return toPublicPath(outputPath);
                         },
-                    ],
+                    },
                 },
                 {
                     test: /\.svg$/,
@@ -620,7 +621,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                         },
                     ],
                 },
-            ].filter(Boolean),
+            ],
         },
 
         plugins: [
@@ -718,11 +719,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     "res/jitsi_external_api.min.js",
                     "res/jitsi_external_api.min.js.LICENSE.txt",
                     "res/manifest.json",
-                    "res/welcome.html",
-                    // :TCHAP: sso-agentconnect-flow
-                    "res/welcome_with_proconnect.html",
-                    "res/welcome_mas.html",
-                    { from: "welcome/**", context: path.resolve(__dirname, "res") },
                     { from: "themes/**", context: path.resolve(__dirname, "res") },
                     { from: "vector-icons/**", context: path.resolve(__dirname, "res") },
                     { from: "decoder-ring/**", context: path.resolve(__dirname, "res") },
@@ -764,7 +760,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 retryDelay: 500,
                 maxRetries: 3,
             }),
-        ].filter(Boolean),
+        ],
 
         output: {
             path: path.join(__dirname, "webapp"),
@@ -831,7 +827,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
  *
  * @param url The adjusted name of the file, such as `warning.1234567.svg`.
  * @param resourcePath The absolute path to the source file with unmodified name.
- * @return The returned paths will look like `img/warning.1234567.svg`.
+ * @returns The returned paths will look like `img/warning.1234567.svg`.
  */
 function getAssetOutputPath(url: string, resourcePath: string): string {
     const isKaTeX = resourcePath.includes("KaTeX");

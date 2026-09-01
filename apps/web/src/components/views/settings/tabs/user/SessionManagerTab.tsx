@@ -9,6 +9,7 @@ Please see LICENSE files in the repository root for full details.
 import React, { lazy, Suspense, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { RendezvousIntent } from "matrix-js-sdk/src/rendezvous";
 
 import { _t } from "../../../../../languageHandler";
 import Modal from "../../../../../Modal";
@@ -23,14 +24,14 @@ import SecurityRecommendations from "../../devices/SecurityRecommendations";
 import { type ExtendedDevice } from "../../devices/types";
 import { deleteDevicesWithInteractiveAuth } from "../../devices/deleteDevices";
 import SettingsTab from "../SettingsTab";
-// import LoginWithQRSection from "../../devices/LoginWithQRSection"; // :TCHAP: remove-link-new-device-qr-code
+import LoginWithQRSection from "../../devices/LoginWithQRSection";
 import { Mode } from "../../../auth/LoginWithQR-types";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { type FilterVariation } from "../../devices/filter";
 import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 import { SettingsSection } from "../../shared/SettingsSection";
-import { getManageDeviceUrl } from "../../../../../utils/oidc/urls.ts";
+import { getManageDeviceUrl } from "../../../../../utils/oauth/urls.ts";
 import { SDKContext } from "../../../../../contexts/SDKContext";
 import Spinner from "../../../elements/Spinner";
 
@@ -39,7 +40,7 @@ const LoginWithQR = lazy(() => import("../../../auth/LoginWithQR"));
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("action|sign_out"),
+        title: _t("settings|sessions|sign_out_n_sessions", { count: sessionsToSignOutCount }),
         description: (
             <div>
                 <p>
@@ -50,7 +51,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
             </div>
         ),
         cancelButton: _t("action|cancel"),
-        button: _t("action|sign_out"),
+        button: _t("settings|sessions|sign_out_n_sessions", { count: sessionsToSignOutCount }),
     });
     const [confirmed] = await finished;
 
@@ -153,23 +154,15 @@ const SessionManagerTab: React.FC<{
      * See https://github.com/matrix-org/matrix-spec-proposals/pull/3824
      */
     const accountManagement = useAsyncMemo(async () => {
-        await sdkContext.oidcClientStore.readyPromise; // wait for the store to be ready
+        const authMetadata = await matrixClient.getAuthMetadata().catch(() => {});
         return {
-            endpoint: sdkContext.oidcClientStore.accountManagementEndpoint,
-            actionsSupported: sdkContext.oidcClientStore.accountManagementActionsSupported,
+            endpoint: authMetadata?.account_management_uri,
+            actionsSupported: authMetadata?.account_management_actions_supported,
         };
-    }, [sdkContext.oidcClientStore]);
+    }, [matrixClient]);
     const disableMultipleSignout = !!accountManagement?.endpoint;
     const userId = matrixClient?.getUserId();
     const currentUserMember = (userId && matrixClient?.getUser(userId)) || undefined;
-    const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
-    const oidcClientConfig = useAsyncMemo(async () => {
-        try {
-            return await matrixClient?.getAuthMetadata();
-        } catch (e) {
-            logger.error("Failed to discover OIDC metadata", e);
-        }
-    }, [matrixClient]);
     const isCrossSigningReady = useAsyncMemo(
         async () => matrixClient.getCrypto()?.isCrossSigningReady() ?? false,
         [matrixClient],
@@ -271,7 +264,12 @@ const SessionManagerTab: React.FC<{
     if (signInWithQrMode) {
         return (
             <Suspense fallback={<Spinner />}>
-                <LoginWithQR mode={signInWithQrMode} onFinished={onQrFinish} client={matrixClient} />
+                <LoginWithQR
+                    mode={signInWithQrMode}
+                    onFinished={onQrFinish}
+                    client={matrixClient}
+                    intent={RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE}
+                />
             </Suspense>
         );
     }
@@ -279,14 +277,7 @@ const SessionManagerTab: React.FC<{
     return (
         <SettingsTab>
             <SettingsSection>
-                {/* :TCHAP: remove-link-new-device-qr-code */}
-                {/* <LoginWithQRSection
-                    onShowQr={onShowQrClicked}
-                    versions={clientVersions}
-                    oidcClientConfig={oidcClientConfig}
-                    isCrossSigningReady={isCrossSigningReady}
-                /> */}
-                {/* end :TCHAP: */}
+                <LoginWithQRSection onShowQr={onShowQrClicked} isCrossSigningReady={isCrossSigningReady} />
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}

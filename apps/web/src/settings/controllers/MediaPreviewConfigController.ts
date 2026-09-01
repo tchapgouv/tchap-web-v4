@@ -38,8 +38,8 @@ export default class MediaPreviewConfigController extends MatrixClientBackedCont
         const validMediaPreviews = Object.values(MediaPreviewValue);
         const validInviteAvatars = [MediaPreviewValue.Off, MediaPreviewValue.On];
         return {
-            invite_avatars: validInviteAvatars.includes(inviteAvatars) ? inviteAvatars : undefined,
-            media_previews: validMediaPreviews.includes(mediaPreviews) ? mediaPreviews : undefined,
+            invite_avatars: validInviteAvatars.includes(inviteAvatars!) ? inviteAvatars : undefined,
+            media_previews: validMediaPreviews.includes(mediaPreviews!) ? mediaPreviews : undefined,
         };
     }
 
@@ -56,7 +56,7 @@ export default class MediaPreviewConfigController extends MatrixClientBackedCont
 
         // Save an account data fetch if we have all the values.
         if (calculatedConfig.invite_avatars && calculatedConfig.media_previews) {
-            return calculatedConfig as MediaPreviewConfig;
+            return calculatedConfig;
         }
 
         // We're missing some keys.

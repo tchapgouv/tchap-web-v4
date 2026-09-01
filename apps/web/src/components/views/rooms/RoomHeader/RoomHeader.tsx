@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { type JSX, useCallback, useEffect, useState } from "react";
+import React, { type JSX, useCallback, useContext, useState } from "react";
 import { Text, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import VideoCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/video-call-solid";
 import VoiceCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/voice-call-solid";
@@ -17,16 +17,15 @@ import RoomInfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/inf
 import NotificationsIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications-solid";
 import { HistoryVisibility, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 import { type ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
-import { Flex, Box } from "@element-hq/web-shared-components";
+import { Flex, Box, StatusTextView } from "@element-hq/web-shared-components";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { HistoryIcon, UserProfileSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { useRoomName } from "../../../../hooks/useRoomName.ts";
 import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStorePhases.ts";
-import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext.tsx";
 import { useRoomMemberCount, useRoomMembers } from "../../../../hooks/useRoomMembers.ts";
-import { _t } from "../../../../languageHandler.tsx";
-import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/useRoomCall.tsx";
+import { _t } from "../../../../languageHandler";
+import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/useRoomCall";
 import { useRoomThreadNotifications } from "../../../../hooks/room/useRoomThreadNotifications.ts";
 import { useGlobalNotificationState } from "../../../../hooks/useGlobalNotificationState.ts";
 import { useFeatureEnabled } from "../../../../hooks/useSettings.ts";
@@ -35,7 +34,6 @@ import FacePile from "../../elements/FacePile.tsx";
 import { useRoomState } from "../../../../hooks/useRoomState.ts";
 import RoomAvatar from "../../avatars/RoomAvatar.tsx";
 import { formatCount } from "../../../../utils/FormattingUtils.ts";
-import RightPanelStore from "../../../../stores/right-panel/RightPanelStore.ts";
 import PosthogTrackers from "../../../../PosthogTrackers.ts";
 import { VideoRoomChatButton } from "./VideoRoomChatButton.tsx";
 import { RoomKnocksBar } from "../RoomKnocksBar.tsx";
@@ -45,15 +43,17 @@ import { CallGuestLinkButton } from "./CallGuestLinkButton.tsx";
 import { type ButtonEvent } from "../../elements/AccessibleButton.tsx";
 import WithPresenceIndicator, { useDmMember } from "../../avatars/WithPresenceIndicator.tsx";
 import { type IOOBData } from "../../../../stores/ThreepidInviteStore.ts";
-import { MainSplitContentType } from "../../../structures/RoomView.tsx";
+import { MainSplitContentType } from "../../../../contexts/RoomContext.ts";
 import defaultDispatcher from "../../../../dispatcher/dispatcher.ts";
-import { RoomSettingsTab } from "../../dialogs/RoomSettingsDialog.tsx";
+import { RoomSettingsTab } from "../../dialogs/RoomSettingsDialog-tab";
 import { useScopedRoomContext } from "../../../../contexts/ScopedRoomContext.tsx";
 import { ToggleableIcon } from "./toggle/ToggleableIcon.tsx";
 import { CurrentRightPanelPhaseContextProvider } from "../../../../contexts/CurrentRightPanelPhaseContext.tsx";
 import { LocalRoom } from "../../../../models/LocalRoom.ts";
 import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 import { useIsEncrypted } from "../../../../hooks/useIsEncrypted.ts";
+import { useUserStatus } from "../../../../hooks/useUserStatus.ts";
+import { SDKContext } from "../../../../contexts/SDKContext.ts";
 
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
@@ -72,6 +72,7 @@ function RoomHeaderButtons({
     legacyAdditionalButtons?: ViewRoomOpts["buttons"];
     extraButtons?: JSX.Element;
 }): JSX.Element {
+    const sdkContext = useContext(SDKContext);
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500, includeInvited: true });
 
@@ -145,7 +146,7 @@ function RoomHeaderButtons({
 
     const joinCallButton = (
         <Tooltip
-            label={
+            description={
                 videoCallDisabledReason ??
                 (activeCallSessionType === CallType.Voice ? _t("voip|voice_call") : _t("voip|video_call"))
             }
@@ -153,8 +154,9 @@ function RoomHeaderButtons({
             <Button
                 size="sm"
                 // :TCHAP: add distinction between join click and start click
-                // onClick={videoClick}
-                onClick={(ev: React.MouseEvent) => videoClick(ev, true)}
+                // onClick={activeCallSessionType === CallType.Video ? videoClick : voiceClick}
+                onClick={activeCallSessionType === CallType.Video ? (ev: React.MouseEvent) => videoClick(ev, true) : voiceClick}
+                // If we know this is a voice session, show the voice call. All other kinds of call are video calls.
                 Icon={activeCallSessionType === CallType.Voice ? VoiceCallIcon : VideoCallIcon}
                 className="mx_RoomHeader_join_button"
                 disabled={!!videoCallDisabledReason}
@@ -390,7 +392,7 @@ function RoomHeaderButtons({
                     indicator={notificationLevelToIndicator(threadNotifications)}
                     onClick={(evt) => {
                         evt.stopPropagation();
-                        RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
+                        sdkContext.rightPanelStore.showOrHidePhase(RightPanelPhases.ThreadPanel);
                         PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
                     }}
                     aria-label={_t("common|threads")}
@@ -422,7 +424,7 @@ function RoomHeaderButtons({
                         indicator={notificationLevelToIndicator(globalNotificationState.level)}
                         onClick={(evt) => {
                             evt.stopPropagation();
-                            RightPanelStore.instance.showOrHidePhase(RightPanelPhases.NotificationPanel);
+                            sdkContext.rightPanelStore.showOrHidePhase(RightPanelPhases.NotificationPanel);
                         }}
                         aria-label={_t("notifications|enable_prompt_toast_title")}
                     >
@@ -435,7 +437,7 @@ function RoomHeaderButtons({
                 <IconButton
                     onClick={(evt) => {
                         evt.stopPropagation();
-                        RightPanelStore.instance.showOrHidePhase(RightPanelPhases.RoomSummary);
+                        sdkContext.rightPanelStore.showOrHidePhase(RightPanelPhases.RoomSummary);
                     }}
                     aria-label={_t("right_panel|room_summary_card|title")}
                 >
@@ -453,7 +455,7 @@ function RoomHeaderButtons({
                         viewUserOnClick={false}
                         tooltipLabel={_t("room|header_face_pile_tooltip")}
                         onClick={(e: ButtonEvent) => {
-                            RightPanelStore.instance.showOrHidePhase(RightPanelPhases.MemberList);
+                            sdkContext.rightPanelStore.showOrHidePhase(RightPanelPhases.MemberList);
                             e.stopPropagation();
                         }}
                         aria-label={_t("common|n_members", { count: memberCount })}
@@ -513,15 +515,15 @@ export default function RoomHeader({
     legacyAdditionalButtons?: ViewRoomOpts["buttons"];
     oobData?: IOOBData;
 }): JSX.Element {
-    const client = useMatrixClientContext();
+    const sdkContext = useContext(SDKContext);
     const roomName = useRoomName(room);
     const joinRule = useRoomState(room, (state) => state.getJoinRule());
     const historyVisibility = useRoomState(room, (state) => state.getHistoryVisibility());
-    const historySharingEnabled = useFeatureEnabled("feature_share_history_on_invite");
     const dmMember = useDmMember(room);
     const isDirectMessage = !!dmMember;
-    const isRoomEncrypted = useIsEncrypted(client, room);
-    const e2eStatus = useEncryptionStatus(client, room);
+    const dmUserStatus = useUserStatus(dmMember?.userId);
+    const isRoomEncrypted = useIsEncrypted(sdkContext.client!, room);
+    const e2eStatus = useEncryptionStatus(sdkContext.client!, room);
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
     const onAvatarClick = (): void => {
         defaultDispatcher.dispatch({
@@ -531,99 +533,101 @@ export default function RoomHeader({
     };
 
     return (
-        <>
-            <CurrentRightPanelPhaseContextProvider roomId={room.roomId}>
-                <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-                    <WithPresenceIndicator room={room} size="8px">
-                    {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y } */}
-                        <RoomAvatar
-                            room={room}
-                            size="40px"
-                            oobData={oobData}
-                            onClick={room instanceof LocalRoom ? undefined : onAvatarClick}
-                            tabIndex={-1}
-                            aria-label={_t("room|header_avatar_open_settings_label")}
-                        />
-                    </WithPresenceIndicator>
-                    <button
-                        aria-label={_t("right_panel|room_summary_card|title")}
-                        tabIndex={0}
-                        onClick={
-                            room instanceof LocalRoom
-                                ? undefined
-                                : () => RightPanelStore.instance.showOrHidePhase(RightPanelPhases.RoomSummary)
-                        }
-                        className="mx_RoomHeader_infoWrapper"
-                    >
-                        <Box flex="1" className="mx_RoomHeader_info">
-                            <Text
-                                as="div"
-                                size="lg"
-                                weight="semibold"
-                                dir="auto"
-                                role="heading"
-                                aria-level={1}
-                                className="mx_RoomHeader_heading"
-                            >
-                                <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
-                                {/* :tchap: customize-room-header-bar - remove public forum icon
-                                {!isDirectMessage && joinRule === JoinRule.Public && (
-                                    <Tooltip label={_t("common|public_room")} placement="right">
-                                        <PublicIcon
-                                            width="16px"
-                                            height="16px"
-                                            className="mx_RoomHeader_icon"
-                                            color="var(--cpd-color-icon-info-primary)"
-                                            aria-label={_t("common|public_room")}
-                                        />
-                                    </Tooltip>
-                                )}
-                                */}
+        <CurrentRightPanelPhaseContextProvider roomId={room.roomId}>
+            <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
+                <WithPresenceIndicator room={room}>
+                    {/* We hide this from the tabIndex list as it is a pointer shortcut and superfluous for a11y */}
+                    {/* Disable on-click actions until the room is created */}
+                    <RoomAvatar
+                        room={room}
+                        size="40px"
+                        oobData={oobData}
+                        onClick={room instanceof LocalRoom ? undefined : onAvatarClick}
+                        tabIndex={-1}
+                        aria-label={_t("room|header_avatar_open_settings_label")}
+                    />
+                </WithPresenceIndicator>
+                {/* Disable on-click actions until the room is created */}
+                <button
+                    aria-label={_t("right_panel|room_summary_card|title")}
+                    tabIndex={0}
+                    onClick={
+                        room instanceof LocalRoom
+                            ? undefined
+                            : () => sdkContext.rightPanelStore.showOrHidePhase(RightPanelPhases.RoomSummary)
+                    }
+                    className="mx_RoomHeader_infoWrapper"
+                    type="button"
+                >
+                    <Box flex="1" className="mx_RoomHeader_info">
+                        <Text
+                            as="div"
+                            size="lg"
+                            weight="semibold"
+                            dir="auto"
+                            role="heading"
+                            aria-level={1}
+                            className="mx_RoomHeader_heading"
+                        >
+                            <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
 
-                                {/* :tchap: customize-room-header-bar - do not show e2eStatus
-                                {isDirectMessage && e2eStatus === E2EStatus.Verified && (
-                                    <Tooltip label={_t("common|verified")} placement="right">
-                                        <VerifiedIcon
-                                            width="16px"
-                                            height="16px"
-                                            className="mx_RoomHeader_icon mx_Verified"
-                                            aria-label={_t("common|verified")}
-                                        />
-                                    </Tooltip>
-                                )}
-                                */}
+                            {isDirectMessage && dmUserStatus && (
+                                <StatusTextView status={dmUserStatus} className="mx_RoomHeader_userStatus" />
+                            )}
+                            {/* :tchap: customize-room-header-bar - remove public forum icon
+                            {!isDirectMessage && joinRule === JoinRule.Public && (
+                                <Tooltip label={_t("common|public_room")} placement="right">
+                                    <PublicIcon
+                                        width="16px"
+                                        height="16px"
+                                        className="mx_RoomHeader_icon"
+                                        color="var(--cpd-color-icon-info-primary)"
+                                        aria-label={_t("common|public_room")}
+                                    />
+                                </Tooltip>
+                            )}
+                            */}
+                            {/* :tchap: customize-room-header-bar - do not show e2eStatus
+                            {isDirectMessage && e2eStatus === E2EStatus.Verified && (
+                                <Tooltip label={_t("common|verified")} placement="right">
+                                    <VerifiedIcon
+                                        width="16px"
+                                        height="16px"
+                                        className="mx_RoomHeader_icon mx_Verified"
+                                        aria-label={_t("common|verified")}
+                                    />
+                                </Tooltip>
+                            )}
 
-                                {/* :tchap: customize-room-header-bar - do not show E2EStatus.Warning
-                                {isDirectMessage && e2eStatus === E2EStatus.Warning && (
-                                    <Tooltip label={_t("room|header_untrusted_label")} placement="right">
-                                        <ErrorIcon
-                                            width="16px"
-                                            height="16px"
-                                            className="mx_RoomHeader_icon mx_Untrusted"
-                                            aria-label={_t("room|header_untrusted_label")}
-                                        />
-                                    </Tooltip>
-                                )}
-                                */}
+                            {isDirectMessage && e2eStatus === E2EStatus.Warning && (
+                                <Tooltip label={_t("room|header_untrusted_label")} placement="right">
+                                    <ErrorIcon
+                                        width="16px"
+                                        height="16px"
+                                        className="mx_RoomHeader_icon mx_Untrusted"
+                                        aria-label={_t("room|header_untrusted_label")}
+                                    />
+                                </Tooltip>
+                            )}
+                            */}
 
-                                {isRoomEncrypted && historySharingEnabled && historyVisibilityIcon(historyVisibility)}
-                            </Text>
-                            {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
+                            {isRoomEncrypted && historyVisibilityIcon(historyVisibility)}
+                        </Text>
+                                {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
                             <TchapRoomTypeRoomHeader room={room} isDM={isDirectMessage} />
                             {/* :tchap: end */}
-                        </Box>
-                    </button>
-                    {/* If the room is local-only then we don't want to show any additional buttons, as it won't work */}
-                    {room instanceof LocalRoom === false && (
-                        <RoomHeaderButtons
-                            room={room}
-                            legacyAdditionalButtons={legacyAdditionalButtons}
-                            extraButtons={extraButtons}
-                        />
-                    )}
-                </Flex>
-                {askToJoinEnabled && <RoomKnocksBar room={room} />}
-            </CurrentRightPanelPhaseContextProvider>
-        </>
+                    </Box>
+                </button>
+                {/* If the room is local-only then we don't want to show any additional buttons, as it won't work */}
+                {room instanceof LocalRoom === false && (
+                    <RoomHeaderButtons
+                        room={room}
+                        legacyAdditionalButtons={legacyAdditionalButtons}
+                        extraButtons={extraButtons}
+                    />
+                )}
+            </Flex>
+            {askToJoinEnabled && <RoomKnocksBar room={room} />}
+        </CurrentRightPanelPhaseContextProvider>
     );
 }

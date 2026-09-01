@@ -6,8 +6,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+import { rejectToastIfExists } from "@element-hq/element-web-playwright-common";
+
 import { test, expect } from "../../element-web-test";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { getSampleFilePath } from "../../sample-files";
 
 const CtrlOrMeta = process.platform === "darwin" ? "Meta" : "Control";
 
@@ -17,6 +20,7 @@ test.describe("Composer", () => {
         botCreateOpts: {
             displayName: "Bob",
         },
+        lockLeftPanelWidth: false,
     });
 
     test.use({
@@ -27,7 +31,9 @@ test.describe("Composer", () => {
         },
     });
 
-    test.beforeEach(async ({ room }) => {}); // trigger room fixture
+    test.beforeEach(async ({ app, room /* trigger room fixture */ }) => {
+        await rejectToastIfExists(app.page, "Notifications");
+    });
 
     test.describe("CIDER", () => {
         test("sends a message when you click send or press Enter", async ({ page }) => {
@@ -68,12 +74,21 @@ test.describe("Composer", () => {
         test("should allow user to input emoji via graphical picker", async ({ page, app }) => {
             await app.getComposer(false).getByRole("button", { name: "Emoji" }).click();
 
-            await page.getByTestId("mx_EmojiPicker").locator(".mx_EmojiPicker_item", { hasText: "😇" }).click();
+            await page.getByLabel("Emoji picker").getByRole("button", { name: "😇" }).click();
 
             await page.locator(".mx_ContextualMenu_background").click(); // Close emoji picker
             await page.getByRole("textbox", { name: "Send an unencrypted message…" }).press("Enter"); // Send message
 
             await expect(page.locator(".mx_EventTile_body", { hasText: "😇" })).toBeVisible();
+        });
+
+        test("renders in narrow viewports", { tag: "@screenshot" }, async ({ page, bot, app }) => {
+            // Shrink the viewport
+            await page.setViewportSize({ width: 500, height: 1080 });
+            // Shrinking the viewport will collapse the left-panel, so manually expand it.
+            await app.resizeLeftPanel(150);
+            // Now take the screenshot
+            await expect(app.getComposer()).toMatchScreenshot("narrow.png");
         });
 
         test.describe("render emoji picker with larger viewport height", async () => {
@@ -82,7 +97,7 @@ test.describe("Composer", () => {
                 await app.getComposer(false).getByRole("button", { name: "Emoji" }).click();
                 // Mask the background of the screenshot to avoid failing the test just because some
                 // other component have changed its rendering.
-                await expect(page.getByTestId("mx_EmojiPicker")).toMatchScreenshot("emoji-picker.png", {
+                await expect(page.getByLabel("Emoji picker")).toMatchScreenshot("emoji-picker.png", {
                     css: `
                         .mx_ContextualMenu_background {
                             background-color: magenta !important;
@@ -98,7 +113,7 @@ test.describe("Composer", () => {
                 await app.getComposer(false).getByRole("button", { name: "Emoji" }).click();
                 // Mask the background of the screenshot to avoid failing the test just because some
                 // other component have changed its rendering.
-                await expect(page.getByTestId("mx_EmojiPicker")).toMatchScreenshot("emoji-picker-small.png", {
+                await expect(page.getByLabel("Emoji picker")).toMatchScreenshot("emoji-picker-small.png", {
                     css: `
                         .mx_ContextualMenu_background {
                             background-color: magenta !important;
@@ -115,7 +130,7 @@ test.describe("Composer", () => {
             await emojiButton.click();
 
             // Wait for emoji picker to be visible
-            const emojiPicker = page.getByTestId("mx_EmojiPicker");
+            const emojiPicker = page.getByLabel("Emoji picker");
             await expect(emojiPicker).toBeVisible();
 
             // Get initial focused element (should be search input)
@@ -130,8 +145,8 @@ test.describe("Composer", () => {
             await page.keyboard.press("Tab");
 
             // Verify we're still within the emoji picker (not back to composer)
-            const focusedElement = await page.evaluate(() => document.activeElement?.closest(".mx_EmojiPicker"));
-            expect(focusedElement).not.toBeNull();
+            const focusStillInPicker = await emojiPicker.evaluate((el) => el.contains(document.activeElement));
+            expect(focusStillInPicker).toBe(true);
 
             // Close with Escape key
             await page.keyboard.press("Escape");
@@ -169,16 +184,17 @@ test.describe("Composer", () => {
             // Set up a private room so we have another user to mention
             await app.client.createRoom({
                 is_direct: true,
-                invite: [bot.credentials.userId],
+                invite: [bot.credentials!.userId],
             });
             await app.viewRoomByName("Bob");
 
             const composer = page.getByRole("textbox", { name: "Send an unencrypted message…" });
+            await composer.click();
             await composer.pressSequentially("@bob");
 
             // Note that we include the user ID here as the room tile is also an 'option' role
             // with text 'Bob'
-            await page.getByRole("option", { name: `Bob ${bot.credentials.userId}` }).click();
+            await page.getByRole("option", { name: `Bob ${bot.credentials!.userId}` }).click();
             await expect(composer.getByText("Bob")).toBeVisible();
             await expect(composer).toMatchScreenshot("mention.png");
             await composer.press("Enter");
@@ -197,6 +213,11 @@ test.describe("Composer", () => {
 
             // Take a screenshot of the autocomplete
             await expect(autocomplete).toMatchScreenshot("emoji-autocomplete.png");
+        });
+
+        test("can paste a file", async ({ page, bot, app }) => {
+            await app.composerDragAndPasteFile("room", getSampleFilePath("riot.png"), "image/png");
+            await expect(page.locator(".mx_ImageBody")).toBeVisible();
         });
     });
 });

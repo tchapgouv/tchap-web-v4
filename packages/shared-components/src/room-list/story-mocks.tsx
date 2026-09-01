@@ -13,7 +13,7 @@ import {
     type RoomListItemViewModel,
     type RoomListItemViewSnapshot,
     RoomNotifState,
-} from "./VirtualizedRoomListView/RoomListItemAccessibilityWrapper/RoomListItemView";
+} from "./VirtualizedRoomListView/RoomListItemWrapper/RoomListItemView";
 import { type RoomListSectionHeaderViewModel } from "./VirtualizedRoomListView/RoomListSectionHeaderView";
 import { MockViewModel } from "../core/viewmodel";
 
@@ -46,7 +46,6 @@ export const mockAvatar = (name: string): React.ReactElement => (
  */
 export const renderAvatar = (room: Room): React.ReactElement => {
     // Cast to any to access properties - in real usage, the room object from the SDK will have these
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return mockAvatar((room as any)?.name || "Room");
 };
 
@@ -105,7 +104,8 @@ export const createMockRoomSnapshot = (id: string, name: string, index: number):
     canMarkAsRead: false,
     canMarkAsUnread: true,
     roomNotifState: RoomNotifState.AllMessages,
-    canMoveToSection: true,
+    sections: [],
+    areSectionsEnabled: true,
 });
 
 export function createMockRoomItemViewModel(roomId: string, name: string, index: number): RoomListItemViewModel {
@@ -123,6 +123,8 @@ export function createMockRoomItemViewModel(roomId: string, name: string, index:
         onLeaveRoom: fn(),
         onSetRoomNotifState: fn(),
         onCreateSection: fn(),
+        onToggleSection: fn(),
+        onRemoveFromSection: fn(),
     };
 }
 
@@ -148,6 +150,9 @@ export const createGetSectionHeaderViewModel = (
             id: sectionId,
             title: sectionId[0].toUpperCase() + sectionId.slice(1),
             isExpanded: true,
+            isUnread: false,
+            displaySectionMenu: false,
+            canBeReordered: true,
         };
         const vm = new MockViewModel(snapshot) as unknown as RoomListSectionHeaderViewModel;
         Object.assign(vm, {

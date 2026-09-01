@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import mime from "mime";
-import React, { createRef } from "react";
+import React, { createRef, type JSX, useCallback, useEffect } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import {
     EventType,
@@ -18,29 +18,33 @@ import {
     M_POLL_START,
     type IContent,
 } from "matrix-js-sdk/src/matrix";
+import { MjolnirBodyView, UnknownBodyView, useCreateAutoDisposedViewModel } from "@element-hq/web-shared-components";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import { Mjolnir } from "../../../mjolnir/Mjolnir";
-import UnknownBody from "./UnknownBody";
 import { type IMediaBody } from "./IMediaBody";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { type IBodyProps } from "./IBodyProps";
-import TextualBody from "./TextualBody";
-import MImageBody from "./MImageBody";
 import MVoiceOrAudioBody from "./MVoiceOrAudioBody";
 import MStickerBody from "./MStickerBody";
 import MPollBody from "./MPollBody";
 import MLocationBody from "./MLocationBody";
-import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
 import { type GetRelationsForEvent, type IEventTileOps } from "../rooms/EventTile";
+import { MjolnirBodyViewModel } from "../../../viewmodels/room/timeline/event-tile/body/MjolnirBodyViewModel";
+import {
+    allowMjolnirBody,
+    isMjolnirBodyAllowed,
+} from "../../../viewmodels/room/timeline/event-tile/EventTileMjolnirBodyState";
 import {
     DecryptionFailureBodyFactory,
     FileBodyFactory,
+    ImageBodyFactory,
     RedactedBodyFactory,
     VideoBodyFactory,
     renderMBody,
 } from "./MBodyFactory";
+import { TextualBodyFactory } from "./TextualBodyFactory";
 
 import { ContentScannerMediaHelper } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
@@ -66,10 +70,10 @@ export interface IOperableEventTile {
 }
 
 const baseBodyTypes = new Map<string, React.ComponentType<IBodyProps>>([
-    [MsgType.Text, TextualBody],
-    [MsgType.Notice, TextualBody],
-    [MsgType.Emote, TextualBody],
-    [MsgType.Image, MImageBody],
+    [MsgType.Text, TextualBodyFactory],
+    [MsgType.Notice, TextualBodyFactory],
+    [MsgType.Emote, TextualBodyFactory],
+    [MsgType.Image, ImageBodyFactory],
     [MsgType.File, (props: IBodyProps) => renderMBody(props, FileBodyFactory)!],
     [MsgType.Audio, MVoiceOrAudioBody],
     [MsgType.Video, VideoBodyFactory],
@@ -81,6 +85,23 @@ const baseEvTypes = new Map<string, React.ComponentType<IBodyProps>>([
     [M_BEACON_INFO.name, MBeaconBody],
     [M_BEACON_INFO.altName, MBeaconBody],
 ]);
+
+function MjolnirBodyWrappedView({ mxEvent, onMessageAllowed, ref }: IBodyProps): JSX.Element {
+    const onAllow = useCallback(() => {
+        allowMjolnirBody(mxEvent, onMessageAllowed);
+    }, [mxEvent, onMessageAllowed]);
+    const vm = useCreateAutoDisposedViewModel(() => new MjolnirBodyViewModel({ onAllow }));
+
+    useEffect(() => {
+        vm.setProps({ onAllow });
+    }, [onAllow, vm]);
+
+    return <MjolnirBodyView vm={vm} ref={ref} />;
+}
+
+function UnknownBody({ mxEvent, ref }: IBodyProps): JSX.Element {
+    return <UnknownBodyView text={mxEvent.getContent().body} ref={ref} className="mx_UnknownBody" />;
+}
 
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
     private body = createRef<React.Component | IOperableEventTile>();
@@ -273,7 +294,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             }
 
             if (
-                ((BodyType === MImageBody || BodyType === VideoBodyFactory) &&
+                ((BodyType === ImageBodyFactory || BodyType === VideoBodyFactory) &&
                     !this.validateImageOrVideoMimetype(content)) ||
                 (BodyType === MStickerBody && !this.validateStickerMimetype(content))
             ) {
@@ -287,16 +308,13 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         }
 
         if (SettingsStore.getValue("feature_mjolnir")) {
-            const key = `mx_mjolnir_render_${this.props.mxEvent.getRoomId()}__${this.props.mxEvent.getId()}`;
-            const allowRender = localStorage.getItem(key) === "true";
-
-            if (!allowRender) {
+            if (!isMjolnirBodyAllowed(this.props.mxEvent)) {
                 const userDomain = this.props.mxEvent.getSender()?.split(":").slice(1).join(":");
                 const userBanned = Mjolnir.sharedInstance().isUserBanned(this.props.mxEvent.getSender()!);
                 const serverBanned = userDomain && Mjolnir.sharedInstance().isServerBanned(userDomain);
 
                 if (userBanned || serverBanned) {
-                    BodyType = MjolnirBody;
+                    BodyType = MjolnirBodyWrappedView;
                 }
             }
         }
@@ -337,6 +355,6 @@ const CaptionBody: React.FunctionComponent<IBodyProps & { WrappedBodyType: React
 }) => (
     <div className="mx_EventTile_content">
         <WrappedBodyType {...props} />
-        <TextualBody {...{ ...props, ref: undefined }} />
+        <TextualBodyFactory {...{ ...props, ref: undefined }} />
     </div>
 );
