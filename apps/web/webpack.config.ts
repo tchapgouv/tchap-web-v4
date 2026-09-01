@@ -254,18 +254,13 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 // and matrix-widget-api
                 "matrix-widget-api": getPackageRoot("matrix-widget-api"),
 
-<<<<<<< HEAD
                 // :TCHAP:
                 "~tchap-web": path.resolve(__dirname, "."),
                 // we use tchap own compound-web package
-                "@vector-im/compound-web": path.resolve(__dirname, "../../node_modules/compound-web-tchap"),
-                // end :TCHAP:
-                // Make shared-components imports resolve to EW counterpart
-                "counterpart": getPackageRoot(__dirname, "node_modules/counterpart"),
-=======
                 // Make shared-components imports resolve to EW deps
-                "@vector-im/compound-web": getPackageRoot("@vector-im/compound-web", ""),
->>>>>>> v1.12.26
+                // "@vector-im/compound-web": getPackageRoot("@vector-im/compound-web", ""),
+                "@vector-im/compound-web": getPackageRoot("compound-web-tchap", "")
+                // end :TCHAP:
             },
             fallback: {
                 // Mock out the NodeFS module: The opus decoder imports this wrongly.
@@ -724,14 +719,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     "res/jitsi_external_api.min.js",
                     "res/jitsi_external_api.min.js.LICENSE.txt",
                     "res/manifest.json",
-<<<<<<< HEAD
-                    "res/welcome.html",
-                    // :TCHAP: sso-agentconnect-flow
-                    "res/welcome_with_proconnect.html",
-                    "res/welcome_mas.html",
-                    { from: "welcome/**", context: path.resolve(__dirname, "res") },
-=======
->>>>>>> v1.12.26
                     { from: "themes/**", context: path.resolve(__dirname, "res") },
                     { from: "vector-icons/**", context: path.resolve(__dirname, "res") },
                     { from: "decoder-ring/**", context: path.resolve(__dirname, "res") },

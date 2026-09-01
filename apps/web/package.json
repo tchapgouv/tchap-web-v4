@@ -1,12 +1,8 @@
 {
     "name": "element-web",
-<<<<<<< HEAD
     "productName": "Tchap",
     "version": "4.21.4",
-    "version-element-web": "1.12.9",
-=======
-    "version": "1.12.26",
->>>>>>> v1.12.26
+    "version-element-web": "1.12.26",
     "description": "Element: the future of secure communication",
     "author": "DINUM",
     "repository": {
@@ -31,7 +27,6 @@
         "vendor:jitsi": "curl -s https://meet.element.io/libs/external_api.min.js > ./res/jitsi_external_api.min.js",
         "dist": "./scripts/package.sh",
         "start": "nx start",
-<<<<<<< HEAD
         "lint": "pnpm lint:types && pnpm lint:js && pnpm lint:style",
         "lint:js:tchap": "eslint --max-warnings 100 test/unit-tests/tchap module_system",
         "prettier:tchap": "prettier --check src/tchap test/unit-tests/tchap",
@@ -41,14 +36,8 @@
         "lint:types": "nx lint:types",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "nx test:unit",
-        "test:tchap": "nx test:unit:tchap --testPathPatterns=test/unit-tests/tchap/*/",
-=======
-        "lint": "pnpm lint:types && pnpm lint:style",
-        "lint:types": "nx lint:types",
-        "lint:style": "stylelint \"res/css/**/*.pcss\"",
-        "test": "nx test:unit",
         "test:vitest": "nx test:vitest",
->>>>>>> v1.12.26
+        "test:tchap": "nx test:unit:tchap --testPathPatterns=test/unit-tests/tchap/*/",
         "test:playwright": "nx test:playwright --",
         "test:playwright:open": "nx test:playwright -- --ui",
         "test:playwright:screenshots": "nx test:playwright:screenshots --",
@@ -60,18 +49,12 @@
         "@babel/runtime": "^7.12.5",
         "@element-hq/element-web-module-api": "workspace:*",
         "@element-hq/web-shared-components": "workspace:*",
-        "@element-hq/element-call-embedded": "0.19.1",
         "@fontsource/fira-code": "^5",
         "@fontsource/inter": "catalog:",
         "@formatjs/intl-segmenter": "^12.0.0",
-<<<<<<< HEAD
         "@gouvfr-lasuite/integration": "^1.0.3",
-        "@matrix-org/analytics-events": "^0.33.0",
-        "@matrix-org/emojibase-bindings": "^1.5.0",
-=======
         "@matrix-org/analytics-events": "^0.37.0",
         "@matrix-org/emojibase-bindings": "catalog:",
->>>>>>> v1.12.26
         "@matrix-org/react-sdk-module-api": "^2.4.0",
         "@sentry/browser": "^10.0.0",
         "@tauri-apps/api": "^2.11.0",
@@ -154,11 +137,8 @@
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.12.10",
         "@babel/preset-typescript": "^7.12.7",
-<<<<<<< HEAD
         "@casualbot/jest-sonar-reporter": "2.6.0",
-=======
         "@element-hq/element-call-embedded": "0.22.0",
->>>>>>> v1.12.26
         "@element-hq/element-web-playwright-common": "workspace:*",
         "@fetch-mock/jest": "^0.2.20",
         "@fetch-mock/vitest": "^0.2.18",
@@ -258,7 +238,6 @@
         "webpack-version-file-plugin": "^0.5.0",
         "yaml": "^2.3.3"
     },
-<<<<<<< HEAD
     "devDependencies-comments": {
         "tchap-added": {
             "@tauri-apps/api": "^2.2.0",
@@ -266,13 +245,6 @@
             "@tauri-apps/plugin-updater": "^2.6.0"
         }
     },
-    "@casualbot/jest-sonar-reporter": {
-        "outputDirectory": "coverage",
-        "outputName": "jest-sonar-report.xml",
-        "relativePaths": true
-    },
-=======
->>>>>>> v1.12.26
     "engines": {
         "node": "24"
     },

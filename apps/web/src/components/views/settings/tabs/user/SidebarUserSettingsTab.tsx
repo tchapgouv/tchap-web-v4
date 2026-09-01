@@ -86,39 +86,6 @@ const SidebarUserSettingsTab: React.FC = () => {
                         {_t("settings|sidebar|metaspaces_home_all_rooms")}
                     </StyledCheckbox>
 
-<<<<<<< HEAD
-                    {!newRoomListEnabled && (
-                        <>
-                            <StyledCheckbox
-                                checked={!!favouritesEnabled}
-                                onChange={onMetaSpaceChangeFactory(
-                                    MetaSpace.Favourites,
-                                    "WebSettingsSidebarTabSpacesCheckbox",
-                                )}
-                                className="mx_SidebarUserSettingsTab_checkbox"
-                                description={_t("settings|sidebar|metaspaces_favourites_description")}
-                            >
-                                <FavouriteSolidIcon className="mx_SidebarUserSettingsTab_icon" />
-                                {_t("common|favourites")}
-                            </StyledCheckbox>
-
-                            <StyledCheckbox
-                                checked={!!peopleEnabled}
-                                onChange={onMetaSpaceChangeFactory(
-                                    MetaSpace.People,
-                                    "WebSettingsSidebarTabSpacesCheckbox",
-                                )}
-                                className="mx_SidebarUserSettingsTab_checkbox"
-                                description={_t("settings|sidebar|metaspaces_people_description")}
-                            >
-                                <UserProfileSolidIcon className="mx_SidebarUserSettingsTab_icon" />
-                                {_t("Direct Messages") /* TCHAP: use-the-term-direct-messages-not-people - change label _t("common|people") */}
-                            </StyledCheckbox>
-                        </>
-                    )}
-
-=======
->>>>>>> v1.12.26
                     <StyledCheckbox
                         checked={!!orphansEnabled}
                         onChange={onMetaSpaceChangeFactory(MetaSpace.Orphans, "WebSettingsSidebarTabSpacesCheckbox")}

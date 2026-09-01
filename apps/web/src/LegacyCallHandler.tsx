@@ -52,11 +52,8 @@ import { localNotificationsAreSilenced } from "./utils/notifications";
 import { isNotNull } from "./Typeguards";
 import { BackgroundAudio } from "./audio/BackgroundAudio";
 import { Jitsi } from "./widgets/Jitsi.ts";
-<<<<<<< HEAD
 import TchapPosthog from "./tchap/util/TchapPosthog.ts";
-=======
 import { type SDKContextClass } from "./contexts/SDKContextClass.ts";
->>>>>>> v1.12.26
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";

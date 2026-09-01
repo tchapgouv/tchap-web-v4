@@ -6,15 +6,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-<<<<<<< HEAD
-import React, { type JSX } from "react";
-import { useContext, useState } from "react";
-import { BackupIcon, GuideIcon, InstallationIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
-=======
 import React, { type JSX, useContext, useState } from "react";
-import { ChatSolidIcon, ExploreIcon, GroupIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { BackupIcon, GuideIcon, InstallationIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { AutoHideScrollbar } from "@element-hq/web-shared-components";
->>>>>>> v1.12.26
 
 import { getHomePageUrl } from "../../utils/pages";
 import { _t, _tDom } from "../../languageHandler";

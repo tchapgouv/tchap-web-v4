@@ -280,17 +280,12 @@ export async function attemptDelegatedAuthLogin(
  * @param urlParams subset of app-load url parameters relating to oauth auth
  * @returns Promise that resolves to true when login succeeded, else false
  */
-<<<<<<< HEAD
 async function attemptOidcNativeLogin(
     urlParams: NonNullable<URLParams["oidc_fragment"]>,
     responseMode: "fragment" | "query",
 ): Promise<boolean> {
     console.log("We have OIDC params - attempting OIDC login", urlParams);
     console.log("We have OIDC params - attempting OIDC login responseMode", responseMode);
-=======
-async function attemptOAuthLogin(urlParams: NonNullable<URLParams["oauth2"]>): Promise<boolean> {
-    console.log("We have OAuth2 params - attempting login");
->>>>>>> v1.12.26
 
     try {
         const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId } =
@@ -931,47 +926,51 @@ let _isLoggingOut = false;
  * @param client
  * @param oauth
  */
-<<<<<<< HEAD
-async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore): Promise<void> {
-    // :TCHAP: logout from MAS
-    if (oidcClientStore?.isUserAuthenticatedWithOidc) {
-        // Only send premanent logout request to MAS if in web platform
-        if (window.__TAURI__) {
-            // standard element web, signout only current device
-            const accessToken = client.getAccessToken() ?? undefined;
-            const refreshToken = client.getRefreshToken() ?? undefined;
-
-            await oidcClientStore.revokeTokens(accessToken, refreshToken);
-            return;
-        }
-
-        const signoutRequest = (await oidcClientStore.createSignoutRequest()).url;
-        if (signoutRequest) {
-            console.log("**** Doing signout request logout to MAS");
-            window.location.href = signoutRequest;
-        } else {
-            // fallback to standard element web, signout only current device
-            const accessToken = client.getAccessToken() ?? undefined;
-            const refreshToken = client.getRefreshToken() ?? undefined;
-
-            await oidcClientStore.revokeTokens(accessToken, refreshToken);
-        }
-=======
 async function doLogout(client: MatrixClient, oauth: OAuth2 | null): Promise<void> {
-    if (oauth) {
-        const accessToken = client.getAccessToken();
-        const refreshToken = client.getRefreshToken();
+    // :TCHAP:
+    // if (oauth) {
+    //     const accessToken = client.getAccessToken();
+    //     const refreshToken = client.getRefreshToken();
 
-        await Promise.all(
-            filterBoolean([
-                accessToken ? oauth.revokeToken(accessToken, "access_token") : null,
-                refreshToken ? oauth.revokeToken(refreshToken, "refresh_token") : null,
-            ]),
-        );
+    //     await Promise.all(
+    //         filterBoolean([
+    //             accessToken ? oauth.revokeToken(accessToken, "access_token") : null,
+    //             refreshToken ? oauth.revokeToken(refreshToken, "refresh_token") : null,
+    //         ]),
+    //     );
 
+    //     client.stopClient();
+    //     client.http.abort();
+    const oauthLogout = async (client: MatrixClient, oauth: OAuth2) => {
+            const accessToken = client.getAccessToken();
+            const refreshToken = client.getRefreshToken();
+
+            await Promise.all(
+                filterBoolean([
+                    accessToken ? oauth.revokeToken(accessToken, "access_token") : null,
+                    refreshToken ? oauth.revokeToken(refreshToken, "refresh_token") : null,
+                ]),
+            );
+
+            client.stopClient();
+            client.http.abort();
+    }
+    // Only send premanent logout request to MAS if in web platform
+    if (window.__TAURI__) {
+        // standard element web, signout only current device
+        await oauthLogout(client, oauth);
+        return;
+    }
+
+    const signoutRequest = (await oidcClientStore.createSignoutRequest()).url;
+    if (signoutRequest) {
+        console.log("**** Doing signout request logout to MAS");
         client.stopClient();
         client.http.abort();
->>>>>>> v1.12.26
+        window.location.href = signoutRequest;
+    } else {
+        await oauthLogout(client, oauth);
+    }
     } else {
         await client.logout(true);
     }

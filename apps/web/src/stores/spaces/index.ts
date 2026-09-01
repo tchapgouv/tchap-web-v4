@@ -29,16 +29,6 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
     switch (spaceKey) {
         case MetaSpace.Home:
             return allRoomsInHome ? _t("common|all_chats") : _t("common|home");
-<<<<<<< HEAD
-        case MetaSpace.Favourites:
-            return _t("common|favourites");
-        case MetaSpace.People:
-            // TCHAP: use-the-term-direct-messages-not-people
-            // return _t("common|people")
-            return _t("Direct Messages");
-            // end TCHAP
-=======
->>>>>>> v1.12.26
         case MetaSpace.Orphans:
             return _t("common|orphan_rooms");
         case MetaSpace.VideoRooms:

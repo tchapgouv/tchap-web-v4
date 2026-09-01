@@ -25,16 +25,13 @@
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs",
         "docs:preview": "vitepress preview docs",
-<<<<<<< HEAD
         "patch-package": "npx patch-package",
         "patch-make": "node scripts/tchap/makePatch.ts",
         "merge-patches": "./scripts/tchap/merge-patches.sh",
         "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh",
-        "scalingo-postbuild": "apps/web/scripts/tchap/package-tchap.sh"
-=======
+        "scalingo-postbuild": "apps/web/scripts/tchap/package-tchap.sh",
         "test:unit": "nx run-many -t test:unit:prepare -p && vitest run",
         "coverage:diff": "diff-cover --config-file diff-cover.toml apps/web/coverage/lcov.info packages/shared-components/coverage/lcov.info coverage/lcov.info"
->>>>>>> v1.12.26
     },
     "devDependencies": {
         "@action-validator/cli": "^0.6.0",
@@ -53,83 +50,17 @@
         "lodash": "^4.17.21",
         "mermaid": "^11.13.0",
         "minimist": "^1.2.6",
-<<<<<<< HEAD
-        "nx": "22.6.5",
-        "patch-package": "^8.0.1",
-        "prettier": "3.8.1",
-        "typescript": "catalog:",
-=======
         "nx": "catalog:",
         "oxfmt": "0.60.0",
         "oxlint": "^1.70.0",
         "oxlint-tsgolint": "^7.0.0",
         "typescript": "catalog:ts6",
->>>>>>> v1.12.26
+        "patch-package": "^8.0.1",
         "vitepress": "^1.6.4",
         "vitepress-plugin-mermaid": "^2.0.17",
         "vitest": "catalog:",
         "yaml": "^2.3.3"
     },
-<<<<<<< HEAD
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "matrix-js-sdk"
-        ],
-        "ignoredBuiltDependencies": [
-            "@sentry/cli",
-            "nx"
-        ],
-        "patchedDependencies": {
-            "@vector-im/matrix-wysiwyg": "patches/@vector-im__matrix-wysiwyg.patch",
-            "react-blurhash": "patches/react-blurhash.patch",
-            "linkify-html": "patches/linkify-html.patch",
-            "@matrix-org/react-sdk-module-api": "patches/@matrix-org__react-sdk-module-api.patch",
-            "@types/mdx": "patches/@types__mdx.patch",
-            "await-lock": "patches/await-lock.patch",
-            "jest-fixed-jsdom": "patches/jest-fixed-jsdom.patch",
-            "jsdom": "patches/jsdom.patch",
-            "rollup": "patches/rollup.patch",
-            "postcss-mixins": "patches/postcss-mixins.patch",
-            "knip": "patches/knip.patch"
-        },
-        "peerDependencyRules": {
-            "allowedVersions": {
-                "react": "19",
-                "react-dom": "19",
-                "eslint": "8"
-            }
-        },
-        "allowedDeprecatedVersions": {
-            "eslint": "8",
-            "react-beautiful-dnd": "13"
-        },
-        "overrides": {
-            "pretty-format@30>react-is": "19.2.4",
-            "@types/react": "catalog:",
-            "@types/react-dom": "catalog:",
-            "oidc-client-ts": "3.5.0",
-            "jwt-decode": "4.0.0",
-            "caniuse-lite": "1.0.30001781",
-            "markdown-it": "14.1.1",
-            "testcontainers": "^11.0.0",
-            "matrix-widget-api": "^1.17.0",
-            "qs": "6.15.0",
-            "ajv@6.12.6": "6.14.0",
-            "ajv@>=8 <8.18.0": "8.18.0",
-            "axios@>1.0.0 <1.15.0": "1.15.0",
-            "picomatch@>=4.0.0 <4.0.4": "4.0.4",
-            "esbuild@<=0.24.2": "0.27.4",
-            "esbuild@~0.27.0": "0.27.4",
-            "minimatch@>=10.0.0 <10.2.3": ">=10.2.3",
-            "lodash@4.17.23": "4.18.1",
-            "follow-redirects@1.15.11": "1.16.0",
-            "@actions/github@6.0.1": "8.0.1",
-            "dompurify@>=3.0.0 <=3.3.3": "3.4.0",
-            "protobufjs@>=7.0.0 <7.5.5": "7.5.5"
-        }
-    },
-=======
->>>>>>> v1.12.26
     "engines": {
         "node": "24"
     },

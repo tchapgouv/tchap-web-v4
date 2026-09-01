@@ -36,12 +36,7 @@ export const placeCall = async (
 
     console.log("*** platformCallType", platformCallType)
     if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
-<<<<<<< HEAD
-        console.log("*** inside legacy")
-        await LegacyCallHandler.instance.placeCall(room.roomId, callType);
-=======
         await legacyCallHandler.placeCall(room.roomId, callType);
->>>>>>> v1.12.26
     } else if (platformCallType == PlatformCallType.ElementCall) {
         console.log("*** inside element")
         defaultDispatcher.dispatch<ViewRoomPayload>({

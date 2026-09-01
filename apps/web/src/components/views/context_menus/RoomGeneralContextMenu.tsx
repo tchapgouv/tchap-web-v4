@@ -7,11 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-<<<<<<< HEAD
-import { type Room, JoinRule } from "matrix-js-sdk/src/matrix";
-=======
 import { type Room, RoomEvent } from "matrix-js-sdk/src/matrix";
->>>>>>> v1.12.26
 import React, { type JSX, useContext } from "react";
 import {
     FavouriteSolidIcon,

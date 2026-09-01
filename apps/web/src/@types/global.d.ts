@@ -39,14 +39,11 @@ import type MatrixChat from "../components/structures/MatrixChat";
 import { type InitialCryptoSetupStore } from "../stores/InitialCryptoSetupStore";
 import { type ModuleApiType } from "../modules/Api.ts";
 import type { RoomListStoreV3Class } from "../stores/room-list-v3/RoomListStoreV3.ts";
-<<<<<<< HEAD
 import { type TauriSecureStorage } from "../vector/platform/tchap-desktop/TauriSecureStorage.ts"; // :TCHAP:
 
 
 /* eslint-disable @typescript-eslint/naming-convention */
-=======
 import { type SDKContextClass } from "../contexts/SDKContextClass.ts";
->>>>>>> v1.12.26
 
 type ElectronChannel =
     | "app_onAction"

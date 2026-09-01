@@ -17,11 +17,6 @@ import { Tooltip } from "@vector-im/compound-web";
 import { ImageErrorIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { HiddenMediaPlaceholder } from "@element-hq/web-shared-components";
 
-<<<<<<< HEAD
-
-
-// import { MImageBodyInner } from "./MImageBody"; // :TCHAP: content-scanner
-=======
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -29,7 +24,6 @@ import Spinner from "../elements/Spinner";
 import { type Media, mediaFromContent } from "../../../customisations/Media";
 import { BLURHASH_FIELD, createThumbnail } from "../../../utils/image-media";
 import ImageView from "../elements/ImageView";
->>>>>>> v1.12.26
 import { type IBodyProps } from "./IBodyProps";
 import { suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";

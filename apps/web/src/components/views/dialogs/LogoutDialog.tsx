@@ -24,18 +24,15 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import Spinner from "../elements/Spinner";
-<<<<<<< HEAD
 import DialogButtons from "../elements/DialogButtons";
 import ExternalLink from "../elements/ExternalLink";
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 import InfoIcon from "@vector-im/compound-design-tokens/icons/info.svg"; // :TCHAP:
-=======
 import { BackupStatus, useKeyBackupStatus } from "../../../hooks/useKeyBackupStatus";
 import { useHasOtherVerifiedDevices } from "../../../hooks/useHasOtherVerifiedDevices";
 import { EncryptionCard } from "../settings/encryption/EncryptionCard";
 import { EncryptionCardButtons } from "../settings/encryption/EncryptionCardButtons";
 import { EncryptionCardEmphasisedContent } from "../settings/encryption/EncryptionCardEmphasisedContent";
->>>>>>> v1.12.26
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -114,56 +111,10 @@ export default function LogoutDialog(props: IProps): JSX.Element {
                         title={_t("auth|logout_dialog|setup_key_backup_title")}
                         className="mx_EncryptionCard_noBorder"
                     >
-<<<<<<< HEAD
-                        <Spinner />
-                    </BaseDialog>
-                );
-
-            case BackupStatus.NO_CRYPTO:
-            case BackupStatus.BACKUP_ACTIVE:
-                return (
-                    <QuestionDialog
-                        hasCancelButton={true}
-                        title={_t("action|sign_out")}
-                        // :TCHAP: warning-logout-dialog
-                        description={_t("auth|logout_dialog|description",  {},
-                            {
-                                div: (text) => (
-                                    <div style={{ marginTop: "10px", color: "red", display: "flex", alignItems: "center" }}>
-                                          <img 
-                                            src={InfoIcon} 
-                                            alt="info" 
-                                            style={{ 
-                                                width: "16px", 
-                                                height: "16px",
-                                                filter: "brightness(0) saturate(100%) invert(13%) sepia(94%) saturate(7151%) hue-rotate(3deg) brightness(97%) contrast(118%)",
-                                                marginRight: "5px"
-                                            }}
-                                        />
-                                        {text}
-                                    </div>
-                                ),
-                                a: (sub) => (
-                                    <ExternalLink href={TchapUrls.lockedMessagesPage} style={{ color: "red", textDecoration: "underline" }}>
-                                        {sub}
-                                    </ExternalLink>
-                                ),
-                            })}
-                        // end :TCHAP:
-                        button={_t("action|sign_out")}
-                        onFinished={this.onFinished}
-                    />
-                )
-
-            case BackupStatus.NO_BACKUP:
-            case BackupStatus.SERVER_BACKUP_BUT_DISABLED:
-            case BackupStatus.ERROR:
-            case BackupStatus.BACKUP_NO_RECOVERY:
-                return this.renderSetupRecoveryMethod();
-=======
                         <EncryptionCardEmphasisedContent>
                             <Text>{_t("auth|logout_dialog|setup_secure_backup_description")}</Text>
-                            <Text as="a" target="_blank" href="https://element.io/en/help#encryption16">
+                            {/* :TCHAP: */}
+                            <Text as="a" target="_blank" href={TchapUrls.lockedMessagesPage}>
                                 {_t("action|learn_more")} <PopOutIcon />
                             </Text>
                         </EncryptionCardEmphasisedContent>
@@ -178,7 +129,6 @@ export default function LogoutDialog(props: IProps): JSX.Element {
                     </EncryptionCard>
                 </BaseDialog>
             );
->>>>>>> v1.12.26
         }
     }
 }

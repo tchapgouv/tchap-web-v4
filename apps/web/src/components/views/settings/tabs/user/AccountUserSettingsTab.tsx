@@ -23,16 +23,12 @@ import ChangePassword from "../../ChangePassword";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import { SettingsSubsection, SettingsSubsectionText } from "../../shared/SettingsSubsection";
-import { UserPersonalInfoSettings } from "../../UserPersonalInfoSettings";
-<<<<<<< HEAD
-import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
+import { SDKContext } from "../../../../../contexts/SDKContext.ts";
+
 import TchapRedListSettings from "~tchap-web/src/tchap/components/views/settings/tabs/user/TchapRedListSettings"; // :TCHAP: red-list-settings
 import TchapMailSignature from "~tchap-web/src/tchap/components/views/settings/tabs/user/TchapMailSignature";
 import { makeUserPermalink } from "~tchap-web/src/utils/permalinks/Permalinks"; // :TCHAP: mail-signature
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
-=======
-import { SDKContext } from "../../../../../contexts/SDKContext.ts";
->>>>>>> v1.12.26
 
 interface IProps {
     closeSettingsFn: () => void;

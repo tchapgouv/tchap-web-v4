@@ -139,17 +139,14 @@ import { isOnlyAdmin } from "../../utils/membership";
 import { ModuleApi } from "../../modules/Api.ts";
 import { type IScreen } from "../../vector/routing.ts";
 import { type URLParams } from "../../vector/url_utils.ts";
-<<<<<<< HEAD
 
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls"; // :TCHAP: activate-cross-signing-and-secure-storage-react
 import EmailVerificationPage from "~tchap-web/src/tchap/components/views/sso/EmailVerificationPage"; // :TCHAP: sso-agentconnect-flow
 
 // legacy export
 export { default as Views } from "../../Views";
-=======
 import { type QrLoginCredentials } from "../views/auth/LoginWithQR.tsx";
 import { configureFromCompletedOAuthLogin } from "../../Lifecycle";
->>>>>>> v1.12.26
 
 // :TCHAP: const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "welcome", ""];
 const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "welcome", "email-precheck-sso"];
@@ -1131,11 +1128,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen("welcome");
     }
 
-<<<<<<< HEAD
-    private viewLogin(otherState?: any, tchapEmailHint?: string): void {
-=======
-    private viewLogin(otherState?: Partial<IState>): void {
->>>>>>> v1.12.26
+    private viewLogin(otherState?: Partial<IState>, tchapEmailHint?: string): void {
         this.setStateForNewView({
             view: Views.LOGIN,
             tchapEmailHint,
@@ -1921,13 +1914,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: "email_precheck_sso"
             });
-<<<<<<< HEAD
             // end :TCHAP:
-=======
             PerformanceMonitor.instance.start(PerformanceEntryNames.LOGIN);
         } else if (screen === "qr_login") {
             dis.fire(Action.ViewQrLogin);
->>>>>>> v1.12.26
         } else if (screen === "forgot_password") {
             dis.dispatch({
                 action: "start_password_recovery",
@@ -2302,75 +2292,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         syncError={this.state.syncError}
                     />
                 );
-<<<<<<< HEAD
-            }
-        } else if (this.state.view === Views.WELCOME) {
-            view = <Welcome />;
-        } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
-            const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
-            view = (
-                <Registration
-                    clientSecret={this.state.register_client_secret}
-                    sessionId={this.state.register_session_id}
-                    idSid={this.state.register_id_sid}
-                    email={email || this.state.tchapEmailHint}
-                    brand={this.props.config.brand}
-                    onLoggedIn={this.onRegisterFlowComplete}
-                    onLoginClick={this.onLoginClick}
-                    onServerConfigChange={this.onServerConfigChange}
-                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
-                    fragmentAfterLogin={fragmentAfterLogin}
-                    mobileRegister={this.state.isMobileRegistration}
-                    {...this.getServerProperties()}
-                />
-            );
-        } else if (this.state.view === Views.FORGOT_PASSWORD && SettingsStore.getValue(UIFeature.PasswordReset)) {
-            view = (
-                <ForgotPassword
-                    onComplete={this.onLoginClick}
-                    onLoginClick={this.onLoginClick}
-                    {...this.getServerProperties()}
-                />
-            );
-        } else if (this.state.view === Views.LOGIN) {
-            const showPasswordReset = SettingsStore.getValue(UIFeature.PasswordReset);
-            view = (
-                <Login
-                    isSyncing={this.state.pendingInitialSync}
-                    onLoggedIn={this.onUserCompletedLoginFlow}
-                    onRegisterClick={this.onRegisterClick}
-                    fallbackHsUrl={this.getFallbackHsUrl()}
-                    defaultDeviceDisplayName={this.props.defaultDeviceDisplayName}
-                    onForgotPasswordClick={showPasswordReset ? this.onForgotPasswordClick : undefined}
-                    onServerConfigChange={this.onServerConfigChange}
-                    fragmentAfterLogin={fragmentAfterLogin}
-                    defaultUsername={this.props.urlParams?.defaults?.defaultUsername || this.state.tchapEmailHint} // :TCHAP:
-                    {...this.getServerProperties()}
-                />
-            );
-        } else if (this.state.view === Views.SOFT_LOGOUT) {
-            view = (
-                <SoftLogout
-                    urlParams={this.props.urlParams}
-                    onTokenLoginCompleted={this.props.onTokenLoginCompleted}
-                    fragmentAfterLogin={fragmentAfterLogin}
-                />
-            );
-        } else if (this.state.view === Views.LOCK_STOLEN) {
-            view = <SessionLockStolenView />;
-        // :TCHAP: sso-agentconnect-flow
-        } else if (this.state.view === Views.EMAIL_PRECHECK_SSO) {
-            //propagate onServerConfigChange
-            view = (
-                <EmailVerificationPage
-                    onServerConfigChange={this.onServerConfigChange}
-                />
-            )
-        // end :TCHAP:
-        } else {
-            logger.error(`Unknown view ${this.state.view}`);
-            return null;
-=======
             case Views.LOGGED_IN:
                 // `ready` and `view==LOGGED_IN` may be set before `page_type` (because the
                 // latter is set via the dispatcher). If we don't yet have a `page_type`,
@@ -2440,7 +2361,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                         }
                         onServerConfigChange={this.onServerConfigChange}
                         fragmentAfterLogin={fragmentAfterLogin}
-                        defaultUsername={this.props.urlParams?.defaults?.defaultUsername}
+                        defaultUsername={this.props.urlParams?.defaults?.defaultUsername || this.state.tchapEmailHint} // :TCHAP:
                         {...this.getServerProperties()}
                     />
                 );
@@ -2454,7 +2375,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             case Views.LOCK_STOLEN:
                 return <SessionLockStolenView />;
->>>>>>> v1.12.26
+            // :TCHAP: sso-agentconnect-flow
+            case Views.EMAIL_PRECHECK_SSO:
+                //propagate onServerConfigChange
+                return(
+                    <EmailVerificationPage
+                        onServerConfigChange={this.onServerConfigChange}
+                    />
+                );
         }
     }
 

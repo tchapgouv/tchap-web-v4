@@ -83,38 +83,24 @@ export default {
                 "@types/sdp-transform",
             ],
         },
-<<<<<<< HEAD
-        // :TCHAP:
+        // // :TCHAP:
         // "apps/desktop": {
-        //     entry: ["src/preload.cts", "electron-builder.ts", "scripts/**", "hak/**"],
-        //     project: ["**/*.{js,ts}"],
+        //     entry: ["src/preload.cts!", "electron-builder.ts!", "scripts/**", "hak/**"],
+        //     project: ["**/*.{js,ts,pcss}"],
         //     ignoreDependencies: [
         //         // Brought in via hak scripts
         //         "matrix-seshat",
         //     ],
-        //     ignoreBinaries: ["scripts/in-docker.sh"],
-        // },
-        // ".": {
-        //     entry: ["scripts/**", "docs/**"],
+        //     ignoreBinaries: [
+        //         // Used to build seshat (optional)
+        //         "rustc",
+        //         // Used by the fetch-package script (optional)
+        //         "gpg",
+        //         // Used for the macOS universal builds
+        //         "lipo",
+        //     ],
         // },
         // end :TCHAP:
-=======
-        "apps/desktop": {
-            entry: ["src/preload.cts!", "electron-builder.ts!", "scripts/**", "hak/**"],
-            project: ["**/*.{js,ts,pcss}"],
-            ignoreDependencies: [
-                // Brought in via hak scripts
-                "matrix-seshat",
-            ],
-            ignoreBinaries: [
-                // Used to build seshat (optional)
-                "rustc",
-                // Used by the fetch-package script (optional)
-                "gpg",
-                // Used for the macOS universal builds
-                "lipo",
-            ],
-        },
         "modules": {
             project: ["**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,pcss}!", "!playwright/**!"],
         },
@@ -125,7 +111,6 @@ export default {
         ".": {
             entry: ["scripts/**", "docs/**"],
         },
->>>>>>> v1.12.26
     },
     ignoreDependencies: [
         // Used by multiple packages, raises a false positive for some reason

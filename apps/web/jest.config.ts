@@ -12,22 +12,8 @@ import { fileURLToPath } from "node:url";
 
 import type { Config } from "jest";
 
-<<<<<<< HEAD
-/*
-"jest-comments": {
-    "README": "For the tests to work, you need matrix-react-sdk to be git-cloned and yarn linked into this project.",
-    "snapshotSerializers": "used for jest snapshot",
-    "testEnvironment": "switch to jsdom like in matrix-react-sdk",
-    "testMatch": "execute only tests in unit-tests directory",
-    "setupFilesAfterEnv": "duplicate enzyme configuration in our own setup file '<rootDir>/test/setupTests.js'",
-    "moduleNameMapper": "use mapper from element-web, helps at mocking {module, ressources} directly with regexp",
-    "transformIgnorePatterns": "make regexp inline {matrix-js-sdk|matrix-react-sdk} else it does not work"
-}
-*/
-=======
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
->>>>>>> v1.12.26
 const config: Config = {
     testEnvironment: "jest-fixed-jsdom",
     testEnvironmentOptions: {
@@ -59,7 +45,6 @@ const config: Config = {
         "workers/(.+)Factory": "<rootDir>/__mocks__/workerFactoryMock-jest.js",
         ".*\\?raw": "jest-raw-loader",
         "recorderWorkletFactory": "<rootDir>/__mocks__/empty.js",
-<<<<<<< HEAD
         // :TCHAP:
         "MImageBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageBody.tsx",
         "MImageReplyBody":
@@ -77,12 +62,9 @@ const config: Config = {
         "@vector-im/compound-web": "<rootDir>/../../node_modules/compound-web-tchap",
         // end :TCHAP:
         "counterpart": "<rootDir>/../../node_modules/counterpart",
-=======
-        "@vector-im/compound-web": "<rootDir>/node_modules/@vector-im/compound-web",
         "^vitest$": "<rootDir>/__mocks__/empty.js",
         "jest-mock-vitest-adapter": "<rootDir>/test/setup/adapter.ts",
         "test-utils-rtl": "<rootDir>/test/test-utils/jest-matrix-react.tsx",
->>>>>>> v1.12.26
     },
     transformIgnorePatterns: [
         `${path.join(__dirname, "../..")}/node_modules/.pnpm/(?!(matrix-js-sdk|htmlparser2|mime|uuid|p-retry|is-network-error|react-merge-refs|is-ip|ip-regex|super-regex|function-timeout|time-span|convert-hrtime|clone-regexp|is-regexp|matrix-web-i18n|await-lock|@element-hq/web-shared-components|react-virtuoso|lodash|domutils|domhandler|domelementtype|dom-serializer|entities)).+$`,

@@ -9,24 +9,14 @@ import React, { type JSX, type ComponentProps, type ReactNode } from "react";
 import { type Tooltip } from "@vector-im/compound-web";
 import { type MediaEventContent } from "matrix-js-sdk/src/types";
 
-<<<<<<< HEAD
-=======
 import { ImageBodyBaseInner } from "./MImageReplyBody";
->>>>>>> v1.12.26
 import { BLURHASH_FIELD } from "../../../utils/image-media";
 import IconsShowStickersSvg from "../../../../res/img/icons-show-stickers.svg";
 import { type IBodyProps } from "./IBodyProps";
 import { useMediaVisible } from "../../../hooks/useMediaVisible";
 import AccessibleButton, { type ButtonEvent } from "../elements/AccessibleButton.tsx";
 
-<<<<<<< HEAD
-import { MImageBodyInner } from "~tchap-web/src/tchap/components/views/messages/OriginalImageBody"; // :TCHAP: content-scanner
-// import { MImageBodyInner } from "./MImageBody"; // :TCHAP: content-scanner
-
-class MStickerBodyInner extends MImageBodyInner {
-=======
 class MStickerBodyInner extends ImageBodyBaseInner {
->>>>>>> v1.12.26
     // Mostly empty to prevent default behaviour of MImageBody
     protected onClick = (ev: ButtonEvent): void => {
         ev.preventDefault();

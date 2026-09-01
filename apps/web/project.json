@@ -50,7 +50,6 @@
             "executor": "nx:noop",
             "dependsOn": ["^build"]
         },
-<<<<<<< HEAD
         "test:unit:tchap": {
             "executor": "@nx/jest:jest",
             "options": {
@@ -59,7 +58,6 @@
             },
             "dependsOn": ["^build"]
         },
-=======
         "test:unit:prepare": {
             "executor": "nx:noop",
             "dependsOn": ["^build"]
@@ -75,7 +73,6 @@
             "options": { "cwd": "apps/web" },
             "dependsOn": ["test:unit:prepare"]
         },
->>>>>>> v1.12.26
         "test:playwright": {
             "command": "playwright test",
             "options": { "cwd": "apps/web" },

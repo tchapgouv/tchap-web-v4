@@ -140,9 +140,6 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true, 
     const indexIncomplete = useIsIndexIncomplete(eventIndex, scope, roomId);
 
     if (!isRoomEncrypted) return <></>;
-<<<<<<< HEAD
-    // :TCHAP: search-no-results-warning- if (EventIndexPeg.get()) return <></>;
-=======
 
     if (eventIndex) {
         // The index is still missing history for this search, so it may silently return partial
@@ -158,7 +155,6 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true, 
         }
         return <></>;
     }
->>>>>>> v1.12.26
 
     if (EventIndexPeg.error) {
         return (

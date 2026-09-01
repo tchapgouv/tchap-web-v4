@@ -55,3 +55,6 @@ storybook-static
 # vitepress
 /docs/.vitepress/dist
 /docs/.vitepress/cache
+
+# :TCHAP:
+apps/desktop/

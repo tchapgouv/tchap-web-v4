@@ -26,11 +26,9 @@ import LegacyCallViewButtons from "./LegacyCallView/LegacyCallViewButtons";
 import { type ActionPayload } from "../../../dispatcher/payloads";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-<<<<<<< HEAD
-import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; /** :TCHAP: hide-video-button-on-call-screen */ 
-=======
 import { SDKContext } from "../../../contexts/SDKContext.ts";
->>>>>>> v1.12.26
+
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; /** :TCHAP: hide-video-button-on-call-screen */ 
 
 interface IProps {
     // The call for us to display

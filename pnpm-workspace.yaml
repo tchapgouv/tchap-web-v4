@@ -26,14 +26,10 @@ catalog:
     "@playwright/test": 1.61.1
     "playwright-core": 1.61.1
     # Compound
-<<<<<<< HEAD
-    # "@vector-im/compound-design-tokens": 10.1.0
+    # "@vector-im/compound-design-tokens": 10.2.1
+    # "@vector-im/compound-web": 10.0.1
     "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#upgrade_10.1.0
     "compound-web-tchap": 6.0.1
-=======
-    "@vector-im/compound-design-tokens": 10.2.1
-    "@vector-im/compound-web": 10.0.1
->>>>>>> v1.12.26
     # i18n
     matrix-web-i18n: 3.6.0
     # emojibase

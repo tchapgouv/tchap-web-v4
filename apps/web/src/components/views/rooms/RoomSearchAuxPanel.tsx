@@ -64,19 +64,15 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                         ) : (
                             <InlineSpinner />
                         )}
-<<<<<<< HEAD
                         {/* :TCHAP */}
-                        {/* <SearchWarning kind={WarningKind.Search} isRoomEncrypted={isRoomEncrypted} showLogo={false} />*/}
-                        {/* end :TCHAP */}
-=======
-                        <SearchWarning
+                        {/* <SearchWarning
                             kind={WarningKind.Search}
                             isRoomEncrypted={isRoomEncrypted}
                             showLogo={false}
                             scope={scope}
                             roomId={searchInfo?.roomId}
-                        />
->>>>>>> v1.12.26
+                        /> */}
+                        {/* end :TCHAP */}
                     </div>
                 </div>
                 <div className="mx_RoomSearchAuxPanel_buttons">

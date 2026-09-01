@@ -33,9 +33,6 @@ import { type URLParams } from "./url_utils.ts";
 
 export const rageshakePromise = initRageshake();
 
-<<<<<<< HEAD
-export async function preparePlatform(): Promise<void> {
-=======
 let root: Root | undefined;
 let rootContainer: Element | undefined;
 
@@ -56,7 +53,6 @@ function getRoot(): Root {
 }
 
 export function preparePlatform(): void {
->>>>>>> v1.12.26
     if (window.electron) {
         logger.log("Using Electron platform");
         PlatformPeg.set(new ElectronPlatform());
@@ -101,16 +97,10 @@ export async function loadLanguage(): Promise<void> {
 
     console.log('preflang :TCHAP:', prefLang);
     if (!prefLang) {
-<<<<<<< HEAD
         // :TCHAP: default-language-french
-        // languageHandler.getLanguagesFromBrowser().forEach((l) => {
-        //     langs.push(...languageHandler.getNormalizedLanguageKeys(l));
-        // });
-        langs.push(...languageHandler.getNormalizedLanguageKeys("fr"));
+        // langs = getLanguagesFromBrowser().flatMap(getNormalizedLanguageKeys);
+        langs.push(...getNormalizedLanguageKeys("fr"));
         // end :TCHAP:
-=======
-        langs = getLanguagesFromBrowser().flatMap(getNormalizedLanguageKeys);
->>>>>>> v1.12.26
     } else {
         langs = [prefLang];
     }

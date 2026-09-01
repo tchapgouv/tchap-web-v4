@@ -18,16 +18,13 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import Modal from "./Modal";
 import TermsDialog from "./components/views/dialogs/TermsDialog";
-<<<<<<< HEAD
 import {
     doesAccountDataHaveIdentityServer,
     setToDefaultIdentityServer,
 } from './utils/IdentityServerUtils';
 import { pickBestLanguage } from "./languageHandler.tsx";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
-=======
 import { pickBestLanguage } from "./i18n/utils";
->>>>>>> v1.12.26
 
 export class TermsNotSignedError extends Error {}
 

@@ -19,18 +19,15 @@ import { MATRIX_LOGO_HTML } from "../../structures/static-page-vars";
 import DefaultWelcome from "./DefaultWelcome.tsx";
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig.ts";
 
-<<<<<<< HEAD
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 
 export default class Welcome extends React.PureComponent<EmptyObject> {
-=======
 interface Props {
     serverConfig: ValidatedServerConfig;
 }
 
 export default class Welcome extends React.PureComponent<Props> {
->>>>>>> v1.12.26
     public render(): React.ReactNode {
         const pagesConfig = SdkConfig.getObject("embedded_pages");
         const pageUrl = pagesConfig?.get("welcome_url");
@@ -41,64 +38,44 @@ export default class Welcome extends React.PureComponent<Props> {
             "$riot:casUrl": "#/start_cas",
             "$matrixLogo": MATRIX_LOGO_HTML,
             "[matrix]": MATRIX_LOGO_HTML,
+            "$proconnectFaq": TchapUrls.helpProconnectInstances // :TCHAP:
         };
 
-<<<<<<< HEAD
-        if (!pageUrl) {
-            // Fall back to default and replace $logoUrl in welcome.html
-            const brandingConfig = SdkConfig.getObject("branding");
-            const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
-            replaceMap["$logoUrl"] = logoUrl;
-            // :TCHAP: sso-agentconnect-flow - pageUrl = "welcome.html"; 
-            pageUrl = "welcome_mas.html";
-            replaceMap["$proconnectFaq"] = TchapUrls.helpProconnectInstances;
-            // end :TCHAP:
-=======
         let body: ReactNode;
         if (pageUrl) {
             body = <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />;
         } else {
             body = <DefaultWelcome serverConfig={this.props.serverConfig} />;
->>>>>>> v1.12.26
         }
 
         // :TCHAP:
         // return (
         //     <AuthPage>
-        //         <div
-        //             className={classNames("mx_Welcome", {
-        //                 mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
-        //             })}
-        //             data-testid="mx_welcome_screen"
-        //         >
-        //             <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
-        //             <LanguageSelector />
-        //         </div>
+                // <Glass>
+                //     <div
+                //         className={classNames("mx_Welcome", {
+                //             mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
+                //         })}
+                //     >
+                //         {body}
+                //         <LanguageSelector />
+                //     </div>
+                // </Glass>
         //     </AuthPage>
         // );
         return (
             <AuthPage addBlur={false}>
-<<<<<<< HEAD
-                <div
-                    className={classNames("mx_Welcome", {
-                        mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
-                    })}
-                    data-testid="mx_welcome_screen_mas"
-                >
-                    <EmbeddedPage className="mx_WelcomePage" url={pageUrl} replaceMap={replaceMap} />
-                </div>
-=======
                 <Glass>
                     <div
                         className={classNames("mx_Welcome", {
                             mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
                         })}
+                        data-testid="mx_welcome_screen_mas"
                     >
                         {body}
                         <LanguageSelector />
                     </div>
                 </Glass>
->>>>>>> v1.12.26
             </AuthPage>
         )
         // end :TCHAP:

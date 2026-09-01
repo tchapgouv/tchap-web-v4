@@ -697,14 +697,10 @@ export class MessageComposer extends React.Component<IProps, IState> {
         return (
             <div className={classes} ref={this.ref} role="region" aria-label={_t("a11y|message_composer")}>
                 <div className="mx_MessageComposer_wrapper">
-<<<<<<< HEAD
+                    <MessageComposerUrlPreviewWrapper urlPreviewVm={this.props.urlPreviewVm} />
                     {/* :TCHAP: remove-identity-change-warning */}
                     {/* <UserIdentityWarning room={this.props.room} key={this.props.room.roomId} /> */}
                     {/* end :TCHAP: */}
-=======
-                    <MessageComposerUrlPreviewWrapper urlPreviewVm={this.props.urlPreviewVm} />
-                    <UserIdentityWarning room={this.props.room} key={this.props.room.roomId} />
->>>>>>> v1.12.26
                     <ReplyPreview
                         replyToEvent={this.props.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator}

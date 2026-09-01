@@ -31,15 +31,11 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton, { type ButtonEvent } from "../../views/elements/AccessibleButton";
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
-<<<<<<< HEAD
-import { startOidcLogin } from "../../../utils/oidc/authorize";
 import TchapUtils from '~tchap-web/src/tchap/util/TchapUtils'; // :TCHAP: login
 import Tchapi18nUtils from '~tchap-web/src/tchap/i18n/Tchapi18nUtils'; // :TCHAP: login
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import ProconnectButton from "~tchap-web/src/tchap/components/views/sso/ProconnectButton";
-=======
 import { startOAuthLogin } from "../../../utils/oauth/authorize";
->>>>>>> v1.12.26
 import { ModuleApi } from "../../../modules/Api.ts";
 
 interface IProps {

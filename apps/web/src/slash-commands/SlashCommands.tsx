@@ -62,12 +62,9 @@ import { goto, join } from "./join";
 import { manuallyVerifyDevice } from "../components/views/dialogs/ManualDeviceKeyVerificationDialog";
 import upgraderoom from "./upgraderoom/upgraderoom";
 import { emoticon } from "./emoticon";
-<<<<<<< HEAD
 import { visioCommand } from '../tchap/util/TchapCommands'; // :TCHAP:
-=======
 import { statusCommand } from "./status";
 import { SDKContextClass } from "../contexts/SDKContextClass.ts";
->>>>>>> v1.12.26
 
 export { CommandCategories, Command };
 
@@ -777,15 +774,14 @@ export const Commands = [
         },
         category: CommandCategories.actions,
     }),
-<<<<<<< HEAD
     // :TCHAP:
-    // new Command({
+    //  new Command({
     //     command: "holdcall",
     //     description: _td("slash_command|holdcall"),
     //     category: CommandCategories.other,
     //     isEnabled: (cli) => !isCurrentLocalRoom(cli),
     //     runFn: function (cli, roomId, threadId, args) {
-    //         const call = LegacyCallHandler.instance.getCallForRoom(roomId);
+    //         const call = SDKContextClass.instance.legacyCallHandler.getCallForRoom(roomId);
     //         if (!call) {
     //             return reject(new UserFriendlyError("slash_command|no_active_call"));
     //         }
@@ -800,7 +796,7 @@ export const Commands = [
     //     category: CommandCategories.other,
     //     isEnabled: (cli) => !isCurrentLocalRoom(cli),
     //     runFn: function (cli, roomId, threadId, args) {
-    //         const call = LegacyCallHandler.instance.getCallForRoom(roomId);
+    //         const call = SDKContextClass.instance.legacyCallHandler.getCallForRoom(roomId);
     //         if (!call) {
     //             return reject(new UserFriendlyError("slash_command|no_active_call"));
     //         }
@@ -810,38 +806,6 @@ export const Commands = [
     //     renderingTypes: [TimelineRenderingType.Room],
     // }),
     // end :TCHAP:
-=======
-    new Command({
-        command: "holdcall",
-        description: _td("slash_command|holdcall"),
-        category: CommandCategories.other,
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const call = SDKContextClass.instance.legacyCallHandler.getCallForRoom(roomId);
-            if (!call) {
-                return reject(new UserFriendlyError("slash_command|no_active_call"));
-            }
-            call.setRemoteOnHold(true);
-            return success();
-        },
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
-    new Command({
-        command: "unholdcall",
-        description: _td("slash_command|unholdcall"),
-        category: CommandCategories.other,
-        isEnabled: (cli) => !isCurrentLocalRoom(cli),
-        runFn: function (cli, roomId, threadId, args) {
-            const call = SDKContextClass.instance.legacyCallHandler.getCallForRoom(roomId);
-            if (!call) {
-                return reject(new UserFriendlyError("slash_command|no_active_call"));
-            }
-            call.setRemoteOnHold(false);
-            return success();
-        },
-        renderingTypes: [TimelineRenderingType.Room],
-    }),
->>>>>>> v1.12.26
     new Command({
         command: "converttodm",
         description: _td("slash_command|converttodm"),

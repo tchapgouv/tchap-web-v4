@@ -19,15 +19,11 @@ WORKDIR /src
 
 # Install dependencies
 COPY --parents package.json pnpm-lock.yaml pnpm-workspace.yaml patches scripts **/package.json /src/
-<<<<<<< HEAD
 #:tchap: copy tchap things
 COPY --parents patches_tchap /src/
 COPY --parents apps/web/modules /src/
 #:tchap:end
 RUN corepack enable
-=======
-RUN pnpm install --frozen-lockfile
->>>>>>> v1.12.26
 RUN --mount=type=bind,source=.git,target=/src/.git /src/scripts/docker-link-repos.sh
 
 # Build

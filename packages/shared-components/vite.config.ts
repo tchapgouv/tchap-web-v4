@@ -6,14 +6,6 @@
  *
  */
 
-<<<<<<< HEAD
-import path, { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import { defineConfig, esmExternalRequirePlugin } from "vite";
-import dts from "vite-plugin-dts";
-import alias from "@rollup/plugin-alias";
-const __dirname = dirname(fileURLToPath(import.meta.url));
-=======
 import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { defineConfig, esmExternalRequirePlugin, type Plugin } from "vite";
@@ -52,7 +44,6 @@ function layerCssAssets(): Plugin {
         },
     };
 }
->>>>>>> v1.12.26
 
 export default defineConfig({
     // :TCHAP:

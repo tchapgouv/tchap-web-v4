@@ -87,15 +87,10 @@ export function getEventDisplayInfo(
     // const isLeftAlignedBubbleMessage =
     //     !isBubbleMessage && (eventType === EventType.CallInvite || ElementCallEventType.matches(eventType));
     const isLeftAlignedBubbleMessage =
-<<<<<<< HEAD
-        !isBubbleMessage && (eventType === EventType.CallInvite || ElementCallMemberEventType.matches(eventType));
-    // end :TCHAP:
-=======
         !isBubbleMessage &&
         (eventType === EventType.RTCNotification ||
             eventType === EventType.CallInvite ||
             ElementCallEventType.matches(eventType));
->>>>>>> v1.12.26
     let isInfoMessage = calcIsInfoMessage(eventType, content, isBubbleMessage, isLeftAlignedBubbleMessage);
     // Some non-info messages want to be rendered in the appropriate bubble column but without the bubble background
     const noBubbleEvent =

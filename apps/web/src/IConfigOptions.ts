@@ -19,35 +19,21 @@ import { type DEFAULTS } from "./SdkConfig.ts";
 export const BugReportEndpointURLLocal = "local";
 
 export interface ConfigOptions extends WebConfigJson {
+    /* :tchap: tchap-features-from-config */
+    tchap_features?: {
+        feature_email_notification?:[string]//activate email notification on a list of home servers, ie : "dev01.tchap.incubateur.net"
+    };
+    tchap_desktop: {
+        deep_link_scheme: string
+    };
+    // end :TCHAP:
     /**
      * This is not a real config field, we're just abusing the config structure to pass around a validated server config
      */
     validated_server_config?: ValidatedServerConfig;
 }
 
-<<<<<<< HEAD
-export interface ISsoRedirectOptions {
-    immediate?: boolean;
-    on_welcome_page?: boolean;
-    on_login_page?: boolean;
-}
-
-/* :tchap: tchap-features-from-config
-* Add tchap specific options to IConfigOptions. Both interfaces get merged in compilation. https://www.typescriptlang.org/docs/handbook/declaration-merging.html#merging-interfaces
-* IConfigOptions declares which options can get retrieved with SdkConfig, if not declared SdkConfig complains it does not know the parameter.
-*/
-export interface IConfigOptions {
-    tchap_features?: {
-        feature_email_notification?:[string]//activate email notification on a list of home servers, ie : "dev01.tchap.incubateur.net"
-    },
-    tchap_desktop: {
-        deep_link_scheme: string
-    }
-}
-//end :tchap:
-=======
 /**
  * Type representing the effective config.json structure after DEFAULTS has been merged in
  */
 export type IConfigOptions = ResolveDefaults<ConfigOptions, typeof DEFAULTS>;
->>>>>>> v1.12.26
