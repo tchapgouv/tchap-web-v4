@@ -85,7 +85,12 @@ const QuickFaqButton: React.FC<{
                 <HelpSolidIcon />
                 {/* This is dirty, but we need to add the label to the indicator icon */}
                 {!isPanelCollapsed && (
-                    <Text className="mx_QuickSettingsButton_label" as="span" size="md" title={_t("quick_settings|support_title")}>
+                    <Text
+                        className="mx_QuickSettingsButton_label"
+                        as="span"
+                        size="md"
+                        title={_t("quick_settings|support_title")}
+                    >
                         {_t("quick_settings|support_title")}
                     </Text>
                 )}
