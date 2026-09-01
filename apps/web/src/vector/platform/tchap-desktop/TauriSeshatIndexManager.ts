@@ -29,7 +29,6 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
         const key = `seshat|${userId}|${deviceId}`;
 
         let passphrase: string = await this.platform.getSecureStorageInstance().getItem(key);
-        logger.debug("[init_event_index] key", key);
 
         if (!passphrase) {
             logger.debug("[init_event_index] Passphrase was not found, creating new one");
@@ -43,7 +42,6 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
     }
 
     public async addEventToIndex(event: IMatrixEvent, profile: IMatrixProfile): Promise<void> {
-        logger.debug("[addliveenent] ", event);
         // return this.ipc.call("add_event_to_index", {event: seshatEvent, profile});
         return this.ipc.call("add_event_to_index", {event, profile});
     }
@@ -66,7 +64,6 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
 
     public async searchEventIndex(searchArgs: ISearchArgs): Promise<IResultRoomEvents> {
         const result = await this.ipc.call("search_event_index", {searchConfig: searchArgs});
-        logger.debug("[searcheventindex]", result);
         return result;
     }
 
@@ -75,12 +72,10 @@ export class TauriSeshatIndexManager extends BaseEventIndexManager {
         newCheckpoint: ICrawlerCheckpoint | null,
         oldCheckpoint: ICrawlerCheckpoint | null,
     ): Promise<boolean> {
-        logger.debug("[addHistoricEvents] ", event);
         return this.ipc.call("add_historic_events", { events, newCheckpoint, oldCheckpoint });
     }
 
     public async addCrawlerCheckpoint(checkpoint: ICrawlerCheckpoint): Promise<void> {
-        logger.debug("[add_crawler_checkpoint] checkpoint", checkpoint);
         return this.ipc.call("add_crawler_checkpoint", { checkpoint });
     }
 

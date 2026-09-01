@@ -110,14 +110,14 @@ exports[`<SpacePanel /> should render as expected 1`] = `
     </ul>
     <button
       aria-expanded="false"
-      aria-label="Quick settings"
+      aria-label="quick_settings"
       aria-labelledby="_r_c_"
       class="_icon-button_1215g_8 mx_QuickSettingsButton"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
-      title="Quick settings"
+      title="quick_settings"
     >
       <div
         class="_indicator-icon_147l5_17"
