@@ -1,3 +1,10 @@
+/*
+Copyright 2026 Element Creations Ltd.
+
+SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE in the repository root for full details.
+*/
+
 module.exports = {
     extends: ["stylelint-config-standard"],
     customSyntax: "postcss-scss",
@@ -66,10 +73,10 @@ module.exports = {
                     { from: "res/themes/tchap-dark/css/_tchap_custom_vars.pcss", type: "css" },
                     // end :TCHAP:
                     // Compound vars
-                    "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-base.css",
-                    "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-semantic.css",
-                    "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-base-mq.css",
-                    "../../node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-semantic-mq.css",
+                    "./node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-base.css",
+                    "./node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-common-semantic.css",
+                    "./node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-base-mq.css",
+                    "./node_modules/@vector-im/compound-design-tokens/assets/web/css/cpd-theme-light-semantic-mq.css",
                 ],
             },
         ],

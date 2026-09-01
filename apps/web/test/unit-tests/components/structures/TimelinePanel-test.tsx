@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 import { render, waitFor, screen, act, cleanup } from "jest-matrix-react";
 import {
+    ClientEvent,
     ReceiptType,
     EventTimelineSet,
     EventType,
@@ -19,6 +20,7 @@ import {
     RoomEvent,
     RoomMember,
     RoomState,
+    SyncState,
     TimelineWindow,
     EventTimeline,
     FeatureSupport,
@@ -50,7 +52,7 @@ import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import MatrixClientBackedController from "../../../../src/settings/controllers/MatrixClientBackedController";
-import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+import { SDKContextClass } from "../../../../src/contexts/SDKContextClass";
 import type Timer from "../../../../src/utils/Timer";
 
 // ScrollPanel calls this, but jsdom doesn't mock it for us
@@ -160,7 +162,7 @@ const setupPagination = (
 
 describe("TimelinePanel", () => {
     let client: Mocked<MatrixClient>;
-    let sdkContext: SdkContextClass;
+    let sdkContext: SDKContextClass;
     let userId: string;
 
     filterConsole("checkForPreJoinUISI: showing all messages, skipping check");
@@ -168,7 +170,7 @@ describe("TimelinePanel", () => {
     beforeEach(() => {
         client = mocked(stubClient());
         userId = client.getSafeUserId();
-        sdkContext = new SdkContextClass();
+        sdkContext = new SDKContextClass();
     });
 
     describe("read receipts and markers", () => {
@@ -437,6 +439,32 @@ describe("TimelinePanel", () => {
         expect(props.onEventScrolledIntoView).toHaveBeenCalledWith(events[1].getId());
     });
 
+    it("should scroll the event into view again when the same event is re-requested", () => {
+        const client = MatrixClientPeg.safeGet();
+        const room = mkRoom(client, "roomId");
+        const events = mockEvents(room);
+
+        const props = {
+            ...getProps(room, events),
+            eventId: events[1].getId(),
+            eventScrollIntoView: true,
+            onEventScrolledIntoView: jest.fn(),
+        };
+
+        const { rerender } = render(<TimelinePanel {...props} />);
+        expect(props.onEventScrolledIntoView).toHaveBeenCalledTimes(1);
+
+        // RoomView clears the flag once the jump has landed, so the event stays put on re-render.
+        props.eventScrollIntoView = false;
+        rerender(<TimelinePanel {...props} />);
+        expect(props.onEventScrolledIntoView).toHaveBeenCalledTimes(1);
+
+        // Clicking the same permalink a second time asks for the very same event again.
+        props.eventScrollIntoView = true;
+        rerender(<TimelinePanel {...props} />);
+        expect(props.onEventScrolledIntoView).toHaveBeenCalledTimes(2);
+    });
+
     it("paginates", async () => {
         const [client, room, events] = setupTestData();
         const eventsPage1 = events.slice(0, 1);
@@ -481,6 +509,39 @@ describe("TimelinePanel", () => {
 
             await waitFor(() => expectEvents(container, [events[1]]));
         });
+    });
+
+    it("only re-renders when sync changes forward pagination state", async () => {
+        const [client, room, events] = setupTestData();
+        let timelinePanel: TimelinePanel | null = null;
+
+        render(
+            <TimelinePanel
+                {...getProps(room, events)}
+                ref={(ref) => {
+                    timelinePanel = ref;
+                }}
+            />,
+            clientAndSDKContextRenderOptions(client, sdkContext),
+        );
+        await flushPromises();
+        await waitFor(() => expect(timelinePanel).toBeTruthy());
+
+        const forceUpdateSpy = jest.spyOn(timelinePanel!, "forceUpdate");
+
+        await act(async () => {
+            client.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
+            await flushPromises();
+        });
+
+        expect(forceUpdateSpy).not.toHaveBeenCalled();
+
+        await act(async () => {
+            client.emit(ClientEvent.Sync, SyncState.Prepared, SyncState.Syncing);
+            await flushPromises();
+        });
+
+        expect(forceUpdateSpy).toHaveBeenCalledTimes(1);
     });
 
     describe("onRoomTimeline", () => {

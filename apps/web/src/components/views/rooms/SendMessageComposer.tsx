@@ -6,7 +6,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { createRef, type KeyboardEvent, type SyntheticEvent } from "react";
+import React, {
+    createRef,
+    type KeyboardEvent,
+    type SyntheticEvent,
+    type RefAttributes,
+    type ReactElement,
+} from "react";
 import {
     type MatrixEvent,
     type IEventRelation,
@@ -19,8 +25,8 @@ import {
 import { type DebouncedFunc, throttle } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
 import { type Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { type RoomMessageEventContent } from "matrix-js-sdk/src/types";
 
+import { type RoomMessageEventContent } from "../../../../@types/url-preview";
 import dis from "../../../dispatcher/dispatcher";
 import EditorModel from "../../../editor/model";
 import {
@@ -37,8 +43,7 @@ import { CommandPartCreator, type Part, type PartCreator, type SerializedPart } 
 import { findEditableEvent } from "../../../utils/EventUtils";
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from "../../../slash-commands/SlashCommands";
-import ContentMessages from "../../../ContentMessages";
-import { withMatrixClientHOC, type MatrixClientProps } from "../../../contexts/MatrixClientContext";
+import { useMatrixClientContext, type MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from "../../../effects";
@@ -59,7 +64,10 @@ import { type Caret } from "../../../editor/caret";
 import { type IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
 import { EMOJI_REGEX } from "../../../HtmlUtils";
-import { attachMentions, attachRelation } from "../../../utils/messages";
+import { attachMentions, attachRelation, attachUrlPreviews } from "../../../utils/messages";
+import { type RoomUploadViewModel, useRoomUploadViewModel } from "../../../viewmodels/room/RoomUploadViewModel";
+import { type MessageComposerUrlPreviewViewModel } from "../../../viewmodels/composer/MessageComposerUrlPreviewViewModel";
+import { type MessageComposerUrlPreviewSnapshot } from "@element-hq/web-shared-components";
 
 // The prefix used when persisting editor drafts to localstorage.
 export const EDITOR_STATE_STORAGE_PREFIX = "mx_cider_state_";
@@ -124,12 +132,18 @@ export function isQuickReaction(model: EditorModel): boolean {
 
 interface ISendMessageComposerProps extends MatrixClientProps {
     room: Room;
+    uploadVm: RoomUploadViewModel;
     placeholder?: string;
     relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
     toggleStickerPickerOpen: () => void;
+    urlPreviewVm: MessageComposerUrlPreviewViewModel;
+}
+
+interface ISendMessageActionProps {
+    urlPreviewSnapshot: MessageComposerUrlPreviewSnapshot;
 }
 
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
@@ -188,10 +202,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case KeyBindingAction.SendMessage:
-                this.sendMessage();
+            case KeyBindingAction.SendMessage: {
+                const urlPreviewSnapshot = this.props.urlPreviewVm.getSnapshot();
+                this.sendMessage({ urlPreviewSnapshot });
                 event.preventDefault();
                 break;
+            }
             case KeyBindingAction.SelectPrevSendHistory:
             case KeyBindingAction.SelectNextSendHistory: {
                 // Try select composer history
@@ -321,7 +337,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     }
 
-    public async sendMessage(): Promise<void> {
+    /*
+     * The URL preview VM snapshot before the composer is cleared
+     */
+    public async sendMessage({ urlPreviewSnapshot }: ISendMessageActionProps): Promise<void> {
         const model = this.model;
 
         if (model.isEmpty) {
@@ -403,6 +422,21 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             this.sendQuickReaction();
         }
 
+        const clearComposerAndPushHistory = (): void => {
+            this.sendHistoryManager.save(model, replyToEvent);
+            // clear composer
+            model.reset([]);
+            this.editorRef.current?.clearUndoHistory();
+            this.editorRef.current?.focus();
+            this.clearStoredEditorState();
+            if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
+                dis.dispatch({
+                    action: "scroll_to_bottom",
+                    timelineRenderingType: this.context.timelineRenderingType,
+                });
+            }
+        };
+
         if (shouldSend) {
             const { roomId } = this.props.room;
             if (!content) {
@@ -413,8 +447,13 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     this.props.relation,
                 );
             }
+
             // don't bother sending an empty message
             if (!content.body.trim()) return;
+
+            // clear composer first so the user doesn't actually see the delay of attach URL preview image files
+            clearComposerAndPushHistory();
+            attachUrlPreviews(urlPreviewSnapshot, content);
 
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 decorateStartSendingTime(content);
@@ -453,19 +492,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     sendRoundTripMetric(this.props.mxClient, roomId, resp.event_id);
                 });
             }
-        }
-
-        this.sendHistoryManager.save(model, replyToEvent);
-        // clear composer
-        model.reset([]);
-        this.editorRef.current?.clearUndoHistory();
-        this.editorRef.current?.focus();
-        this.clearStoredEditorState();
-        if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
-            dis.dispatch({
-                action: "scroll_to_bottom",
-                timelineRenderingType: this.context.timelineRenderingType,
-            });
+        } else {
+            clearComposerAndPushHistory();
         }
     }
 
@@ -561,14 +589,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // We check text/rtf instead of text/plain as when copy+pasting a file from Finder or Gnome Image Viewer
         // it puts the filename in as text/plain which we want to ignore.
         if (data.files.length && !data.types.includes("text/rtf")) {
-            ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(data.files),
-                this.props.room.roomId,
-                this.props.relation,
-                this.context.replyToEvent,
-                this.props.mxClient,
-                this.context.timelineRenderingType,
-            );
+            this.props.uploadVm.initiateViaDataTransfer(data);
             return true; // to skip internal onPaste handler
         }
 
@@ -589,7 +610,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // Fallback to internal onPaste handler
                 return false;
             }
-            const imgSrc = imgDoc!.querySelector("img")!.src;
+            const imgSrc = imgDoc.querySelector("img")!.src;
 
             fetch(imgSrc).then(
                 (response) => {
@@ -601,13 +622,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                             const parts = response.url.split("/");
                             const filename = parts[parts.length - 1];
                             const file = new File([imgBlob], filename + "." + ext, { type: safetype });
-                            ContentMessages.sharedInstance().sendContentToRoom(
-                                file,
-                                this.props.room.roomId,
-                                this.props.relation,
-                                this.props.mxClient,
-                                this.context.replyToEvent,
-                            );
+                            this.props.uploadVm.initiateViaInputFiles([file]);
                         },
                         (error) => {
                             console.log(error);
@@ -660,5 +675,13 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 }
 
-const SendMessageComposerWithMatrixClient = withMatrixClientHOC(SendMessageComposer);
-export default SendMessageComposerWithMatrixClient;
+function SendMessageComposerWrapped(
+    props: Omit<ISendMessageComposerProps, "mxClient" | "uploadVm"> &
+        RefAttributes<InstanceType<typeof SendMessageComposer>>,
+): ReactElement {
+    const client = useMatrixClientContext();
+    const uploadVm = useRoomUploadViewModel();
+    return <SendMessageComposer {...props} mxClient={client} uploadVm={uploadVm} />;
+}
+
+export default SendMessageComposerWrapped;

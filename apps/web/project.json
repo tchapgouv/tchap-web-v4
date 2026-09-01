@@ -46,14 +46,11 @@
             },
             "dependsOn": ["^build", "^build:playwright"]
         },
-        "test:unit": {
-            "executor": "@nx/jest:jest",
-            "options": {
-                "jestConfig": "{projectRoot}/jest.config.ts",
-                "cwd": "apps/web"
-            },
+        "lint:prepare": {
+            "executor": "nx:noop",
             "dependsOn": ["^build"]
         },
+<<<<<<< HEAD
         "test:unit:tchap": {
             "executor": "@nx/jest:jest",
             "options": {
@@ -62,6 +59,23 @@
             },
             "dependsOn": ["^build"]
         },
+=======
+        "test:unit:prepare": {
+            "executor": "nx:noop",
+            "dependsOn": ["^build"]
+        },
+        "test:unit": {
+            // We avoid the jest executor because it doesn't seem to give any benefit, and it mangles the summary of failing tests.
+            "command": "jest",
+            "options": { "cwd": "apps/web" },
+            "dependsOn": ["test:unit:prepare"]
+        },
+        "test:vitest": {
+            "command": "vitest run",
+            "options": { "cwd": "apps/web" },
+            "dependsOn": ["test:unit:prepare"]
+        },
+>>>>>>> v1.12.26
         "test:playwright": {
             "command": "playwright test",
             "options": { "cwd": "apps/web" },

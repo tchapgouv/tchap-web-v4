@@ -21,8 +21,6 @@ export const UPDATE_SUGGESTED_ROOMS = Symbol("suggested-rooms");
 
 export enum MetaSpace {
     Home = "home-space",
-    Favourites = "favourites-space",
-    People = "people-space",
     Orphans = "orphans-space",
     VideoRooms = "video-rooms-space",
 }
@@ -31,6 +29,7 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
     switch (spaceKey) {
         case MetaSpace.Home:
             return allRoomsInHome ? _t("common|all_chats") : _t("common|home");
+<<<<<<< HEAD
         case MetaSpace.Favourites:
             return _t("common|favourites");
         case MetaSpace.People:
@@ -38,6 +37,8 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
             // return _t("common|people")
             return _t("Direct Messages");
             // end TCHAP
+=======
+>>>>>>> v1.12.26
         case MetaSpace.Orphans:
             return _t("common|orphan_rooms");
         case MetaSpace.VideoRooms:
@@ -60,11 +61,5 @@ export interface ISuggestedRoom extends HierarchyRoom {
 }
 
 export function isMetaSpace(spaceKey?: SpaceKey): spaceKey is MetaSpace {
-    return (
-        spaceKey === MetaSpace.Home ||
-        spaceKey === MetaSpace.Favourites ||
-        spaceKey === MetaSpace.People ||
-        spaceKey === MetaSpace.Orphans ||
-        spaceKey === MetaSpace.VideoRooms
-    );
+    return spaceKey === MetaSpace.Home || spaceKey === MetaSpace.Orphans || spaceKey === MetaSpace.VideoRooms;
 }

@@ -11,7 +11,7 @@ import { Button, Tooltip } from "@vector-im/compound-web";
 import { RestartIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import AccessibleButton from "../../../views/elements/AccessibleButton";
-import { Icon as EMailPromptIcon } from "../../../../../res/img/element-icons/email-prompt.svg";
+import EMailPromptIcon from "../../../../../res/img/element-icons/email-prompt.svg?react";
 import { _t } from "../../../../languageHandler";
 import { useTimeoutToggle } from "../../../../hooks/useTimeoutToggle";
 import { ErrorMessage } from "../../ErrorMessage";
@@ -58,7 +58,7 @@ export const CheckEmail: React.FC<CheckEmailProps> = ({
                 {/* end :TCHAP: */}
             </div>
             {errorText && <ErrorMessage message={errorText} />}
-            <Button onClick={onSubmitForm} type="button" className="mx_Login_submit" size="sm">
+            <Button onClick={onSubmitForm} type="button" className="mx_Login_submit" size="md">
                 {_t("action|next")}
             </Button>
             <div className="mx_AuthBody_did-not-receive">

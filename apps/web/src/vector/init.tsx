@@ -8,12 +8,15 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { createRoot } from "react-dom/client";
+import { createRoot, type Root } from "react-dom/client";
 import React, { StrictMode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ModuleLoader } from "@element-hq/element-web-module-api";
+import { getNormalizedLanguageKeys } from "@element-hq/web-shared-components";
 
-import * as languageHandler from "../languageHandler";
+import { getLanguagesFromBrowser } from "../i18n/browser";
+import { setLanguage } from "../i18n/settings";
+import { getCurrentLanguage } from "../i18n";
 import SettingsStore from "../settings/SettingsStore";
 import PlatformPeg from "../PlatformPeg";
 import SdkConfig from "../SdkConfig";
@@ -30,7 +33,30 @@ import { type URLParams } from "./url_utils.ts";
 
 export const rageshakePromise = initRageshake();
 
+<<<<<<< HEAD
 export async function preparePlatform(): Promise<void> {
+=======
+let root: Root | undefined;
+let rootContainer: Element | undefined;
+
+/**
+ * Get the React root for the `#matrixchat` container.
+ *
+ * These views replace one another (`showError` may be called after `loadApp`, for instance), so they share a
+ * single root: calling `createRoot` again for the same container leaves the previous tree mounted and running
+ * against a detached DOM node, with both copies still subscribed to the dispatcher and the client peg.
+ */
+function getRoot(): Root {
+    const container = document.getElementById("matrixchat")!;
+    if (root && rootContainer === container) return root;
+    root?.unmount();
+    rootContainer = container;
+    root = createRoot(container);
+    return root;
+}
+
+export function preparePlatform(): void {
+>>>>>>> v1.12.26
     if (window.electron) {
         logger.log("Using Electron platform");
         PlatformPeg.set(new ElectronPlatform());
@@ -75,18 +101,22 @@ export async function loadLanguage(): Promise<void> {
 
     console.log('preflang :TCHAP:', prefLang);
     if (!prefLang) {
+<<<<<<< HEAD
         // :TCHAP: default-language-french
         // languageHandler.getLanguagesFromBrowser().forEach((l) => {
         //     langs.push(...languageHandler.getNormalizedLanguageKeys(l));
         // });
         langs.push(...languageHandler.getNormalizedLanguageKeys("fr"));
         // end :TCHAP:
+=======
+        langs = getLanguagesFromBrowser().flatMap(getNormalizedLanguageKeys);
+>>>>>>> v1.12.26
     } else {
         langs = [prefLang];
     }
     try {
-        await languageHandler.setLanguage(...langs);
-        document.documentElement.setAttribute("lang", languageHandler.getCurrentLanguage());
+        await setLanguage(...langs);
+        document.documentElement.setAttribute("lang", getCurrentLanguage());
     } catch (e) {
         logger.error("Unable to set language", e);
     }
@@ -107,8 +137,7 @@ export async function loadApp(urlParams: URLParams): Promise<void> {
         window.matrixChat = matrixChat;
     }
     const app = await module.loadApp(urlParams, setWindowMatrixChat);
-    const root = createRoot(document.getElementById("matrixchat")!);
-    root.render(app);
+    getRoot().render(app);
 }
 
 export async function showError(title: string, messages?: string[]): Promise<void> {
@@ -116,8 +145,7 @@ export async function showError(title: string, messages?: string[]): Promise<voi
         /* webpackChunkName: "error-view" */
         "../async-components/structures/ErrorView"
     );
-    const root = createRoot(document.getElementById("matrixchat")!);
-    root.render(
+    getRoot().render(
         <StrictMode>
             <ErrorView title={title} messages={messages} />
         </StrictMode>,
@@ -129,8 +157,7 @@ export async function showIncompatibleBrowser(onAccept: () => void): Promise<voi
         /* webpackChunkName: "error-view" */
         "../async-components/structures/ErrorView"
     );
-    const root = createRoot(document.getElementById("matrixchat")!);
-    root.render(
+    getRoot().render(
         <StrictMode>
             <UnsupportedBrowserView onAccept={onAccept} />
         </StrictMode>,

@@ -21,6 +21,7 @@ import {
     RoomMember,
     RoomStateEvent,
     SearchResult,
+    User,
 } from "matrix-js-sdk/src/matrix";
 import { type CryptoApi, CryptoEvent, UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 import { KnownMembership } from "matrix-js-sdk/src/types";
@@ -55,7 +56,8 @@ import { type LocalRoom, LocalRoomState } from "../../../../src/models/LocalRoom
 import { DirectoryMember } from "../../../../src/utils/direct-messages";
 import { createDmLocalRoom } from "../../../../src/utils/dm/createDmLocalRoom";
 import { UPDATE_EVENT } from "../../../../src/stores/AsyncStore";
-import { SDKContext, SdkContextClass } from "../../../../src/contexts/SDKContext";
+import { SDKContext } from "../../../../src/contexts/SDKContext";
+import { TestSDKContext } from "../../TestSDKContext.ts";
 import WidgetUtils from "../../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../../src/widgets/WidgetType";
 import WidgetStore from "../../../../src/stores/WidgetStore";
@@ -71,6 +73,8 @@ import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog.ts
 import * as pinnedEventHooks from "../../../../src/hooks/usePinnedEvents";
 import { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { ModuleApi } from "../../../../src/modules/Api";
+import MatrixClientBackedController from "../../../../src/settings/controllers/MatrixClientBackedController.ts";
+import { type ComposerInsertPayload, ComposerType } from "../../../../src/dispatcher/payloads/ComposerInsertPayload.ts";
 
 // Used by group calls
 jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
@@ -83,7 +87,7 @@ describe("RoomView", () => {
     let cli: MockedObject<MatrixClient>;
     let room: Room;
     let rooms: Map<string, Room>;
-    let stores: SdkContextClass;
+    let stores: TestSDKContext;
     let crypto: CryptoApi;
 
     // mute some noise
@@ -92,6 +96,7 @@ describe("RoomView", () => {
     beforeEach(() => {
         mockPlatformPeg({ reload: () => {} });
         cli = mocked(stubClient());
+        MatrixClientBackedController.matrixClient = cli;
 
         const roomName = (expect.getState().currentTestName ?? "").replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
 
@@ -107,8 +112,8 @@ describe("RoomView", () => {
         room.on(RoomEvent.TimelineReset, (...args) => cli.emit(RoomEvent.TimelineReset, ...args));
 
         DMRoomMap.makeShared(cli);
-        stores = new SdkContextClass();
-        stores.client = cli;
+        stores = new TestSDKContext();
+        stores._client = cli;
         stores.rightPanelStore.useUnitTestClient(cli);
 
         crypto = cli.getCrypto()!;
@@ -952,7 +957,7 @@ describe("RoomView", () => {
             expect(searchResultTile).not.toBeNull();
 
             await userEvent.hover(searchResultTile!);
-            await userEvent.click(await findByLabelText("Edit"));
+            await userEvent.click(await findByLabelText("Edit"), { skipHover: true });
 
             await waitFor(() => {
                 expect(container.querySelector(".mx_RoomView_searchResultsPanel")).not.toBeInTheDocument();
@@ -1021,7 +1026,7 @@ describe("RoomView", () => {
             expect(searchResultTile).not.toBeNull();
 
             await userEvent.hover(searchResultTile!);
-            await userEvent.click(await findByLabelText("Edit"));
+            await userEvent.click(await findByLabelText("Edit"), { skipHover: true });
 
             await expect(prom).resolves.toEqual(expect.objectContaining({ room_id: room2.roomId }));
         });
@@ -1073,6 +1078,107 @@ describe("RoomView", () => {
 
         // It should now force a reload
         expect(onRoomViewUpdateMock).toHaveBeenCalledWith(true);
+    });
+
+    describe("handles Action.ComposerInsert", () => {
+        it("redispatches an empty composerType with the current state", async () => {
+            await mountRoomView();
+            const promise = untilDispatch((payload) => {
+                try {
+                    expect(payload).toEqual({
+                        action: Action.ComposerInsert,
+                        text: "Hello world",
+                        timelineRenderingType: TimelineRenderingType.Room,
+                        composerType: ComposerType.Send,
+                    });
+                } catch {
+                    return false;
+                }
+                return true;
+            }, defaultDispatcher);
+            defaultDispatcher.dispatch({
+                action: Action.ComposerInsert,
+                text: "Hello world",
+                timelineRenderingType: TimelineRenderingType.Room,
+            } satisfies ComposerInsertPayload);
+            await promise;
+        });
+        it("ignores payloads with a timelineRenderingType != TimelineRenderingType.Thread", async () => {
+            await mountRoomView();
+            const promise = untilDispatch(
+                (payload) => {
+                    try {
+                        expect(payload).toStrictEqual({
+                            action: Action.ComposerInsert,
+                            text: "Hello world",
+                            timelineRenderingType: TimelineRenderingType.Thread,
+                            composerType: ComposerType.Send,
+                        });
+                    } catch {
+                        return false;
+                    }
+                    return true;
+                },
+                defaultDispatcher,
+                500,
+            );
+            defaultDispatcher.dispatch({
+                action: Action.ComposerInsert,
+                text: "Hello world",
+                composerType: ComposerType.Send,
+                timelineRenderingType: TimelineRenderingType.Room,
+                viaTest: true,
+            } satisfies ComposerInsertPayload);
+            await expect(promise).rejects.toThrow();
+        });
+    });
+
+    it("should handle Action.ViewUser", async () => {
+        await mountRoomView();
+        jest.spyOn(stores.rightPanelStore, "setCards");
+        const member = new User("@user:server");
+        defaultDispatcher.dispatch(
+            {
+                action: Action.ViewUser,
+                member,
+            },
+            true,
+        );
+        expect(stores.rightPanelStore.setCards).toHaveBeenCalledWith([
+            { phase: RightPanelPhases.RoomSummary },
+            { phase: RightPanelPhases.MemberList },
+            { phase: RightPanelPhases.MemberInfo, state: { member } },
+        ]);
+    });
+
+    it("should handle Action.ViewUser with push", async () => {
+        await mountRoomView();
+        jest.spyOn(stores.rightPanelStore, "pushCard");
+        const member = new User("@user:server");
+        defaultDispatcher.dispatch(
+            {
+                action: Action.ViewUser,
+                member,
+                push: true,
+            },
+            true,
+        );
+        expect(stores.rightPanelStore.pushCard).toHaveBeenCalledWith({
+            phase: RightPanelPhases.MemberInfo,
+            state: { member },
+        });
+    });
+
+    it("should handle Action.View3pidInvite", async () => {
+        await mountRoomView();
+        jest.spyOn(stores.rightPanelStore, "showOrHidePhase");
+        defaultDispatcher.dispatch(
+            {
+                action: Action.View3pidInvite,
+            },
+            true,
+        );
+        expect(stores.rightPanelStore.showOrHidePhase).toHaveBeenCalledWith("MemberList");
     });
 
     describe("when there is a RoomView", () => {

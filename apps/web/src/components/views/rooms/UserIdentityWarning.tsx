@@ -15,7 +15,7 @@ import MemberAvatar from "../avatars/MemberAvatar";
 import {
     useUserIdentityWarningViewModel,
     type ViolationPrompt,
-} from "../../viewmodels/rooms/UserIdentityWarningViewModel.tsx";
+} from "../../viewmodels/rooms/UserIdentityWarningViewModel";
 import { type ButtonEvent } from "../elements/AccessibleButton.tsx";
 
 interface UserIdentityWarningProps {
@@ -122,7 +122,7 @@ function warningBanner(
             <div className="mx_UserIdentityWarning_row">
                 {avatar}
                 <span className={classNames("mx_UserIdentityWarning_main", { critical: isCritical })}>{title}</span>
-                <Button kind="secondary" size="sm" onClick={onButtonClick}>
+                <Button kind="secondary" size="md" onClick={onButtonClick}>
                     {action}
                 </Button>
             </div>

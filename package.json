@@ -13,44 +13,64 @@
         "i18n": "pnpm -r i18n",
         "i18n:sort": "pnpm -r i18n:sort",
         "i18n:lint": "pnpm -r i18n:lint",
-        "lint": "pnpm -r lint:types && pnpm lint:prettier && pnpm -r lint:js && pnpm -r lint:style && pnpm lint:workflows && pnpm lint:knip",
-        "lint:prettier": "prettier --check .",
-        "lint:prettier-fix": "prettier --log-level=warn --write .",
+        "lint": "pnpm -r --workspace-concurrency=1 lint:types && pnpm lint:fmt && pnpm lint:js && pnpm -r lint:style && pnpm lint:workflows && pnpm lint:knip",
+        "lint:fmt": "oxfmt --check",
+        "lint:fmt:fix": "oxfmt",
+        "lint:js": "nx run-many -t lint:prepare -p && oxlint",
+        "lint:js:fix": "oxlint --fix",
         "lint:workflows": "find .github/workflows -type f \\( -iname '*.yaml' -o -iname '*.yml' \\) -print -exec action-validator {} ';'",
-        "lint:knip": "knip",
+        "lint:knip": "knip --no-tag-hints && knip --strict --exclude unlisted,dependencies,binaries",
+        "lint:unused-settings": "node scripts/find-unused-settings.ts",
         "install:git-hooks": "husky",
         "docs:dev": "vitepress dev docs",
         "docs:build": "vitepress build docs",
         "docs:preview": "vitepress preview docs",
+<<<<<<< HEAD
         "patch-package": "npx patch-package",
         "patch-make": "node scripts/tchap/makePatch.ts",
         "merge-patches": "./scripts/tchap/merge-patches.sh",
         "postinstall": "node scripts/pnpm-link.ts && ./scripts/tchap/apply_patches.sh",
         "scalingo-postbuild": "apps/web/scripts/tchap/package-tchap.sh"
+=======
+        "test:unit": "nx run-many -t test:unit:prepare -p && vitest run",
+        "coverage:diff": "diff-cover --config-file diff-cover.toml apps/web/coverage/lcov.info packages/shared-components/coverage/lcov.info coverage/lcov.info"
+>>>>>>> v1.12.26
     },
     "devDependencies": {
         "@action-validator/cli": "^0.6.0",
         "@action-validator/core": "^0.6.0",
         "@nx-tools/nx-container": "^7.2.1",
-        "@nx/jest": "^22.5.0",
         "@playwright/test": "catalog:",
-        "@types/node": "22",
+        "@types/node": "25",
+        "@typescript/native": "catalog:",
+        "@vitest/coverage-v8": "catalog:",
         "cronstrue": "^3.0.0",
-        "eslint-plugin-matrix-org": "^3.0.0",
+        "eslint-plugin-element-call": "github:element-hq/element-call#livekit&path:/eslint",
+        "eslint-plugin-storybook": "^10.4.6",
         "husky": "^9.0.0",
-        "knip": "6.3.0",
-        "lint-staged": "^16.0.0",
+        "knip": "6.29.0",
+        "lint-staged": "^17.0.0",
         "lodash": "^4.17.21",
         "mermaid": "^11.13.0",
         "minimist": "^1.2.6",
+<<<<<<< HEAD
         "nx": "22.6.5",
         "patch-package": "^8.0.1",
         "prettier": "3.8.1",
         "typescript": "catalog:",
+=======
+        "nx": "catalog:",
+        "oxfmt": "0.60.0",
+        "oxlint": "^1.70.0",
+        "oxlint-tsgolint": "^7.0.0",
+        "typescript": "catalog:ts6",
+>>>>>>> v1.12.26
         "vitepress": "^1.6.4",
         "vitepress-plugin-mermaid": "^2.0.17",
+        "vitest": "catalog:",
         "yaml": "^2.3.3"
     },
+<<<<<<< HEAD
     "pnpm": {
         "onlyBuiltDependencies": [
             "matrix-js-sdk"
@@ -108,6 +128,8 @@
             "protobufjs@>=7.0.0 <7.5.5": "7.5.5"
         }
     },
+=======
+>>>>>>> v1.12.26
     "engines": {
         "node": "24"
     },
@@ -116,6 +138,13 @@
         "2023-08-29": "matrix-js-sdk requires >=18.0.0",
         "2024-11-25": "change engine node to fix 20.0.0, because scalingo doesnt like semver >= "
     },
-    "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
-    "private": true
+    "devEngines": {
+        "packageManager": {
+            "name": "pnpm",
+            "version": "11.20.0",
+            "onFail": "download"
+        }
+    },
+    "private": true,
+    "nx": {}
 }

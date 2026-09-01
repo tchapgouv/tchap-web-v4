@@ -6,6 +6,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+import { rejectToast } from "@element-hq/element-web-playwright-common";
+
 import type { Page } from "@playwright/test";
 import { expect, test } from "../../element-web-test";
 import { autoJoin, createSharedRoomWithUser, enableKeyBackup, verify } from "./utils";
@@ -23,10 +25,13 @@ const checkDMRoom = async (page: Page) => {
 const startDMWithBob = async (page: Page, bob: Bot) => {
     await page.getByRole("navigation", { name: "Room list" }).getByRole("button", { name: "New conversation" }).click();
     await page.getByRole("menuitem", { name: "Start chat" }).click();
-    await page.getByTestId("invite-dialog-input").fill(bob.credentials.userId);
-    await page.getByRole("option", { name: bob.credentials.displayName }).click();
+    await page.getByTestId("invite-dialog-input").fill(bob.credentials!.userId);
+    await page.getByRole("option", { name: bob.credentials!.displayName! }).click();
     await expect(page.getByTestId("invite-dialog-input-wrapper").getByText("Bob")).toBeVisible();
     await page.getByRole("button", { name: "Go" }).click();
+
+    await expect(page.getByRole("heading", { name: "Start a chat with this new contact?" })).toBeVisible();
+    await page.getByRole("button", { name: "Continue" }).click();
 };
 
 const testMessages = async (page: Page, bob: Bot, bobRoomId: string) => {
@@ -44,7 +49,7 @@ const bobJoin = async (page: Page, bob: Bot) => {
         const bobRooms = cli.getRooms();
         if (!bobRooms.length) {
             await new Promise<void>((resolve) => {
-                const onMembership = (_event) => {
+                const onMembership = () => {
                     cli.off(window.matrixcs.RoomMemberEvent.Membership, onMembership);
                     resolve();
                 };
@@ -77,14 +82,14 @@ test.describe("Cryptography", function () {
      * @param keyType
      */
     async function verifyKey(app: ElementAppPage, keyType: "master" | "self_signing" | "user_signing") {
-        const accountData: { encrypted: Record<string, Record<string, string>> } = await app.client.evaluate(
+        const accountData = await app.client.evaluate(
             (cli, keyType) => cli.getAccountDataFromServer(`m.cross_signing.${keyType}`),
             keyType,
         );
 
-        expect(accountData.encrypted).toBeDefined();
-        const keys = Object.keys(accountData.encrypted);
-        const key = accountData.encrypted[keys[0]];
+        expect(accountData?.encrypted).toBeDefined();
+        const keys = Object.keys(accountData!.encrypted);
+        const key = accountData!.encrypted[keys[0]];
         expect(key.ciphertext).toBeDefined();
         expect(key.iv).toBeDefined();
         expect(key.mac).toBeDefined();
@@ -114,9 +119,9 @@ test.describe("Cryptography", function () {
         async function fetchMasterKey() {
             return await test.step("Fetch master key from server", async () => {
                 const k = await app.client.evaluate(async (cli) => {
-                    const userId = cli.getUserId();
+                    const userId = cli.getSafeUserId();
                     const keys = await cli.downloadKeysForUsers([userId]);
-                    return Object.values(keys.master_keys[userId].keys)[0];
+                    return Object.values(keys.master_keys![userId].keys)[0];
                 });
                 console.log(`fetchMasterKey: ${k}`);
                 return k;
@@ -133,7 +138,7 @@ test.describe("Cryptography", function () {
         await encryptionTab.getByRole("button", { name: "Continue" }).click();
 
         // Enter the password
-        await page.getByPlaceholder("Password").fill(aliceCredentials.password);
+        await page.getByPlaceholder("Password").fill(aliceCredentials.password!);
         await page.getByRole("button", { name: "Continue" }).click();
 
         await expect(async () => {
@@ -158,7 +163,7 @@ test.describe("Cryptography", function () {
         await encryptionTab.getByRole("button", { name: "Continue" }).click();
 
         // Enter the password
-        await page.getByPlaceholder("Password").fill(aliceCredentials.password);
+        await page.getByPlaceholder("Password").fill(aliceCredentials.password!);
         await page.getByRole("button", { name: "Continue" }).click();
 
         // Key storage should now be enabled
@@ -169,6 +174,7 @@ test.describe("Cryptography", function () {
         "creating a DM should work, being e2e-encrypted / user verification",
         { tag: "@screenshot" },
         async ({ page, app, bot: bob, user: aliceCredentials }) => {
+            await rejectToast(page, "Verify this device");
             await app.client.bootstrapCrossSigning(aliceCredentials);
             await startDMWithBob(page, bob);
             // send first message
@@ -203,7 +209,7 @@ test.describe("Cryptography", function () {
         await autoJoin(bob);
 
         // we need to have a room with the other user present, so we can open the verification panel
-        await createSharedRoomWithUser(app, bob.credentials.userId);
+        await createSharedRoomWithUser(app, bob.credentials!.userId);
         await verify(app, bob);
     });
 });
