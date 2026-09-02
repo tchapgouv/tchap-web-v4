@@ -127,7 +127,7 @@
         "node": ">=20.0.0"
     },
     "peerDependencies": {
-        "compound-web-tchap": "catalog:",
+        "@vector-im/compound-web": "catalog:",
         "react-dom": "catalog:",
         "react": "catalog:"
     }

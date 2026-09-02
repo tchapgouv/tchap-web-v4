@@ -27,9 +27,9 @@ catalog:
     "playwright-core": 1.61.1
     # Compound
     # "@vector-im/compound-design-tokens": 10.2.1
-    # "@vector-im/compound-web": 10.0.1
+    "@vector-im/compound-web": 10.0.1
     "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#upgrade_10.1.0
-    "compound-web-tchap": 6.0.1
+    # "compound-web-tchap": 6.0.1
     # i18n
     matrix-web-i18n: 3.6.0
     # emojibase
@@ -105,8 +105,8 @@ patchedDependencies:
     linkify-html: patches/linkify-html.patch
     # Workaround for typescript incompatibilities in an archived dependency - soon to be deleted
     "@matrix-org/react-sdk-module-api": patches/@matrix-org__react-sdk-module-api.patch
-    # Workaround to access a private API
-    "@types/auto-launch": patches/@types__auto-launch.patch
+    # :TCHAP: no desktop use # Workaround to access a private API
+    # "@types/auto-launch": patches/@types__auto-launch.patch
     # Workaround for jest still using commonjs and not being able to use the ESM version of await-lock
     await-lock: patches/await-lock.patch
     # Workaround for global type mismatches
@@ -117,8 +117,8 @@ patchedDependencies:
     postcss-mixins: patches/postcss-mixins.patch
     # Workaround for some babel rules being false positively flagged
     knip: patches/knip.patch
-    # Workaround for being stuck on an old version of plist due to electron-builder not supporting ESM yet
-    plist: patches/plist.patch
+    # :TCHAP: no desktop use # Workaround for being stuck on an old version of plist due to electron-builder not supporting ESM yet
+    # plist: patches/plist.patch
     # Workaround for type fails
     "@arcmantle/vite-plugin-import-css-sheet": patches/@arcmantle__vite-plugin-import-css-sheet.patch
     # Workaround for scroll anchoring landing on transient placeholder rows (pending upstream)
@@ -209,6 +209,8 @@ overrides:
     # Hold some things back from ts7
     "@arcmantle/vite-plugin-import-css-sheet>typescript": "catalog:ts6"
     "react-docgen-typescript>typescript": "catalog:ts6"
+    # :TCHAP: to be used in compound-web too
+    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#upgrade_10.1.0
 
 minimumReleaseAgeExclude:
     - "matrix-js-sdk"

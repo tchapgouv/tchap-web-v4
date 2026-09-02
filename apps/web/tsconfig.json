@@ -19,8 +19,8 @@
         "types": ["node", "modernizr"],
         "paths": {
             "~tchap-web/*": ["./*"],
-            "@vector-im/compound-web": ["../../node_modules/compound-web-tchap"],
-            "@vector-im/compound-web/*": ["../../node_modules/compound-web-tchap/*"],
+            // "@vector-im/compound-web": ["../../node_modules/compound-web-tchap"],
+            // "@vector-im/compound-web/*": ["../../node_modules/compound-web-tchap/*"],
             "jest-matrix-react": ["./test/test-utils/jest-matrix-react"],
             "test-utils-rtl": ["./test/test-utils/jest-matrix-react"],
             "test-utils": ["./test/test-utils"],

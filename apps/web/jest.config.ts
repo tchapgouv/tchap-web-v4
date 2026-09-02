@@ -58,9 +58,9 @@ const config: Config = {
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
         "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
         "~tchap-web/(.*)": "<rootDir>/$1",
-        // we use tchap own compound-web package
-        "@vector-im/compound-web": "<rootDir>/../../node_modules/compound-web-tchap",
-        // end :TCHAP:
+        // // we use tchap own compound-web package
+        // "@vector-im/compound-web": "<rootDir>/../../node_modules/compound-web-tchap",
+        // // end :TCHAP:
         "counterpart": "<rootDir>/../../node_modules/counterpart",
         "^vitest$": "<rootDir>/__mocks__/empty.js",
         "jest-mock-vitest-adapter": "<rootDir>/test/setup/adapter.ts",

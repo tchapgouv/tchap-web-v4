@@ -46,14 +46,14 @@ function layerCssAssets(): Plugin {
 }
 
 export default defineConfig({
-    // :TCHAP:
-    // Use for vite during local dev
-    resolve: {
-        alias: {
-            "@vector-im/compound-web": resolve(__dirname, "../../node_modules/compound-web-tchap"),
-        },
-    },
-    // end :TCHAP:
+    // // :TCHAP:
+    // // Use for vite during local dev
+    // resolve: {
+    //     alias: {
+    //         "@vector-im/compound-web": resolve(__dirname, "../../node_modules/compound-web-tchap"),
+    //     },
+    // },
+    // // end :TCHAP:
     build: {
         lib: {
             // Two entries: the main bundle and a standalone `numbers` utility that callers
@@ -100,7 +100,8 @@ export default defineConfig({
                     "react": "react",
                     "@matrix-org/emojibase-bindings": "matrixEmojibaseBindings",
                     "@vector-im/compound-design-tokens": "compoundDesignTokens",
-                    "compound-web-tchap": "compoundWeb",
+                    // "compound-web-tchap": "compoundWeb",
+                    "@vector-im/compound-web": "compoundWeb",
                     "react-virtuoso": "reactVirtuoso",
                     "react-resizable-panels": "reactResizablePanels",
                 },

@@ -258,8 +258,8 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 "~tchap-web": path.resolve(__dirname, "."),
                 // we use tchap own compound-web package
                 // Make shared-components imports resolve to EW deps
-                // "@vector-im/compound-web": getPackageRoot("@vector-im/compound-web", ""),
-                "@vector-im/compound-web": getPackageRoot("compound-web-tchap", "")
+                "@vector-im/compound-web": getPackageRoot("@vector-im/compound-web", ""),
+                // "@vector-im/compound-web": getPackageRoot("compound-web-tchap", "")
                 // end :TCHAP:
             },
             fallback: {

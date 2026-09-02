@@ -4,7 +4,7 @@ import { _t } from "~tchap-web/src/languageHandler";
 
 import { TchapRoomType } from "../../../@types/tchap";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
-import { Badge } from "compound-web-tchap";
+import { Badge } from "@vector-im/compound-web";
 import { LockIcon, PublicIcon, LockOffIcon, LockSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 export interface IProps {
