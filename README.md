@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/tchapgouv">
-    <img alt="tchap-logo" src=".apps/web/res/themes/tchap/img/logos/tchap-logo.svg" width="300" />
+    <img alt="tchap-logo" src="./apps/web/res/themes/tchap/img/logos/tchap-logo.svg" width="300" />
   </a>
 </p>
 
@@ -36,12 +36,16 @@ Tchap is a web app that allows you to chat through the matrix protocol for the F
     - "deep_link_scheme": Determine the value of the scheme depending on the environment, used by tchap-desktop
 
 ## File structures
-
-- modules -> used for translation
-- yarn-linked-dependencies -> legacy dependencies used for matrix-js-sdk
+- apps/web/modules -> used for translation, old element module system
 - patches_legacy -> legacy patches directory in which code for the patches where put
-- patches -> used for matrix-js-sdk patches
-- src -> code containing ex matrix-react-sdk lib and element-web code
+- patches_tchap -> specific patches used by tchap (using patch package instead of pnpm system)
+- patches -> used by element code
+- apps/web/src -> Main source of the application
+- apps/web/src/tchap -> containing tchap custom react components
+- apps/web/res/css/tchap -> containing all tchap custom css
+- apps/web/res/themes/tchap-* -> tchap themes
+- apps/web/test/unit-tests/tchap -> tchap unit tests
+- 
 
 ## Local dev installation
 

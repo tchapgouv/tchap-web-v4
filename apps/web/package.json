@@ -1,9 +1,9 @@
 {
-    "name": "element-web",
+    "name": "tchap-web",
     "productName": "Tchap",
-    "version": "4.21.4",
-    "version-element-web": "1.12.9",
-    "description": "Element: the future of secure communication",
+    "version": "4.21.5",
+    "version-element-web": "1.12.17",
+    "description": "Tchap: la messagerie instantanée du secteur public",
     "author": "DINUM",
     "repository": {
         "type": "git",
