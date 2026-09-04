@@ -8,6 +8,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import TchapApi from "./TchapApi";
 import { ClientConfig } from "matrix-js-sdk/src/autodiscovery";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 /**
  * Tchap utils.
@@ -61,45 +62,60 @@ export default class TchapUtils {
         return homeserver.server_name;
     };
 
+    /**
+     * @deprecated
+     */
     static randomHomeServer = () => {
         const homeServerList = SdkConfig.get()["homeserver_list"];
         return homeServerList[Math.floor(Math.random() * homeServerList.length)];
     };
 
     /**
+     * Return the homeserver list in a random order (shuffled copy).
+     * @returns The shuffled homeserver list.
+     */
+    private static shuffledHomeServerList = (): { base_url: string; server_name: string }[] => {
+        const homeServerList = [...(SdkConfig.get()["homeserver_list"] ?? [])];
+        return [...homeServerList].sort(() => Math.random() - 0.5);//insert before or after the previous item
+    };
+
+    /**
      * Find the homeserver corresponding to the given email.
-     * @param email Note : if email is invalid, this function still works and returns the externs server. (todo : fix)
+     * The request is tried on every homeserver of the config list (in a random order, never twice on the same
+     * server) until one answers.
+     * @param email Note : if email is invalid, this function still works and returns the externs server.
      * @returns
      */
     static fetchHomeserverForEmail = async (
         email: string,
     ): Promise<void | { base_url: string; server_name: string }> => {
-        const randomHomeServer = this.randomHomeServer();
         const infoUrl = "/_matrix/identity/api/v1/info?medium=email&address=";
-        // TODO for dev only, to remove when mas is fixed with sydent
-        // return Promise.resolve({
-        //     base_url: "https://matrix.dev01.tchap.incubateur.net",
-        //     server_name: "Agents 1",
-        // })
-        return fetch(randomHomeServer.base_url + infoUrl + email)
-            .then((response) => {
+        const homeServersToTry = this.shuffledHomeServerList();
+
+        for (const homeServer of homeServersToTry) {
+            try {
+                const response = await fetch(
+                    homeServer.base_url + infoUrl + email
+                );
                 if (!response.ok) {
-                    throw new Error("Could not find homeserver for this email");
+                    throw new Error(`Could not find homeserver for email ${email} on ${homeServer.base_url}`);
                 }
-                return response.json();
-            })
-            .then((response) => {
-                // Never returns error : anything that doesn't match a homeserver (even invalid email) returns "externe".
-                const serverUrl = "https://matrix." + response.hs;
+                const jsonResponse = await response.json();
+                // homeserver never returns error : anything that doesn't match a homeserver (even invalid email) returns "externe".
+                const serverUrl = "https://matrix." + jsonResponse.hs;
                 return {
                     base_url: serverUrl,
                     server_name: this.findHomeServerNameFromUrl(serverUrl),
                 };
-            })
-            .catch((error) => {
-                logger.error("Could not find homeserver for this email", error);
-                return;
-            });
+            } catch (error) {
+                logger.warn(`Could not find homeserver for email ${email} on ${homeServer.base_url} let's try on next homeServer`, error);
+                //add a wait time de 200ms
+                await sleep(200);
+            }
+        }
+
+        logger.error("Could not find homeserver for this email on any homeserver of the list");
+        return;
     };
 
     /**
