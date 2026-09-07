@@ -139,5 +139,6 @@
         "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",
         "api_host": "https://posthog.tchap.incubateur.net"
     },
-    "logout_redirect_url": "#/welcome"
+    "logout_redirect_url": "#/welcome",
+    "modules":["./modules/tchap-translations/lib/index.js"]
 }

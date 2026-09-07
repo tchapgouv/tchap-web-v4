@@ -179,7 +179,7 @@ function findDepVersionInPackageJson(dep: string, pkgJsonStr: string): string {
 function getTopLevelDependencyVersion(dep: string): string {
     const dependencyTree = JSON.parse(
         childProcess
-            .execSync(`npm list ${dep} --depth=0 --json`, {
+            .execSync(`pnpm list ${dep} --depth=0 --json`, {
                 cwd: WORKSPACE_ROOT,
                 env: process.env,
                 stdio: ["inherit", "pipe", "pipe"],
@@ -200,8 +200,12 @@ function getTopLevelDependencyVersion(dep: string): string {
           }
         }
      */
+    // :TCHAP:
 
-    return dependencyTree["dependencies"][dep]["version"];
+    const depObject = dependencyTree.find(d => d.name === "element-web");
+
+    // return dependencyTree["dependencies"][dep]["version"];
+    return depObject["dependencies"][dep]["version"];
 }
 
 function getModuleApiVersionFor(moduleName: string): string {

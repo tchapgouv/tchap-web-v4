@@ -1,0 +1,24 @@
+{
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "cache": true,
+            "command": "vite build",
+            "inputs": ["src"],
+            "outputs": ["{projectRoot}/lib"],
+            "options": { "cwd": "apps/web/modules/tchap-translations" },
+            "dependsOn": ["^build"]
+        },
+        "test:unit": {
+            "command": "vitest run",
+            "options": { "cwd": "apps/web/modules/tchap-translations" }
+        },
+        "lint:types": {
+            "command": "tsc --noEmit",
+            "options": {
+                "cwd": "apps/web/modules/tchap-translations"
+            },
+            "dependsOn": ["^build"]
+        }
+    }
+}

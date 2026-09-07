@@ -138,5 +138,6 @@
         "brand": "Appel de groupe",
         "use_exclusively": true
     },
-    "logout_redirect_url": "#/welcome"
+    "logout_redirect_url": "#/welcome",
+    "modules":["./modules/tchap-translations/lib/index.js"]
 }

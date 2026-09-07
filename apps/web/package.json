@@ -251,8 +251,5 @@
     "engines": {
         "node": "24"
     },
-    "optionalDependencies": {
-        "tchap-translations": "file:./modules/tchap-translations"
-    },
     "private": true
 }

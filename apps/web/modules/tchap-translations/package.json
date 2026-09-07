@@ -1,12 +1,20 @@
 {
     "name": "tchap-translations",
-    "version": "0.0.0",
-    "description": "Custom translations for Tchap",
-    "author": "DINUM",
-    "license": "Apache-2.0",
-    "dependencies": {
-        "@matrix-org/react-sdk-module-api": "^1.0.0"
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "main": "lib/index.js",
+    "license": "SEE LICENSE IN README.md",
+    "scripts": {
+        "build": "nx build",
+        "lint:types": "nx lint:types"
     },
-    "main": "TchapTranslationsModule.js",
-    "types": "types.d.ts"
+    "devDependencies": {
+        "@element-hq/element-web-module-api": "workspace:*",
+        "@types/node": "catalog:",
+        "@types/react": "catalog:",
+        "matrix-web-i18n": "^3.6.0",
+        "typescript": "catalog:",
+        "vite": "catalog:"
+    }
 }
