@@ -86,9 +86,9 @@ export default defineConfig({
             plugins: [
                 // needs to transform at build time the import from compound-web to compound-web-tchap
                 // since it is marked as an external dependencies which
-                alias({
-                    entries: [{ find: "@vector-im/compound-web", replacement: "compound-web-tchap" }],
-                }),
+                // alias({
+                //     entries: [{ find: "@vector-im/compound-web", replacement: "compound-web-tchap" }],
+                // }),
                 esmExternalRequirePlugin({
                     external: ["react", "react-dom"],
                 }),
