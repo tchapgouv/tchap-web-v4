@@ -33,7 +33,7 @@ import {
 import SessionManagerTab from "~tchap-web/src/components/views/settings/tabs/user/SessionManagerTab";
 import SettingsStore from "~tchap-web/src/settings/SettingsStore";
 import { SDKContext, SdkContextClass } from "~tchap-web/src/contexts/SDKContext";
-import { mockOpenIdConfiguration } from "~tchap-web/test/test-utils/oidc";
+import { mockOpenIdConfiguration } from "matrix-js-sdk/src/testing";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 
 // In tchap there is no much modification, exept on the QR code login that is not shown for now

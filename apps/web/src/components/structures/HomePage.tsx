@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { type JSX, useContext, useState } from "react";
-import { BackupIcon, GuideIcon, InstallationIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { DevicePasskeyIcon, HelpIcon, DevicesIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { AutoHideScrollbar } from "@element-hq/web-shared-components";
 
 import { getHomePageUrl } from "../../utils/pages";
@@ -143,17 +143,17 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
                 <div className="mx_HomePage_default_buttons">
                     {/*:TCHAP: <AccessibleButton onClick={onClickSendDm} className="mx_HomePage_button_sendDm"> */}
                     <AccessibleButton onClick={onClickFAQ} className="mx_HomePage_button_sendDm">
-                        <GuideIcon />
+                        <HelpIcon />
                         {_tDom("onboarding|send_dm")}
                     </AccessibleButton>
                     {/* :TCHAP: <AccessibleButton onClick={onClickExplore} className="mx_HomePage_button_explore"> */}
                     <AccessibleButton onClick={onClickActivateSecureStorage} className="mx_HomePage_button_explore">
-                        <BackupIcon />
+                        <DevicePasskeyIcon />
                         {_tDom("onboarding|explore_rooms")}
                     </AccessibleButton>
                     {/* :TCHAP: <AccessibleButton onClick={onClickNewRoom} className="mx_HomePage_button_createGroup"> */}
                     <AccessibleButton onClick={onClickDownloadApps} className="mx_HomePage_button_createGroup">
-                        <InstallationIcon />
+                        <DevicesIcon />
                         {_tDom("onboarding|create_room")}
                     </AccessibleButton>
                 </div>

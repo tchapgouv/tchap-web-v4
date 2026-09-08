@@ -218,6 +218,9 @@ catalogs:
     '@typescript/native':
       specifier: npm:typescript@7.0.2
       version: 7.0.2
+    '@vector-im/compound-design-tokens':
+      specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
+      version: 10.2.3
     '@vector-im/compound-web':
       specifier: 10.0.1
       version: 10.0.1
@@ -302,7 +305,7 @@ overrides:
   '@microsoft/api-extractor>typescript': npm:@typescript/typescript6@6.0.2
   '@arcmantle/vite-plugin-import-css-sheet>typescript': npm:@typescript/typescript6@6.0.2
   react-docgen-typescript>typescript: npm:@typescript/typescript6@6.0.2
-  '@vector-im/compound-design-tokens': github:tchapgouv/compound-design-tokens#upgrade_10.1.0
+  '@vector-im/compound-design-tokens': github:tchapgouv/compound-design-tokens#web-merge-10.2.3
 
 packageExtensionsChecksum: sha256-kCJccFy7l6HmjcpzmxV958fHndI9zZq246f1ttgkURI=
 
@@ -456,11 +459,11 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#upgrade_10.1.0
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+        specifier: 'catalog:'
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/179e94db2d1e174acf90e20c4b26333e9da0e9ee(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: 'catalog:'
-        version: 10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)
+        version: 10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       '@vector-im/matrix-wysiwyg':
         specifier: 2.40.0
         version: 2.40.0(patch_hash=7bdf6150f2905bc2f055a6bcaa7b9d78fa7ffde82e800bcc454ac7b0096bd65e)(react@19.2.8)
@@ -982,11 +985,11 @@ importers:
         specifier: ^1.1.6
         version: 1.1.23(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#upgrade_10.1.0
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
-        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)
+        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       motion:
         specifier: ^12.4.10
         version: 12.42.2(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8)(react@19.2.8)
@@ -1040,11 +1043,11 @@ importers:
   modules/restricted-guests:
     dependencies:
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#upgrade_10.1.0
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
-        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)
+        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       styled-components:
         specifier: ^6.1.18
         version: 6.4.4(react-dom@19.2.8)(react@19.2.8)
@@ -1108,11 +1111,11 @@ importers:
   modules/widget-toggles:
     dependencies:
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#upgrade_10.1.0
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
-        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)
+        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       matrix-widget-api:
         specifier: ^1.18.0
         version: 1.18.0
@@ -1294,8 +1297,8 @@ importers:
         specifier: 3.14.8
         version: 3.14.8(react-dom@19.2.8)(react@19.2.8)
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#upgrade_10.1.0
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -1413,7 +1416,7 @@ importers:
         version: typescript@7.0.2
       '@vector-im/compound-web':
         specifier: 'catalog:'
-        version: 10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)
+        version: 10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       '@vitejs/plugin-react':
         specifier: 'catalog:'
         version: 6.0.5(vite@8.2.0)
@@ -6187,9 +6190,21 @@ packages:
   '@upsetjs/venn.js@2.0.0':
     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}
 
-  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1':
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1}
-    version: 10.1.0
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4':
+    resolution: {gitHosted: true, integrity: sha512-xNG9Kmn+rWBLZO1UKkWCOf43ZzllwCZXmdWp+y6f/yV5CufR0mEta16PkOh8OI2xEp7CCzTBY+Ew9m11Pk7XaA==, tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4}
+    version: 10.2.3
+    peerDependencies:
+      '@types/react': ^19.2.10
+      react: ^17 || ^18 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/179e94db2d1e174acf90e20c4b26333e9da0e9ee':
+    resolution: {gitHosted: true, integrity: sha512-etJC/Yf5asVKQJyfzPp5odtbVerrLAJpoau8ZOKp9xIbtdrfq7P5kqAYupJX9o9Q+BAtpVSCVR1UWUyUZNUBsg==, tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/179e94db2d1e174acf90e20c4b26333e9da0e9ee}
+    version: 10.2.3
     peerDependencies:
       '@types/react': ^19.2.10
       react: ^17 || ^18 || ^19.0.0
@@ -13103,7 +13118,7 @@ snapshots:
 
   '@babel/plugin-syntax-import-attributes@7.29.7(@babel/core@7.29.7)':
     dependencies:
-      '@babel/core': 7.29.7(supports-color@7.2.0)
+      '@babel/core': 7.29.7(supports-color@10.2.2)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.29.7)':
@@ -13118,7 +13133,7 @@ snapshots:
 
   '@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7)':
     dependencies:
-      '@babel/core': 7.29.7(supports-color@7.2.0)
+      '@babel/core': 7.29.7(supports-color@10.2.2)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.29.7)':
@@ -13163,7 +13178,7 @@ snapshots:
 
   '@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7)':
     dependencies:
-      '@babel/core': 7.29.7(supports-color@7.2.0)
+      '@babel/core': 7.29.7(supports-color@10.2.2)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/plugin-syntax-unicode-sets-regex@7.18.6(@babel/core@7.29.7)':
@@ -17713,12 +17728,17 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
-  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)':
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)':
     optionalDependencies:
       '@types/react': 19.2.18
       react: 19.2.8
 
-  '@vector-im/compound-web@10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)':
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/179e94db2d1e174acf90e20c4b26333e9da0e9ee(@types/react@19.2.18)(react@19.2.8)':
+    optionalDependencies:
+      '@types/react': 19.2.18
+      react: 19.2.8
+
+  '@vector-im/compound-web@10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)':
     dependencies:
       '@floating-ui/react': 0.27.17(react-dom@19.2.8)(react@19.2.8)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8)(react@19.2.8)
@@ -17730,7 +17750,7 @@ snapshots:
       '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-slot': 1.3.3(@types/react@19.2.18)(react@19.2.8)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/179e94db2d1e174acf90e20c4b26333e9da0e9ee(@types/react@19.2.18)(react@19.2.8)
       classnames: 2.5.1
       react: 19.2.8
       vaul: 1.1.2(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
@@ -17740,7 +17760,7 @@ snapshots:
       - '@types/react-dom'
       - react-dom
 
-  '@vector-im/compound-web@9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.1.0)(react-dom@19.2.8)(react@19.2.8)':
+  '@vector-im/compound-web@9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)':
     dependencies:
       '@floating-ui/react': 0.27.17(react-dom@19.2.8)(react@19.2.8)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8)(react@19.2.8)
@@ -17752,7 +17772,7 @@ snapshots:
       '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-slot': 1.3.3(@types/react@19.2.18)(react@19.2.8)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/99237cfce1597f481f1ca48f4013e74a6c64b0e1(@types/react@19.2.18)(react@19.2.8)
+      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       classnames: 2.5.1
       react: 19.2.8
       vaul: 1.1.2(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
@@ -20503,14 +20523,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  http-proxy-agent@7.0.2(supports-color@7.2.0):
-    dependencies:
-      agent-base: 7.1.4
-      debug: 4.4.3(supports-color@7.2.0)
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
-
   http-proxy-middleware@4.2.0(supports-color@10.2.2):
     dependencies:
       debug: 4.4.3(supports-color@10.2.2)
@@ -20543,14 +20555,6 @@ snapshots:
       debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
-
-  https-proxy-agent@7.0.6(supports-color@7.2.0):
-    dependencies:
-      agent-base: 7.1.4
-      debug: 4.4.3(supports-color@7.2.0)
-    transitivePeerDependencies:
-      - supports-color
-    optional: true
 
   httpxy@0.5.4: {}
 
@@ -21187,34 +21191,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-
-  jsdom@26.1.0(patch_hash=040623e87b1c8b676c2a705513c0276c0704dd1b23fc3a1bb77cde8128b64b5f)(supports-color@7.2.0):
-    dependencies:
-      cssstyle: 4.6.0
-      data-urls: 5.0.0
-      decimal.js: 10.6.0
-      html-encoding-sniffer: 4.0.0
-      http-proxy-agent: 7.0.2(supports-color@7.2.0)
-      https-proxy-agent: 7.0.6(supports-color@7.2.0)
-      is-potential-custom-element-name: 1.0.1
-      nwsapi: 2.2.23
-      parse5: 7.3.0
-      rrweb-cssom: 0.8.0
-      saxes: 6.0.0
-      symbol-tree: 3.2.4
-      tough-cookie: 5.1.2
-      w3c-xmlserializer: 5.0.0
-      webidl-conversions: 7.0.0
-      whatwg-encoding: 3.1.1
-      whatwg-mimetype: 4.0.0
-      whatwg-url: 14.2.0
-      ws: 8.21.1
-      xml-name-validator: 5.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    optional: true
 
   jsesc@3.1.0: {}
 
@@ -24777,7 +24753,7 @@ snapshots:
       '@vitest/browser-playwright': 4.1.10(playwright@1.61.1)(vite@8.2.0)(vitest@4.1.10)
       '@vitest/coverage-v8': 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
       happy-dom: 20.11.1
-      jsdom: 26.1.0(patch_hash=040623e87b1c8b676c2a705513c0276c0704dd1b23fc3a1bb77cde8128b64b5f)(supports-color@7.2.0)
+      jsdom: 26.1.0(patch_hash=040623e87b1c8b676c2a705513c0276c0704dd1b23fc3a1bb77cde8128b64b5f)(supports-color@10.2.2)
     transitivePeerDependencies:
       - msw
 

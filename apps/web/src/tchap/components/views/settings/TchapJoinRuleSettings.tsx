@@ -46,7 +46,7 @@ import {
 import TchapRoomLinkAccess from "../rooms/TchapRoomLinkAccess";
 import TchapRoomUtils from "../../../util/TchapRoomUtils";
 import { RoomJoinRulesEventContent } from "matrix-js-sdk/src/types";
-import { RoomSettingsTab } from "~tchap-web/src/components/views/dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "~tchap-web/src/components/views/dialogs/RoomSettingsDialog-tab";
 import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
 

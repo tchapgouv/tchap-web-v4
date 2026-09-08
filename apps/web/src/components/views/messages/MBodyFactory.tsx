@@ -59,7 +59,7 @@ export function FileBodyFactory({
     ) as any as typeof mediaEventHelper;
 
     const content = mxEvent.getContent<MediaEventContent>();
-    scanningMediaHelper.onScanStateChange(() => {
+    scanningMediaHelper?.onScanStateChange(() => {
         if (scanState !== scanningMediaHelper.getScanState()) {
             setScanState(scanningMediaHelper.getScanState())
         }

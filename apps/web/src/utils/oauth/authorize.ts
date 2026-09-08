@@ -13,6 +13,7 @@ import { OAuthClientError } from "./error";
 import PlatformPeg from "../../PlatformPeg";
 import { type URLParams } from "../../vector/url_utils.ts";
 import { getOAuthParams, loadAuthContext, storeAuthContext } from "./persistOAuthSettings.ts";
+import TauriPlatform from "~tchap-web/src/vector/platform/tchap-desktop/TauriPlatform.ts";
 
 const RESPONSE_MODE = "fragment";
 
@@ -52,7 +53,15 @@ export const startOAuthLogin = async (
         isRegistration ? "create" : undefined,
     );
 
-    window.location.href = authorizationUrl;
+    // :TCHAP: desktop-tauri-browser
+    // window.location.href = authorizationUrl;
+    if (window.__TAURI__) {
+        const tauriPlatform = PlatformPeg.get() as TauriPlatform;
+        tauriPlatform.openAuthorizationInBrowser(authorizationUrl);
+    } else {
+        window.location.href = authorizationUrl;
+    }
+    // end :TCHAP:
 };
 
 /**

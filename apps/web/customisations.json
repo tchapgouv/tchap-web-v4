@@ -12,14 +12,8 @@
     "src/components/views/dialogs/RoomUpgradeWarningDialog.tsx": "src/tchap/components/views/dialogs/TchapRoomUpgradeWarningDialog.tsx",
     "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx": "src/tchap/components/views/settings/tabs/user/TchapHelpUserSettingsTab.tsx",
     "src/components/structures/UserMenu.tsx": "src/tchap/components/structures/UserMenu.tsx",
-    "src/components/views/messages/MImageBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningImageBody.tsx",
-    "src/components/views/messages/MStickerBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
-    "src/components/views/messages/MImageReplyBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningImageReplyBody.tsx",
     "src/components/views/messages/MAudioBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningAudioBody.tsx",
     "src/components/views/messages/MVoiceMessageBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningVoiceMessageBody.tsx",
-    "src/tchap/components/views/messages/OriginalImageReplyBody.tsx": "src/components/views/messages/MImageReplyBody.tsx",
-    "src/tchap/components/views/messages/OriginalImageBody.tsx": "src/components/views/messages/MImageBody.tsx",
-    "src/tchap/components/views/messages/OriginalStickerBody.tsx": "src/components/views/messages/MStickerBody.tsx",
     "src/tchap/components/views/messages/OriginalAudioBody.tsx": "src/components/views/messages/MAudioBody.tsx",
     "src/tchap/components/views/messages/OriginalVoiceMessageBody.tsx": "src/components/views/messages/MVoiceMessageBody.tsx"
 }

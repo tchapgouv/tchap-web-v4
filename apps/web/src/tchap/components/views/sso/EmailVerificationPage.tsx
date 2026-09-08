@@ -29,7 +29,7 @@ import Login, { OidcNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
-import { startOidcLogin } from "../../../../utils/oidc/authorize";
+import { startOAuthLogin } from "../../../../utils/oauth/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
 
 interface IProps {
@@ -112,13 +112,13 @@ export default function EmailVerificationPage(props: IProps) {
             let oidcNativeFlow: OidcNativeFlow | undefined;
             oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
 
-            await startOidcLogin(
+            await startOAuthLogin(
                 validatedServerConfig.delegatedAuthentication!,
                 oidcNativeFlow.clientId,
                 validatedServerConfig.hsUrl,
                 validatedServerConfig.isUrl,
                 isCreateAccount,
-                email,
+                // email,
             );
 
             setLoading(false);

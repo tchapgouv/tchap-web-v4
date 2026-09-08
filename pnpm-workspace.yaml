@@ -28,7 +28,7 @@ catalog:
     # Compound
     # "@vector-im/compound-design-tokens": 10.2.1
     "@vector-im/compound-web": 10.0.1
-    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#upgrade_10.1.0
+    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#web-merge-10.2.3
     # "compound-web-tchap": 6.0.1
     # i18n
     matrix-web-i18n: 3.6.0
@@ -210,7 +210,7 @@ overrides:
     "@arcmantle/vite-plugin-import-css-sheet>typescript": "catalog:ts6"
     "react-docgen-typescript>typescript": "catalog:ts6"
     # :TCHAP: to be used in compound-web too
-    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#upgrade_10.1.0
+    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#web-merge-10.2.3
 
 minimumReleaseAgeExclude:
     - "matrix-js-sdk"

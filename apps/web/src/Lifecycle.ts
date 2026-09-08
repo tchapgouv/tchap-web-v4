@@ -280,12 +280,8 @@ export async function attemptDelegatedAuthLogin(
  * @param urlParams subset of app-load url parameters relating to oauth auth
  * @returns Promise that resolves to true when login succeeded, else false
  */
-async function attemptOidcNativeLogin(
-    urlParams: NonNullable<URLParams["oidc_fragment"]>,
-    responseMode: "fragment" | "query",
-): Promise<boolean> {
-    console.log("We have OIDC params - attempting OIDC login", urlParams);
-    console.log("We have OIDC params - attempting OIDC login responseMode", responseMode);
+async function attemptOAuthLogin(urlParams: NonNullable<URLParams["oauth2"]>): Promise<boolean> {
+    console.log("We have OAuth2 params - attempting login");
 
     try {
         const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId } =
@@ -307,7 +303,6 @@ async function attemptOidcNativeLogin(
         return false;
     }
 }
-
 /**
  * Exchange the given OAuth2 credentials for {@link IMatrixClientCreds}, additionally persisting them to storage.
  * @param creds the credentials from the OAuth2 flow
@@ -968,9 +963,6 @@ async function doLogout(client: MatrixClient, oauth: OAuth2 | null): Promise<voi
         client.stopClient();
         client.http.abort();
         window.location.href = signoutRequest;
-    } else {
-        await oauthLogout(client, oauth);
-    }
     } else {
         await client.logout(true);
     }

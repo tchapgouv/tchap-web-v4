@@ -37,13 +37,9 @@ import { type InteractionName } from "../../PosthogTrackers";
 import { ElementCallMemberEventType } from "../../call-types";
 import { LocalRoom, LocalRoomState } from "../../models/LocalRoom";
 import { useScopedRoomContext } from "../../contexts/ScopedRoomContext";
-<<<<<<< HEAD:apps/web/src/hooks/room/useRoomCall.tsx
-import { SdkContextClass } from "../../contexts/SDKContext";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
-=======
+import SdkConfig from "~tchap-web/src/SdkConfig";
 import { SDKContext } from "../../contexts/SDKContext.ts";
-import SdkConfig from "../../SdkConfig";
->>>>>>> v1.12.26:apps/web/src/hooks/room/useRoomCall.ts
 
 const logger = rootLogger.getChild("useRoomCall");
 
@@ -191,7 +187,6 @@ export const useRoomCall = (
     // If there are multiple options, the user will be prompted to choose.
     const callOptions = useMemo((): PlatformCallType[] => {
         const options: PlatformCallType[] = [];
-<<<<<<< HEAD:apps/web/src/hooks/room/useRoomCall.tsx
         if (memberCount <= 2) {
             // :TCHAP:
             if (TchapUIFeature.isFeatureActiveForHomeserver("feature_use_ec_in_dm")) {
@@ -203,13 +198,7 @@ export const useRoomCall = (
             // end :TCHAP:
         }
 
-        if (groupCallsEnabled) {
-            if (hasGroupCall || mayCreateElementCalls) {
-                options.push(PlatformCallType.ElementCall);
-            }
-=======
         if (!SdkConfig.get("element_call").disable) {
->>>>>>> v1.12.26:apps/web/src/hooks/room/useRoomCall.ts
             if (useElementCallExclusively && !hasJitsiWidget) {
                 return [PlatformCallType.ElementCall];
             }

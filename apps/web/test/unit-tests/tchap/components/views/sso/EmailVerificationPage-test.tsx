@@ -9,7 +9,7 @@ import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import { flushPromises, mockPlatformPeg } from "~tchap-web/test/test-utils";
 import Login from "~tchap-web/src/Login";
-import * as authorize from "~tchap-web/src/utils/oidc/authorize";
+import * as authorize from "~tchap-web/src/utils/oauth/authorize";
 import * as routing from "~tchap-web/src/vector/routing";
 
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
@@ -67,7 +67,7 @@ describe("Tests sso and oidc native flow", () => {
     describe("MAS flow activated", () => {
         beforeEach(() => {
             // Dans le beforeEach du bloc "MAS flow activated"
-            jest.spyOn(authorize, "startOidcLogin").mockImplementation(jest.fn());
+            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(jest.fn());
             PlatformPegMocked = mockPlatformPeg({
                 startSingleSignOn: jest.fn(),
             });
@@ -114,7 +114,7 @@ describe("Tests sso and oidc native flow", () => {
                 await fireEvent.click(proconnectButton);
             });
 
-            expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+            expect(authorize.startOAuthLogin).toHaveBeenCalledWith(
                 undefined, // delegatedAuthentication is undefined in this test
                 expect.anything(), // clientId
                 expect.anything(), // hsUrl
@@ -153,7 +153,7 @@ describe("Tests sso and oidc native flow", () => {
                 await fireEvent.click(proconnectButton);
             });
 
-            expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+            expect(authorize.startOAuthLogin).toHaveBeenCalledWith(
                 undefined, // delegatedAuthentication is undefined in this test
                 expect.anything(), // clientId
                 expect.anything(), // hsUrl

@@ -22,7 +22,7 @@ import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 
-export default class Welcome extends React.PureComponent<EmptyObject> {
+
 interface Props {
     serverConfig: ValidatedServerConfig;
 }

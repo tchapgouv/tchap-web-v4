@@ -46,11 +46,8 @@ const config: Config = {
         ".*\\?raw": "jest-raw-loader",
         "recorderWorkletFactory": "<rootDir>/__mocks__/empty.js",
         // :TCHAP:
-        "MImageBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageBody.tsx",
         "MImageReplyBody":
             "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageReplyBody.tsx",
-        "<rootDir>/src/tchap/components/views/messages/OriginalImageBody":
-            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MImageBody.tsx",
         "<rootDir>/src/tchap/components/views/messages/OriginalFileBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MFileBody.tsx",
         "MAudioBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningAudioBody.tsx",
