@@ -1,5 +1,10 @@
 # Tchap Translations - a long story
 
+## Usage in tchap-web
+For now we use the `custom_translation_url` config. A modification in webpack.config has been added to copy the translation file inside the webapp release, since it is not hosted in a remote server.
+
+The custom runtime module is not working (no errors but no translations are applied), so the `vite.config.json`, `tsconfig.json` are not really used ... needs more investigation why
+
 ## What are all these translation files ?
 
 - `tchap_translations.json` : translations for strings that Tchap code adds to the web and react-sdk repos.

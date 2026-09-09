@@ -163,24 +163,14 @@ async function start(): Promise<void> {
         }
 
         // set the platform for react sdk
-        await preparePlatform();
+        preparePlatform();
         // load config requires the platform to be ready
         const loadConfigPromise = loadConfig();
         await settled(loadConfigPromise); // wait for it to settle
-
+        // keep initialising so that we can show any possible error with as many features (theme, i18n) as possible
 
         // now that the config is ready, try to persist logs
         const persistLogsPromise = setupLogStorage();
-        
-        // :TCHAP: reput load module up, otherwise translations in the modules are not taken into account
-        // PR in element that did this change https://github.com/element-hq/element-web/pull/29934
-        // Load modules & plugins before language to ensure any custom translations are respected, and any app
-        // startup functionality is run
-        const loadModulesPromise = loadModules();
-        await settled(loadModulesPromise);
-        const loadPluginsPromise = loadPlugins();
-        await settled(loadPluginsPromise);
-        // end :TCHAP:
 
         // Load language after loading config.json so that settingsDefaults.language can be applied
         const loadLanguagePromise = loadLanguage();
@@ -188,6 +178,12 @@ async function start(): Promise<void> {
         const loadThemePromise = loadTheme();
         // await things settling so that any errors we have to render have features like i18n running
         await settled(loadThemePromise, loadLanguagePromise);
+
+        const loadModulesPromise = loadModules();
+        await settled(loadModulesPromise);
+        const loadPluginsPromise = loadPlugins();
+        await settled(loadPluginsPromise);
+
 
         let acceptBrowser = supportedBrowser;
         if (!acceptBrowser && window.localStorage) {

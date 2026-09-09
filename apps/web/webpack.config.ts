@@ -736,11 +736,11 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                         context: path.resolve(__dirname, "src/vector/mobile_guide"),
                         to: "mobile_guide",
                     },
-                    // :TCHAP: for local runtime module,
+                    // :TCHAP: for custom translation
                     {
-                        from: "**",
-                        context: path.join(__dirname, "modules/tchap-translations/lib"),
-                        to: path.join(__dirname, "webapp", "modules", "tchap-translations", "lib"),
+                        from: "tchap_translations.json",
+                        context: path.join(__dirname, "modules/tchap-translations/src"),
+                        to: path.join(__dirname, "webapp", "modules", "tchap-translations"),
                     },
                     // end :TCHAP:
                 ],

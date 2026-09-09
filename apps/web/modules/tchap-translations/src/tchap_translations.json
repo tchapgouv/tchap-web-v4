@@ -160,7 +160,6 @@
     },
     "auth|logout_dialog|use_key_backup": { "en": "Use automatic Backup", "fr": "Utiliser la sauvegarde automatique" },
     "bug_reporting|title": {
-        "comment": "The title of BugReportDialog is unclear, specify it",
         "en": "Report a bug and send debug logs",
         "fr": "Signalez un bug et envoyez les journaux de débogage"
     },
@@ -276,7 +275,6 @@
     "an uppercase letter": { "en": "an uppercase letter", "fr": "une lettre majuscule" },
     "auth|check_email_wrong_email_button": { "en": "Re-enter email address", "fr": "Re-saisir l'adresse mail" },
     "auth|check_email_wrong_email_prompt": {
-        "comment": "TODO contribute to element",
         "en": "Wrong email address?",
         "fr": "Mauvaise adresse mail ?"
     },
@@ -301,12 +299,10 @@
         "fr": "Verrouiller mes messages et me déconnecter de tous mes appareils (en cas de piratage de votre compte ou perte d'un appareil)"
     },
     "auth|reset_password_title": {
-        "comment": "TODO contribute to element translations",
         "en": "Reset your password",
         "fr": "Réinitialisez votre mot de passe"
     },
     "auth|sign_in_instead": {
-        "comment": "TODO contribute to element translations",
         "en": "Sign in instead",
         "fr": "ou connectez-vous"
     },
@@ -360,17 +356,14 @@
     },
     "encryption|verify_toast_title": { "en": "Verify this device", "fr": "Vérifier cet appareil" },
     "error_app_open_in_another_tab": {
-        "comment": "2024-02-05: remove once the string is fr-translated in element",
         "en": "Switch to the other tab to connect to %(brand)s. This tab can now be closed.",
         "fr": "Vous pouvez fermer cet onglet déconnecté, et aller à l'autre onglet %(brand)s."
     },
     "error_app_open_in_another_tab_title": {
-        "comment": "2024-02-05: remove once the string is fr-translated in element",
         "en": "%(brand)s is connected in another tab",
         "fr": "%(brand)s a été connecté dans un autre onglet"
     },
     "error_app_opened_in_another_window": {
-        "comment": "2023-11-08: remove once the string is translated in element",
         "en": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
         "fr": "%(brand)s est ouvert dans une autre fenêtre. Cliquez \"%(label)s\" pour utiliser %(brand)s ici et déconnecter l'autre fenêtre."
     },
@@ -435,7 +428,6 @@
     "settings|encryption|advanced|title": { "en": "Tchap keys", "fr": "Clés Tchap" },
     "settings|security|ignore_users_section": { "en": "Ignored users", "fr": "Membres ignorés" },
     "settings|security|message_search_unsupported_web": {
-        "comment": "We have to include a <<desktopLink> otherwise the i18n checker crashes. So add an empty one.",
         "en": "Currently %(brand)s does not support searching into messages in encrypted rooms.<desktopLink></desktopLink>",
         "fr": "Actuellement %(brand)s ne supporte pas la recherche des messages dans les salons chiffrés.<desktopLink></desktopLink>"
     },
@@ -560,7 +552,6 @@
         "fr": "Retirer de certains endroits où j’ai le droit de le faire (réversible)"
     },
     "voip|connection_lost": {
-        "comment": "the element string does not have <a>. Where is this used?",
         "en": "Tchap is not available at the moment. <a>View the status of services</a>.",
         "fr": "La connexion à Tchap n'est pas possible pour le moment. <a>Voir l'état du service</a>"
     },

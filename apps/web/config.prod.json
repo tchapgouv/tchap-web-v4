@@ -237,5 +237,5 @@
         "use_exclusively": true
     },
     "logout_redirect_url": "#/welcome",
-    "modules":["/modules/tchap-translations/lib/index.js"]
+    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json"
 }

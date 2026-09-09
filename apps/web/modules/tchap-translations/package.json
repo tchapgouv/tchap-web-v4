@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@element-hq/element-web-module-api": "workspace:*",
+        "@matrix-org/react-sdk-module-api": "^2.5.0",
         "@types/node": "catalog:",
         "@types/react": "catalog:",
         "matrix-web-i18n": "^3.6.0",

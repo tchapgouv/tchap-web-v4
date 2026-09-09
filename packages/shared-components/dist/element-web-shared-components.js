@@ -6742,7 +6742,7 @@ Xb.default.setSeparator("|");
 var Qb = "en";
 Xb.default.setFallbackLocale(Qb);
 function $b(e, t) {
-	Xb.default.registerTranslations(e, t);
+	console.log("***** registering in counterpart", e, t), Xb.default.registerTranslations(e, t);
 }
 function ex(e) {
 	Xb.default.setMissingEntryGenerator(e);
@@ -21493,8 +21493,10 @@ var BG = class {
 		return tx();
 	}
 	register(e) {
+		console.log("**** inweb-shared-components register", e);
 		let t = {};
 		for (let n in e) for (let r in e[n]) t[r] = t[r] || {}, t[r][n] = e[n][r];
+		console.log("**** inweb-shared-components register langs", t);
 		for (let e in t) $b(e, t[e]);
 	}
 	translate(e, t, n) {
