@@ -218,9 +218,6 @@ catalogs:
     '@typescript/native':
       specifier: npm:typescript@7.0.2
       version: 7.0.2
-    '@vector-im/compound-design-tokens':
-      specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
-      version: 10.2.3
     '@vector-im/compound-web':
       specifier: 10.0.1
       version: 10.0.1
@@ -313,6 +310,7 @@ patchedDependencies:
   '@arcmantle/vite-plugin-import-css-sheet': 8019aa9feca17db6bab3483612b4150c911d70b58fddc52bf2d7258a1484a747
   '@matrix-org/react-sdk-module-api': 016146c9cc96e6363609d2b2ac0896ccef567882eb1d73b75a77b8a30929de96
   '@tanstack/virtual-core@3.17.6': 9db9d80c4fe7a7a9911643522aef9bc9359075570c38f3d847ff75ed635d921c
+  '@vector-im/compound-web': a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3
   '@vector-im/matrix-wysiwyg': 7bdf6150f2905bc2f055a6bcaa7b9d78fa7ffde82e800bcc454ac7b0096bd65e
   await-lock: b767a571946a4f8710ac54b1a7bec8a7c1570f9b85d75922392fae20d0578964
   jest-fixed-jsdom: b4bc876eca343b57d231c1cf9817ddb13ff04503ece7794d1690f342f6289ad3
@@ -459,11 +457,11 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@vector-im/compound-design-tokens':
-        specifier: 'catalog:'
+        specifier: github:tchapgouv/compound-design-tokens#web-merge-10.2.3
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/179e94db2d1e174acf90e20c4b26333e9da0e9ee(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: 'catalog:'
-        version: 10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
+        version: 10.0.1(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       '@vector-im/matrix-wysiwyg':
         specifier: 2.40.0
         version: 2.40.0(patch_hash=7bdf6150f2905bc2f055a6bcaa7b9d78fa7ffde82e800bcc454ac7b0096bd65e)(react@19.2.8)
@@ -870,6 +868,9 @@ importers:
       oxfmt:
         specifier: 0.60.0
         version: 0.60.0
+      patch-package:
+        specifier: ^8.0.1
+        version: 8.0.1
       playwright-core:
         specifier: 'catalog:'
         version: 1.61.1
@@ -989,7 +990,7 @@ importers:
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
-        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
+        version: 9.9.0(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       motion:
         specifier: ^12.4.10
         version: 12.42.2(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8)(react@19.2.8)
@@ -1047,7 +1048,7 @@ importers:
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
-        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
+        version: 9.9.0(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       styled-components:
         specifier: ^6.1.18
         version: 6.4.4(react-dom@19.2.8)(react@19.2.8)
@@ -1115,7 +1116,7 @@ importers:
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/0bbc302445d09d08b418ef02917997abd5c321e4(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
-        version: 9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
+        version: 9.9.0(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       matrix-widget-api:
         specifier: ^1.18.0
         version: 1.18.0
@@ -1416,7 +1417,7 @@ importers:
         version: typescript@7.0.2
       '@vector-im/compound-web':
         specifier: 'catalog:'
-        version: 10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
+        version: 10.0.1(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
       '@vitejs/plugin-react':
         specifier: 'catalog:'
         version: 6.0.5(vite@8.2.0)
@@ -11729,10 +11730,6 @@ packages:
     resolution: {integrity: sha512-WMi/OQ2axVTf/ykqCQgXiIct+mSQDFdH2fkwhPwgEwvJ1kSzZRiinb0zF2Xb8u4+OqPChmyI6MEu4EezNJz+FQ==}
     hasBin: true
 
-  tmp@0.2.5:
-    resolution: {integrity: sha512-voyz6MApa1rQGUxT3E+BK7/ROe8itEx7vD8/HEvt4xwXucvQ5G5oeEiHkmHZJuBO21RpOf+YYm9MOivj709jow==}
-    engines: {node: '>=14.14'}
-
   tmp@0.2.7:
     resolution: {integrity: sha512-e0votIpp4Uo2AJYSzVHV6xCcawuiez3DzqDAbrTc3YxBkplN6e+dM13ZeIcZnDg/QpSuU2zfZ3rzwY8ukEnaXw==}
     engines: {node: '>=14.14'}
@@ -13118,7 +13115,7 @@ snapshots:
 
   '@babel/plugin-syntax-import-attributes@7.29.7(@babel/core@7.29.7)':
     dependencies:
-      '@babel/core': 7.29.7(supports-color@10.2.2)
+      '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.29.7)':
@@ -13133,7 +13130,7 @@ snapshots:
 
   '@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7)':
     dependencies:
-      '@babel/core': 7.29.7(supports-color@10.2.2)
+      '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.29.7)':
@@ -13178,7 +13175,7 @@ snapshots:
 
   '@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.7)':
     dependencies:
-      '@babel/core': 7.29.7(supports-color@10.2.2)
+      '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/helper-plugin-utils': 7.29.7
 
   '@babel/plugin-syntax-unicode-sets-regex@7.18.6(@babel/core@7.29.7)':
@@ -17738,7 +17735,7 @@ snapshots:
       '@types/react': 19.2.18
       react: 19.2.8
 
-  '@vector-im/compound-web@10.0.1(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)':
+  '@vector-im/compound-web@10.0.1(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)':
     dependencies:
       '@floating-ui/react': 0.27.17(react-dom@19.2.8)(react@19.2.8)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8)(react@19.2.8)
@@ -17760,7 +17757,7 @@ snapshots:
       - '@types/react-dom'
       - react-dom
 
-  '@vector-im/compound-web@9.9.0(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)':
+  '@vector-im/compound-web@9.9.0(patch_hash=a8c9ca3370207a9cc80fc1c80aa44f78a5b431222a199f13bb0a5a0a46580ee3)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)':
     dependencies:
       '@floating-ui/react': 0.27.17(react-dom@19.2.8)(react@19.2.8)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8)(react@19.2.8)
@@ -20523,6 +20520,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  http-proxy-agent@7.0.2(supports-color@7.2.0):
+    dependencies:
+      agent-base: 7.1.4
+      debug: 4.4.3(supports-color@7.2.0)
+    transitivePeerDependencies:
+      - supports-color
+    optional: true
+
   http-proxy-middleware@4.2.0(supports-color@10.2.2):
     dependencies:
       debug: 4.4.3(supports-color@10.2.2)
@@ -20555,6 +20560,14 @@ snapshots:
       debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
+
+  https-proxy-agent@7.0.6(supports-color@7.2.0):
+    dependencies:
+      agent-base: 7.1.4
+      debug: 4.4.3(supports-color@7.2.0)
+    transitivePeerDependencies:
+      - supports-color
+    optional: true
 
   httpxy@0.5.4: {}
 
@@ -21191,6 +21204,34 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  jsdom@26.1.0(patch_hash=040623e87b1c8b676c2a705513c0276c0704dd1b23fc3a1bb77cde8128b64b5f)(supports-color@7.2.0):
+    dependencies:
+      cssstyle: 4.6.0
+      data-urls: 5.0.0
+      decimal.js: 10.6.0
+      html-encoding-sniffer: 4.0.0
+      http-proxy-agent: 7.0.2(supports-color@7.2.0)
+      https-proxy-agent: 7.0.6(supports-color@7.2.0)
+      is-potential-custom-element-name: 1.0.1
+      nwsapi: 2.2.23
+      parse5: 7.3.0
+      rrweb-cssom: 0.8.0
+      saxes: 6.0.0
+      symbol-tree: 3.2.4
+      tough-cookie: 5.1.2
+      w3c-xmlserializer: 5.0.0
+      webidl-conversions: 7.0.0
+      whatwg-encoding: 3.1.1
+      whatwg-mimetype: 4.0.0
+      whatwg-url: 14.2.0
+      ws: 8.21.1
+      xml-name-validator: 5.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+    optional: true
 
   jsesc@3.1.0: {}
 
@@ -22331,9 +22372,9 @@ snapshots:
       klaw-sync: 6.0.0
       minimist: 1.2.8
       open: 7.4.2
-      semver: 7.7.4
+      semver: 7.8.5
       slash: 2.0.0
-      tmp: 0.2.5
+      tmp: 0.2.7
       yaml: 2.9.0
 
   path-browserify@1.0.1: {}
@@ -24227,8 +24268,6 @@ snapshots:
     dependencies:
       tldts-core: 6.1.86
 
-  tmp@0.2.5: {}
-
   tmp@0.2.7: {}
 
   tmpl@1.0.5: {}
@@ -24753,7 +24792,7 @@ snapshots:
       '@vitest/browser-playwright': 4.1.10(playwright@1.61.1)(vite@8.2.0)(vitest@4.1.10)
       '@vitest/coverage-v8': 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
       happy-dom: 20.11.1
-      jsdom: 26.1.0(patch_hash=040623e87b1c8b676c2a705513c0276c0704dd1b23fc3a1bb77cde8128b64b5f)(supports-color@10.2.2)
+      jsdom: 26.1.0(patch_hash=040623e87b1c8b676c2a705513c0276c0704dd1b23fc3a1bb77cde8128b64b5f)(supports-color@7.2.0)
     transitivePeerDependencies:
       - msw
 

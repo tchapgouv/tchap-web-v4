@@ -31,6 +31,7 @@ export default class Welcome extends React.PureComponent<Props> {
     public render(): React.ReactNode {
         const pagesConfig = SdkConfig.getObject("embedded_pages");
         const pageUrl = pagesConfig?.get("welcome_url");
+        const brandingConfig = SdkConfig.getObject("branding"); // :TCHAP:
 
         const replaceMap: Record<string, string> = {
             "$brand": SdkConfig.get("brand"),
@@ -38,7 +39,8 @@ export default class Welcome extends React.PureComponent<Props> {
             "$riot:casUrl": "#/start_cas",
             "$matrixLogo": MATRIX_LOGO_HTML,
             "[matrix]": MATRIX_LOGO_HTML,
-            "$proconnectFaq": TchapUrls.helpProconnectInstances // :TCHAP:
+            "$proconnectFaq": TchapUrls.helpProconnectInstances, // :TCHAP:
+            "$logoUrl": brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg"
         };
 
         let body: ReactNode;
@@ -65,17 +67,15 @@ export default class Welcome extends React.PureComponent<Props> {
         // );
         return (
             <AuthPage addBlur={false}>
-                <Glass>
-                    <div
-                        className={classNames("mx_Welcome", {
-                            mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
-                        })}
-                        data-testid="mx_welcome_screen_mas"
-                    >
-                        {body}
-                        <LanguageSelector />
-                    </div>
-                </Glass>
+                <div
+                    className={classNames("mx_Welcome", {
+                        mx_WelcomePage_registrationDisabled: !SettingsStore.getValue(UIFeature.Registration),
+                    })}
+                    data-testid="mx_welcome_screen_mas"
+                >
+                    {body}
+                    <LanguageSelector />
+                </div>
             </AuthPage>
         )
         // end :TCHAP:

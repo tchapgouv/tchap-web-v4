@@ -143,10 +143,7 @@ describe("RoomHeader", () => {
         jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
 
         // activate the group and widget features
-        jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => {
-            return feature === "feature_group_calls" || feature == UIFeature.Widgets || feature == UIFeature.Voip;
-        });
-        mockedTchapRoomUtils.getTchapRoomType.mockImplementation(() => TchapRoomType.Private);
+        mockedTchapRoomUtils.getTchapRoomType.mockImplementation(async () => TchapRoomType.Private);
 
         DMRoomMap.setShared({
             getUserIdForRoomId: jest.fn(),

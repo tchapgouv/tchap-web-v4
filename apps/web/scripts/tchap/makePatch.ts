@@ -1,4 +1,5 @@
-import * as patchFile from "../../patches_tchap/patches.json";
+import patchFile from "../../patches_tchap/patches.json" with { type: "json" };
+import { exec } from "child_process";
 
 if (process.argv.length !== 3) {
     console.log("\nMissing patch name.");
@@ -12,9 +13,10 @@ if (process.argv.length !== 3) {
 // Run patch file check.
 // EDIT : running the file check when making a new patch FAILS because it does not find the folder of the patch to create.
 // commenting before finding another solution. Is it necessary to make a check at this point anyway?
-//require('./checkPatchFile');
+//import checkPatchFile from './checkPatchFile.js';
 
 const patchName = process.argv[2];
+
 const patchInfo = patchFile[patchName];
 if (!patchInfo) {
     console.log("Your patch name is not listed in patches_tchap/patches.json. Aborting.");
@@ -22,13 +24,13 @@ if (!patchInfo) {
 }
 
 const fileList = patchInfo.files.join("|");
-const command = `pnpm patch-package --patch-dir patches_tchap/${patchName} --include "${fileList}"  ${patchInfo.package}`;
+const command = `pnpm dlx patch-package --patch-dir patches_tchap/${patchName} --include "${fileList}"  ${patchInfo.package}`;
 
-var child = require("child_process").exec(command);
+const child = exec(command);
 // use event hooks to provide a callback to execute when data are available:
-child.stdout.on("data", function (data) {
+child.stdout?.on("data", function (data) {
     console.log(data.toString());
 });
-child.stderr.on("data", function (data) {
+child.stderr?.on("data", function (data) {
     console.error(data.toString());
 });

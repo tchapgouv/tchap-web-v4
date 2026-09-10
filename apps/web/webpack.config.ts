@@ -693,6 +693,14 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 chunks: ["usercontent"],
             }),
 
+            // :TCHAP: welcome
+            new HtmlWebpackPlugin({
+                template: "./res/welcome_mas.html",
+                filename: "welcome_mas.html",
+                minify: false,
+                chunks: [],
+            }),
+
             new HtmlWebpackInjectPreload({
                 files: [{ match: /.*Inter.*\.woff2$/, attributes: {} }],
             }),

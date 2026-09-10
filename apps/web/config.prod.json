@@ -93,7 +93,6 @@
         "feature_new_room_decoration_ui": true,
         "feature_rust_crypto": true,
         "feature_latex_maths": true,
-        "feature_group_calls": true,
         "feature_new_room_list": false
     },
     "feedback": {

@@ -859,10 +859,6 @@
         "en": "Download the mobile app",
         "fr": "Télécharger l'application mobile"
     },
-    "room_settings|permissions|m.call.member": {
-        "en": "Allow users to start group calls",
-        "fr": "Autoriser les utilisateurs à démarrer ou rejoindre les appels groupés"
-    },
     "room_settings|voip|enable_element_call_caption": {
         "en": "Group calls are end-to-end encrypted, but is currently limited to smaller numbers of users.",
         "fr": "Les appels de groupe sont chiffrés de bout en bout, mais sont actuellement limité à un nombre plus petit d'utilisateurs."

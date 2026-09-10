@@ -1,0 +1,14 @@
+diff --git a/src/components/Button/Button.module.css b/src/components/Button/Button.module.css
+index b1a2c5a2d9c155b3c0481125bde900f1c7279f53..798d7ee4abb7ed6ad07a48bfa4c9435d71af3e1b 100644
+--- a/src/components/Button/Button.module.css
++++ b/src/components/Button/Button.module.css
+@@ -6,7 +6,8 @@ Please see LICENSE files in the repository root for full details.
+ */
+ 
+ .button {
+-  border-radius: var(--cpd-radius-pill-effect);
++  /* :TCHAP: border-radius: var(--cpd-radius-pill-effect); */
++  border-radius: 4px;
+   cursor: pointer;
+   appearance: none;
+   display: flex;

@@ -7,3 +7,122 @@
         color: #3a3a3a !important;
     }
 }
+
+/* ========================================
+   DSFR - Footer Classes
+   ======================================== */
+
+.fr-footer {
+    width: 100%;
+    padding-top: 2rem;
+
+    &__body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    &__brand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__content {
+        margin-top: 0;
+        flex-basis: 50%;
+        margin-left: auto;
+
+        &-desc {
+            width: 100%;
+            font-size: 0.875rem;
+            line-height: 1.5rem;
+        }
+
+        &-list {
+            display: flex;
+            flex-direction: row;
+            align-self: center;
+            margin-bottom: -0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+
+            > li {
+                margin-right: 1.25rem;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+
+                &::before {
+                    content: none;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        &-item {
+            margin-right: 1.25rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        &-link {
+            font-weight: bold;
+            font-size: 0.875rem;
+            line-height: 1.5rem;
+            color: var(--text-default-grey);
+        }
+    }
+
+    &__bottom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 2.5rem;
+        box-shadow: inset 0 1px 0 0 var(--border-default-grey);
+
+        &-list {
+            padding: 0.5rem 0;
+            width: 100%;
+            margin: 0;
+        }
+
+        &-item {
+            position: relative;
+            margin: 0.5rem 0 0 0.25rem;
+            display: inline;
+
+            &::before {
+                content: "";
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                width: 1px;
+                height: 1rem;
+                margin-right: 0.25rem;
+                margin-bottom: 0.625rem;
+                margin-top: 0.625rem;
+                box-shadow: inset 0 0 0 1px var(--border-default-grey);
+            }
+
+            &:first-child {
+                margin: 0.5rem 0 0;
+
+                &::before {
+                    content: none;
+                }
+            }
+        }
+
+        &-link {
+            font-size: 0.75rem;
+            line-height: 1.25rem;
+            color: var(--text-mention-grey);
+        }
+    }
+}

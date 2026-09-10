@@ -26,6 +26,8 @@ import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { PowerLevelSelector } from "../../PowerLevelSelector";
 import { ElementCallEventType, ElementCallMemberEventType } from "../../../../../call-types";
 import { objectClone } from "../../../../../utils/objects.ts";
+import SettingsStore from "~tchap-web/src/settings/SettingsStore.ts";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature.ts";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -412,11 +414,6 @@ export default class RolesRoomSettingsTab extends React.Component<IProps, RolesR
         // hide the power level selector for enabling E2EE if it the room is already encrypted
         if (this.state.isRoomEncrypted) {
             delete eventsLevels[EventType.RoomEncryption];
-        }
-
-        // :TCHAP: group-calls-settings-tab
-        if (SettingsStore.getValue("feature_group_calls")) {
-            delete eventsLevels[ElementCallEventType.name];
         }
 
         const eventPowerSelectors = Object.keys(eventsLevels)

@@ -2,9 +2,9 @@ import React from "react";
 
 export const TchapHeader: React.FC = () => {
     return (
-        <header role="banner" className="lasuite fr-header">
+        <header role="banner" className="fr-header lasuite">
             <div className="fr-header__body">
-                <div className="fr-container lasuite-container">
+                <div className="fr-container">
                     <div className="fr-header__body-row">
                         <div className="fr-header__brand fr-enlarge-link">
                             <div className="fr-header__brand-top">
@@ -18,18 +18,18 @@ export const TchapHeader: React.FC = () => {
                             </div>
                             <div className="fr-header__service">
                                 <a
-                                    className="lasuite-header__service-link ui-home"
+                                    className="ui-home"
                                     href="/#/welcome"
                                     title="Accueil - Tchap - DINUM"
                                 >
                                     <img
                                         src="/themes/tchap/img/logos/tchap-logo.svg"
                                         alt=""
-                                        className="lasuite-header__service-logo fr-responsive-img"
+                                        className="r-responsive-img"
                                         width="32"
                                         height="32"
                                     />
-                                    <p className="fr-header__service-title lasuite-header__service-title tc_header_title">
+                                    <p className="fr-header__service-title tc_header_title">
                                         Tchap
                                     </p>
                                 </a>
@@ -39,14 +39,13 @@ export const TchapHeader: React.FC = () => {
 
                         <div className="fr-header__tools">
                             <div
-                                className="fr-header__tools-links lasuite-header__tools-links"
+                                className="fr-header__tools-links"
                                 data-fr-js-header-links="true"
                             >
                                 <ul className="fr-btns-group">
-                                    <li className="lasuite-nomobile">
+                                    <li>
                                         <button
                                             type="button"
-                                            className="lasuite-gaufre-btn lasuite-gaufre-btn--vanilla js-lasuite-gaufre-btn"
                                             title="Les services de La Suite numérique"
                                         >
                                             Les services de La Suite numérique

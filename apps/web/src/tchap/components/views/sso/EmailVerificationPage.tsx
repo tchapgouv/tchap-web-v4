@@ -25,12 +25,13 @@ import Spinner from "~tchap-web/src/components/views/elements/Spinner";
 import { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
 import { Button } from "@vector-im/compound-web";
 import { ErrorMessage } from "~tchap-web/src/components/structures/ErrorMessage";
-import Login, { OidcNativeFlow } from "~tchap-web/src/Login";
+import Login, { OAuthNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
 import { startOAuthLogin } from "../../../../utils/oauth/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
+import { ISSOFlow, LoginFlow, OAUTH_AWARE_PREFERRED_FLOW_FIELD } from "matrix-js-sdk/src/matrix";
 
 interface IProps {
     //propagate the server config change
@@ -108,13 +109,11 @@ export default function EmailVerificationPage(props: IProps) {
             });
 
             const loginFlows = await login.getFlows(false);
-
-            let oidcNativeFlow: OidcNativeFlow | undefined;
-            oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
-
+            console.log("**** flows", loginFlows);
+            const flowOauth = loginFlows.find((flow) => flow.type === "oauthNativeFlow")! as OAuthNativeFlow;
             await startOAuthLogin(
                 validatedServerConfig.delegatedAuthentication!,
-                oidcNativeFlow.clientId,
+                flowOauth.clientId,
                 validatedServerConfig.hsUrl,
                 validatedServerConfig.isUrl,
                 isCreateAccount,
@@ -123,6 +122,7 @@ export default function EmailVerificationPage(props: IProps) {
 
             setLoading(false);
         } catch (err) {
+            console.log(err);
             displayError(_t("auth|proconnect|error"));
         }
     };
