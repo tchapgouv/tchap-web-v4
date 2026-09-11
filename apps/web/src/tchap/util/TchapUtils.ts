@@ -76,7 +76,7 @@ export default class TchapUtils {
      */
     private static shuffledHomeServerList = (): { base_url: string; server_name: string }[] => {
         const homeServerList = [...(SdkConfig.get()["homeserver_list"] ?? [])];
-        return [...homeServerList].sort(() => Math.random() - 0.5);//insert before or after the previous item
+        return [...homeServerList].sort(() => Math.random() - 0.5); //insert before or after the previous item
     };
 
     /**
@@ -94,9 +94,7 @@ export default class TchapUtils {
 
         for (const homeServer of homeServersToTry) {
             try {
-                const response = await fetch(
-                    homeServer.base_url + infoUrl + email
-                );
+                const response = await fetch(homeServer.base_url + infoUrl + email);
                 if (!response.ok) {
                     throw new Error(`Could not find homeserver for email ${email} on ${homeServer.base_url}`);
                 }
@@ -108,7 +106,10 @@ export default class TchapUtils {
                     server_name: this.findHomeServerNameFromUrl(serverUrl),
                 };
             } catch (error) {
-                logger.warn(`Could not find homeserver for email ${email} on ${homeServer.base_url} let's try on next homeServer`, error);
+                logger.warn(
+                    `Could not find homeserver for email ${email} on ${homeServer.base_url} let's try on next homeServer`,
+                    error,
+                );
                 //add a wait time de 200ms
                 await sleep(200);
             }

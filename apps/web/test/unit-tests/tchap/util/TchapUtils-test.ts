@@ -22,7 +22,6 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
         jest.spyOn(Math, "random").mockReturnValue(0.9999);
     });
 
-
     const okResponse = (hs: string): Response =>
         ({
             ok: true,
@@ -40,7 +39,7 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
         });
         expect(fetchSpy).toHaveBeenCalledTimes(1);
         expect(fetchSpy).toHaveBeenCalledWith(
-            "https://matrix.dev01.tchap.incubateur.net/_matrix/identity/api/v1/info?medium=email&address=" + email
+            "https://matrix.dev01.tchap.incubateur.net/_matrix/identity/api/v1/info?medium=email&address=" + email,
         );
     });
 
