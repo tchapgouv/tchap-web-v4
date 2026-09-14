@@ -35,6 +35,7 @@ import { ContentScanningFileBodyView } from "~tchap-web/src/tchap/customisations
 // import { useScanningMediaHelper } from "~tchap-web/src/tchap/customisations/components/views/messages/useScanningMediaHelper";
 import { ContentScannerMediaHelper, type ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 import { ContentScanningVideoBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVideoBodyView";
+import { ContentScanningImageBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningImageBodyView";
 
 type MBodyComponent = React.ComponentType<IBodyProps>;
 
@@ -128,6 +129,7 @@ export function VideoBodyFactory({
         () =>
             new VideoBodyViewModel({
                 mxEvent,
+                // :TCHAP: mediaEventHelper,
                 mediaEventHelper: scanningMediaHelper,
                 forExport,
                 inhibitInteraction,
@@ -208,11 +210,30 @@ export function ImageBodyFactory({
         !isMimeTypeAllowed(content.info?.mimetype ?? "") &&
         !content.info?.thumbnail_info;
 
+    // :TCHAP: content-scanner
+    const [scanState, setScanState] = useState<ScanState>("scanning");
+    const scanningMediaHelper = useMemo(
+        () => {
+                    console.log("*** creating NEW helper");
+                    return new ContentScannerMediaHelper(mxEvent);
+                },
+        [mxEvent],
+    ) as any as typeof mediaEventHelper;
+
+    scanningMediaHelper.onScanStateChange(() => {
+        const newScanState = scanningMediaHelper.getScanState();
+        if (scanState !== newScanState) {
+            setScanState(newScanState)
+        }
+    });
+    //  end :TCHAP:
+
     const vm = useCreateAutoDisposedViewModel(
         () =>
             new ImageBodyViewModel({
                 mxEvent,
-                mediaEventHelper,
+                // mediaEventHelper,
+                mediaEventHelper: scanningMediaHelper,
                 forExport,
                 maxImageHeight,
                 mediaVisible,
@@ -283,12 +304,27 @@ export function ImageBodyFactory({
     }
 
     return (
-        <ImageBodyView
+        // :TCHAP: <ImageBodyView
+        //     vm={vm}
+            //     className="mx_ImageBody"
+            //     containerClassName="mx_ImageBody_container"
+            //     imageClassName="mx_ImageBody_image"
+        //     imageRef={imageRef}
+        // >
+        //     {showFileBody ? (
+        //         <FileBodyFactory
+        //             mxEvent={mxEvent}
+        //             mediaEventHelper={mediaEventHelper}
+        //             forExport={forExport}
+        //             showFileInfo={false}
+        //         />
+        //     ) : null}
+        // </ImageBodyView>
+        <ContentScanningImageBodyView
             vm={vm}
-            className="mx_ImageBody"
-            containerClassName="mx_ImageBody_container"
-            imageClassName="mx_ImageBody_image"
             imageRef={imageRef}
+            scanState={scanState}
+            content={content}
         >
             {showFileBody ? (
                 <FileBodyFactory
@@ -298,7 +334,8 @@ export function ImageBodyFactory({
                     showFileInfo={false}
                 />
             ) : null}
-        </ImageBodyView>
+        </ContentScanningImageBodyView>
+        // end :TCHAP:
     );
 }
 

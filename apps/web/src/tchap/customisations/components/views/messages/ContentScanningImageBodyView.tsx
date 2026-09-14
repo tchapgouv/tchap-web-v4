@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, Ref, type JSX } from "react";
-import { _t, VideoBodyView, VideoBodyViewModel } from "@element-hq/web-shared-components";
+import { _t, ImageBodyView, ImageBodyViewModel } from "@element-hq/web-shared-components";
 import { ContentScanningStatus } from "~tchap-web/src/tchap/components/views/elements/ContentScanningStatus";
 import TextWithTooltip from "~tchap-web/src/components/views/elements/TextWithTooltip";
 import { presentableTextForFile } from "~tchap-web/src/utils/FileUtils";
@@ -7,13 +7,13 @@ import { MediaEventContent } from "matrix-js-sdk/src/types";
 import { InlineSpinner } from "@vector-im/compound-web";
 import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
-interface ContentScanningVideoBodyViewProps {
+interface ContentScanningImageBodyViewProps {
     /**
      * View model providing render state and actions.
      */
-    vm: VideoBodyViewModel;
+    vm: ImageBodyViewModel;
 
-    videoRef?: Ref<HTMLVideoElement> | Ref<HTMLImageElement>;
+    imageRef?: Ref<HTMLImageElement>;
     /**
      * Optional supplemental content rendered after the video frame.
      */
@@ -40,13 +40,13 @@ const scanningPlaceholder = (
     );
 };
 
-export function ContentScanningVideoBodyView({
+export function ContentScanningImageBodyView({
     vm,
-    videoRef,
+    imageRef,
     children,
     content,
     scanState,
-}: Readonly<ContentScanningVideoBodyViewProps>): JSX.Element {
+}: Readonly<ContentScanningImageBodyViewProps>): JSX.Element {
     const presentableFileName = presentableTextForFile(content, _t("common|attachment"), true, true);
     let icon = <span className="mx_MFileBody_info_icon" />;
     let textComponent = <ContentScanningStatus fileName={presentableFileName} status="scanning" />;
@@ -81,14 +81,14 @@ export function ContentScanningVideoBodyView({
         default:
             return (
                 <div>
-                    <VideoBodyView
+                    <ImageBodyView
                         vm={vm}
-                        className="mx_MVideoBody"
-                        containerClassName="mx_MVideoBody_container"
-                        videoRef={videoRef}
-                    >
+                        imageRef={imageRef}
+                        className="mx_ImageBody"
+                        containerClassName="mx_ImageBody_container"
+                        imageClassName="mx_ImageBody_image">
                         {children}
-                    </VideoBodyView>
+                    </ImageBodyView>
                     <ContentScanningStatus status="done" />
                 </div>
             );
