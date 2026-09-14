@@ -10,7 +10,7 @@ import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import { type IConfigOptions } from "~tchap-web/src/IConfigOptions";
-import { SdkContextClass } from "~tchap-web/src/contexts/SDKContext";
+import { SDKContextClass } from "~tchap-web/src/contexts/SDKContextClass";
 import { type IProfileInfo } from "~tchap-web/src/hooks/useProfileInfo";
 import Modal from "~tchap-web/src/Modal";
 import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
@@ -114,7 +114,7 @@ describe("InviteDialog", () => {
         mockClient.getRoom.mockReturnValue(room);
         mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
         mockClient.lookupThreePid.mockResolvedValue({});
-        SdkContextClass.instance.client = mockClient;
+        jest.spyOn(SDKContextClass.instance, "client").mockReturnValue(mockClient);        
 
         // Default: emails are not external
         (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(false);
@@ -123,8 +123,7 @@ describe("InviteDialog", () => {
     afterEach(() => {
         Modal.closeCurrentModal();
         cleanup();
-        SdkContextClass.instance.onLoggedOut();
-        SdkContextClass.instance.client = undefined;
+        SDKContextClass.instance.onLoggedOut();
         jest.resetAllMocks();
     });
 

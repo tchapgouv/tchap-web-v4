@@ -51,12 +51,11 @@
             "dependsOn": ["^build"]
         },
         "test:unit:tchap": {
-            "executor": "@nx/jest:jest",
+            "command": "jest",
             "options": {
-                "jestConfig": "{projectRoot}/jest.config.ts",
                 "cwd": "apps/web"
             },
-            "dependsOn": ["^build"]
+            "dependsOn": ["test:unit:prepare"]
         },
         "test:unit:prepare": {
             "executor": "nx:noop",

@@ -4,12 +4,12 @@ import { waitFor } from "@testing-library/dom";
 
 import { RoomViewStore } from "~tchap-web/src/stores/RoomViewStore";
 import { Action } from "~tchap-web/src/dispatcher/actions";
-import { TestSdkContext } from "~tchap-web/test/unit-tests/TestSdkContext";
+import { TestSDKContext } from "test-utils";
 import { getMockClientWithEventEmitter, untilDispatch } from "~tchap-web/test/test-utils";
 import { SlidingSyncManager } from "~tchap-web/src/SlidingSyncManager";
 import { PosthogAnalytics } from "~tchap-web/src/PosthogAnalytics";
 import { MatrixDispatcher } from "~tchap-web/src/dispatcher/dispatcher";
-import { SpaceStoreClass } from "~tchap-web/src/stores/spaces/SpaceStore";
+import * as SpaceStoreClass from "~tchap-web/src/stores/spaces/SpaceStore";
 import Modal from "~tchap-web/src/Modal";
 import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
 import { _t } from "~tchap-web/src/languageHandler";
@@ -68,7 +68,7 @@ describe("RoomViewStore", function () {
     let roomViewStore: RoomViewStore;
     let slidingSyncManager: SlidingSyncManager;
     let dis: MatrixDispatcher;
-    let stores: TestSdkContext;
+    let stores: TestSDKContext;
 
     beforeEach(function () {
         jest.clearAllMocks();
@@ -90,7 +90,7 @@ describe("RoomViewStore", function () {
         // Make the RVS to test
         dis = new MatrixDispatcher();
         slidingSyncManager = new MockSlidingSyncManager();
-        stores = new TestSdkContext();
+        stores = new TestSDKContext();
         stores.client = mockClient;
         stores._SlidingSyncManager = slidingSyncManager;
         stores._PosthogAnalytics = new MockPosthogAnalytics();

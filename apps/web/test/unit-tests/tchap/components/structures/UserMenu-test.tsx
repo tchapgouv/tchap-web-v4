@@ -3,17 +3,17 @@ import { render, screen, waitFor } from "jest-matrix-react";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import UnwrappedUserMenu from "~tchap-web/src/components/structures/UserMenu";
-import { TestSdkContext } from "~tchap-web/test/unit-tests/TestSdkContext";
+import { TestSDKContext } from "test-utils";
 import { stubClient, wrapInSdkContext } from "~tchap-web/test/test-utils";
 
 describe("<UserMenu>", () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let client: MatrixClient;
-    let sdkContext: TestSdkContext;
+    let sdkContext: TestSDKContext;
 
     beforeEach(() => {
         client = stubClient();
-        sdkContext = new TestSdkContext();
+        sdkContext = new TestSDKContext();
     });
 
     describe("<UserMenu> UI", () => {

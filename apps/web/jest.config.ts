@@ -46,14 +46,9 @@ const config: Config = {
         ".*\\?raw": "jest-raw-loader",
         "recorderWorkletFactory": "<rootDir>/__mocks__/empty.js",
         // :TCHAP:
-        "MImageReplyBody":
-            "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningImageReplyBody.tsx",
-        "<rootDir>/src/tchap/components/views/messages/OriginalFileBody":
-            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MFileBody.tsx",
         "MAudioBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningAudioBody.tsx",
         "<rootDir>/src/tchap/components/views/messages/OriginalAudioBody":
             "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
-        "MStickerBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningStickerBody.tsx",
         "~tchap-web/(.*)": "<rootDir>/$1",
         // // we use tchap own compound-web package
         // "@vector-im/compound-web": "<rootDir>/../../node_modules/compound-web-tchap",
