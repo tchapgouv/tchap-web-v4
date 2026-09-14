@@ -36,6 +36,9 @@ export const getOidcErrorMessage = (error: Error): string | ReactNode => {
         case OidcError.InvalidBearerTokenResponse:
         case OidcError.InvalidIdToken:
         default:
-            return _t("auth|oidc|generic_auth_error");
+            //:tchap:
+            //return _t("auth|oidc|generic_auth_error");
+            return `${_t("auth|oidc|generic_auth_error")} : ${error.message}`;
+            //:tchap:end
     }
 };
