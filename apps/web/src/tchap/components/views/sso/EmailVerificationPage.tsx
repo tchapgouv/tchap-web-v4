@@ -123,7 +123,8 @@ export default function EmailVerificationPage(props: IProps) {
 
             setLoading(false);
         } catch (err) {
-            displayError(_t("auth|proconnect|error"));
+            const errorMessage = err instanceof Error ? err.message : String(err);
+            displayError(`${_t("auth|proconnect|error")} : ${errorMessage}`);
         }
     };
 
