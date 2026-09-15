@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`<SpacePanel /> should render as expected 1`] = `
+exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
 <div>
   <nav
     aria-label="Spaces"
-    class="mx_SpacePanel collapsed newUi"
+    class="mx_SpacePanel collapsed"
   >
     <div
       aria-expanded="false"
@@ -14,58 +14,830 @@ exports[`<SpacePanel /> should render as expected 1`] = `
       tabindex="0"
     />
     <div
-      class="mx_UserMenu"
+      class="_wrapper_dt4lj_8 mx_UserMenu"
     >
-      <div
+      <button
         aria-expanded="false"
-        aria-haspopup="true"
+        aria-haspopup="menu"
         aria-label="User menu"
-        class="mx_AccessibleButton mx_UserMenu_contextMenuButton"
-        role="button"
-        tabindex="0"
+        class="_triggerButton_dt4lj_96"
+        data-state="closed"
+        id="radix-react-use-id-1"
+        type="button"
       >
         <div
-          class="mx_UserMenu_userAvatar"
+          class="_avatarWrapper_dt4lj_73"
         >
           <span
-            class="_avatar_va14e_8 mx_BaseAvatar mx_UserMenu_userAvatar_BaseAvatar _avatar-imageless_va14e_55"
-            data-color="2"
-            data-testid="avatar-img"
+            aria-label="@test:test"
+            class="_avatar_va14e_8 _avatar-imageless_va14e_55"
+            data-color="5"
             data-type="round"
-            role="presentation"
-            style="--cpd-avatar-size: 32px;"
+            role="img"
+            style="--cpd-avatar-size: 36px;"
           >
-            u
+            t
           </span>
         </div>
-      </div>
-      <div
-        aria-label="Expand"
-        class="mx_AccessibleButton mx_SpacePanel_toggleCollapse"
-        role="button"
-        tabindex="0"
+      </button>
+    </div>
+    <div
+      aria-label="Expand"
+      class="mx_AccessibleButton mx_SpacePanel_toggleCollapse"
+      role="button"
+      tabindex="0"
+    >
+      <svg
+        fill="currentColor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          fill="currentColor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8.7 17.3a.95.95 0 0 1-.275-.7q0-.425.275-.7l3.9-3.9-3.9-3.9a.95.95 0 0 1-.275-.7q0-.425.275-.7a.95.95 0 0 1 .7-.275q.425 0 .7.275l4.6 4.6q.15.15.213.325.062.175.062.375t-.062.375a.9.9 0 0 1-.213.325l-4.6 4.6a.95.95 0 0 1-.7.275.95.95 0 0 1-.7-.275"
-          />
-        </svg>
-      </div>
+        <path
+          d="M8.7 17.3a.95.95 0 0 1-.275-.7q0-.425.275-.7l3.9-3.9-3.9-3.9a.95.95 0 0 1-.275-.7q0-.425.275-.7a.95.95 0 0 1 .7-.275q.425 0 .7.275l4.6 4.6q.15.15.213.325.062.175.062.375t-.062.375a.9.9 0 0 1-.213.325l-4.6 4.6a.95.95 0 0 1-.7.275.95.95 0 0 1-.7-.275"
+        />
+      </svg>
     </div>
     <ul
       aria-label="Spaces"
-      class="mx_AutoHideScrollbar mx_SpaceTreeLevel"
-      data-rbd-droppable-context-id="0"
+      class="_scrollbar_1d5jg_8 mx_AutoHideScrollbar mx_SpaceTreeLevel"
+      data-rbd-droppable-context-id="5"
       data-rbd-droppable-id="top-level-spaces"
       role="tree"
       tabindex="-1"
     >
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.971 3.54 7 3.889A2 2 0 0 1 21 9.177V19a2 2 0 0 1-2 2h-4v-9H9v9H5a2 2 0 0 1-2-2V9.177a2 2 0 0 1 1.029-1.748l7-3.89a2 2 0 0 1 1.942 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m8.566 17-.944 4.094q-.086.406-.372.656t-.687.25q-.543 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.801-3.5H3.158q-.572 0-.916-.484a1.27 1.27 0 0 1-.2-1.078 1.12 1.12 0 0 1 1.116-.938H6.85l1.145-5h-3.12q-.57 0-.915-.484a1.27 1.27 0 0 1-.2-1.078A1.12 1.12 0 0 1 4.875 7h3.691l.945-4.094q.085-.406.372-.656.286-.25.686-.25.544 0 .887.469.345.468.2 1.031l-.8 3.5h4.578l.944-4.094q.085-.406.372-.656.286-.25.687-.25.543 0 .887.469t.2 1.031L17.723 7h3.119q.573 0 .916.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937H17.15l-1.145 5h3.12q.57 0 .915.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937h-3.691l-.944 4.094q-.087.406-.373.656t-.686.25q-.544 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.8-3.5zm.573-2.5h4.578l1.144-5h-4.578z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.971 3.54 7 3.889A2 2 0 0 1 21 9.177V19a2 2 0 0 1-2 2h-4v-9H9v9H5a2 2 0 0 1-2-2V9.177a2 2 0 0 1 1.029-1.748l7-3.89a2 2 0 0 1 1.942 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m8.566 17-.944 4.094q-.086.406-.372.656t-.687.25q-.543 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.801-3.5H3.158q-.572 0-.916-.484a1.27 1.27 0 0 1-.2-1.078 1.12 1.12 0 0 1 1.116-.938H6.85l1.145-5h-3.12q-.57 0-.915-.484a1.27 1.27 0 0 1-.2-1.078A1.12 1.12 0 0 1 4.875 7h3.691l.945-4.094q.085-.406.372-.656.286-.25.686-.25.544 0 .887.469.345.468.2 1.031l-.8 3.5h4.578l.944-4.094q.085-.406.372-.656.286-.25.687-.25.543 0 .887.469t.2 1.031L17.723 7h3.119q.573 0 .916.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937H17.15l-1.145 5h3.12q.57 0 .915.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937h-3.691l-.944 4.094q-.087.406-.373.656t-.686.25q-.544 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.8-3.5zm.573-2.5h4.578l1.144-5h-4.578z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.971 3.54 7 3.889A2 2 0 0 1 21 9.177V19a2 2 0 0 1-2 2h-4v-9H9v9H5a2 2 0 0 1-2-2V9.177a2 2 0 0 1 1.029-1.748l7-3.89a2 2 0 0 1 1.942 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m8.566 17-.944 4.094q-.086.406-.372.656t-.687.25q-.543 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.801-3.5H3.158q-.572 0-.916-.484a1.27 1.27 0 0 1-.2-1.078 1.12 1.12 0 0 1 1.116-.938H6.85l1.145-5h-3.12q-.57 0-.915-.484a1.27 1.27 0 0 1-.2-1.078A1.12 1.12 0 0 1 4.875 7h3.691l.945-4.094q.085-.406.372-.656.286-.25.686-.25.544 0 .887.469.345.468.2 1.031l-.8 3.5h4.578l.944-4.094q.085-.406.372-.656.286-.25.687-.25.543 0 .887.469t.2 1.031L17.723 7h3.119q.573 0 .916.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937H17.15l-1.145 5h3.12q.57 0 .915.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937h-3.691l-.944 4.094q-.087.406-.373.656t-.686.25q-.544 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.8-3.5zm.573-2.5h4.578l1.144-5h-4.578z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.971 3.54 7 3.889A2 2 0 0 1 21 9.177V19a2 2 0 0 1-2 2h-4v-9H9v9H5a2 2 0 0 1-2-2V9.177a2 2 0 0 1 1.029-1.748l7-3.89a2 2 0 0 1 1.942 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m8.566 17-.944 4.094q-.086.406-.372.656t-.687.25q-.543 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.801-3.5H3.158q-.572 0-.916-.484a1.27 1.27 0 0 1-.2-1.078 1.12 1.12 0 0 1 1.116-.938H6.85l1.145-5h-3.12q-.57 0-.915-.484a1.27 1.27 0 0 1-.2-1.078A1.12 1.12 0 0 1 4.875 7h3.691l.945-4.094q.085-.406.372-.656.286-.25.686-.25.544 0 .887.469.345.468.2 1.031l-.8 3.5h4.578l.944-4.094q.085-.406.372-.656.286-.25.687-.25.543 0 .887.469t.2 1.031L17.723 7h3.119q.573 0 .916.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937H17.15l-1.145 5h3.12q.57 0 .915.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937h-3.691l-.944 4.094q-.087.406-.373.656t-.686.25q-.544 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.8-3.5zm.573-2.5h4.578l1.144-5h-4.578z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.971 3.54 7 3.889A2 2 0 0 1 21 9.177V19a2 2 0 0 1-2 2h-4v-9H9v9H5a2 2 0 0 1-2-2V9.177a2 2 0 0 1 1.029-1.748l7-3.89a2 2 0 0 1 1.942 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m8.566 17-.944 4.094q-.086.406-.372.656t-.687.25q-.543 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.801-3.5H3.158q-.572 0-.916-.484a1.27 1.27 0 0 1-.2-1.078 1.12 1.12 0 0 1 1.116-.938H6.85l1.145-5h-3.12q-.57 0-.915-.484a1.27 1.27 0 0 1-.2-1.078A1.12 1.12 0 0 1 4.875 7h3.691l.945-4.094q.085-.406.372-.656.286-.25.686-.25.544 0 .887.469.345.468.2 1.031l-.8 3.5h4.578l.944-4.094q.085-.406.372-.656.286-.25.687-.25.543 0 .887.469t.2 1.031L17.723 7h3.119q.573 0 .916.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937H17.15l-1.145 5h3.12q.57 0 .915.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937h-3.691l-.944 4.094q-.087.406-.373.656t-.686.25q-.544 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.8-3.5zm.573-2.5h4.578l1.144-5h-4.578z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12.971 3.54 7 3.889A2 2 0 0 1 21 9.177V19a2 2 0 0 1-2 2h-4v-9H9v9H5a2 2 0 0 1-2-2V9.177a2 2 0 0 1 1.029-1.748l7-3.89a2 2 0 0 1 1.942 0"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow mx_SpaceButton_withIcon"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m8.566 17-.944 4.094q-.086.406-.372.656t-.687.25q-.543 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.801-3.5H3.158q-.572 0-.916-.484a1.27 1.27 0 0 1-.2-1.078 1.12 1.12 0 0 1 1.116-.938H6.85l1.145-5h-3.12q-.57 0-.915-.484a1.27 1.27 0 0 1-.2-1.078A1.12 1.12 0 0 1 4.875 7h3.691l.945-4.094q.085-.406.372-.656.286-.25.686-.25.544 0 .887.469.345.468.2 1.031l-.8 3.5h4.578l.944-4.094q.085-.406.372-.656.286-.25.687-.25.543 0 .887.469t.2 1.031L17.723 7h3.119q.573 0 .916.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937H17.15l-1.145 5h3.12q.57 0 .915.484.343.485.2 1.079a1.12 1.12 0 0 1-1.116.937h-3.691l-.944 4.094q-.087.406-.373.656t-.686.25q-.544 0-.887-.469a1.18 1.18 0 0 1-.2-1.031l.8-3.5zm.573-2.5h4.578l1.144-5h-4.578z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_narrow collapsed"
+        data-rbd-draggable-context-id="5"
+        data-rbd-draggable-id="!room1:server"
+        role="treeitem"
+      >
+        <div
+          aria-describedby="rbd-hidden-text-5-hidden-text-16"
+          aria-label="Room 1"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow"
+          data-rbd-drag-handle-context-id="5"
+          data-rbd-drag-handle-draggable-id="!room1:server"
+          draggable="false"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <span
+                class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+                data-color="1"
+                data-testid="avatar-img"
+                data-type="round"
+                role="presentation"
+                style="--cpd-avatar-size: 32px;"
+              >
+                R
+              </span>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Space options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_narrow collapsed"
+        data-rbd-draggable-context-id="5"
+        data-rbd-draggable-id="!room2:server"
+        role="treeitem"
+      >
+        <div
+          aria-describedby="rbd-hidden-text-5-hidden-text-16"
+          aria-label="Room 2"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow"
+          data-rbd-drag-handle-context-id="5"
+          data-rbd-drag-handle-draggable-id="!room2:server"
+          draggable="false"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <span
+                class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+                data-color="2"
+                data-testid="avatar-img"
+                data-type="round"
+                role="presentation"
+                style="--cpd-avatar-size: 32px;"
+              >
+                R
+              </span>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Space options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_narrow collapsed"
+        data-rbd-draggable-context-id="5"
+        data-rbd-draggable-id="!room3:server"
+        role="treeitem"
+      >
+        <div
+          aria-describedby="rbd-hidden-text-5-hidden-text-16"
+          aria-label="Room 3"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow"
+          data-rbd-drag-handle-context-id="5"
+          data-rbd-drag-handle-draggable-id="!room3:server"
+          draggable="false"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <span
+                class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+                data-color="3"
+                data-testid="avatar-img"
+                data-type="round"
+                role="presentation"
+                style="--cpd-avatar-size: 32px;"
+              >
+                R
+              </span>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Space options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
       <li
         aria-selected="false"
         class="mx_SpaceItem mx_SpaceItem_new collapsed"
@@ -76,7 +848,7 @@ exports[`<SpacePanel /> should render as expected 1`] = `
           class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_new mx_SpaceButton_narrow mx_SpaceButton_withIcon"
           data-testid="create-space-button"
           role="button"
-          tabindex="0"
+          tabindex="-1"
         >
           <div
             class="mx_SpaceButton_selectionWrapper"
@@ -108,10 +880,46 @@ exports[`<SpacePanel /> should render as expected 1`] = `
         </div>
       </li>
     </ul>
+    <div
+      class="mx_ThreadsActivityCentre_container"
+    >
+      <button
+        aria-disabled="false"
+        aria-expanded="false"
+        aria-haspopup="menu"
+        aria-label="Threads"
+        class="_icon-button_1215g_8 mx_ThreadsActivityCentreButton"
+        data-kind="primary"
+        data-state="closed"
+        id="radix-react-use-id-2"
+        role="button"
+        style="--cpd-icon-button-size: 32px;"
+        tabindex="0"
+        type="button"
+      >
+        <div
+          class="_indicator-icon_147l5_17"
+          style="--cpd-icon-button-size: 100%;"
+        >
+          <svg
+            class="mx_ThreadsActivityCentreButton_Icon"
+            fill="currentColor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 3h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6l-2.293 2.293c-.63.63-1.707.184-1.707-.707V5a2 2 0 0 1 2-2m3 7h10q.424 0 .712-.287A.97.97 0 0 0 18 9a.97.97 0 0 0-.288-.713A.97.97 0 0 0 17 8H7a.97.97 0 0 0-.713.287A.97.97 0 0 0 6 9q0 .424.287.713Q6.576 10 7 10m0 4h6q.424 0 .713-.287A.97.97 0 0 0 14 13a.97.97 0 0 0-.287-.713A.97.97 0 0 0 13 12H7a.97.97 0 0 0-.713.287A.97.97 0 0 0 6 13q0 .424.287.713Q6.576 14 7 14"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
     <button
       aria-expanded="false"
       aria-label="Quick settings"
-      aria-labelledby="_r_c_"
+      aria-labelledby="react-use-id-3"
       class="_icon-button_1215g_8 mx_QuickSettingsButton"
       data-kind="primary"
       role="button"
@@ -136,8 +944,62 @@ exports[`<SpacePanel /> should render as expected 1`] = `
         </svg>
       </div>
     </button>
-    <div>
-      Mocked ChildComponent with text: 
+    <div
+      aria-expanded="false"
+      aria-label="lasuite_numerique"
+      class="mx_AccessibleButton mx_QuickSettingsButton"
+      role="button"
+      tabindex="0"
+    >
+      <svg
+        fill="tchap-gaufre-fill"
+        height="18"
+        width="18"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <path
+            d="M2.796.5c.469 0 .704 0 .892.064.351.12.627.397.748.748.064.188.064.423.064.892v.592c0 .469 0 .704-.064.892-.12.351-.397.627-.748.748-.188.064-.423.064-.892.064h-.592c-.469 0-.704 0-.892-.064a1.201 1.201 0 0 1-.748-.748C.5 3.5.5 3.265.5 2.796v-.592c0-.469 0-.704.064-.892.12-.351.397-.627.748-.748C1.5.5 1.735.5 2.204.5h.592Z"
+            fill="currentColor"
+            id="a"
+          />
+        </defs>
+        <use
+          href="#a"
+        />
+        <use
+          href="#a"
+          transform="translate(6.5)"
+        />
+        <use
+          href="#a"
+          transform="translate(13)"
+        />
+        <use
+          href="#a"
+          transform="translate(0 6.5)"
+        />
+        <use
+          href="#a"
+          transform="translate(6.5 6.5)"
+        />
+        <use
+          href="#a"
+          transform="translate(13 6.5)"
+        />
+        <use
+          href="#a"
+          transform="translate(0 13)"
+        />
+        <use
+          href="#a"
+          transform="translate(6.5 13)"
+        />
+        <use
+          href="#a"
+          transform="translate(13 13)"
+        />
+      </svg>
     </div>
   </nav>
 </div>

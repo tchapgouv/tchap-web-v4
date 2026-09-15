@@ -950,22 +950,30 @@ async function doLogout(client: MatrixClient, oauth: OAuth2 | null): Promise<voi
             client.stopClient();
             client.http.abort();
     }
-    // Only send premanent logout request to MAS if in web platform
-    if (window.__TAURI__) {
-        // standard element web, signout only current device
+
+ 
+    if (oauth) {
         await oauthLogout(client, oauth);
-        return;
+    } else {
+         await client.logout(true);
     }
 
-    const signoutRequest = (await oidcClientStore.createSignoutRequest()).url;
-    if (signoutRequest) {
-        console.log("**** Doing signout request logout to MAS");
-        client.stopClient();
-        client.http.abort();
-        window.location.href = signoutRequest;
-    } else {
-        await client.logout(true);
-    }
+    // TODO reimplement createSignoutRequest without oidc-client-ts lib
+    // Only send premanent logout request to MAS if in web platform
+    // if (window.__TAURI__) {
+    //     // standard element web, signout only current device
+    //     await oauthLogout(client, oauth!);
+    //     return;
+    // }
+    // const signoutRequest = (await oidcClientStore.createSignoutRequest()).url;
+    // if (signoutRequest) {
+    //     console.log("**** Doing signout request logout to MAS");
+    //     client.stopClient();
+    //     client.http.abort();
+    //     window.location.href = signoutRequest;
+    // } else {
+    //     await client.logout(true);
+    // }
     // end :TCHAP:
 }
 

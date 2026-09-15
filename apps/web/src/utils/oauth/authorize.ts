@@ -134,3 +134,15 @@ export const completeOAuthLogin = async (
         clientId: context.authContext.clientId,
     };
 };
+
+// :TCHAP: oidc-logout - logout from MAS TODO
+// export const createSignoutRequest = async (accessToken?: string, refreshToken?: string): Promise<string> => {
+//     const context = loadAuthContext();
+//     const oauth = await new OAuth2(context!.metadata, context!.authContext)
+//     oauth.
+//     return client.createSignoutRequest({
+//         id_token_hint: idToken,
+//         post_logout_redirect_uri: PlatformPeg.get()!.getOAuthCallbackUrl().href
+//     })
+// }
+// end :TCHAP: 

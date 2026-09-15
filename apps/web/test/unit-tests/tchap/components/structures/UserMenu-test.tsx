@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "jest-matrix-react";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import UnwrappedUserMenu from "~tchap-web/src/components/structures/UserMenu";
-import { TestSDKContext } from "test-utils";
+import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
 import { stubClient, wrapInSdkContext } from "~tchap-web/test/test-utils";
 
 describe("<UserMenu>", () => {

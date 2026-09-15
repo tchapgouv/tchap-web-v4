@@ -18,8 +18,7 @@ import {
     GET_LOGIN_TOKEN_CAPABILITY,
     type MatrixClient,
 } from "matrix-js-sdk/src/matrix";
-import { mocked, type MockedObject } from "jest-mock";
-import fetchMock from "@fetch-mock/jest";
+import { mocked, type MockedObject } from "jest-mock-vitest-adapter";
 
 import {
     clearAllModals,
@@ -29,11 +28,12 @@ import {
     mockClientMethodsServer,
     mockClientMethodsUser,
     mockPlatformPeg,
+    TestSDKContext,
 } from "~tchap-web/test/test-utils";
 import SessionManagerTab from "~tchap-web/src/components/views/settings/tabs/user/SessionManagerTab";
 import SettingsStore from "~tchap-web/src/settings/SettingsStore";
-import { SDKContext, SdkContextClass } from "~tchap-web/src/contexts/SDKContext";
-import { mockOpenIdConfiguration } from "matrix-js-sdk/src/testing";
+import { SDKContext } from "~tchap-web/src/contexts/SDKContext";
+import { makeDelegatedAuthMetadata } from "matrix-js-sdk/src/testing";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 
 // In tchap there is no much modification, exept on the QR code login that is not shown for now
@@ -73,7 +73,7 @@ describe("<SessionManagerTab />", () => {
     } as unknown as CryptoApi);
 
     let mockClient!: MockedObject<MatrixClient>;
-    let sdkContext: SdkContextClass;
+    let sdkContext: TestSDKContext;
 
     const defaultProps = {};
     const getComponent = (props = {}): React.ReactElement => (
@@ -130,8 +130,8 @@ describe("<SessionManagerTab />", () => {
             }
         });
 
-        sdkContext = new SdkContextClass();
-        sdkContext.client = mockClient;
+        sdkContext = new TestSDKContext();
+        sdkContext._client = mockClient;
 
         // @ts-ignore allow delete of non-optional prop
         delete window.location;
@@ -153,7 +153,6 @@ describe("<SessionManagerTab />", () => {
     describe("MSC4108 QR code login", () => {
         const settingsValueSpy = jest.spyOn(SettingsStore, "getValue");
         const issuer = "https://issuer.org";
-        const openIdConfiguration = mockOpenIdConfiguration(issuer);
 
         beforeEach(() => {
             settingsValueSpy.mockClear().mockReturnValue(true);
@@ -169,21 +168,15 @@ describe("<SessionManagerTab />", () => {
                     enabled: true,
                 },
             });
-            mockCrypto.exportSecretsBundle = jest.fn();
-            fetchMock.get(`${issuer}/.well-known/openid-configuration`, {
-                ...openIdConfiguration,
+            const delegatedAuthConfig = makeDelegatedAuthMetadata(issuer);
+            mockClient.getAuthMetadata.mockResolvedValue({
+                ...delegatedAuthConfig,
                 grant_types_supported: [
-                    ...openIdConfiguration.grant_types_supported,
+                    ...delegatedAuthConfig.grant_types_supported,
                     "urn:ietf:params:oauth:grant-type:device_code",
                 ],
             });
-            fetchMock.get(openIdConfiguration.jwks_uri!, {
-                status: 200,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                keys: [],
-            });
+            mockCrypto.exportSecretsBundle = jest.fn();
         });
 
         // in tchap we hide all those sections
