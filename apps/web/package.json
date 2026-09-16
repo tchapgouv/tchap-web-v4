@@ -37,6 +37,7 @@
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "nx test:unit",
         "test:vitest": "nx test:vitest",
+        "test:vitest:tchap": "nx test:vitest:tchap",
         "test:tchap": "nx test:unit:tchap --testPathPatterns=test/unit-tests/tchap/*/",
         "test:playwright": "nx test:playwright --",
         "test:playwright:open": "nx test:playwright -- --ui",

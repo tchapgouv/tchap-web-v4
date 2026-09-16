@@ -72,6 +72,11 @@
             "options": { "cwd": "apps/web" },
             "dependsOn": ["test:unit:prepare"]
         },
+        "test:vitest:tchap": {
+            "command": "vitest run -c ./vitest.tchap.config.ts",
+            "options": { "cwd": "apps/web" },
+            "dependsOn": ["test:unit:prepare"]
+        },
         "test:playwright": {
             "command": "playwright test",
             "options": { "cwd": "apps/web" },

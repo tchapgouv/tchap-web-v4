@@ -83,9 +83,6 @@ export function getEventDisplayInfo(
         eventType === EventType.RoomCreate ||
         eventType === EventType.RoomEncryption ||
         factory === JitsiEventFactory;
-    // :TCHAP:
-    // const isLeftAlignedBubbleMessage =
-    //     !isBubbleMessage && (eventType === EventType.CallInvite || ElementCallEventType.matches(eventType));
     const isLeftAlignedBubbleMessage =
         !isBubbleMessage &&
         (eventType === EventType.RTCNotification ||

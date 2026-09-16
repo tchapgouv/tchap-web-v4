@@ -613,7 +613,7 @@ export default function RoomHeader({
 
                             {isRoomEncrypted && historyVisibilityIcon(historyVisibility)}
                         </Text>
-                                {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
+                            {/* :tchap: customize-room-header-bar - Add external caption when room is open to external */}
                             <TchapRoomTypeRoomHeader room={room} isDM={isDirectMessage} />
                             {/* :tchap: end */}
                     </Box>

@@ -26,8 +26,6 @@ import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { PowerLevelSelector } from "../../PowerLevelSelector";
 import { ElementCallEventType, ElementCallMemberEventType } from "../../../../../call-types";
 import { objectClone } from "../../../../../utils/objects.ts";
-import SettingsStore from "~tchap-web/src/settings/SettingsStore.ts";
-import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature.ts";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -58,7 +56,7 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.RoomRedaction]: { isState: false, hideForSpace: true },
 
     // MSC3401: Native Group VoIP signaling
-    // [ElementCallEventType.name]: { isState: true, hideForSpace: true }, // :TCHAP: deprecated-call-event-permissions
+    [ElementCallEventType.name]: { isState: true, hideForSpace: true },
     [ElementCallMemberEventType.name]: { isState: true, hideForSpace: true },
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
