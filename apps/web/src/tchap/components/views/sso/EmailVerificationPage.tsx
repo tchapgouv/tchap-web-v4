@@ -31,7 +31,6 @@ import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfi
 import * as Email from "~tchap-web/src/email";
 import { startOAuthLogin } from "../../../../utils/oauth/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
-import { ISSOFlow, LoginFlow, OAUTH_AWARE_PREFERRED_FLOW_FIELD } from "matrix-js-sdk/src/matrix";
 
 interface IProps {
     //propagate the server config change
@@ -72,11 +71,6 @@ export default function EmailVerificationPage(props: IProps) {
         }
     };
 
-    const isSSOFlowActive = async (login: Login): Promise<boolean> => {
-        const flows = await login.getFlows();
-        return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.sso");
-    };
-
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         setLoading(true);
@@ -109,7 +103,6 @@ export default function EmailVerificationPage(props: IProps) {
             });
 
             const loginFlows = await login.getFlows(false);
-            console.log("**** flows", loginFlows);
             const flowOauth = loginFlows.find((flow) => flow.type === "oauthNativeFlow")! as OAuthNativeFlow;
             await startOAuthLogin(
                 validatedServerConfig.delegatedAuthentication!,

@@ -14,22 +14,15 @@ import { vi, describe, it, expect, beforeEach, afterEach, type Mocked } from "vi
 import React from "react";
 import { CallType, type MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import {
-    EventType,
-    JoinRule,
     MatrixEvent,
     PendingEventOrdering,
     Room,
-    RoomStateEvent,
     RoomMember,
     type MatrixClient,
     ClientEvent,
 } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
-import { CryptoEvent, UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 import {
-    act,
-    createEvent,
-    fireEvent,
     getAllByLabelText,
     getByLabelText,
     getByText,
@@ -39,7 +32,6 @@ import {
     screen,
     waitFor,
 } from "test-utils-rtl";
-import { type ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 import userEvent from "@testing-library/user-event";
 import { filterConsole, setupAsyncStoreWithClient, stubClient } from "test-utils";
 
@@ -68,7 +60,6 @@ import { SDKContextClass } from "../../../../contexts/SDKContextClass.ts";
 import TchapUIFeature from "../../../..//tchap/util/TchapUIFeature.ts";
 import TchapRoomUtils from "../../../../tchap/util/TchapRoomUtils.ts";
 import { TchapRoomType } from "../../../../tchap/@types/tchap.ts";
-import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 import Modal from "../../../../Modal.tsx";
 
 vi.mock("../../../../utils/ShieldUtils");
@@ -143,7 +134,23 @@ describe("RoomHeader", () => {
             TchapUIFeature,
             "isFeatureActiveForHomeserver",
         ).mockReturnValue(true);
+
+        // make calls work
+        vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
+            if (key === ElementCallMemberEventType.name) return true;
+            return false;
+        });
         await setupAsyncStoreWithClient(CallStore.instance, client);
+        vi.spyOn(CallStore.instance, "getConfiguredRTCTransports").mockReturnValue([{ 
+            type: "livekit",
+            livekit_service_url: "https://livekit"
+        }])
+
+        vi.spyOn(Modal, "createDialog").mockReturnValue({
+            finished: Promise.resolve([true]),
+            close: vi.fn(),
+        });
+         vi.spyOn(TchapRoomUtils, "getTchapRoomType").mockImplementation(() => Promise.resolve(TchapRoomType.Private));
     });
 
     afterEach(() => {
@@ -251,17 +258,6 @@ describe("RoomHeader", () => {
     });
 
     it("should not show voice call button in rooms larger than 2 members", async () => {
-        vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-            if (key === ElementCallMemberEventType.name) return true;
-            return false;
-        });
-        SdkConfig.put({
-            tchap_features: {
-                "feature_audio_call": ["*"],
-                "feature_video_call": ["*"],
-                "feature_video_group_call": ["*"]
-            }
-        });
         mockRoomMembers(room, 3);
         render(<RoomHeader room={room} />, getWrapper());
 
@@ -270,852 +266,420 @@ describe("RoomHeader", () => {
         expect(screen.queryByRole("button", { name: "Voice call" })).not.toBeInTheDocument();
     });
 
-    // describe("UIFeature.Voip disabled", () => {
-    //     beforeEach(() => {
-    //         SdkConfig.put({
-    //             setting_defaults: {
-    //                 [UIFeature.Voip]: false,
-    //             },
-    //         });
-    //     });
-
-    //     afterEach(() => {
-    //         SdkConfig.reset();
-    //         vi.restoreAllMocks();
-    //     });
-
-    //     it("should not show call buttons in rooms smaller than 3 members", async () => {
-    //         mockRoomMembers(room, 2);
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(screen.queryByRole("button", { name: "Video call" })).not.toBeInTheDocument();
-    //         expect(screen.queryByRole("button", { name: "Voice call" })).not.toBeInTheDocument();
-    //     });
-
-    //     it("should not show call button in rooms larger than 2 members", async () => {
-    //         mockRoomMembers(room, 3);
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(screen.queryByRole("button", { name: "Video call" })).not.toBeInTheDocument();
-    //         expect(screen.queryByRole("button", { name: "Voice call" })).not.toBeInTheDocument();
-    //     });
-    // });
-
-    // describe("UIFeature.Widgets enabled (default)", () => {
-    //     beforeEach(() => {
-    //         SdkConfig.put({
-    //             setting_defaults: {
-    //                 [UIFeature.Widgets]: true,
-    //             },
-    //         });
-    //     });
-
-    //     afterEach(() => {
-    //         SdkConfig.reset();
-    //     });
-
-    //     it("should show call buttons in a room with 2 members", () => {
-    //         mockRoomMembers(room, 2);
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoButton).toBeInTheDocument();
-    //     });
-
-    //     it("should show call buttons in a room with more than 2 members", () => {
-    //         mockRoomMembers(room, 3);
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoButton).toBeInTheDocument();
-    //     });
-    // });
-
-    // describe("UIFeature.Widgets disabled", () => {
-    //     beforeEach(() => {
-    //         SdkConfig.put({
-    //             setting_defaults: {
-    //                 [UIFeature.Widgets]: false,
-    //             },
-    //         });
-    //     });
-
-    //     afterEach(() => {
-    //         SdkConfig.reset();
-    //     });
-
-    //     it("should show call buttons in a room with 2 members", () => {
-    //         mockRoomMembers(room, 2);
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoButton).toBeInTheDocument();
-    //     });
-
-    //     it("should not show call buttons in a room with more than 2 members", () => {
-    //         mockRoomMembers(room, 3);
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         expect(queryByLabelText(container, "Video call")).not.toBeInTheDocument();
-    //     });
-    // });
-
-    // describe("groups call disabled", () => {
-    //     beforeEach(() => {
-    //         SdkConfig.put({
-    //             setting_defaults: {
-    //                 [UIFeature.Widgets]: true,
-    //             },
-    //         });
-    //     });
-
-    //     afterEach(() => {
-    //         SdkConfig.reset();
-    //     });
-
-    //     it("you can call when you're two in the room", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 2);
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const voiceButton = screen.getByRole("button", { name: "Voice call" });
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(voiceButton).not.toHaveAttribute("aria-disabled", "true");
-    //         expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
-
-    //         const placeCallSpy = vi.spyOn(SDKContextClass.instance.legacyCallHandler, "placeCall");
-
-    //         await user.click(voiceButton);
-    //         expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
-    //         await user.click(videoButton);
-    //         expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
-    //     });
-
-    //     it("you can't call if there's already a call", () => {
-    //         mockRoomMembers(room, 2);
-    //         vi.spyOn(SDKContextClass.instance.legacyCallHandler, "getCallForRoom").mockReturnValue(
-    //             // The JS-SDK does not export the class `MatrixCall` only the type
-    //             {} as MatrixCall,
-    //         );
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         for (const button of getAllByLabelText(container, "Ongoing call")) {
-    //             expect(button).toHaveAttribute("aria-disabled", "true");
-    //         }
-    //     });
-
-    //     it("can call in large rooms if able to edit widgets", () => {
-    //         mockRoomMembers(room, 10);
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const videoCallButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoCallButton).not.toHaveAttribute("aria-disabled", "true");
-    //     });
-
-    //     it("disable calls in large rooms by default", () => {
-    //         mockRoomMembers(room, 10);
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         expect(
-    //             getByLabelText(document.body, "You do not have permission to start video calls", {
-    //                 selector: "button",
-    //             }),
-    //         ).toHaveAttribute("aria-disabled", "true");
-    //     });
-    // });
-
-    // describe("group call enabled", () => {
-    //     beforeEach(async () => {
-    //         SdkConfig.put({
-    //             tchap_features: {
-    //                 "feature_video_group_call": ["*"],
-    //                 "feature_audio_call": ["*"],
-    //                 "feature_video_call": ["*"],
-    //             }
-    //         });
-    //         // Enable Element Call
-    //         client._unstable_getRTCTransports = vi
-    //             .fn()
-    //             .mockResolvedValue([{ type: "livekit", livekit_service_url: "https://example.org" }]);
-    //         // And ensure the CallStore has the transports configured.
-    //         await setupAsyncStoreWithClient(CallStore.instance, client);
-    //     });
-
-    //     afterEach(() => {
-    //         SdkConfig.reset();
-    //         vi.restoreAllMocks();
-    //     });
-
-    //     it("renders only the video call element", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 3);
-    //         SdkConfig.add({
-    //             element_call: {
-    //                 use_exclusively: true,
-    //             },
-    //         });
-    //         // allow element calls
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(screen.queryByTitle("Voice call")).toBeNull();
-
-    //         const videoCallButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoCallButton).not.toHaveAttribute("aria-disabled", "true");
-
-    //         const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
-
-    //         await user.click(videoCallButton);
-    //         expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
-    //     });
-
-    //     it("can't call if there's an ongoing (pinned) call", () => {
-    //         SdkConfig.add({
-    //             element_call: {
-    //                 use_exclusively: true,
-    //             },
-    //         });
-    //         // allow element calls
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-    //         vi.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
-    //         const widget = { type: "m.jitsi" } as IApp;
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue({
-    //             widget,
-    //             on: () => {},
-    //             off: () => {},
-    //         } as unknown as Call);
-    //         vi.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         // Voice and video
-    //         for (const button of screen.getAllByRole("button", { name: "Ongoing call" })) {
-    //             expect(button).toHaveAttribute("aria-disabled", "true");
-    //         }
-    //     });
-
-    //     it("clicking on ongoing (unpinned) call re-pins it", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 3);
-    //         SdkConfig.add({
-    //             element_call: { disable: true }, // This test is about Jitsi widget re-pinning, not Element Call
-    //             setting_defaults: {
-    //                 [UIFeature.Widgets]: true,
-    //             },
-    //         });
-    //         // allow calls
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-    //         vi.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);
-    //         const spy = vi.spyOn(WidgetLayoutStore.instance, "moveToContainer");
-
-    //         const widget = { type: "m.jitsi" } as IApp;
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue({
-    //             widget,
-    //             on: () => {},
-    //             off: () => {},
-    //         } as unknown as Call);
-    //         vi.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
-    //         await user.click(videoButton);
-    //         expect(spy).toHaveBeenCalledWith(room, widget, "top");
-    //     });
-
-    //     it("disables calling if there's a jitsi call", () => {
-    //         mockRoomMembers(room, 2);
-    //         vi.spyOn(SDKContextClass.instance.legacyCallHandler, "getCallForRoom").mockReturnValue(
-    //             // The JS-SDK does not export the class `MatrixCall` only the type
-    //             {} as MatrixCall,
-    //         );
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         for (const button of getAllByLabelText(container, "Ongoing call")) {
-    //             expect(button).toHaveAttribute("aria-disabled", "true");
-    //         }
-    //     });
-
-    //     it("calls using legacy or jitsi", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 2);
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-    //             if (key === "im.vector.modular.widgets") return true;
-    //             return false;
-    //         });
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const voiceButton = screen.getByRole("button", { name: "Voice call" });
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(voiceButton).not.toHaveAttribute("aria-disabled", "true");
-    //         expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
-
-    //         const placeCallSpy = vi.spyOn(SDKContextClass.instance.legacyCallHandler, "placeCall");
-    //         await user.click(voiceButton);
-    //         expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
-    //         await user.click(videoButton);
-    //         expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
-    //     });
-
-    //     it("calls using legacy or jitsi for large rooms", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 3);
-
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-    //             if (key === "im.vector.modular.widgets") return true;
-    //             return false;
-    //         });
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
-
-    //         const placeCallSpy = vi.spyOn(SDKContextClass.instance.legacyCallHandler, "placeCall");
-    //         await user.click(videoButton);
-    //         expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
-    //     });
-
-    //     it("calls using element call for large rooms", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 3);
-
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-    //             if (key === ElementCallMemberEventType.name) return true;
-    //             return false;
-    //         });
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const videoButton = screen.getByRole("button", { name: "Video call" });
-    //         expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
-
-    //         const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
-    //         await user.click(videoButton);
-    //         expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
-    //     });
-
-    //     it("buttons are disabled if there is an ongoing call", async () => {
-    //         mockRoomMembers(room, 3);
-
-    //         vi.spyOn(CallStore.prototype, "connectedCalls", "get").mockReturnValue(
-    //             new Set([{ roomId: "some_other_room" } as Call]),
-    //         );
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         const [videoButton] = getAllByLabelText(container, "Ongoing call");
-
-    //         expect(videoButton).toHaveAttribute("aria-disabled", "true");
-    //     });
-
-    //     it("join video call button is shown if there is an ongoing call", async () => {
-    //         mockRoomMembers(room, 3);
-    //         // Mock CallStore to return a call with 3 participants
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3));
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         const joinButton = getByLabelText(document.body, "Join video call");
-    //         expect(joinButton).not.toHaveAttribute("aria-disabled", "true");
-    //     });
-
-    //     it("join voice call button is shown if there is an ongoing call", async () => {
-    //         mockRoomMembers(room, 3);
-    //         // Mock CallStore to return a call with 3 participants
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3, CallType.Voice));
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         const joinButton = getByLabelText(document.body, "Join voice call");
-    //         expect(joinButton).not.toHaveAttribute("aria-disabled", "true");
-    //     });
-
-    //     it("clicking the join button of an ongoing video call joins as a video call", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 3);
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3, CallType.Video, true));
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
-    //         await user.click(getByLabelText(document.body, "Join video call"));
-
-    //         expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true, voiceOnly: false }));
-    //     });
-
-    //     it("clicking the join button of an ongoing voice call joins as a voice call", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 3);
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3, CallType.Voice, true));
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
-    //         await user.click(getByLabelText(document.body, "Join voice call"));
-
-    //         expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true, voiceOnly: true }));
-    //     });
-
-    //     it("join button is disabled if there is an other ongoing call", async () => {
-    //         mockRoomMembers(room, 3);
-    //         // Mock CallStore to return a call with 3 participants
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3));
-    //         vi.spyOn(CallStore.prototype, "connectedCalls", "get").mockReturnValue(
-    //             new Set([{ roomId: "some_other_room" } as Call]),
-    //         );
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         const joinButton = getByLabelText(document.body, "Ongoing call");
-
-    //         expect(joinButton).toHaveAttribute("aria-disabled", "true");
-    //     });
-
-    //     it("close lobby button is shown", async () => {
-    //         mockRoomMembers(room, 3);
-
-    //         mockRoomViewStore.isViewingCall.mockReturnValue(true);
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         expect(getByLabelText(document.body, "Close lobby")).toBeVisible();
-    //     });
-
-    //     it("close lobby button is shown if there is an ongoing call but we are viewing the lobby", async () => {
-    //         mockRoomMembers(room, 3);
-    //         // Mock CallStore to return a call with 3 participants
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3));
-    //         mockRoomViewStore.isViewingCall.mockReturnValue(true);
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         expect(getByLabelText(document.body, "Close lobby")).toBeVisible();
-    //     });
-
-    //     it("don't show external conference button if the call is not shown", () => {
-    //         mockRoomViewStore.isViewingCall.mockReturnValue(false);
-    //         vi.spyOn(SdkConfig, "get").mockImplementation((key) => {
-    //             return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
-    //         });
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         expect(screen.queryByLabelText(_t("voip|get_call_link"))).not.toBeInTheDocument();
-
-    //         mockRoomViewStore.isViewingCall.mockReturnValue(true);
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(getByLabelText(document.body, _t("voip|get_call_link"))).toBeInTheDocument();
-    //     });
-
-    //     it("gives the option of element call or legacy calling for video", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 2);
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-    //             if (key === ElementCallMemberEventType.name) return true;
-    //             return false;
-    //         });
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const button = screen.getByRole("button", { name: "Video call" });
-    //         expect(button).not.toHaveAttribute("aria-disabled", "true");
-    //         await user.click(button);
-    //         const elementCallButton = screen.getByRole("menuitem", { name: "Element Call" });
-    //         const legacyCallButton = screen.getByRole("menuitem", { name: "Legacy Call" });
-    //         expect(elementCallButton).toBeInTheDocument();
-    //         expect(legacyCallButton).toBeInTheDocument();
-    //     });
-    //     it("gives the option of element call or legacy calling for voice in DM rooms", async () => {
-    //         const user = userEvent.setup();
-    //         mockRoomMembers(room, 2);
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-    //             if (key === ElementCallMemberEventType.name) return true;
-    //             return false;
-    //         });
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         const button = screen.getByRole("button", { name: "Voice call" });
-    //         expect(button).not.toHaveAttribute("aria-disabled", "true");
-    //         await user.click(button);
-    //         const elementCallButton = screen.getByRole("menuitem", { name: "Element Call" });
-    //         const legacyCallButton = screen.getByRole("menuitem", { name: "Legacy Call" });
-    //         expect(elementCallButton).toBeInTheDocument();
-    //         expect(legacyCallButton).toBeInTheDocument();
-    //     });
-    // });
-
-
-    // it("does not show a user status for non-DM rooms", async () => {
-    //     await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, true);
-    //     vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
-    //     vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
-
-    //     render(<RoomHeader room={room} />, getWrapper());
-
-    //     expect(screen.queryByText("on a horse")).not.toBeInTheDocument();
-    //     expect(client.doesServerSupportExtendedProfiles).not.toHaveBeenCalled();
-    // });
-
-    // it("shows a history icon if the room is encrypted and has shared history", async () => {
-    //     vi.mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
-    //     await room.addLiveEvents(
-    //         [
-    //             new MatrixEvent({
-    //                 type: "m.room.history_visibility",
-    //                 content: { history_visibility: "shared" },
-    //                 sender: MatrixClientPeg.get()!.getSafeUserId(),
-    //                 state_key: "",
-    //                 room_id: room.roomId,
-    //             }),
-    //         ],
-    //         { addToState: true },
-    //     );
-
-    //     render(<RoomHeader room={room} />, getWrapper());
-    //     await waitFor(() => expect(getByLabelText(document.body, "New members see history")).toBeVisible());
-    // });
-
-    // it("shows a user icon if the room is encrypted and has world readable history", async () => {
-    //     vi.mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
-    //     await room.addLiveEvents(
-    //         [
-    //             new MatrixEvent({
-    //                 type: "m.room.history_visibility",
-    //                 content: { history_visibility: "world_readable" },
-    //                 sender: MatrixClientPeg.get()!.getSafeUserId(),
-    //                 state_key: "",
-    //                 room_id: room.roomId,
-    //             }),
-    //         ],
-    //         { addToState: true },
-    //     );
-
-    //     render(<RoomHeader room={room} />, getWrapper());
-    //     await waitFor(() => expect(getByLabelText(document.body, "Anyone can see history")).toBeVisible());
-    // });
-
-    // describe("dm", () => {
-    //     beforeEach(() => {
-    //         // Make the mocked room a DM
-    //         vi.mocked(DMRoomMap.shared().getUserIdForRoomId).mockImplementation((roomId) => {
-    //             if (roomId === room.roomId) return "@user:example.com";
-    //         });
-    //         room.getMember = vi.fn((userId) => new RoomMember(room.roomId, userId));
-    //         room.getJoinedMembers = vi.fn().mockReturnValue([
-    //             {
-    //                 userId: "@me:example.org",
-    //                 name: "Member",
-    //                 rawDisplayName: "Member",
-    //                 roomId: room.roomId,
-    //                 membership: KnownMembership.Join,
-    //                 getAvatarUrl: () => "mxc://avatar.url/image.png",
-    //                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-    //             },
-    //             {
-    //                 userId: "@bob:example.org",
-    //                 name: "Other Member",
-    //                 rawDisplayName: "Other Member",
-    //                 roomId: room.roomId,
-    //                 membership: KnownMembership.Join,
-    //                 getAvatarUrl: () => "mxc://avatar.url/image.png",
-    //                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-    //             },
-    //         ]);
-    //     });
-
-    //     afterEach(() => {
-    //         SdkConfig.reset();
-    //     });
-
-    //     it("shows the user status", async () => {
-    //         await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, true);
-    //         vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
-    //         vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         await waitFor(() => expect(screen.getByText("on a horse")).toBeInTheDocument());
-    //         expect(screen.getByText("🐎")).toBeInTheDocument();
-    //     });
-
-    //     it("updates user status when it changes", async () => {
-    //         await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, true);
-    //         vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
-    //         vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐴", text: "is a horse" });
-    //         client.emit(ClientEvent.UserProfileUpdate, "@bob:example.org", { emoji: "🐴", text: "is a horse" });
-
-    //         await waitFor(() => expect(screen.getByText("is a horse")).toBeInTheDocument());
-    //         expect(screen.getByText("🐴")).toBeInTheDocument();
-    //     });
-
-    //     it("does not show the user status when the feature is disabled", async () => {
-    //         await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, false);
-    //         vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
-    //         vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(screen.queryByText("on a horse")).not.toBeInTheDocument();
-    //         expect(client.doesServerSupportExtendedProfiles).not.toHaveBeenCalled();
-    //     });
-
-    //     it("does not show the face pile for DMs", () => {
-    //         SdkConfig.put({
-    //             features: {
-    //                 feature_notifications: false,
-    //             },
-    //         });
-    //         const { asFragment } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(asFragment()).toMatchSnapshot();
-    //     });
-    // });
-
-    // it("renders legacy additionalButtons", async () => {
-    //     const additionalButtons: ViewRoomOpts["buttons"] = [
-    //         {
-    //             icon: () => <>test-icon</>,
-    //             id: "test-id",
-    //             label: () => "test-label",
-    //             onClick: () => {},
-    //         },
-    //     ];
-    //     render(<RoomHeader room={room} legacyAdditionalButtons={additionalButtons} />, getWrapper());
-    //     expect(screen.getByRole("button", { name: "test-label" })).toBeInTheDocument();
-    // });
-
-    // it("calls onClick-callback on legacyAdditionalButtons", () => {
-    //     const callback = vi.fn();
-    //     const additionalButtons: ViewRoomOpts["buttons"] = [
-    //         {
-    //             icon: () => <>test-icon</>,
-    //             id: "test-id",
-    //             label: () => "test-label",
-    //             onClick: callback,
-    //         },
-    //     ];
-
-    //     render(<RoomHeader room={room} legacyAdditionalButtons={additionalButtons} />, getWrapper());
-
-    //     const button = screen.getByRole("button", { name: "test-label" });
-    //     const event = createEvent.click(button);
-    //     event.stopPropagation = vi.fn();
-    //     fireEvent(button, event);
-
-    //     expect(callback).toHaveBeenCalled();
-    //     expect(event.stopPropagation).toHaveBeenCalled();
-    // });
-
-    // describe("ask to join disabled", () => {
-    //     it("does not render the RoomKnocksBar", () => {
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         expect(screen.queryByRole("heading", { name: "Asking to join" })).not.toBeInTheDocument();
-    //     });
-    // });
-
-    // describe("ask to join enabled", () => {
-    //     it("does render the RoomKnocksBar", async () => {
-    //         await SettingsStore.setValue("feature_ask_to_join", null, SettingLevel.DEVICE, true);
-    //         vi.spyOn(room, "canInvite").mockReturnValue(true);
-    //         vi.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
-    //         vi.spyOn(room, "getMembersWithMembership").mockReturnValue([new RoomMember(room.roomId, "@foo")]);
-
-    //         render(<RoomHeader room={room} />, getWrapper());
-    //         expect(screen.getByRole("heading", { name: "Asking to join" })).toBeInTheDocument();
-    //     });
-    // });
-
-    // it("should open room settings when clicking the room avatar", async () => {
-    //     const user = userEvent.setup();
-    //     render(<RoomHeader room={room} />, getWrapper());
-
-    //     const dispatcherSpy = vi.spyOn(dispatcher, "dispatch");
-    //     await user.click(getByLabelText(document.body, "Open room settings"));
-    //     expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ action: "open_room_settings" }));
-    // });
-
-    // describe("Tchap custo", () => {
-    //     it("should render as expected", async () => {
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         expect(container).toMatchSnapshot();
-    //     });
-
-    //     it("renders the room header", () => {
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         expect(container).toHaveTextContent(ROOM_ID);
-    //     });
-
-    //     it("display well the thread button when feature is activated", () => {
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(screen.queryByRole("button", { name: "Threads" })).toBeInTheDocument();
-    //     });
-
-    //     it("hides the thread button when feature is deactivated", () => {
-    //         render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(screen.queryByRole("button", { name: "Threads" })).not.toBeInTheDocument();
-    //     });
-
-    //     // For 1 to 1 video call
-    //     it("display well the video button when feature is activated for 1v1 call and has permission to send state event", () => {
-    //         mockRoomMembers(room, 2);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(queryByLabelText(container, "Video call")).toBeInTheDocument();
-    //     });
-
-    //     it("hides the video button when feature is deactivated for 1v1 call", () => {
-    //         vi.spyOn(
-    //             TchapUIFeature,
-    //             "isFeatureActiveForHomeserver",
-    //         ).mockReturnValue(false);
-    //         mockRoomMembers(room, 2);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(queryByLabelText(container, "Video call")).toBeNull();
-    //     });
-
-    //     it("hides the video button when feature is activated but is not a direct message room", () => {
-    //         mockRoomMembers(room, 4);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(queryByLabelText(container, "Video call")).toBeNull();
-    //     });
-
-    //     // for video group element call button
-    //     it("display well the video group button when feature is activated", () => {
-
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
-    //         mockRoomMembers(room, 4);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(getByLabelText(container, "Video call")).toBeInTheDocument();
-    //     });
-
-    //     it("hides the video group when feature is deactivated", () => {
-    //         vi.spyOn(
-    //             TchapUIFeature,
-    //             "isFeatureActiveForHomeserver",
-    //         ).mockReturnValue(false);
-
-    //         mockRoomMembers(room, 4);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(queryByLabelText(container, "Video call")).toBeNull();
-    //     });
-
-    //     it("hides the video group when feature is activated but it is a forum", () => {
-    //         vi.spyOn(TchapRoomUtils, "getTchapRoomType").mockImplementation(() => Promise.resolve(TchapRoomType.Forum));
-
-    //         vi.spyOn(
-    //             TchapUIFeature,
-    //             "isFeatureActiveForHomeserver",
-    //         ).mockReturnValue(false);
-
-    //         mockRoomMembers(room, 4);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(queryByLabelText(container, "Video call")).toBeNull();
-    //     });
-
-    //     it("disables the video group when feature is activated user as not the right permissions", () => {
-    //         mockRoomMembers(room, 4);
-    //         // give  lower permissions to the user
-    //         vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         expect(queryByLabelText(container, "Video call")).toBeNull();
-    //     });
-
-    //     // // :TCHAP: flow-legacy-call-element-call
-    //     it("Start legacy call when there is only two users in the room", async () => {
-    //         mockRoomMembers(room, 2);
-    //         const placeCallSpy = vi.spyOn(SDKContextClass.instance.legacyCallHandler, "placeCall");
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         const videoButton = getByLabelText(container, "Video call");
-
-    //         const user = userEvent.setup();
-    //         // Click the video call button
-    //         await user.click(videoButton);
-
-    //         // confirmation Modal should display
-    //         expect(Modal.createDialog).toHaveBeenCalledWith(QuestionDialog, {
-    //             button: "Continue",
-    //             cancelButton: "Cancel",
-    //             description: (
-    //                 <div>
-    //                     <p>voip</p>
-    //                 </div>
-    //             ),
-    //             title: "voip",
-    //         });
-
-    //         // placeCall to have been called with PlatformCallType.LegacyCall so only two params, legacy call is not given
-    //         expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
-    //     });
-
-    //     it("directly start legacy call when it is a DM room and element call is enabled, no modale confirmation", async () => {
-    //         mockRoomMembers(room, 2);
-
-    //         const placeCallSpy = vi.spyOn(SDKContextClass.instance.legacyCallHandler, "placeCall");
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         const videoButton = getByLabelText(container, "Video call");
-
-    //         const user = userEvent.setup();
-    //         // Click the video call button
-    //         await user.click(videoButton);
-
-    //         // placeCall to have been called with PlatformCallType.LegacyCall
-    //         expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
-    //     });
-
-    //     it("directly start element call when there is more than two users in the room", async () => {
-    //         mockRoomMembers(room, 4);
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-    //         const videoButton = getByLabelText(container, "Video call");
-    //         screen.debug();
-    //         const user = userEvent.setup();
-    //         // Click the video call button
-    //         await user.click(videoButton);
-
-    //         // confirmation Modal should display
-    //         await waitFor(() =>
-    //             expect(Modal.createDialog).toHaveBeenCalledWith(QuestionDialog, {
-    //                 button: "Continue",
-    //                 cancelButton: "Cancel",
-    //                 description: (
-    //                     <div>
-    //                         <p>voip</p>
-    //                     </div>
-    //                 ),
-    //                 title: "voip",
-    //             }),
-    //         );
-    //         const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
-
-    //         waitFor(() => expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true })));
-    //     });
-
-    //     it("should not display modal if the call has been started and it is a join state", async () => {
-    //         // mock call already started with participant
-    //         vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 4));
-
-    //         const spy = vi.spyOn(WidgetLayoutStore.instance, "moveToContainer");
-
-    //         mockRoomMembers(room, 4);
-
-    //         const { container } = render(<RoomHeader room={room} />, getWrapper());
-
-    //         const videoJoinButton = getByLabelText(container, "Join video call");
-
-    //         const user = userEvent.setup();
-    //         // Click the video call button
-    //         await user.click(videoJoinButton);
-
-    //         // confirmation Modal should not display on join call
-    //         expect(Modal.createDialog).not.toHaveBeenCalled();
-    //         // element call is not using place call anymore, but widget
-    //         await waitFor(() => expect(spy).toHaveBeenCalledWith(room, { id: "test-widget" }, expect.anything()));
-    //     });
-    // })
+    describe("UIFeature.Voip disabled", () => {
+        beforeEach(() => {
+            SdkConfig.put({
+                setting_defaults: {
+                    [UIFeature.Voip]: false,
+                },
+            });
+        });
+
+        afterEach(() => {
+            SdkConfig.reset();
+            vi.restoreAllMocks();
+        });
+
+        it("should not show call buttons in rooms smaller than 3 members", async () => {
+            mockRoomMembers(room, 2);
+            render(<RoomHeader room={room} />, getWrapper());
+
+            expect(screen.queryByRole("button", { name: "Video call" })).not.toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Voice call" })).not.toBeInTheDocument();
+        });
+
+        it("should not show call button in rooms larger than 2 members", async () => {
+            mockRoomMembers(room, 3);
+            render(<RoomHeader room={room} />, getWrapper());
+
+            expect(screen.queryByRole("button", { name: "Video call" })).not.toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Voice call" })).not.toBeInTheDocument();
+        });
+    });
+
+    describe("UIFeature.Widgets enabled (default)", () => {
+        beforeEach(() => {
+            SdkConfig.put({
+                setting_defaults: {
+                    [UIFeature.Widgets]: true,
+                },
+            });
+        });
+
+        afterEach(() => {
+            SdkConfig.reset();
+        });
+
+        it("should show call buttons in a room with 2 members", () => {
+            mockRoomMembers(room, 2);
+            render(<RoomHeader room={room} />, getWrapper());
+            const videoButton = screen.getByRole("button", { name: "Video call" });
+            expect(videoButton).toBeInTheDocument();
+        });
+
+        it("should show call buttons in a room with more than 2 members", () => {
+            mockRoomMembers(room, 3);
+            render(<RoomHeader room={room} />, getWrapper());
+            const videoButton = screen.getByRole("button", { name: "Video call" });
+            expect(videoButton).toBeInTheDocument();
+        });
+    });
+
+    describe("groups call disabled", () => {
+        beforeEach(() => {
+            SdkConfig.put({
+                setting_defaults: {
+                    [UIFeature.Widgets]: true,
+                },
+            });
+        });
+
+        afterEach(() => {
+            SdkConfig.reset();
+        });
+
+        it("you can't call if there's already a call", () => {
+            mockRoomMembers(room, 2);
+            vi.spyOn(SDKContextClass.instance.legacyCallHandler, "getCallForRoom").mockReturnValue(
+                // The JS-SDK does not export the class `MatrixCall` only the type
+                {} as MatrixCall,
+            );
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            for (const button of getAllByLabelText(container, "Ongoing call")) {
+                expect(button).toHaveAttribute("aria-disabled", "true");
+            }
+        });
+
+        it("can call in large rooms if able to edit widgets", () => {
+            mockRoomMembers(room, 10);
+            vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            render(<RoomHeader room={room} />, getWrapper());
+
+            const videoCallButton = screen.getByRole("button", { name: "Video call" });
+            expect(videoCallButton).not.toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("disable calls in large rooms by default", () => {
+            mockRoomMembers(room, 10);
+            vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
+            render(<RoomHeader room={room} />, getWrapper());
+            expect(
+                getByLabelText(document.body, "You do not have permission to start video calls", {
+                    selector: "button",
+                }),
+            ).toHaveAttribute("aria-disabled", "true");
+        });
+    });
+
+    describe("group call enabled", () => {
+        beforeEach(async () => {
+            SdkConfig.put({
+                tchap_features: {
+                    "feature_video_group_call": ["*"],
+                    "feature_audio_call": ["*"],
+                    "feature_video_call": ["*"],
+                }
+            });
+            // Enable Element Call
+            client._unstable_getRTCTransports = vi
+                .fn()
+                .mockResolvedValue([{ type: "livekit", livekit_service_url: "https://example.org" }]);
+            // And ensure the CallStore has the transports configured.
+            await setupAsyncStoreWithClient(CallStore.instance, client);
+        });
+
+        afterEach(() => {
+            SdkConfig.reset();
+            vi.restoreAllMocks();
+        });
+
+        it("can't call if there's an ongoing (pinned) call", () => {
+            SdkConfig.add({
+                element_call: {
+                    use_exclusively: true,
+                },
+            });
+            // allow element calls
+            vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            vi.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
+            const widget = { type: "m.jitsi" } as IApp;
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue({
+                widget,
+                on: () => {},
+                off: () => {},
+            } as unknown as Call);
+            vi.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
+            render(<RoomHeader room={room} />, getWrapper());
+            // Voice and video
+            for (const button of screen.getAllByRole("button", { name: "Ongoing call" })) {
+                expect(button).toHaveAttribute("aria-disabled", "true");
+            }
+        });
+
+        it("buttons are disabled if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+
+            vi.spyOn(CallStore.prototype, "connectedCalls", "get").mockReturnValue(
+                new Set([{ roomId: "some_other_room" } as Call]),
+            );
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+            const [videoButton] = getAllByLabelText(container, "Ongoing call");
+
+            expect(videoButton).toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("join video call button is shown if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            // Mock CallStore to return a call with 3 participants
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3));
+            render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(document.body, "Join video call");
+            expect(joinButton).not.toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("join voice call button is shown if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            // Mock CallStore to return a call with 3 participants
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3, CallType.Voice));
+            render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(document.body, "Join voice call");
+            expect(joinButton).not.toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("clicking the join button of an ongoing video call joins as a video call", async () => {
+            const user = userEvent.setup();
+            mockRoomMembers(room, 3);
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3, CallType.Video, true));
+            render(<RoomHeader room={room} />, getWrapper());
+
+            const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
+            await user.click(getByLabelText(document.body, "Join video call"));
+
+            expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true, voiceOnly: false }));
+        });
+
+        it("clicking the join button of an ongoing voice call joins as a voice call", async () => {
+            const user = userEvent.setup();
+            mockRoomMembers(room, 3);
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3, CallType.Voice, true));
+            render(<RoomHeader room={room} />, getWrapper());
+
+            const dispatcherSpy = vi.spyOn(dispatcher, "dispatch").mockImplementation(() => {});
+            await user.click(getByLabelText(document.body, "Join voice call"));
+
+            expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true, voiceOnly: true }));
+        });
+
+        it("join button is disabled if there is an other ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            // Mock CallStore to return a call with 3 participants
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3));
+            vi.spyOn(CallStore.prototype, "connectedCalls", "get").mockReturnValue(
+                new Set([{ roomId: "some_other_room" } as Call]),
+            );
+            render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(document.body, "Ongoing call");
+
+            expect(joinButton).toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("close lobby button is shown", async () => {
+            mockRoomMembers(room, 3);
+
+            mockRoomViewStore.isViewingCall.mockReturnValue(true);
+            render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(document.body, "Close lobby")).toBeVisible();
+        });
+
+        it("close lobby button is shown if there is an ongoing call but we are viewing the lobby", async () => {
+            mockRoomMembers(room, 3);
+            // Mock CallStore to return a call with 3 participants
+            vi.spyOn(CallStore.instance, "getCall").mockReturnValue(createMockCall(ROOM_ID, 3));
+            mockRoomViewStore.isViewingCall.mockReturnValue(true);
+
+            render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(document.body, "Close lobby")).toBeVisible();
+        });
+    });
+
+
+    it("does not show a user status for non-DM rooms", async () => {
+        await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, true);
+        vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
+        vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
+
+        render(<RoomHeader room={room} />, getWrapper());
+
+        expect(screen.queryByText("on a horse")).not.toBeInTheDocument();
+        expect(client.doesServerSupportExtendedProfiles).not.toHaveBeenCalled();
+    });
+
+    it("shows a history icon if the room is encrypted and has shared history", async () => {
+        vi.mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
+        await room.addLiveEvents(
+            [
+                new MatrixEvent({
+                    type: "m.room.history_visibility",
+                    content: { history_visibility: "shared" },
+                    sender: MatrixClientPeg.get()!.getSafeUserId(),
+                    state_key: "",
+                    room_id: room.roomId,
+                }),
+            ],
+            { addToState: true },
+        );
+
+        render(<RoomHeader room={room} />, getWrapper());
+        await waitFor(() => expect(getByLabelText(document.body, "New members see history")).toBeVisible());
+    });
+
+    describe("dm", () => {
+        beforeEach(() => {
+            // Make the mocked room a DM
+            vi.mocked(DMRoomMap.shared().getUserIdForRoomId).mockImplementation((roomId) => {
+                if (roomId === room.roomId) return "@user:example.com";
+            });
+            room.getMember = vi.fn((userId) => new RoomMember(room.roomId, userId));
+            room.getJoinedMembers = vi.fn().mockReturnValue([
+                {
+                    userId: "@me:example.org",
+                    name: "Member",
+                    rawDisplayName: "Member",
+                    roomId: room.roomId,
+                    membership: KnownMembership.Join,
+                    getAvatarUrl: () => "mxc://avatar.url/image.png",
+                    getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+                },
+                {
+                    userId: "@bob:example.org",
+                    name: "Other Member",
+                    rawDisplayName: "Other Member",
+                    roomId: room.roomId,
+                    membership: KnownMembership.Join,
+                    getAvatarUrl: () => "mxc://avatar.url/image.png",
+                    getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+                },
+            ]);
+        });
+
+        afterEach(() => {
+            SdkConfig.reset();
+        });
+
+        it("shows the user status", async () => {
+            await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, true);
+            vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
+            vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
+
+            render(<RoomHeader room={room} />, getWrapper());
+
+            await waitFor(() => expect(screen.getByText("on a horse")).toBeInTheDocument());
+            expect(screen.getByText("🐎")).toBeInTheDocument();
+        });
+
+        it("updates user status when it changes", async () => {
+            await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, true);
+            vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
+            vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
+
+            render(<RoomHeader room={room} />, getWrapper());
+
+            vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐴", text: "is a horse" });
+            client.emit(ClientEvent.UserProfileUpdate, "@bob:example.org", { emoji: "🐴", text: "is a horse" });
+
+            await waitFor(() => expect(screen.getByText("is a horse")).toBeInTheDocument());
+            expect(screen.getByText("🐴")).toBeInTheDocument();
+        });
+
+        it("does not show the user status when the feature is disabled", async () => {
+            await SettingsStore.setValue("feature_user_status", null, SettingLevel.DEVICE, false);
+            vi.mocked(client.doesServerSupportExtendedProfiles).mockResolvedValue(true);
+            vi.mocked(client.getExtendedProfileProperty).mockResolvedValue({ emoji: "🐎", text: "on a horse" });
+
+            render(<RoomHeader room={room} />, getWrapper());
+
+            expect(screen.queryByText("on a horse")).not.toBeInTheDocument();
+            expect(client.doesServerSupportExtendedProfiles).not.toHaveBeenCalled();
+        });
+
+        it("does not show the face pile for DMs", () => {
+            SdkConfig.put({
+                features: {
+                    feature_notifications: false,
+                },
+            });
+            const { asFragment } = render(<RoomHeader room={room} />, getWrapper());
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+    });
+
+
+
+    it("should open room settings when clicking the room avatar", async () => {
+        const user = userEvent.setup();
+        render(<RoomHeader room={room} />, getWrapper());
+
+        const dispatcherSpy = vi.spyOn(dispatcher, "dispatch");
+        await user.click(getByLabelText(document.body, "Open room settings"));
+        expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ action: "open_room_settings" }));
+    });
+
+    describe("Tchap custo", () => {
+        it("should render as expected", async () => {
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(container).toMatchSnapshot();
+        });
+
+        it("renders the room header", () => {
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(container).toHaveTextContent(ROOM_ID);
+        });
+
+        it("display well the thread button when feature is activated", () => {
+            render(<RoomHeader room={room} />, getWrapper());
+
+            expect(screen.queryByRole("button", { name: "Threads" })).toBeInTheDocument();
+        });
+
+        it("hides the thread,video audio button when feature is deactivated", () => {
+            vi.spyOn(
+                TchapUIFeature,
+                "isFeatureActiveForHomeserver",
+            ).mockReturnValue(false);
+            mockRoomMembers(room, 3);
+             const { container }  = render(<RoomHeader room={room} />, getWrapper());
+
+            expect(screen.queryByRole("button", { name: "Threads" })).not.toBeInTheDocument();
+            expect(queryByLabelText(container, "Video call")).toBeNull();
+        });
+
+        it("hides the video group when feature is activated but it is a forum", () => {
+            vi.spyOn(TchapRoomUtils, "getTchapRoomType").mockImplementation(() => Promise.resolve(TchapRoomType.Forum));
+
+            vi.spyOn(
+                TchapUIFeature,
+                "isFeatureActiveForHomeserver",
+            ).mockReturnValue(false);
+
+            mockRoomMembers(room, 4);
+
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+            expect(queryByLabelText(container, "Video call")).toBeNull();
+        });
+
+        it("disables the video group when feature is activated user as not the right permissions", () => {
+            mockRoomMembers(room, 4);
+            // give  lower permissions to the user
+            vi.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(false);
+
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+            expect(queryByLabelText(container, "Video call")).toBeNull();
+        });
+    });
 });
 
 /**

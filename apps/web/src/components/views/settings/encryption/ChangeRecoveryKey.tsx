@@ -136,7 +136,6 @@ export function ChangeRecoveryKey({
                     onCancelClick={onCancelClickWrapper}
                     onSubmit={async () => {
                         const crypto = matrixClient.getCrypto();
-                        console.log("**** crypto", crypto)
                         if (!crypto) return onFinish();
 
                         // :TCHAP: :TCHAP: recovery-code-flow-improve 

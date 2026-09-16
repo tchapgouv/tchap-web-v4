@@ -407,7 +407,7 @@ function RoomHeaderButtons({
                             indicator={notificationLevelToIndicator(threadNotifications)}
                             onClick={(evt) => {
                                 evt.stopPropagation();
-                                RightPanelStore.instance.showOrHidePhase(RightPanelPhases.ThreadPanel);
+                                sdkContext.rightPanelStore.showOrHidePhase(RightPanelPhases.ThreadPanel);
                                 PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
                             }}
                             aria-label={_t("common|threads")}

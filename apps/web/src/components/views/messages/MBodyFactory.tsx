@@ -53,7 +53,6 @@ export function FileBodyFactory({
     const [scanState, setScanState] = useState<ScanState>("scanning");
     const scanningMediaHelper = useMemo(
         () => {
-                    console.log("*** creating NEW helper");
                     return new ContentScannerMediaHelper(mxEvent);
                 },
         [mxEvent],
@@ -110,7 +109,6 @@ export function VideoBodyFactory({
     const [scanState, setScanState] = useState<ScanState>("scanning");
     const scanningMediaHelper = useMemo(
         () => {
-                    console.log("*** creating NEW helper");
                     return new ContentScannerMediaHelper(mxEvent);
                 },
         [mxEvent],
@@ -214,7 +212,6 @@ export function ImageBodyFactory({
     const [scanState, setScanState] = useState<ScanState>("scanning");
     const scanningMediaHelper = useMemo(
         () => {
-                    console.log("*** creating NEW helper");
                     return new ContentScannerMediaHelper(mxEvent);
                 },
         [mxEvent],

@@ -183,7 +183,6 @@ export const useRoomCall = (
 
     const mayCreateElementCalls = mayCreateElementCallState && serverIsConfiguredForElementCall;
 
-    console.log("****mayCreateElementCalls, serverIsConfiguredForElementCall", mayCreateElementCallState, serverIsConfiguredForElementCall);
     
     // The options provided to the RoomHeader.
     // If there are multiple options, the user will be prompted to choose.
