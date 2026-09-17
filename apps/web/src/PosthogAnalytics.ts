@@ -19,7 +19,7 @@ import SettingsStore from "./settings/SettingsStore";
 import { type ScreenName } from "./PosthogTrackers";
 import { type ActionPayload } from "./dispatcher/payloads";
 import { Action } from "./dispatcher/actions";
-import { type SettingUpdatedPayload } from "./dispatcher/payloads/SettingUpdatedPayload";
+import { isSettingUpdatedPayload, type SettingUpdatedPayload } from "./dispatcher/payloads/SettingUpdatedPayload";
 import dis from "./dispatcher/dispatcher";
 import { Layout } from "./settings/enums/Layout";
 
@@ -139,10 +139,10 @@ export class PosthogAnalytics {
     }
 
     public constructor(private readonly posthog: PostHog) {
-        const posthogConfig = SdkConfig.getObject("posthog");
-        if (posthogConfig) {
-            this.posthog.init(posthogConfig.get("project_api_key"), {
-                api_host: posthogConfig.get("api_host"),
+        const posthogConfig = SdkConfig.get("posthog");
+        if (posthogConfig?.project_api_key && posthogConfig?.api_host) {
+            this.posthog.init(posthogConfig.project_api_key, {
+                api_host: posthogConfig.api_host,
                 autocapture: false,
                 mask_all_text: true,
                 mask_all_element_attributes: true,
@@ -199,8 +199,8 @@ export class PosthogAnalytics {
         const settingsPayload = payload as SettingUpdatedPayload;
         if (["layout", "useCompactLayout"].includes(settingsPayload.settingName)) {
             this.onLayoutUpdated();
-        } else if (settingsPayload.settingName === "urlPreviewsEnabled" && !settingsPayload.roomId) {
-            this.onUrlPreviewSettingUpdated(settingsPayload.newValue as boolean);
+        } else if (isSettingUpdatedPayload(settingsPayload, "urlPreviewsEnabled") && !settingsPayload.roomId) {
+            this.onUrlPreviewSettingUpdated(settingsPayload.newValue);
         }
     };
 

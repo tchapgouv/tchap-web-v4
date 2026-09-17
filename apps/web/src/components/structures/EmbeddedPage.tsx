@@ -11,14 +11,17 @@ import React from "react";
 import sanitizeHtml from "sanitize-html";
 import classnames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
+import { AutoHideScrollbar } from "@element-hq/web-shared-components";
 
 import { _t } from "../../languageHandler";
 import dis from "../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import AutoHideScrollbar from "./AutoHideScrollbar";
 import { type ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions.ts";
+import { sanitizedHtmlNode } from "../../HtmlUtils.tsx";
+import { sanitizeHtmlParams, transformTags } from "../../Linkify.ts";
+import { objectExcluding } from "../../utils/objects.ts";
 
 interface IProps {
     // URL to request embedded page content from
@@ -121,11 +124,17 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         const isGuest = client ? client.isGuest() : true;
         const className = this.props.className;
         const classes = classnames(className, {
+            mx_AutoHideScrollbar: this.props.scrollbar,
             [`${className}_guest`]: isGuest,
             [`${className}_loggedIn`]: !!client,
         });
 
-        const content = <div className={`${className}_body`} dangerouslySetInnerHTML={{ __html: this.state.page }} />;
+        // const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
+        //     ...sanitizeHtmlParams
+        // });
+        // :TCHAP: we trust our html, go back previous version
+        const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
+        // end :TCHAP:
 
         if (this.props.scrollbar) {
             return <AutoHideScrollbar className={classes}>{content}</AutoHideScrollbar>;

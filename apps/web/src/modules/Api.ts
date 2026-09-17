@@ -33,6 +33,10 @@ import { StoresApi } from "./StoresApi.ts";
 import { WidgetLifecycleApi } from "./WidgetLifecycleApi.ts";
 import { WidgetApi } from "./WidgetApi.ts";
 import { CustomisationsApi } from "./customisationsApi.ts";
+import { ComposerApi } from "./ComposerApi.ts";
+import { StorageHelperApi } from "./StorageHelperApi.ts";
+import { SettingsApi } from "./SettingsApi.ts";
+import defaultDispatcher from "../dispatcher/dispatcher.ts";
 
 const legacyCustomisationsFactory = <T extends object>(baseCustomisations: T) => {
     let used = false;
@@ -57,7 +61,6 @@ export class ModuleApi implements Api {
         return ModuleApi._instance;
     }
 
-    /* eslint-disable @typescript-eslint/naming-convention */
     public async _registerLegacyModule(LegacyModule: RuntimeModuleConstructor): Promise<void> {
         ModuleRunner.instance.registerModule((api) => new LegacyModule(api));
     }
@@ -72,11 +75,11 @@ export class ModuleApi implements Api {
     public readonly _registerLegacyRoomListCustomisations = legacyCustomisationsFactory(RoomListCustomisations);
     public readonly _registerLegacyUserIdentifierCustomisations =
         legacyCustomisationsFactory(UserIdentifierCustomisations);
-    public readonly _registerLegacyWidgetPermissionsCustomisations =
-        legacyCustomisationsFactory(WidgetPermissionCustomisations);
+    public readonly _registerLegacyWidgetPermissionsCustomisations: (
+        customisations: typeof WidgetPermissionCustomisations,
+    ) => void = legacyCustomisationsFactory(WidgetPermissionCustomisations);
     public readonly _registerLegacyWidgetVariablesCustomisations =
         legacyCustomisationsFactory(WidgetVariableCustomisations);
-    /* eslint-enable @typescript-eslint/naming-convention */
 
     public readonly navigation = new NavigationApi();
     public readonly openDialog = openDialog;
@@ -94,6 +97,9 @@ export class ModuleApi implements Api {
     public readonly rootNode = document.getElementById("matrixchat")!;
     public readonly client = new ClientApi();
     public readonly stores = new StoresApi();
+    public readonly composer = new ComposerApi(defaultDispatcher);
+    public readonly storageHelper = new StorageHelperApi();
+    public readonly settings = new SettingsApi();
 
     public createRoot(element: Element): Root {
         return createRoot(element);

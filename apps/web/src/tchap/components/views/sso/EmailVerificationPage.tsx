@@ -25,11 +25,11 @@ import Spinner from "~tchap-web/src/components/views/elements/Spinner";
 import { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
 import { Button } from "@vector-im/compound-web";
 import { ErrorMessage } from "~tchap-web/src/components/structures/ErrorMessage";
-import Login, { OidcNativeFlow } from "~tchap-web/src/Login";
+import Login, { OAuthNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import * as Email from "~tchap-web/src/email";
-import { startOidcLogin } from "../../../../utils/oidc/authorize";
+import { startOAuthLogin } from "../../../../utils/oauth/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
 
 interface IProps {
@@ -71,11 +71,6 @@ export default function EmailVerificationPage(props: IProps) {
         }
     };
 
-    const isSSOFlowActive = async (login: Login): Promise<boolean> => {
-        const flows = await login.getFlows();
-        return !!flows?.find((flow: Record<string, any>) => flow.type === "m.login.sso");
-    };
-
     const onSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         setLoading(true);
@@ -108,21 +103,19 @@ export default function EmailVerificationPage(props: IProps) {
             });
 
             const loginFlows = await login.getFlows(false);
-
-            let oidcNativeFlow: OidcNativeFlow | undefined;
-            oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
-
-            await startOidcLogin(
+            const flowOauth = loginFlows.find((flow) => flow.type === "oauthNativeFlow")! as OAuthNativeFlow;
+            await startOAuthLogin(
                 validatedServerConfig.delegatedAuthentication!,
-                oidcNativeFlow.clientId,
+                flowOauth.clientId,
                 validatedServerConfig.hsUrl,
                 validatedServerConfig.isUrl,
                 isCreateAccount,
-                email,
+                // email,
             );
 
             setLoading(false);
         } catch (err) {
+            console.log(err);
             displayError(_t("auth|proconnect|error"));
         }
     };

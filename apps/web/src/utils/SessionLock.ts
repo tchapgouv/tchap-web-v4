@@ -7,7 +7,6 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { v4 as uuidv4 } from "uuid";
 
 /*
  * Functionality for checking that only one instance is running at once
@@ -107,7 +106,7 @@ export function checkSessionLockFree(): boolean {
  */
 export async function getSessionLock(onNewInstance: () => Promise<void>): Promise<boolean> {
     /** unique ID for this session */
-    const sessionIdentifier = uuidv4();
+    const sessionIdentifier = window.crypto.randomUUID();
 
     const prefixedLogger = logger.getChild(`getSessionLock[${sessionIdentifier}]`);
 
@@ -218,7 +217,6 @@ export async function getSessionLock(onNewInstance: () => Promise<void>): Promis
     window.localStorage.setItem(SESSION_LOCK_CONSTANTS.STORAGE_ITEM_CLAIMANT, sessionIdentifier);
 
     // now, wait for the lock to be free.
-    // eslint-disable-next-line no-constant-condition
     while (true) {
         const remaining = checkLock();
 

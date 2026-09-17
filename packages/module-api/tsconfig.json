@@ -1,6 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/tsconfig",
     "compilerOptions": {
+        "rootDir": "./src",
         "target": "esnext",
         "lib": ["dom", "es2022", "esnext"],
         "esModuleInterop": true,
@@ -9,7 +10,7 @@
         "module": "es2022",
         "moduleResolution": "bundler",
         "types": [],
-        "outDir": "lib",
+        "noEmit": true,
         "jsx": "react-jsx",
         "declarationMap": true,
         "allowImportingTsExtensions": true

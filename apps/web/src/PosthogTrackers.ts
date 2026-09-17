@@ -13,7 +13,8 @@ import { type Interaction as InteractionEvent } from "@matrix-org/analytics-even
 import { type PinUnpinAction } from "@matrix-org/analytics-events/types/typescript/PinUnpinAction";
 import { type RoomListSortingAlgorithmChanged } from "@matrix-org/analytics-events/types/typescript/RoomListSortingAlgorithmChanged";
 import { type UrlPreviewRendered } from "@matrix-org/analytics-events/types/typescript/UrlPreviewRendered";
-import { type UrlPreview } from "@element-hq/web-shared-components";
+import { type SectionCreation } from "@matrix-org/analytics-events/types/typescript/SectionCreation";
+import { type ExpandCollapseSection } from "@matrix-org/analytics-events/types/typescript/ExpandCollapseSection";
 
 import PageType from "./PageTypes";
 import Views from "./Views";
@@ -159,7 +160,7 @@ export default class PosthogTrackers {
      * @param isEncrypted Whether the event (and effectively the room) was encrypted.
      * @param previews The previews generated from the event.
      */
-    public trackUrlPreview(eventId: string, isEncrypted: boolean, previews: UrlPreview[]): void {
+    public trackUrlPreview(eventId: string, isEncrypted: boolean, previews: { image?: unknown }[]): void {
         // Discount any previews that we have already tracked.
         if (this.previewedEventIds.get(eventId)) {
             return;
@@ -172,6 +173,33 @@ export default class PosthogTrackers {
             encryptedRoom: isEncrypted,
         });
         this.previewedEventIds.set(eventId, true);
+    }
+
+    /**
+     * Track when the user creates a section in the room list.
+     * @param from The source from which the section creation was triggered.
+     */
+    public static trackSectionCreation(from: SectionCreation["from"]): void {
+        PosthogAnalytics.instance.trackEvent<SectionCreation>({
+            eventName: "SectionCreation",
+            from,
+        });
+    }
+
+    /**
+     * Track when the user collapses or expands a section in the room list.
+     * @param kind Is expand or collapse.
+     * @param from From where the action is triggered.
+     */
+    public static trackCollapseOrExpandSection(
+        kind: ExpandCollapseSection["kind"],
+        from: ExpandCollapseSection["from"],
+    ): void {
+        PosthogAnalytics.instance.trackEvent<ExpandCollapseSection>({
+            eventName: "ExpandCollapseSection",
+            kind,
+            from,
+        });
     }
 }
 

@@ -35,7 +35,6 @@ import {
     RoomIcon,
     SpaceIcon,
     UserProfileIcon,
-    FavouriteIcon,
     HomeIcon,
     GroupIcon,
     CloseIcon,
@@ -44,10 +43,10 @@ import {
 
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import {
-    findSiblingElement,
+    findNextSiblingElement,
+    RovingStateActionType,
     RovingTabIndexContext,
     RovingTabIndexProvider,
-    Type,
 } from "../../../../accessibility/RovingTabIndex";
 import { mediaFromMxc } from "../../../../customisations/Media";
 import { Action } from "../../../../dispatcher/actions";
@@ -70,10 +69,9 @@ import SettingsStore from "../../../../settings/SettingsStore";
 import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
 import { type RoomNotificationState } from "../../../../stores/notifications/RoomNotificationState";
 import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
-import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
-import { SdkContextClass } from "../../../../contexts/SDKContext";
+import { compareRoomsByRecency } from "../../../../utils/room/sortRoomsByRecency";
+import { SDKContextClass } from "../../../../contexts/SDKContextClass";
 import { getMetaSpaceName, MetaSpace } from "../../../../stores/spaces";
-import SpaceStore from "../../../../stores/spaces/SpaceStore";
 import { DirectoryMember, type Member, startDmOnFirstMessage } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
 import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
@@ -85,7 +83,7 @@ import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
 import { NetworkDropdown } from "../../directory/NetworkDropdown";
 import AccessibleButton, { type ButtonEvent } from "../../elements/AccessibleButton";
 import Spinner from "../../elements/Spinner";
-import NotificationBadge from "../../rooms/NotificationBadge";
+import { NotificationBadge } from "../../rooms/NotificationBadge/NotificationBadge";
 import BaseDialog from "../BaseDialog";
 import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
@@ -156,10 +154,6 @@ function metaspaceToIcon(key: MetaSpace): JSX.Element | undefined {
     switch (key) {
         case MetaSpace.Home:
             return <HomeIcon />;
-        case MetaSpace.Favourites:
-            return <FavouriteIcon />;
-        case MetaSpace.People:
-            return <UserProfileIcon />;
         case MetaSpace.Orphans:
             return <RoomIcon />;
     }
@@ -251,8 +245,6 @@ const toMemberResult = (member: Member | RoomMember, alreadyFiltered: boolean): 
     filter: [Filter.People],
     query: [member.userId.toLowerCase(), member.name.toLowerCase()].filter(Boolean),
 });
-
-const recentAlgorithm = new RecentAlgorithm();
 
 export const useWebSearchMetrics = (numResults: number, queryLength: number, viaSpotlight: boolean): void => {
     useEffect(() => {
@@ -427,13 +419,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         return [
-            ...SpaceStore.instance.enabledMetaSpaces.map((spaceKey) => ({
+            ...SDKContextClass.instance.spaceStore.enabledMetaSpaces.map((spaceKey) => ({
                 section: Section.Spaces,
                 filter: [] as Filter[],
                 avatar: <div className="mx_SpotlightDialog_metaspaceResult">{metaspaceToIcon(spaceKey)}</div>,
-                name: getMetaSpaceName(spaceKey, SpaceStore.instance.allRoomsInHome),
+                name: getMetaSpaceName(spaceKey, SDKContextClass.instance.spaceStore.allRoomsInHome),
                 onClick() {
-                    SpaceStore.instance.setActiveSpace(spaceKey);
+                    SDKContextClass.instance.spaceStore.setActiveSpace(spaceKey);
                 },
             })),
             ...roomResults,
@@ -498,7 +490,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         // Sort results by most recent activity
-
         const myUserId = cli.getSafeUserId();
         for (const resultArray of Object.values(results)) {
             resultArray.sort((a: Result, b: Result) => {
@@ -507,7 +498,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     if (!isRoomResult(b)) return -1;
                     if (!isRoomResult(a)) return -1;
 
-                    return recentAlgorithm.getLastTs(b.room, myUserId) - recentAlgorithm.getLastTs(a.room, myUserId);
+                    return compareRoomsByRecency(a.room, b.room, myUserId);
                 } else if (isMemberResult(a) || isMemberResult(b)) {
                     // Member results should appear just after room results
                     if (!isMemberResult(b)) return -1;
@@ -520,12 +511,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         return results;
-    }, [trimmedQuery, filter, cli, possibleResults, userDirectorySearchResults, memberComparator]);
+    }, [cli, trimmedQuery, filter, possibleResults, userDirectorySearchResults, memberComparator]);
 
     const numResults = sum(Object.values(results).map((it) => it.length));
     useWebSearchMetrics(numResults, query.length, true);
 
-    const activeSpace = SpaceStore.instance.activeSpaceRoom;
+    const activeSpace = SDKContextClass.instance.spaceStore.activeSpaceRoom;
     const [spaceResults, spaceResultsLoading] = useSpaceResults(activeSpace ?? undefined, query);
 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -537,7 +528,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
             const node = rovingContext.state.nodes[0];
             if (node) {
                 rovingContext.dispatch({
-                    type: Type.SetFocus,
+                    type: RovingStateActionType.SetFocus,
                     payload: { node },
                 });
                 node?.scrollIntoView?.({
@@ -547,7 +538,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         });
         // we intentionally ignore changes to the rovingContext for the purpose of this hook
         // we only want to reset the focus whenever the results or filters change
-        // eslint-disable-next-line
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [results, filter]);
 
     const viewRoom = (
@@ -673,8 +664,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         {...ariaProperties}
                     >
                         <DecoratedRoomAvatar room={result.room} size={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
-                        {result.room.name}
-                        <NotificationBadge notification={notification} />
+                        <span className="mx_SpotlightDialog_result_name" title={result.room.name}>
+                            {result.room.name}
+                        </span>
+                        <NotificationBadge
+                            notification={notification}
+                            className="mx_SpotlightDialog_notificationBadge"
+                        />
                         <RoomContextDetails
                             id={`mx_SpotlightDialog_button_result_${result.room.roomId}_details`}
                             className="mx_SpotlightDialog_result_details"
@@ -698,7 +694,14 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         aria-describedby={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
                     >
                         <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
-                        {result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name}
+                        <span
+                            className="mx_SpotlightDialog_result_name"
+                            title={
+                                result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name
+                            }
+                        >
+                            {result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name}
+                        </span>
                         <div
                             id={`mx_SpotlightDialog_button_result_${result.member.userId}_details`}
                             className="mx_SpotlightDialog_result_details"
@@ -1096,7 +1099,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                                         tooltipProps={{ tabIndex: -1 }}
                                     />
                                     {room.name}
-                                    <NotificationBadge notification={notification} />
+                                    <NotificationBadge
+                                        notification={notification}
+                                        className="mx_SpotlightDialog_notificationBadge"
+                                    />
                                     <RoomContextDetails
                                         id={`mx_SpotlightDialog_button_recentSearch_${room.roomId}_details`}
                                         className="mx_SpotlightDialog_result_details"
@@ -1122,7 +1128,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     </h4>
                     <div>
                         {BreadcrumbsStore.instance.rooms
-                            .filter((r) => r.roomId !== SdkContextClass.instance.roomViewStore.getRoomId())
+                            .filter((r) => r.roomId !== SDKContextClass.instance.roomViewStore.getRoomId())
                             .map((room) => (
                                 <TooltipOption
                                     id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
@@ -1181,7 +1187,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     }
 
                     const idx = nodes.indexOf(rovingContext.state.activeNode);
-                    node = findSiblingElement(nodes, idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1));
+                    node = findNextSiblingElement(
+                        nodes,
+                        idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1),
+                    );
                 }
                 break;
 
@@ -1201,7 +1210,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
                     const nodes = rovingContext.state.nodes.filter(nodeIsForRecentlyViewed);
                     const idx = nodes.indexOf(rovingContext.state.activeNode);
-                    node = findSiblingElement(
+                    node = findNextSiblingElement(
                         nodes,
                         idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1),
                     );
@@ -1211,7 +1220,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         if (node) {
             rovingContext.dispatch({
-                type: Type.SetFocus,
+                type: RovingStateActionType.SetFocus,
                 payload: { node },
             });
             node?.scrollIntoView({

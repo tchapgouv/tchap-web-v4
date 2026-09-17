@@ -10,13 +10,13 @@ import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
 import { type IConfigOptions } from "~tchap-web/src/IConfigOptions";
-import { SdkContextClass } from "~tchap-web/src/contexts/SDKContext";
 import { type IProfileInfo } from "~tchap-web/src/hooks/useProfileInfo";
 import Modal from "~tchap-web/src/Modal";
-import { filterConsole, flushPromises, getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
+import { filterConsole, flushPromises, getMockClientWithEventEmitter, TestSDKContext } from "~tchap-web/test/test-utils";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
+import { SDKContextClass } from "~tchap-web/src/contexts/SDKContextClass";
 
 // Mock TchapUtils to control checkIfEmailIsExternal in tests
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
@@ -58,6 +58,7 @@ const externalEmail = "imexternal@test.fr";
 describe("InviteDialog", () => {
     let mockClient: Mocked<MatrixClient>;
     let room: Room;
+    let sdkContext: TestSDKContext;
 
     filterConsole(
         "Error retrieving profile for userId @carol:example.com",
@@ -114,17 +115,20 @@ describe("InviteDialog", () => {
         mockClient.getRoom.mockReturnValue(room);
         mockClient.getIdentityServerUrl.mockReturnValue("https://identity-server");
         mockClient.lookupThreePid.mockResolvedValue({});
-        SdkContextClass.instance.client = mockClient;
+        sdkContext = new TestSDKContext();
+        // @ts-ignore UserMenuViewModel uses SDKContext in the constructor
+        SDKContextClass.instance = sdkContext;
+        sdkContext._client = mockClient;
 
         // Default: emails are not external
-        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(false);
+        jest.spyOn(TchapUtils, "checkIfEmailIsExternal").mockResolvedValue(false);
+
     });
 
     afterEach(() => {
         Modal.closeCurrentModal();
         cleanup();
-        SdkContextClass.instance.onLoggedOut();
-        SdkContextClass.instance.client = undefined;
+        SDKContextClass.instance.onLoggedOut();
         jest.resetAllMocks();
     });
 

@@ -1,21 +1,63 @@
-import { mocked } from "jest-mock";
-import { MatrixError, Room } from "matrix-js-sdk/src/matrix";
-import { waitFor } from "@testing-library/dom";
+/*
+Copyright 2024 New Vector Ltd.
+Copyright 2017-2022 The Matrix.org Foundation C.I.C.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+import { mocked } from "jest-mock-vitest-adapter";
+import { KnownMembership, MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { sleep } from "matrix-js-sdk/src/utils";
+import {
+    RoomViewLifecycle,
+    type ViewRoomOpts,
+} from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
+import EventEmitter from "node:events";
 
 import { RoomViewStore } from "~tchap-web/src/stores/RoomViewStore";
 import { Action } from "~tchap-web/src/dispatcher/actions";
-import { TestSdkContext } from "~tchap-web/test/unit-tests/TestSdkContext";
-import { getMockClientWithEventEmitter, untilDispatch } from "~tchap-web/test/test-utils";
+import {
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mkEvent,
+    mkRoom,
+    mkRoomMember,
+    setupAsyncStoreWithClient,
+    untilDispatch,
+    untilEmission,
+} from "~tchap-web/test/test-utils";
+import SettingsStore from "~tchap-web/src/settings/SettingsStore";
 import { SlidingSyncManager } from "~tchap-web/src/SlidingSyncManager";
 import { PosthogAnalytics } from "~tchap-web/src/PosthogAnalytics";
+import { TimelineRenderingType } from "~tchap-web/src/contexts/RoomContext";
 import { MatrixDispatcher } from "~tchap-web/src/dispatcher/dispatcher";
-import { SpaceStoreClass } from "~tchap-web/src/stores/spaces/SpaceStore";
+import { UPDATE_EVENT } from "~tchap-web/src/stores/AsyncStore";
+import { type ActiveRoomChangedPayload } from "~tchap-web/src/dispatcher/payloads/ActiveRoomChangedPayload";
+import SpaceStore from "~tchap-web/src/stores/spaces/SpaceStore";
+import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext";
+import { type ViewRoomPayload } from "~tchap-web/src/dispatcher/payloads/ViewRoomPayload";
 import Modal from "~tchap-web/src/Modal";
-import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
-import { _t } from "~tchap-web/src/languageHandler";
 import ErrorDialog from "~tchap-web/src/components/views/dialogs/ErrorDialog";
+import { type CancelAskToJoinPayload } from "~tchap-web/src/dispatcher/payloads/CancelAskToJoinPayload";
+import { type JoinRoomErrorPayload } from "~tchap-web/src/dispatcher/payloads/JoinRoomErrorPayload";
+import { type SubmitAskToJoinPayload } from "~tchap-web/src/dispatcher/payloads/SubmitAskToJoinPayload";
+import { ModuleRunner } from "~tchap-web/src/modules/ModuleRunner";
+import { type IApp } from "~tchap-web/src/utils/WidgetUtils-types";
+import { CallStore } from "~tchap-web/src/stores/CallStore";
+import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
+import MediaDeviceHandler, { MediaDeviceKindEnum } from "~tchap-web/src/MediaDeviceHandler";
+import { storeRoomAliasInCache } from "~tchap-web/src/RoomAliasCache.ts";
+import { type Call, ConnectionState } from "~tchap-web/src/models/Call.ts";
+import ActiveWidgetStore from "~tchap-web/src/stores/ActiveWidgetStore";
+import { ModuleApi } from "~tchap-web/src/modules/Api";
+import { type JoinRoomPayload } from "~tchap-web/src/dispatcher/payloads/JoinRoomPayload.ts";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
+import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
+import { waitFor } from "@testing-library/dom";
+import { _t } from "@element-hq/web-shared-components";
+
 jest.mock("~tchap-web/src/Modal");
 
 // mock out the injected classes
@@ -24,9 +66,31 @@ const MockPosthogAnalytics = <jest.Mock<PosthogAnalytics>>(<unknown>PosthogAnaly
 jest.mock("~tchap-web/src/SlidingSyncManager");
 const MockSlidingSyncManager = <jest.Mock<SlidingSyncManager>>(<unknown>SlidingSyncManager);
 jest.mock("~tchap-web/src/stores/spaces/SpaceStore");
-const MockSpaceStore = <jest.Mock<SpaceStoreClass>>(<unknown>SpaceStoreClass);
+const MockSpaceStore = <jest.Mock<SpaceStore>>(<unknown>SpaceStore);
 
-jest.mock("~tchap-web/src/utils/DMRoomMap", () => {
+// mock VoiceRecording because it contains all the audio APIs
+jest.mock("~tchap-web/src/audio/VoiceRecording", () => ({
+    VoiceRecording: jest.fn().mockReturnValue({
+        disableMaxLength: jest.fn(),
+        liveData: {
+            onUpdate: jest.fn(),
+        },
+        off: jest.fn(),
+        on: jest.fn(),
+        start: jest.fn(),
+        stop: jest.fn(),
+        destroy: jest.fn(),
+        contentType: "audio/ogg",
+    }),
+}));
+
+jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
+    [MediaDeviceKindEnum.AudioInput]: [],
+    [MediaDeviceKindEnum.VideoInput]: [],
+    [MediaDeviceKindEnum.AudioOutput]: [],
+});
+
+jest.mock("~tchap-web/test/../src/utils/DMRoomMap", () => {
     const mock = {
         getUserIdForRoomId: jest.fn(),
         getDMRoomsForUserId: jest.fn(),
@@ -38,22 +102,39 @@ jest.mock("~tchap-web/src/utils/DMRoomMap", () => {
     };
 });
 
-jest.mock("~tchap-web/src/stores/WidgetStore");
-jest.mock("~tchap-web/src/stores/widgets/WidgetLayoutStore");
+jest.mock("~tchap-web/test/../src/stores/WidgetStore", () => {
+    const EventEmitter = jest.requireActual("events");
+    const apps: IApp[] = [];
+    const instance = new (class extends EventEmitter {
+        getApps() {
+            return apps;
+        }
+        addVirtualWidget(app: IApp) {
+            apps.push(app);
+        }
+    })();
+    return { instance };
+});
+jest.mock("~tchap-web/test/../src/stores/widgets/WidgetLayoutStore");
 
 describe("RoomViewStore", function () {
     const userId = "@alice:server";
     const roomId = "!randomcharacters:aser.ver";
     const roomId2 = "!room2:example.com";
-
+    // we need to change the alias to ensure cache misses as the cache exists
+    // through all tests.
+    let alias = "#somealias2:aser.ver";
+    const getRooms = jest.fn();
     const mockClient = getMockClientWithEventEmitter({
         joinRoom: jest.fn(),
         getRoom: jest.fn(),
         getRoomIdForAlias: jest.fn(),
+        getRooms,
         isGuest: jest.fn(),
         getUserId: jest.fn().mockReturnValue(userId),
         getSafeUserId: jest.fn().mockReturnValue(userId),
         getDeviceId: jest.fn().mockReturnValue("ABC123"),
+        getDomain: jest.fn().mockReturnValue("server"),
         sendStateEvent: jest.fn().mockResolvedValue({}),
         supportsThreads: jest.fn(),
         isInitialSyncComplete: jest.fn().mockResolvedValue(false),
@@ -61,25 +142,51 @@ describe("RoomViewStore", function () {
         knockRoom: jest.fn(),
         leave: jest.fn(),
         setRoomAccountData: jest.fn(),
+        getAccountData: jest.fn(),
+        waitForClientWellKnown: jest.fn().mockResolvedValue(undefined),
+        getClientWellKnown: jest.fn().mockReturnValue({}),
+        matrixRTC: new (class extends EventEmitter {
+            getRoomSession() {
+                return new (class extends EventEmitter {
+                    memberships = [];
+                })();
+            }
+        })(),
     });
-    const room = new Room(roomId, mockClient, userId);
+    const room = mkRoom(mockClient, roomId);
     const room2 = new Room(roomId2, mockClient, userId);
+    getRooms.mockReturnValue([room, room2]);
+
+    const dispatchPromptAskToJoin = async () => {
+        dis.dispatch({ action: Action.PromptAskToJoin });
+        await untilDispatch(Action.PromptAskToJoin, dis);
+    };
+
+    const dispatchSubmitAskToJoin = async (roomId: string, reason?: string) => {
+        dis.dispatch<SubmitAskToJoinPayload>({ action: Action.SubmitAskToJoin, roomId, opts: { reason } });
+        await untilDispatch(Action.SubmitAskToJoin, dis);
+    };
+
+    const dispatchCancelAskToJoin = async (roomId: string) => {
+        dis.dispatch<CancelAskToJoinPayload>({ action: Action.CancelAskToJoin, roomId });
+        await untilDispatch(Action.CancelAskToJoin, dis);
+    };
+
+    const dispatchRoomLoaded = async () => {
+        dis.dispatch({ action: Action.RoomLoaded });
+        await untilDispatch(Action.RoomLoaded, dis);
+    };
 
     let roomViewStore: RoomViewStore;
     let slidingSyncManager: SlidingSyncManager;
     let dis: MatrixDispatcher;
-    let stores: TestSdkContext;
+    let stores: TestSDKContext;
 
     beforeEach(function () {
         jest.clearAllMocks();
-
-        Modal.createDialog = jest.fn();
-        // @ts-ignore mock (type error because empty return)
-        mocked(Modal.createDialog).mockReturnValue({});
-
         mockClient.credentials = { userId: userId };
         mockClient.joinRoom.mockResolvedValue(room);
-        mockClient.getRoom.mockImplementation((roomId: string): Room | null => {
+        mockClient.getRoom.mockImplementation((roomId?: string): Room | null => {
             if (roomId === room.roomId) return room;
             if (roomId === room2.roomId) return room2;
             return null;
@@ -90,18 +197,565 @@ describe("RoomViewStore", function () {
         // Make the RVS to test
         dis = new MatrixDispatcher();
         slidingSyncManager = new MockSlidingSyncManager();
-        stores = new TestSdkContext();
-        stores.client = mockClient;
+        stores = new TestSDKContext();
+        stores._client = mockClient;
         stores._SlidingSyncManager = slidingSyncManager;
         stores._PosthogAnalytics = new MockPosthogAnalytics();
+        // @ts-expect-error
+        MockPosthogAnalytics.instance = stores._PosthogAnalytics;
         stores._SpaceStore = new MockSpaceStore();
+        // Add activeSpace property to the mock
+        Object.defineProperty(stores._SpaceStore, "activeSpace", {
+            value: null,
+            writable: true,
+            configurable: true,
+        });
         roomViewStore = new RoomViewStore(dis, stores);
         stores._RoomViewStore = roomViewStore;
-
-        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
+         jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
+         jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
     });
 
-    it("should display specific error message when the room is a forum", async () => {
+    it("can be used to view a room by ID and join", async () => {
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        dis.dispatch({ action: Action.JoinRoom });
+        await untilDispatch(Action.JoinRoomReady, dis);
+        expect(mockClient.joinRoom).toHaveBeenCalledWith(roomId, { acceptSharedHistory: true, viaServers: [] });
+        expect(roomViewStore.isJoining()).toBe(true);
+    });
+
+    it("can be used to view a room by alias with auto_join", async () => {
+        const alias = "#alias12345:server";
+        storeRoomAliasInCache(alias, roomId, ["server1"]);
+        dis.dispatch({ action: Action.ViewRoom, room_alias: alias, auto_join: true }, true);
+        await expect(untilDispatch(Action.ViewRoom, dis)).resolves.toEqual(
+            expect.objectContaining({
+                action: Action.ViewRoom,
+                room_id: roomId,
+                auto_join: true,
+            }),
+        );
+        await untilDispatch(Action.JoinRoomReady, dis);
+        expect(mockClient.joinRoom).toHaveBeenCalledWith(alias, { acceptSharedHistory: true, viaServers: ["server1"] });
+        expect(roomViewStore.isJoining()).toBe(true);
+    });
+
+    it("can auto-join a room", async () => {
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId, auto_join: true });
+        await untilDispatch(Action.JoinRoomReady, dis);
+        expect(mockClient.joinRoom).toHaveBeenCalledWith(roomId, { acceptSharedHistory: true, viaServers: [] });
+        expect(roomViewStore.isJoining()).toBe(true);
+    });
+
+    it("emits ActiveRoomChanged when the viewed room changes", async () => {
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        let payload = (await untilDispatch(Action.ActiveRoomChanged, dis)) as ActiveRoomChangedPayload;
+        expect(payload.newRoomId).toEqual(roomId);
+        expect(payload.oldRoomId).toEqual(null);
+
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId2 });
+        payload = (await untilDispatch(Action.ActiveRoomChanged, dis)) as ActiveRoomChangedPayload;
+        expect(payload.newRoomId).toEqual(roomId2);
+        expect(payload.oldRoomId).toEqual(roomId);
+    });
+
+    it("invokes room activity listeners when the viewed room changes", async () => {
+        const callback = jest.fn();
+        roomViewStore.addRoomListener(roomId, callback);
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        (await untilDispatch(Action.ActiveRoomChanged, dis)) as ActiveRoomChangedPayload;
+        expect(callback).toHaveBeenCalledWith(true);
+        expect(callback).not.toHaveBeenCalledWith(false);
+
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId2 });
+        (await untilDispatch(Action.ActiveRoomChanged, dis)) as ActiveRoomChangedPayload;
+        expect(callback).toHaveBeenCalledWith(false);
+    });
+
+    it("can be used to view a room by alias and join", async () => {
+        mockClient.getRoomIdForAlias.mockResolvedValue({ room_id: roomId, servers: [] });
+        dis.dispatch({ action: Action.ViewRoom, room_alias: alias });
+        await untilDispatch((p) => {
+            // wait for the re-dispatch with the room ID
+            return p.action === Action.ViewRoom && p.room_id === roomId;
+        }, dis);
+
+        // roomId is set to id of the room alias
+        expect(roomViewStore.getRoomId()).toBe(roomId);
+
+        // join the room
+        dis.dispatch({ action: Action.JoinRoom }, true);
+
+        await untilDispatch(Action.JoinRoomReady, dis);
+
+        expect(roomViewStore.isJoining()).toBeTruthy();
+        expect(mockClient.joinRoom).toHaveBeenCalledWith(alias, { acceptSharedHistory: true, viaServers: [] });
+    });
+
+    it("emits ViewRoomError if the alias lookup fails", async () => {
+        alias = "#something-different:to-ensure-cache-miss";
+        mockClient.getRoomIdForAlias.mockRejectedValue(new Error("network error or something"));
+        dis.dispatch({ action: Action.ViewRoom, room_alias: alias });
+        const payload = await untilDispatch(Action.ViewRoomError, dis);
+        expect(payload.room_id).toBeNull();
+        expect(payload.room_alias).toEqual(alias);
+        expect(roomViewStore.getRoomAlias()).toEqual(alias);
+    });
+
+    it("emits JoinRoomError if joining the room fails", async () => {
+        const joinErr = new Error("network error or something");
+        mockClient.joinRoom.mockRejectedValue(joinErr);
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        dis.dispatch({ action: Action.JoinRoom });
+        await untilDispatch(Action.JoinRoomError, dis);
+        expect(roomViewStore.isJoining()).toBe(false);
+        expect(roomViewStore.getJoinError()).toEqual(joinErr);
+    });
+
+    it("remembers the event being replied to when swapping rooms", async () => {
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        const replyToEvent = {
+            getRoomId: () => roomId,
+        };
+        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context: TimelineRenderingType.Room });
+        await untilEmission(roomViewStore, UPDATE_EVENT);
+        expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+        // view the same room, should remember the event.
+        // set the highlighed flag to make sure there is a state change so we get an update event
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId, highlighted: true });
+        await untilEmission(roomViewStore, UPDATE_EVENT);
+        expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+    });
+
+    it("swaps to the replied event room if it is not the current room", async () => {
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        const replyToEvent = {
+            getRoomId: () => roomId2,
+        };
+        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context: TimelineRenderingType.Room });
+        await untilDispatch(Action.ViewRoom, dis);
+        expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+        expect(roomViewStore.getRoomId()).toEqual(roomId2);
+    });
+
+    it("should ignore reply_to_event for Thread panels", async () => {
+        expect(roomViewStore.getQuotingEvent()).toBeFalsy();
+        const replyToEvent = {
+            getRoomId: () => roomId2,
+        };
+        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context: TimelineRenderingType.Thread });
+        await sleep(100);
+        expect(roomViewStore.getQuotingEvent()).toBeFalsy();
+    });
+
+    it.each([TimelineRenderingType.Room, TimelineRenderingType.File, TimelineRenderingType.Notification])(
+        "Should respect reply_to_event for %s rendering context",
+        async (context) => {
+            const replyToEvent = {
+                getRoomId: () => roomId,
+            };
+            dis.dispatch({ action: "reply_to_event", event: replyToEvent, context });
+            await untilDispatch(Action.ViewRoom, dis);
+            expect(roomViewStore.getQuotingEvent()).toEqual(replyToEvent);
+        },
+    );
+
+    it("does not change room when replying to event in a room displayed in module", async () => {
+        // Spy on dispatch to check later if ViewRoom was dispatched
+        jest.spyOn(dis, "dispatch");
+
+        // Set up current room
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        expect(roomViewStore.getRoomId()).toEqual(roomId);
+
+        ModuleApi.instance.extras.getVisibleRoomBySpaceKey("space1", () => [roomId, roomId2]);
+        // @ts-ignore
+        stores.spaceStore.activeSpace = "space1";
+
+        // Create reply event for roomId2 (which is displayed in module)
+        const replyToEvent = {
+            getRoomId: () => roomId2,
+        };
+
+        // Dispatch reply_to_event - should not change room since roomId2 is in module
+        dis.dispatch({ action: "reply_to_event", event: replyToEvent, context: TimelineRenderingType.Room });
+        await flushPromises();
+
+        // Room should remain the same (roomId), not change to roomId2
+        expect(dis.dispatch).not.toHaveBeenCalledWith({
+            action: Action.ViewRoom,
+            room_id: roomId2,
+            replyingToEvent: replyToEvent,
+            metricsTrigger: undefined,
+        });
+    });
+
+    it("removes the roomId on ViewHomePage", async () => {
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        expect(roomViewStore.getRoomId()).toEqual(roomId);
+
+        dis.dispatch({ action: Action.ViewHomePage });
+        await untilEmission(roomViewStore, UPDATE_EVENT);
+        expect(roomViewStore.getRoomId()).toBeNull();
+    });
+
+    it("when viewing a call without a broadcast, it should not raise an error", async () => {
+        const call = { presented: false } as Call;
+        const getCallSpy = jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
+
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: roomId,
+            view_call: true,
+            metricsTrigger: undefined,
+        });
+        await untilDispatch(Action.ViewRoom, dis);
+
+        expect(getCallSpy).toHaveBeenCalledWith(roomId);
+        expect(call.presented).toEqual(true);
+    });
+
+    it("implicitly views an active call", async () => {
+        const call = { presented: false } as Call;
+        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        jest.spyOn(CallStore.instance, "getActiveCall").mockImplementation((rId) => (rId === roomId ? call : null));
+        await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
+
+        // View the room without explicitly setting view_call to true
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: roomId,
+            metricsTrigger: undefined,
+        });
+        await untilDispatch(Action.ViewRoom, dis);
+
+        expect(call.presented).toEqual(true);
+    });
+
+    it("opens a voice-intent call directly in picture-in-picture rather than maximised", async () => {
+        const call = {
+            presented: false,
+            connectionState: ConnectionState.Disconnected,
+            widget: { id: "!widget:example.org" },
+            start: jest.fn(),
+        } as unknown as Call;
+        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        const persistenceSpy = jest.spyOn(ActiveWidgetStore.instance, "setWidgetPersistence");
+        await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
+
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: roomId,
+            view_call: true,
+            voiceOnly: true,
+            metricsTrigger: undefined,
+        });
+        await untilDispatch(Action.ViewRoom, dis);
+
+        // The call is started and marked persistent so it renders in the PiP container...
+        expect(call.presented).toEqual(true);
+        expect(persistenceSpy).toHaveBeenCalledWith("!widget:example.org", roomId, true);
+        expect(call.start).toHaveBeenCalledWith(expect.objectContaining({ voiceOnly: true }));
+        // ...but the room is not switched to the maximised call view.
+        expect(roomViewStore.isViewingCall()).toEqual(false);
+    });
+
+    it("opens a video-intent call maximised in the room", async () => {
+        const call = {
+            presented: false,
+            connectionState: ConnectionState.Disconnected,
+            widget: { id: "!widget:example.org" },
+            start: jest.fn(),
+        } as unknown as Call;
+        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        const persistenceSpy = jest.spyOn(ActiveWidgetStore.instance, "setWidgetPersistence");
+        await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
+
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: roomId,
+            view_call: true,
+            voiceOnly: false,
+            metricsTrigger: undefined,
+        });
+        await untilDispatch(Action.ViewRoom, dis);
+
+        expect(call.presented).toEqual(true);
+        expect(persistenceSpy).not.toHaveBeenCalled();
+        expect(call.start).toHaveBeenCalledWith(expect.objectContaining({ voiceOnly: false }));
+        expect(roomViewStore.isViewingCall()).toEqual(true);
+    });
+
+    it("should display an error message when the room is unreachable via the roomId", async () => {
+          jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+        // View and wait for the room
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        // Generate error to display the expected error message
+        const error = new MatrixError(undefined, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+    // The server bob is on will affect the message we send.
+    it.each(["server", "another-server"])(
+        "should display an invite-specific error message when the room is unreachable",
+        async (bobsServer) => {
+            jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+            room.getMyMembership.mockReturnValue(KnownMembership.Invite);
+            room.getMember.mockImplementationOnce((memberUserId) => {
+                if (userId === memberUserId) {
+                    const member = mkRoomMember(roomId, userId, KnownMembership.Invite);
+                    member.events.member!.getSender = () => `@bob:${bobsServer}`;
+                    return member;
+                }
+                return null;
+            });
+            dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+            await untilDispatch(Action.ActiveRoomChanged, dis);
+
+            // Generate error to display the expected error message
+            const error = new MatrixError(undefined, 404);
+            roomViewStore.showJoinRoomError(error, roomId);
+
+            // Check the modal props
+            expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+        },
+    );
+
+    it("should display an error message when the provided room is invalid", async () => {
+        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+        dis.dispatch({ action: Action.JoinRoom, room_id: "" });
+        const result = await untilDispatch(Action.JoinRoomError, dis);
+        expect(result.err.cause.message).toEqual("Cannot join room: no room ID or alias to join");
+    });
+
+    it("should display the generic error message when the roomId doesnt match", async () => {
+        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+        // When
+        // Generate error to display the expected error message
+        const error = new MatrixError({ error: "my 404 error" }, 404);
+        roomViewStore.showJoinRoomError(error, roomId);
+
+        // Check the modal props
+        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+
+    it("clears the unread flag when viewing a room", async () => {
+        room.getAccountData.mockReturnValue(
+            mkEvent({ type: "m.marked_unread", user: "@anyone:example.org", content: { unread: true }, event: true }),
+        );
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        expect(mockClient.setRoomAccountData).toHaveBeenCalledWith(roomId, "m.marked_unread", {
+            unread: false,
+        });
+    });
+
+    describe("Sliding Sync", function () {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, value) => {
+                return settingName === "feature_simplified_sliding_sync"; // this is enabled, everything else is disabled.
+            });
+        });
+
+        it("subscribes to the room", async () => {
+            const setRoomVisible = jest.spyOn(slidingSyncManager, "setRoomVisible").mockReturnValue(Promise.resolve());
+            const subscribedRoomId = "!sub1:localhost";
+            dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId });
+            await untilDispatch(Action.ActiveRoomChanged, dis);
+            expect(roomViewStore.getRoomId()).toBe(subscribedRoomId);
+            expect(setRoomVisible).toHaveBeenCalledWith(subscribedRoomId);
+        });
+
+        // Previously a regression test for an in-the-wild bug where rooms would rapidly switch forever in sliding sync mode
+        // although that was before the complexity was removed with similified mode. I've removed the complexity but kept the
+        // test anyway.
+        it("doesn't get stuck in a loop if you view rooms quickly", async () => {
+            const setRoomVisible = jest.spyOn(slidingSyncManager, "setRoomVisible").mockReturnValue(Promise.resolve());
+            const subscribedRoomId = "!sub1:localhost";
+            const subscribedRoomId2 = "!sub2:localhost";
+            dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId }, true);
+            dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId2 }, true);
+            await untilDispatch(Action.ActiveRoomChanged, dis);
+            // should view 1, then 2
+            const wantCalls = [[subscribedRoomId], [subscribedRoomId2]];
+            expect(setRoomVisible).toHaveBeenCalledTimes(wantCalls.length);
+            wantCalls.forEach((v, i) => {
+                try {
+                    expect(setRoomVisible.mock.calls[i][0]).toEqual(v[0]);
+                } catch {
+                    throw new Error(`i=${i} got ${setRoomVisible.mock.calls[i]} want ${v}`);
+                }
+            });
+        });
+    });
+
+    describe("Action.JoinRoom", () => {
+        it("dispatches Action.JoinRoomError and Action.AskToJoin when the join fails with 403", async () => {
+            const err = new MatrixError({}, 403);
+
+            jest.spyOn(dis, "dispatch");
+            jest.spyOn(mockClient, "joinRoom").mockRejectedValueOnce(err);
+
+            const roomId = "!hello:world";
+
+            dis.dispatch<JoinRoomPayload>({
+                action: Action.JoinRoom,
+                canAskToJoin: true,
+                roomId,
+                metricsTrigger: "RoomPreview",
+            });
+            await untilDispatch(Action.PromptAskToJoin, dis);
+
+            expect(mocked(dis.dispatch).mock.calls[0][0]).toEqual({
+                action: Action.JoinRoom,
+                canAskToJoin: true,
+                metricsTrigger: "RoomPreview",
+                roomId,
+            });
+            expect(mocked(dis.dispatch).mock.calls[1][0]).toEqual({
+                action: Action.JoinRoomError,
+                roomId,
+                err,
+                canAskToJoin: true,
+            });
+            expect(mocked(dis.dispatch).mock.calls[2][0]).toEqual({ action: Action.PromptAskToJoin });
+        });
+
+        it("sets 'acceptSharedHistory'", async () => {
+            dis.dispatch<ViewRoomPayload>({ action: Action.ViewRoom, room_id: roomId, metricsTrigger: "RoomList" });
+            dis.dispatch<JoinRoomPayload>({ action: Action.JoinRoom, roomId: roomId, metricsTrigger: "RoomPreview" });
+            await untilDispatch(Action.JoinRoomReady, dis);
+            expect(mockClient.joinRoom).toHaveBeenCalledWith(roomId, { acceptSharedHistory: true, viaServers: [] });
+        });
+    });
+
+    describe("Action.JoinRoomError", () => {
+        const err = new MatrixError();
+        beforeEach(() => jest.spyOn(roomViewStore, "showJoinRoomError"));
+
+        it("calls showJoinRoomError()", async () => {
+            dis.dispatch<JoinRoomErrorPayload>({ action: Action.JoinRoomError, roomId, err });
+            await untilDispatch(Action.JoinRoomError, dis);
+            expect(roomViewStore.showJoinRoomError).toHaveBeenCalledWith(err, roomId);
+        });
+
+        it("does not call showJoinRoomError() when canAskToJoin is true", async () => {
+            dis.dispatch<JoinRoomErrorPayload>({ action: Action.JoinRoomError, roomId, err, canAskToJoin: true });
+            await untilDispatch(Action.JoinRoomError, dis);
+            expect(roomViewStore.showJoinRoomError).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("askToJoin()", () => {
+        it("returns false", () => {
+            expect(roomViewStore.promptAskToJoin()).toBe(false);
+        });
+
+        it("returns true", async () => {
+            await dispatchPromptAskToJoin();
+            expect(roomViewStore.promptAskToJoin()).toBe(true);
+        });
+    });
+
+    describe("Action.SubmitAskToJoin", () => {
+        const reason = "some reason";
+        beforeEach(async () => await dispatchPromptAskToJoin());
+
+        it("calls knockRoom() and sets promptAskToJoin state to false", async () => {
+            jest.spyOn(mockClient, "knockRoom").mockResolvedValue({ room_id: roomId });
+            await dispatchSubmitAskToJoin(roomId, reason);
+
+            expect(mockClient.knockRoom).toHaveBeenCalledWith(roomId, { reason, viaServers: [] });
+            expect(roomViewStore.promptAskToJoin()).toBe(false);
+        });
+
+        it("calls knockRoom(), sets promptAskToJoin state to false and shows an error dialog", async () => {
+            const error = new MatrixError(undefined, 403);
+            jest.spyOn(mockClient, "knockRoom").mockRejectedValue(error);
+            await dispatchSubmitAskToJoin(roomId, reason);
+
+            expect(mockClient.knockRoom).toHaveBeenCalledWith(roomId, { reason, viaServers: [] });
+            expect(roomViewStore.promptAskToJoin()).toBe(false);
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                description: "You need an invite to access this room.",
+                title: "Failed to join",
+            });
+        });
+
+        it("shows an error dialog with a generic error message", async () => {
+            const error = new MatrixError();
+            jest.spyOn(mockClient, "knockRoom").mockRejectedValue(error);
+            await dispatchSubmitAskToJoin(roomId);
+
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                description: error.message,
+                title: "Failed to join",
+            });
+        });
+    });
+
+    describe("Action.CancelAskToJoin", () => {
+        beforeEach(async () => {
+            jest.spyOn(mockClient, "knockRoom").mockResolvedValue({ room_id: roomId });
+            await dispatchSubmitAskToJoin(roomId);
+        });
+
+        it("calls leave()", async () => {
+            jest.spyOn(mockClient, "leave").mockResolvedValue({});
+            await dispatchCancelAskToJoin(roomId);
+
+            expect(mockClient.leave).toHaveBeenCalledWith(roomId);
+        });
+
+        it("calls leave() and shows an error dialog", async () => {
+            const error = new MatrixError();
+            jest.spyOn(mockClient, "leave").mockRejectedValue(error);
+            await dispatchCancelAskToJoin(roomId);
+
+            expect(mockClient.leave).toHaveBeenCalledWith(roomId);
+            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                description: error.message,
+                title: "Failed to cancel",
+            });
+        });
+    });
+
+    describe("getViewRoomOpts", () => {
+        it("returns viewRoomOpts", () => {
+            expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons: [] });
+        });
+    });
+
+    describe("Action.RoomLoaded", () => {
+        it("updates viewRoomOpts", async () => {
+            const buttons: ViewRoomOpts["buttons"] = [
+                {
+                    icon: "test-icon",
+                    id: "test-id",
+                    label: () => "test-label",
+                    onClick: () => {},
+                },
+            ];
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts) => {
+                if (lifecycleEvent === RoomViewLifecycle.ViewRoom) {
+                    opts.buttons = buttons;
+                }
+            });
+            await dispatchRoomLoaded();
+            expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons });
+        });
+    });
+
+    describe("Tchap custo", () => {
+        it("should display specific error message when the room is a forum", async () => {
         jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
 
         // View and wait for the room
@@ -143,4 +797,5 @@ describe("RoomViewStore", function () {
             });
         });
     });
+    })
 });

@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 import { test, expect } from "../../element-web-test";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
+import { getSampleFilePath } from "../../sample-files";
 
 const CtrlOrMeta = process.platform === "darwin" ? "Meta" : "Control";
 
@@ -99,7 +100,7 @@ test.describe("Composer", () => {
                     // Set up a private room so we have another user to mention
                     await app.client.createRoom({
                         is_direct: true,
-                        invite: [bob.credentials.userId],
+                        invite: [bob.credentials!.userId],
                     });
                     await app.viewRoomByName("Bob");
 
@@ -112,11 +113,11 @@ test.describe("Composer", () => {
                     await expect(page.getByTestId("autocomplete-wrapper")).toBeEmpty();
 
                     // Entering the first letter of the other user's name opens the autocomplete...
-                    await page.getByRole("textbox").pressSequentially(bob.credentials.displayName.slice(0, 1));
+                    await page.getByRole("textbox").pressSequentially(bob.credentials!.displayName!.slice(0, 1));
                     // ...with the other user name visible, and clicking that username...
-                    await page.getByTestId("autocomplete-wrapper").getByText(bob.credentials.displayName).click();
+                    await page.getByTestId("autocomplete-wrapper").getByText(bob.credentials!.displayName!).click();
                     // ...inserts the username into the composer
-                    const pill = page.getByRole("textbox").getByText(bob.credentials.displayName, { exact: false });
+                    const pill = page.getByRole("textbox").getByText(bob.credentials!.displayName!, { exact: false });
                     await expect(pill).toHaveAttribute("contenteditable", "false");
                     await expect(pill).toHaveAttribute("data-mention-type", "user");
 
@@ -124,7 +125,7 @@ test.describe("Composer", () => {
                     await page.getByRole("button", { name: "Send message" }).click();
 
                     // Typing an @, then other user's name, then trailing space closes the autocomplete
-                    await page.getByRole("textbox").pressSequentially(`@${bob.credentials.displayName} `);
+                    await page.getByRole("textbox").pressSequentially(`@${bob.credentials!.displayName!} `);
                     await expect(page.getByTestId("autocomplete-wrapper")).toBeEmpty();
 
                     // Send the message to clear the composer
@@ -133,7 +134,7 @@ test.describe("Composer", () => {
                     // Moving the cursor back to an "incomplete" mention opens the autocomplete
                     await page
                         .getByRole("textbox")
-                        .pressSequentially(`initial text @${bob.credentials.displayName.slice(0, 1)} abc`);
+                        .pressSequentially(`initial text @${bob.credentials!.displayName!.slice(0, 1)} abc`);
                     await expect(page.getByTestId("autocomplete-wrapper")).toBeEmpty();
                     // Move the cursor left by 4 to put it to: `@B| abc`, check autocomplete displays
                     await page.getByRole("textbox").press("ArrowLeft");
@@ -144,7 +145,7 @@ test.describe("Composer", () => {
 
                     // Selecting the autocomplete option using Enter inserts it into the composer
                     await page.getByRole("textbox").press("Enter");
-                    const pill2 = page.getByRole("textbox").getByText(bob.credentials.displayName, { exact: false });
+                    const pill2 = page.getByRole("textbox").getByText(bob.credentials!.displayName!, { exact: false });
                     await expect(pill2).toHaveAttribute("contenteditable", "false");
                     await expect(pill2).toHaveAttribute("data-mention-type", "user");
                 });
@@ -193,6 +194,41 @@ test.describe("Composer", () => {
             await page.locator("div[contenteditable=true]").pressSequentially(" message");
             await page.getByRole("button", { name: "Send message" }).click();
             await expect(page.locator(".mx_EventTile_body strong").getByText("bold")).toBeVisible();
+        });
+
+        test("can paste a file", async ({ page, bot, app }) => {
+            await app.composerDragAndPasteFile("room", getSampleFilePath("riot.png"), "image/png");
+            await expect(page.locator(".mx_ImageBody")).toBeVisible();
+        });
+
+        test("can paste a file in a thread", async ({ page, app }) => {
+            // Send a message
+            const composer = page.locator("div[contenteditable=true]");
+            await composer.pressSequentially("my first message");
+            await page.getByRole("button", { name: "Send message" }).click();
+
+            // Click reply
+            const tile = page.locator(".mx_EventTile_last");
+            await tile.hover();
+            await tile.getByRole("button", { name: "Reply in thread" }).click();
+
+            await app.composerDragAndPasteFile("thread", getSampleFilePath("riot.png"), "image/png");
+            await expect(page.locator(".mx_ImageBody")).toBeVisible();
+        });
+
+        test.describe(() => {
+            test.use({
+                lockLeftPanelWidth: false,
+            });
+
+            test("renders in narrow viewports", { tag: "@screenshot" }, async ({ page, bot, app }) => {
+                // Shrink the viewport
+                await page.setViewportSize({ width: 750, height: 1080 });
+                // Shrinking the viewport will collapse the left-panel, so manually expand it.
+                await app.resizeLeftPanel(150);
+                // Now take the screenshot
+                await expect(page.locator(".mx_MessageComposer_wrapper")).toMatchScreenshot("narrow.png");
+            });
         });
 
         test.describe("when Control+Enter is required to send", () => {

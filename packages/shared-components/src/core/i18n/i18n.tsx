@@ -19,7 +19,7 @@
  * you will end up with literal "<a>" in your output, rather than HTML. Note that you can also use variable
  * substitution to insert React components, but you can't use it to translate text between tags.
  *
- * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
+ * @returns a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 import React from "react";
 import { KEY_SEPARATOR } from "matrix-web-i18n";
@@ -141,10 +141,19 @@ function safeCounterpartTranslate(text: string, variables?: IVariables): { trans
  */
 type SubstitutionValue = number | string | React.ReactNode | ((sub: string) => React.ReactNode);
 
-export interface IVariables {
+// Variables that are guaranteed to only contain primitive (string-safe) values
+export interface StringVariables {
+    count?: number;
+    [key: string]: number | string | null | undefined;
+}
+
+// Variables that may contain ReactNodes or functions, requiring a ReactNode return
+export interface RichVariables {
     count?: number;
     [key: string]: SubstitutionValue;
 }
+
+export type IVariables = StringVariables | RichVariables;
 
 export type Tags = Record<string, SubstitutionValue>;
 
@@ -168,13 +177,15 @@ const annotateStrings = (result: TranslatedString, translationKey: TranslationKe
     }
 };
 
-export function _t(text: TranslationKey, variables?: IVariables): string;
-export function _t(text: TranslationKey, variables: IVariables | undefined, tags: Tags): React.ReactNode;
-export function _t(text: TranslationKey, variables?: IVariables, tags?: Tags): TranslatedString {
-    // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
+// Returns string only when variables are primitives and no tags are provided
+export function _t(text: TranslationKey, variables?: StringVariables): string;
+// Returns ReactNode when variables contain ReactNodes (even without tags)
+export function _t(text: TranslationKey, variables: RichVariables): React.ReactNode;
+// Returns ReactNode when tags are provided (regardless of variables)
+export function _t(text: TranslationKey, variables: RichVariables | undefined, tags: Tags): React.ReactNode;
+export function _t(text: TranslationKey, variables?: StringVariables | RichVariables, tags?: Tags): TranslatedString {
     const { translated } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
-
     return annotateStrings(substituted, text);
 }
 
@@ -193,12 +204,13 @@ export function lookupString(key: TranslationKey): string {
  * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
  * @param {object} tags Tag substitutions e.g. { 'a': (sub) => <a>{sub}</a> }
  *
- * @return a React <span> component if any non-strings were used in substitutions
+ * @returns a React <span> component if any non-strings were used in substitutions
  * or translation used a fallback locale, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-export function _tDom(text: TranslationKey, variables?: IVariables): TranslatedString;
-export function _tDom(text: TranslationKey, variables: IVariables, tags: Tags): React.ReactNode;
+export function _tDom(text: TranslationKey, variables?: StringVariables): string;
+export function _tDom(text: TranslationKey, variables: RichVariables): React.ReactNode;
+export function _tDom(text: TranslationKey, variables: RichVariables, tags: Tags): React.ReactNode;
 export function _tDom(text: TranslationKey, variables?: IVariables, tags?: Tags): TranslatedString {
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
     const { translated, isFallback } = safeCounterpartTranslate(text, variables);
@@ -231,10 +243,11 @@ export function sanitizeForTranslation(text: string): string {
  * the substitution (e.g. return a React component). In case of a tag replacement, the function receives as
  * the argument the text inside the element corresponding to the tag.
  *
- * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
+ * @returns a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
-export function substitute(text: string, variables?: IVariables): string;
-export function substitute(text: string, variables: IVariables | undefined, tags: Tags | undefined): string;
+export function substitute(text: string, variables?: StringVariables): string;
+export function substitute(text: string, variables?: RichVariables): React.ReactNode;
+export function substitute(text: string, variables: RichVariables | undefined, tags: Tags | undefined): string;
 export function substitute(text: string, variables?: IVariables, tags?: Tags): string | React.ReactNode {
     let result: React.ReactNode | string = text;
 
@@ -264,7 +277,7 @@ export function substitute(text: string, variables?: IVariables, tags?: Tags): s
  * function which will receive as the argument the capture groups defined in the regexp. E.g.
  * { 'Hello (.?) World': (sub) => sub.toUpperCase() }
  *
- * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
+ * @returns a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 export function replaceByRegexes(text: string, mapping: IVariables): string;
 export function replaceByRegexes(text: string, mapping: Tags): React.ReactNode;
@@ -312,6 +325,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
 
                 let replaced: SubstitutionValue;
                 // If substitution is a function, call it
+                // oxlint-disable-next-line unicorn/no-instanceof-builtins
                 if (mapping[regexpString] instanceof Function) {
                     replaced = ((mapping as Tags)[regexpString] as (...subs: string[]) => string)(...capturedGroups);
                 } else {
@@ -419,7 +433,8 @@ async function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
 }
 
 export async function getLangsJson(): Promise<Languages> {
-    const url = i18nFolder + "languages.json";
+    const cachebust = Date.now();
+    const url = `${i18nFolder}languages.json?${cachebust}`;
 
     const res = await fetch(url, { method: "GET" });
 

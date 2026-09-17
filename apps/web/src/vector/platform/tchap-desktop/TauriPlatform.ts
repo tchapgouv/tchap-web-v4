@@ -305,8 +305,21 @@ export default class TauriPlatform extends BasePlatform {
         return url;
     }
 
-    public async getOidcClientMetadata(): Promise<OidcRegistrationClientMetadata> {
-        const baseMetadata = await super.getOidcClientMetadata();
+    /**
+     * The URL to return to after a successful OIDC authentication
+     */
+    public getOAuthCallbackUrl(): URL {
+        const url = super.getOAuthCallbackUrl();
+        url.protocol = this.protocol;
+        // Trim the double slash into a single slash to comply with https://datatracker.ietf.org/doc/html/rfc8252#section-7.1
+        if (url.href.startsWith(`${url.protocol}//`)) {
+            url.href = url.href.replace("://", ":/");
+        }
+        return url;
+    }
+
+    public async getOAuthClientMetadata(): Promise<OidcRegistrationClientMetadata> {
+        const baseMetadata = await super.getOAuthClientMetadata();
         return {
             ...baseMetadata,
             applicationType: "native",

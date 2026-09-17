@@ -197,7 +197,7 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                             onClick={termsAndConditionsClicked}
                             className={styles.primaryAction}
                             kind="primary"
-                            size="sm"
+                            size="md"
                             as="a"
                             href={snapshot.consentUri}
                             target="_blank"
@@ -225,7 +225,7 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                         snapshot.adminContactHref && (
                             <Button
                                 kind="secondary"
-                                size="sm"
+                                size="md"
                                 as="a"
                                 href={snapshot.adminContactHref}
                                 target="_blank"
@@ -258,7 +258,7 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                     aria-labelledby={bannerTitleId}
                     actions={
                         <Button
-                            size="sm"
+                            size="md"
                             kind="primary"
                             className={styles.primaryAction}
                             Icon={RestartIcon}
@@ -286,7 +286,7 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                             <>
                                 {vm.onDeleteAllClick && (
                                     <Button
-                                        size="sm"
+                                        size="md"
                                         kind="secondary"
                                         Icon={DeleteIcon}
                                         className={styles.secondaryAction}
@@ -297,7 +297,7 @@ export function RoomStatusBarView({ vm }: Readonly<RoomStatusBarViewProps>): JSX
                                 )}
                                 {vm.onResendAllClick && (
                                     <Button
-                                        size="sm"
+                                        size="md"
                                         kind="primary"
                                         Icon={RestartIcon}
                                         onClick={resendClick}

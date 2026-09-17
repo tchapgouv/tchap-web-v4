@@ -42,7 +42,6 @@ export default class ContentScanningImageReplyBody extends React.PureComponent<I
         if (props.mediaEventHelper) {
             (props.mediaEventHelper as any as ContentScannerMediaHelper).onScanStateChange(() => {
                 const scanState = props.mediaEventHelper.getScanState();
-                console.log("*** scanState", scanState);
                 if (this.state.scanState !== scanState) {
                     this.setState({
                         scanState,

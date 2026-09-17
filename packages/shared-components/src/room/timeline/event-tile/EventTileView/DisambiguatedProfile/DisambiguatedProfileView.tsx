@@ -7,6 +7,7 @@
 
 import React, { type JSX, type KeyboardEventHandler, type MouseEventHandler } from "react";
 import classNames from "classnames";
+import { Text, Tooltip } from "@vector-im/compound-web";
 
 import { type ViewModel, useViewModel } from "../../../../../core/viewmodel";
 import styles from "./DisambiguatedProfile.module.css";
@@ -38,6 +39,14 @@ export interface DisambiguatedProfileViewSnapshot {
      * Whether to emphasize the display name with additional styling.
      */
     emphasizeDisplayName?: boolean;
+
+    /**
+     * User status message
+     */
+    userStatus?: {
+        emoji: string;
+        text: string;
+    };
 }
 
 /**
@@ -80,7 +89,9 @@ interface DisambiguatedProfileViewProps {
  * ```
  */
 export function DisambiguatedProfileView({ vm, className }: Readonly<DisambiguatedProfileViewProps>): JSX.Element {
-    const { displayName, colorClass, displayIdentifier, title, emphasizeDisplayName } = useViewModel(vm);
+    const { displayName, colorClass, displayIdentifier, title, emphasizeDisplayName, userStatus } = useViewModel(vm);
+
+    const userStatusEmoji = userStatus && userStatus.emoji;
 
     const displayNameClasses = classNames(colorClass, {
         [styles.disambiguatedProfile_displayName]: emphasizeDisplayName,
@@ -109,6 +120,17 @@ export function DisambiguatedProfileView({ vm, className }: Readonly<Disambiguat
             <span className={displayNameClasses} dir="auto">
                 {displayName}
             </span>
+            {userStatus && (
+                <Tooltip description={userStatus.text}>
+                    <Text
+                        as="span"
+                        size="md"
+                        className={classNames("mx_DisambiguatedProfile_userStatus", styles.userStatus)}
+                    >
+                        {userStatusEmoji}
+                    </Text>
+                </Tooltip>
+            )}
             {/* mx_DisambiguatedProfile_mxid is required for PCSS selectors like .mx_MemberTileView .mx_DisambiguatedProfile_mxid */}
             {displayIdentifier && (
                 <span className={classNames("mx_DisambiguatedProfile_mxid", styles.disambiguatedProfile_mxid)}>

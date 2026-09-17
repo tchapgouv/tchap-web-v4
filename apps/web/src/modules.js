@@ -6,7 +6,5 @@
  * You are not a salmon.
  */
 
-import Module1 from "tchap-translations";
 
 export const INSTALLED_MODULES = [];
-INSTALLED_MODULES.push(Module1);

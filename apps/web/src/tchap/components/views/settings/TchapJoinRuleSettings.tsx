@@ -20,7 +20,6 @@ import { JoinRule, RestrictedAllowType, type Room, EventType } from "matrix-js-s
 import StyledRadioGroup, { IDefinition } from "~tchap-web/src/components/views/elements/StyledRadioGroup";
 import { _t } from "~tchap-web/src/languageHandler";
 import AccessibleButton from "~tchap-web/src/components/views/elements/AccessibleButton";
-import SpaceStore from "~tchap-web/src/stores/spaces/SpaceStore";
 import RoomAvatar from "~tchap-web/src/components/views/avatars/RoomAvatar";
 import Modal from "~tchap-web/src/Modal";
 import ManageRestrictedJoinRuleDialog from "~tchap-web/src/components/views/dialogs/ManageRestrictedJoinRuleDialog";
@@ -46,9 +45,10 @@ import {
 import TchapRoomLinkAccess from "../rooms/TchapRoomLinkAccess";
 import TchapRoomUtils from "../../../util/TchapRoomUtils";
 import { RoomJoinRulesEventContent } from "matrix-js-sdk/src/types";
-import { RoomSettingsTab } from "~tchap-web/src/components/views/dialogs/RoomSettingsDialog";
+import { RoomSettingsTab } from "~tchap-web/src/components/views/dialogs/RoomSettingsDialog-tab";
 import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
+import { SDKContextClass } from "~tchap-web/src/contexts/SDKContextClass";
 
 interface JoinRuleSettingsProps {
     room: Room;
@@ -105,8 +105,8 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
-        if (!selected?.length && SpaceStore.instance.activeSpaceRoom) {
-            selected = [SpaceStore.instance.activeSpaceRoom.roomId];
+        if (!selected?.length && SDKContextClass.instance.spaceStore.activeSpaceRoom) {
+            selected = [SDKContextClass.instance.spaceStore.activeSpaceRoom.roomId];
         }
 
         const { finished } = Modal.createDialog(
@@ -370,12 +370,12 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                         </div>
                     </div>
                 );
-            } else if (SpaceStore.instance.activeSpaceRoom) {
+            } else if (SDKContextClass.instance.spaceStore.activeSpaceRoom) {
                 description = _t(
                     "room_settings|security|join_rule_restricted_description_active_space",
                     {},
                     {
-                        spaceName: () => <b>{SpaceStore.instance.activeSpaceRoom!.name}</b>,
+                        spaceName: () => <b>{SDKContextClass.instance.spaceStore.activeSpaceRoom!.name}</b>,
                     },
                 );
             } else {
@@ -415,7 +415,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
 
                 let warning: JSX.Element | undefined;
                 const userId = cli.getUserId()!;
-                const unableToUpdateSomeParents = Array.from(SpaceStore.instance.getKnownParents(room.roomId)).some(
+                const unableToUpdateSomeParents = Array.from(SDKContextClass.instance.spaceStore.getKnownParents(room.roomId)).some(
                     (roomId) => !cli.getRoom(roomId)?.currentState.maySendStateEvent(EventType.SpaceChild, userId),
                 );
                 if (unableToUpdateSomeParents) {

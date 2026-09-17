@@ -1,4 +1,5 @@
 /*
+Copyright 2026 Element Creations Ltd.
 Copyright 2024, 2025 New Vector Ltd.
 Copyright 2018-2024 The Matrix.org Foundation C.I.C.
 Copyright 2017 Travis Ralston
@@ -9,6 +10,7 @@ Please see LICENSE files in the repository root for full details.
 
 import React, { type ReactNode } from "react";
 import { STABLE_MSC4133_EXTENDED_PROFILES, UNSTABLE_MSC4133_EXTENDED_PROFILES } from "matrix-js-sdk/src/matrix";
+import { type JsonDocument, type JsonValue } from "shared-types";
 // Import these directly from shared-components to avoid circular deps
 import { _t, _td } from "@element-hq/web-shared-components";
 
@@ -43,7 +45,6 @@ import FallbackIceServerController from "./controllers/FallbackIceServerControll
 import { type IRightPanelForRoomStored } from "../stores/right-panel/RightPanelStoreIPanelState.ts";
 import { type ILayoutSettings } from "../stores/widgets/WidgetLayoutStore.ts";
 import { type ReleaseAnnouncementData } from "../stores/ReleaseAnnouncementStore.ts";
-import { type Json, type JsonValue } from "../@types/json.ts";
 import { type RecentEmojiData } from "../emojipicker/recent.ts";
 import { type Assignable } from "../@types/common.ts";
 import { SortingAlgorithm } from "../stores/room-list-v3/skip-list/sorters/index.ts";
@@ -52,7 +53,13 @@ import InviteRulesConfigController from "./controllers/InviteRulesConfigControll
 import { type ComputedInviteConfig } from "../@types/invite-rules.ts";
 import BlockInvitesConfigController from "./controllers/BlockInvitesConfigController.ts";
 import RequiresSettingsController from "./controllers/RequiresSettingsController.ts";
-import { type OrderedCustomSections, type CustomSectionsData } from "../stores/room-list-v3/section.ts";
+import {
+    type ReorderableSection,
+    type CustomSectionsData,
+    type SectionExpansionState,
+} from "../stores/room-list-v3/section.ts";
+import { type NotificationSound } from "../Notifier.ts";
+import VideoRoomsBetaImage from "../../res/img/betas/video_rooms.png";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -118,7 +125,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Ui]: _td("labs|group_ui"),
 };
 
-export type SettingValueType = Json | JsonValue | Record<string, unknown> | Record<string, unknown>[];
+export type SettingValueType = JsonDocument | JsonValue | Record<string, unknown> | Record<string, unknown>[];
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
@@ -206,29 +213,27 @@ export interface Settings {
     "feature_video_rooms": IFeature;
     [Features.NotificationSettings2]: IFeature;
     "feature_msc3531_hide_messages_pending_moderation": IFeature;
-    "feature_report_to_moderators": IFeature;
     "feature_latex_maths": IFeature;
     "feature_wysiwyg_composer": IFeature;
     "feature_mjolnir": IFeature;
     "feature_custom_themes": IFeature;
     "feature_exclude_insecure_devices": IFeature;
-    "feature_share_history_on_invite": IFeature;
-    "feature_html_topic": IFeature;
     "feature_bridge_state": IFeature;
     "feature_jump_to_date": IFeature;
     "feature_sliding_sync": IBaseSetting<boolean>;
     "feature_simplified_sliding_sync": IFeature;
     "feature_element_call_video_rooms": IFeature;
-    "feature_group_calls": IFeature;
     "feature_disable_call_per_sender_encryption": IFeature;
     "feature_location_share_live": IFeature;
     "feature_dynamic_room_predecessors": IFeature;
     "feature_render_reaction_images": IFeature;
-    "feature_new_room_list": IFeature;
-    "feature_room_list_sections": IFeature;
+    "feature_retention": IFeature;
     "feature_ask_to_join": IFeature;
     "feature_notifications": IFeature;
     "feature_msc4362_encrypted_state_events": IFeature;
+    "feature_user_status": IFeature;
+    "feature_login_with_qr": IFeature;
+    "feature_msc4095_url_preview_bundle": IFeature;
     // These are in the feature namespace but aren't actually features
     "feature_hidebold": IBaseSetting<boolean>;
 
@@ -237,15 +242,12 @@ export interface Settings {
     "mjolnirPersonalRoom": IBaseSetting<string | null>;
     "RoomList.backgroundImage": IBaseSetting<string | null>;
     "sendReadReceipts": IBaseSetting<boolean>;
-    "baseFontSize": IBaseSetting<"" | number>;
-    "baseFontSizeV2": IBaseSetting<"" | number>;
     "fontSizeDelta": IBaseSetting<number>;
     "useCustomFontSize": IBaseSetting<boolean>;
     "MessageComposerInput.suggestEmoji": IBaseSetting<boolean>;
     "MessageComposerInput.showStickersButton": IBaseSetting<boolean>;
     "MessageComposerInput.showPollsButton": IBaseSetting<boolean>;
     "MessageComposerInput.insertTrailingColon": IBaseSetting<boolean>;
-    "Notifications.alwaysShowBadgeCounts": IBaseSetting<boolean>;
     "Notifications.showbold": IBaseSetting<boolean>;
     "Notifications.tac_only_notifications": IBaseSetting<boolean>;
     "useCompactLayout": IBaseSetting<boolean>;
@@ -266,8 +268,6 @@ export interface Settings {
     "scrollToBottomOnMessageSent": IBaseSetting<boolean>;
     "Pill.shouldShowPillAvatar": IBaseSetting<boolean>;
     "TextualBody.enableBigEmoji": IBaseSetting<boolean>;
-    "MessageComposerInput.isRichTextEnabled": IBaseSetting<boolean>;
-    "MessageComposer.showFormatting": IBaseSetting<boolean>;
     "sendTypingNotifications": IBaseSetting<boolean>;
     "showTypingNotifications": IBaseSetting<boolean>;
     "ctrlFForSearch": IBaseSetting<boolean>;
@@ -283,6 +283,7 @@ export interface Settings {
     "useSystemFont": IBaseSetting<boolean>;
     "systemFont": IBaseSetting<string>;
     "webRtcAllowPeerToPeer": IBaseSetting<boolean>;
+    "enableLegacyCallsVoip": IBaseSetting<boolean>;
     "webrtc_audiooutput": IBaseSetting<string>;
     "webrtc_audioinput": IBaseSetting<string>;
     "webrtc_videoinput": IBaseSetting<string>;
@@ -310,15 +311,7 @@ export interface Settings {
     "urlPreviewsEnabled_e2ee": IBaseSetting<boolean>;
     "notificationsEnabled": IBaseSetting<boolean>;
     "deviceNotificationsEnabled": IBaseSetting<boolean>;
-    "notificationSound": IBaseSetting<
-        | {
-              name: string;
-              type: string;
-              size: number;
-              url: string;
-          }
-        | false
-    >;
+    "notificationSound": IBaseSetting<NotificationSound | false>;
     "notificationBodyEnabled": IBaseSetting<boolean>;
     "audioNotificationsEnabled": IBaseSetting<boolean>;
     "enableWidgetScreenshots": IBaseSetting<boolean>;
@@ -343,7 +336,6 @@ export interface Settings {
     "RightPanel.phases": IBaseSetting<IRightPanelForRoomStored | null>;
     "enableEventIndexing": IBaseSetting<boolean>;
     "crawlerSleepTime": IBaseSetting<number>;
-    "showCallButtonsInComposer": IBaseSetting<boolean>;
     "ircDisplayNameWidth": IBaseSetting<number>;
     "layout": IBaseSetting<Layout>;
     "Images.size": IBaseSetting<ImageSize>;
@@ -359,7 +351,6 @@ export interface Settings {
     "debug_timeline_panel": IBaseSetting<boolean>;
     "debug_registration": IBaseSetting<boolean>;
     "debug_animation": IBaseSetting<boolean>;
-    "debug_legacy_call_handler": IBaseSetting<boolean>;
     "audioInputMuted": IBaseSetting<boolean>;
     "videoInputMuted": IBaseSetting<boolean>;
     "activeCallRoomIds": IBaseSetting<string[]>;
@@ -378,15 +369,24 @@ export interface Settings {
     "Tauri.autoLaunch": IBaseSetting<"enabled" | "disabled">;
     // end :TCHAP:
     "RoomList.CustomSectionData": IBaseSetting<CustomSectionsData>;
-    "RoomList.OrderedCustomSections": IBaseSetting<OrderedCustomSections>;
+    "RoomList.OrderedCustomSections": IBaseSetting<ReorderableSection[]>;
+    "RoomList.SectionExpansionState": IBaseSetting<SectionExpansionState>;
+    "RoomList.showSections": IBaseSetting<boolean>;
 }
 
 export type SettingKey = keyof Settings;
 export type FeatureSettingKey = Assignable<Settings, IFeature>;
 export type BooleanSettingKey = Assignable<Settings, IBaseSetting<boolean>> | FeatureSettingKey;
+export type NullableBooleanSettingKey = Assignable<Settings, IBaseSetting<boolean | null>> | FeatureSettingKey;
 export type StringSettingKey = Assignable<Settings, IBaseSetting<string>>;
 
 export const SETTINGS: Settings = {
+    // Used in tests only
+    "test_setting": {
+        supportedLevels: [],
+        default: "",
+    },
+
     "feature_video_rooms": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
@@ -421,8 +421,7 @@ export const SETTINGS: Settings = {
             ),
             feedbackLabel: "video-room-feedback",
             feedbackSubheading: _td("labs|video_rooms_feedbackSubheading"),
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
-            image: require("../../res/img/betas/video_rooms.png"),
+            image: VideoRoomsBetaImage,
             requiresRefresh: true,
         },
     },
@@ -435,13 +434,11 @@ export const SETTINGS: Settings = {
         betaInfo: {
             title: _td("labs|notification_settings_beta_title"),
             caption: () => (
-                <>
-                    <p>
-                        {_t("labs|notification_settings_beta_caption", {
-                            brand: SdkConfig.get().brand,
-                        })}
-                    </p>
-                </>
+                <p>
+                    {_t("labs|notification_settings_beta_caption", {
+                        brand: SdkConfig.get().brand,
+                    })}
+                </p>
             ),
         },
     },
@@ -468,17 +465,8 @@ export const SETTINGS: Settings = {
         shouldExportToRageshake: false,
     },
     "blockInvites": {
-        controller: new BlockInvitesConfigController("blockInvites"),
+        controller: new BlockInvitesConfigController("blockInvites", defaultWatchManager),
         supportedLevels: [SettingLevel.ACCOUNT],
-        default: false,
-    },
-    "feature_report_to_moderators": {
-        isFeature: true,
-        labsGroup: LabGroup.Moderation,
-        displayName: _td("labs|report_to_moderators"),
-        description: _td("labs|report_to_moderators_description"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
-        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_latex_maths": {
@@ -525,29 +513,6 @@ export const SETTINGS: Settings = {
         supportedLevelsAreOrdered: true,
         default: false,
     },
-    "feature_share_history_on_invite": {
-        isFeature: true,
-        labsGroup: LabGroup.Encryption,
-        displayName: _td("labs|share_history_on_invite"),
-        description: () => (
-            <>
-                {_t("labs|share_history_on_invite_description")}
-                <div className="mx_SettingsFlag_microcopy">
-                    {_t(
-                        "settings|warning",
-                        {},
-                        {
-                            w: (sub) => <span className="mx_SettingsTab_microcopy_warning">{sub}</span>,
-                            description: _t("labs|share_history_on_invite_warning"),
-                        },
-                    )}
-                </div>
-            </>
-        ),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
-        supportedLevelsAreOrdered: true,
-        default: false,
-    },
     // Defaulted to true Feb 26, intention is to remove entirely, all being well,
     // as this fixes bugs where display name / avatar are missing and also makes
     // Element Web consistent with Element X.
@@ -567,14 +532,6 @@ export const SETTINGS: Settings = {
         default: null,
         // Contains room ID
         shouldExportToRageshake: false,
-    },
-    "feature_html_topic": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
-        supportedLevelsAreOrdered: true,
-        displayName: _td("labs|html_topic"),
-        default: false,
     },
     "feature_bridge_state": {
         isFeature: true,
@@ -643,15 +600,6 @@ export const SETTINGS: Settings = {
         controller: new ReloadOnChangeController(),
         default: false,
     },
-    "feature_group_calls": {
-        isFeature: true,
-        labsGroup: LabGroup.VoiceAndVideo,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
-        supportedLevelsAreOrdered: true,
-        displayName: _td("labs|group_calls"),
-        controller: new ReloadOnChangeController(),
-        default: false,
-    },
     "feature_disable_call_per_sender_encryption": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
@@ -680,15 +628,6 @@ export const SETTINGS: Settings = {
         shouldWarn: true,
         default: false,
     },
-    /**
-     * @deprecated in favor of {@link fontSizeDelta}
-     */
-    "baseFontSize": {
-        displayName: _td("settings|appearance|font_size"),
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: "",
-        controller: new FontSizeController(),
-    },
     "feature_render_reaction_images": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -698,39 +637,25 @@ export const SETTINGS: Settings = {
         supportedLevelsAreOrdered: true,
         default: false,
     },
-    "feature_new_room_list": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+    "feature_login_with_qr": {
+        supportedLevels: [SettingLevel.CONFIG],
         labsGroup: LabGroup.Ui,
-        displayName: _td("labs|new_room_list"),
-        description: _td("labs|under_active_development"),
-        isFeature: true,
-        default: true,
-        controller: new ReloadOnChangeController(),
-    },
-    "feature_room_list_sections": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
-        labsGroup: LabGroup.Ui,
-        displayName: _td("labs|room_list_sections"),
-        description: _td("labs|under_active_development"),
+        displayName: _td("labs|login_with_qr"),
+        description: _td("labs|config_only"),
         isFeature: true,
         default: false,
-        controller: new ReloadOnChangeController(),
     },
-    /**
-     * With the transition to Compound we are moving to a base font size
-     * of 16px. We're taking the opportunity to move away from the `baseFontSize`
-     * setting that had a 5px offset.
-     * @deprecated in favor {@link fontSizeDelta}
-     */
-    "baseFontSizeV2": {
-        displayName: _td("settings|appearance|font_size"),
-        supportedLevels: [SettingLevel.DEVICE],
-        default: "",
-        controller: new FontSizeController(),
+    "feature_msc4095_url_preview_bundle": {
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("labs|url_preview_bundle"),
+        description: _td("labs|url_preview_bundle_description"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
+        isFeature: true,
+        default: false,
     },
     /**
      * This delta is added to the browser default font size
-     * Moving from `baseFontSizeV2` to `fontSizeDelta` to replace the default 16px to --cpd-font-size-root (browser default font size) + fontSizeDelta
      */
     "fontSizeDelta": {
         displayName: _td("settings|appearance|font_size"),
@@ -764,11 +689,6 @@ export const SETTINGS: Settings = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|insert_trailing_colon_mentions"),
         default: true,
-    },
-    // TODO: Wire up appropriately to UI (FTUE notifications)
-    "Notifications.alwaysShowBadgeCounts": {
-        supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
-        default: false,
     },
     // Used to be a feature, name kept for backwards compat
     "feature_hidebold": {
@@ -814,6 +734,46 @@ export const SETTINGS: Settings = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
         supportedLevelsAreOrdered: true,
         shouldWarn: true,
+        default: false,
+    },
+    "feature_user_status": {
+        isFeature: true,
+        labsGroup: LabGroup.Profile,
+        displayName: _td("labs|feature_user_status|display_name"),
+        description: _td("labs|feature_user_status|description"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
+        controller: new ServerSupportUnstableFeatureController(
+            "feature_user_status",
+            defaultWatchManager,
+            [["org.matrix.msc4429"], ["org.matrix.msc4429.stable"]],
+            undefined,
+            _td("labs|feature_user_status|required_msc_support"),
+            false,
+            // We have to assume it's available during early startup because of a race:
+            // The feature is used to enable extra sync filters during MatrixClient setup
+            // and we can't check for serverside support until the client has finished setting up.
+            // Once the client has setup, (so by the time the user actually opens the labs menu) we can
+            // enforce proper checks.
+            true,
+            true,
+        ),
+        default: false,
+    },
+    "feature_retention": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        displayName: _td("labs|feature_retention|display_name"),
+        description: _td("labs|feature_retention|description"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
+        controller: new IncompatibleController(
+            "feature_sliding_sync",
+            false,
+            true,
+            _td("labs|feature_retention|disabled_sliding_sync"),
+            true,
+        ),
         default: false,
     },
     "useCompactLayout": {
@@ -924,14 +884,6 @@ export const SETTINGS: Settings = {
         default: true,
         invertedSettingName: "TextualBody.disableBigEmoji",
     },
-    "MessageComposerInput.isRichTextEnabled": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: false,
-    },
-    "MessageComposer.showFormatting": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: false,
-    },
     "sendTypingNotifications": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|send_typing_notifications"),
@@ -1013,6 +965,12 @@ export const SETTINGS: Settings = {
         default: "",
         displayName: _td("settings|appearance|custom_font_name"),
         controller: new SystemFontController(),
+    },
+    "enableLegacyCallsVoip": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("settings|voip|enable_legacy_calls"),
+        description: _td("settings|voip|enable_legacy_calls_description"),
+        default: true,
     },
     "webRtcAllowPeerToPeer": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -1149,11 +1107,17 @@ export const SETTINGS: Settings = {
     "urlPreviewsEnabled": {
         // Enabled by default and client configurable as this setting only allows unencrypted
         // messages to be previewed.
-        supportedLevels: [SettingLevel.DEVICE, SettingLevel.ACCOUNT, SettingLevel.CONFIG],
+        supportedLevels: [SettingLevel.ROOM_DEVICE, SettingLevel.DEVICE, SettingLevel.ACCOUNT, SettingLevel.CONFIG],
         supportedLevelsAreOrdered: true,
         displayName: _td("settings|inline_url_previews_default"),
         default: true,
-        controller: new UIFeatureController(UIFeature.URLPreviews),
+        controller: new RequiresSettingsController([UIFeature.URLPreviews], false, (c) => {
+            if (c["io.element.msc4452.preview_url"]?.enabled !== false) {
+                // If the capability is not listed, or explicitly true then do not disable.
+                return false;
+            }
+            return _t("common|disabled_by_homeserver");
+        }),
     },
     "urlPreviewsEnabled_e2ee": {
         // Can only be enabled per-device to ensure neither the homeserver nor client config
@@ -1253,6 +1217,11 @@ export const SETTINGS: Settings = {
         default: false,
         displayName: _td("settings|show_message_previews"),
     },
+    "RoomList.showSections": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: true,
+        displayName: _td("settings|show_sections"),
+    },
     "RightPanel.phasesGlobal": {
         supportedLevels: [SettingLevel.DEVICE],
         default: null,
@@ -1270,13 +1239,6 @@ export const SETTINGS: Settings = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("settings|security|message_search_sleep_time"),
         default: 3000,
-    },
-    "showCallButtonsInComposer": {
-        // Dev note: This is no longer "in composer" but is instead "in room header".
-        // TODO: Rename with settings v3
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: true,
-        controller: new UIFeatureController(UIFeature.Voip),
     },
     "ircDisplayNameWidth": {
         // We specifically want to have room-device > device so that users may set a device default
@@ -1351,10 +1313,6 @@ export const SETTINGS: Settings = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
     },
-    "debug_legacy_call_handler": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
-    },
     "audioInputMuted": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
@@ -1392,6 +1350,14 @@ export const SETTINGS: Settings = {
     "RoomList.OrderedCustomSections": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: [],
+    },
+    /**
+     * Managed by the {@link RoomListSectionHeaderViewModel}
+     * Store the expanded/collapsed state of the room list sections, per space and per section tag
+     */
+    "RoomList.SectionExpansionState": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {},
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

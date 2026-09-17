@@ -6,8 +6,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+import { rejectToast } from "@element-hq/element-web-playwright-common";
+
 import type { Locator, Page } from "@playwright/test";
-import type { ISendEventResponse, EventType, MsgType } from "matrix-js-sdk/src/matrix";
+import type { ISendEventResponse, EventType, MsgType, IContent } from "matrix-js-sdk/src/matrix";
 import { test, expect } from "../../element-web-test";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
@@ -46,15 +48,13 @@ const expectAvatar = async (cli: Client, e: Locator, avatarUrl: string): Promise
         },
         { avatarUrl, size, resizeMethod: AVATAR_RESIZE_METHOD },
     );
-    await expect(e.locator(".mx_BaseAvatar img")).toHaveAttribute("src", url);
+    await expect(e.locator(".mx_BaseAvatar img")).toHaveAttribute("src", url!);
 };
 
 const sendEvent = async (client: Client, roomId: string, html = false): Promise<ISendEventResponse> => {
-    const content = {
+    const content: IContent = {
         msgtype: "m.text" as MsgType,
         body: "Message",
-        format: undefined,
-        formatted_body: undefined,
     };
     if (html) {
         content.format = "org.matrix.custom.html";
@@ -71,7 +71,7 @@ const sendImage = async (
 ): Promise<ISendEventResponse> => {
     const upload = await client.uploadContent(pngBytes, { name: "image.png", type: "image/png" });
     return client.sendEvent(roomId, null, "m.room.message" as EventType, {
-        ...(additionalContent ?? {}),
+        ...additionalContent,
 
         msgtype: "m.image" as MsgType,
         body: "image.png",
@@ -154,7 +154,7 @@ test.describe("Timeline", () => {
                 // wait for the date separator to appear to have a stable screenshot
                 await expect(page.locator(".mx_TimelineSeparator")).toHaveText("today");
 
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("configured-room-irc-layout.png");
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot("configured-room-irc-layout.png");
             },
         );
 
@@ -179,7 +179,7 @@ test.describe("Timeline", () => {
                 // Assert that the "expand" link button worked
                 await expect(gels.getByRole("button", { name: "Collapse" })).toBeVisible();
 
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-irc-layout.png", {
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot("expanded-gels-irc-layout.png", {
                     css: `
                     .mx_MessageTimestamp,.mx_TopUnreadMessagesBar {
                         visibility: hidden;
@@ -215,8 +215,10 @@ test.describe("Timeline", () => {
                 // Assert that the "expand" link button worked
                 await expect(gels.getByRole("button", { name: "Collapse" })).toBeVisible();
 
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-modern-layout.png", {
-                    css: `
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
+                    "expanded-gels-modern-layout.png",
+                    {
+                        css: `
                     .mx_MessageTimestamp,.mx_TopUnreadMessagesBar {
                         visibility: hidden;
                     }
@@ -224,7 +226,8 @@ test.describe("Timeline", () => {
                         display: none !important;
                     }
                 `,
-                });
+                    },
+                );
             },
         );
 
@@ -256,14 +259,17 @@ test.describe("Timeline", () => {
                 ).not.toBeVisible(); // See: _GenericEventListSummary.pcss
 
                 // Save snapshot of expanded generic event list summary on bubble layout
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-bubble-layout.png", {
-                    // Exclude timestamp from snapshot
-                    css: `
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
+                    "expanded-gels-bubble-layout.png",
+                    {
+                        // Exclude timestamp from snapshot
+                        css: `
                         .mx_MessageTimestamp,.mx_TopUnreadMessagesBar {
                             visibility: hidden;
                         }
                     `,
-                });
+                    },
+                );
 
                 // Click "collapse" link button on the first hovered info event line
                 const firstTile = gels.locator(
@@ -277,13 +283,16 @@ test.describe("Timeline", () => {
                 await expect(gels.getByRole("button", { name: "Expand" })).toBeVisible();
 
                 // Save snapshot of collapsed generic event list summary on bubble layout
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("collapsed-gels-bubble-layout.png", {
-                    css: `
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
+                    "collapsed-gels-bubble-layout.png",
+                    {
+                        css: `
                         .mx_MessageTimestamp,.mx_TopUnreadMessagesBar {
                             visibility: hidden;
                         }
                     `,
-                });
+                    },
+                );
             },
         );
 
@@ -319,7 +328,7 @@ test.describe("Timeline", () => {
                 await expect(firstEventLineIrc).toHaveCSS("margin-inline-start", "99px");
                 await expect(firstEventLineIrc).toHaveCSS("inset-inline-start", "0px");
 
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "event-line-inline-start-margin-irc-layout.png",
                     {
                         // Exclude timestamp and read marker from snapshot
@@ -418,10 +427,10 @@ test.describe("Timeline", () => {
                     await expect(locator).toHaveCSS("min-width", "46px");
                 }
                 // Record alignment of collapsed GELS and messages on messagePanel
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "collapsed-gels-and-messages-irc-layout.png",
                     {
-                        // Exclude timestamp from snapshot of mx_MainSplit
+                        // Exclude timestamp from snapshot of mx_RoomView_timeline
                         css: `
                             .mx_MessageTimestamp {
                                 visibility: hidden;
@@ -441,10 +450,10 @@ test.describe("Timeline", () => {
                     page.locator(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line"),
                 ).toHaveCSS("margin-inline-start", "99px");
                 // Record alignment of expanded GELS and messages on messagePanel
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "expanded-gels-and-messages-irc-layout.png",
                     {
-                        // Exclude timestamp from snapshot of mx_MainSplit
+                        // Exclude timestamp from snapshot of mx_RoomView_timeline
                         css: `
                             .mx_MessageTimestamp,.mx_TopUnreadMessagesBar {
                                 visibility: hidden;
@@ -470,10 +479,10 @@ test.describe("Timeline", () => {
                     page.locator(".mx_GenericEventListSummary .mx_EventTile_last").getByRole("status"),
                 ).toHaveAccessibleName("Your message was sent");
                 // Record alignment of expanded GELS and placeholder of deleted message on messagePanel
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "expanded-gels-redaction-placeholder.png",
                     {
-                        // Exclude timestamp from snapshot of mx_MainSplit
+                        // Exclude timestamp from snapshot of mx_RoomView_timeline
                         css: `
                             .mx_MessageTimestamp {
                                 visibility: hidden;
@@ -504,14 +513,17 @@ test.describe("Timeline", () => {
                     page.locator(".mx_EventTile_last.mx_EventTile_emote").getByRole("status"),
                 ).toHaveAccessibleName("Your message was sent");
                 // Record alignment of expanded GELS, placeholder of deleted message, and emote
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-emote-irc-layout.png", {
-                    // Exclude timestamp from snapshot of mx_MainSplit
-                    css: `
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
+                    "expanded-gels-emote-irc-layout.png",
+                    {
+                        // Exclude timestamp from snapshot of mx_RoomView_timeline
+                        css: `
                         .mx_MessageTimestamp {
                             visibility: hidden;
                         }
                     `,
-                });
+                    },
+                );
             },
         );
 
@@ -568,7 +580,7 @@ test.describe("Timeline", () => {
                 await expect(
                     page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
                 ).toBeInViewport();
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "event-tiles-irc-layout.png",
                     screenshotOptions,
                 );
@@ -584,7 +596,7 @@ test.describe("Timeline", () => {
                 await expect(
                     page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
                 ).toBeInViewport();
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "event-tiles-modern-layout.png",
                     screenshotOptions,
                 );
@@ -597,7 +609,7 @@ test.describe("Timeline", () => {
                 await expect(
                     page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
                 ).toBeInViewport();
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "event-tiles-compact-modern-layout.png",
                     screenshotOptions,
                 );
@@ -612,7 +624,7 @@ test.describe("Timeline", () => {
                 await expect(
                     page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
                 ).toBeInViewport();
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "event-tiles-bubble-layout.png",
                     screenshotOptions,
                 );
@@ -659,7 +671,7 @@ test.describe("Timeline", () => {
                     `,
                 };
 
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "hidden-event-line-zero-padding-irc-layout.png",
                     screenshotOptions,
                 );
@@ -671,7 +683,7 @@ test.describe("Timeline", () => {
                     page.locator(".mx_EventTile[data-layout=group].mx_EventTile_info .mx_EventTile_line").first(),
                 ).toHaveCSS("padding-inline-start", "84px");
 
-                await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
+                await expect(page.locator(".mx_RoomView_timeline")).toMatchScreenshot(
                     "hidden-event-line-padding-modern-layout.png",
                     screenshotOptions,
                 );
@@ -720,7 +732,7 @@ test.describe("Timeline", () => {
             await viewSourceEventExpanded.hover();
             const toggleEventButton = viewSourceEventExpanded.getByRole("button", { name: "toggle event" });
             // Check size and position of toggle on expanded view source event
-            // See: _ViewSourceEvent.pcss
+            // See: ViewSourceEventView.module.css
             await expect(toggleEventButton).toHaveCSS("height", "16px"); // --ViewSourceEvent_toggle-size
             await expect(toggleEventButton).toHaveCSS("align-self", "flex-end");
             // Click again to collapse the source
@@ -753,7 +765,7 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_EventTile[data-layout=irc] .mx_ViewSourceEvent_expanded")).toBeVisible();
         });
 
-        test("should render file size in kibibytes on a file tile", async ({ page, room }) => {
+        test("should render file size in kibibytes on a file tile", async ({ page, app, room }) => {
             await page.goto(`/#/room/${room.roomId}`);
             await expect(
                 page
@@ -762,12 +774,7 @@ test.describe("Timeline", () => {
             ).toBeVisible();
 
             // Upload a file from the message composer
-            await page
-                .locator(".mx_MessageComposer_actions input[type='file']")
-                .setInputFiles(getSampleFilePath("matrix-org-client-versions.json"));
-
-            // Click "Upload" button
-            await page.locator(".mx_Dialog").getByRole("button", { name: "Upload" }).click();
+            await app.composerUploadFiles("room", getSampleFilePath("matrix-org-client-versions.json"));
 
             // Wait until the file is sent
             await expect(page.locator(".mx_RoomView_statusArea_expanded")).not.toBeVisible();
@@ -790,6 +797,7 @@ test.describe("Timeline", () => {
                     await sendEvent(app.client, room.roomId);
                     await sendEvent(app.client, room.roomId, true);
                     await page.goto(`/#/room/${room.roomId}`);
+                    await rejectToast(page, "Verify this device");
 
                     await app.toggleRoomInfoPanel();
 
@@ -815,6 +823,7 @@ test.describe("Timeline", () => {
                 await sendEvent(app.client, room.roomId);
 
                 await page.goto(`/#/room/${room.roomId}`);
+                await rejectToast(page, "Verify this device");
 
                 // Open a room setting dialog
                 await app.toggleRoomInfoPanel();
@@ -900,6 +909,30 @@ test.describe("Timeline", () => {
             });
         });
 
+        test("should not enlarge emoji inside a code block", async ({ page, app, room }) => {
+            await page.goto(`/#/room/${room.roomId}`);
+
+            const composer = app.getComposerField();
+            await composer.fill("```\nconst waving = '👋';\n```");
+            await composer.press("Enter");
+            await composer.fill("👋 hello");
+            await composer.press("Enter");
+
+            const codeBlock = page.locator(".mx_EventTile_pre_container").first();
+            await expect(codeBlock).toBeVisible();
+
+            const fontSize = (locator: Locator): Promise<string> =>
+                locator.evaluate((node) => window.getComputedStyle(node).fontSize);
+
+            // Inside a code block the emoji must not be any larger than the code around it,
+            // otherwise the line it sits on grows and the line numbers stop lining up
+            expect(await fontSize(codeBlock.locator(".mx_Emoji"))).toEqual(await fontSize(codeBlock.locator("code")));
+
+            // ...but emoji in an ordinary message are still enlarged
+            const message = page.locator(".mx_EventTile_last .mx_EventTile_body");
+            expect(await fontSize(message.locator(".mx_Emoji"))).not.toEqual(await fontSize(message));
+        });
+
         test(
             "should be able to hide an image",
             { tag: "@screenshot" },
@@ -908,11 +941,11 @@ test.describe("Timeline", () => {
 
                 const bot = new Bot(page, homeserver, {});
                 await bot.prepareClient();
-                await app.client.inviteUser(room.roomId, bot.credentials.userId);
+                await app.client.inviteUser(room.roomId, bot.credentials!.userId);
 
                 await sendImage(bot, room.roomId, NEW_AVATAR);
                 await app.timeline.scrollToBottom();
-                const imgTile = page.locator(".mx_MImageBody").first();
+                const imgTile = page.locator(".mx_ImageBody").first();
                 await expect(imgTile).toBeVisible();
                 await imgTile.hover();
                 await page.getByRole("button", { name: "Hide" }).click();
@@ -927,7 +960,7 @@ test.describe("Timeline", () => {
 
             const bot = new Bot(page, homeserver, {});
             await bot.prepareClient();
-            await app.client.inviteUser(room.roomId, bot.credentials.userId);
+            await app.client.inviteUser(room.roomId, bot.credentials!.userId);
 
             const upload = await bot.uploadContent(VIDEO_FILE, { name: "bbb.webm", type: "video/webm" });
             await bot.sendEvent(room.roomId, null, "m.room.message" as EventType, {
@@ -961,7 +994,7 @@ test.describe("Timeline", () => {
                 autoAcceptInvites: false,
             });
             await bot.prepareClient();
-            await app.client.inviteUser(room.roomId, bot.credentials.userId);
+            await app.client.inviteUser(room.roomId, bot.credentials!.userId);
             await bot.joinRoom(room.roomId);
             await bot.sendMessage(room.roomId, messageFromSender);
 
@@ -1091,7 +1124,7 @@ test.describe("Timeline", () => {
                 autoAcceptInvites: false,
             });
             await bot.prepareClient();
-            await app.client.inviteUser(room.roomId, bot.credentials.userId);
+            await app.client.inviteUser(room.roomId, bot.credentials!.userId);
             await bot.joinRoom(room.roomId);
 
             // Make sure the bot joined the room
@@ -1219,7 +1252,7 @@ test.describe("Timeline", () => {
 
                 // Create another room with a long name, invite the bot, and open the room
                 const testRoomId = await app.client.createRoom({ name: LONG_STRING });
-                await app.client.inviteUser(testRoomId, bot.credentials.userId);
+                await app.client.inviteUser(testRoomId, bot.credentials!.userId);
                 await bot.joinRoom(testRoomId);
                 await page.goto(`/#/room/${testRoomId}`);
 
@@ -1319,7 +1352,7 @@ test.describe("Timeline", () => {
 
             await sendImage(app.client, room.roomId, NEW_AVATAR);
             await app.timeline.scrollToBottom();
-            await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
+            await expect(page.locator(".mx_ImageBody").first()).toBeVisible();
 
             // Exclude timestamp and read marker from snapshot
             const screenshotOptions = {

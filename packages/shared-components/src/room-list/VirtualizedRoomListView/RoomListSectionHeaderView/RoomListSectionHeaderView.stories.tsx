@@ -7,6 +7,8 @@
 
 import React, { type JSX } from "react";
 import { fn } from "storybook/test";
+import { DragDropProvider } from "@dnd-kit/react";
+import { PointerActivationConstraints, PointerSensor } from "@dnd-kit/dom";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
@@ -25,6 +27,8 @@ type RoomListSectionHeaderProps = RoomListSectionHeaderViewSnapshot &
 const RoomListSectionHeaderViewWrapperImpl = ({
     onClick,
     onFocus,
+    editSection,
+    removeSection,
     isFocused,
     sectionIndex,
     sectionCount,
@@ -32,7 +36,7 @@ const RoomListSectionHeaderViewWrapperImpl = ({
     roomCountInSection,
     ...rest
 }: RoomListSectionHeaderProps): JSX.Element => {
-    const vm = useMockedViewModel(rest, { onClick });
+    const vm = useMockedViewModel(rest, { onClick, editSection, removeSection });
     return (
         <RoomListSectionHeaderView
             vm={vm}
@@ -57,8 +61,23 @@ const meta = {
         isExpanded: true,
         isFocused: false,
         isUnread: false,
+        notification: {
+            hasAnyNotificationOrActivity: false,
+            isUnsentMessage: false,
+            invited: false,
+            isMention: false,
+            isActivityNotification: false,
+            isNotification: false,
+            hasUnreadCount: false,
+            count: 0,
+            muted: false,
+        },
+        displaySectionMenu: true,
+        canBeReordered: true,
         onClick: fn(),
         onFocus: fn(),
+        editSection: fn(),
+        removeSection: fn(),
         sectionIndex: 1,
         sectionCount: 3,
         roomCountInSection: 5,
@@ -66,9 +85,17 @@ const meta = {
     },
     decorators: [
         (Story) => (
-            <div role="treegrid" style={{ width: "320px" }}>
-                <Story />
-            </div>
+            <DragDropProvider
+                sensors={[
+                    PointerSensor.configure({
+                        activationConstraints: [new PointerActivationConstraints.Distance({ value: 5 })],
+                    }),
+                ]}
+            >
+                <div role="treegrid" style={{ width: "320px" }}>
+                    <Story />
+                </div>
+            </DragDropProvider>
         ),
     ],
     parameters: {
@@ -112,5 +139,24 @@ export const LastHeaderCollapsed: Story = {
 export const Unread: Story = {
     args: {
         isUnread: true,
+    },
+};
+
+export const WithNotificationDecoration: Story = {
+    args: {
+        isUnread: true,
+        notification: {
+            hasAnyNotificationOrActivity: true,
+            isUnsentMessage: true,
+            invited: true,
+            isMention: true,
+            isActivityNotification: false,
+            isNotification: true,
+            hasUnreadCount: true,
+            count: 12,
+            muted: false,
+            callType: "video",
+        },
+        isExpanded: false,
     },
 };

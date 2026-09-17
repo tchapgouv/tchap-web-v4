@@ -142,7 +142,6 @@ module.exports = {
                             "!matrix-js-sdk/src/oidc/discovery",
                             "!matrix-js-sdk/src/oidc/authorize",
                             "!matrix-js-sdk/src/oidc/validate",
-                            "!matrix-js-sdk/src/oidc/error",
                             "!matrix-js-sdk/src/oidc/register",
                             "!matrix-js-sdk/src/webrtc",
                             "!matrix-js-sdk/src/webrtc/call",
