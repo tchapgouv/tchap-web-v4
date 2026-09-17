@@ -22,6 +22,7 @@ import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { clearAllUserStatus } from "../../utils/userStatus";
 import { type SetStatusViewModel, UserMenuSetStatusViewModel } from "../status/SetStatusViewModel";
 import SettingsStore from "../../settings/SettingsStore";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 // Matches maximum size of an avatar in the UserMenu
 const AVATAR_PX = 88;
@@ -132,7 +133,8 @@ export class UserMenuViewModel
         this.dispatcher.dispatch({
             action: Action.ViewUserSettings,
             initialTabId: UserTab.SessionManager,
-            props: { showMsc4108QrCode: true },
+            // :TCHAP: remove-link-new-device-qr-code props: { showMsc4108QrCode: true },
+            props: { showMsc4108QrCode: TchapUIFeature.isFeatureActiveForHomeserver("feature_qrcode_login") },
         });
     };
 

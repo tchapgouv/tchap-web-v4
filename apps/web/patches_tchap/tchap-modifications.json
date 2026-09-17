@@ -93,8 +93,8 @@
     "remove-link-new-device-qr-code": {
         "issue": "",
         "files": [
-            "src/components/structures/UserMenu.tsx",
-            "src/components/views/settings/tabs/user/SessionManagerTab.tsx"
+            "src/components/views/settings/tabs/user/SessionManagerTab.tsx",
+            "src/viewmodels/menus/UserMenuViewModel.ts"
         ]
     },
     "last-admin-warning-room-settings": {

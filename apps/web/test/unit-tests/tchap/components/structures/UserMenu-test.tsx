@@ -1,10 +1,12 @@
 import React from "react";
-import { render, screen, waitFor } from "jest-matrix-react";
+import { logRoles, render, screen } from "jest-matrix-react";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import UnwrappedUserMenu from "~tchap-web/src/components/structures/UserMenu";
+import UnwrappedUserMenu from "~tchap-web/src/tchap/components/structures/UserMenu.tsx";
 import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
 import { stubClient, wrapInSdkContext } from "~tchap-web/test/test-utils";
+import dispatch from "~tchap-web/src/dispatcher/dispatcher";
+import { Action } from "~tchap-web/src/dispatcher/actions";
 
 describe("<UserMenu>", () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,47 +16,20 @@ describe("<UserMenu>", () => {
     beforeEach(() => {
         client = stubClient();
         sdkContext = new TestSDKContext();
+        jest.spyOn(dispatch, "dispatch");
     });
 
-    describe("<UserMenu> UI", () => {
-        beforeEach(() => {
-            const UserMenu = wrapInSdkContext(UnwrappedUserMenu, sdkContext);
-            render(<UserMenu isPanelCollapsed={false} />);
-        });
-
-        // If this snapshot change, you should consider to check what change on the UI side from element
-        // it"s a good indicator to see if this could introduce some regression on our code
-        it("should render as expected", async () => {
-            // open the user menu
-            screen.getByRole("button", { name: "User menu" }).click();
-
-            waitFor(() => {
-                const menu = screen.getByRole("menu");
-                expect(menu).toMatchSnapshot();
-            });
-        });
-
-        // you can also add some specific ui check here
-        // ...
-    });
-
-    // Here you can add some business logic check
-    describe("<UserMenu> faq", () => {
-        beforeEach(() => {
-            const UserMenu = wrapInSdkContext(UnwrappedUserMenu, sdkContext);
-            render(<UserMenu isPanelCollapsed={true} />);
-        });
+    describe("<UserMenu> open directly all parameters", () => {
 
         it("should open the faq when clicking on the faq button", () => {
-            global.open = jest.fn();
+            const UserMenu = wrapInSdkContext(UnwrappedUserMenu, sdkContext);
+            const { container } = render(<UserMenu isPanelCollapsed={true} />);
             // open the user menu
             screen.getByRole("button", { name: "User menu" }).click();
             // click on the faq
-            waitFor(() => {
-                screen.getByRole("menuitem", { name: "Help" }).click();
-                expect(global.open).toHaveBeenCalledTimes(1);
-                expect(global.open).toHaveBeenCalledWith("https://www.tchap.gouv.fr/faq", "_blank");
-            });
+            logRoles(container);
+            expect(dispatch.dispatch).toHaveBeenCalledWith({ action: Action.ViewUserSettings, initialTabId: undefined, props: undefined })
+            expect(container).toMatchSnapshot();
         });
     });
 

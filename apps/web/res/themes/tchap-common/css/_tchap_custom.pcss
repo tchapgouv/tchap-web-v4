@@ -155,6 +155,23 @@
 }
 
 
+/* Element removed this from space panel css when user profile refactor 
+   They are using shared-web-component, when we are simply using a base avatar to directly display all the menu
+*/
+.mx_SpacePanel .mx_UserMenu {
+    padding-bottom: 12px;
+    border-bottom: 1px solid $separator;
+    margin: 12px 14px 4px 18px;
+    width: min-content;
+    max-width: 226px;
+
+    /* Display the container and img here as block elements so they don't take
+        * up extra vertical space.
+    */
+    .mx_UserMenu_userAvatar_BaseAvatar {
+        display: block;
+    }
+}
 // Because of our long explanation about persistent toast on recovery code
 .mx_ToastContainer .mx_Toast_toast .mx_Toast_description {
     max-width: 500px;

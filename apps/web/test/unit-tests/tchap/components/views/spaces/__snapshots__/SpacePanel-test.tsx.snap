@@ -14,32 +14,30 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
       tabindex="0"
     />
     <div
-      class="_wrapper_dt4lj_8 mx_UserMenu"
+      class="mx_UserMenu"
     >
-      <button
-        aria-expanded="false"
-        aria-haspopup="menu"
+      <div
+        aria-isexpanded="false"
         aria-label="User menu"
-        class="_triggerButton_dt4lj_96"
-        data-state="closed"
-        id="radix-react-use-id-1"
-        type="button"
+        class="mx_AccessibleButton mx_UserMenu_contextMenuButton"
+        role="button"
+        tabindex="0"
       >
         <div
-          class="_avatarWrapper_dt4lj_73"
+          class="mx_UserMenu_userAvatar"
         >
           <span
-            aria-label="@test:test"
-            class="_avatar_va14e_8 _avatar-imageless_va14e_55"
+            class="_avatar_va14e_8 mx_BaseAvatar mx_UserMenu_userAvatar_BaseAvatar _avatar-imageless_va14e_55"
             data-color="5"
+            data-testid="avatar-img"
             data-type="round"
-            role="img"
-            style="--cpd-avatar-size: 36px;"
+            role="presentation"
+            style="--cpd-avatar-size: 32px;"
           >
             t
           </span>
         </div>
-      </button>
+      </div>
     </div>
     <div
       aria-label="Expand"
@@ -891,7 +889,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
         class="_icon-button_1215g_8 mx_ThreadsActivityCentreButton"
         data-kind="primary"
         data-state="closed"
-        id="radix-react-use-id-2"
+        id="radix-react-use-id-1"
         role="button"
         style="--cpd-icon-button-size: 32px;"
         tabindex="0"
@@ -919,7 +917,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
     <button
       aria-expanded="false"
       aria-label="Quick settings"
-      aria-labelledby="react-use-id-3"
+      aria-labelledby="react-use-id-2"
       class="_icon-button_1215g_8 mx_QuickSettingsButton"
       data-kind="primary"
       role="button"

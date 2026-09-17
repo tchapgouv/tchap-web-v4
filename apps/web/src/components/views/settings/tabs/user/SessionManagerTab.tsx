@@ -34,6 +34,8 @@ import { SettingsSection } from "../../shared/SettingsSection";
 import { getManageDeviceUrl } from "../../../../../utils/oauth/urls.ts";
 import { SDKContext } from "../../../../../contexts/SDKContext";
 import Spinner from "../../../elements/Spinner";
+import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils.ts";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature.ts";
 
 // We import `LoginWithQR` asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
 const LoginWithQR = lazy(() => import("../../../auth/LoginWithQR"));
@@ -277,7 +279,12 @@ const SessionManagerTab: React.FC<{
     return (
         <SettingsTab>
             <SettingsSection>
-                <LoginWithQRSection onShowQr={onShowQrClicked} isCrossSigningReady={isCrossSigningReady} />
+                {/* :TCHAP: remove-link-new-device-qr-code add FF for QR code login */}
+                {/* <LoginWithQRSection onShowQr={onShowQrClicked} isCrossSigningReady={isCrossSigningReady} /> */}
+                { TchapUIFeature.isFeatureActiveForHomeserver("feature_qrcode_login")  ? 
+                    <LoginWithQRSection onShowQr={onShowQrClicked} isCrossSigningReady={isCrossSigningReady} /> 
+                    : null
+                }
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}

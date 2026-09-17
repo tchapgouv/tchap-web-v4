@@ -31,7 +31,7 @@ import {
     PlusIcon,
     ChevronRightIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
-import { useCreateAutoDisposedViewModel, UserMenu } from "@element-hq/web-shared-components";
+import { useCreateAutoDisposedViewModel } from "@element-hq/web-shared-components";
 
 import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
@@ -83,6 +83,7 @@ import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP
 import TchapGaufre from "~tchap-web/src/tchap/components/views/common/Gaufre";
 import QuickFaqButton from "~tchap-web/src/tchap/components/views/common/QuickFaq"; // :TCHAP: improve-faq-visibility
 import SpacePanelTchap from "~tchap-web/src/tchap/components/views/common/SpacePanelTchap";
+import UserMenu from "~tchap-web/src/tchap/components/structures/UserMenu.tsx";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const sdkContext = useContext(SDKContext);
@@ -438,8 +439,9 @@ const SpacePanel: React.FC = () => {
                     >
                         {/* :TCHAP: */}
                         <SpacePanelTchap isPanelCollapsed={isPanelCollapsed} />
+                        {/* <UserMenu vm={userMenuVm} className="mx_UserMenu" /> */}
+                        <UserMenu isPanelCollapsed={isPanelCollapsed}/>
                         {/* end :TCHAP: */}
-                        <UserMenu vm={userMenuVm} className="mx_UserMenu" />
                         <AccessibleButton
                             className={classNames("mx_SpacePanel_toggleCollapse", {
                                 expanded: !isPanelCollapsed,
