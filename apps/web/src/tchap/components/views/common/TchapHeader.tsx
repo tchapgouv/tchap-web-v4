@@ -18,9 +18,9 @@ export const TchapHeader: React.FC = () => {
                             </div>
                             <div className="fr-header__service">
                                 <a
-                                    className="ui-home"
                                     href="/#/welcome"
                                     title="Accueil - Tchap - DINUM"
+                                    className="lasuite-header__service-link"
                                 >
                                     <img
                                         src="/themes/tchap/img/logos/tchap-logo.svg"
@@ -37,7 +37,7 @@ export const TchapHeader: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="fr-header__tools">
+                        {/* <div className="fr-header__tools">
                             <div
                                 className="fr-header__tools-links"
                                 data-fr-js-header-links="true"
@@ -53,7 +53,7 @@ export const TchapHeader: React.FC = () => {
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
