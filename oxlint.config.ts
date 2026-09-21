@@ -181,15 +181,17 @@ export default defineConfig({
         "no-restricted-properties": ["error", ...defaultRestrictedProperties],
         "import/no-duplicates": ["error"],
 
-        "element-call/copyright-header": [
-            "error",
-            "/*\nCopyright %%CURRENT_YEAR%% Element Creations Ltd.\n\nSPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial\nPlease see LICENSE in the repository root for full details.\n*/\n\n",
-        ],
+        // :TCHAP: no need for header in tchap
+        // "element-call/copyright-header": [
+        //     "error",
+        //     "/*\nCopyright %%CURRENT_YEAR%% Element Creations Ltd.\n\nSPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial\nPlease see LICENSE in the repository root for full details.\n*/\n\n",
+        // ],
 
         // Allow the use of underscore to show args are not used.
         // This is helpful for seeing that a function implements
         // an interface but won't be using one of it's arguments.
-        "no-unused-vars": ["error", { args: "none", ignoreRestSiblings: true }],
+        // :TCHAP: when commenting code, we can leave unused vars
+        // "no-unused-vars": ["error", { args: "none", ignoreRestSiblings: true }],
 
         // Require method signatures to be explicit to help make signature changes more obvious in review
         "typescript/explicit-function-return-type": [

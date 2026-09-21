@@ -11,7 +11,7 @@
  *  - create the pr !
  */
 
-const fs = require('fs');
+const fs = require('node:fs');
 
 const fetchReleaseDetails = require('./fetchReleaseDetails').fetchReleaseDetails;
 

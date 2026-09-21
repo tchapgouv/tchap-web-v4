@@ -1,5 +1,5 @@
 import patchFile from "../../patches_tchap/patches.json" with { type: "json" };
-import { exec } from "child_process";
+import { exec } from "node:child_process";
 
 if (process.argv.length !== 3) {
     console.log("\nMissing patch name.");

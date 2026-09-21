@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 import patchFile from "../../patches_tchap/patches.json" with { type: "json" };
 

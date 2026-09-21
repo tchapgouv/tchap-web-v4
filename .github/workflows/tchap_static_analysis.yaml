@@ -95,6 +95,10 @@ jobs:
               working-directory: apps/web
               run: "pnpm i18n-tchap"
 
+            # TODO: make oxlint run successfully for tchap  
+            # - name: Run global Oxlint
+            #   run: pnpm nx run-many -t "lint:js" -p
+
     # tchap : fix this https://github.com/tchapgouv/tchap-web-v4/issues/767
     # analyse_dead_code:
     #    name: "Analyse Dead Code"

@@ -1,7 +1,7 @@
 import React from "react";
 import { type RenderResult, render, screen } from "jest-matrix-react";
 import userEvent from "@testing-library/user-event";
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
 
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";

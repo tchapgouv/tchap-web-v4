@@ -19,7 +19,7 @@ import {
 } from "~tchap-web/test/test-utils";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
-import { ConfigOptions } from "~tchap-web/src/IConfigOptions";
+import { type ConfigOptions } from "~tchap-web/src/IConfigOptions";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 
 describe("LegacyCallView", () => {
