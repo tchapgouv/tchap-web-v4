@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 
 import React, { type JSX, type RefObject, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MsgType } from "matrix-js-sdk/src/matrix";
-import { type ImageContent } from "matrix-js-sdk/src/types";
+import { type ImageContent,type MediaEventContent } from "matrix-js-sdk/src/types";
 import {
     DecryptionFailureBodyView,
     FileBodyView,
@@ -16,7 +16,6 @@ import {
     VideoBodyView,
     useCreateAutoDisposedViewModel,
 } from "@element-hq/web-shared-components";
-import { type MediaEventContent } from "matrix-js-sdk/src/types";
 
 import { type IBodyProps } from "./IBodyProps";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";

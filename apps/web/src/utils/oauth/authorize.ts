@@ -13,7 +13,7 @@ import { OAuthClientError } from "./error";
 import PlatformPeg from "../../PlatformPeg";
 import { type URLParams } from "../../vector/url_utils.ts";
 import { getOAuthParams, loadAuthContext, storeAuthContext } from "./persistOAuthSettings.ts";
-import TauriPlatform from "~tchap-web/src/vector/platform/tchap-desktop/TauriPlatform.ts";
+import type TauriPlatform from "~tchap-web/src/vector/platform/tchap-desktop/TauriPlatform.ts";
 
 const RESPONSE_MODE = "fragment";
 
