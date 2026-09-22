@@ -124,7 +124,8 @@ patchedDependencies:
   # Workaround for scroll anchoring landing on transient placeholder rows (pending upstream)
   "@tanstack/virtual-core@3.17.6": patches/@tanstack__virtual-core@3.17.6.patch
   # :TCHAP: simple squarer button for compound-web, workaround because error with pnpm x patch-package, normal tchap patch system
-  '@vector-im/compound-web': patches/@vector-im__compound-web.patch
+  "@vector-im/compound-web": patches/@vector-im__compound-web.patch
+  '@vector-im/compound-web@9.9.0': patches/@vector-im__compound-web@9.9.0.patch
 
 peerDependencyRules:
   allowedVersions:

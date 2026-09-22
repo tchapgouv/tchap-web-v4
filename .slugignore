@@ -1,5 +1,3 @@
-apps/web/test/*
-apps/web/playwright/*
-apps/web/docker/*
-apps/web/patches_legacy/*
-
+./.cache/*
+./apps/*
+./node_modules/*
