@@ -89,6 +89,9 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
+    "embedded_pages": {
+        "welcome_url": "welcome_mas.html"
+    },
     "user_notice": {
         "title": "PREPROD",
         "description": "You are on preprod env",
