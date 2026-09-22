@@ -7,7 +7,7 @@ import { relaunch } from '@tauri-apps/plugin-process';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { onOpenUrl } from '@tauri-apps/plugin-deep-link';
 import { secureRandomString } from 'matrix-js-sdk/src/randomstring';
-import { type MatrixEvent, type Room, type MatrixClient, type SSOAction, type OidcRegistrationClientMetadata } from 'matrix-js-sdk/src/matrix';
+import { type MatrixEvent, type Room, type MatrixClient, type SSOAction, type OAuthRegistrationRequest } from 'matrix-js-sdk/src/matrix';
 import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification';
 import { encodeParams } from 'matrix-js-sdk/src/utils';
 import { resolveResource } from '@tauri-apps/api/path';
@@ -112,8 +112,7 @@ export default class TauriPlatform extends BasePlatform {
                 // callback return from sso connexion
                 if (parsedParams.params.legacy_sso) window.location.replace(`/?loginToken=${parsedParams.params.legacy_sso.loginToken}`);
                 // note : removing the no_universal_links in this case, freeze the app.
-                if (parsedParams.params.oidc_fragment) window.location.replace(`/?no_universal_links=true#state=${parsedParams.params.oidc_fragment.state}&code=${parsedParams.params.oidc_fragment.code}&`)
-                if (parsedParams.params.oidc_query) window.location.replace(`/?no_universal_links=true&state=${parsedParams.params.oidc_query.state}&code=${parsedParams.params.oidc_query.code}&`)
+                if (parsedParams.params.oauth2) window.location.replace(`/?no_universal_links=true#state=${parsedParams.params.oauth2.state}&code=${parsedParams.params.oauth2.code}&`)
             }
         });
     }
@@ -294,14 +293,9 @@ export default class TauriPlatform extends BasePlatform {
     }
 
 
-    public getSSOCallbackUrl(fragmentAfterLogin?: string): URL {
-        const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;
-        const href = window.location.href;
-        const urlTchap = href.replace(/^https?/, scheme);
-        const url = new URL(urlTchap);
-        url.hash = fragmentAfterLogin ?? "";
-        url.protocol = scheme; // only using this is not working to change the protocol, dont know why...
-        // url.searchParams.set(SSO_ID_KEY, this.ssoID); No need in tchap, only a single instance, and its breaking params parsing
+    public getSSOCallbackUrl(fragmentAfterLogin: string = ""): URL {
+        const url = new URL(window.location.href);
+        url.hash = fragmentAfterLogin;
         return url;
     }
 
@@ -309,20 +303,23 @@ export default class TauriPlatform extends BasePlatform {
      * The URL to return to after a successful OIDC authentication
      */
     public getOAuthCallbackUrl(): URL {
-        const url = super.getOAuthCallbackUrl();
-        url.protocol = this.protocol;
+        const url = super.getSSOCallbackUrl();
+        const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;
+        url.protocol = scheme;
         // Trim the double slash into a single slash to comply with https://datatracker.ietf.org/doc/html/rfc8252#section-7.1
+        console.log("**** url", url)
+        url.href = url.href.replace(/^https?/, scheme);
         if (url.href.startsWith(`${url.protocol}//`)) {
             url.href = url.href.replace("://", ":/");
         }
         return url;
     }
 
-    public async getOAuthClientMetadata(): Promise<OidcRegistrationClientMetadata> {
+    public async getOAuthClientMetadata(): Promise<OAuthRegistrationRequest> {
         const baseMetadata = await super.getOAuthClientMetadata();
         return {
             ...baseMetadata,
-            applicationType: "native",
+            application_type: "native",
         };
     }
 
