@@ -113,7 +113,7 @@ export default class ContentScanningVideoBody extends React.Component<IBodyProps
     }
 
     private get fileName() {
-        return presentableTextForFile(this.content, _t("common|video"), true, false);
+        return presentableTextForFile(this.content, _t("common|attachment"), true, false);
     }
 
     private get content(): MediaEventContent {

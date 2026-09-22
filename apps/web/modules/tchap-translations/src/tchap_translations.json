@@ -158,7 +158,6 @@
         "en": "Verification Code",
         "fr": "Code de vérification"
     },
-    "auth|logout_dialog|use_key_backup": { "en": "Use automatic Backup", "fr": "Utiliser la sauvegarde automatique" },
     "bug_reporting|title": {
         "en": "Report a bug and send debug logs",
         "fr": "Signalez un bug et envoyez les journaux de débogage"
@@ -270,7 +269,6 @@
     },
     "a number": { "en": "a number", "fr": "un chiffre" },
     "a symbol": { "en": "a symbol", "fr": "un caractère spécial" },
-    "action|explore_public_rooms": { "en": "Explore public rooms", "fr": "Rejoindre un salon public" },
     "action|start_chat": { "en": "New direct message", "fr": "Nouveau message direct" },
     "an uppercase letter": { "en": "an uppercase letter", "fr": "une lettre majuscule" },
     "auth|check_email_wrong_email_button": { "en": "Re-enter email address", "fr": "Re-saisir l'adresse mail" },
@@ -338,10 +336,6 @@
         "en": "This session has detected that your Security Phrase and code for Secure Messages have been removed.",
         "fr": "Cette session a détecté que votre phrase secrète et code de vérification pour les messages sécurisés ont été supprimés."
     },
-    "encryption|set_up_toast_description": {
-        "en": "Activate your verification code to never lose your messages",
-        "fr": "Activez votre code de vérification pour ne jamais perdre vos messages"
-    },
     "encryption|set_up_toast_title": {
         "en": "Activate message Secure Backup",
         "fr": "Activer la sauvegarde automatique des messages"
@@ -380,7 +374,6 @@
         "en": "Messages will be sent when your connection returns.",
         "fr": "Les messages seront envoyés automatiquement dès que la connexion sera rétablie."
     },
-    "room_list|join_public_room_label": { "en": "Join a public room", "fr": "Rejoindre un salon public" },
     "room_settings|permissions|ban": {
         "en": "Ban users",
         "fr": "Interdire aux utilisateurs l’accès au salon (définitif)"
@@ -500,17 +493,9 @@
         "fr": "Cela veut dire qu'ils disposent de toutes les clés nécessaires pour lire les messages chiffrés, et confirment aux autres utilisateurs que vous faites confiance à cet appareil."
     },
     "settings|sessions|verify_session": { "en": "Verify device", "fr": "Vérifier l'appareil" },
-    "settings|sidebar|metaspaces_favourites_description": {
-        "en": "Group all your favourite rooms in one place.",
-        "fr": "Regroupe tous vos salons favoris au même endroit."
-    },
     "settings|sidebar|metaspaces_home_all_rooms_description": {
         "en": "Show all your rooms in Home",
         "fr": "Affiche tous vos salons dans l’accueil"
-    },
-    "settings|sidebar|metaspaces_people_description": {
-        "en": "Group all your direct message room in one place.",
-        "fr": "Regroupe tous vos salons de message directs au même endroit."
     },
     "settings|sidebar|spaces_explainer": {
         "en": "Spaces are ways to group rooms and direct messages.",
@@ -574,10 +559,6 @@
     "tchap_voip_bug_report_prefill": {
         "en": "I had a problem during a Tchap call.\nDetails: ...",
         "fr": "J'ai eu un problème pendant un appel Tchap.\nDétails : ..."
-    },
-    "common|system_alerts": {
-        "en": "Tchap Info",
-        "fr": "Annonces Tchap"
     },
     "settings|notifications|enable_notifications_email_detail": {
         "en": "Receive an e-mail if at least one message is unread during 72h. <a> Learn more </a>",
