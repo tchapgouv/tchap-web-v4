@@ -9,6 +9,7 @@ import AccessibleButton from "~tchap-web/src/components/views/elements/Accessibl
 import classNames from "classnames";
 import { _t } from "../../../../languageHandler";
 import { RovingAccessibleButton } from "~tchap-web/src/accessibility/RovingTabIndex";
+import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
 
 const TchapGaufre: React.FC<{
     isPanelCollapsed: boolean;
@@ -109,7 +110,7 @@ const TchapGaufre: React.FC<{
                 {lasuiteServices.map((service) => (
                     <RovingAccessibleButton
                         onClick={() => {
-                            window.open(service.url, "_blank");
+                            TchapUrls.openHelper(service.url);
                         }}
                     >
                         <img src={service.logo} alt={`${service.name} logo`} aria-hidden="true"></img>
