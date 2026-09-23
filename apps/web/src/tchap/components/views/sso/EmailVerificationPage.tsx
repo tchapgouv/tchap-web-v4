@@ -110,7 +110,7 @@ export default function EmailVerificationPage(props: IProps) {
                 validatedServerConfig.hsUrl,
                 validatedServerConfig.isUrl,
                 isCreateAccount,
-                // email,
+                email,
             );
 
             setLoading(false);

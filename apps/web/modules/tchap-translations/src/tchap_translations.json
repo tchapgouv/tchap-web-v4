@@ -122,7 +122,6 @@
         "fr": "Invitez quelqu’un grâce à son nom, adresse mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>. Il est possible d'inviter en masse en copiant et collant une liste de mails séparés par une virgule (prenom1.nom1@beta.gouv.fr, prenom2.nom2@beta.gouv.fr, prenom3.nom3@beta.gouv.fr) ou séparés par un saut à la ligne."
     },
     "restore_key_backup_dialog|keys_restored_title": { "en": "Messages restored", "fr": "Messages récupérés" },
-    "Known issues": { "en": "Known issues", "fr": "Problèmes connus" },
     "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.": {
         "en": "One of your devices <b>wants to check your Tchap Keys</b> to unlock your messages.",
         "fr": "L'un de vos appareils <b>demande à partager vos Clés Tchap</b> pour déverrouiller vos messages."
@@ -137,7 +136,6 @@
     },
     "Read the CGU": { "en": "Read the CGU", "fr": "Consultez les modalités d'utilisation" },
     "Read the FAQ": { "en": "Read the FAQ", "fr": "Consultez la FAQ" },
-    "Read the Known Issues": { "en": "Read the Known Issues", "fr": "Consultez les problèmes connus" },
     "Read the Privacy Policy": { "en": "Read the Privacy Policy", "fr": "Lire la Politique de Confidentialité" },
     "invite|recents_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
     "invite|suggestions_section": { "en": "Recent direct messages", "fr": "Messages directs récents" },
@@ -221,10 +219,6 @@
     "This room is private and open to external users": {
         "en": "This room is private and open to external users",
         "fr": "Ce salon est privé et ouvert aux externes"
-    },
-    "This version of Tchap Web is currently in development. There are known issues that will be solved soon.": {
-        "en": "This version of Tchap Web is currently in development. There are known issues that will be solved soon.",
-        "fr": "Cette version de Tchap Web est en cours de développement. Il y a des problèmes connus qui seront bientôt résolus."
     },
     "Trusted": { "en": "Trusted", "fr": "Vérifié" },
     "Type of room": { "en": "Type of room", "fr": "Type de salon" },

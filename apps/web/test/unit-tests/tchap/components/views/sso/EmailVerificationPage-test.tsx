@@ -118,7 +118,7 @@ describe("Tests sso and oidc native flow", () => {
                 expect.anything(), // hsUrl
                 expect.anything(), // isUrl
                 expect.anything(), // isRegistration
-                // userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
+                userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
             );
         });
 
@@ -157,7 +157,7 @@ describe("Tests sso and oidc native flow", () => {
                 expect.anything(), // hsUrl
                 expect.anything(), // isUrl
                 true, // isRegistration
-                // userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
+                userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
             );
         });
     });

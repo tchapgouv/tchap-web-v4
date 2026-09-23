@@ -1868,7 +1868,7 @@ export declare class I18nApi implements I18nApi_2 {
     humanizeTime: (timeMillis: number) => string;
 }
 
-export declare const I18nContext: Context<I18nApi_2 | null>;
+export declare const I18nContext: Context<any>;
 
 /**
  * An action dispatched to the roving tabindex reducer for node registration and

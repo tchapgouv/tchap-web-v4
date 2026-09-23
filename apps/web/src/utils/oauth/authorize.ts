@@ -34,6 +34,9 @@ export const startOAuthLogin = async (
     homeserverUrl: string,
     identityServerUrl?: string,
     isRegistration?: boolean,
+    // :TCHAP:
+    loginHint?: string,
+    // end :TCHAP:
 ): Promise<void> => {
     const platform = PlatformPeg.get()!;
     const state = secureRandomString(32) + platform.getOAuthClientState();
@@ -55,11 +58,12 @@ export const startOAuthLogin = async (
 
     // :TCHAP: desktop-tauri-browser
     // window.location.href = authorizationUrl;
+    const authUrlWithHint = `${authorizationUrl}&login_hint=${loginHint}`
     if (window.__TAURI__) {
         const tauriPlatform = PlatformPeg.get() as TauriPlatform;
-        tauriPlatform.openAuthorizationInBrowser(authorizationUrl);
+        tauriPlatform.openAuthorizationInBrowser(authUrlWithHint);
     } else {
-        window.location.href = authorizationUrl;
+        window.location.href = authUrlWithHint;
     }
     // end :TCHAP:
 };
