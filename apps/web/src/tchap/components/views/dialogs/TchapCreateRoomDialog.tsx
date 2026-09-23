@@ -12,21 +12,25 @@ Note on imports : because this file will be copied to a different directory by t
 mechanism, imports must use absolute paths.
 Except when importing from other customisation files. Then imports must use relative paths.
 */
-import React, { ChangeEvent, createRef, FormEvent, KeyboardEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import withValidation, { IFieldState } from "~tchap-web/src/components/views/elements/Validation";
-import { _t } from "~tchap-web/src/languageHandler";
-import { IOpts } from "~tchap-web/src/createRoom";
-import { getKeyBindingsManager } from "~tchap-web/src/KeyBindingsManager";
-import { KeyBindingAction } from "~tchap-web/src/accessibility/KeyboardShortcuts";
-import Field from "~tchap-web/src/components/views/elements/Field";
-import DialogButtons from "~tchap-web/src/components/views/elements/DialogButtons";
-import BaseDialog from "~tchap-web/src/components/views/dialogs/BaseDialog";
+import React, { type ChangeEvent, createRef, type FormEvent, type KeyboardEvent } from "react";
+import { type Room } from "matrix-js-sdk/src/matrix";
 
 import TchapUtils from "../../../util/TchapUtils";
 import TchapRoomTypeSelector from "../elements/TchapRoomTypeSelector";
 import { TchapRoomType } from "../../../@types/tchap";
 import TchapCreateRoom from "../../../ext/createTchapRoom";
+
+import withValidation, {
+    type IValidationResult,
+    type IFieldState,
+} from "~tchap-web/src/components/views/elements/Validation";
+import { _t } from "~tchap-web/src/languageHandler";
+import { type IOpts } from "~tchap-web/src/createRoom";
+import { getKeyBindingsManager } from "~tchap-web/src/KeyBindingsManager";
+import { KeyBindingAction } from "~tchap-web/src/accessibility/KeyboardShortcuts";
+import Field from "~tchap-web/src/components/views/elements/Field";
+import DialogButtons from "~tchap-web/src/components/views/elements/DialogButtons";
+import BaseDialog from "~tchap-web/src/components/views/dialogs/BaseDialog";
 
 // We leave the same props as Element's version, to avoid unknown props warnings.
 interface IProps {
@@ -64,12 +68,12 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         };
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         // move focus to first field when showing dialog
         this.nameField?.current.focus();
     }
 
-    private onCancel = () => {
+    private onCancel = (): void => {
         this.setState({ nameIsValid: true });
         this.props.onFinished(false);
     };
@@ -86,7 +90,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         this.setState({ name: ev.target.value });
     };
 
-    private onNameValidate = async (fieldState: IFieldState) => {
+    private onNameValidate = async (fieldState: IFieldState): IValidationResult => {
         const result = await TchapCreateRoomDialog.validateRoomName(fieldState);
         this.setState({ nameIsValid: result.valid });
         return result;
@@ -119,7 +123,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
             : true;
     };
 
-    private onOk = async (event?: FormEvent) => {
+    private onOk = async (event?: FormEvent): void => {
         event?.preventDefault();
 
         const activeElement = document.activeElement as HTMLElement;
@@ -152,7 +156,7 @@ export default class TchapCreateRoomDialog extends React.Component<IProps, IStat
         }
     };
 
-    public render() {
+    public render(): React.ReactNode {
         const shortDomain: string = TchapUtils.getShortDomain();
 
         const title = this.createRoomInSpace ? _t("Create a room in this space") : _t("action|create_a_room");

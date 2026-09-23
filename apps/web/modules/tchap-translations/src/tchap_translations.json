@@ -1144,5 +1144,13 @@
     "quick_settings|support_title": {
         "en": "Help and support",
         "fr": "Aide et support"
+    },
+    "room_settings|permissions|error_unbanning": {
+        "en":"Failed to unban",
+        "fr": "L'interdiction a échoué"
+    },
+    "badge|recommended": {
+        "en":"RECOMMANDED",
+        "fr": "RECOMMANDÉ"
     }
 }

@@ -2,14 +2,15 @@
 Copyright 2022 DINUM
 */
 
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import classNames from "classnames";
-import { _t } from "~tchap-web/src/languageHandler";
-import StyledRadioButton from "~tchap-web/src/components/views/elements/StyledRadioButton";
+import { Badge, Form, SettingsToggleInput } from "@vector-im/compound-web";
+import { LockSolidIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { TchapRoomType } from "../../../@types/tchap";
-import { Form, SettingsToggleInput } from "@vector-im/compound-web";
-import { LockSolidIcon, PublicIcon, LockOffIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+
+import { _t } from "~tchap-web/src/languageHandler";
+import StyledRadioButton from "~tchap-web/src/components/views/elements/StyledRadioButton";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 interface IProps {
@@ -95,6 +96,9 @@ export default class TchapRoomTypeSelector extends React.Component<IProps, IStat
                         <div className="tc_TchapRoomTypeSelector_RadioButton_title">
                             <LockSolidIcon width="30px" />
                             {_t("create|private_encrypted_title")}
+                            <Badge kind="grey" className="badge_recommanded">
+                                {_t("badge|recommended")}
+                            </Badge>
                         </div>
                         {/* <div>{this.props.createRoomInSpace ? _t("Private discussions accessible to all users of this space.")  : _t("Accessible to all users by invitation from an administrator.")}</div> */}
                         <ul>

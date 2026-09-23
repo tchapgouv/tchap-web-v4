@@ -33,6 +33,9 @@ export const getOAuthErrorMessage = (error: Error): string | ReactNode => {
         case OAuth2Error.CodeExchangeFailed:
         case OAuth2Error.InvalidBearerTokenResponse:
         default:
-            return _t("auth|oidc|generic_auth_error");
+            //:tchap:
+            //return _t("auth|oidc|generic_auth_error");
+            return `${_t("auth|oidc|generic_auth_error")} : ${error.message}`;
+            //:tchap:end
     }
 };
