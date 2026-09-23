@@ -1172,5 +1172,9 @@
     "search|summary|warning": {
         "en": "It is possible that your messages were not cached yet hence not accessible for search. <a> Learn more </a>",
         "fr": "Il est possible que vos messages n'aient pas encore été mis en cache et soient donc inaccessibles par la recherche. <a> En savoir plus </a>"
+    },
+    "quick_settings|support_title": {
+        "en": "Help and support",
+        "fr": "Aide et support"
     }
 }

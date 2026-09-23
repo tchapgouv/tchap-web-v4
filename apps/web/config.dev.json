@@ -97,11 +97,13 @@
         "show_once": false
     },
     "desktop_builds": {
-        "available": false
+        "available": true,
+        "logo": "themes/tchap/img/logos/tchap-logo-dev.svg",
+        "url": "https://www.tchap.incubateur.net/client/config/download/desktop/windows"
     },
     "mobile_builds": {
-        "ios": "https://apps.apple.com/us/app/tchap/id1446253779",
-        "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.a",
+        "ios": "https://apps.apple.com/us/app/tchap/id6736991029",
+        "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.android.x",
         "fdroid": null
     },
     "permalink_prefix": "https://www.tchap.incubateur.net",

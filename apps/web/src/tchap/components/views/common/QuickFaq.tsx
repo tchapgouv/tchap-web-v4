@@ -74,10 +74,10 @@ const QuickFaqButton: React.FC<{
 
     let button = (
         <IconButton
-            aria-label={_t("quick_settings|title")}
+            aria-label={_t("quick_settings|support_title")}
             className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
             onClick={openMenu}
-            title={isPanelCollapsed ? _t("quick_settings|title") : undefined}
+            title={isPanelCollapsed ? _t("quick_settings|support_title") : undefined}
             ref={handle}
             aria-expanded={!isPanelCollapsed}
         >
@@ -85,8 +85,13 @@ const QuickFaqButton: React.FC<{
                 <HelpSolidIcon />
                 {/* This is dirty, but we need to add the label to the indicator icon */}
                 {!isPanelCollapsed && (
-                    <Text className="mx_QuickSettingsButton_label" as="span" size="md" title={_t("common|settings")}>
-                        {_t("common|settings")}
+                    <Text
+                        className="mx_QuickSettingsButton_label"
+                        as="span"
+                        size="md"
+                        title={_t("quick_settings|support_title")}
+                    >
+                        {_t("quick_settings|support_title")}
                     </Text>
                 )}
             </>
@@ -95,7 +100,7 @@ const QuickFaqButton: React.FC<{
 
     if (isPanelCollapsed) {
         button = (
-            <Tooltip label={_t("quick_settings|title")} placement="right">
+            <Tooltip label={_t("quick_settings|support_title")} placement="right">
                 {button}
             </Tooltip>
         );

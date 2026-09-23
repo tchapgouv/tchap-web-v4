@@ -179,11 +179,13 @@
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
     "desktop_builds": {
-        "available": false
+        "available": true,
+        "logo": "themes/tchap/img/logos/tchap-logo.svg",
+        "url": "https://www.tchap.gouv.fr/client/config/download/desktop/windows"
     },
     "mobile_builds": {
-        "ios": "https://apps.apple.com/us/app/tchap/id1446253779",
-        "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.a",
+        "ios": "https://apps.apple.com/us/app/tchap/id6736991029",
+        "android": "https://play.google.com/store/apps/details?id=fr.gouv.tchap.android.x",
         "fdroid": null
     },
     "permalink_prefix": "https://tchap.gouv.fr",
