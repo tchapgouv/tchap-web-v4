@@ -32,6 +32,10 @@ import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 interface IProps {
     closeSettingsFn: () => void;
+    /**
+     * If true, the status control starts in custom status mode, ready for the user to enter a custom status.
+     */
+    startCustomStatus?: boolean;
 }
 
 interface AccountSectionProps {
@@ -86,7 +90,7 @@ const ManagementSection: React.FC<ManagementSectionProps> = ({ onDeactivateClick
     );
 };
 
-const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
+const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn, startCustomStatus }) => {
     const [externalAccountManagementUrl, setExternalAccountManagementUrl] = React.useState<string | undefined>();
     const [canMake3pidChanges, setCanMake3pidChanges] = React.useState<boolean>(false);
     const [canSetDisplayName, setCanSetDisplayName] = React.useState<boolean>(false);
@@ -169,7 +173,7 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
 
     const onDeactivateClicked = useCallback((): void => {
         const { finished } = Modal.createDialog(DeactivateAccountDialog);
-        finished.then(([success]) => {
+        void finished.then(([success]) => {
             if (success) closeSettingsFn();
         });
     }, [closeSettingsFn]);
@@ -182,6 +186,7 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
 
     return (
         <SettingsTab data-testid="mx_AccountUserSettingsTab">
+<<<<<<< HEAD
             <SettingsSection>
                 <UserProfileSettings
                     externalAccountManagementUrl={externalAccountManagementUrl}
@@ -208,6 +213,22 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
                 }
                 {/* end :TCHAP: */}
             </SettingsSection>
+=======
+            <UserProfileSettings
+                externalAccountManagementUrl={externalAccountManagementUrl}
+                canSetDisplayName={canSetDisplayName}
+                canSetAvatar={canSetAvatar}
+                startCustomStatus={startCustomStatus}
+            />
+            {(!isAccountManagedExternally || canMake3pidChanges) && (
+                <UserPersonalInfoSettings canMake3pidChanges={canMake3pidChanges} />
+            )}
+            <AccountSection
+                canChangePassword={canChangePassword}
+                onPasswordChanged={onPasswordChanged}
+                onPasswordChangeError={onPasswordChangeError}
+            />
+>>>>>>> v1.12.29
             {accountManagementSection}
         </SettingsTab>
     );
