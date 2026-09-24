@@ -221,7 +221,7 @@ export class RoomViewStore extends EventEmitter {
             //      - event_offset: 100
             //      - highlighted:  true
             case Action.ViewRoom:
-                this.viewRoom(payload as ViewRoomPayload);
+                void this.viewRoom(payload as ViewRoomPayload);
                 break;
             case Action.ViewThread:
                 this.viewThread(payload as ThreadPayload);
@@ -253,7 +253,7 @@ export class RoomViewStore extends EventEmitter {
             // join_room:
             //      - opts: options for joinRoom
             case Action.JoinRoom:
-                this.joinRoom(payload as JoinRoomPayload);
+                void this.joinRoom(payload as JoinRoomPayload);
                 break;
             case Action.JoinRoomError:
                 this.joinRoomError(payload as JoinRoomErrorPayload);
@@ -263,7 +263,7 @@ export class RoomViewStore extends EventEmitter {
                     this.setState({ shouldPeek: false });
                 }
 
-                awaitRoomDownSync(MatrixClientPeg.safeGet(), payload.roomId).then((room) => {
+                void awaitRoomDownSync(MatrixClientPeg.safeGet(), payload.roomId).then((room) => {
                     const numMembers = room.getJoinedMemberCount();
                     const roomSize =
                         numMembers > 1000
@@ -391,7 +391,7 @@ export class RoomViewStore extends EventEmitter {
                 // Immediately start the call. This will connect to all required widget events
                 // and allow the widget to show the lobby.
                 if (call.connectionState === ConnectionState.Disconnected) {
-                    call.start({ skipLobby: payload.skipLobby, voiceOnly: payload.voiceOnly });
+                    void call.start({ skipLobby: payload.skipLobby, voiceOnly: payload.voiceOnly });
                 }
             }
             // If we switch to a different room from the call, we are no longer presenting it

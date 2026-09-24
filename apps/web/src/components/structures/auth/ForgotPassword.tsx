@@ -113,7 +113,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
         ) {
             // Do a liveliness check on the new URLs
-            this.checkServerLiveliness(this.props.serverConfig);
+            void this.checkServerLiveliness(this.props.serverConfig);
         }
         end :TCHAP: */
     }
@@ -256,7 +256,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
         // Focus on the first invalid field, then re-validate,
         // which will result in the error tooltip being displayed for that field.
         invalidFields[0].focus();
-        invalidFields[0].validate({ allowEmpty: false, focused: true });
+        await invalidFields[0].validate({ allowEmpty: false, focused: true });
 
         return false;
     }
@@ -350,13 +350,13 @@ export default class ForgotPassword extends React.Component<Props, State> {
 
         switch (this.state.phase) {
             case Phase.EnterEmail:
-                this.onPhaseEmailInputSubmit();
+                await this.onPhaseEmailInputSubmit();
                 break;
             case Phase.EmailSent:
-                this.onPhaseEmailSentSubmit();
+                await this.onPhaseEmailSentSubmit();
                 break;
             case Phase.PasswordInput:
-                this.onPhasePasswordInputSubmit();
+                await this.onPhasePasswordInputSubmit();
                 break;
         }
     };

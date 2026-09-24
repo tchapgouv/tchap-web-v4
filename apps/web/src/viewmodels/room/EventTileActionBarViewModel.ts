@@ -305,7 +305,7 @@ export class EventTileActionBarViewModel
             this.scannerMediaHelper = undefined;
         }
         // end :TCHAP:
-        MatrixClientPeg.safeGet().decryptEventIfNeeded(mxEvent);
+        void MatrixClientPeg.safeGet().decryptEventIfNeeded(mxEvent);
         void this.updateDownloadPermission(++this.downloadPermissionRequestId);
     }
 

@@ -161,7 +161,7 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
                     const newName = ev.target.value;
                     if (!alias || alias === `#${nameToLocalpart(name)}:${domain}`) {
                         setAlias(`#${nameToLocalpart(newName)}:${domain}`);
-                        aliasFieldRef.current?.validate({ allowEmpty: true });
+                        void aliasFieldRef.current?.validate({ allowEmpty: true });
                     }
                     setName(newName);
                 }}
@@ -219,7 +219,8 @@ const SpaceCreateMenu: React.FC<{
 
     const [supportsSpaceFiltering, setSupportsSpaceFiltering] = useState(true); // assume it does until we find out it doesn't
     useEffect(() => {
-        cli.isVersionSupported("v1.4")
+        void cli
+            .isVersionSupported("v1.4")
             .then((supported) => {
                 return supported || cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable");
             })
@@ -236,7 +237,7 @@ const SpaceCreateMenu: React.FC<{
         // require & validate the space name field
         if (spaceNameField.current && !(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
-            spaceNameField.current.validate({ allowEmpty: false, focused: true });
+            void spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
@@ -247,7 +248,7 @@ const SpaceCreateMenu: React.FC<{
             !(await spaceAliasField.current.validate({ allowEmpty: false }))
         ) {
             spaceAliasField.current.focus();
-            spaceAliasField.current.validate({ allowEmpty: false, focused: true });
+            void spaceAliasField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }

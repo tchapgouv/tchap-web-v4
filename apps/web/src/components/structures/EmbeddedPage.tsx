@@ -101,7 +101,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         // We use fetch to inline the page into the react component
         // so that it can inherit CSS and theming easily rather than mess around
         // with iframes and trying to synchronise document.stylesheets.
-        this.fetchEmbed();
+        void this.fetchEmbed();
 
         this.dispatcherRef = dis.register(this.onAction);
     }
@@ -133,8 +133,25 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         //     ...sanitizeHtmlParams
         // });
         // :TCHAP: we trust our html, go back previous version
-        const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
+        // const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
         // end :TCHAP:
+        const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
+            ...sanitizeHtmlParams,
+            transformTags: {
+                ...objectExcluding(transformTags, [
+                    // Disable the transformer for `img` as it only allows mxc resources
+                    "img",
+                    // Disable the default transformer as it forbids inline styles
+                    "*",
+                ]),
+                a: (tagName: string, attribs: sanitizeHtml.Attributes) => {
+                    if (attribs.href?.startsWith("#/")) {
+                        return { tagName, attribs };
+                    }
+                    return transformTags.a(tagName, attribs);
+                },
+            },
+        });
 
         if (this.props.scrollbar) {
             return <AutoHideScrollbar className={classes}>{content}</AutoHideScrollbar>;
