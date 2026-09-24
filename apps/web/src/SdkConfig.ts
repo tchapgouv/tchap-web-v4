@@ -8,15 +8,21 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import { mergeWith } from "lodash";
+import { type DeepReadonly } from "shared-types";
 
 import { SnakedObject } from "./utils/SnakedObject";
-import { type IConfigOptions } from "./IConfigOptions";
+import { type IConfigOptions, type ConfigOptions } from "./IConfigOptions";
 import { isObject, objectClone } from "./utils/objects";
-import { type DeepReadonly, type Defaultize } from "./@types/common";
+import ElementDesktopLogoSvg from "../res/img/element-desktop-logo.svg";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
-export const DEFAULTS: DeepReadonly<IConfigOptions> = {
+export const DEFAULTS = {
     brand: "Element",
+    branding: {
+        logo_link_url: "https://element.io",
+        auth_header_logo_url: "themes/element/img/logos/element-logo.svg",
+        welcome_background_url: "themes/element/img/backgrounds/lake.jpg",
+    },
     help_url: "https://element.io/help",
     help_encryption_url: "https://element.io/help#encryption",
     help_key_storage_url: "https://element.io/help#encryption5",
@@ -24,12 +30,12 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     integrations_rest_url: "https://scalar.vector.im/api",
     show_labs_settings: false,
     force_verification: false,
+    enable_client_well_known_lookups: true,
 
     jitsi: {
         preferred_domain: "meet.element.io",
     },
     element_call: {
-        use_exclusively: false,
         brand: "Element Call",
     },
 
@@ -39,8 +45,7 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     // be preferred over their config.
     desktopBuilds: {
         available: true,
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        logo: require("../res/img/element-desktop-logo.svg").default,
+        logo: ElementDesktopLogoSvg,
         url: "https://element.io/get-started",
     },
 
@@ -64,13 +69,13 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
         android: "https://play.google.com/store/apps/details?id=im.vector.app",
         fdroid: "https://f-droid.org/repository/browse/?fdid=im.vector.app",
     },
-};
+} satisfies ConfigOptions;
 
-export type ConfigOptions = Defaultize<IConfigOptions, typeof DEFAULTS>;
+export type { ConfigOptions };
 
 function mergeConfig(
     config: DeepReadonly<IConfigOptions>,
-    changes: DeepReadonly<Partial<IConfigOptions>>,
+    changes: DeepReadonly<ConfigOptions>,
 ): DeepReadonly<IConfigOptions> {
     // return { ...config, ...changes };
     return mergeWith(objectClone(config), changes, (objValue, srcValue) => {
@@ -90,6 +95,7 @@ type ObjectType<K extends keyof IConfigOptions> = IConfigOptions[K] extends obje
     ? SnakedObject<NonNullable<IConfigOptions[K]>>
     : SnakedObject<NonNullable<IConfigOptions[K]>> | null | undefined;
 
+// oxlint-disable-next-line typescript/no-extraneous-class
 export default class SdkConfig {
     private static instance: DeepReadonly<IConfigOptions>;
     private static fallback: SnakedObject<DeepReadonly<IConfigOptions>>;
@@ -136,7 +142,7 @@ export default class SdkConfig {
         SdkConfig.setInstance(mergeConfig(DEFAULTS, {})); // safe to cast - defaults will be applied
     }
 
-    public static add(cfg: Partial<ConfigOptions>): void {
+    public static add(cfg: DeepReadonly<ConfigOptions>): void {
         SdkConfig.put(mergeConfig(SdkConfig.get(), cfg));
     }
 }

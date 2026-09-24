@@ -17,7 +17,6 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import AccessibleButton from "~tchap-web/src/components/views/elements/AccessibleButton";
 import { _t } from "~tchap-web/src/languageHandler";
 
 import SdkConfig from "~tchap-web/src/SdkConfig";
@@ -29,6 +28,7 @@ import BugReportDialog from "~tchap-web/src/components/views/dialogs/BugReportDi
 import CopyableText from "~tchap-web/src/components/views/elements/CopyableText";
 import ExternalLink from "~tchap-web/src/components/views/elements/ExternalLink";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
+import { Button } from "@vector-im/compound-web";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -275,9 +275,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         <p>{_t("bug_reporting|description")}</p>
                         {/** end :TCHAP: */}
                     </div>
-                    <AccessibleButton onClick={this.onBugReport} kind="primary">
+                    <Button onClick={this.onBugReport} kind="primary">
                         {_t("bug_reporting|submit_debug_logs")}
-                    </AccessibleButton>
+                    </Button>
                     <div className="mx_SettingsTab_subsectionText">
                         {_t(
                             "bug_reporting|matrix_security_issue",
@@ -315,16 +315,13 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         },
                     )}
                 </div>
-                <AccessibleButton
+                <Button
                     kind="primary"
-                    element="a"
+                    as="a"
                     href={"mailto:" + supportEmail}
-                    target="_blank"
-                    rel="noreferrer noopener"
                 >
                     {_t("Contact us")}
-                    <i className="mx_ExternalLink_icon" />
-                </AccessibleButton>
+                </Button>
             </div>
         );
 
@@ -337,32 +334,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         "We have compiled a list of the questions our users ask the most frequently. Your question may be answered there.",
                     )}
                 </div>
-                <AccessibleButton kind="primary" element="a" href={faqUrl} target="_blank" rel="noreferrer noopener">
+                <Button kind="primary" as="a" href={faqUrl}>
                     {_t("Read the FAQ")}
-                    <i className="mx_ExternalLink_icon" />
-                </AccessibleButton>
-            </div>
-        );
-
-        const knownIssuesUrl = "https://github.com/tchapgouv/tchap-web-v4/wiki/Nouveau-Tchap-Web";
-        const knownIssuesSection = (
-            <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{_t("Known issues")}</span>
-                <div className="mx_SettingsTab_subsectionText">
-                    {_t(
-                        "This version of Tchap Web is currently in development. There are known issues that will be solved soon.",
-                    )}
-                </div>
-                <AccessibleButton
-                    kind="primary"
-                    element="a"
-                    href={knownIssuesUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                >
-                    {_t("Read the Known Issues")}
-                    <i className="mx_ExternalLink_icon" />
-                </AccessibleButton>
+                </Button>
             </div>
         );
         // end :TCHAP:
@@ -377,11 +351,10 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("FAQ")}</span>
                     <div className="mx_SettingsTab_subsectionText">{faqText}</div>
-                    <AccessibleButton kind="primary" onClick={this.onKeyboardShortcutsClicked}>
+                    <Button kind="primary" onClick={this.onKeyboardShortcutsClicked}>
                         {_t("Keyboard Shortcuts")}
-                    </AccessibleButton>
+                    </Button>
                 </div> */}
-                {/* :TCHAP: added */ knownIssuesSection}
                 {/* :TCHAP: moved from higher up the page */ bugReportingSection}
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{_t("setting|help_about|versions")}</span>
@@ -430,9 +403,9 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                                 {this.context.getAccessToken()}
                             </CopyableText>
                         </details>
-                        <AccessibleButton onClick={this.onClearCacheAndReload} kind="danger">
+                        <Button onClick={this.onClearCacheAndReload} kind="destructive">
                             {_t("setting|help_about|clear_cache_reload")}
-                        </AccessibleButton>
+                        </Button>
                     </div>
                 </div>
             </div>

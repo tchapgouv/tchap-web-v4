@@ -1,52 +1,33 @@
-import React from "react";
-import { MatrixCall, CallState } from "matrix-js-sdk/src/webrtc/call";
-import { fireEvent, render, waitFor } from "jest-matrix-react";
-import { type MatrixClient } from "matrix-js-sdk/src/matrix";
+/*
+Copyright 2025 New Vector Ltd.
 
-import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
-import { stubClient } from "~tchap-web/test/test-utils";
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+import React from "react";
+import { render, fireEvent } from "jest-matrix-react";
+import { type MatrixCall } from "matrix-js-sdk/src/matrix";
+import { type CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
+import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
+
 import LegacyCallView from "~tchap-web/src/components/views/voip/LegacyCallView";
+import {
+    clientAndSDKContextRenderOptions,
+    createTestClient,
+    stubClient,
+} from "~tchap-web/test/test-utils";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
+import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
+import { type ConfigOptions } from "~tchap-web/src/IConfigOptions";
+import SdkConfig from "~tchap-web/src/SdkConfig";
 
 describe("LegacyCallView", () => {
     const featureName: string = "feature_video_call";
     const homeserverName: string = "my.home.server";
-    const roomId: string = "roomId";
-    // const fakeCall: MatrixCall = new FakeCall(roomId) as unknown as MatrixCall;
-    let fakeCall: MatrixCall;
-
-    beforeAll(() => {
-        SdkConfig.reset(); // in case other tests didn't clean up
-    });
-
-    beforeEach(() => {
-        const mockClient: MatrixClient = stubClient();
-        mockClient.isFallbackICEServerAllowed = jest.fn();
-        jest.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
-
-        const dmRoomMap = new DMRoomMap(mockClient);
-
-        jest.spyOn(dmRoomMap, "getUserIdForRoomId");
-        jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
-
-        fakeCall = new MatrixCall({
-            client: mockClient,
-            roomId,
-        });
-
-        jest.spyOn(fakeCall, "state", "get").mockReturnValue(CallState.Connected);
-        jest.spyOn(fakeCall, "isLocalOnHold").mockReturnValue(false);
-        jest.spyOn(fakeCall, "isRemoteOnHold").mockReturnValue(false);
-        jest.spyOn(fakeCall, "isMicrophoneMuted").mockReturnValue(false);
-        jest.spyOn(fakeCall, "isLocalVideoMuted").mockReturnValue(true);
-        jest.spyOn(fakeCall, "isScreensharing").mockReturnValue(false);
-        jest.spyOn(fakeCall, "isScreensharing").mockReturnValue(false);
-    });
-
-    afterEach(function () {
-        SdkConfig.reset(); // we touch the config, so clean up
-        jest.clearAllMocks();
-    });
+    const cli = stubClient();
+    const sdkContext = new TestSDKContext();
+    sdkContext._client = cli;
 
     const mockFeatureConfig = (homeservers: string[]) => {
         // mock SdkConfig.get("tchap_features")
@@ -56,110 +37,228 @@ describe("LegacyCallView", () => {
         SdkConfig.put(config);
     };
 
-    const renderCallView = () => {
-        return render(
-            <LegacyCallView
-                key="call-view"
-                onMouseDownOnHeader={() => null}
-                call={fakeCall}
-                secondaryCall={fakeCall}
-                pipMode={false}
-                onResize={() => null}
-            />,
+    afterEach(() => {
+        SdkConfig.reset();
+    });
+
+    beforeEach(() => {
+        mockFeatureConfig([homeserverName]);
+    });
+
+    it("should exit full screen on unmount", () => {
+        const element = document.createElement("div");
+        // @ts-expect-error
+        document.fullscreenElement = element;
+        document.exitFullscreen = jest.fn();
+
+        const call = {
+            on: jest.fn(),
+            removeListener: jest.fn(),
+            getFeeds: jest.fn().mockReturnValue([]),
+            isLocalOnHold: jest.fn().mockReturnValue(false),
+            isRemoteOnHold: jest.fn().mockReturnValue(false),
+            isMicrophoneMuted: jest.fn().mockReturnValue(false),
+            isLocalVideoMuted: jest.fn().mockReturnValue(false),
+            isScreensharing: jest.fn().mockReturnValue(false),
+        } as unknown as MatrixCall;
+
+        const { unmount } = render(
+            <LegacyCallView call={call} sidebarShown={false} />,
+            clientAndSDKContextRenderOptions(cli, sdkContext),
         );
-    };
-
-    it("returns true when the the homeserver include video_call feature", () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
-
-        mockFeatureConfig([homeserverName]);
-        const { container } = renderCallView();
-
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
-
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_vid").length).toBe(1);
+        expect(document.exitFullscreen).not.toHaveBeenCalled();
+        unmount();
+        expect(document.exitFullscreen).toHaveBeenCalled();
     });
 
-    it("returns false when the the homeserver doesnt include video_call feature", async () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
+    it("should show/hide the sidebar based on the sidebarShown prop", async () => {
+        const cli = stubClient();
+        const call = {
+            roomId: "test-room",
+            on: jest.fn(),
+            removeListener: jest.fn(),
+            getFeeds: jest.fn().mockReturnValue(
+                [
+                    { local: true },
+                    { local: false },
+                    { local: true, screenshare: true },
+                ].map(
+                    (x, i) =>
+                        ({
+                            stream: { id: "test-" + i },
+                            addListener: jest.fn(),
+                            removeListener: jest.fn(),
+                            getMember: jest.fn(),
+                            isAudioMuted: jest.fn().mockReturnValue(true),
+                            isVideoMuted: jest.fn().mockReturnValue(true),
+                            isLocal: jest.fn().mockReturnValue(x.local),
+                            purpose:
+                                x.screenshare &&
+                                SDPStreamMetadataPurpose.Screenshare,
+                        }) as unknown as CallFeed,
+                ),
+            ),
+            isLocalOnHold: jest.fn().mockReturnValue(false),
+            isRemoteOnHold: jest.fn().mockReturnValue(false),
+            isMicrophoneMuted: jest.fn().mockReturnValue(true),
+            isLocalVideoMuted: jest.fn().mockReturnValue(true),
+            isScreensharing: jest.fn().mockReturnValue(true),
+            noIncomingFeeds: jest.fn().mockReturnValue(false),
+            opponentSupportsSDPStreamMetadata: jest.fn().mockReturnValue(true),
+        } as unknown as MatrixCall;
+        DMRoomMap.setShared({
+            getUserIdForRoomId: jest.fn().mockReturnValue("test-user"),
+        } as unknown as DMRoomMap);
 
-        mockFeatureConfig(["other.homeserver"]);
-        const { container } = renderCallView();
-
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
-
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_vid").length).toBe(0);
+        const { container, rerender } = render(
+            <LegacyCallView call={call} sidebarShown={true} />,
+            clientAndSDKContextRenderOptions(cli, sdkContext),
+        );
+        expect(
+            container.querySelector(".mx_LegacyCallViewSidebar"),
+        ).toBeTruthy();
+        rerender(<LegacyCallView call={call} sidebarShown={true} />);
+        expect(
+            container.querySelector(".mx_LegacyCallViewSidebar"),
+        ).toBeTruthy();
     });
 
-    it("returns false when the call doesnt support opponentSupportsSDPStreamMetadata or hasLocalUserMediaVideoTrack", async () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(false);
-        jest.spyOn(fakeCall, "hasLocalUserMediaVideoTrack", "get").mockReturnValue(false);
+    it("should not show the sidebar button in picture-in-picture mode", async () => {
+        const cli = stubClient();
+        const call = {
+            on: jest.fn(),
+            removeListener: jest.fn(),
+            getFeeds: jest.fn().mockReturnValue([]),
+            isLocalOnHold: jest.fn().mockReturnValue(false),
+            isRemoteOnHold: jest.fn().mockReturnValue(false),
+            isMicrophoneMuted: jest.fn().mockReturnValue(false),
+            isLocalVideoMuted: jest.fn().mockReturnValue(false),
+            isScreensharing: jest.fn().mockReturnValue(false),
+        } as unknown as MatrixCall;
+        DMRoomMap.setShared({
+            getUserIdForRoomId: jest.fn().mockReturnValue("test-user"),
+        } as unknown as DMRoomMap);
 
-        mockFeatureConfig([homeserverName]);
-        const { container } = renderCallView();
-
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
-
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_vid").length).toBe(0);
+        const { container } = render(
+            <LegacyCallView call={call} sidebarShown={false} pipMode={true} />,
+            clientAndSDKContextRenderOptions(cli, sdkContext),
+        );
+        expect(
+            container.querySelector(".mx_LegacyCallViewButtons_button_sidebar"),
+        ).toBeFalsy();
     });
 
-    it("returns true when the call support opponentSupportsSDPStreamMetadata", async () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
-        jest.spyOn(fakeCall, "hasLocalUserMediaVideoTrack", "get").mockReturnValue(false);
+    it("should allow user to resume held call", async () => {
+        const client = createTestClient();
+        const sdkContext = new TestSDKContext();
+        sdkContext._client = client;
 
-        mockFeatureConfig([homeserverName]);
-        const { container } = renderCallView();
+        const call = {
+            roomId: "test-room",
+            on: jest.fn(),
+            removeListener: jest.fn(),
+            getFeeds: jest.fn().mockReturnValue(
+                [
+                    { local: true },
+                    { local: false },
+                    { local: true, screenshare: true },
+                ].map(
+                    (x, i) =>
+                        ({
+                            stream: { id: "test-" + i },
+                            addListener: jest.fn(),
+                            removeListener: jest.fn(),
+                            getMember: jest.fn(),
+                            isAudioMuted: jest.fn().mockReturnValue(true),
+                            isVideoMuted: jest.fn().mockReturnValue(true),
+                            isLocal: jest.fn().mockReturnValue(x.local),
+                            purpose:
+                                x.screenshare &&
+                                SDPStreamMetadataPurpose.Screenshare,
+                        }) as unknown as CallFeed,
+                ),
+            ),
+            isLocalOnHold: jest.fn().mockReturnValue(false),
+            isRemoteOnHold: jest.fn().mockReturnValue(true),
+            isMicrophoneMuted: jest.fn().mockReturnValue(true),
+            isLocalVideoMuted: jest.fn().mockReturnValue(true),
+            isScreensharing: jest.fn().mockReturnValue(true),
+            noIncomingFeeds: jest.fn().mockReturnValue(false),
+            opponentSupportsSDPStreamMetadata: jest.fn().mockReturnValue(true),
+            getOpponentMember: jest.fn(),
+        } as unknown as MatrixCall;
 
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
+        jest.spyOn(
+            sdkContext.legacyCallHandler,
+            "roomIdForCall",
+        ).mockReturnValue(call.roomId);
+        jest.spyOn(sdkContext.legacyCallHandler, "setActiveCallRoomId");
 
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_vid").length).toBe(1);
+        const { getByText } = render(
+            <LegacyCallView call={call} sidebarShown />,
+            clientAndSDKContextRenderOptions(client, sdkContext),
+        );
+        fireEvent.click(getByText("Resume"));
+
+        expect(
+            sdkContext.legacyCallHandler.setActiveCallRoomId,
+        ).toHaveBeenCalledWith(call.roomId);
     });
 
-    it("returns true when the call support hasLocalUserMediaVideoTrack", async () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(false);
-        jest.spyOn(fakeCall, "hasLocalUserMediaVideoTrack", "get").mockReturnValue(true);
+    it("should allow user to hangup call", async () => {
+        const client = createTestClient();
+        const sdkContext = new TestSDKContext();
+        sdkContext._client = client;
 
-        mockFeatureConfig([homeserverName]);
-        const { container } = renderCallView();
+        const call = {
+            roomId: "test-room",
+            on: jest.fn(),
+            removeListener: jest.fn(),
+            getFeeds: jest.fn().mockReturnValue(
+                [
+                    { local: true },
+                    { local: false },
+                    { local: true, screenshare: true },
+                ].map(
+                    (x, i) =>
+                        ({
+                            stream: { id: "test-" + i },
+                            addListener: jest.fn(),
+                            removeListener: jest.fn(),
+                            getMember: jest.fn(),
+                            isAudioMuted: jest.fn().mockReturnValue(true),
+                            isVideoMuted: jest.fn().mockReturnValue(true),
+                            isLocal: jest.fn().mockReturnValue(x.local),
+                            purpose:
+                                x.screenshare &&
+                                SDPStreamMetadataPurpose.Screenshare,
+                        }) as unknown as CallFeed,
+                ),
+            ),
+            isLocalOnHold: jest.fn().mockReturnValue(false),
+            isRemoteOnHold: jest.fn().mockReturnValue(false),
+            isMicrophoneMuted: jest.fn().mockReturnValue(true),
+            isLocalVideoMuted: jest.fn().mockReturnValue(true),
+            isScreensharing: jest.fn().mockReturnValue(true),
+            noIncomingFeeds: jest.fn().mockReturnValue(false),
+            opponentSupportsSDPStreamMetadata: jest.fn().mockReturnValue(true),
+            getOpponentMember: jest.fn(),
+        } as unknown as MatrixCall;
 
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
+        jest.spyOn(
+            sdkContext.legacyCallHandler,
+            "roomIdForCall",
+        ).mockReturnValue(call.roomId);
+        jest.spyOn(sdkContext.legacyCallHandler, "hangupOrReject");
 
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_vid").length).toBe(1);
-    });
+        const { getByLabelText } = render(
+            <LegacyCallView call={call} sidebarShown />,
+            clientAndSDKContextRenderOptions(client, sdkContext),
+        );
+        fireEvent.click(getByLabelText("Hangup"));
 
-    it("should display screenshare button when the the homeserver include feature_screenshare_call feature", () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
-
-        mockFeatureConfig([homeserverName]);
-        const { container } = renderCallView();
-
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
-
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_screensharing").length).toBe(1);
-    });
-
-    it("should not display screenshare button when the the homeserver doesnt include feature_screenshare_call feature", async () => {
-        jest.spyOn(fakeCall, "opponentSupportsSDPStreamMetadata").mockReturnValue(true);
-
-        mockFeatureConfig(["other.homeserver"]);
-        const { container } = renderCallView();
-
-        // needs to hover on the component to make the control button appears
-        fireEvent.mouseEnter(container);
-        waitFor(() => container.getElementsByClassName("mx_LegacyCallViewButtons").length);
-
-        expect(container.getElementsByClassName("mx_LegacyCallViewButtons_button_screensharing").length).toBe(0);
+        expect(
+            sdkContext.legacyCallHandler.hangupOrReject,
+        ).toHaveBeenCalledWith(call.roomId);
     });
 });

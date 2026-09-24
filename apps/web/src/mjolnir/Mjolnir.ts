@@ -11,7 +11,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ALL_RULE_TYPES, BanList } from "./BanList";
-import SettingsStore from "../settings/SettingsStore";
+import SettingsStore, { type CallbackFn } from "../settings/SettingsStore";
 import { _t } from "../languageHandler";
 import dis from "../dispatcher/dispatcher";
 import { SettingLevel } from "../settings/SettingLevel";
@@ -24,8 +24,8 @@ import { Action } from "../dispatcher/actions";
 export class Mjolnir {
     private static instance?: Mjolnir;
 
-    private _lists: BanList[] = []; // eslint-disable-line @typescript-eslint/naming-convention
-    private _roomIds: string[] = []; // eslint-disable-line @typescript-eslint/naming-convention
+    private _lists: BanList[] = [];
+    private _roomIds: string[] = [];
     private mjolnirWatchRef?: string;
     private dispatcherRef?: string;
 
@@ -38,7 +38,7 @@ export class Mjolnir {
     }
 
     public start(): void {
-        this.mjolnirWatchRef = SettingsStore.watchSetting("mjolnirRooms", null, this.onListsChanged.bind(this));
+        this.mjolnirWatchRef = SettingsStore.watchSetting("mjolnirRooms", null, this.onListsChanged);
 
         this.dispatcherRef = dis.register(this.onAction);
         dis.dispatch<DoAfterSyncPreparedPayload<ActionPayload>>({
@@ -130,15 +130,10 @@ export class Mjolnir {
         this.updateLists(this._roomIds);
     };
 
-    private onListsChanged(
-        settingName: string,
-        roomId: string | null,
-        atLevel: SettingLevel,
-        newValue: string[],
-    ): void {
+    private onListsChanged: CallbackFn<"mjolnirRooms"> = (settingName, roomId, atLevel, newValue): void => {
         // We know that ban lists are only recorded at one level so we don't need to re-eval them
-        this.updateLists(newValue);
-    }
+        this.updateLists(newValue ?? []);
+    };
 
     private updateLists(listRoomIds: string[]): void {
         if (!MatrixClientPeg.get()) return;

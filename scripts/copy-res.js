@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+/*
+Copyright 2026 Element Creations Ltd.
+
+SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE in the repository root for full details.
+*/
+
 const loaderUtils = require("loader-utils");
 
 // copies the resources into the webapp directory.
@@ -41,7 +48,7 @@ const COPY_LIST = [
 const parseArgs = require("minimist");
 const Cpx = require("cpx");
 const chokidar = require("chokidar");
-const fs = require("fs");
+const fs = require("node:fs");
 
 const argv = parseArgs(process.argv.slice(2), {});
 

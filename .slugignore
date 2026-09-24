@@ -1,0 +1,3 @@
+./.cache/*
+./apps/*
+./node_modules/*

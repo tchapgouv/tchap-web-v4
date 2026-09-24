@@ -7,9 +7,9 @@ import type BasePlatform from "~tchap-web/src/BasePlatform";
 import EmailVerificationPage from "~tchap-web/src/tchap/components/views/sso/EmailVerificationPage";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
-import { flushPromises, mockPlatformPeg } from "~tchap-web/test/test-utils";
+import { flushPromises } from "~tchap-web/test/test-utils";
 import Login from "~tchap-web/src/Login";
-import * as authorize from "~tchap-web/src/utils/oidc/authorize";
+import * as authorize from "~tchap-web/src/utils/oauth/authorize";
 import * as routing from "~tchap-web/src/vector/routing";
 
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
@@ -20,7 +20,6 @@ describe("Tests sso and oidc native flow", () => {
     const defaultHsUrl = "https://matrix.agent1.fr";
     const mockedTchapUtils = mocked(TchapUtils);
     const mockedLogin = Login as jest.Mock;
-    let PlatformPegMocked: MockedObject<BasePlatform>;
 
     const mockedFetchHomeserverFromEmail = (hs: string = defaultHsUrl) => {
         mockedTchapUtils.fetchHomeserverForEmail.mockImplementation(() =>
@@ -50,11 +49,13 @@ describe("Tests sso and oidc native flow", () => {
 
     const mockedPlatformPegStartSSO = (withError: boolean) => {
         if (withError) {
-            jest.spyOn(PlatformPegMocked, "startSingleSignOn").mockImplementation(() => {
+            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
                 throw new Error();
             });
         } else {
-            jest.spyOn(PlatformPegMocked, "startSingleSignOn").mockImplementation(() => {});
+            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
+                console.log("starting oauth")
+            });
         }
     };
 
@@ -67,15 +68,12 @@ describe("Tests sso and oidc native flow", () => {
     describe("MAS flow activated", () => {
         beforeEach(() => {
             // Dans le beforeEach du bloc "MAS flow activated"
-            jest.spyOn(authorize, "startOidcLogin").mockImplementation(jest.fn());
-            PlatformPegMocked = mockPlatformPeg({
-                startSingleSignOn: jest.fn(),
-            });
+            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(jest.fn());
 
             mockedLogin.mockImplementation(() => ({
                 hsUrl: defaultHsUrl,
                 delegatedAuthentication: {},
-                getFlows: jest.fn().mockResolvedValue([{ type: "oidcNativeFlow", clientId: "clientId" }]),
+                getFlows: jest.fn().mockResolvedValue([{ type: "oauthNativeFlow", clientId: "clientId" }]),
             }));
         });
 
@@ -114,7 +112,7 @@ describe("Tests sso and oidc native flow", () => {
                 await fireEvent.click(proconnectButton);
             });
 
-            expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+            expect(authorize.startOAuthLogin).toHaveBeenCalledWith(
                 undefined, // delegatedAuthentication is undefined in this test
                 expect.anything(), // clientId
                 expect.anything(), // hsUrl
@@ -153,7 +151,7 @@ describe("Tests sso and oidc native flow", () => {
                 await fireEvent.click(proconnectButton);
             });
 
-            expect(authorize.startOidcLogin).toHaveBeenCalledWith(
+            expect(authorize.startOAuthLogin).toHaveBeenCalledWith(
                 undefined, // delegatedAuthentication is undefined in this test
                 expect.anything(), // clientId
                 expect.anything(), // hsUrl

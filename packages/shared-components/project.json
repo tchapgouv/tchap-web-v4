@@ -17,15 +17,15 @@
             "continuous": true
         },
         "typedoc": {
-            "cache": "true",
+            "cache": true,
             "command": "typedoc",
-            "inputs": ["src"],
+            "inputs": ["src", "{projectRoot}/typedoc.json"],
             "outputs": ["{projectRoot}/typedoc"],
             "options": { "cwd": "packages/shared-components" },
             "dependsOn": ["^build"]
         },
         "storybook": {
-            "cache": "true",
+            "cache": true,
             "inputs": ["src", "{projectRoot}/.storybook", "{projectRoot}/typedoc"],
             "outputs": ["{projectRoot}/storybook-static"],
             "executor": "nx:run-commands",
@@ -54,6 +54,14 @@
                 "cwd": "packages/shared-components"
             },
             "dependsOn": ["typedoc", "^build:playwright"]
+        },
+        "lint:types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["tsc --noEmit", "tsc --noEmit -p tsconfig.node.json"],
+                "cwd": "packages/shared-components"
+            },
+            "dependsOn": ["^build"]
         }
     }
 }

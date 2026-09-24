@@ -9,7 +9,6 @@
             "one": "1 neperskaitytas paminėjimas.",
             "other": "%(count)s neperskaitytos žinutės, įskaitant paminėjimus."
         },
-        "room_name": "Kambarys %(name)s",
         "unread_messages": "Neperskaitytos žinutės."
     },
     "a11y_jump_first_unread_room": "Peršokti į pirmą neperskaitytą kambarį.",
@@ -17,7 +16,6 @@
         "accept": "Priimti",
         "add": "Pridėti",
         "add_existing_room": "Pridėti esamą kambarį",
-        "add_people": "Pridėti žmonių",
         "approve": "Patvirtinti",
         "back": "Atgal",
         "call": "Skambinti",
@@ -42,7 +40,6 @@
         "edit": "Koreguoti",
         "enable": "Įjungti",
         "expand": "Išplėsti",
-        "explore_public_rooms": "Tyrinėti viešuosius kambarius",
         "explore_rooms": "Žvalgyti kambarius",
         "export": "Eksportuoti",
         "forward": "Persiųsti",
@@ -54,8 +51,6 @@
         "ignore": "Ignoruoti",
         "import": "Importuoti",
         "invite": "Pakviesti",
-        "invite_to_space": "Pakviesti į erdvę",
-        "invites_list": "Pakvietimai",
         "join": "Prisijungti",
         "learn_more": "Sužinokite daugiau",
         "leave": "Palikti",
@@ -79,7 +74,6 @@
         "rename": "Pervadinti",
         "reply": "Atsakyti",
         "reply_in_thread": "Atsakyti temoje",
-        "report_content": "Pranešti",
         "resend": "Siųsti iš naujo",
         "reset": "Iš naujo nustatyti",
         "resume": "Tęsti",
@@ -94,11 +88,9 @@
         "show_advanced": "Rodyti išplėstinius",
         "show_all": "Rodyti viską",
         "sign_in": "Prisijungti",
-        "sign_out": "Atsijungti",
+        "sign_out": "Šalinti šį įrenginį",
         "skip": "Praleisti",
         "start": "Pradėti",
-        "start_chat": "Pradėti pokalbį",
-        "start_new_chat": "Pradėti naują pokalbį",
         "stop": "Sustabdyti",
         "submit": "Pateikti",
         "subscribe": "Prenumeruoti",
@@ -160,9 +152,7 @@
         "log_in_new_account": "<a>Prisijunkite</a> prie naujos paskyros.",
         "logout_dialog": {
             "description": "Ar tikrai norite atsijungti?",
-            "megolm_export": "Eksportuoti raktus rankiniu būdu",
             "setup_key_backup_title": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
-            "setup_secure_backup_description_1": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
             "skip_key_backup": "Man nereikalingos užšifruotos žinutės"
         },
         "misconfigured_body": "Paprašykite savo %(brand)s administratoriaus patikrinti ar <a>jūsų konfigūracijoje</a> nėra neteisingų arba pasikartojančių įrašų.",
@@ -208,7 +198,7 @@
         "set_email": {
             "description": "Tai jums leis iš naujo nustatyti slaptažodį ir gauti pranešimus.",
             "verification_pending_description": "Patikrinkite savo el. laišką ir spustelėkite jame esančią nuorodą. Kai tai padarysite, spauskite tęsti.",
-            "verification_pending_title": "Laukiama Patikrinimo"
+            "verification_pending_title": "Laukiama patvirtinimo"
         },
         "set_email_prompt": "Ar norite nustatyti el. pašto adresą?",
         "sign_in_instead_prompt": "Jau turite paskyrą? <a>Prisijunkite čia</a>",
@@ -309,7 +299,6 @@
         "encrypted": "Užšifruota",
         "error": "Klaida",
         "faq": "DUK",
-        "favourites": "Mėgstami",
         "feedback": "Atsiliepimai",
         "filter_results": "Išfiltruoti rezultatus",
         "forward_message": "Persiųsti žinutę",
@@ -317,7 +306,6 @@
         "go_to_settings": "Eiti į Nustatymus",
         "guest": "Svečias",
         "help": "Pagalba",
-        "historical": "Istoriniai",
         "home": "Pradžia",
         "homeserver": "Serveris",
         "identity_server": "Tapatybės serveris",
@@ -326,7 +314,6 @@
         "labs": "Laboratorijos",
         "legal": "Teisiniai",
         "light": "Šviesi",
-        "low_priority": "Žemo prioriteto",
         "message": "Žinutė",
         "message_layout": "Žinutės išdėstymas",
         "microphone": "Mikrofonas",
@@ -371,7 +358,6 @@
         "stickerpack": "Lipdukų paketas",
         "success": "Pavyko",
         "suggestions": "Pasiūlymai",
-        "system_alerts": "Sistemos įspėjimai",
         "theme": "Tema",
         "threads": "Temos",
         "timeline": "Laiko juosta",
@@ -382,7 +368,6 @@
         "user_avatar": "Profilio paveikslėlis",
         "username": "Vartotojo vardas",
         "verified": "Patvirtinta",
-        "video": "Vaizdo įrašas",
         "video_room": "Vaizdo kambarys",
         "view_message": "Žiūrėti žinutę",
         "warning": "Įspėjimas"
@@ -402,8 +387,13 @@
         "format_code_block": "Kodo blokas",
         "format_inline_code": "Kodas",
         "format_insert_link": "Įterpti nuorodą",
+        "format_italic": "Kursyvas",
         "format_italics": "Kursyvas",
+        "format_link": "Nuoroda",
+        "format_ordered_list": "Sunumeruotas sąrašas",
         "format_strikethrough": "Perbrauktas",
+        "format_underline": "Pabraukimas",
+        "format_unordered_list": "Suženklintasis sąrašas",
         "no_perms_notice": "Jūs neturite leidimų rašyti šiame kambaryje",
         "placeholder": "Siųsti žinutę…",
         "placeholder_encrypted": "Siųsti šifruotą žinutę…",
@@ -424,6 +414,8 @@
         "voice_message_button": "Balso žinutė"
     },
     "create_room": {
+        "action_create_room": "Kurti kambarį",
+        "action_create_video_room": "Kurti vaizdo kambarį",
         "encryption_forced": "Jūsų serveris reikalauja, kad šifravimas būtų įjungtas privačiuose kambariuose.",
         "encryption_label": "Įjungti visapusį šifravimą",
         "error_title": "Nepavyko sukurti kambario",
@@ -431,6 +423,7 @@
         "name_validation_required": "Įveskite kambario pavadinimą",
         "title_private_room": "Sukurti privatų kambarį",
         "title_public_room": "Sukurti viešą kambarį",
+        "title_video_room": "Kurti vaizdo pokalbių kambarį",
         "topic_label": "Tema (nebūtina)",
         "unfederated": "Blokuoti bet ką, kas nėra iš %(serverName)s, niekada nebeleidžiant prisijungti prie šio kambario.",
         "unfederated_label_default_off": "Jūs galite tai įjungti, jei kambarys bus naudojamas tik bendradarbiavimui su vidinėmis komandomis jūsų serveryje. Tai negali būti vėliau pakeista.",
@@ -461,36 +454,37 @@
         "event_content": "Įvykio turinys",
         "event_sent": "Įvykis išsiųstas!",
         "event_type": "Įvykio tipas",
+        "explore_account_data": "Naršyti paskyros duomenis",
+        "explore_room_account_data": "Naršyti kambario paskyros duomenis",
+        "explore_room_state": "Naršyti kambario būseną",
         "failed_to_find_widget": "Įvyko klaida ieškant šio valdiklio.",
+        "failed_to_send": "Nepavyko išsiųsti įvykio.",
+        "invalid_json": "Neatrodo kaip tinkamas JSON.",
         "level": "Lygis",
+        "no_receipt_found": "Nerasta kvito.",
+        "notifications_debug": "Pranešimų derinimas",
         "original_event_source": "Originalus įvykio šaltinis",
+        "room_id": "Kambario ID: %(roomId)s",
+        "send_custom_account_data_event": "Siųsti pasirinktinius paskyros duomenis įvykį",
+        "send_custom_room_account_data_event": "Siųsti pasirinktinius kambario paskyros duomenis įvykį",
+        "send_custom_timeline_event": "Siųsti pasirinktinės laiko skalės įvykį",
+        "server_info": "Serverio informacija",
         "setting_colon": "Nustatymas:",
         "setting_id": "Nustatymo ID",
+        "settings_explorer": "Nustatymų naršyklė",
         "show_hidden_events": "Rodyti paslėptus įvykius laiko juostoje",
         "state_key": "Būklės raktas",
+        "thread_root_id": "Gijos šaknies ID: %(threadRootId)s",
         "title": "Kūrėjo įrankiai",
         "toolbox": "Įrankinė",
+        "user_read_up_to": "Naudotojas perskaitė iki: ",
+        "user_read_up_to_ignore_synthetic": "Naudotojas perskaitė iki (ignoreSynthetic): ",
         "value": "Reikšmė",
+        "view_servers_in_room": "Peržiūrėti serverius kambaryje",
         "widget_screenshots": "Įjungti valdiklių ekrano kopijas palaikomuose valdikliuose"
     },
     "dialog_close_label": "Uždaryti dialogą",
     "download_completed": "Atsisiuntimas baigtas",
-    "emoji": {
-        "categories": "Kategorijos",
-        "category_activities": "Veikla",
-        "category_animals_nature": "Gyvūnai & Gamta",
-        "category_flags": "Vėliavos",
-        "category_food_drink": "Maistas & Gėrimai",
-        "category_frequently_used": "Dažnai Naudojama",
-        "category_objects": "Objektai",
-        "category_smileys_people": "Šypsenėlės ir Žmonės",
-        "category_symbols": "Simboliai",
-        "category_travel_places": "Kelionės & Vietovės",
-        "quick_reactions": "Greitos Reakcijos"
-    },
-    "emoji_picker": {
-        "cancel_search_label": "Atšaukti paiešką"
-    },
     "empty_room": "Tuščias kambarys",
     "empty_room_was_name": "Tuščias kambarys (buvo %(oldName)s)",
     "encryption": {
@@ -534,16 +528,6 @@
             "warning": "Jei jūs nepašalinote paskyros atgavimo metodo, gali būti, kad užpuolikas bando patekti į jūsų paskyrą. Nedelsiant nustatymuose pakeiskite savo paskyros slaptažodį ir nustatykite naują atgavimo metodą."
         },
         "set_up_toast_title": "Nustatyti Saugią Atsarginę Kopiją",
-        "setup_secure_backup": {
-            "explainer": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo."
-        },
-        "udd": {
-            "other_ask_verify_text": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-            "other_new_session_text": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
-            "own_ask_verify_text": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
-            "own_new_session_text": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
-            "title": "Nepatikimas"
-        },
         "unable_to_setup_keys_error": "Nepavyksta nustatyti raktų",
         "verification": {
             "accepting": "Priimama…",
@@ -581,7 +565,7 @@
             "unverified_session_toast_title": "Naujas prisijungimas. Ar tai jūs?",
             "unverified_sessions_toast_description": "Peržiūrėkite, ar jūsų paskyra yra saugi",
             "unverified_sessions_toast_reject": "Vėliau",
-            "verification_dialog_title_user": "Patikrinimo Užklausa",
+            "verification_dialog_title_user": "Patvirtinimo prašymas",
             "verify_emoji": "Patvirtinti naudojant jaustukus",
             "verify_emoji_prompt": "Patvirtinti palyginant unikalius jaustukus.",
             "verify_emoji_prompt_qr": "Jei nuskaityti aukščiau esančio kodo negalite, patvirtinkite palygindami unikalius jaustukus.",
@@ -591,7 +575,8 @@
             "waiting_other_user": "Laukiama kol %(displayName)s patvirtins…"
         },
         "verify_toast_description": "Kiti vartotojai gali nepasitikėti",
-        "verify_toast_title": "Patvirtinti šį seansą"
+        "verify_toast_title": "Patvirtinti šį seansą",
+        "withdraw_verification_action": "Atšaukti patvirtinimą"
     },
     "error": {
         "admin_contact_short": "Susisiekite su savo <a>serverio administratoriumi</a>.",
@@ -798,7 +783,9 @@
     },
     "keyboard": {
         "activate_button": "Aktyvuoti pasirinktą mygtuką",
+        "alt": "Alt",
         "autocomplete_cancel": "Atšaukti automatinį užbaigimą",
+        "backspace": "Naikinimo klavišas",
         "cancel_reply": "Atšaukti atsakymą į žinutę",
         "category_autocomplete": "Autorašymas",
         "category_calls": "Skambučiai",
@@ -809,29 +796,41 @@
         "composer_toggle_bold": "Perjungti paryškinimą",
         "composer_toggle_italics": "Perjungti kursyvą",
         "composer_toggle_quote": "Perjungti citatą",
+        "control": "Vald",
         "dismiss_read_marker_and_jump_bottom": "Atsisakyti skaitymo žymeklio ir nušokti į apačią",
+        "end": "Pab",
+        "enter": "Įvesti",
+        "escape": "Gr",
         "home": "Pradžia",
         "jump_room_search": "Nušokti į kambarių paiešką",
         "jump_to_read_marker": "Nušokti iki seniausios neperskaitytos žinutės",
         "number": "[skaičius]",
+        "page_down": "Puslapis žemyn",
+        "page_up": "Puslapis aukštyn",
         "room_list_collapse_section": "Sutraukti kambarių sąrašo skyrių",
         "room_list_expand_section": "Išplėsti kambarių sąrašo skyrių",
         "room_list_select_room": "Pasirinkti kambarį iš kambarių sąrašo",
         "search": "Paieška (turi būti įjungta)",
+        "shift": "Lyg2",
+        "space": "Tarpas",
         "toggle_microphone_mute": "Perjungti mikrofono nutildymą",
         "toggle_right_panel": "Perjungti dešinį skydelį",
         "toggle_top_left_menu": "Perjungti viršutinį kairės pusės meniu",
         "upload_file": "Įkelti failą"
     },
     "labs": {
+        "ask_to_join": "Įjungti prašymą jungtis",
         "beta_feedback_leave_button": "Norėdami išeiti iš beta versijos, apsilankykite savo nustatymuose.",
         "bridge_state": "Rodyti informaciją apie tiltus kambario nustatymuose",
         "bridge_state_channel": "Kanalas: <channelLink/>",
         "bridge_state_creator": "Šis tiltas buvo parūpintas <user />.",
         "bridge_state_manager": "Šis tiltas yra tvarkomas <user />.",
         "bridge_state_workspace": "Darbo aplinka: <networkLink/>",
+        "currently_experimental": "Šiuo metu eksperimentinė.",
         "custom_themes": "Palaikykite pridėdami pasirinktines temas",
+        "dynamic_room_predecessors": "Dinaminiai kambario pirmtakai",
         "element_call_video_rooms": "Element skambučio vaizdo kambariai",
+        "feature_wysiwyg_composer_description": "Naudoti raiškųjį tekstą vietoj ženklinimo žinučių rengyklėje.",
         "group_developer": "Kūrėjas",
         "group_encryption": "Šifravimas",
         "group_experimental": "Eksperimentinis",
@@ -843,13 +842,18 @@
         "group_themes": "Temos",
         "group_voip": "Garsas ir Vaizdas",
         "group_widgets": "Valdikliai",
-        "html_topic": "Rodyti kambarių temų HTML atvaizdavimą",
+        "hidebold": "Slėpti pranešimų tašką (rodyti tik skaičių žymes)",
         "jump_to_date": "Pereiti prie datos (prideda /jumptodate ir perėjimo prie datos antraštes)",
+        "jump_to_date_msc_support": "Privaloma, kad jūsų serveris palaikytų MSC3030.",
         "latex_maths": "Atvaizduoti LaTeX matematikas žinutėse",
         "leave_beta": "Palikti beta versiją",
+        "location_share_live": "Tiesioginis vietos bendrinimas",
+        "location_share_live_description": "Laikinas įgyvendinimas. Vietos išlieka kambario istorijoje.",
+        "mjolnir": "Nauji būdai ignoruoti žmones",
         "msc3531_hide_messages_pending_moderation": "Leisti moderatoriams slėpti žinutes, laukiančias moderavimo.",
         "notification_settings": "Nauji pranešimų nustatymai",
-        "report_to_moderators": "Pranešti prižiūrėtojams",
+        "sliding_sync": "Slankiojo sinchronizavimo režimas",
+        "sliding_sync_description": "Aktyviai kuriama, negalima išjungti. Šiuo metu nesuderinama su „Element“ skambučiais.",
         "video_rooms": "Vaizdo kambariai",
         "video_rooms_a_new_way_to_chat": "Naujas būdas kalbėtis balsu ir vaizdu per %(brand)s.",
         "video_rooms_always_on_voip_channels": "Vaizdo kambariai - tai visada veikiantys VoIP kanalai, įterpti į %(brand)s kambarį.",
@@ -928,7 +932,6 @@
         "mentions_and_keywords": "@paminėjimai & raktažodžiai",
         "mentions_and_keywords_description": "Gaukite pranešimus tik apie paminėjimus ir raktinius žodžius, kaip nustatyta jūsų <a>nustatymuose</a>",
         "mentions_keywords": "Paminėjimai & Raktažodžiai",
-        "message_didnt_send": "Žinutė nebuvo išsiųsta. Spustelėkite norėdami gauti informacijos.",
         "mute_description": "Negausite jokių pranešimų"
     },
     "notifier": {
@@ -950,8 +953,8 @@
         "restricted": "Apribotas"
     },
     "powered_by_matrix": "Veikia su Matrix",
-    "powered_by_matrix_with_logo": "Decentralizuotas, užšifruotų pokalbių &amp; bendradarbiavimas, paremtas $matrixLogo",
     "presence": {
+        "away": "Pasitraukę",
         "busy": "Užsiėmęs",
         "idle": "Neveiklus",
         "idle_for": "Neveiklus %(duration)s",
@@ -964,7 +967,6 @@
     },
     "quick_settings": {
         "all_settings": "Visi nustatymai",
-        "metaspace_section": "Prisegti prie šoninės juostos",
         "sidebar_settings": "Daugiau parinkčių",
         "title": "Greiti nustatymai"
     },
@@ -981,7 +983,6 @@
     "report_content": {
         "description": "Pranešant apie šią netinkamą žinutę, serverio administratoriui bus nusiųstas unikalus 'įvykio ID'. Jei žinutės šiame kambaryje yra šifruotos, serverio administratorius negalės perskaityti žinutės teksto ar peržiūrėti failų arba paveikslėlių.",
         "missing_reason": "Įrašykite kodėl pranešate.",
-        "other_label": "Kitas",
         "report_content_to_homeserver": "Pranešti apie turinį serverio administratoriui"
     },
     "restore_key_backup_dialog": {
@@ -1121,35 +1122,10 @@
         }
     },
     "room_list": {
-        "add_room_label": "Sukurti kambarį",
         "add_space_label": "Pridėti erdvę",
-        "breadcrumbs_empty": "Nėra neseniai lankytų kambarių",
-        "breadcrumbs_label": "Neseniai lankyti kambariai",
         "failed_remove_tag": "Nepavyko pašalinti žymos %(tagName)s iš kambario",
-        "home_menu_label": "Pradžios parinktys",
-        "join_public_room_label": "Prisijungti prie viešo kambario",
-        "joining_rooms_status": {
-            "one": "Šiuo metu prisijungiama prie %(count)s kambario",
-            "other": "Šiuo metu prisijungiama prie %(count)s kambarių"
-        },
         "notification_options": "Pranešimų parinktys",
-        "redacting_messages_status": {
-            "one": "Šiuo metu šalinamos žinutės iš %(count)s kambario",
-            "other": "Šiuo metu šalinamos žinutės iš %(count)s kambarių"
-        },
-        "show_less": "Rodyti mažiau",
-        "show_n_more": {
-            "one": "Rodyti dar %(count)s",
-            "other": "Rodyti dar %(count)s"
-        },
-        "show_previews": "Rodyti žinučių peržiūras",
-        "sort_by": "Rūšiuoti pagal",
-        "sort_by_activity": "Aktyvumą",
-        "sort_by_alphabet": "A-Ž",
-        "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
-        "space_menu_label": "%(spaceName)s meniu",
-        "sublist_options": "Sąrašo parinktys",
-        "suggested_rooms_heading": "Siūlomi kambariai"
+        "show_less": "Rodyti mažiau"
     },
     "room_settings": {
         "access": {
@@ -1415,8 +1391,10 @@
         "big_emoji": "Įjungti didelius jaustukus pokalbiuose",
         "code_block_expand_default": "Išplėsti kodo blokus pagal nutylėjimą",
         "code_block_line_numbers": "Rodyti eilučių numerius kodo blokuose",
+        "disable_historical_profile": "Rodyti dabartinę profilio nuotrauką ir vardą naudotojams žinučių istorijoje",
         "emoji_autocomplete": "Įjungti Jaustukų pasiūlymus rašant",
         "enable_markdown": "Įjungti Markdown",
+        "enable_markdown_description": "Pradėkite žinutes su <code>/plain</code> norint siųsti be ženklinimo.",
         "general": {
             "account_management_section": "Paskyros tvarkymas",
             "account_section": "Paskyra",
@@ -1467,7 +1445,7 @@
             "remove_email_prompt": "Pašalinti %(email)s?",
             "remove_msisdn_prompt": "Pašalinti %(phone)s?"
         },
-        "inline_url_previews_default": "Įjungti URL nuorodų peržiūras kaip numatytasias",
+        "inline_url_previews_default": "Įjungti peržiūras",
         "insert_trailing_colon_mentions": "Įterpti dvitaškį po naudotojo paminėjimų žinutės pradžioje",
         "jump_to_bottom_on_send": "Peršokti į laiko juostos apačią, kai siunčiate žinutę",
         "key_backup": {
@@ -1625,22 +1603,22 @@
             "verified_sessions_list_description": "Geriausiam saugumui, atsijunkite iš bet kurios sesijos, kurios neatpažįstate arba nebenaudojate.",
             "verify_session": "Patvirtinti seansą"
         },
+        "show_avatar_changes": "Rodyti profilio nuotraukos pakeitimus",
         "show_breadcrumbs": "Rodyti neseniai peržiūrėtų kambarių nuorodas virš kambarių sąrašo",
         "show_chat_effects": "Rodyti pokalbių efektus (animaciją, kai gaunate, pvz., konfeti)",
         "show_displayname_changes": "Rodyti rodomo vardo pakeitimus",
         "show_join_leave": "Rodyti prisijungimo/išėjimo žinutes (kvietimai/pašalinimai/blokavimai neturi įtakos)",
+        "show_nsfw_content": "Rodyti NSD turinį",
         "show_read_receipts": "Rodyti kitų vartotojų siųstus perskaitymo kvitus",
         "show_redaction_placeholder": "Rodyti pašalintų žinučių žymeklį",
         "show_stickers_button": "Rodyti lipdukų mygtuką",
         "show_typing_notifications": "Rodyti spausdinimo pranešimus",
         "sidebar": {
-            "metaspaces_favourites_description": "Sugrupuokite visus mėgstamus kambarius ir žmones vienoje vietoje.",
             "metaspaces_home_all_rooms": "Rodyti visus kambarius",
             "metaspaces_home_all_rooms_description": "Rodyti visus savo kambarius pradžioje, net jei jie yra erdvėje.",
             "metaspaces_home_description": "Pradžia yra naudinga norint apžvelgti viską.",
             "metaspaces_orphans": "Kambariai nepriklausantys erdvei",
             "metaspaces_orphans_description": "Sugrupuokite visus kambarius, kurie nėra erdvės dalis, į vieną vietą.",
-            "metaspaces_people_description": "Sugrupuokite visus savo žmones vienoje vietoje.",
             "metaspaces_subsection": "Kurias erdves rodyti",
             "title": "Šoninė juosta"
         },
@@ -1741,12 +1719,6 @@
         "invite_description": "Pakviesti su el. paštu arba naudotojo vardu",
         "invite_link": "Bendrinti pakvietimo nuorodą",
         "search_children": "Ieškoti %(spaceName)s"
-    },
-    "spaces": {
-        "error_no_permission_add_room": "Neturite leidimų pridėti kambarių į šią erdvę",
-        "error_no_permission_add_space": "Neturite leidimų į šią erdvę pridėti erdvių",
-        "error_no_permission_create_room": "Neturite leidimų kurti naujus kambarius šioje erdvėje",
-        "error_no_permission_invite": "Neturite leidimų kviesti žmones į šią erdvę"
     },
     "spotlight": {
         "public_rooms": {
@@ -1860,9 +1832,7 @@
         "m.poll.start": "%(senderName)s pradėjo apklausą - %(pollQuestion)s",
         "m.room.avatar": {
             "changed": "%(senderDisplayName)s pakeitė kambario avatarą.",
-            "changed_img": "%(senderDisplayName)s pakeitė kambario pseudoportretą į <img/>",
-            "lightbox_title": "%(senderDisplayName)s pakeitė kambario %(roomName)s pseudoportretą",
-            "removed": "%(senderDisplayName)s pašalino kambario pseudoportretą."
+            "lightbox_title": "%(senderDisplayName)s pakeitė kambario %(roomName)s pseudoportretą"
         },
         "m.room.canonical_alias": {
             "alt_added": {
@@ -1906,8 +1876,8 @@
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)s priėmė kvietimą, skirtą %(displayName)s",
             "accepted_invite": "%(targetName)s priėmė kvietimą",
-            "ban": "%(senderName)s uždraudė %(targetName)s",
-            "ban_reason": "%(senderName)s uždraudė %(targetName)s%(targetName)s: %(reason)s",
+            "ban": "%(senderName)s uždraudė naudotoją",
+            "ban_reason": "%(senderName)s uždraudė naudotoją: %(reason)s",
             "change_avatar": "%(senderName)s pakeitė savo profilio nuotrauką",
             "change_name": "%(oldDisplayName)s pasikeitė savo rodomą vardą į %(displayName)s",
             "change_name_avatar": "%(oldDisplayName)s pakeitė savo rodomą vardą ir profilio nuotrauką",
@@ -1979,7 +1949,6 @@
             "created_rule_rooms": "%(senderName)s sukūrė taisyklę, draudžiančią kambarius, sutampančius su %(glob)s dėl %(reason)s",
             "created_rule_servers": "%(senderName)s sukūrė taisyklę, draudžiančią serverius, sutampančius su %(glob)s dėl %(reason)s",
             "created_rule_users": "%(senderName)s sukūrė taisyklę, draudžiančią vartotojus, sutampančius su %(glob)s dėl %(reason)s",
-            "message_hidden": "Jūs ignoravote šį vartotoją, todėl jo žinutė yra paslėpta. <a>Rodyti vistiek.</a>",
             "removed_rule": "%(senderName)s pašalino draudimo taisyklę, sutampančią su %(glob)s",
             "removed_rule_rooms": "%(senderName)s pašalino taisyklę, draudžiančią kambarius, sutampančius su %(glob)s",
             "removed_rule_servers": "%(senderName)s pašalino taisyklę, draudžiančią serverius, sutampančius su %(glob)s",
@@ -1995,7 +1964,8 @@
         "pending_moderation": "Žinutė laukia moderavimo",
         "pending_moderation_reason": "Žinutė laukia moderavimo: %(reason)s",
         "reactions": {
-            "add_reaction_prompt": "Pridėti reakciją"
+            "add_reaction_prompt": "Pridėti reakciją",
+            "label": "%(reactors)s sureagavo su %(content)s"
         },
         "read_receipt_title": {
             "one": "Matė %(count)s žmogus",
@@ -2203,9 +2173,6 @@
         "verify_button": "Patvirtinti Vartotoją",
         "verify_explainer": "Dėl papildomo saugumo patvirtinkite šį vartotoją patikrindami vienkartinį kodą abiejuose jūsų įrenginiuose."
     },
-    "user_menu": {
-        "settings": "Visi nustatymai"
-    },
     "voip": {
         "already_in_call": "Jau pokalbyje",
         "already_in_call_person": "Jūs jau esate pokalbyje su šiuo asmeniu.",
@@ -2278,7 +2245,6 @@
         "voice_call": "Balso skambutis",
         "you_are_presenting": "Jūs pristatote"
     },
-    "welcome_to_element": "Sveiki atvykę į Element",
     "widget": {
         "added_by": "Valdiklį pridėjo",
         "capabilities_dialog": {
@@ -2313,11 +2279,7 @@
         "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
         "context_menu": {
             "delete": "Ištrinti valdiklį",
-            "delete_warning": "Valdiklio ištrinimas pašalina jį visiems kambaryje esantiems vartotojams. Ar tikrai norite ištrinti šį valdiklį?",
-            "remove": "Pašalinti visiems",
-            "revoke": "Atšaukti leidimus",
-            "screenshot": "Padarykite nuotrauką",
-            "start_audio_stream": "Pradėti garso transliaciją"
+            "delete_warning": "Valdiklio ištrinimas pašalina jį visiems kambaryje esantiems vartotojams. Ar tikrai norite ištrinti šį valdiklį?"
         },
         "cookie_warning": "Šiame valdiklyje gali būti naudojami slapukai.",
         "error_hangup_description": "Jūsų skambutis buvo nutrauktas. (Klaida: %(message)s)",

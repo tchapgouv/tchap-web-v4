@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 import {
     type I18nApi as II18nApi,
     type Variables,
+    type StringVariables,
     type Translations,
     type Tags,
 } from "@element-hq/element-web-module-api";
@@ -30,9 +31,9 @@ export class I18nApi implements II18nApi {
         const langs: Record<string, Record<string, string>> = {};
 
         for (const key in translations) {
-            for (const lang in translations[key as keyof Translations]) {
+            for (const lang in translations[key]) {
                 langs[lang] = langs[lang] || {};
-                langs[lang][key] = translations[key as keyof Translations]![lang];
+                langs[lang][key] = translations[key][lang];
             }
         }
 
@@ -48,11 +49,11 @@ export class I18nApi implements II18nApi {
      * @param variables - Optional variables to interpolate into the translation
      * @param tags - Optional tags to interpolate into the translation
      */
-    public translate(this: void, key: TranslationKey, variables?: Variables): string;
+    public translate(this: void, key: TranslationKey, variables?: StringVariables): string;
     public translate(this: void, key: TranslationKey, variables: Variables | undefined, tags: Tags): React.ReactNode;
     public translate(this: void, key: TranslationKey, variables?: Variables, tags?: Tags): React.ReactNode | string {
         if (tags) return _t(key, variables, tags);
-        return _t(key, variables);
+        return _t(key, variables!);
     }
 
     public humanizeTime = (timeMillis: number): string => humanizeTime(timeMillis, this);

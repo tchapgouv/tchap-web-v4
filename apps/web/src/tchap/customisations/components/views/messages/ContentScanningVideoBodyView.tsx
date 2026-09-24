@@ -4,16 +4,16 @@ import { ContentScanningStatus } from "~tchap-web/src/tchap/components/views/ele
 import TextWithTooltip from "~tchap-web/src/components/views/elements/TextWithTooltip";
 import { presentableTextForFile } from "~tchap-web/src/utils/FileUtils";
 import { MediaEventContent } from "matrix-js-sdk/src/types";
-import { InlineSpinner } from "@vector-im/compound-web/dist";
+import { InlineSpinner } from "@vector-im/compound-web";
 import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
-interface ContentScanningFileBodyViewProps {
+interface ContentScanningVideoBodyViewProps {
     /**
      * View model providing render state and actions.
      */
     vm: VideoBodyViewModel;
 
-    videoRef?: Ref<HTMLVideoElement>;
+    videoRef?: Ref<HTMLVideoElement> | Ref<HTMLImageElement>;
     /**
      * Optional supplemental content rendered after the video frame.
      */
@@ -46,7 +46,7 @@ export function ContentScanningVideoBodyView({
     children,
     content,
     scanState,
-}: Readonly<ContentScanningFileBodyViewProps>): JSX.Element {
+}: Readonly<ContentScanningVideoBodyViewProps>): JSX.Element {
     const presentableFileName = presentableTextForFile(content, _t("common|attachment"), true, true);
     let icon = <span className="mx_MFileBody_info_icon" />;
     let textComponent = <ContentScanningStatus fileName={presentableFileName} status="scanning" />;

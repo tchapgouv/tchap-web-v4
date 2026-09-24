@@ -21,15 +21,6 @@ fi
 
 pnpm install
 
-echo "===== Installing shared components"
-pushd packages/shared-components
-ls -l
-pnpm build
-# echo "preparing ..."
-# pnpm prepare
-
-popd
-
 
 pushd ./apps/web
 echo "===== Building app"

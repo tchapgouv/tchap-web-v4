@@ -6,17 +6,16 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { env } from "process";
+import { env } from "node:process";
 import "@testing-library/jest-dom";
 import "blob-polyfill";
 import { secureRandomString } from "matrix-js-sdk/src/randomstring";
-import { mocked } from "jest-mock";
+import { mocked } from "jest-mock-vitest-adapter";
 
 import { PredictableRandom } from "./test-utils/predictableRandom";
 import * as rageshake from "../src/rageshake/rageshake";
 
 declare global {
-    // eslint-disable-next-line no-var
     var IS_REACT_ACT_ENVIRONMENT: boolean;
 }
 
@@ -62,7 +61,7 @@ if (env["GITHUB_ACTIONS"] !== undefined) {
 //
 // These are also require() calls to make sure they get called
 // synchronously.
-/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-require-imports,import/no-commonjs,unicorn/prefer-module */
 require("./setup/setupManualMocks"); // must be first
 require("./setup/setupLanguage");
 require("./setup/setupConfig");

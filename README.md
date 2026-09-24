@@ -27,7 +27,7 @@ Tchap is a web app that allows you to chat through the matrix protocol for the F
     - "feature_thread": Activate thread on messages
     - "feature_audio_call": Activate 1 to 1 voice call
     - "feature_video_call": Activate 1 to 1 video call
-    - "feature_video_group_call": Activate group call on rooms, for this feature to work, the values of `UIFeature.widgets` and `feature_group_calls` needs to be true
+    - "feature_video_group_call": Activate group call on rooms, for this feature to work, the values of `UIFeature.widgets` needs to be true
     - "feature_screenshare_call": Activate 1 to 1 screenshare
     - feature_create_room_non_encrypted : Activate option to create private non encrypted room
     - feature_use_ec_in_dm: give options to use Element call in DM room
@@ -70,23 +70,35 @@ pnpm start
 
 Then also update the `tchap-modifications.json` file. We continue to keep track of the changes we make to the sdk. It will also be easier to separate different functionnality that tchap added to the code
 
-### Compound Web tchap
+### Compound Web and compound-design-token
 
-We use our own compound-web and compound-design-token packages. When upgrading the version, do not forget to also upgrade compoound-web-tchap npm package.
-The reference to `@vector-im/compound-web` are still present, but it is only an alias to our package `compound-design-tchap` defined in webpack. The only direct reference to this package is in the css import of `_common.pcss`, because the pcss loader doesnt manage aliases.
+We only patch `@vector-im/compound-web` as desired (pnpm patch), whereas we have our fork of compound-design-tokens. In order for compund-web to use our compound-design-tokens fork, we use pnpm workspace overide value, to use the correct compound-design-token package across all the dependencies.
+
+### Patches 
+
+There are two type of patches used by tchap:
+1. pnpm
+2. patch-packages patches
+
+Most of the pnpm patches are from element, take a look at pnpm-workspace to see the tchap specific.
+We also use patch packages in order to be able to have separate patches for the same package (matrix-js-sdk for exemple), which is not possible with pnpm patches. More info about those patches can be found [here](./apps/web/patches_tchap/README.md) 
+
+### Translations
+Take a look at [tchap-translations](./apps/web/modules/tchap-translations/README.md) module
 
 ### Tests
 
 - Now that `matrix-react-sdk` is merged inside tchap-web, we only target the `test/tchap` folder in order to run our tests on only the files that tchap has modified.
 - For every modification, we need to copy the existing test (if there is one) of the component, move it to tchap folder and modify it accordingly.
+- There is another type of unit-test that are directly inside `src` folders which use vitest as runner. We add our test by copying the existing and add the suffixe *.tchap.test, pnpm test:vitest:tchap, will only find those files to tests
 - This project is tested with BrowserStack.
 
 ## Copyright & License
 
-Copyright (c) 2014-2017 OpenMarket Ltd
-Copyright (c) 2017 Vector Creations Ltd
-Copyright (c) 2017-2025 New Vector Ltd
-2024-2025, Direction interministérielle du numérique
+Copyright (c) 2014-2017 OpenMarket Ltd  
+Copyright (c) 2017 Vector Creations Ltd  
+Copyright (c) 2017-2025 New Vector Ltd  
+2024-2025, Direction interministérielle du numérique  
 
 This software is multi licensed by New Vector Ltd (Element). It can be used either:
 

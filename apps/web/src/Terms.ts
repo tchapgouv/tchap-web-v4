@@ -22,8 +22,8 @@ import {
     doesAccountDataHaveIdentityServer,
     setToDefaultIdentityServer,
 } from './utils/IdentityServerUtils';
-import { pickBestLanguage } from "./languageHandler.tsx";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
+import { pickBestLanguage } from "./i18n/utils";
 
 export class TermsNotSignedError extends Error {}
 

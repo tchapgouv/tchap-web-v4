@@ -93,7 +93,6 @@
         "feature_new_room_decoration_ui": true,
         "feature_rust_crypto": true,
         "feature_latex_maths": true,
-        "feature_group_calls": true,
         "feature_new_room_list": false
     },
     "feedback": {
@@ -178,6 +177,9 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
+    "embedded_pages": {
+        "welcome_url": "welcome_mas.html"
+    },
     "desktop_builds": {
         "available": true,
         "logo": "themes/tchap/img/logos/tchap-logo.svg",
@@ -224,7 +226,8 @@
         "feature_screenshare_call": ["*"],
         "feature_create_room_non_encrypted": ["*"],
         "feature_use_ec_in_dm": [""],
-        "feature_red_list": ["*"]
+        "feature_red_list": ["*"],
+        "feature_qrcode_login": []
     },
     "tchap_desktop": {
         "deep_link_scheme": "tchap"
@@ -238,5 +241,6 @@
         "brand": "Appel de groupe",
         "use_exclusively": true
     },
-    "logout_redirect_url": "#/welcome"
+    "logout_redirect_url": "#/welcome",
+    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json"
 }

@@ -208,7 +208,7 @@ export function FileBodyView({ vm, refIFrame, refLink, className }: Readonly<Fil
             <MediaBody data-type="info">
                 <Button
                     as="button"
-                    size="sm"
+                    size="md"
                     kind="secondary"
                     aria-label={resolvedInfoLabel}
                     Icon={resolvedInfoIcon}
@@ -240,7 +240,7 @@ export function FileBodyView({ vm, refIFrame, refLink, className }: Readonly<Fil
                     {showDownload && (
                         <div data-type="download">
                             {/* Decrypt/download is triggered by the view model action, not by an anchor `href`. */}
-                            <Button size="sm" kind="secondary" Icon={DownloadIcon} onClick={vm.onDownloadClick}>
+                            <Button size="md" kind="secondary" Icon={DownloadIcon} onClick={vm.onDownloadClick}>
                                 {resolvedDownloadLabel}
                             </Button>
                         </div>
@@ -260,7 +260,8 @@ export function FileBodyView({ vm, refIFrame, refLink, className }: Readonly<Fil
                                  * We'll use it to learn how the download button
                                  * would have been styled if it was rendered inline.
                                  * this violates multiple eslint rules so ignore it completely */}
-                                <Button size="sm" kind="secondary" Icon={DownloadIcon} as="a" ref={refLink} />
+                                {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label */}
+                                <Button size="md" kind="secondary" Icon={DownloadIcon} as="a" ref={refLink} />
                             </div>
                             {/*
                             TODO: Move iframe (and dummy link) into FileDownloader.
@@ -290,7 +291,7 @@ export function FileBodyView({ vm, refIFrame, refLink, className }: Readonly<Fil
                         <div data-type="download">
                             {/* Unencrypted media uses an anchor element with VM-controlled click behavior. */}
                             <Button
-                                size="sm"
+                                size="md"
                                 kind="secondary"
                                 Icon={DownloadIcon}
                                 as="a"

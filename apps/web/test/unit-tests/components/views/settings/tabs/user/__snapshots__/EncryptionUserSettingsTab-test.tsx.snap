@@ -42,9 +42,9 @@ exports[`<EncryptionUserSettingsTab /> should display a verify button when the e
           </div>
         </div>
         <button
-          class="_button_13vu4_8 _has-icon_13vu4_60"
+          class="_button_1nw83_8 _has-icon_1nw83_60"
           data-kind="primary"
-          data-size="sm"
+          data-size="md"
           role="button"
           tabindex="0"
         >
@@ -124,9 +124,9 @@ exports[`<EncryptionUserSettingsTab /> should display the identity needs reset p
         </div>
         <div>
           <button
-            class="_button_13vu4_8"
+            class="_button_1nw83_8"
             data-kind="primary"
-            data-size="sm"
+            data-size="md"
             role="button"
             tabindex="0"
           >
@@ -186,18 +186,18 @@ exports[`<EncryptionUserSettingsTab /> should display the recovery out of sync p
           class="mx_RecoveryPanelOutOfSync"
         >
           <button
-            class="_button_13vu4_8"
+            class="_button_1nw83_8"
             data-kind="secondary"
-            data-size="sm"
+            data-size="md"
             role="button"
             tabindex="0"
           >
             Forgot recovery key?
           </button>
           <button
-            class="_button_13vu4_8 _has-icon_13vu4_60"
+            class="_button_1nw83_8 _has-icon_1nw83_60"
             data-kind="primary"
-            data-size="sm"
+            data-size="md"
             role="button"
             tabindex="0"
           >
@@ -235,6 +235,7 @@ exports[`<EncryptionUserSettingsTab /> should display the reset identity panel w
         class="_breadcrumb_t96w3_8"
       >
         <button
+          aria-disabled="false"
           aria-label="Back"
           class="_icon-button_1215g_8"
           data-kind="secondary"
@@ -264,7 +265,7 @@ exports[`<EncryptionUserSettingsTab /> should display the reset identity panel w
         >
           <li>
             <a
-              class="_link_k9ljz_8"
+              class="_link_13esb_8"
               data-kind="primary"
               data-size="sm"
               rel="noreferrer noopener"
@@ -394,7 +395,7 @@ exports[`<EncryptionUserSettingsTab /> should display the reset identity panel w
         >
           <button
             aria-disabled="false"
-            class="_button_13vu4_8 _destructive_13vu4_110"
+            class="_button_1nw83_8 _destructive_1nw83_110"
             data-kind="primary"
             data-size="lg"
             role="button"
@@ -403,7 +404,7 @@ exports[`<EncryptionUserSettingsTab /> should display the reset identity panel w
             Continue
           </button>
           <button
-            class="_button_13vu4_8"
+            class="_button_1nw83_8"
             data-kind="tertiary"
             data-size="lg"
             role="button"

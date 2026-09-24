@@ -19,7 +19,6 @@ import { RecencySorter } from "./skip-list/sorters/RecencySorter";
 import { AlphabeticSorter } from "./skip-list/sorters/AlphabeticSorter";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { EffectiveMembership, getEffectiveMembership, getEffectiveMembershipTag } from "../../utils/membership";
-import SpaceStore from "../spaces/SpaceStore";
 import { type SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
 import { FavouriteFilter } from "./skip-list/filters/FavouriteFilter";
 import { UnreadFilter } from "./skip-list/filters/UnreadFilter";
@@ -36,11 +35,20 @@ import { UnreadSorter } from "./skip-list/sorters/UnreadSorter";
 import { getChangedOverrideRoomMutePushRules } from "./utils";
 import { isRoomVisible } from "./isRoomVisible";
 import { RoomSkipList } from "./skip-list/RoomSkipList";
-import { DefaultTagID } from "./skip-list/tag";
+import { getTagsForRoom } from "../../utils/room/getTagsForRoom";
 import { ExcludeTagsFilter } from "./skip-list/filters/ExcludeTagsFilter";
 import { TagFilter } from "./skip-list/filters/TagFilter";
 import { filterBoolean } from "../../utils/arrays";
-import { createSection } from "./section";
+import {
+    CHATS_TAG,
+    createSection,
+    deleteSection,
+    editSection,
+    getOrderedReorderableSections,
+    reorderSection,
+} from "./section";
+import { DefaultTagID, type TagID } from "./skip-list/tag";
+import { SDKContextClass } from "../../contexts/SDKContextClass.ts";
 
 /**
  * These are the filters passed to the room skip list.
@@ -62,6 +70,8 @@ export enum RoomListStoreV3Event {
     ListsLoaded = "lists_loaded",
     /** Fired when a new section is created in the room list. */
     SectionCreated = "section_created",
+    /** Fired when a room's tags change. */
+    RoomTagged = "room_tagged",
 }
 
 // The result object for returning rooms from the store
@@ -84,15 +94,10 @@ export interface Section {
     rooms: Room[];
 }
 
-/**
- * A synthetic tag used to represent the "Chats" section, which contains
- * every room that does not belong to any other explicit tag section.
- */
-export const CHATS_TAG = "chats";
-
 export const LISTS_UPDATE_EVENT = RoomListStoreV3Event.ListsUpdate;
 export const LISTS_LOADED_EVENT = RoomListStoreV3Event.ListsLoaded;
 export const SECTION_CREATED_EVENT = RoomListStoreV3Event.SectionCreated;
+export const ROOM_TAGGED_EVENT = RoomListStoreV3Event.RoomTagged;
 
 /**
  * This store allows for fast retrieval of the room list in a sorted and filtered manner.
@@ -126,12 +131,14 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
     public constructor(dispatcher: MatrixDispatcher) {
         super(dispatcher);
         this.msc3946ProcessDynamicPredecessor = SettingsStore.getValue("feature_dynamic_room_predecessors");
-        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, () => {
+        SDKContextClass.instance.spaceStore.on(UPDATE_SELECTED_SPACE, () => {
             this.onActiveSpaceChanged();
         });
-        SpaceStore.instance.on(UPDATE_HOME_BEHAVIOUR, () => this.onActiveSpaceChanged());
+        SDKContextClass.instance.spaceStore.on(UPDATE_HOME_BEHAVIOUR, () => this.onActiveSpaceChanged());
         SettingsStore.watchSetting("RoomList.OrderedCustomSections", null, () => this.onOrderedCustomSectionsChange());
         this.loadCustomSections();
+
+        SettingsStore.watchSetting("RoomList.showSections", null, () => this.scheduleEmit());
     }
 
     /**
@@ -166,9 +173,9 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
      * @param filterKeys Optional array of filters that the rooms must match against.
      */
     public getSortedRoomsInActiveSpace(filterKeys?: FilterKey[]): RoomsResult {
-        const spaceId = SpaceStore.instance.activeSpace;
+        const spaceId = SDKContextClass.instance.spaceStore.activeSpace;
+        const areSectionsEnabled = SettingsStore.getValue("RoomList.showSections");
 
-        const areSectionsEnabled = SettingsStore.getValue("feature_room_list_sections");
         const sections = areSectionsEnabled
             ? this.getSections(filterKeys)
             : [{ tag: CHATS_TAG, rooms: Array.from(this.roomSkipList?.getRoomsInActiveSpace(filterKeys) ?? []) }];
@@ -178,6 +185,30 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
             filterKeys,
             sections,
         };
+    }
+
+    /**
+     * Get the rooms in the currently active space that are tagged with the given tag.
+     * @param tag The tag to filter the rooms by.
+     */
+    private getRoomsWithTagInActiveSpace(tag: TagID): Room[] {
+        return this.getSortedRoomsInActiveSpace()
+            .sections.flatMap((s) => s.rooms)
+            .filter((room) => getTagsForRoom(room).includes(tag));
+    }
+
+    /**
+     * Get the server notice rooms in the currently active space.
+     */
+    public getServerNoticeRooms(): Room[] {
+        return this.getRoomsWithTagInActiveSpace(DefaultTagID.ServerNotice);
+    }
+
+    /**
+     * Get the direct message (DM) rooms in the currently active space.
+     */
+    public getDmRooms(): Room[] {
+        return this.getRoomsWithTagInActiveSpace(DefaultTagID.DM);
     }
 
     /**
@@ -207,7 +238,7 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
 
         this.roomSkipList = new RoomSkipList(sorter, this.getSkipListFilters());
 
-        await SpaceStore.instance.storeReadyPromise;
+        await SDKContextClass.instance.spaceStore.storeReadyPromise;
         const rooms = this.getRooms();
         this.roomSkipList.seed(rooms);
         this.emit(LISTS_LOADED_EVENT);
@@ -241,8 +272,17 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
             }
 
             case "MatrixActions.Room.tags": {
+                // Re-sort on any tag change, but don't emit ROOM_TAGGED_EVENT here: the js-sdk
+                // re-emits RoomEvent.Tags for every m.tag on every sync, which would show a spurious
+                // "chat moved" toast on load. It is emitted from tagRoom.success below instead.
                 const room = payload.room;
                 this.addRoomAndEmit(room);
+                break;
+            }
+
+            case "RoomListActions.tagRoom.success": {
+                // Tag change initiated by the local user, so surface the "chat moved" toast.
+                this.emit(ROOM_TAGGED_EVENT);
                 break;
             }
 
@@ -461,14 +501,16 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
      * @returns An array of sections
      */
     private getSections(filterKeys?: FilterKey[]): Section[] {
-        return this.sortedTags.map((tag) => {
-            const filters = filterBoolean([this.filterByTag.get(tag)?.key, ...(filterKeys || [])]);
+        return this.sortedTags
+            .map((tag) => {
+                const filters = filterBoolean([this.filterByTag.get(tag)?.key, ...(filterKeys ?? [])]);
 
-            return {
-                tag,
-                rooms: Array.from(this.roomSkipList?.getRoomsInActiveSpace(filters) || []),
-            };
-        });
+                return {
+                    tag,
+                    rooms: Array.from(this.roomSkipList?.getRoomsInActiveSpace(filters) || []),
+                };
+            })
+            .filter((section) => !filterKeys || section.rooms.length > 0);
     }
 
     /**
@@ -485,24 +527,62 @@ export class RoomListStoreV3Class extends AsyncStoreWithClient<EmptyObject> {
 
     /**
      * Create a new section.
-     * Emits {@link SECTION_CREATED_EVENT} and  {@link LISTS_UPDATE_EVENT} if the section was successfully created.
+     * Emits {@link SECTION_CREATED_EVENT} if the section was successfully created.
      */
-    public async createSection(): Promise<void> {
-        const sectionIsCreated = await createSection();
-        if (!sectionIsCreated) return;
-        this.emit(SECTION_CREATED_EVENT);
+    public async createSection(): Promise<string | undefined> {
+        const tag = await createSection(SDKContextClass.instance.spaceStore.activeSpace);
+        if (!tag) return;
+        this.emit(SECTION_CREATED_EVENT, tag);
+        return tag;
+    }
+
+    /**
+     * Edit a section's name.
+     * @param tag The tag of the section to edit
+     */
+    public async editSection(tag: string): Promise<void> {
+        await editSection(tag);
+    }
+
+    /**
+     * Remove a section
+     * Emits {@link LISTS_UPDATE_EVENT} if the section was successfully removed.
+     * @param tag The tag of the section to remove
+     * @param isEmpty Whether the section is empty
+     */
+    public async removeSection(tag: string, isEmpty: boolean): Promise<void> {
+        await deleteSection(tag, isEmpty);
         this.scheduleEmit();
+    }
+
+    /**
+     * Reorder custom sections by moving sourceTag to the position of targetTag.
+     * @param sourceTag The tag of the section to move
+     * @param targetTag The tag of the section to move to
+     */
+    public async reorderSection(sourceTag: string, targetTag: string): Promise<void> {
+        await reorderSection(sourceTag, targetTag);
+    }
+
+    /**
+     * Returns the ordered section tags.
+     */
+    public get orderedSectionTags(): string[] {
+        return this.sortedTags;
     }
 
     /**
      * Load the custom sections from the settings store and update the sorted tags.
      */
     private loadCustomSections(): void {
-        const orderedCustomSections = SettingsStore.getValue("RoomList.OrderedCustomSections");
-        this.sortedTags = [DefaultTagID.Favourite, ...orderedCustomSections, CHATS_TAG, DefaultTagID.LowPriority];
+        // Favourite is pinned to the top and LowPriority to the bottom. Everything in between
+        // (custom sections + Chats) is user-reorderable.
+        const reorderable = getOrderedReorderableSections();
+        this.sortedTags = [DefaultTagID.Favourite, ...reorderable, DefaultTagID.LowPriority];
     }
 }
 
+// oxlint-disable-next-line typescript/no-extraneous-class
 export default class RoomListStoreV3 {
     private static internalInstance: RoomListStoreV3Class;
 

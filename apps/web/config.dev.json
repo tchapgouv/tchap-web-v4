@@ -36,7 +36,6 @@
         "feature_notification_settings2": false,
         "feature_new_room_decoration_ui": true,
         "feature_rust_crypto": true,
-        "feature_group_calls": true,
         "feature_latex_maths": true,
         "feature_new_room_list": false
     },
@@ -91,6 +90,9 @@
         ],
         "welcome_background_url": "themes/tchap/img/backgrounds/tchap-bg.jpg"
     },
+    "embedded_pages": {
+        "welcome_url": "welcome_mas.html"
+    },
     "user_notice": {
         "title": "DEV",
         "description": "You are on dev env",
@@ -127,7 +129,8 @@
         "feature_screenshare_call": ["*"],
         "feature_create_room_non_encrypted": ["*"],
         "feature_use_ec_in_dm": ["*"],
-        "feature_red_list": ["*"]
+        "feature_red_list": ["*"],
+        "feature_qrcode_login": ["*"]
     },
     "tchap_desktop": {
         "deep_link_scheme": "tchap-dev"
@@ -141,5 +144,6 @@
         "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",
         "api_host": "https://posthog.tchap.incubateur.net"
     },
-    "logout_redirect_url": "#/welcome"
+    "logout_redirect_url": "#/welcome",
+    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json"
 }

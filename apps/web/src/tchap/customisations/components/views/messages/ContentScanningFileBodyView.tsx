@@ -4,7 +4,7 @@ import { ContentScanningStatus } from "~tchap-web/src/tchap/components/views/ele
 import TextWithTooltip from "~tchap-web/src/components/views/elements/TextWithTooltip";
 import { presentableTextForFile } from "~tchap-web/src/utils/FileUtils";
 import { MediaEventContent } from "matrix-js-sdk/src/types";
-import { InlineSpinner } from "@vector-im/compound-web/dist";
+import { InlineSpinner } from "@vector-im/compound-web";
 import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 interface ContentScanningFileBodyViewProps {

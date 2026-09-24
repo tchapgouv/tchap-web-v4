@@ -57,6 +57,15 @@ If both `default_server_config` and `default_server_name` are used, Element will
 information using `.well-known`, and if that fails, take `default_server_config` as the homeserver connection
 information.
 
+1. `enable_client_well_known_lookups`: Controls whether Element makes runtime requests to the logged-in user's
+   [`<server_name>/.well-known/matrix/...`](https://spec.matrix.org/latest/client-server-api/#getwell-knownmatrixclient)
+   endpoints (for example, polling for client configuration after login). Set it to `false` to stop Element making these
+   requests, so it only contacts the homeserver base URL; the `well_known` object returned inline in the `/login` response
+   is unaffected. Defaults to `true`.
+   This option covers those runtime requests only; login-time `.well-known` autodiscovery is separate. Setting
+   `default_server_config` with `disable_custom_urls: true` fixes the homeserver and removes the server picker, covering
+   the startup lookup and server selection. It also doesn't cover the legacy password login form (not shown for delegated authentication/OIDC) which performs its own `.well-known` lookup when a full Matrix ID is entered.
+
 ## Labs flags
 
 Labs flags are optional, typically beta or in-development, features that can be turned on or off. The full range of
@@ -214,14 +223,15 @@ Starting with `branding`, the following subproperties are available:
 
 1. `welcome_background_url`: When a string, the URL for the full-page image background of the login, registration, and welcome
    pages. This property can additionally be an array to have the app choose an image at random from the selections.
-2. `auth_header_logo_url`: A URL to the logo used on the login, registration, etc pages.
-3. `auth_footer_links`: A list of links to add to the footer during login, registration, etc. Each entry must have a `text` and
+2. `logo_link_url`: When rendering the a brand Logo, if it is linkified, this is the link it should direct to. Defaults to `https://element.io`.
+3. `auth_header_logo_url`: A URL to the logo used on the login, registration, etc pages.
+4. `auth_footer_links`: A list of links to add to the footer during login, registration, etc. Each entry must have a `text` and
    `url` property.
 
 `embedded_pages` can be configured as such:
 
-1. `welcome_url`: A URL to an HTML page to show as a welcome page (landing on `#/welcome`). When not specified, the default
-   `welcome.html` that ships with Element will be used instead.
+1. `welcome_url`: A URL to an HTML page to show as a welcome page (landing on `#/welcome`).
+   When not specified, a default internal component will be used instead.
 2. `home_url`: A URL to an HTML page to show within the app as the "home" page. When the app doesn't have a room/screen to
    show the user, it will use the home page instead. The home page is additionally accessible from the user menu. By default,
    no home page is set and therefore a hardcoded landing screen is used. More documentation and examples are [here](./custom-home.md).
@@ -297,7 +307,6 @@ The following subproperties are available:
 2. `logo_uri`: Optional URI for the client logo.
 3. `tos_uri`: Optional URI for the client's terms of service.
 4. `policy_uri`: Optional URI for the client's privacy policy.
-5. `contacts`: Optional list of contact emails for the client.
 
 As an example:
 
@@ -307,8 +316,7 @@ As an example:
         "client_uri": "https://example.com",
         "logo_uri": "https://example.com/logo.png",
         "tos_uri": "https://example.com/tos",
-        "policy_uri": "https://example.com/policy",
-        "contacts": ["support@example.com"]
+        "policy_uri": "https://example.com/policy"
     }
 }
 ```
@@ -389,7 +397,12 @@ The VoIP and Jitsi options are:
    at any time without notice.
 6. `element_call`: Optional configuration for native group calls using Element Call, with the following subkeys:
     - `use_exclusively`: A boolean specifying whether Element Call should be used exclusively as the only VoIP stack in
-      the app, removing the ability to start legacy 1:1 calls or Jitsi calls. Defaults to `false`.
+      the app, removing the ability to enable legacy 1:1 calls or Jitsi calls.
+      It is a misconfiguration if its set to true while `element_call.disable` is also true!
+      Defaults to `false`.
+    - `disable`: A boolean flag specifying whether Element Call should be disabled.
+      If `true`, `element_call.use_exclusively` has no effect!
+      Defaults to `false`.
     - `brand`: Optional name for the app. Defaults to `Element Call`. This is
       used throughout the application in various strings/locations.
     - `guest_spa_url`: Optional URL for an Element Call single-page app (SPA),
@@ -595,7 +608,7 @@ Currently, the following UI feature flags are supported:
 }
 ```
 
-Each module URL is loaded using dynamic import (`import()`). The modules are loaded in order after Element Web initializes but before the application fully starts. Modules must be accessible from the browser and should export a compatible module format that works with the [Module API](https://github.com/element-hq/element-modules/tree/main/packages/element-web-module-api).
+Each module URL is loaded using dynamic import (`import()`). The modules are loaded in order after Element Web initializes but before the application fully starts. Modules must be accessible from the browser and should export a compatible module format that works with the [Module API](https://github.com/element-hq/element-web/tree/develop/packages/module-api).
 
 ## Undocumented / developer options
 
