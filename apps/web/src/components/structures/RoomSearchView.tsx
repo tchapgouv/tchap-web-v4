@@ -25,10 +25,6 @@ import { searchPagination, SearchScope } from "../../Searching";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import { useScopedRoomContext } from "../../contexts/ScopedRoomContext.tsx";
-import ErrorDialog from "../views/dialogs/ErrorDialog.tsx"; // :TCHAP: error-tchap-is-down
-
-import Tchapi18nUtils from "~tchap-web/src/tchap/i18n/Tchapi18nUtils"; // :tchap: error-tchap-is-down
-import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP: error-tchap-is-down
 
 const DEBUG = false;
 let debuglog = function (msg: string): void {};
@@ -123,13 +119,6 @@ export const RoomSearchView = ({ term, scope, promise, className, onUpdate, inPr
                         logger.error("Discarding stale search results");
                         return false;
                     }
-<<<<<<< HEAD
-                    Modal.createDialog(ErrorDialog, {
-                        title: _t("settings|security|message_search_failed"),
-                        // :TCHAP: error-tchap-is-down - description: error?.message ?? _t("error_dialog|search_failed|server_unavailable"),
-                        description: error?.message ?? Tchapi18nUtils.getServerDownMessage(),
-                    });
-=======
                     if (error?.name === "AbortError") {
                         // Opening a result aborts the search, which rejects whatever request is
                         // still in flight. We asked for that, so there is nothing to tell the user
@@ -138,7 +127,6 @@ export const RoomSearchView = ({ term, scope, promise, className, onUpdate, inPr
                         debuglog("search aborted");
                         return false;
                     }
->>>>>>> v1.12.29
                     logger.error("Search failed", error);
                     onUpdate(false, null, error);
                     return false;

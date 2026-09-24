@@ -129,14 +129,12 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
             [`${className}_loggedIn`]: !!client,
         });
 
-<<<<<<< HEAD
         // const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
         //     ...sanitizeHtmlParams
         // });
         // :TCHAP: we trust our html, go back previous version
-        const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
+        // const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
         // end :TCHAP:
-=======
         const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
             ...sanitizeHtmlParams,
             transformTags: {
@@ -154,7 +152,6 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
                 },
             },
         });
->>>>>>> v1.12.29
 
         if (this.props.scrollbar) {
             return <AutoHideScrollbar className={classes}>{content}</AutoHideScrollbar>;

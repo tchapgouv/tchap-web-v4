@@ -186,12 +186,12 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn, startCustom
 
     return (
         <SettingsTab data-testid="mx_AccountUserSettingsTab">
-<<<<<<< HEAD
             <SettingsSection>
                 <UserProfileSettings
                     externalAccountManagementUrl={externalAccountManagementUrl}
                     canSetDisplayName={canSetDisplayName}
                     canSetAvatar={canSetAvatar}
+                    startCustomStatus={startCustomStatus}
                 />
                 {/* :TCHAP: hide-discovery-email-phone-settings-updated */}
                 {/* {(!isAccountManagedExternally || canMake3pidChanges) && (
@@ -213,22 +213,6 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn, startCustom
                 }
                 {/* end :TCHAP: */}
             </SettingsSection>
-=======
-            <UserProfileSettings
-                externalAccountManagementUrl={externalAccountManagementUrl}
-                canSetDisplayName={canSetDisplayName}
-                canSetAvatar={canSetAvatar}
-                startCustomStatus={startCustomStatus}
-            />
-            {(!isAccountManagedExternally || canMake3pidChanges) && (
-                <UserPersonalInfoSettings canMake3pidChanges={canMake3pidChanges} />
-            )}
-            <AccountSection
-                canChangePassword={canChangePassword}
-                onPasswordChanged={onPasswordChanged}
-                onPasswordChangeError={onPasswordChangeError}
-            />
->>>>>>> v1.12.29
             {accountManagementSection}
         </SettingsTab>
     );

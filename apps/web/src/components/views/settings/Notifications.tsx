@@ -205,21 +205,13 @@ const NotificationActivitySettings = (): JSX.Element => {
             }}
         >
             <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
-<<<<<<< HEAD
-            {/* :TCHAP: extend-remove-thread-buttons <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} /> */}
+            {/* :TCHAP: extend-remove-thread-buttons <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} requires={["Notifications.showbold"]} /> */}
             { TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? 
-                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} requires={["Notifications.showbold"]}/>
                 : null   
             }
             {/* end :TCHAP: */}
-=======
-            <SettingsFlag
-                name="Notifications.activityIsUnread"
-                level={SettingLevel.DEVICE}
-                requires={["Notifications.showbold"]}
-            />
             <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
->>>>>>> v1.12.29
         </Form.Root>
     );
 };

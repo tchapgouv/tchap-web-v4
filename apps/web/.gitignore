@@ -6,13 +6,7 @@
 /src/component-index.js
 # Auto-generated file
 /src/modules.js
-<<<<<<< HEAD
 # /build_config.yaml // :TCHAP: still using the legacy module system
-
-# File from translations checkin scripts.
-modules/tchap-translations/tmp/*
-=======
-/build_config.yaml
 
 # Vitest browser-mode screenshots. Only the linux baselines are committed, as linux
 # is what CI renders with; regenerate them with `pnpm test:unit:screenshots`, which
@@ -22,4 +16,8 @@ modules/tchap-translations/tmp/*
 /src/**/__screenshots__/*
 !/src/**/__screenshots__/linux/
 /.vitest-attachments/
->>>>>>> v1.12.29
+
+
+
+# File from translations checkin scripts.
+modules/tchap-translations/tmp/*

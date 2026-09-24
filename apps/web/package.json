@@ -1,17 +1,10 @@
 {
-<<<<<<< HEAD
     "name": "tchap-web",
     "productName": "Tchap",
     "version": "4.21.6",
-    "version-element-web": "1.12.26",
+    "version-element-web": "1.12.29",
     "description": "Tchap: la messagerie instantanée du secteur public",
     "author": "DINUM",
-=======
-    "name": "element-web",
-    "version": "1.12.29",
-    "description": "Element: the future of secure communication",
-    "author": "New Vector Ltd.",
->>>>>>> v1.12.29
     "repository": {
         "type": "git",
         "url": "https://github.com/element-hq/element-web"
@@ -39,12 +32,9 @@
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "nx test:unit",
         "test:vitest": "nx test:vitest",
-<<<<<<< HEAD
         "test:vitest:tchap": "nx test:vitest:tchap",
         "test:tchap": "nx test:unit:tchap --testPathPatterns=test/unit-tests/tchap/*/",
-=======
         "test:unit:screenshots": "playwright-screenshots pnpm -w exec vitest run --project web-browser --update",
->>>>>>> v1.12.29
         "test:playwright": "nx test:playwright --",
         "test:playwright:open": "nx test:playwright -- --ui",
         "test:playwright:screenshots": "nx test:playwright:screenshots --",
@@ -147,12 +137,7 @@
         "@babel/preset-env": "^7.12.11",
         "@babel/preset-react": "^7.12.10",
         "@babel/preset-typescript": "^7.12.7",
-<<<<<<< HEAD
-        "@casualbot/jest-sonar-reporter": "2.6.0",
-        "@element-hq/element-call-embedded": "0.22.0",
-=======
         "@element-hq/element-call-embedded": "0.24.0",
->>>>>>> v1.12.29
         "@element-hq/element-web-playwright-common": "workspace:*",
         "@fetch-mock/jest": "^0.2.20",
         "@fetch-mock/vitest": "^0.2.18",
@@ -219,12 +204,8 @@
         "mini-css-extract-plugin": "2.10.2",
         "minimist": "^1.2.8",
         "modernizr": "^3.12.0",
-<<<<<<< HEAD
-        "oxfmt": "0.60.0",
-        "patch-package": "^8.0.1",
-=======
         "oxfmt": "0.65.0",
->>>>>>> v1.12.29
+        "patch-package": "^8.0.1",
         "playwright-core": "catalog:",
         "postcss": "8.5.26",
         "postcss-hexrgba": "2.1.0",

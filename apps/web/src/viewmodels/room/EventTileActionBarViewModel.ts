@@ -295,7 +295,6 @@ export class EventTileActionBarViewModel
             this.addListenerCleanup(() => roomState.off(RoomStateEvent.Events, this.onRoomEvent));
         }
 
-<<<<<<< HEAD
         // :TCHAP: content-scanner - create once per event, subscribe to scan state
         if (MediaEventHelper.isEligible(mxEvent)) {
             this.scannerMediaHelper = new ContentScannerMediaHelper(mxEvent);
@@ -306,10 +305,7 @@ export class EventTileActionBarViewModel
             this.scannerMediaHelper = undefined;
         }
         // end :TCHAP:
-        MatrixClientPeg.safeGet().decryptEventIfNeeded(mxEvent);
-=======
         void MatrixClientPeg.safeGet().decryptEventIfNeeded(mxEvent);
->>>>>>> v1.12.29
         void this.updateDownloadPermission(++this.downloadPermissionRequestId);
     }
 

@@ -7,11 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { createRef, type JSX, type ReactNode, type SyntheticEvent } from "react";
-<<<<<<< HEAD
-import { EventTimeline, EventType, type Room, RoomMember } from "matrix-js-sdk/src/matrix";
-=======
-import { EventType, RoomMember } from "matrix-js-sdk/src/matrix";
->>>>>>> v1.12.29
+import { EventTimeline, EventType, RoomMember } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { type MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
