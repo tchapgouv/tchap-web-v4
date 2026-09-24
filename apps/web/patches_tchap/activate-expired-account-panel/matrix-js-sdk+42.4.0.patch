@@ -1,8 +1,8 @@
 diff --git a/node_modules/matrix-js-sdk/src/http-api/fetch.ts b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
-index 82a4bcd..5c024e1 100644
+index 0d1f88a..5369c10 100644
 --- a/node_modules/matrix-js-sdk/src/http-api/fetch.ts
 +++ b/node_modules/matrix-js-sdk/src/http-api/fetch.ts
-@@ -187,6 +187,12 @@ export class FetchHttpApi<O extends IHttpOpts> {
+@@ -188,6 +188,12 @@ export class FetchHttpApi<O extends IHttpOpts> {
              } else if (error.errcode == "M_CONSENT_NOT_GIVEN") {
                  this.eventEmitter.emit(HttpApiEvent.NoConsent, error.message, error.data.consent_uri);
              }
@@ -41,7 +41,7 @@ index 3208567..7da493b 100644
  
  export interface UploadProgress {
 diff --git a/node_modules/matrix-js-sdk/src/sync.ts b/node_modules/matrix-js-sdk/src/sync.ts
-index 3e01c4b..2e59386 100644
+index 3035f4b..7147a2b 100644
 --- a/node_modules/matrix-js-sdk/src/sync.ts
 +++ b/node_modules/matrix-js-sdk/src/sync.ts
 @@ -591,6 +591,14 @@ export class SyncApi {

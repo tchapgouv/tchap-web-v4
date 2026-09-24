@@ -27,10 +27,10 @@ index 9c24ca8..6c24a6c 100644
  
  /** A reason code for a failure to decrypt an event. */
 diff --git a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
-index bfcd8c6..8b7139f 100644
+index c6f68cb..4c3ea14 100644
 --- a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
 +++ b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
-@@ -2289,6 +2289,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
+@@ -2247,6 +2247,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
              logger.warn("pushSecretToVerifiedDevices: Error processing outgoing requests", e);
          });
      }
