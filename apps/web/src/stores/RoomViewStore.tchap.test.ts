@@ -6,7 +6,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { mocked } from "jest-mock-vitest-adapter";
+// @vitest-environment happy-dom
+
 import { KnownMembership, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 import {
@@ -14,9 +15,8 @@ import {
     type ViewRoomOpts,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 import EventEmitter from "node:events";
-
-import { RoomViewStore } from "~tchap-web/src/stores/RoomViewStore";
-import { Action } from "~tchap-web/src/dispatcher/actions";
+import type * as NodeEvents from "node:events";
+import { vi, describe, it, expect, beforeEach, afterEach, type MockedClass } from "vitest";
 import {
     flushPromises,
     getMockClientWithEventEmitter,
@@ -26,84 +26,90 @@ import {
     setupAsyncStoreWithClient,
     untilDispatch,
     untilEmission,
-} from "~tchap-web/test/test-utils";
-import SettingsStore from "~tchap-web/src/settings/SettingsStore";
-import { SlidingSyncManager } from "~tchap-web/src/SlidingSyncManager";
-import { PosthogAnalytics } from "~tchap-web/src/PosthogAnalytics";
-import { TimelineRenderingType } from "~tchap-web/src/contexts/RoomContext";
-import { MatrixDispatcher } from "~tchap-web/src/dispatcher/dispatcher";
-import { UPDATE_EVENT } from "~tchap-web/src/stores/AsyncStore";
-import { type ActiveRoomChangedPayload } from "~tchap-web/src/dispatcher/payloads/ActiveRoomChangedPayload";
-import SpaceStore from "~tchap-web/src/stores/spaces/SpaceStore";
-import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext";
-import { type ViewRoomPayload } from "~tchap-web/src/dispatcher/payloads/ViewRoomPayload";
-import Modal from "~tchap-web/src/Modal";
-import ErrorDialog from "~tchap-web/src/components/views/dialogs/ErrorDialog";
-import { type CancelAskToJoinPayload } from "~tchap-web/src/dispatcher/payloads/CancelAskToJoinPayload";
-import { type JoinRoomErrorPayload } from "~tchap-web/src/dispatcher/payloads/JoinRoomErrorPayload";
-import { type SubmitAskToJoinPayload } from "~tchap-web/src/dispatcher/payloads/SubmitAskToJoinPayload";
-import { ModuleRunner } from "~tchap-web/src/modules/ModuleRunner";
-import { type IApp } from "~tchap-web/src/utils/WidgetUtils-types";
-import { CallStore } from "~tchap-web/src/stores/CallStore";
-import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
-import MediaDeviceHandler, { MediaDeviceKindEnum } from "~tchap-web/src/MediaDeviceHandler";
-import { storeRoomAliasInCache } from "~tchap-web/src/RoomAliasCache.ts";
-import { type Call, ConnectionState } from "~tchap-web/src/models/Call.ts";
-import ActiveWidgetStore from "~tchap-web/src/stores/ActiveWidgetStore";
-import { ModuleApi } from "~tchap-web/src/modules/Api";
-import { type JoinRoomPayload } from "~tchap-web/src/dispatcher/payloads/JoinRoomPayload.ts";
-import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
-import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
-import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
-import { waitFor } from "@testing-library/dom";
-import { _t } from "@element-hq/web-shared-components";
+    TestSDKContext,
+} from "test-utils";
 
-jest.mock("~tchap-web/src/Modal");
+import { waitFor } from "test-utils-rtl";
+
+import { RoomViewStore } from "./RoomViewStore";
+import { Action } from "../dispatcher/actions";
+import SettingsStore from "../settings/SettingsStore";
+import { SlidingSyncManager } from "../SlidingSyncManager";
+import { PosthogAnalytics } from "../PosthogAnalytics";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import { MatrixDispatcher } from "../dispatcher/dispatcher";
+import { UPDATE_EVENT } from "./AsyncStore";
+import { type ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
+import SpaceStore from "./spaces/SpaceStore";
+import { type ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
+import Modal from "../Modal";
+import ErrorDialog from "../components/views/dialogs/ErrorDialog";
+import { type CancelAskToJoinPayload } from "../dispatcher/payloads/CancelAskToJoinPayload";
+import { type JoinRoomErrorPayload } from "../dispatcher/payloads/JoinRoomErrorPayload";
+import { type SubmitAskToJoinPayload } from "../dispatcher/payloads/SubmitAskToJoinPayload";
+import { ModuleRunner } from "../modules/ModuleRunner";
+import { type IApp } from "../utils/WidgetUtils-types";
+import { CallStore } from "./CallStore";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import MediaDeviceHandler, { MediaDeviceKindEnum } from "../MediaDeviceHandler";
+import { storeRoomAliasInCache } from "../RoomAliasCache.ts";
+import { type Call, ConnectionState } from "../models/Call.ts";
+import ActiveWidgetStore from "./ActiveWidgetStore";
+import { ModuleApi } from "../modules/Api";
+import { type JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload.ts";
+import ExternalAccountHandler from "../tchap/ext/ExternalAccountHandler.ts";
+import TchapRoomUtils from "../tchap/util/TchapRoomUtils.ts";
+import { TchapRoomType } from "../tchap/@types/tchap.ts";
+import { _t } from "../languageHandler.ts";
+
+vi.mock("../Modal");
 
 // mock out the injected classes
-jest.mock("~tchap-web/src/PosthogAnalytics");
-const MockPosthogAnalytics = <jest.Mock<PosthogAnalytics>>(<unknown>PosthogAnalytics);
-jest.mock("~tchap-web/src/SlidingSyncManager");
-const MockSlidingSyncManager = <jest.Mock<SlidingSyncManager>>(<unknown>SlidingSyncManager);
-jest.mock("~tchap-web/src/stores/spaces/SpaceStore");
-const MockSpaceStore = <jest.Mock<SpaceStore>>(<unknown>SpaceStore);
+vi.mock("../PosthogAnalytics");
+const MockPosthogAnalytics = PosthogAnalytics as unknown as MockedClass<typeof PosthogAnalytics>;
+vi.mock("../SlidingSyncManager");
+const MockSlidingSyncManager = SlidingSyncManager as unknown as MockedClass<typeof SlidingSyncManager>;
+vi.mock("./spaces/SpaceStore");
+const MockSpaceStore = SpaceStore as unknown as MockedClass<typeof SpaceStore>;
 
 // mock VoiceRecording because it contains all the audio APIs
-jest.mock("~tchap-web/src/audio/VoiceRecording", () => ({
-    VoiceRecording: jest.fn().mockReturnValue({
-        disableMaxLength: jest.fn(),
+vi.mock("../audio/VoiceRecording", () => ({
+    VoiceRecording: vi.fn().mockReturnValue({
+        disableMaxLength: vi.fn(),
         liveData: {
-            onUpdate: jest.fn(),
+            onUpdate: vi.fn(),
         },
-        off: jest.fn(),
-        on: jest.fn(),
-        start: jest.fn(),
-        stop: jest.fn(),
-        destroy: jest.fn(),
+        off: vi.fn(),
+        on: vi.fn(),
+        start: vi.fn(),
+        stop: vi.fn(),
+        destroy: vi.fn(),
         contentType: "audio/ogg",
     }),
 }));
 
-jest.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
+vi.spyOn(MediaDeviceHandler, "getDevices").mockResolvedValue({
     [MediaDeviceKindEnum.AudioInput]: [],
     [MediaDeviceKindEnum.VideoInput]: [],
     [MediaDeviceKindEnum.AudioOutput]: [],
 });
 
-jest.mock("~tchap-web/test/../src/utils/DMRoomMap", () => {
+vi.mock("../utils/DMRoomMap", () => {
     const mock = {
-        getUserIdForRoomId: jest.fn(),
-        getDMRoomsForUserId: jest.fn(),
+        getUserIdForRoomId: vi.fn(),
+        getDMRoomsForUserId: vi.fn(),
     };
 
     return {
-        shared: jest.fn().mockReturnValue(mock),
-        sharedInstance: mock,
+        default: {
+            shared: vi.fn().mockReturnValue(mock),
+            sharedInstance: mock,
+        },
     };
 });
 
-jest.mock("~tchap-web/test/../src/stores/WidgetStore", () => {
-    const EventEmitter = jest.requireActual("events");
+vi.mock("./WidgetStore", async () => {
+    const { EventEmitter } = await vi.importActual<typeof NodeEvents>("node:events");
     const apps: IApp[] = [];
     const instance = new (class extends EventEmitter {
         getApps() {
@@ -113,9 +119,9 @@ jest.mock("~tchap-web/test/../src/stores/WidgetStore", () => {
             apps.push(app);
         }
     })();
-    return { instance };
+    return { default: { instance } };
 });
-jest.mock("~tchap-web/test/../src/stores/widgets/WidgetLayoutStore");
+vi.mock("./widgets/WidgetLayoutStore");
 
 describe("RoomViewStore", function () {
     const userId = "@alice:server";
@@ -124,27 +130,31 @@ describe("RoomViewStore", function () {
     // we need to change the alias to ensure cache misses as the cache exists
     // through all tests.
     let alias = "#somealias2:aser.ver";
-    const getRooms = jest.fn();
+    const getRooms = vi.fn();
     const mockClient = getMockClientWithEventEmitter({
-        joinRoom: jest.fn(),
-        getRoom: jest.fn(),
-        getRoomIdForAlias: jest.fn(),
+        joinRoom: vi.fn(),
+        getRoom: vi.fn(),
+        getRoomIdForAlias: vi.fn(),
         getRooms,
-        isGuest: jest.fn(),
-        getUserId: jest.fn().mockReturnValue(userId),
-        getSafeUserId: jest.fn().mockReturnValue(userId),
-        getDeviceId: jest.fn().mockReturnValue("ABC123"),
-        getDomain: jest.fn().mockReturnValue("server"),
-        sendStateEvent: jest.fn().mockResolvedValue({}),
-        supportsThreads: jest.fn(),
-        isInitialSyncComplete: jest.fn().mockResolvedValue(false),
-        relations: jest.fn(),
-        knockRoom: jest.fn(),
-        leave: jest.fn(),
-        setRoomAccountData: jest.fn(),
-        getAccountData: jest.fn(),
-        waitForClientWellKnown: jest.fn().mockResolvedValue(undefined),
-        getClientWellKnown: jest.fn().mockReturnValue({}),
+        isGuest: vi.fn(),
+        getUserId: vi.fn().mockReturnValue(userId),
+        getSafeUserId: vi.fn().mockReturnValue(userId),
+        getDeviceId: vi.fn().mockReturnValue("ABC123"),
+        getDomain: vi.fn().mockReturnValue("server"),
+        sendStateEvent: vi.fn().mockResolvedValue({}),
+        supportsThreads: vi.fn(),
+        isInitialSyncComplete: vi.fn().mockResolvedValue(false),
+        relations: vi.fn(),
+        knockRoom: vi.fn(),
+        leave: vi.fn(),
+        setRoomAccountData: vi.fn(),
+        getAccountData: vi.fn(),
+        waitForClientWellKnown: vi.fn().mockResolvedValue(undefined),
+        getClientWellKnown: vi.fn().mockReturnValue({}),
+        cachedRtcTransports: {
+            get: vi.fn().mockReturnValue([]),
+            wait: vi.fn().mockResolvedValue([]),
+        },
         matrixRTC: new (class extends EventEmitter {
             getRoomSession() {
                 return new (class extends EventEmitter {
@@ -183,7 +193,7 @@ describe("RoomViewStore", function () {
     let stores: TestSDKContext;
 
     beforeEach(function () {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         mockClient.credentials = { userId: userId };
         mockClient.joinRoom.mockResolvedValue(room);
         mockClient.getRoom.mockImplementation((roomId?: string): Room | null => {
@@ -200,10 +210,14 @@ describe("RoomViewStore", function () {
         stores = new TestSDKContext();
         stores._client = mockClient;
         stores._SlidingSyncManager = slidingSyncManager;
-        stores._PosthogAnalytics = new MockPosthogAnalytics();
-        // @ts-expect-error
-        MockPosthogAnalytics.instance = stores._PosthogAnalytics;
-        stores._SpaceStore = new MockSpaceStore();
+        stores._PosthogAnalytics = new MockPosthogAnalytics(
+            undefined as unknown as ConstructorParameters<typeof PosthogAnalytics>[0],
+        );
+        vi.spyOn(MockPosthogAnalytics, "instance", "get").mockReturnValue(stores._PosthogAnalytics);
+        stores._SpaceStore = new MockSpaceStore(
+            undefined as unknown as ConstructorParameters<typeof SpaceStore>[0],
+            undefined as unknown as ConstructorParameters<typeof SpaceStore>[1],
+        );
         // Add activeSpace property to the mock
         Object.defineProperty(stores._SpaceStore, "activeSpace", {
             value: null,
@@ -212,8 +226,8 @@ describe("RoomViewStore", function () {
         });
         roomViewStore = new RoomViewStore(dis, stores);
         stores._RoomViewStore = roomViewStore;
-         jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
-         jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
+        vi.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
+        vi.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
     });
 
     it("can be used to view a room by ID and join", async () => {
@@ -260,7 +274,7 @@ describe("RoomViewStore", function () {
     });
 
     it("invokes room activity listeners when the viewed room changes", async () => {
-        const callback = jest.fn();
+        const callback = vi.fn();
         roomViewStore.addRoomListener(roomId, callback);
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         (await untilDispatch(Action.ActiveRoomChanged, dis)) as ActiveRoomChangedPayload;
@@ -364,7 +378,7 @@ describe("RoomViewStore", function () {
 
     it("does not change room when replying to event in a room displayed in module", async () => {
         // Spy on dispatch to check later if ViewRoom was dispatched
-        jest.spyOn(dis, "dispatch");
+        vi.spyOn(dis, "dispatch");
 
         // Set up current room
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
@@ -405,7 +419,7 @@ describe("RoomViewStore", function () {
 
     it("when viewing a call without a broadcast, it should not raise an error", async () => {
         const call = { presented: false } as Call;
-        const getCallSpy = jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        const getCallSpy = vi.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
         await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
 
         dis.dispatch<ViewRoomPayload>({
@@ -422,8 +436,8 @@ describe("RoomViewStore", function () {
 
     it("implicitly views an active call", async () => {
         const call = { presented: false } as Call;
-        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
-        jest.spyOn(CallStore.instance, "getActiveCall").mockImplementation((rId) => (rId === roomId ? call : null));
+        vi.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        vi.spyOn(CallStore.instance, "getActiveCall").mockImplementation((rId) => (rId === roomId ? call : null));
         await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
 
         // View the room without explicitly setting view_call to true
@@ -442,10 +456,10 @@ describe("RoomViewStore", function () {
             presented: false,
             connectionState: ConnectionState.Disconnected,
             widget: { id: "!widget:example.org" },
-            start: jest.fn(),
+            start: vi.fn(),
         } as unknown as Call;
-        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
-        const persistenceSpy = jest.spyOn(ActiveWidgetStore.instance, "setWidgetPersistence");
+        vi.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        const persistenceSpy = vi.spyOn(ActiveWidgetStore.instance, "setWidgetPersistence");
         await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
 
         dis.dispatch<ViewRoomPayload>({
@@ -470,10 +484,10 @@ describe("RoomViewStore", function () {
             presented: false,
             connectionState: ConnectionState.Disconnected,
             widget: { id: "!widget:example.org" },
-            start: jest.fn(),
+            start: vi.fn(),
         } as unknown as Call;
-        jest.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
-        const persistenceSpy = jest.spyOn(ActiveWidgetStore.instance, "setWidgetPersistence");
+        vi.spyOn(CallStore.instance, "getCall").mockReturnValue(call);
+        const persistenceSpy = vi.spyOn(ActiveWidgetStore.instance, "setWidgetPersistence");
         await setupAsyncStoreWithClient(CallStore.instance, MatrixClientPeg.safeGet());
 
         dis.dispatch<ViewRoomPayload>({
@@ -492,7 +506,7 @@ describe("RoomViewStore", function () {
     });
 
     it("should display an error message when the room is unreachable via the roomId", async () => {
-          jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+        vi.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
         // View and wait for the room
         dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
         await untilDispatch(Action.ActiveRoomChanged, dis);
@@ -501,13 +515,13 @@ describe("RoomViewStore", function () {
         roomViewStore.showJoinRoomError(error, roomId);
 
         // Check the modal props
-        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+        expect(vi.mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
     });
     // The server bob is on will affect the message we send.
     it.each(["server", "another-server"])(
         "should display an invite-specific error message when the room is unreachable",
         async (bobsServer) => {
-            jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+            vi.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
             room.getMyMembership.mockReturnValue(KnownMembership.Invite);
             room.getMember.mockImplementationOnce((memberUserId) => {
                 if (userId === memberUserId) {
@@ -525,26 +539,25 @@ describe("RoomViewStore", function () {
             roomViewStore.showJoinRoomError(error, roomId);
 
             // Check the modal props
-            expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+            expect(vi.mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
         },
     );
 
     it("should display an error message when the provided room is invalid", async () => {
-        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
         dis.dispatch({ action: Action.JoinRoom, room_id: "" });
         const result = await untilDispatch(Action.JoinRoomError, dis);
         expect(result.err.cause.message).toEqual("Cannot join room: no room ID or alias to join");
     });
 
     it("should display the generic error message when the roomId doesnt match", async () => {
-        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
+        vi.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(false);
         // When
         // Generate error to display the expected error message
         const error = new MatrixError({ error: "my 404 error" }, 404);
         roomViewStore.showJoinRoomError(error, roomId);
 
         // Check the modal props
-        expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+        expect(vi.mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
     });
 
     it("clears the unread flag when viewing a room", async () => {
@@ -560,13 +573,22 @@ describe("RoomViewStore", function () {
 
     describe("Sliding Sync", function () {
         beforeEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, value) => {
+            vi.spyOn(SettingsStore, "getValue").mockImplementation((settingName, roomId, value) => {
                 return settingName === "feature_simplified_sliding_sync"; // this is enabled, everything else is disabled.
             });
         });
 
+        afterEach(() => {
+            // Restore immediately: this mock makes RoomViewStore.viewRoom() take the "simplified sliding sync"
+            // branch, which re-dispatches Action.ViewRoom asynchronously. If left in place after this describe
+            // block, it leaks into later tests (vi.clearAllMocks() clears call history but not implementations)
+            // and can cause a dangling re-dispatch that fires during a later test and crashes on
+            // MatrixClientPeg.safeGet() once that room is no longer set up.
+            vi.mocked(SettingsStore.getValue).mockRestore();
+        });
+
         it("subscribes to the room", async () => {
-            const setRoomVisible = jest.spyOn(slidingSyncManager, "setRoomVisible").mockReturnValue(Promise.resolve());
+            const setRoomVisible = vi.spyOn(slidingSyncManager, "setRoomVisible").mockReturnValue(Promise.resolve());
             const subscribedRoomId = "!sub1:localhost";
             dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId });
             await untilDispatch(Action.ActiveRoomChanged, dis);
@@ -578,7 +600,7 @@ describe("RoomViewStore", function () {
         // although that was before the complexity was removed with similified mode. I've removed the complexity but kept the
         // test anyway.
         it("doesn't get stuck in a loop if you view rooms quickly", async () => {
-            const setRoomVisible = jest.spyOn(slidingSyncManager, "setRoomVisible").mockReturnValue(Promise.resolve());
+            const setRoomVisible = vi.spyOn(slidingSyncManager, "setRoomVisible").mockReturnValue(Promise.resolve());
             const subscribedRoomId = "!sub1:localhost";
             const subscribedRoomId2 = "!sub2:localhost";
             dis.dispatch({ action: Action.ViewRoom, room_id: subscribedRoomId }, true);
@@ -601,8 +623,8 @@ describe("RoomViewStore", function () {
         it("dispatches Action.JoinRoomError and Action.AskToJoin when the join fails with 403", async () => {
             const err = new MatrixError({}, 403);
 
-            jest.spyOn(dis, "dispatch");
-            jest.spyOn(mockClient, "joinRoom").mockRejectedValueOnce(err);
+            vi.spyOn(dis, "dispatch");
+            vi.spyOn(mockClient, "joinRoom").mockRejectedValueOnce(err);
 
             const roomId = "!hello:world";
 
@@ -614,19 +636,19 @@ describe("RoomViewStore", function () {
             });
             await untilDispatch(Action.PromptAskToJoin, dis);
 
-            expect(mocked(dis.dispatch).mock.calls[0][0]).toEqual({
+            expect(vi.mocked(dis.dispatch).mock.calls[0][0]).toEqual({
                 action: Action.JoinRoom,
                 canAskToJoin: true,
                 metricsTrigger: "RoomPreview",
                 roomId,
             });
-            expect(mocked(dis.dispatch).mock.calls[1][0]).toEqual({
+            expect(vi.mocked(dis.dispatch).mock.calls[1][0]).toEqual({
                 action: Action.JoinRoomError,
                 roomId,
                 err,
                 canAskToJoin: true,
             });
-            expect(mocked(dis.dispatch).mock.calls[2][0]).toEqual({ action: Action.PromptAskToJoin });
+            expect(vi.mocked(dis.dispatch).mock.calls[2][0]).toEqual({ action: Action.PromptAskToJoin });
         });
 
         it("sets 'acceptSharedHistory'", async () => {
@@ -639,7 +661,7 @@ describe("RoomViewStore", function () {
 
     describe("Action.JoinRoomError", () => {
         const err = new MatrixError();
-        beforeEach(() => jest.spyOn(roomViewStore, "showJoinRoomError"));
+        beforeEach(() => vi.spyOn(roomViewStore, "showJoinRoomError"));
 
         it("calls showJoinRoomError()", async () => {
             dis.dispatch<JoinRoomErrorPayload>({ action: Action.JoinRoomError, roomId, err });
@@ -670,7 +692,7 @@ describe("RoomViewStore", function () {
         beforeEach(async () => await dispatchPromptAskToJoin());
 
         it("calls knockRoom() and sets promptAskToJoin state to false", async () => {
-            jest.spyOn(mockClient, "knockRoom").mockResolvedValue({ room_id: roomId });
+            vi.spyOn(mockClient, "knockRoom").mockResolvedValue({ room_id: roomId });
             await dispatchSubmitAskToJoin(roomId, reason);
 
             expect(mockClient.knockRoom).toHaveBeenCalledWith(roomId, { reason, viaServers: [] });
@@ -679,7 +701,7 @@ describe("RoomViewStore", function () {
 
         it("calls knockRoom(), sets promptAskToJoin state to false and shows an error dialog", async () => {
             const error = new MatrixError(undefined, 403);
-            jest.spyOn(mockClient, "knockRoom").mockRejectedValue(error);
+            vi.spyOn(mockClient, "knockRoom").mockRejectedValue(error);
             await dispatchSubmitAskToJoin(roomId, reason);
 
             expect(mockClient.knockRoom).toHaveBeenCalledWith(roomId, { reason, viaServers: [] });
@@ -692,7 +714,7 @@ describe("RoomViewStore", function () {
 
         it("shows an error dialog with a generic error message", async () => {
             const error = new MatrixError();
-            jest.spyOn(mockClient, "knockRoom").mockRejectedValue(error);
+            vi.spyOn(mockClient, "knockRoom").mockRejectedValue(error);
             await dispatchSubmitAskToJoin(roomId);
 
             expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
@@ -704,12 +726,12 @@ describe("RoomViewStore", function () {
 
     describe("Action.CancelAskToJoin", () => {
         beforeEach(async () => {
-            jest.spyOn(mockClient, "knockRoom").mockResolvedValue({ room_id: roomId });
+            vi.spyOn(mockClient, "knockRoom").mockResolvedValue({ room_id: roomId });
             await dispatchSubmitAskToJoin(roomId);
         });
 
         it("calls leave()", async () => {
-            jest.spyOn(mockClient, "leave").mockResolvedValue({});
+            vi.spyOn(mockClient, "leave").mockResolvedValue({});
             await dispatchCancelAskToJoin(roomId);
 
             expect(mockClient.leave).toHaveBeenCalledWith(roomId);
@@ -717,7 +739,7 @@ describe("RoomViewStore", function () {
 
         it("calls leave() and shows an error dialog", async () => {
             const error = new MatrixError();
-            jest.spyOn(mockClient, "leave").mockRejectedValue(error);
+            vi.spyOn(mockClient, "leave").mockRejectedValue(error);
             await dispatchCancelAskToJoin(roomId);
 
             expect(mockClient.leave).toHaveBeenCalledWith(roomId);
@@ -744,7 +766,7 @@ describe("RoomViewStore", function () {
                     onClick: () => {},
                 },
             ];
-            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts) => {
+            vi.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts) => {
                 if (lifecycleEvent === RoomViewLifecycle.ViewRoom) {
                     opts.buttons = buttons;
                 }
@@ -754,48 +776,48 @@ describe("RoomViewStore", function () {
         });
     });
 
-    describe("Tchap custo", () => {
+     describe("Tchap custo", () => {
         it("should display specific error message when the room is a forum", async () => {
-        jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
-
-        // View and wait for the room
-        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
-        await untilDispatch(Action.ActiveRoomChanged, dis);
-        // Generate error to display the expected error message
-        const error = new MatrixError(undefined, 404);
-        roomViewStore.showJoinRoomError(error, roomId);
-
-        expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
-
-        expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
-
-        waitFor(() => {
-            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
-                title: _t("room|error_join_title"),
-                description: _t("room|room|error_join_public_external"),
+            vi.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Forum));
+    
+            // View and wait for the room
+            dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+            await untilDispatch(Action.ActiveRoomChanged, dis);
+            // Generate error to display the expected error message
+            const error = new MatrixError(undefined, 404);
+            roomViewStore.showJoinRoomError(error, roomId);
+    
+            expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
+    
+            expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
+    
+            waitFor(() => {
+                expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                    title: _t("room|error_join_title"),
+                    description: _t("room|error_join_public_external"),
+                });
             });
         });
-    });
-
-    it("should display specific error message when the room is a private", async () => {
-        jest.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Private));
-        // View and wait for the room
-        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
-        await untilDispatch(Action.ActiveRoomChanged, dis);
-        // Generate error to display the expected error message
-        const error = new MatrixError(undefined, 404);
-        roomViewStore.showJoinRoomError(error, roomId);
-
-        expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
-
-        expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
-
-        waitFor(() => {
-            expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
-                title: _t("room|error_join_title"),
-                description: _t("room|error_join_private_external"),
+    
+        it("should display specific error message when the room is a private", async () => {
+            vi.spyOn(TchapRoomUtils, "getTchapRoomType").mockReturnValue(Promise.resolve(TchapRoomType.Private));
+            // View and wait for the room
+            dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+            await untilDispatch(Action.ActiveRoomChanged, dis);
+            // Generate error to display the expected error message
+            const error = new MatrixError(undefined, 404);
+            roomViewStore.showJoinRoomError(error, roomId);
+    
+            expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
+    
+            expect(ExternalAccountHandler.isUserExternal).toHaveBeenCalledTimes(1);
+    
+            waitFor(() => {
+                expect(Modal.createDialog).toHaveBeenCalledWith(ErrorDialog, {
+                    title: _t("room|error_join_title"),
+                    description: _t("room|error_join_private_external"),
+                });
             });
         });
-    });
     })
 });

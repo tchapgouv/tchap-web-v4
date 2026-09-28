@@ -260,7 +260,7 @@ describe("<Notifications />", () => {
 
         const tacNotifParentElement = screen.queryByTestId("tac-notification-parent");
 
-        expect(tacNotifParentElement?.children.length).toBe(2);
+        expect(tacNotifParentElement?.children.length).toBe(3);
     });
 
     it("display hides the tac notification switch when feature is deactivated", async () => {
@@ -270,6 +270,6 @@ describe("<Notifications />", () => {
 
         const tacNotifParentElement = screen.queryByTestId("tac-notification-parent");
 
-        expect(tacNotifParentElement?.children.length).toBe(1);
+        expect(tacNotifParentElement?.children.length).toBe(2);
     });
 });

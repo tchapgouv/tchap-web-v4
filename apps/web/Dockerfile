@@ -20,7 +20,6 @@ WORKDIR /src
 # Install dependencies
 COPY --parents package.json pnpm-lock.yaml pnpm-workspace.yaml patches scripts **/package.json /src/
 #:tchap: copy tchap things
-COPY --parents patches_tchap /src/
 COPY --parents apps/web/modules /src/
 #:tchap:end
 RUN corepack enable
