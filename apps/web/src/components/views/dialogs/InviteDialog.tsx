@@ -500,10 +500,10 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                     inhibitProgressDialog: true,
                 });
                 const states = await inviter.invite(targetIds);
-                if (!this.shouldAbortAfterInviteError(states, inviter, room)) {
-                    // handles setting error message too
-                    this.props.onFinished(true);
-                }
+                this.setState({ busy: false });
+                const userMap = new Map<string, Member>(this.state.targets.map((member) => [member.userId, member]));
+                this.props.onFinished(true);
+                showAnyInviteErrors(states, room, inviter, userMap);
             } catch (err) {
                 logger.error(err);
                 // an error occured, we need to go back to original state
