@@ -272,7 +272,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
             return (
                 <IconizedContextMenuOption
                     onClick={wrapHandler(() => {
-                        clearRoomNotification(room, cli);
+                        void clearRoomNotification(room, cli);
                         onFinished?.();
                     }, onPostMarkAsReadClick)}
                     label={_t("room|context_menu|mark_read")}
@@ -283,7 +283,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
             return (
                 <IconizedContextMenuOption
                     onClick={wrapHandler(() => {
-                        setMarkedUnreadState(room, cli, true);
+                        void setMarkedUnreadState(room, cli, true);
                         onFinished?.();
                     }, onPostMarkAsUnreadClick)}
                     label={_t("room|context_menu|mark_unread")}

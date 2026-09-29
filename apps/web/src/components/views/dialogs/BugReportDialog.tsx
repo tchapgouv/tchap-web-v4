@@ -209,7 +209,7 @@ export default class BugReportDialog extends React.Component<BugReportDialogProp
             },
         );
 
-        sendSentryReport(this.state.text, this.state.issueUrl, this.props.error);
+        void sendSentryReport(this.state.text, this.state.issueUrl, this.props.error);
     };
 
     private onDownload = async (): Promise<void> => {

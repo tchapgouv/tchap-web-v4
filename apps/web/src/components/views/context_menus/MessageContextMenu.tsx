@@ -227,7 +227,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onResendReactionsClick = (): void => {
         for (const reaction of this.getUnsentReactions()) {
-            Resend.resend(MatrixClientPeg.safeGet(), reaction);
+            void Resend.resend(MatrixClientPeg.safeGet(), reaction);
         }
         this.closeMenu();
     };
@@ -280,7 +280,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
     private onPinClick = (isPinned: boolean): void => {
         // Pin or unpin in background
-        PinningUtils.pinOrUnpinEvent(MatrixClientPeg.safeGet(), this.props.mxEvent);
+        void PinningUtils.pinOrUnpinEvent(MatrixClientPeg.safeGet(), this.props.mxEvent);
         PosthogTrackers.trackPinUnpinMessage(isPinned ? "Pin" : "Unpin", "Timeline");
 
         this.closeMenu();
@@ -307,7 +307,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     private onCopyLinkClick = (e: ButtonEvent): void => {
         e.preventDefault(); // So that we don't open the permalink
         if (!this.props.link) return;
-        copyPlaintext(this.props.link);
+        void copyPlaintext(this.props.link);
         this.closeMenu();
     };
 
@@ -317,7 +317,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onCopyClick = (): void => {
-        copyPlaintext(getSelectedText());
+        void copyPlaintext(getSelectedText());
         this.closeMenu();
     };
 

@@ -29,7 +29,7 @@ const config: Config = {
     setupFiles: ["jest-canvas-mock", "web-streams-polyfill/polyfill"],
     setupFilesAfterEnv: ["<rootDir>/test/setupTests.ts"],
     moduleNameMapper: {
-        // Support CSS module
+         // Support CSS module
         "\\.(module.css)$": "identity-obj-proxy",
         "\\.(css|scss|pcss)(\\?raw)?$": "<rootDir>/__mocks__/cssMock.js",
         "\\.(gif|png|ttf|woff2)$": "<rootDir>/__mocks__/imageMock.js",
@@ -45,21 +45,16 @@ const config: Config = {
         "workers/(.+)Factory": "<rootDir>/__mocks__/workerFactoryMock-jest.js",
         ".*\\?raw": "jest-raw-loader",
         "recorderWorkletFactory": "<rootDir>/__mocks__/empty.js",
-        // :TCHAP:
-        "MAudioBody": "<rootDir>/src/tchap/customisations/components/views/messages/ContentScanningAudioBody.tsx",
-        "<rootDir>/src/tchap/components/views/messages/OriginalAudioBody":
-            "<rootDir>/node_modules/matrix-react-sdk/src/components/views/messages/MAudioBody.tsx",
-        "~tchap-web/(.*)": "<rootDir>/$1",
-        // // we use tchap own compound-web package
-        // "@vector-im/compound-web": "<rootDir>/../../node_modules/compound-web-tchap",
-        // // end :TCHAP:
-        "counterpart": "<rootDir>/../../node_modules/counterpart",
+        "@vector-im/compound-web": "<rootDir>/node_modules/@vector-im/compound-web",
         "^vitest$": "<rootDir>/__mocks__/empty.js",
         "jest-mock-vitest-adapter": "<rootDir>/test/setup/adapter.ts",
         "test-utils-rtl": "<rootDir>/test/test-utils/jest-matrix-react.tsx",
+        // :TCHAP:
+        "~tchap-web/(.*)": "<rootDir>/$1",
+        // end :TCHAP:
     },
     transformIgnorePatterns: [
-        `${path.join(__dirname, "../..")}/node_modules/.pnpm/(?!(matrix-js-sdk|htmlparser2|mime|uuid|p-retry|is-network-error|react-merge-refs|is-ip|ip-regex|super-regex|function-timeout|time-span|convert-hrtime|clone-regexp|is-regexp|matrix-web-i18n|await-lock|@element-hq/web-shared-components|react-virtuoso|lodash|domutils|domhandler|domelementtype|dom-serializer|entities)).+$`,
+        `${path.join(__dirname, "../..")}/node_modules/.pnpm/(?!(matrix-js-sdk|htmlparser2|mime|uuid|p-retry|is-network-error|react-merge-refs|is-ip|ip-regex|super-regex|function-timeout|time-span|convert-hrtime|clone-regexp|is-regexp|matrix-web-i18n|await-lock|@element-hq/web-shared-components|react-virtuoso|lodash|domutils|domhandler|domelementtype|dom-serializer|entities|content-type)).+$`,
     ],
     collectCoverageFrom: [
         "<rootDir>/src/**/*.{js,ts,tsx}",
@@ -70,6 +65,8 @@ const config: Config = {
         "!<rootDir>/src/**/*.d.ts",
         // Ignore vitest tests
         "!<rootDir>/src/**/*.test.{ts,tsx}",
+        // ...including the browser-mode ones, whose name does not end in `.test.ts`
+        "!<rootDir>/src/**/*.test.browser.{ts,tsx}",
         "!<rootDir>/src/test/**",
         // Exclude mocks
         "!<rootDir>/src/**/*-{mock,mocks}.{ts,tsx}",

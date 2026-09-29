@@ -63,7 +63,7 @@ export default class EventIndexPanel extends React.Component<EmptyObject, IState
     }
 
     public componentDidMount(): void {
-        this.updateState();
+        void this.updateState();
     }
 
     public async updateState(): Promise<void> {
@@ -121,7 +121,7 @@ export default class EventIndexPanel extends React.Component<EmptyObject, IState
 
     private confirmEventStoreReset = (): void => {
         const { finished, close } = Modal.createDialog(SeshatResetDialog);
-        finished.then(async ([success]) => {
+        void finished.then(async ([success]) => {
             if (success) {
                 await SettingsStore.setValue("enableEventIndexing", null, SettingLevel.DEVICE, false);
                 await EventIndexPeg.deleteEventIndex();

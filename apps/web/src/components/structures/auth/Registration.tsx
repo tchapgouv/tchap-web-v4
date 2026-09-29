@@ -169,7 +169,7 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        this.replaceClient(this.props.serverConfig);
+        void this.replaceClient(this.props.serverConfig);
         //triggers a confirmation dialog for data loss before page unloads/refreshes
         window.addEventListener("beforeunload", this.unloadCallback);
     }
@@ -192,7 +192,7 @@ export default class Registration extends React.Component<IProps, IState> {
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
         ) {
-            this.replaceClient(this.props.serverConfig);
+            void this.replaceClient(this.props.serverConfig);
         }
     }
 
@@ -324,7 +324,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     clearTimeout(this.rateLimitTimer);
                     this.rateLimitTimer = setTimeout(() => {
                         this.rateLimitTimer = undefined;
-                        this.replaceClient(this.props.serverConfig);
+                        void this.replaceClient(this.props.serverConfig);
                     }, retryAfterMs);
                 }
             } else {
@@ -483,7 +483,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     accessToken,
                 });
 
-                this.setupPushers();
+                void this.setupPushers();
             }
         } else {
             newState.busy = false;
@@ -531,7 +531,7 @@ export default class Registration extends React.Component<IProps, IState> {
     private onGoToFormClicked = (ev: ButtonEvent): void => {
         ev.preventDefault();
         ev.stopPropagation();
-        this.replaceClient(this.props.serverConfig);
+        void this.replaceClient(this.props.serverConfig);
         this.setState({
             busy: false,
             doingUIAuth: false,

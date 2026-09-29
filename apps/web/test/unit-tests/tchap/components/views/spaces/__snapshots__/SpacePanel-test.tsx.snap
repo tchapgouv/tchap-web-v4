@@ -692,7 +692,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
                 class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
                 data-color="1"
                 data-testid="avatar-img"
-                data-type="round"
+                data-type="square"
                 role="presentation"
                 style="--cpd-avatar-size: 32px;"
               >
@@ -749,7 +749,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
                 class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
                 data-color="2"
                 data-testid="avatar-img"
-                data-type="round"
+                data-type="square"
                 role="presentation"
                 style="--cpd-avatar-size: 32px;"
               >
@@ -806,7 +806,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
                 class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
                 data-color="3"
                 data-testid="avatar-img"
-                data-type="round"
+                data-type="square"
                 role="presentation"
                 style="--cpd-avatar-size: 32px;"
               >

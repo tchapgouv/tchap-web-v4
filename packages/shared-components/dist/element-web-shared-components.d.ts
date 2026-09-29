@@ -1,3 +1,4 @@
+import { AriaRole } from 'react';
 import { ChangeEventHandler } from 'react';
 import { ComponentProps } from 'react';
 import { ComponentPropsWithoutRef } from 'react';
@@ -51,11 +52,15 @@ import { Tags as Tags_2 } from '@element-hq/element-web-module-api';
 import { Text as Text_2 } from '@vector-im/compound-web';
 import { TransitionEventHandler } from 'react';
 import { Translations } from '@element-hq/element-web-module-api';
+import { UrlPreview } from 'shared-types';
 import { Variables } from '@element-hq/element-web-module-api';
 import { VirtuosoHandle } from 'react-virtuoso';
 import { VirtuosoMockContext } from 'react-virtuoso';
 import { VirtuosoProps } from 'react-virtuoso';
 import { WheelEvent as WheelEvent_2 } from 'react';
+
+/** The kind of room a section takes when a room is dropped on it. */
+export declare type AcceptedRoomKind = "any" | "dm" | "nonDm" | "none";
 
 /**
  * Resolved actions that `ActionBarView` can render.
@@ -437,7 +442,7 @@ export declare function clamp(i: number, min: number, max: number): number;
  * <Clock seconds={125} />
  * ```
  */
-export declare function Clock({ seconds, className, minutesMaxLength, hoursMaxLength, ...rest }: Props): JSX.Element;
+export declare function Clock({ seconds, className, minutesMinLength, hoursMinLength, ...rest }: Props): JSX.Element;
 
 /**
  * The available options for collapsing sections in the room list.
@@ -488,6 +493,94 @@ export declare interface CommonOngoingCallTileViewSnapshot {
      * Whether this call has participants other than who started the call.
      */
     callHasOtherParticipants: boolean;
+}
+
+/**
+ * Why an attempt to add a custom theme failed.
+ *
+ * The view model reports the failure as one of these values rather than as a
+ * message, so that the view stays the only layer that knows about translations.
+ */
+export declare const CustomThemeError: {
+    /** The downloaded document was not a valid theme (missing or invalid `name` / `colors`). */
+    readonly InvalidSchema: "InvalidSchema";
+    /** The URL could not be fetched, or the response was not JSON. */
+    readonly DownloadFailed: "DownloadFailed";
+    /** A theme with the same name is already installed. */
+    readonly AlreadyInstalled: "AlreadyInstalled";
+    /** A write to the settings store did not complete (or wasn't confirmed) in time. */
+    readonly SaveFailed: "SaveFailed";
+};
+
+export declare type CustomThemeError = (typeof CustomThemeError)[keyof typeof CustomThemeError];
+
+export declare interface CustomThemeInfo {
+    /**
+     * The theme's name, as declared in its definition.
+     */
+    name: string;
+    /**
+     * Whether this theme records the URL it came from, and so can be re-downloaded. False for
+     * themes that were added before we started recording that URL.
+     */
+    canRefresh: boolean;
+    /**
+     * Whether this theme is currently being re-downloaded.
+     */
+    isRefreshing: boolean;
+    /**
+     * Why the last attempt to refresh this theme failed, or `null` if there is nothing to report.
+     */
+    error: CustomThemeError | null;
+}
+
+/**
+ * Developer tool for installing custom themes from a URL, and removing installed ones.
+ */
+export declare function CustomThemesView({ vm }: CustomThemesViewProps): JSX.Element;
+
+export declare interface CustomThemesViewActions {
+    /**
+     * Called when the user edits the URL field. Also clears any error being shown.
+     */
+    setUrl: (url: string) => void;
+    /**
+     * Called when the user submits the form. Downloads and installs the theme at the current URL.
+     */
+    addTheme: () => Promise<void>;
+    /**
+     * Called when the user deletes an installed theme.
+     */
+    removeTheme: (name: string) => Promise<void>;
+    /**
+     * Called when the user re-downloads an installed theme from the URL it came from.
+     */
+    refreshTheme: (name: string) => Promise<void>;
+}
+
+export declare type CustomThemesViewModel = ViewModel<CustomThemesViewSnapshot, CustomThemesViewActions>;
+
+export declare interface CustomThemesViewProps {
+    vm: CustomThemesViewModel;
+}
+
+export declare interface CustomThemesViewSnapshot {
+    /**
+     * The currently installed custom themes.
+     */
+    themes: readonly CustomThemeInfo[];
+    /**
+     * The URL currently entered into the "add theme" field.
+     */
+    url: string;
+    /**
+     * Whether a theme is currently being downloaded.
+     */
+    isDownloading: boolean;
+    /**
+     * Why the last attempt to add a theme failed, or `null` if there is nothing to report.
+     */
+    error: CustomThemeError | null;
 }
 
 declare interface DateSeparatorTimelineItem {
@@ -1049,7 +1142,7 @@ export declare interface EventContentBodyViewSnapshot {
     /**
      * CSS class names to apply to the container element.
      */
-    className: string;
+    className?: string;
     /**
      * The text direction attribute.
      * Always "auto" for divs, controlled by includeDir prop for spans.
@@ -1141,7 +1234,7 @@ export declare interface EventTileBubbleProps {
 }
 
 /** Timeline rendering modes supported by the EventTile shell. */
-export declare type EventTileRenderingMode = "Room" | "Thread" | "ThreadsList" | "File" | "Notification" | "Search" | "Pinned";
+export declare type EventTileRenderingMode = "Room" | "Card" | "Thread" | "ThreadsList" | "File" | "Notification" | "Search" | "Pinned";
 
 /**
  * Renders the common EventTile root and event-line structure.
@@ -1150,7 +1243,7 @@ export declare type EventTileRenderingMode = "Room" | "Thread" | "ThreadsList" |
  * application supplies render-ready content; this component owns the shared
  * structure, slot boundaries, placement classes, and root behavior.
  */
-export declare function EventTileView({ root, slots, classNames: classNameOverrides, refs, onMouseEnter, onMouseLeave, onFocus, onBlur, onClick, onContextMenu, onPermalinkClick, onPermalinkContextMenu, }: Readonly<EventTileViewProps>): JSX.Element;
+export declare function EventTileView({ root, line: lineState, slots, classNames: classNameOverrides, refs, onMouseEnter, onMouseLeave, onFocus, onBlur, onClick, onContextMenu, onPermalinkClick, onPermalinkContextMenu, }: Readonly<EventTileViewProps>): JSX.Element;
 
 /** Optional application CSS class overrides for shell-owned structural elements and slot boundaries. */
 export declare interface EventTileViewClassNames {
@@ -1194,10 +1287,24 @@ export declare interface EventTileViewHandlers {
     onPermalinkContextMenu?: default_2.MouseEventHandler<HTMLElement>;
 }
 
+/** Semantic state consumed by EventTileView for the event line. */
+export declare interface EventTileViewLine {
+    /** Whether the event body is likely to render media content. */
+    media?: boolean;
+    /** Whether the event is a sticker. */
+    sticker?: boolean;
+    /** Whether the event body is an emote. */
+    emote?: boolean;
+    /** Whether the event body is an image. */
+    image?: boolean;
+}
+
 /** Props for the shared EventTile shell. */
 export declare interface EventTileViewProps extends EventTileViewHandlers {
     /** Pure root render state. */
     root: EventTileViewRoot;
+    /** Optional semantic state for the event line. */
+    line?: EventTileViewLine;
     /** Optional application CSS class overrides for shell-owned elements. */
     classNames?: EventTileViewClassNames;
     /** Render-ready children supplied by the application layer. Each slot is rendered inside a named shell boundary. */
@@ -1226,8 +1333,6 @@ export declare interface EventTileViewRoot {
     permalink?: string;
     /** Optional event identifier exposed through `data-event-id`. */
     eventId?: string;
-    /** Configured tile layout. */
-    layout: EventLayout;
     /** Timeline rendering mode. */
     shape: EventTileRenderingMode;
     /** Conditional state classes and styling state. */
@@ -1240,6 +1345,22 @@ export declare interface EventTileViewRootState {
     isOwnEvent: boolean;
     /** Whether EventTile renders a reply chain. */
     hasReply: boolean;
+    /** Whether the event is an informational timeline item. */
+    info?: boolean;
+    /** Whether the event uses the bubble container shell. */
+    bubbleContainer?: boolean;
+    /** Whether the bubble is aligned to the left. */
+    leftAlignedBubble?: boolean;
+    /** Whether the event is aligned between bubble columns. */
+    alignedBetweenBubbles?: boolean;
+    /** Whether bubble styling is suppressed for this event. */
+    noBubble?: boolean;
+    /** Whether sender details are hidden. */
+    noSender?: boolean;
+    /** Whether the event failed decryption. */
+    encryptionFailure?: boolean;
+    /** Whether the event body is an emote. */
+    emote?: boolean;
     /** Whether the event is highlighted by search or navigation. */
     highlighted?: boolean;
     /** Whether the event is selected. */
@@ -1250,6 +1371,12 @@ export declare interface EventTileViewRootState {
     continuation?: boolean;
     /** Whether this is the last event in a section. */
     lastInSection?: boolean;
+    /** Whether the tile is a contextual search result. */
+    contextual?: boolean;
+    /** Whether the action bar currently has focus. */
+    actionBarFocused?: boolean;
+    /** Whether the body should be clamped to a preview. */
+    previewClamped?: boolean;
 }
 
 /** Render-ready children supplied by the application integration layer. */
@@ -1599,8 +1726,8 @@ export declare function formatDateForInput(date: Date): string;
  * @param inSeconds
  */
 export declare function formatSeconds(inSeconds: number, opts?: {
-    hoursMaxLength?: number;
-    minutesMaxLength?: number;
+    hoursMinLength?: number;
+    minutesMinLength?: number;
 }): string;
 
 export declare const FORWARD_LOADING_KEY = "forward-loading";
@@ -1868,7 +1995,7 @@ export declare class I18nApi implements I18nApi_2 {
     humanizeTime: (timeMillis: number) => string;
 }
 
-export declare const I18nContext: Context<any>;
+export declare const I18nContext: Context<I18nApi_2 | null>;
 
 /**
  * An action dispatched to the roving tabindex reducer for node registration and
@@ -2427,6 +2554,18 @@ export declare interface MessageComposerUrlPreviewProps {
      */
     vm: ViewModel<MessageComposerUrlPreviewSnapshot>;
     /**
+     * Whether the preview is collapsed
+     */
+    collapsed: boolean;
+    /**
+     * Function to call to toggle collapsed state
+     */
+    toggleCollapsed: () => void;
+    /**
+     * Function to call to toggle collapsed state
+     */
+    removePreview?: (url: string) => void;
+    /**
      * Extra CSS classes to apply to the component.
      */
     className?: string;
@@ -2435,15 +2574,46 @@ export declare interface MessageComposerUrlPreviewProps {
 /** Snapshot data for rendering a URL preview attached to the composer. */
 export declare interface MessageComposerUrlPreviewSnapshot {
     /** URL preview to render. */
-    previews: UrlPreview[];
+    entries: MessageComposerUrlPreviewSnapshotEntry[];
     /** Content of the composer when the snapshot is computed */
     content: string;
 }
 
 /**
+ * An entry in the URL preview box
+ */
+export declare type MessageComposerUrlPreviewSnapshotEntry = MessageComposerUrlPreviewSnapshotEntryState & {
+    /**
+     * default: true
+     * set to false when the preview is removed by the user
+     * so the vm remembers to not show the previews list even after another computeSnapshot
+     */
+    include: boolean;
+    /**
+     * the url string that the preview is representing
+     */
+    matched_url: string;
+};
+
+export declare interface MessageComposerUrlPreviewSnapshotEntryFailed {
+    status: "failed";
+}
+
+export declare interface MessageComposerUrlPreviewSnapshotEntryLoaded {
+    status: "loaded";
+    preview: UrlPreview;
+}
+
+export declare interface MessageComposerUrlPreviewSnapshotEntryLoading {
+    status: "loading";
+}
+
+export declare type MessageComposerUrlPreviewSnapshotEntryState = MessageComposerUrlPreviewSnapshotEntryFailed | MessageComposerUrlPreviewSnapshotEntryLoaded | MessageComposerUrlPreviewSnapshotEntryLoading;
+
+/**
  * MessageComposerUrlPreviewView renders a preview of all previewable URLs above the messasge composer.
  */
-export declare function MessageComposerUrlPreviewView({ vm, className }: MessageComposerUrlPreviewProps): JSX.Element | null;
+export declare function MessageComposerUrlPreviewView({ vm, className, collapsed, toggleCollapsed, removePreview, }: MessageComposerUrlPreviewProps): JSX.Element | null;
 
 /**
  * Displays a message timestamp with optional tooltip details.
@@ -2875,16 +3045,16 @@ declare interface Props extends Pick<HTMLProps<HTMLSpanElement>, "aria-live" | "
      * The number of positions to pad the minutes part.
      *
      * @example
-     * If minutesMaxLength = 1, the clock will show 5:31 instead of 05:31.
+     * If minutesMinLength = 1, the clock will show 5:31 instead of 05:31.
      */
-    minutesMaxLength?: number;
+    minutesMinLength?: number;
     /**
      * The number of positions to pad the hour part.
      *
      * @example
-     * If hoursMaxLength = 1, the clock will show 1:05:31 instead of 01:05:31.
+     * If hoursMinLength = 1, the clock will show 1:05:31 instead of 01:05:31.
      */
-    hoursMaxLength?: number;
+    hoursMinLength?: number;
 }
 
 declare interface Props_10 {
@@ -3369,6 +3539,96 @@ export declare interface RoomAvatarEventViewSnapshot {
     isRemoved: boolean;
 }
 
+/**
+ * Renders a room avatar image with initial-letter fallback.
+ *
+ * Rendering data, styling hooks, and accessibility attributes are supplied
+ * through the ViewModel snapshot.
+ */
+export declare function RoomAvatarView({ vm, ref }: Readonly<RoomAvatarViewProps>): JSX.Element;
+
+/**
+ * Actions the host application can invoke on the room avatar ViewModel.
+ */
+export declare interface RoomAvatarViewActions {
+    /**
+     * Invoked when the user clicks the avatar.
+     */
+    onClick: () => void;
+}
+
+/**
+ * Combined ViewModel type accepted by {@link RoomAvatarView}.
+ */
+export declare type RoomAvatarViewModel = ViewModel<RoomAvatarViewSnapshot, RoomAvatarViewActions>;
+
+declare interface RoomAvatarViewProps {
+    /**
+     * ViewModel providing room avatar state and the click action.
+     */
+    vm: RoomAvatarViewModel;
+    /**
+     * Ref forwarded to the underlying avatar element.
+     */
+    ref?: Ref<HTMLButtonElement | HTMLSpanElement>;
+}
+
+/**
+ * Data provided by the ViewModel to render a room avatar.
+ */
+export declare interface RoomAvatarViewSnapshot {
+    /**
+     * Rendered size of the avatar in CSS units, e.g. `"36px"`.
+     */
+    size: string;
+    /**
+     * Display name of the room, used for the initial-letter fallback.
+     */
+    name: string;
+    /**
+     * Room ID (or DM user ID) used for consistent hash-colour generation.
+     */
+    idName?: string;
+    /**
+     * Priority-ordered list of avatar image URLs to try. The view cycles
+     * through them on image load error.
+     */
+    urls: string[];
+    /**
+     * Avatar shape – round for regular rooms, square for spaces.
+     */
+    type: "round" | "square";
+    /**
+     * Whether the avatar should respond to clicks.
+     */
+    isClickable: boolean;
+    /**
+     * Optional additional CSS class names applied to the avatar element.
+     */
+    className?: string;
+    /**
+     * Accessible label announced by assistive technologies.
+     * Defaults to `"Avatar"`.
+     */
+    altText?: string;
+    /**
+     * Browser tooltip shown on hover.
+     */
+    title?: string;
+    /**
+     * Tab index forwarded to the avatar element.
+     */
+    tabIndex?: number;
+    /**
+     * ARIA role override for the avatar element.
+     */
+    role?: AriaRole;
+    /**
+     * When `true`, hides the avatar from the accessibility tree.
+     */
+    ariaHidden?: boolean;
+}
+
 export declare type RoomCallStartedTileViewModel = ViewModel<RoomOngoingCallTileViewSnapshot> & CommonOngoingCallTileViewAction;
 
 /**
@@ -3709,6 +3969,8 @@ export declare interface RoomListItemViewSnapshot {
     isFavourite: boolean;
     /** Whether the room is a low priority room */
     isLowPriority: boolean;
+    /** Whether the room is a direct message */
+    isDm: boolean;
     /** Can invite other users in the room */
     canInvite: boolean;
     /** Can copy the room link */
@@ -3723,6 +3985,11 @@ export declare interface RoomListItemViewSnapshot {
     sections: Section[];
     /** Whether sections are enabled in the room list */
     areSectionsEnabled: boolean;
+    /**
+     * Whether the room can be moved to another section, by dragging it or through the menu entries
+     * that assign a section (Favourited, Low priority and "Move to").
+     */
+    canChangeSection: boolean;
 }
 
 /**
@@ -3919,6 +4186,12 @@ export declare interface RoomListSectionHeaderViewSnapshot {
     displaySectionMenu: boolean;
     /** Whether the section can be reordered via drag-and-drop  */
     canBeReordered: boolean;
+    /**
+     * The kind of room this section accepts when a room is dropped on it.
+     * "none" for the sections that take no room at all, such as Invites where the membership of the
+     * room decides rather than a drop.
+     */
+    acceptedRoomKind: AcceptedRoomKind;
 }
 
 /**
@@ -4019,9 +4292,9 @@ export declare interface RoomListViewActions {
     /** Called to change the order of sections */
     changeSectionOrder: (sourceTag: string, targetTag: string) => void;
     /** Called when a section drag starts — collapses all sections */
-    onSectionDragStart: () => void;
+    onSectionOrRoomDragStart: () => void;
     /** Called when a section drag ends (drop or cancel) — restores expansion states */
-    onSectionDragEnd: () => void;
+    onSectionOrRoomDragEnd: () => void;
 }
 
 /**
@@ -4101,6 +4374,19 @@ export declare enum RoomNotifState {
     Mute = "mute"
 }
 
+export declare interface RoomOfRoomPickerView {
+    /**  Unique identifier for the room. */
+    id: string;
+    /** Display name of the room. */
+    name: string;
+    /** Brief description of the room. */
+    description: string;
+    /** Timestamp of the last activity in the room (in milliseconds since epoch). */
+    timestamp?: number;
+    /** Indicates if the room is currently selected. */
+    selected: boolean;
+}
+
 /**
  * View that renders the tile content for an ongoing call in a room.
  */
@@ -4115,6 +4401,65 @@ export declare interface RoomOngoingCallTileViewSnapshot extends CommonOngoingCa
      * Whether the user ignored this call.
      */
     isCallIgnored?: boolean;
+}
+
+/**
+ * A view component for picking rooms from a searchable, filterable list.
+ * Displays selected rooms as pills in an input field and renders available
+ * rooms in a rich list below.
+ *
+ * @example
+ * ```tsx
+ * <RoomPickerView vm={roomPickerViewModel} className="my-room-picker" />
+ * ```
+ */
+export declare function RoomPickerView({ vm, className }: Readonly<RoomPickerViewProps>): JSX.Element;
+
+export declare interface RoomPickerViewActions {
+    /**
+     * Called when a room is selected or deselected in the list or in the input.
+     * @param roomId
+     */
+    toggleRoom: (roomId: string) => void;
+    /**
+     * Called when the user types in the search input to filter rooms.
+     * @param query
+     */
+    search: (query: string) => void;
+    /**
+     * Called when the last room that was selected needs to be removed.
+     * Used by the pill input to remove the last added room on backspace.
+     */
+    unSelectLastRoom: () => void;
+    /**
+     * Renders the avatar for a room in the list.
+     * @param room
+     * @param size - The size of the avatar to render (e.g., "32px", "40px").
+     */
+    renderRoomAvatar: (room: RoomOfRoomPickerView, size: string) => ReactNode;
+}
+
+/** The view model for the room picker component. */
+export declare type RoomPickerViewModel = ViewModel<RoomPickerViewSnapshot, RoomPickerViewActions>;
+
+declare interface RoomPickerViewProps {
+    /** The view model for the room picker component. */
+    vm: RoomPickerViewModel;
+    /** Optional CSS class name to apply to the root element of the component. */
+    className?: string;
+}
+
+export declare interface RoomPickerViewSnapshot {
+    /** List of rooms available for selection. */
+    rooms: RoomOfRoomPickerView[];
+    /** List of rooms that have been selected by the user. */
+    selectedRooms: RoomOfRoomPickerView[];
+    /** Placeholder text displayed in the search input when empty. */
+    placeholder: string;
+    /** Title displayed above the list of rooms. */
+    listTitle: string;
+    /** Text displayed when the list of rooms is empty. */
+    emptyListText: string;
 }
 
 export declare interface RoomStatusBarConsentState {
@@ -4472,6 +4817,52 @@ export declare interface Section {
 }
 
 /**
+ * A form component to create a new room list section or edit an existing one.
+ * In creation mode it shows an explanatory description; in editing mode it is pre-filled
+ * with the current section name.
+ *
+ * @example
+ * ```tsx
+ * <SectionCreationView vm={sectionCreationViewModel} />
+ * ```
+ */
+export declare function SectionCreationView({ vm }: Readonly<SectionCreationViewProps>): JSX.Element;
+
+export declare interface SectionCreationViewActions extends RoomPickerViewActions {
+    /**
+     * Creates a new section or saves the edited one, depending on the current mode.
+     */
+    createOrEditSection: () => void;
+    /**
+     * Updates the pending section name.
+     */
+    setSection: (sectionName: string) => void;
+}
+
+/**
+ * The view model for the section creation component.
+ */
+export declare type SectionCreationViewModel = ViewModel<SectionCreationViewSnapshot, SectionCreationViewActions>;
+
+declare interface SectionCreationViewProps {
+    /**
+     * The view model for the section creation component.
+     */
+    vm: SectionCreationViewModel;
+}
+
+export declare interface SectionCreationViewSnapshot extends RoomPickerViewSnapshot {
+    /**
+     * The current value of the section name input.
+     */
+    value: string;
+    /**
+     * The current step of the section creation process.
+     */
+    step: "creation" | "editing" | "add_rooms";
+}
+
+/**
  * A seek bar component for audio playback.
  *
  * @example
@@ -4528,15 +4919,15 @@ export declare function setLocale(value: string): string;
 
 export declare function setMissingEntryGenerator(callback: (value: string) => void): void;
 
-export declare function SetStatusView({ vm }: SetStatusViewProps): JSX.Element;
+export declare function SetStatusView({ vm, initialCustomMode }: SetStatusViewProps): JSX.Element;
 
 export declare interface SetStatusViewActions {
     /**
-     * Called when the user clicks to start setting a status.
+     * Called when the user clicks to start setting a custom status.
      *
-     * If falsy, the default dropdown will open for the user to choose a status.
+     * If falsy, the UI will change to allow the user to choose an emoji and enter text.
      */
-    onSetStatusClick?: () => void;
+    onSetCustomStatusClick?: () => void;
     /**
      * Called when the user selects a preset status from the dropdown.
      */
@@ -4545,12 +4936,23 @@ export declare interface SetStatusViewActions {
      * Called when the user clears their current status.
      */
     clearStatus: () => void;
+    /**
+     * Called with the unicode of an emoji the user picked for a custom status,
+     * so it can be recorded as recently used.
+     */
+    recordRecentEmoji?: (unicode: string) => void;
 }
 
 export declare type SetStatusViewModel = ViewModel<SetStatusViewSnapshot, SetStatusViewActions>;
 
 export declare type SetStatusViewProps = {
     vm: SetStatusViewModel;
+    /**
+     * If true, the view starts in custom status mode, ready for the user to enter a custom status.
+     *
+     * Ignored if the user already has a status set, as their existing status is shown instead.
+     */
+    initialCustomMode?: boolean;
 };
 
 export declare interface SetStatusViewSnapshot {
@@ -4558,6 +4960,11 @@ export declare interface SetStatusViewSnapshot {
      * The current user status, or undefined if no status is set.
      */
     userStatus?: UserStatus;
+    /**
+     * Recently used emoji (unicode strings, most relevant first) to offer when
+     * choosing an emoji for a custom status.
+     */
+    recentEmojis?: string[];
 }
 
 /**
@@ -5197,82 +5604,6 @@ export declare interface UploadButtonViewSnapshot {
     }[];
 }
 
-export declare interface UrlPreview {
-    /**
-     * The URL for the preview.
-     */
-    link: string;
-    /**
-     * Should the link have a tooltip. Should be `true` if the platform does not provide a tooltip.
-     */
-    showTooltipOnLink: boolean;
-    /**
-     * The title of the page being previewed.
-     */
-    title: string;
-    /**
-     * The site name to be displayed alongside the title.
-     */
-    siteName: string;
-    /**
-     * The og:url value of the page, could be different from link
-     */
-    ogUrl?: string;
-    /**
-     * The HTTP URI of the the sites icon.
-     */
-    siteIcon?: string;
-    /**
-     * Description of the site. May contain links.
-     */
-    description?: string;
-    /**
-     * Preview image to display.
-     */
-    image?: {
-        /**
-         * The HTTP URI of the the thumbnail.
-         */
-        imageThumb: string;
-        /**
-         * The HTTP URI of the full image.
-         */
-        imageFull: string;
-        /**
-         * The mxc:// URI of the full image.
-         */
-        mxcImageFull: string;
-        /**
-         * The type/subtype of the image format
-         */
-        imageType?: string;
-        /**
-         * File size in bytes.
-         */
-        fileSize?: number;
-        /**
-         * The width of the thumbnail.
-         */
-        width?: number;
-        /**
-         * The height of the thumbnail.
-         */
-        height?: number;
-        /**
-         * Alt text for the image
-         */
-        alt?: string;
-        /**
-         * Is the media playable.
-         */
-        playable: boolean;
-    };
-    /**
-     * Author of the content, if specified.
-     */
-    author?: string;
-}
-
 /**
  * Renders the URL preview group attached to a single event.
  *
@@ -5405,10 +5736,6 @@ export declare interface UserMenuSnapshot {
      * Matrix user ID for the user.
      */
     userId: string;
-    /**
-     * Account management URL if the user is using OIDC.
-     */
-    manageAccountHref?: string;
     /**
      * The user status to display, or undefined for no icon / status.
      */

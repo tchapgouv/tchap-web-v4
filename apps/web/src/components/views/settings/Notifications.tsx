@@ -205,9 +205,14 @@ const NotificationActivitySettings = (): JSX.Element => {
             }}
         >
             <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
-            {/* :TCHAP: extend-remove-thread-buttons <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} /> */}
+            <SettingsFlag
+                name="Notifications.activityIsUnread"
+                level={SettingLevel.DEVICE}
+                requires={["Notifications.showbold"]}
+            />
+            {/* :TCHAP: extend-remove-thread-buttons <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} requires={["Notifications.showbold"]} /> */}
             { TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") ? 
-                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} requires={["Notifications.showbold"]}/>
                 : null   
             }
             {/* end :TCHAP: */}
@@ -247,9 +252,8 @@ export default class Notifications extends React.PureComponent<EmptyObject, ISta
             }),
         ];
 
-        // noinspection JSIgnoredPromiseFromCall
-        this.refreshFromServer();
-        this.refreshFromAccountData();
+        void this.refreshFromServer();
+        void this.refreshFromAccountData();
     }
 
     public componentWillUnmount(): void {
@@ -258,7 +262,7 @@ export default class Notifications extends React.PureComponent<EmptyObject, ISta
 
     public componentDidUpdate(prevProps: Readonly<EmptyObject>, prevState: Readonly<IState>): void {
         if (this.state.deviceNotificationsEnabled !== prevState.deviceNotificationsEnabled) {
-            this.persistLocalNotificationSettings(this.state.deviceNotificationsEnabled);
+            void this.persistLocalNotificationSettings(this.state.deviceNotificationsEnabled);
         }
     }
 

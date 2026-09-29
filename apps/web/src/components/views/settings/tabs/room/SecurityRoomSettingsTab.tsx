@@ -143,7 +143,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                                             kind="link_inline"
                                             onClick={() => {
                                                 dialog.close();
-                                                this.createNewRoom(false, true);
+                                                void this.createNewRoom(false, true);
                                             }}
                                         >
                                             {" "}
@@ -172,7 +172,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 },
             ),
         });
-        finished.then(([confirm]) => {
+        await finished.then(([confirm]) => {
             if (!confirm) {
                 this.setState({ encrypted: false });
                 return;
@@ -347,7 +347,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                                         kind="link_inline"
                                         onClick={(): void => {
                                             dialog.close();
-                                            this.createNewRoom(true, false);
+                                            void this.createNewRoom(true, false);
                                         }}
                                     >
                                         {" "}
