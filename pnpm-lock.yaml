@@ -309,7 +309,7 @@ overrides:
   '@microsoft/api-extractor>typescript': npm:@typescript/typescript6@6.0.2
   '@arcmantle/vite-plugin-import-css-sheet>typescript': npm:@typescript/typescript6@6.0.2
   react-docgen-typescript>typescript: npm:@typescript/typescript6@6.0.2
-  '@vector-im/compound-design-tokens': github:tchapgouv/compound-design-tokens#main
+  '@vector-im/compound-design-tokens': github:tchapgouv/compound-design-tokens#web-fix-heading-size
 
 packageExtensionsChecksum: sha256-kCJccFy7l6HmjcpzmxV958fHndI9zZq246f1ttgkURI=
 
@@ -462,8 +462,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#main
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: 'catalog:'
         version: 10.0.1(patch_hash=95eef1155685213da1d81220fc4e713e65d2220aab58095cfc6a92f228179e06)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
@@ -1000,8 +1000,8 @@ importers:
         specifier: ^1.1.6
         version: 1.1.23(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#main
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
         version: 9.9.0(patch_hash=66def2c4e04977f8700ca3c29c2bee18d69ecf411490424574b175ec562352fd)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
@@ -1076,8 +1076,8 @@ importers:
   modules/restricted-guests:
     dependencies:
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#main
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
         version: 9.9.0(patch_hash=66def2c4e04977f8700ca3c29c2bee18d69ecf411490424574b175ec562352fd)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
@@ -1144,8 +1144,8 @@ importers:
   modules/widget-toggles:
     dependencies:
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#main
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb(@types/react@19.2.18)(react@19.2.8)
       '@vector-im/compound-web':
         specifier: ^9.0.0
         version: 9.9.0(patch_hash=66def2c4e04977f8700ca3c29c2bee18d69ecf411490424574b175ec562352fd)(@fontsource/inconsolata@5.2.8)(@fontsource/inter@5.3.0)(@types/react-dom@19.2.3)(@types/react@19.2.18)(@vector-im/compound-design-tokens@10.2.3)(react-dom@19.2.8)(react@19.2.8)
@@ -1330,8 +1330,8 @@ importers:
         specifier: 3.14.10
         version: 3.14.10(react-dom@19.2.8)(react@19.2.8)
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#main
-        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb(@types/react@19.2.18)(react@19.2.8)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -6362,8 +6362,20 @@ packages:
   '@upsetjs/venn.js@2.0.0':
     resolution: {integrity: sha512-WbBhLrooyePuQ1VZxrJjtLvTc4NVfpOyKx0sKqioq9bX1C1m7Jgykkn8gLrtwumBioXIqam8DLxp88Adbue6Hw==}
 
-  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7':
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7}
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb':
+    resolution: {gitHosted: true, integrity: sha512-IzoZjdI8ZkenDef0HH4/EixLTy5xE72Jbr1MqaZ12QGXvyqRBkXGKB4ymkMKf8wNf9wUjGkZezF7UE/qLphiAg==, tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb}
+    version: 10.2.3
+    peerDependencies:
+      '@types/react': ^19.2.10
+      react: ^17 || ^18 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15':
+    resolution: {gitHosted: true, integrity: sha512-nc5JMjDxV6ml1ylNhTgqCpOffvRkKDQJWHQ2l/5WEY7jty3R4NVkEuCggcht7Pwt45oaCKwyguxqkK5oSsgqDQ==, tarball: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15}
     version: 10.2.3
     peerDependencies:
       '@types/react': ^19.2.10
@@ -18156,7 +18168,12 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
-  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)':
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb(@types/react@19.2.18)(react@19.2.8)':
+    optionalDependencies:
+      '@types/react': 19.2.18
+      react: 19.2.8
+
+  '@vector-im/compound-design-tokens@https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.2.18)(react@19.2.8)':
     optionalDependencies:
       '@types/react': 19.2.18
       react: 19.2.8
@@ -18173,7 +18190,7 @@ snapshots:
       '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-slot': 1.3.3(@types/react@19.2.18)(react@19.2.8)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.2.18)(react@19.2.8)
       classnames: 2.5.1
       react: 19.2.8
       vaul: 1.1.2(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
@@ -18195,7 +18212,7 @@ snapshots:
       '@radix-ui/react-progress': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-separator': 1.1.8(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)
       '@radix-ui/react-slot': 1.3.3(@types/react@19.2.18)(react@19.2.8)
-      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/bbc0868e3710dfe837226293f71f73c49a9946d7(@types/react@19.2.18)(react@19.2.8)
+      '@vector-im/compound-design-tokens': https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/262f6561dc422818e4cb02557eb8236b7f9b4dfb(@types/react@19.2.18)(react@19.2.8)
       classnames: 2.5.1
       react: 19.2.8
       vaul: 1.1.2(@types/react-dom@19.2.3)(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)

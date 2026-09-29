@@ -3384,7 +3384,7 @@ function ef(e) {
 	}).toString();
 }
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/play-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/play-solid.js
 function tf(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -3400,7 +3400,7 @@ function tf(e, t) {
 tf.displayName = "PlaySolidIcon";
 var nf = d(tf);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/pause-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/pause-solid.js
 function rf(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7253,7 +7253,7 @@ var yx = /* @__PURE__ */ function(e) {
 	});
 };
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/arrow-down.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/arrow-down.js
 function Jx(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7269,7 +7269,7 @@ function Jx(e, t) {
 Jx.displayName = "ArrowDownIcon";
 var Yx = d(Jx);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/arrow-right.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/arrow-right.js
 function Xx(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7285,7 +7285,7 @@ function Xx(e, t) {
 Xx.displayName = "ArrowRightIcon";
 var Zx = d(Xx);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/ask-to-join.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/ask-to-join.js
 function Qx(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7301,7 +7301,7 @@ function Qx(e, t) {
 Qx.displayName = "AskToJoinIcon";
 var $x = d(Qx);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/attachment.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/attachment.js
 function eS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7317,7 +7317,7 @@ function eS(e, t) {
 eS.displayName = "AttachmentIcon";
 var tS = d(eS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/block.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/block.js
 function nS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7333,7 +7333,7 @@ function nS(e, t) {
 nS.displayName = "BlockIcon";
 var rS = d(nS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chat-problem.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chat-problem.js
 function iS(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7349,7 +7349,7 @@ function iS(e, t) {
 iS.displayName = "ChatProblemIcon";
 var aS = d(iS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chat.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chat.js
 function oS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7365,7 +7365,7 @@ function oS(e, t) {
 oS.displayName = "ChatIcon";
 var sS = d(oS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/check-circle.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/check-circle.js
 function cS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7381,7 +7381,7 @@ function cS(e, t) {
 cS.displayName = "CheckCircleIcon";
 var lS = d(cS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/check.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/check.js
 function uS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7397,7 +7397,7 @@ function uS(e, t) {
 uS.displayName = "CheckIcon";
 var dS = d(uS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-down.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-down.js
 function fS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7413,7 +7413,7 @@ function fS(e, t) {
 fS.displayName = "ChevronDownIcon";
 var pS = d(fS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-left.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-left.js
 function mS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7429,7 +7429,7 @@ function mS(e, t) {
 mS.displayName = "ChevronLeftIcon";
 var hS = d(mS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-right.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-right.js
 function gS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7445,7 +7445,7 @@ function gS(e, t) {
 gS.displayName = "ChevronRightIcon";
 var _S = d(gS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-up.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/chevron-up.js
 function vS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7461,7 +7461,7 @@ function vS(e, t) {
 vS.displayName = "ChevronUpIcon";
 var yS = d(vS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/close.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/close.js
 function bS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7477,7 +7477,7 @@ function bS(e, t) {
 bS.displayName = "CloseIcon";
 var xS = d(bS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/collapse-all.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/collapse-all.js
 function SS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7493,7 +7493,7 @@ function SS(e, t) {
 SS.displayName = "CollapseAllIcon";
 var CS = d(SS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/collapse.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/collapse.js
 function wS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7509,7 +7509,7 @@ function wS(e, t) {
 wS.displayName = "CollapseIcon";
 var TS = d(wS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/delete.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/delete.js
 function ES(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7525,7 +7525,7 @@ function ES(e, t) {
 ES.displayName = "DeleteIcon";
 var DS = d(ES);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/devices.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/devices.js
 function OS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7541,7 +7541,7 @@ function OS(e, t) {
 OS.displayName = "DevicesIcon";
 var kS = d(OS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/dial-pad.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/dial-pad.js
 function AS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7557,7 +7557,7 @@ function AS(e, t) {
 AS.displayName = "DialPadIcon";
 var jS = d(AS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/download.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/download.js
 function MS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7573,7 +7573,7 @@ function MS(e, t) {
 MS.displayName = "DownloadIcon";
 var NS = d(MS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/drag-list.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/drag-list.js
 function PS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7589,7 +7589,7 @@ function PS(e, t) {
 PS.displayName = "DragListIcon";
 var FS = d(PS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/edit.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/edit.js
 function IS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7609,7 +7609,7 @@ function IS(e, t) {
 IS.displayName = "EditIcon";
 var LS = d(IS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/email-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/email-solid.js
 function RS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7625,7 +7625,7 @@ function RS(e, t) {
 RS.displayName = "EmailSolidIcon";
 var zS = d(RS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/error-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/error-solid.js
 function BS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7641,7 +7641,7 @@ function BS(e, t) {
 BS.displayName = "ErrorSolidIcon";
 var VS = d(BS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/error.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/error.js
 function HS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7657,7 +7657,7 @@ function HS(e, t) {
 HS.displayName = "ErrorIcon";
 var US = d(HS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/expand-all.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/expand-all.js
 function WS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7673,7 +7673,7 @@ function WS(e, t) {
 WS.displayName = "ExpandAllIcon";
 var GS = d(WS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/expand.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/expand.js
 function KS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7689,7 +7689,7 @@ function KS(e, t) {
 KS.displayName = "ExpandIcon";
 var qS = d(KS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/explore.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/explore.js
 function JS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7705,7 +7705,7 @@ function JS(e, t) {
 JS.displayName = "ExploreIcon";
 var YS = d(JS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/favourite.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/favourite.js
 function XS(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7721,7 +7721,7 @@ function XS(e, t) {
 XS.displayName = "FavouriteIcon";
 var ZS = d(XS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/file-error.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/file-error.js
 function QS(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7737,7 +7737,7 @@ function QS(e, t) {
 QS.displayName = "FileErrorIcon";
 var $S = d(QS);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/history.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/history.js
 function eC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7753,7 +7753,7 @@ function eC(e, t) {
 eC.displayName = "HistoryIcon";
 var tC = d(eC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/home.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/home.js
 function nC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7773,7 +7773,7 @@ function nC(e, t) {
 nC.displayName = "HomeIcon";
 var rC = d(nC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/image-error.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/image-error.js
 function iC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7789,7 +7789,7 @@ function iC(e, t) {
 iC.displayName = "ImageErrorIcon";
 var aC = d(iC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/info.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/info.js
 function oC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7809,7 +7809,7 @@ function oC(e, t) {
 oC.displayName = "InfoIcon";
 var sC = d(oC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/inline-code.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/inline-code.js
 function cC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7825,7 +7825,7 @@ function cC(e, t) {
 cC.displayName = "InlineCodeIcon";
 var lC = d(cC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/leave.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/leave.js
 function uC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7841,7 +7841,7 @@ function uC(e, t) {
 uC.displayName = "LeaveIcon";
 var dC = d(uC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/link.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/link.js
 function fC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7857,7 +7857,7 @@ function fC(e, t) {
 fC.displayName = "LinkIcon";
 var pC = d(fC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/lock-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/lock-solid.js
 function mC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7873,7 +7873,7 @@ function mC(e, t) {
 mC.displayName = "LockSolidIcon";
 var hC = d(mC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/lock.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/lock.js
 function gC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7889,7 +7889,7 @@ function gC(e, t) {
 gC.displayName = "LockIcon";
 var _C = d(gC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/mark-as-read.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/mark-as-read.js
 function vC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7905,7 +7905,7 @@ function vC(e, t) {
 vC.displayName = "MarkAsReadIcon";
 var yC = d(vC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/mark-as-unread.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/mark-as-unread.js
 function bC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7925,7 +7925,7 @@ function bC(e, t) {
 bC.displayName = "MarkAsUnreadIcon";
 var xC = d(bC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/mention.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/mention.js
 function SC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7941,7 +7941,7 @@ function SC(e, t) {
 SC.displayName = "MentionIcon";
 var CC = d(SC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/minus.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/minus.js
 function wC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7957,7 +7957,7 @@ function wC(e, t) {
 wC.displayName = "MinusIcon";
 var TC = d(wC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/notifications-off-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/notifications-off-solid.js
 function EC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7973,7 +7973,7 @@ function EC(e, t) {
 EC.displayName = "NotificationsOffSolidIcon";
 var DC = d(EC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/notifications-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/notifications-solid.js
 function OC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -7989,7 +7989,7 @@ function OC(e, t) {
 OC.displayName = "NotificationsSolidIcon";
 var kC = d(OC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/overflow-horizontal.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/overflow-horizontal.js
 function AC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8005,7 +8005,7 @@ function AC(e, t) {
 AC.displayName = "OverflowHorizontalIcon";
 var jC = d(AC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/pin-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/pin-solid.js
 function MC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8021,7 +8021,7 @@ function MC(e, t) {
 MC.displayName = "PinSolidIcon";
 var NC = d(MC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/pin.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/pin.js
 function PC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8041,7 +8041,7 @@ function PC(e, t) {
 PC.displayName = "PinIcon";
 var FC = d(PC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/plus.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/plus.js
 function IC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8057,7 +8057,7 @@ function IC(e, t) {
 IC.displayName = "PlusIcon";
 var LC = d(IC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/preferences.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/preferences.js
 function RC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8077,7 +8077,7 @@ function RC(e, t) {
 RC.displayName = "PreferencesIcon";
 var zC = d(RC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/reaction-add.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/reaction-add.js
 function BC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8093,7 +8093,7 @@ function BC(e, t) {
 BC.displayName = "ReactionAddIcon";
 var VC = d(BC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/reaction.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/reaction.js
 function HC(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8109,7 +8109,7 @@ function HC(e, t) {
 HC.displayName = "ReactionIcon";
 var UC = d(HC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/reply.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/reply.js
 function WC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8125,7 +8125,7 @@ function WC(e, t) {
 WC.displayName = "ReplyIcon";
 var GC = d(WC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/restart.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/restart.js
 function KC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8141,7 +8141,7 @@ function KC(e, t) {
 KC.displayName = "RestartIcon";
 var qC = d(KC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/room.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/room.js
 function JC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8157,7 +8157,7 @@ function JC(e, t) {
 JC.displayName = "RoomIcon";
 var YC = d(JC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/search.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/search.js
 function XC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8173,7 +8173,7 @@ function XC(e, t) {
 XC.displayName = "SearchIcon";
 var ZC = d(XC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/section.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/section.js
 function QC(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8189,7 +8189,7 @@ function QC(e, t) {
 QC.displayName = "SectionIcon";
 var $C = d(QC);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/settings.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/settings.js
 function ew(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8205,7 +8205,7 @@ function ew(e, t) {
 ew.displayName = "SettingsIcon";
 var tw = d(ew);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/threads-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/threads-solid.js
 function nw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8221,7 +8221,7 @@ function nw(e, t) {
 nw.displayName = "ThreadsSolidIcon";
 var rw = d(nw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/threads.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/threads.js
 function iw(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8237,7 +8237,7 @@ function iw(e, t) {
 iw.displayName = "ThreadsIcon";
 var aw = d(iw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/unpin.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/unpin.js
 function ow(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8257,7 +8257,7 @@ function ow(e, t) {
 ow.displayName = "UnpinIcon";
 var sw = d(ow);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/user-add.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/user-add.js
 function cw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8273,7 +8273,7 @@ function cw(e, t) {
 cw.displayName = "UserAddIcon";
 var lw = d(cw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/user-profile-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/user-profile-solid.js
 function uw(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8289,7 +8289,7 @@ function uw(e, t) {
 uw.displayName = "UserProfileSolidIcon";
 var dw = d(uw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/video-call-declined-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/video-call-declined-solid.js
 function fw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8305,7 +8305,7 @@ function fw(e, t) {
 fw.displayName = "VideoCallDeclinedSolidIcon";
 var pw = d(fw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/video-call-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/video-call-solid.js
 function mw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8321,7 +8321,7 @@ function mw(e, t) {
 mw.displayName = "VideoCallSolidIcon";
 var hw = d(mw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/video-call.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/video-call.js
 function gw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8337,7 +8337,7 @@ function gw(e, t) {
 gw.displayName = "VideoCallIcon";
 var _w = d(gw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/visibility-off.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/visibility-off.js
 function vw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8353,7 +8353,7 @@ function vw(e, t) {
 vw.displayName = "VisibilityOffIcon";
 var yw = d(vw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/visibility-on.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/visibility-on.js
 function bw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8369,7 +8369,7 @@ function bw(e, t) {
 bw.displayName = "VisibilityOnIcon";
 var xw = d(bw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/voice-call-declined-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/voice-call-declined-solid.js
 function Sw(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8385,7 +8385,7 @@ function Sw(e, t) {
 Sw.displayName = "VoiceCallDeclinedSolidIcon";
 var Cw = d(Sw);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/voice-call-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/voice-call-solid.js
 function ww(e, t) {
 	return /*#__PURE__*/ (0, R.jsx)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
@@ -8401,7 +8401,7 @@ function ww(e, t) {
 ww.displayName = "VoiceCallSolidIcon";
 var Tw = d(ww);
 //#endregion
-//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_1f4dc31343a3b1622e93017a95ce3fb7/node_modules/@vector-im/compound-design-tokens/assets/web/icons/volume-on-solid.js
+//#region ../../node_modules/.pnpm/@vector-im+compound-design-tokens@https+++codeload.github.com+tchapgouv+compound-design_d33a2c4442c844d53de4696ecf3c5376/node_modules/@vector-im/compound-design-tokens/assets/web/icons/volume-on-solid.js
 function Ew(e, t) {
 	return /*#__PURE__*/ (0, R.jsxs)("svg", {
 		xmlns: "http://www.w3.org/2000/svg",
