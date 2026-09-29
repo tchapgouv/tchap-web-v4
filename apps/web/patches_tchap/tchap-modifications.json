@@ -260,11 +260,9 @@
             "src/autocomplete/Components.tsx"
         ]
     },
-    "search-no-results-warning": {
-        "issue": "https://github.com/tchapgouv/tchap-desktop/issues/226",
+    "hide-encryption-details": {
         "files": [
-            "src/components/views/rooms/RoomSearchAuxPanel.tsx",
-            "src/components/views/elements/SearchWarning.tsx"
+            "src/components/views/settings/encryption/AdvancedPanel.tsx"
         ]
     }
 }
