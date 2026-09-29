@@ -129,6 +129,9 @@ export function EncryptionUserSettingsTab({ initialState = "main" }: Readonly<Pr
                                     <Separator kind="section" />
                                 </>
                             )}
+                            {/* :TCHAP: */}
+                            {eventIndex}
+                            {/* end :TCHAP: */}
                             <AdvancedPanel onResetIdentityClick={() => setState("reset_identity_compromised")} />
                         </>
                     );
@@ -165,9 +168,6 @@ export function EncryptionUserSettingsTab({ initialState = "main" }: Readonly<Pr
     return (
         <SettingsTab className="mx_EncryptionUserSettingsTab" data-testid="encryptionTab">
             {content}
-            {/* :TCHAP: */}
-            {eventIndex}
-            {/* end :TCHAP: */}
         </SettingsTab>
     );
 }

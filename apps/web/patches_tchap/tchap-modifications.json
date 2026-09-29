@@ -266,5 +266,10 @@
             "src/components/views/rooms/RoomSearchAuxPanel.tsx",
             "src/components/views/elements/SearchWarning.tsx"
         ]
+    },
+    "hide-encryption-details": {
+        "files": [
+            "src/components/views/settings/encryption/AdvancedPanel.tsx"
+        ]
     }
 }
