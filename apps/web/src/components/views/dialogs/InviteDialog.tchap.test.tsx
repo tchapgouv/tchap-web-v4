@@ -490,6 +490,31 @@ describe("InviteDialog", () => {
         expect(screen.queryByText("@localpart:server.tld")).not.toBeInTheDocument();
     });
 
+    // :TCHAP:
+    describe("external members detection", () => {
+        const externalId = "@ext:agent.externe.tchap.gouv.fr";
+
+        it("should warn about an external MXID pasted after an internal one", async () => {
+            render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
+
+            const input = screen.getByTestId("invite-dialog-input");
+            input.focus();
+            await userEvent.paste(`${aliceId} ${externalId}`);
+
+            await expect(screen.findByTestId("tc_warning")).resolves.toBeVisible();
+        });
+
+        it("should warn about an external MXID added after an internal one", async () => {
+            render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
+
+            await enterIntoSearchField(aliceId);
+            await enterIntoSearchField(externalId);
+
+            await expect(screen.findByTestId("tc_warning")).resolves.toBeVisible();
+        });
+    });
+    // end :TCHAP:
+
     describe("when inviting a user whose cryptographic identity we do not know", () => {
         beforeEach(() => {
             vi.mocked(mockClient.getCrypto()!.getUserVerificationStatus).mockImplementation(async (u) => {

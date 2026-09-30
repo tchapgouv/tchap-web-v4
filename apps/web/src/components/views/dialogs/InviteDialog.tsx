@@ -989,13 +989,17 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         for (const m of members) {
             // For email targets, validate against identity server
             if (Email.looksValid(m.name)) {
-                const isExternal = await TchapUtils.checkIfEmailIsExternal(m.name);
-                return isExternal;
+                if (await TchapUtils.checkIfEmailIsExternal(m.name)) {
+                    return true;
+                }
+                continue;
             }
             // For mxid, check if the homeserver is external
             if (m.userId && m.userId.startsWith("@")) {
                 const hs = m.userId.split(":")[1];
-                return TchapUtils.isExternalHomeserver(hs);
+                if (TchapUtils.isExternalHomeserver(hs)) {
+                    return true;
+                }
             }
         }
         return false;
