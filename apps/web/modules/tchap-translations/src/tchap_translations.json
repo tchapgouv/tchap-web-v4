@@ -412,7 +412,6 @@
         "en": "Use a secret phrase only you know, and optionally save a verification code to use for backup.",
         "fr": "Utilisez une phrase secrète que vous êtes seul à connaître et enregistrez éventuellement un code de vérification à utiliser pour la sauvegarde."
     },
-    "settings|encryption|advanced|title": { "en": "Tchap keys", "fr": "Clés Tchap" },
     "settings|security|ignore_users_section": { "en": "Ignored users", "fr": "Membres ignorés" },
     "settings|security|message_search_unsupported_web": {
         "en": "Currently %(brand)s does not support searching into messages in encrypted rooms.<desktopLink></desktopLink>",
