@@ -1143,7 +1143,7 @@
         "fr": "L'interdiction a échoué"
     },
     "badge|recommended": {
-        "en":"RECOMMANDED",
+        "en": "RECOMMANDED",
         "fr": "RECOMMANDÉ"
     },
     "auth|email_verification_external_warning": {
@@ -1153,5 +1153,9 @@
     "auth|email_verification_external_warning_description": {
         "en": "It it is not the case, check that the email address %(email)s does not contain errors",
         "fr": "Si ce n'est pas le cas, vérifier que votre adresse email \"%(email)s\" ne contient pas d'erreur"
+    },
+    "room|server_notice_title": {
+        "en": "Tchap Announcement",
+        "fr": "Annonces Tchap"
     }
 }

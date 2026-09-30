@@ -109,6 +109,10 @@ function getSectionTitle(tag: string): string {
             return _t("room_list|section|low_priority");
         case DefaultTagID.DM:
             return _t("common|people");
+        // :TCHAP:
+        case DefaultTagID.ServerNotice:
+            return _t("room|server_notice_title");
+        // end :TCHAP:
         case CHATS_TAG:
             // Without a People section, this section holds the direct messages too, so it keeps its
             // broader name.
