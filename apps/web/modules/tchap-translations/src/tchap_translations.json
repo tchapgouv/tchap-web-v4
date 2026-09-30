@@ -1144,7 +1144,11 @@
         "fr": "L'interdiction a échoué"
     },
     "badge|recommended": {
-        "en":"RECOMMANDED",
+        "en": "RECOMMANDED",
         "fr": "RECOMMANDÉ"
+    },
+    "room|server_notice_title": {
+        "en": "Tchap Announcement",
+        "fr": "Annonces Tchap"
     }
 }

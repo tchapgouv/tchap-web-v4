@@ -560,6 +560,9 @@ export class RoomListItemViewModel
     private static getSectionName(tag: string, customSectionData: Record<string, { name: string }>): string {
         if (tag === DefaultTagID.Favourite) return _t("room_list|section|favourites");
         if (tag === DefaultTagID.LowPriority) return _t("room_list|section|low_priority");
+        // :TCHAP:
+        if (tag === DefaultTagID.ServerNotice) return _t("room|server_notice_title");
+        // end :TCHAP:
         return customSectionData[tag]?.name || tag;
     }
 }

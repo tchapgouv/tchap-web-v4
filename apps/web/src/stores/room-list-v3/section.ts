@@ -50,7 +50,10 @@ export function isDefaultSectionTag(tagId: TagID): boolean {
         tagId === DefaultTagID.Favourite ||
         tagId === DefaultTagID.LowPriority ||
         tagId === CHATS_TAG ||
-        tagId === DefaultTagID.DM
+        tagId === DefaultTagID.DM ||
+        // :TCHAP: tchap-info-new-roomlist
+        tagId === DefaultTagID.ServerNotice
+        // end :TCHAP:
     );
 }
 
@@ -228,7 +231,8 @@ export function getOrderedReorderableSections(): ReorderableSection[] {
 export function getOrderedSectionTags(): string[] {
     const showPeopleSection = SettingsStore.getValue("RoomList.showPeopleSection");
     const reorderable = getOrderedReorderableSections().filter((tag) => showPeopleSection || tag !== DefaultTagID.DM);
-    return [DefaultTagID.Invite, DefaultTagID.Favourite, ...reorderable, DefaultTagID.LowPriority];
+    // :TCHAP: tchap-info-new-roomlist return [DefaultTagID.Invite, DefaultTagID.Favourite, ...reorderable, DefaultTagID.LowPriority];
+    return [DefaultTagID.Invite, DefaultTagID.Favourite, DefaultTagID.ServerNotice, ...reorderable, DefaultTagID.LowPriority];
 }
 
 /**

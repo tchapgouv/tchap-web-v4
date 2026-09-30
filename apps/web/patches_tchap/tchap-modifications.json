@@ -266,5 +266,8 @@
             "src/components/views/rooms/RoomSearchAuxPanel.tsx",
             "src/components/views/elements/SearchWarning.tsx"
         ]
+    },
+    "tchap-info-new-roomlist": {
+        "files": "src/stores/room-list-v3/section.ts" 
     }
 }
