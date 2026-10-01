@@ -700,7 +700,9 @@ export const SETTINGS: Settings = {
     "Notifications.activityIsUnread": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("settings|activityIsUnread"),
-        default: false,
+        // :TCHAP: default: false,
+        default: true,
+        // end :TCHAP:
         controller: new RequiresSettingsController(["Notifications.showbold"]),
     },
     "Notifications.tac_only_notifications": {

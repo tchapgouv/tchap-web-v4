@@ -275,7 +275,8 @@
     "tchap-info-new-roomlist": {
         "files": [
           "src/viewmodels/room-list/RoomListViewModel.ts",
-          "src/stores/room-list-v3/section.ts" 
+          "src/stores/room-list-v3/section.ts",
+          "src/settings/Settings.tsx"
         ]
     }
 }
