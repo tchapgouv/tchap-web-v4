@@ -1146,5 +1146,13 @@
     "badge|recommended": {
         "en":"RECOMMANDED",
         "fr": "RECOMMANDÉ"
+    },
+    "auth|email_verification_external_warning": {
+        "en": "Are you an external user ?",
+        "fr": "Êtes-vous un(e) invité(e) externe?"
+    },
+    "auth|email_verification_external_warning_description": {
+        "en": "It it is not the case, check that the email address %(email)s does not contain errors",
+        "fr": "Si ce n'est pas le cas, vérifier que votre adresse email \"%(email)s\" ne contient pas d'erreur"
     }
 }

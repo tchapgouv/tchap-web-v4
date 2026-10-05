@@ -31,6 +31,8 @@ import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfi
 import * as Email from "~tchap-web/src/email";
 import { startOAuthLogin } from "../../../../utils/oauth/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
+import Modal from "~tchap-web/src/Modal";
+import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
 
 interface IProps {
     //propagate the server config change
@@ -90,6 +92,21 @@ export default function EmailVerificationPage(props: IProps) {
                     `Impossible de trouver un homeserver pour cette adresse email: "${email}", merci de contacter support@tchap.beta.gouv.fr`,
                 );
                 return;
+            }
+
+            if (TchapUtils.isExternalHomeserver(hs.base_url)) {
+                const { finished } = Modal.createDialog(QuestionDialog, {
+                    title: _t("auth|email_verification_external_warning"),
+                    description: _t("auth|email_verification_external_warning_description", { email }),
+                    hasCancelButton: true,
+                    button: _t("action|continue"),
+                });
+                const [success] = await finished;
+                // If the user is not sure of his email, we just the close the warning modal so he can check his email
+                if (!success) {
+                    setLoading(false);
+                    return;
+                }
             }
 
             const validatedServerConfig = await setUpCurrentHs(hs);
