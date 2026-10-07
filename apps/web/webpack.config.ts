@@ -744,8 +744,8 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     },
                     // :TCHAP: for custom translation
                     {
-                        from: "tchap_translations.json",
-                        context: path.join(__dirname, "modules/tchap-translations/src"),
+                        from: "**",
+                        context: path.join(__dirname, "modules/tchap-translations/lib"),
                         to: path.join(__dirname, "webapp", "modules", "tchap-translations"),
                     },
                     // end :TCHAP:
