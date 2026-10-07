@@ -78,6 +78,7 @@ describe("Tests sso and oidc native flow", () => {
 
     describe("MAS flow activated", () => {
         beforeEach(() => {
+            jest.clearAllMocks();
             // Dans le beforeEach du bloc "MAS flow activated"
             jest.spyOn(authorize, "startOAuthLogin").mockImplementation(
                 jest.fn(),
