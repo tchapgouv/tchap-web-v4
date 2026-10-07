@@ -231,7 +231,16 @@ function EncryptionDetails({ onResetIdentityClick }: EncryptionDetails): JSX.Ele
                 {_t("settings|encryption|advanced|reset_identity")}
             </Button>
         </div>
+    return (
+        <div className="mx_EncryptionDetails" data-testid="encryptionDetails">
+            {toggle}
+            {advanced}
+            <Button size="md" kind="tertiary" destructive={true} onClick={onResetIdentityClick}>
+                {_t("settings|encryption|advanced|reset_identity")}
+            </Button>
+        </div>
     );
+    // end :TCHAP:
 }
 
 /**
