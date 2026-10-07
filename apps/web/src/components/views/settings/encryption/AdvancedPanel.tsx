@@ -174,64 +174,6 @@ function EncryptionDetails({ onResetIdentityClick }: EncryptionDetails): JSX.Ele
         );
     }
     return (
-        // :TCHAP:
-        // <div className="mx_EncryptionDetails" data-testid="encryptionDetails">
-        //     <div className="mx_EncryptionDetails_session">
-        //         <h3 className="mx_EncryptionDetails_session_title">
-        //             {_t("settings|encryption|advanced|details_title")}
-        //         </h3>
-        //         <div>
-        //             <span>{_t("settings|encryption|advanced|session_id")}</span>
-        //             <span data-testid="deviceId">{matrixClient.deviceId}</span>
-        //         </div>
-        //         <div>
-        //             <span>{_t("settings|encryption|advanced|session_key")}</span>
-        //             <span data-testid="sessionKey">
-        //                 {keys ? keys.ed25519 : <InlineSpinner aria-label={_t("common|loading")} />}
-        //             </span>
-        //         </div>
-        //     </div>
-        //     <div className="mx_EncryptionDetails_buttons">
-        //         <Button
-        //             size="md"
-        //             kind="secondary"
-        //             Icon={DownloadIcon}
-        //             onClick={() =>
-        //                 Modal.createDialog(
-        //                     lazy(
-        //                         () => import("../../../../async-components/views/dialogs/security/ExportE2eKeysDialog"),
-        //                     ),
-        //                     { matrixClient },
-        //                 )
-        //             }
-        //         >
-        //             {_t("settings|encryption|advanced|export_keys")}
-        //         </Button>
-        //         <Button
-        //             size="md"
-        //             kind="secondary"
-        //             Icon={ShareIcon}
-        //             onClick={() =>
-        //                 Modal.createDialog(
-        //                     lazy(
-        //                         () => import("../../../../async-components/views/dialogs/security/ImportE2eKeysDialog"),
-        //                     ),
-        //                     { matrixClient },
-        //                 )
-        //             }
-        //         >
-        //             {_t("settings|encryption|advanced|import_keys")}
-        //         </Button>
-        //     </div>
-        // end :TCHAP:
-        <div className="mx_EncryptionDetails" data-testid="encryptionDetails">
-            {toggle}
-            {advanced}
-            <Button size="md" kind="tertiary" destructive={true} onClick={onResetIdentityClick}>
-                {_t("settings|encryption|advanced|reset_identity")}
-            </Button>
-        </div>
-    return (
         <div className="mx_EncryptionDetails" data-testid="encryptionDetails">
             {toggle}
             {advanced}
