@@ -220,10 +220,8 @@ describe("Tests sso and oidc native flow", () => {
                 title: "auth",
             });
 
-            waitFor(async () => {
-                const continueButton = screen.getByRole("button", {
-                    name: "Continue",
-                });
+            await waitFor(async () => {
+                const continueButton = screen.getByTestId("dialog-primary-button");
                 await fireEvent.click(continueButton);
 
                 expect(authorize.startOAuthLogin).toHaveBeenCalledWith(
