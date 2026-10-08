@@ -558,7 +558,7 @@ describe("section", () => {
                 expected: [
                     DefaultTagID.Invite,
                     DefaultTagID.Favourite,
-                    // :TCHAP:
+                    // :TCHAP: tchap-info-new-roomlist
                     DefaultTagID.ServerNotice,
                     // end :TCHAP:
                     DefaultTagID.DM,
