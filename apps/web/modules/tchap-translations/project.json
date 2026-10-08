@@ -1,6 +1,11 @@
 {
     "projectType": "library",
     "targets": {
+        "start": {
+            "command": "vite build --watch",
+            "options": { "cwd": "apps/web/modules/tchap-translations" },
+            "continuous": true
+        },
         "build": {
             "cache": true,
             "command": "vite build",
