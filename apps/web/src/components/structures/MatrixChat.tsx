@@ -1502,25 +1502,25 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         // Listen to changes in settings and show the toast if appropriate - this is necessary because account
         // settings can still be changing at this point in app init (due to the initial sync being cached, then
         // subsequent syncs being received from the server)
-        SettingsStore.watchSetting(
-            "pseudonymousAnalyticsOptIn",
-            null,
-            (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
-                if (newValue === null) {
-                    // :TCHAP: remove-toast-analytics-browser-support - showAnalyticsToast();
-                    // default the analytics to true
-                    SettingsStore.setValue("pseudonymousAnalyticsOptIn", null, SettingLevel.ACCOUNT, true);
-                } /*else {
-                    // It's possible for the value to change if a cached sync loads at page load, but then network
-                    // sync contains a new value of the flag with it set to false (e.g. another device set it since last
-                    // loading the page); so hide the toast.
-                    // (this flipping usually happens before first render so the user won't notice it; anyway flicker
-                    // on/off is probably better than showing the toast again when the user already dismissed it)
-                    hideAnalyticsToast();
-                }*/
-               // end :TCHAP:
-            },
-        );
+        // :TCHAP: remove-toast-analytics-browser-support - We don't need to listen to this vale,
+        // the user can still change manually the setting in the user parameters
+        // SettingsStore.watchSetting(
+        //     "pseudonymousAnalyticsOptIn",
+        //     null,
+        //     (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
+        //         if (newValue === null) {
+        //             showAnalyticsToast();
+        //         } else {
+        //             // It's possible for the value to change if a cached sync loads at page load, but then network
+        //             // sync contains a new value of the flag with it set to false (e.g. another device set it since last
+        //             // loading the page); so hide the toast.
+        //             // (this flipping usually happens before first render so the user won't notice it; anyway flicker
+        //             // on/off is probably better than showing the toast again when the user already dismissed it)
+        //             hideAnalyticsToast();
+        //         }
+        //     },
+        // );
+        // end :TCHAP:
     }
 
     private showScreenAfterLogin(): void {
