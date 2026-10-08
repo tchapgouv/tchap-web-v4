@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, screen, act } from "jest-matrix-react";
+import { render, fireEvent, screen, act, waitFor } from "jest-matrix-react";
 import { mocked, type MockedObject } from "jest-mock";
 
 import type BasePlatform from "~tchap-web/src/BasePlatform";
@@ -11,6 +11,8 @@ import { flushPromises } from "~tchap-web/test/test-utils";
 import Login from "~tchap-web/src/Login";
 import * as authorize from "~tchap-web/src/utils/oauth/authorize";
 import * as routing from "~tchap-web/src/vector/routing";
+import Modal from "~tchap-web/src/Modal";
+import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
 
 jest.mock("~tchap-web/src/tchap/util/TchapUtils");
 jest.mock("~tchap-web/src/Login");
@@ -27,11 +29,16 @@ describe("Tests sso and oidc native flow", () => {
         );
     };
 
-    const mockedValidatedServerConfig = (withError: boolean = false, hsUrl: string = defaultHsUrl) => {
+    const mockedValidatedServerConfig = (
+        withError: boolean = false,
+        hsUrl: string = defaultHsUrl,
+    ) => {
         if (withError) {
-            mockedTchapUtils.makeValidatedServerConfig.mockImplementation(() => {
-                throw new Error();
-            });
+            mockedTchapUtils.makeValidatedServerConfig.mockImplementation(
+                () => {
+                    throw new Error();
+                },
+            );
         } else {
             mockedTchapUtils.makeValidatedServerConfig.mockImplementation(() =>
                 Promise.resolve({
@@ -54,7 +61,7 @@ describe("Tests sso and oidc native flow", () => {
             });
         } else {
             jest.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
-                console.log("starting oauth")
+                console.log("starting oauth");
             });
         }
     };
@@ -63,17 +70,28 @@ describe("Tests sso and oidc native flow", () => {
     const onServerConfigChangeMock = jest.fn();
 
     const renderEmailVerificationPage = () =>
-        render(<EmailVerificationPage onServerConfigChange={onServerConfigChangeMock} />);
+        render(
+            <EmailVerificationPage
+                onServerConfigChange={onServerConfigChangeMock}
+            />,
+        );
 
     describe("MAS flow activated", () => {
         beforeEach(() => {
+            jest.clearAllMocks();
             // Dans le beforeEach du bloc "MAS flow activated"
-            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(jest.fn());
+            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(
+                jest.fn(),
+            );
 
             mockedLogin.mockImplementation(() => ({
                 hsUrl: defaultHsUrl,
                 delegatedAuthentication: {},
-                getFlows: jest.fn().mockResolvedValue([{ type: "oauthNativeFlow", clientId: "clientId" }]),
+                getFlows: jest
+                    .fn()
+                    .mockResolvedValue([
+                        { type: "oauthNativeFlow", clientId: "clientId" },
+                    ]),
             }));
         });
 
@@ -81,7 +99,9 @@ describe("Tests sso and oidc native flow", () => {
             const { container } = renderEmailVerificationPage();
 
             expect(screen.getByTestId("mas-submit")).toBeInTheDocument();
-            expect(container.getElementsByClassName("mx_AuthHeader").length).toBe(0);
+            expect(
+                container.getElementsByClassName("mx_AuthHeader").length,
+            ).toBe(0);
         });
 
         it("should call start oidc native flow with login_hint", async () => {
@@ -159,6 +179,63 @@ describe("Tests sso and oidc native flow", () => {
                 true, // isRegistration
                 userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
             );
+        });
+
+        it("should open modal when detect external email", async () => {
+            // We clicked on create account button from welcome page
+            jest.spyOn(routing, "getScreenFromLocation").mockReturnValue({
+                screen: "email-precheck-sso",
+                params: {
+                    createAccount: true,
+                },
+            });
+
+            jest.spyOn(TchapUtils, "isExternalHomeserver").mockReturnValue(
+                true,
+            );
+            jest.spyOn(Modal, "createDialog");
+            renderEmailVerificationPage();
+
+            // Mock the implementation without error, what we want is to be sure they are called with the correct parameters
+            mockedFetchHomeserverFromEmail(defaultHsUrl);
+            mockedValidatedServerConfig(false, defaultHsUrl);
+            mockedPlatformPegStartSSO(false);
+
+            // Put text in email field
+            const emailField = screen.getByRole("textbox");
+            fireEvent.focus(emailField);
+            fireEvent.change(emailField, { target: { value: userEmail } });
+
+            await flushPromises();
+
+            // click on proconnect button
+            const proconnectButton = screen.getByTestId("mas-submit");
+            await act(async () => {
+                await fireEvent.click(proconnectButton);
+            });
+
+            expect(Modal.createDialog).toHaveBeenCalledWith(QuestionDialog, {
+                button: "Continue",
+                description: "auth",
+                hasCancelButton: true,
+                title: "auth",
+            });
+
+            const continueButton = screen.getByTestId("dialog-primary-button");
+            await act(async () => {
+                fireEvent.click(continueButton);
+            });
+
+            await waitFor(async () => {
+                expect(authorize.startOAuthLogin).toHaveBeenCalledWith(
+                    undefined, // delegatedAuthentication is undefined in this test
+                    expect.anything(), // clientId
+                    expect.anything(), // hsUrl
+                    expect.anything(), // isUrl
+                    true, // isRegistration
+                    userEmail, // loginHint - c'est ce paramètre que nous voulons vérifier
+                );
+            });
         });
     });
 });
