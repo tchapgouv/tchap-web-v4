@@ -109,7 +109,7 @@ function getSectionTitle(tag: string): string {
             return _t("room_list|section|low_priority");
         case DefaultTagID.DM:
             return _t("common|people");
-        // :TCHAP:
+        // :TCHAP: tchap-info-new-roomlist
         case DefaultTagID.ServerNotice:
             return _t("room|server_notice_title");
         // end :TCHAP:
