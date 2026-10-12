@@ -183,7 +183,7 @@
     "desktop_builds": {
         "available": true,
         "logo": "themes/tchap/img/logos/tchap-logo.svg",
-        "url": "https://www.tchap.gouv.fr/client/config/download/desktop/windows"
+        "url": "https://docs.numerique.gouv.fr/docs/426927c4-68e5-4a68-9ad8-b6678d688d1d/"
     },
     "mobile_builds": {
         "ios": "https://apps.apple.com/us/app/tchap/id6736991029",
