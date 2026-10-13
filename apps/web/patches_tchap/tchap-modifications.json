@@ -278,5 +278,19 @@
           "src/stores/room-list-v3/section.ts",
           "src/settings/Settings.tsx"
         ]
+    },
+    "migrate-translations-to-runtime-module": {
+        "files": [
+            "config.dev.json",
+            "config.preprod.json",
+            "config.prod.json",
+            "config.prod.lab.json",
+            "project.json",
+            "webpack.config.ts",
+            "packages/shared-components/src/core/i18n/I18nApi.ts",
+            "packages/shared-components/src/core/i18n/I18nApi.test.tsx",
+            "packages/shared-components/dist/element-web-shared-components.js",
+            "packages/shared-components/dist/element-web-shared-components.umd.cjs"
+        ]
     }
 }
