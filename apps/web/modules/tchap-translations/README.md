@@ -1,9 +1,13 @@
 # Tchap Translations - a long story
 
 ## Usage in tchap-web
-For now we use the `custom_translation_url` config. A modification in webpack.config has been added to copy the translation file inside the webapp release, since it is not hosted in a remote server.
+Tchap translations are loaded through Element's runtime module API, configured with:
 
-The custom runtime module is not working (no errors but no translations are applied), so the `vite.config.json`, `tsconfig.json` are not really used ... needs more investigation why
+```json
+"modules": ["/modules/tchap-translations/index.js"]
+```
+
+Vite builds the module into `lib/index.js`, and Webpack copies it into the webapp release. The module is built with the application and rebuilt automatically during development when translations change; reload the application to use them.
 
 ## What are all these translation files ?
 

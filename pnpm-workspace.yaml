@@ -7,6 +7,7 @@ dedupePeers: true
 
 packages:
   - "apps/*"
+  - "apps/web/modules/*"
   - "packages/*"
   - "modules"
   - "modules/*"
