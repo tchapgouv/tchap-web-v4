@@ -985,6 +985,30 @@ importers:
         specifier: ^2.8.4
         version: 2.9.0
 
+  apps/web/modules/tchap-translations:
+    devDependencies:
+      '@element-hq/element-web-module-api':
+        specifier: workspace:*
+        version: link:../../../../packages/module-api
+      '@matrix-org/react-sdk-module-api':
+        specifier: ^2.5.0
+        version: 2.5.0(patch_hash=016146c9cc96e6363609d2b2ac0896ccef567882eb1d73b75a77b8a30929de96)(react@18.3.1)
+      '@types/node':
+        specifier: 25.9.3
+        version: 25.9.3
+      '@types/react':
+        specifier: ^19.2.10
+        version: 19.2.18
+      matrix-web-i18n:
+        specifier: ^3.6.0
+        version: 3.6.0(supports-color@10.2.2)
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+      vite:
+        specifier: 'catalog:'
+        version: 8.2.2(@types/node@25.9.3)(esbuild@0.27.4)(jiti@2.7.0)(sugarss@5.0.1)(terser@5.51.2)(yaml@2.9.0)
+
   modules:
     devDependencies:
       '@element-hq/element-web-playwright-common':
@@ -11169,6 +11193,10 @@ packages:
       react: '>=16 || >=17 || >= 18 || >= 19'
       react-dom: '>=16 || >=17 || >= 18 || >=19'
 
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
+
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
     engines: {node: '>=0.10.0'}
@@ -15586,6 +15614,11 @@ snapshots:
       emojibase-data: 17.0.0(emojibase@17.0.0)
 
   '@matrix-org/matrix-sdk-crypto-wasm@18.7.0': {}
+
+  '@matrix-org/react-sdk-module-api@2.5.0(patch_hash=016146c9cc96e6363609d2b2ac0896ccef567882eb1d73b75a77b8a30929de96)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.29.7
+      react: 18.3.1
 
   '@matrix-org/react-sdk-module-api@2.5.0(patch_hash=016146c9cc96e6363609d2b2ac0896ccef567882eb1d73b75a77b8a30929de96)(react@19.2.8)':
     dependencies:
@@ -23875,6 +23908,10 @@ snapshots:
     dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
 
   react@19.2.8: {}
 
