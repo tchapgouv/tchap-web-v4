@@ -216,12 +216,12 @@ describe("Tests sso and oidc native flow", () => {
                 title: "auth",
             });
 
-            waitFor(async () => {
-                const continueButton = screen.getByRole("button", {
-                    name: "Continue",
-                });
+            const continueButton = screen.getByTestId("dialog-primary-button");
+            await act(async () => {
                 await fireEvent.click(continueButton);
+            });
 
+            await waitFor(async () => {
                 expect(authorize.startOidcLogin).toHaveBeenCalledWith(
                     undefined, // delegatedAuthentication is undefined in this test
                     expect.anything(), // clientId
