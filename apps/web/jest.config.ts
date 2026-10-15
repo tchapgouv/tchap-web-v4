@@ -72,7 +72,7 @@ const config: Config = {
         "counterpart": "<rootDir>/../../node_modules/counterpart",
     },
     transformIgnorePatterns: [
-        "/node_modules/(?!(mime|matrix-js-sdk|uuid|p-retry|is-network-error|react-merge-refs|is-ip|ip-regex|super-regex|function-timeout|time-span|convert-hrtime|clone-regexp|is-regexp|matrix-web-i18n|await-lock|@element-hq/web-shared-components|react-virtuoso|lodash|domutils|domhandler|domelementtype|dom-serializer|entities)).+$",
+        "/node_modules/(?!(mime|matrix-js-sdk|uuid|p-retry|is-network-error|react-merge-refs|is-ip|ip-regex|super-regex|function-timeout|time-span|convert-hrtime|clone-regexp|is-regexp|matrix-web-i18n|await-lock|@element-hq/web-shared-components|react-virtuoso|lodash|domutils|domhandler|domelementtype|dom-serializer|entities|sanitize-html|htmlparser2)).+$",
     ],
     collectCoverageFrom: [
         "<rootDir>/src/**/*.{js,ts,tsx}",
