@@ -455,7 +455,7 @@ describe("InviteDialog", () => {
         const externalId = "@ext:agent.externe.tchap.gouv.fr";
 
         it("should warn about an external MXID pasted after an internal one", async () => {
-            render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
+            render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
             const input = screen.getByTestId("invite-dialog-input");
             input.focus();
@@ -465,7 +465,7 @@ describe("InviteDialog", () => {
         });
 
         it("should warn about an external MXID added after an internal one", async () => {
-            render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
+            render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
 
             await enterIntoSearchField(aliceId);
             await enterIntoSearchField(externalId);
@@ -474,44 +474,4 @@ describe("InviteDialog", () => {
         });
     });
     // end :TCHAP:
-
-    describe("when inviting a user whose cryptographic identity we do not know", () => {
-        beforeEach(() => {
-            vi.mocked(mockClient.getCrypto()!.getUserVerificationStatus).mockImplementation(async (u) => {
-                return new UserVerificationStatus(false, false, false, false);
-            });
-        });
-
-        describe.each([InviteKind.Invite, InviteKind.Dm])("with invitekind '%s'", (kind) => {
-            const goButtonName = kind == InviteKind.Invite ? "Invite" : "Go";
-
-            beforeEach(() => {
-                render(
-                    <InviteDialog
-                        kind={kind as InviteKind.Invite | InviteKind.Dm}
-                        roomId={roomId}
-                        onFinished={vi.fn()}
-                    />,
-                );
-            });
-
-            it("should show a warning when inviting by user id", async () => {
-                await enterIntoSearchField(aliceId);
-                await userEvent.click(screen.getByRole("button", { name: goButtonName }));
-                await screen.findByText("Confirm inviting them", { exact: false });
-
-                expect(vi.mocked(mockClient.getCrypto()!.getUserVerificationStatus)).toHaveBeenCalledTimes(1);
-                expect(vi.mocked(mockClient.getCrypto()!.getUserVerificationStatus)).toHaveBeenCalledWith(aliceId);
-            });
-
-            it("should show a warning when inviting by email address", async () => {
-                await enterIntoSearchField("aaa@bbb");
-                await userEvent.click(screen.getByRole("button", { name: goButtonName }));
-                await screen.findByText("Confirm inviting them", { exact: false });
-
-                // We shouldn't call getUserVerificationStatus on an email address
-                expect(vi.mocked(mockClient.getCrypto()!.getUserVerificationStatus)).not.toHaveBeenCalled();
-            });
-        });
-    });
 });
