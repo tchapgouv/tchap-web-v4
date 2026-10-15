@@ -103,6 +103,9 @@ describe("InviteDialog", () => {
 
     beforeEach(() => {
         mockClient = getMockClientWithEventEmitter({
+            // :TCHAP:
+            credentials: { userId: bobId },
+            // end :TCHAP:
             getDomain: jest.fn().mockReturnValue(serverDomain),
             getUserId: jest.fn().mockReturnValue(bobId),
             getSafeUserId: jest.fn().mockReturnValue(bobId),
@@ -114,6 +117,11 @@ describe("InviteDialog", () => {
             getPushActionsForEvent: jest.fn(),
             mxcUrlToHttp: jest.fn().mockReturnValue(""),
             isRoomEncrypted: jest.fn().mockReturnValue(false),
+            // :TCHAP:
+            getCrypto: jest.fn().mockReturnValue({
+                isEncryptionEnabledInRoom: jest.fn().mockResolvedValue(false),
+            }),
+            // end :TCHAP:
             getProfileInfo: jest.fn().mockImplementation(async (userId: string) => {
                 if (userId === aliceId) return aliceProfileInfo;
                 if (userId === bobId) return bobProfileInfo;

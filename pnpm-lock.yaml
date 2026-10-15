@@ -783,7 +783,7 @@ importers:
         version: 2.9.1
     optionalDependencies:
       tchap-translations:
-        specifier: file:modules/tchap-translations
+        specifier: file:./modules/tchap-translations
         version: file:apps/web/modules/tchap-translations
 
   packages/module-api:
