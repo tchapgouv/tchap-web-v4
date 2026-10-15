@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { type SyntheticEvent } from "react";
-import maplibregl, { type MapMouseEvent } from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
 import { type RoomMember, ClientEvent, type IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
@@ -153,7 +153,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.marker?.setLngLat(new maplibregl.LngLat(position.coords.longitude, position.coords.latitude));
     };
 
-    private onClick = (event: MapMouseEvent): void => {
+    private onClick = (event: maplibregl.MapMouseEvent): void => {
         if (!this.marker) {
             this.addMarkerToMap();
         }
