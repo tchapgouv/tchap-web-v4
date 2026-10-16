@@ -30,7 +30,9 @@ import { UIFeature } from "../../../../../settings/UIFeature";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import createRoom from "../../../../../createRoom";
-import CreateRoomDialog from "../../../dialogs/CreateRoomDialog";
+// :TCHAP: create-room-dialog import CreateRoomDialog from "../../../dialogs/CreateRoomDialog";
+import CreateRoomDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapCreateRoomDialog";
+// end :TCHAP:
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import SettingsFieldset from "../../SettingsFieldset";

@@ -12,7 +12,9 @@ import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { calculateRoomVia } from "./permalinks/Permalinks";
 import Modal from "../Modal";
-import CreateRoomDialog from "../components/views/dialogs/CreateRoomDialog";
+// :TCHAP: create-room-dialog import CreateRoomDialog from "../components/views/dialogs/CreateRoomDialog";
+import CreateRoomDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapCreateRoomDialog";
+// end :TCHAP:
 import createRoom from "../createRoom";
 import { _t } from "../languageHandler";
 import SpacePublicShare from "../components/views/spaces/SpacePublicShare";
