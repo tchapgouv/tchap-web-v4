@@ -19,12 +19,9 @@ export default class VerificationComplete extends React.Component<IProps> {
     public render(): React.ReactNode {
         return (
             <div>
-                { /** :TCHAP: simplify-exchange-key-message - replace title and description */}
-                <h2>{ _t("Incoming Verification Request") }</h2>
-                <p>{ _t("The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.") }</p>
-                {/*
                 <h2>{_t("encryption|verification|complete_title")}</h2>
                 <p>{_t("encryption|verification|complete_description")}</p>
+                {/* :TCHAP: simplify-exchange-key-message - omit the extra verification explanation
                 <p>{_t("encryption|verification|explainer")}</p>
                 end :TCHAP: */}
                 <DialogButtons
