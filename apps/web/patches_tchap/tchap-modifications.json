@@ -278,5 +278,12 @@
           "src/stores/room-list-v3/section.ts",
           "src/settings/Settings.tsx"
         ]
+    },
+    "create-room-dialog": {
+        "files": [
+            "src/components/structures/MatrixChat.tsx",
+            "src/utils/space.tsx",
+            "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
+        ]
     }
 }
