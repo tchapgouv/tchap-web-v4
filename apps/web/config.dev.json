@@ -145,5 +145,6 @@
         "api_host": "https://posthog.tchap.incubateur.net"
     },
     "logout_redirect_url": "#/welcome",
-    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json"
+    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json",
+    "modules": ["/modules/tchap-visibility/index.js"]
 }

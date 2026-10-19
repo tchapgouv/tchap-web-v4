@@ -46,6 +46,9 @@ export default defineConfig({
     test: {
         projects: [
             "{apps,modules,packages}/*/vitest.config.ts",
+            // :TCHAP: component-visibility-module-api
+            "apps/*/modules/*/vitest.config.ts",
+            // end :TCHAP:
             // Browser-mode tests for element-web. A separate top-level project rather than a
             // nested one inside apps/web/vitest.config.ts, for the same reason as the
             // shared-components exclusion below; nested projects should land in vitest v5
@@ -57,7 +60,13 @@ export default defineConfig({
         ],
         coverage: {
             provider: "v8",
-            include: ["{apps,modules,packages}/*/src/**/*.{cts,ts,tsx}"],
+            // :TCHAP: component-visibility-module-api
+            // include: ["{apps,modules,packages}/*/src/**/*.{cts,ts,tsx}"],
+            include: [
+                "{apps,modules,packages}/*/src/**/*.{cts,ts,tsx}",
+                "apps/*/modules/*/src/**/*.{cts,ts,tsx}",
+            ],
+            // end :TCHAP:
             exclude: [
                 // Exclude test files
                 "**/*.{stories,test}.{ts,tsx}",

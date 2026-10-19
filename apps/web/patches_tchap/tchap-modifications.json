@@ -278,5 +278,8 @@
           "src/stores/room-list-v3/section.ts",
           "src/settings/Settings.tsx"
         ]
+    },
+     "component-visibility-module-api": {
+        "files": ["webpack.config.ts", "project.json", "customisations.json", "../../vitest.config.ts", "../../pnpm-workspace.yaml"]
     }
 }

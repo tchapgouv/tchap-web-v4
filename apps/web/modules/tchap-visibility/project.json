@@ -1,0 +1,37 @@
+{
+    "name": "tchap-visibility",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "cache": true,
+            "command": "vite build",
+            "inputs": ["{projectRoot}/**/*", "!{projectRoot}/lib/**/*", "!{projectRoot}/node_modules/**/*"],
+            "outputs": ["{projectRoot}/lib"],
+            "options": {
+                "cwd": "apps/web/modules/tchap-visibility"
+            },
+            "dependsOn": ["^build"]
+        },
+        "start": {
+            "command": "vite build --watch",
+            "continuous": true,
+            "dependsOn": ["build"],
+            "options": {
+                "cwd": "apps/web/modules/tchap-visibility"
+            }
+        },
+        "test:unit": {
+            "command": "vitest run",
+            "options": {
+                "cwd": "apps/web/modules/tchap-visibility"
+            }
+        },
+        "lint:types": {
+            "command": "tsc --noEmit",
+            "options": {
+                "cwd": "apps/web/modules/tchap-visibility"
+            },
+            "dependsOn": ["^build"]
+        }
+    }
+}
