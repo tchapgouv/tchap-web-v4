@@ -7,6 +7,9 @@ dedupePeers: true
 
 packages:
   - "apps/*"
+  # :TCHAP: component-visibility-module-api
+  - "apps/*/modules/*"
+  # end :TCHAP:
   - "packages/*"
   - "modules"
   - "modules/*"

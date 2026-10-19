@@ -742,6 +742,13 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                         context: path.resolve(__dirname, "src/vector/mobile_guide"),
                         to: "mobile_guide",
                     },
+                    // :TCHAP: component-visibility-module-api
+                    {
+                        from: "index.js*",
+                        context: path.resolve(__dirname, "modules/tchap-visibility/lib"),
+                        to: "modules/tchap-visibility",
+                    },
+                    // end :TCHAP:
                     // :TCHAP: for custom translation
                     {
                         from: "tchap_translations.json",

@@ -1,0 +1,7 @@
+{
+    "extends": "../../../../modules/tsconfig.json",
+    "compilerOptions": {
+        "strict": true
+    },
+    "include": ["src"]
+}
