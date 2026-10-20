@@ -278,5 +278,11 @@
           "src/stores/room-list-v3/section.ts",
           "src/settings/Settings.tsx"
         ]
+    },
+    "unknown-body-decryption-message": {
+        "files": [
+            "src/components/views/messages/MessageEvent.tsx",
+            "src/components/views/messages/MessageEvent.tchap.test.tsx"
+        ]
     }
 }
