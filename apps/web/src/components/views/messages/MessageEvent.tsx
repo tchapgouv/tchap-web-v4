@@ -45,6 +45,9 @@ import {
     renderMBody,
 } from "./MBodyFactory";
 import { TextualBodyFactory } from "./TextualBodyFactory";
+// :TCHAP: unknown-body-decryption-message
+import { _t } from "../../../languageHandler";
+// end :TCHAP:
 
 import { ContentScannerMediaHelper } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
@@ -100,7 +103,15 @@ function MjolnirBodyWrappedView({ mxEvent, onMessageAllowed, ref }: IBodyProps):
 }
 
 function UnknownBody({ mxEvent, ref }: IBodyProps): JSX.Element {
-    return <UnknownBodyView text={mxEvent.getContent().body} ref={ref} className="mx_UnknownBody" />;
+    // :TCHAP: unknown-body-decryption-message
+    // return <UnknownBodyView text={mxEvent.getContent().body} ref={ref} className="mx_UnknownBody" />;
+    const content = mxEvent.getContent();
+    const text =
+        content.msgtype === "m.bad.encrypted"
+            ? _t("Decryption fail: Please open Tchap on an other connected device to allow key sharing.")
+            : content.body;
+    return <UnknownBodyView text={text} ref={ref} className="mx_UnknownBody" />;
+    // end :TCHAP:
 }
 
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
