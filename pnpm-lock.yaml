@@ -43,7 +43,6 @@ overrides:
   caniuse-lite: 1.0.30001781
   markdown-it: 14.1.1
   testcontainers: ^11.0.0
-  matrix-widget-api: ^1.17.0
   qs: 6.15.0
   ajv@6.12.6: 6.14.0
   ajv@>=8 <8.18.0: 8.18.0
@@ -328,8 +327,8 @@ importers:
         specifier: 41.4.0
         version: 41.4.0
       matrix-widget-api:
-        specifier: ^1.17.0
-        version: 1.20.0
+        specifier: ^1.16.1
+        version: 1.16.1
       memoize-one:
         specifier: ^6.0.0
         version: 6.0.0
@@ -818,7 +817,7 @@ importers:
         version: 4.1.2(@vitest/browser@4.1.10)(vitest@4.1.11)
       matrix-widget-api:
         specifier: ^1.17.0
-        version: 1.17.0
+        version: 1.20.0
       rollup-plugin-external-globals:
         specifier: ^0.13.0
         version: 0.13.0(rollup@4.60.1(patch_hash=603340e49399c6044e41a3998891667387d5ec1acbd38d4e5862f2ba3ef58de8))
@@ -6517,6 +6516,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  baseline-browser-mapping@2.11.30:
+    resolution: {integrity: sha512-YJs6Pz17RMNv8HoyKREtCY38E3BV1nPkWVmIb+XN1uHC1Vqt3KZCH/uJH9ZKRoiKb/icZ6tvehyee6RZNbFfRA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   batch@0.6.1:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
 
@@ -6611,6 +6615,11 @@ packages:
 
   browserslist@4.29.3:
     resolution: {integrity: sha512-1R4kiYKXGViqEN0CnoDrXc1StD9niAwu+j2dukWzrD4bJgsD4lDmEp0CRbc6E/vYJIfTHwPmwyaKtVSudICdPA==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+
+  browserslist@4.29.4:
+    resolution: {integrity: sha512-2TcbbiwXEq+N0kD36tykpCfyyQigUXmuwNQbnPp4Xk4PX9JOqVIKjJlIDjpH7uY6tmRGoAd+apeT1p60T8wsdA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -7646,6 +7655,9 @@ packages:
 
   electron-to-chromium@1.5.456:
     resolution: {integrity: sha512-8hboqI6xesozteFb8aa7OGknvxUtTeRJLz0FoePysUEh/oWbddykIGdgpEJRbPRg/nIMfBf2DFos+H2MtvJl2A==}
+
+  electron-to-chromium@1.5.461:
+    resolution: {integrity: sha512-3WZFARz1By+/rYcqQ0OLj4UcEdhd6tz2LEcDtKBUq7ey77EeJ1OtetY/5hjSUxw7dC5r5mA7FfkhRbqO9vnTCg==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -9737,8 +9749,8 @@ packages:
     resolution: {integrity: sha512-oY4YZCU8OqDZzmCiJpo8XrATa7XNOB5oFyIpE7O0jjaIEeu6LnQrHmm/fpsYkPUENVzGJm1YdoOtvcBrQx+h2g==}
     hasBin: true
 
-  matrix-widget-api@1.17.0:
-    resolution: {integrity: sha512-5FHoo3iEP3Bdlv5jsYPWOqj+pGdFQNLWnJLiB0V7Ygne7bb+Gsj3ibyFyHWC6BVw+Z+tSW4ljHpO17I9TwStwQ==}
+  matrix-widget-api@1.16.1:
+    resolution: {integrity: sha512-oCfTV4xNPo02qIgveqdkIyKQjOPpsjhF3bmJBotHrhr8TsrhVa7kx8PtuiUPnQTjz0tdBle7falR2Fw8VKsedw==}
 
   matrix-widget-api@1.20.0:
     resolution: {integrity: sha512-qwFP37rgns7mPesM5/vvZgknzb+kvyRB5BISv5sCuBxsGMceMr+Kogf7OkjRxBXdMCPBFuf6gIuYRe5S+lpzQw==}
@@ -13391,7 +13403,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 8.0.5
       '@babel/helper-validator-option': 8.0.0
-      browserslist: 4.29.3
+      browserslist: 4.29.4
       flru: 1.0.2
       verkit: 0.5.0
 
@@ -19545,6 +19557,8 @@ snapshots:
 
   baseline-browser-mapping@2.11.28: {}
 
+  baseline-browser-mapping@2.11.30: {}
+
   batch@0.6.1: {}
 
   bcrypt-pbkdf@1.0.2:
@@ -19696,6 +19710,14 @@ snapshots:
       electron-to-chromium: 1.5.456
       node-releases: 2.0.59
       update-browserslist-db: 1.3.4(browserslist@4.29.3)
+
+  browserslist@4.29.4:
+    dependencies:
+      baseline-browser-mapping: 2.11.30
+      caniuse-lite: 1.0.30001781
+      electron-to-chromium: 1.5.461
+      node-releases: 2.0.59
+      update-browserslist-db: 1.3.4(browserslist@4.29.4)
 
   bs58@6.0.0:
     dependencies:
@@ -20809,6 +20831,8 @@ snapshots:
   ejs@5.0.1: {}
 
   electron-to-chromium@1.5.456: {}
+
+  electron-to-chromium@1.5.461: {}
 
   elliptic@6.6.1:
     dependencies:
@@ -23743,7 +23767,7 @@ snapshots:
       jwt-decode: 4.0.0
       loglevel: 1.9.2
       matrix-events-sdk: 0.0.1
-      matrix-widget-api: 1.20.0
+      matrix-widget-api: 1.16.1
       oidc-client-ts: 3.5.0
       p-retry: 8.0.1
       sdp-transform: 3.0.0
@@ -23760,7 +23784,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  matrix-widget-api@1.17.0:
+  matrix-widget-api@1.16.1:
     dependencies:
       '@types/events': 3.0.3
       events: 3.3.0
@@ -26960,6 +26984,12 @@ snapshots:
   update-browserslist-db@1.3.4(browserslist@4.29.3):
     dependencies:
       browserslist: 4.29.3
+      escalade: 3.2.0
+      picocolors: 1.1.1
+
+  update-browserslist-db@1.3.4(browserslist@4.29.4):
+    dependencies:
+      browserslist: 4.29.4
       escalade: 3.2.0
       picocolors: 1.1.1
 
