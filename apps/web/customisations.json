@@ -1,6 +1,4 @@
 {
-    "res/img/user-onboarding/WorkMessaging.png": "res/img/tchap/multi-device-messaging.png",
-    "src/async-components/views/dialogs/security/ExportE2eKeysDialog.tsx": "src/tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx",
     "src/components/views/verification/VerificationComplete.tsx": "src/tchap/components/views/verification/TchapVerificationComplete.tsx",
     "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/tchap/components/views/elements/TchapRoomTypeSelector.tsx",
     "src/customisations/ComponentVisibility.ts": "src/tchap/customisations/TchapComponentVisibility.ts",
