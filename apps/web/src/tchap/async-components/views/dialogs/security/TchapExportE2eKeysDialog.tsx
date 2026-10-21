@@ -28,6 +28,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import TchapExportE2eKeysSuccessDialog from "./TchapExportE2eKeysSuccessDialog";
 import PassphraseConfirmField from "~tchap-web/src/components/views/auth/PassphraseConfirmField";
 import PassphraseField from "~tchap-web/src/components/views/auth/PassphraseField";
+import { Button } from "@vector-im/compound-web";
 
 enum Phase {
     Edit = "edit",
@@ -245,15 +246,20 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                         </div>
                     </div>
                     <div className="mx_Dialog_buttons">
-                        <button onClick={this.onCancelClick} disabled={disableForm}>
-                            {_t("action|cancel")}
-                        </button>
                         <input
-                            className="mx_Dialog_primary"
+                            className="mx_LegacyDialogButton mx_Dialog_primary"
                             disabled={disableForm}
                             type="submit"
                             value={_t("Save my keys")}
                         />
+                        <button 
+                            className="mx_LegacyDialogButton"
+                            onClick={this.onCancelClick} 
+                            type="button"
+                            disabled={disableForm}
+                        >
+                            {_t("action|cancel")}
+                        </button>
                     </div>
                 </form>
             </BaseDialog>
