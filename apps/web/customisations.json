@@ -1,5 +1,4 @@
 {
-    "res/img/user-onboarding/WorkMessaging.png": "res/img/tchap/multi-device-messaging.png",
     "src/components/views/dialogs/CreateRoomDialog.tsx": "src/tchap/components/views/dialogs/TchapCreateRoomDialog.tsx",
     "src/components/views/verification/VerificationComplete.tsx": "src/tchap/components/views/verification/TchapVerificationComplete.tsx",
     "src/components/views/elements/TchapRoomTypeSelector.tsx": "src/tchap/components/views/elements/TchapRoomTypeSelector.tsx",
