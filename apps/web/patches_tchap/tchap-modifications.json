@@ -279,6 +279,9 @@
           "src/settings/Settings.tsx"
         ]
     },
+    "user-menu": {
+        "files": ["src/components/views/spaces/SpacePanel.tsx"]
+    },
     "create-room-dialog": {
         "files": [
             "src/components/structures/MatrixChat.tsx",

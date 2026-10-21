@@ -31,7 +31,9 @@ import {
     PlusIcon,
     ChevronRightIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
+// :TCHAP: user-menu import { useCreateAutoDisposedViewModel, UserMenu } from "@element-hq/web-shared-components";
 import { useCreateAutoDisposedViewModel } from "@element-hq/web-shared-components";
+// end :TCHAP:
 
 import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
@@ -83,7 +85,9 @@ import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP
 import TchapGaufre from "~tchap-web/src/tchap/components/views/common/Gaufre";
 import QuickFaqButton from "~tchap-web/src/tchap/components/views/common/QuickFaq"; // :TCHAP: improve-faq-visibility
 import SpacePanelTchap from "~tchap-web/src/tchap/components/views/common/SpacePanelTchap";
+// :TCHAP: user-menu
 import UserMenu from "~tchap-web/src/tchap/components/structures/UserMenu.tsx";
+// end :TCHAP:
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const sdkContext = useContext(SDKContext);
