@@ -279,6 +279,13 @@
           "src/settings/Settings.tsx"
         ]
     },
+    "create-room-dialog": {
+        "files": [
+            "src/components/structures/MatrixChat.tsx",
+            "src/utils/space.tsx",
+            "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx"
+          ]
+    },
     "export-e2e-keys-without-customisations": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1702",
         "files": [
