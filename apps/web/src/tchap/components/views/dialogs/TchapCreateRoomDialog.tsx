@@ -8,12 +8,10 @@ Tchap does not support spaces for now, so there are no settings dependent on spa
 members"). Element uses JoinRule.Restricted for this.
 When/if Tchap supports spaces, we can decide on more specific settings if needed.
 
-Note on imports : because this file will be copied to a different directory by the customisations
-mechanism, imports must use absolute paths.
-Except when importing from other customisation files. Then imports must use relative paths.
+This component is imported directly by the room creation entry points.
 */
 import React, { type ChangeEvent, createRef, type FormEvent, type KeyboardEvent } from "react";
-import { type Room } from "matrix-js-sdk/src/matrix";
+import { type Room, type RoomType } from "matrix-js-sdk/src/matrix";
 
 import TchapUtils from "../../../util/TchapUtils";
 import TchapRoomTypeSelector from "../elements/TchapRoomTypeSelector";
@@ -34,6 +32,7 @@ import BaseDialog from "~tchap-web/src/components/views/dialogs/BaseDialog";
 
 // We leave the same props as Element's version, to avoid unknown props warnings.
 interface IProps {
+    type?: RoomType; // unused for Tchap version
     defaultPublic?: boolean; // unused for Tchap version
     defaultName?: string;
     parentSpace?: Room;

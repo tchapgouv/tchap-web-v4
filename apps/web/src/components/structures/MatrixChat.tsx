@@ -79,7 +79,9 @@ import { ModuleRunner } from "../../modules/ModuleRunner";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog from "../views/dialogs/UserSettingsDialog";
-import CreateRoomDialog from "../views/dialogs/CreateRoomDialog";
+// :TCHAP: create-room-dialog import CreateRoomDialog from "../views/dialogs/CreateRoomDialog";
+import CreateRoomDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapCreateRoomDialog";
+// end :TCHAP:
 import IncomingSasDialog from "../views/dialogs/IncomingSasDialog";
 import CompleteSecurity from "./auth/CompleteSecurity";
 import Welcome from "../views/auth/Welcome";
