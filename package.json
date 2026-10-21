@@ -84,6 +84,7 @@
             "react-beautiful-dnd": "13"
         },
         "overrides": {
+            "@matrix-org/matrix-sdk-crypto-wasm": "18.1.0",
             "pretty-format@30>react-is": "19.2.4",
             "@types/react": "catalog:",
             "@types/react-dom": "catalog:",
