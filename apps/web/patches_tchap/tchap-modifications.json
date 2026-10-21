@@ -278,5 +278,12 @@
           "src/stores/room-list-v3/section.ts",
           "src/settings/Settings.tsx"
         ]
+    },
+    "export-e2e-keys-without-customisations": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1702",
+        "files": [
+            "src/components/views/settings/encryption/AdvancedPanel.tsx",
+            "src/tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx"
+        ]
     }
 }

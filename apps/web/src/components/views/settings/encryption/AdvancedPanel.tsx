@@ -146,7 +146,9 @@ function EncryptionDetails({ onResetIdentityClick }: EncryptionDetails): JSX.Ele
                         onClick={() =>
                             Modal.createDialog(
                                 lazy(
-                                    () => import("../../../../async-components/views/dialogs/security/ExportE2eKeysDialog"),
+                                    // :TCHAP: export-e2e-keys-without-customisations () => import("../../../../async-components/views/dialogs/security/ExportE2eKeysDialog"),
+                                    () => import("../../../../tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog"),
+                                    // end :TCHAP:
                                 ),
                                 { matrixClient },
                             )

@@ -25,20 +25,20 @@ import { KeysStartingWith } from "~tchap-web/src/@types/common";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import TchapExportE2eKeysSuccessDialog from "./TchapExportE2eKeysSuccessDialog";
 import PassphraseConfirmField from "~tchap-web/src/components/views/auth/PassphraseConfirmField";
 import PassphraseField from "~tchap-web/src/components/views/auth/PassphraseField";
+import { Button } from "@vector-im/compound-web";
 
 enum Phase {
     Edit = "edit",
     Exporting = "exporting",
 }
 
-interface IProps extends DialogProps {
-    allowLogout: boolean;
+interface IProps {
+    allowLogout?: boolean;
     matrixClient: MatrixClient;
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
@@ -99,7 +99,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
             .then(async () => {
                 // :TCHAP: added a confirmation modal
                 const { finished } = Modal.createDialog(TchapExportE2eKeysSuccessDialog, {
-                    allowLogout: this.props.allowLogout,
+                    allowLogout: this.props.allowLogout ?? false,
                 });
                 const [success] = await finished;
                 if (success) {
@@ -172,7 +172,7 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
         return false;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const disableForm = this.state.phase === Phase.Exporting;
 
         return (
@@ -219,7 +219,9 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                                     type="password"
                                     disabled={disableForm}
                                     autoComplete="new-password"
-                                    fieldRef={(field) => (this.fieldPassword = field)}
+                                    fieldRef={(field) => {
+                                        this.fieldPassword = field;
+                                    }}
                                 />
                             </div>
                             <div className="mx_E2eKeysDialog_inputRow">
@@ -236,21 +238,28 @@ export default class TchapExportE2eKeysDialog extends React.Component<IProps, IS
                                     type="password"
                                     disabled={disableForm}
                                     autoComplete="new-password"
-                                    fieldRef={(field) => (this.fieldPasswordConfirm = field)}
+                                    fieldRef={(field) => {
+                                        this.fieldPasswordConfirm = field;
+                                    }}
                                 />
                             </div>
                         </div>
                     </div>
                     <div className="mx_Dialog_buttons">
-                        <button onClick={this.onCancelClick} disabled={disableForm}>
-                            {_t("action|cancel")}
-                        </button>
                         <input
-                            className="mx_Dialog_primary"
+                            className="mx_LegacyDialogButton mx_Dialog_primary"
                             disabled={disableForm}
                             type="submit"
                             value={_t("Save my keys")}
                         />
+                        <button 
+                            className="mx_LegacyDialogButton"
+                            onClick={this.onCancelClick} 
+                            type="button"
+                            disabled={disableForm}
+                        >
+                            {_t("action|cancel")}
+                        </button>
                     </div>
                 </form>
             </BaseDialog>
