@@ -43,7 +43,11 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
     private onRefreshClick = (): void => {
         // Is this likely to help? Probably not, but giving only one button
         // that clears your storage seems awful.
-        window.location.reload();
+
+        // :TCHAP: window.location.reload()
+        // Temporary fix to redirect users with session restore
+        // error to a version with updates that might fix the issue.
+        window.open(`${window.location.origin}/join-new`, "_self");
     };
 
     public render(): React.ReactNode {
@@ -55,30 +59,35 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
             </button>
         );
 
-        let dialogButtons;
-        if (SdkConfig.get().bug_report_endpoint_url) {
-            dialogButtons = (
-                <DialogButtons
-                    primaryButton={_t("bug_reporting|send_logs")}
-                    onPrimaryButtonClick={this.sendBugReport}
-                    focus={true}
-                    hasCancel={false}
-                >
-                    {clearStorageButton}
-                </DialogButtons>
-            );
-        } else {
-            dialogButtons = (
-                <DialogButtons
-                    primaryButton={_t("action|refresh")}
-                    onPrimaryButtonClick={this.onRefreshClick}
-                    focus={true}
-                    hasCancel={false}
-                >
-                    {clearStorageButton}
-                </DialogButtons>
-            );
-        }
+        // :TCHAP: 
+        // Temporary fix to redirect users with session restore 
+        // error to a version with updates that might fix the issue.
+
+        // let dialogButtons;
+        // if (SdkConfig.get().bug_report_endpoint_url) {
+        //     dialogButtons = (
+        //         <DialogButtons
+        //             primaryButton={_t("bug_reporting|send_logs")}
+        //             onPrimaryButtonClick={this.sendBugReport}
+        //             focus={true}
+        //             hasCancel={false}
+        //         >
+        //             {clearStorageButton}
+        //         </DialogButtons>
+        //     );
+        // } else {
+        // end :TCHAP:
+        const dialogButtons = (
+            <DialogButtons
+                primaryButton={_t("action|refresh")}
+                onPrimaryButtonClick={this.onRefreshClick}
+                focus={true}
+                hasCancel={false}
+            >
+                {clearStorageButton}
+            </DialogButtons>
+        );
+        // }
 
         return (
             <BaseDialog
