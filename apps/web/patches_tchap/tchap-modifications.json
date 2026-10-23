@@ -295,5 +295,10 @@
             "src/components/views/settings/encryption/AdvancedPanel.tsx",
             "src/tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx"
         ]
+    },
+    "help-user-settings-tab": {
+        "files": [
+            "apps/web/src/components/views/dialogs/UserSettingsDialog.tsx"
+        ]
     }
 }
