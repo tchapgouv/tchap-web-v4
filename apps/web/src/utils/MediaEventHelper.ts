@@ -11,7 +11,10 @@ import { type FileContent, type ImageContent, type MediaEventContent } from "mat
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { LazyValue } from "./LazyValue";
-import { type Media, mediaFromContent } from "../customisations/Media";
+// :TCHAP: content-scanner
+// import { type Media, mediaFromContent } from "../customisations/Media";
+import { type Media, mediaFromContent } from "../tchap/customisations/ContentScanningMedia";
+// end :TCHAP:
 import { decryptFile } from "./DecryptFile";
 import { type IDestroyable } from "./IDestroyable";
 import { getBlobSafeMimeType } from "./blobs.ts";

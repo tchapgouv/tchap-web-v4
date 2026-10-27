@@ -68,7 +68,7 @@ export function FileBodyFactory({
         () =>
             new FileBodyViewModel({
                 mxEvent,
-                // :TCHAP: - mediaEventHelper,
+                // :TCHAP: content-scanner - mediaEventHelper,
                 mediaEventHelper: scanningMediaHelper,
                 forExport,
                 showFileInfo,
@@ -81,7 +81,7 @@ export function FileBodyFactory({
     useEffect(() => {
         vm.setProps({
             mxEvent,
-            // :TCHAP: - mediaEventHelper,
+            // :TCHAP: content-scanner - mediaEventHelper,
             mediaEventHelper : scanningMediaHelper,
             forExport,
             showFileInfo,
@@ -300,7 +300,7 @@ export function ImageBodyFactory({
     }
 
     return (
-        // :TCHAP: <ImageBodyView
+        // :TCHAP: content-scanner - <ImageBodyView
         //     vm={vm}
             //     className="mx_ImageBody"
             //     containerClassName="mx_ImageBody_container"

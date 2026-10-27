@@ -18,7 +18,7 @@ import { type Playback } from "../../../audio/Playback";
 import RoomContext from "../../../contexts/RoomContext";
 import { FileBodyFactory, renderMBody } from "./MBodyFactory";
 
-import MAudioBody from "~tchap-web/src/tchap/components/views/messages/OriginalAudioBody"; // :TCHAP: content-scanner
+import MAudioBody from "./MAudioBody";
 
 export default class MVoiceMessageBody extends MAudioBody {
     public static contextType = RoomContext;

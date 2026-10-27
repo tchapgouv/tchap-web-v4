@@ -308,5 +308,12 @@
         "files": [
             "apps/web/src/components/views/dialogs/UserSettingsDialog.tsx"
         ]
+    },
+    "content-scanner": {
+        "files": [
+            "apps/web/src/components/views/messages/MBodyFactory.tsx",
+            "packages/shared-components/src/room/timeline/event-tile/actions/ActionBarView/ActionBarView.tsx",
+            "apps/web/src/components/views/messages/MVoiceOrAudioBody.tsx"
+        ]
     }
 }

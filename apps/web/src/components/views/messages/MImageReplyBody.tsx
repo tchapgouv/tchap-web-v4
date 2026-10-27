@@ -619,7 +619,6 @@ export class ImageBodyBaseInner extends React.Component<ImageBodyBaseProps, ISta
     }
 }
 
-// import { MImageBodyInner } from "~tchap-web/src/tchap/components/views/messages/OriginalImageBody"; // :TCHAP: content-scanner
 
 const FORCED_IMAGE_HEIGHT = 44;
 
