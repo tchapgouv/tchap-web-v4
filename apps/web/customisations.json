@@ -1,11 +1,7 @@
 {
-    "src/components/views/verification/VerificationComplete.tsx": "src/tchap/components/views/verification/TchapVerificationComplete.tsx",
     "src/customisations/ComponentVisibility.ts": "src/tchap/customisations/TchapComponentVisibility.ts",
     "src/customisations/Media.ts": "src/tchap/customisations/ContentScanningMedia.ts",
     "src/components/views/messages/DownloadActionButton.tsx": "src/tchap/customisations/components/views/messages/ContentScanningDownloadActionButton.tsx",
-    "src/components/views/messages/UnknownBody.tsx": "src/tchap/components/views/messages/TchapUnknownBody.tsx",
-    "src/components/views/settings/JoinRuleSettings.tsx": "src/tchap/components/views/settings/TchapJoinRuleSettings.tsx",
-    "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx": "src/tchap/components/views/settings/tabs/user/TchapHelpUserSettingsTab.tsx",
     "src/components/views/messages/MAudioBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningAudioBody.tsx",
     "src/components/views/messages/MVoiceMessageBody.tsx": "src/tchap/customisations/components/views/messages/ContentScanningVoiceMessageBody.tsx",
     "src/tchap/components/views/messages/OriginalAudioBody.tsx": "src/components/views/messages/MAudioBody.tsx",

@@ -1,4 +1,7 @@
 {
+    "simplify-exchange-key-message": {
+        "files": ["src/components/views/verification/VerificationComplete.tsx"]
+    },
     "onboarding-add-secure-backup": {
         "PR": "https://github.com/tchapgouv/tchap-web-v4/pull/978/",
         "files": ["src/hooks/useUserOnboardingContext.ts", "src/hooks/useUserOnboardingTasks.ts"]
@@ -294,6 +297,16 @@
         "files": [
             "src/components/views/settings/encryption/AdvancedPanel.tsx",
             "src/tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx"
+        ]
+    },
+    "join-rules-settings": {
+        "files": [
+            "apps/web/src/components/views/settings/JoinRuleSettings.tsx"
+        ] 
+    },
+    "help-user-settings-tab": {
+        "files": [
+            "apps/web/src/components/views/dialogs/UserSettingsDialog.tsx"
         ]
     }
 }

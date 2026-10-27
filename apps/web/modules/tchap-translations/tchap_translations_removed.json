@@ -6,8 +6,6 @@
   "bug_reporting|error_empty",
   "bug_reporting|github_issue",
   "common|matrix",
-  "encryption|verification|complete_description",
-  "encryption|verification|complete_title",
   "encryption|verification|explainer",
   "encryption|verification|incoming_sas_device_dialog_text_1",
   "encryption|verification|incoming_sas_device_dialog_text_2",
@@ -48,5 +46,7 @@
   "slash_command|addwidget_invalid_protocol",
   "settings|security|message_search_pending_rooms",
   "encryption|verification|verify_by_completing_one_of",
-  "unsupported_browser"
+  "unsupported_browser",
+  "room_settings|security|join_rule_invite",
+  "room_settings|security|join_rule_public"
 ]
