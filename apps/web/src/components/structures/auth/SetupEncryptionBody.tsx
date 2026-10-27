@@ -265,16 +265,10 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                     <EncryptionCardButtons>
                         {verifyButton}
                         {useRecoveryKeyButton}
-<<<<<<< HEAD
                         {/* :TCHAP: help-access-verify-device */}
                         {tchapHelpButton}
-                            {/* end :TCHAP: */}
-                        <Button kind="secondary" onClick={this.onCantConfirmClick}>
-                            {_t("encryption|verification|reset_all")}
-                        </Button>
-=======
+                        {/* end :TCHAP: */}
                         {cantConfirmButton}
->>>>>>> v1.12.32
                         {signOutButton}
                     </EncryptionCardButtons>
                 </EncryptionCard>

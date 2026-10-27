@@ -53,28 +53,13 @@ import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 import { useIsEncrypted } from "../../../../hooks/useIsEncrypted.ts";
 import { useUserStatus } from "../../../../hooks/useUserStatus.ts";
 import { SDKContext } from "../../../../contexts/SDKContext.ts";
-
-<<<<<<< HEAD
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import Modal from "~tchap-web/src/Modal.tsx";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader.tsx"; // :TCHAP: customize-room-header-bar
 
-
-
-function RoomHeaderButtons({
-    room,
-    legacyAdditionalButtons,
-    extraButtons,
-}: {
-    room: Room;
-    legacyAdditionalButtons?: ViewRoomOpts["buttons"];
-    extraButtons?: JSX.Element;
-}): JSX.Element {
-=======
 function RoomHeaderButtons({ room, extraButtons }: { room: Room; extraButtons?: JSX.Element }): JSX.Element {
->>>>>>> v1.12.32
     const sdkContext = useContext(SDKContext);
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500, includeInvited: true });

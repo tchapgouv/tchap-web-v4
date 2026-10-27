@@ -16,3 +16,15 @@ export declare function percentageWithin(pct: number, min: number, max: number):
 export declare function sum(...i: number[]): number;
 
 export { }
+
+
+
+declare global {
+    type TranslationKey = _TranslationKey<typeof Translations>;
+}
+
+declare module "vitest/browser" {
+    interface BrowserCommands {
+        parkPointer: () => Promise<void>;
+    }
+}

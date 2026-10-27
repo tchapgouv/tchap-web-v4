@@ -682,21 +682,20 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 chunks: ["usercontent"],
             }),
 
-<<<<<<< HEAD
             // :TCHAP: welcome
             new HtmlWebpackPlugin({
                 template: "./res/welcome_mas.html",
                 filename: "welcome_mas.html",
                 minify: false,
                 chunks: [],
-=======
+            }),
+            
             // This is the PDF viewer's usercontent target (see docs/usercontent.md)
             new HtmlWebpackPlugin({
                 template: "./src/usercontent/pdf/index.html",
                 filename: "usercontent/pdf/index.html",
                 minify: false,
                 chunks: ["usercontent-pdf"],
->>>>>>> v1.12.32
             }),
 
             new HtmlWebpackInjectPreload({

@@ -31,12 +31,9 @@ import ConfirmKeyStorageOffDialog from "../components/views/dialogs/ConfirmKeySt
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { resetKeyBackupAndWait } from "../utils/crypto/resetKeyBackup";
 import { PosthogAnalytics } from "../PosthogAnalytics";
-<<<<<<< HEAD
 import Tchapi18nUtils from "../tchap/i18n/Tchapi18nUtils";
 import { TCHAP_AVAILABLE_LINK } from "../tchap/util/TchapUrls";
-=======
 import { encryptionSettingsStateForKeyStorageOutOfSyncForgotRecovery } from "../components/views/settings/tabs/user/EncryptionUserSettingsTab.tsx";
->>>>>>> v1.12.32
 
 const TOAST_KEY = "setupencryption";
 
@@ -134,33 +131,19 @@ const getDescription = (state: DeviceStateForToast): string | React.ReactNode =>
         case "set_up_recovery":
             return _t("encryption|set_up_recovery_toast_description");
         case "verify_this_session":
-<<<<<<< HEAD
             // :TCHAP: return _t("encryption|verify_toast_description", undefined, {
             //     a: (sub) => (
-            //         <a
+            //         <Link
             //             href="https://docs.element.io/latest/element-support/device-verification/how-to-verify-devices/"
             //             target="_blank"
-            //             rel="noreferrer noopener"
+            //             size="sm"
             //         >
             //             {sub}
-            //         </a>
+            //         </Link>
             //     ),
             // });
             return _t("encryption|verify_toast_description");
             // end :TCHAP:
-=======
-            return _t("encryption|verify_toast_description", undefined, {
-                a: (sub) => (
-                    <Link
-                        href="https://docs.element.io/latest/element-support/device-verification/how-to-verify-devices/"
-                        target="_blank"
-                        size="sm"
-                    >
-                        {sub}
-                    </Link>
-                ),
-            });
->>>>>>> v1.12.32
         case "key_storage_out_of_sync":
             // :TCHAP: return _t("encryption|key_storage_out_of_sync_description")
             return _t("encryption|key_storage_out_of_sync_description", {},

@@ -15,12 +15,8 @@
 # are the diffs vitest writes alongside it.
 /src/**/__screenshots__/*
 !/src/**/__screenshots__/linux/
-<<<<<<< HEAD
-/.vitest-attachments/
 
 
 
 # File from translations checkin scripts.
 modules/tchap-translations/tmp/*
-=======
->>>>>>> v1.12.32

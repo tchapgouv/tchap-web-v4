@@ -91,11 +91,9 @@ export interface FileBodyViewSnapshot {
      * Optional URL used for `UNENCRYPTED` download links.
      */
     downloadHref?: string;
-<<<<<<< HEAD
     // :TCHAP: content-scanner
     scanningState?: "scanning" | "unsafe" | "error" | "done";
     // end :TCHAP:
-=======
     /**
      * Whether to render a control, inside the info row, that opens the file in a viewer. Only set for
      * file types the host knows how to display, so no action icons appear by default.
@@ -113,7 +111,6 @@ export interface FileBodyViewSnapshot {
      * from {@link showDownload}, which is the separate full-width download control below the row.
      */
     showInlineDownload?: boolean;
->>>>>>> v1.12.32
 }
 
 export interface FileBodyViewActions {

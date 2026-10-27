@@ -1,20 +1,11 @@
 diff --git a/node_modules/matrix-js-sdk/src/crypto-api/index.ts b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
-index 9c24ca8..6c24a6c 100644
+index 218e6e1..16c4fc8 100644
 --- a/node_modules/matrix-js-sdk/src/crypto-api/index.ts
 +++ b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
-@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
- limitations under the License.
- */
- 
--import type { SecretsBundle } from "@matrix-org/matrix-sdk-crypto-wasm";
-+import type { PkMessage, SecretsBundle } from "@matrix-org/matrix-sdk-crypto-wasm";
- import type { IMegolmSessionData } from "../@types/crypto.ts";
- import type { ToDeviceBatch, ToDevicePayload } from "../models/ToDeviceMessage.ts";
- import { type Room } from "../models/room.ts";
 @@ -730,6 +730,14 @@ export interface CryptoApi {
       * @param secrets - The secrets bundle received from the other device
       */
-     importSecretsBundle?(secrets: Awaited<ReturnType<SecretsBundle["to_json"]>>): Promise<void>;
+     importSecretsBundle?(secrets: SecretsBundleJson): Promise<void>;
 +
 +    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 +    //
@@ -27,7 +18,7 @@ index 9c24ca8..6c24a6c 100644
  
  /** A reason code for a failure to decrypt an event. */
 diff --git a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
-index c6f68cb..4c3ea14 100644
+index 3904a9d..e947d1d 100644
 --- a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
 +++ b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
 @@ -2247,6 +2247,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH

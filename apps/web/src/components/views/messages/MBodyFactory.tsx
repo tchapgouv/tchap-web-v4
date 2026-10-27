@@ -5,15 +5,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-<<<<<<< HEAD
-import React, { type JSX, type RefObject, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { MsgType } from "matrix-js-sdk/src/matrix";
-import { type ImageContent,type MediaEventContent } from "matrix-js-sdk/src/types";
-=======
-import React, { type JSX, type RefObject, useContext, useEffect, useRef } from "react";
+import React, { type JSX, type RefObject, useContext, useEffect, useRef, useState, useMemo } from "react";
 import { type MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
-import { type ImageContent } from "matrix-js-sdk/src/types";
->>>>>>> v1.12.32
+import { type ImageContent, type MediaEventContent } from "matrix-js-sdk/src/types";
 import {
     DecryptionFailureBodyView,
     FileBodyView,
@@ -71,7 +65,6 @@ function LegacyFileBody({ mxEvent, mediaEventHelper, forExport, showFileInfo }: 
     const { timelineRenderingType } = useContext(RoomContext);
     const refIFrame = useRef<HTMLIFrameElement>(null) as RefObject<HTMLIFrameElement>;
     const refLink = useRef<HTMLAnchorElement>(null) as RefObject<HTMLAnchorElement>;
-<<<<<<< HEAD
     // Replace MediaEventHelper with ContentScannerMediaHelper
     // :TCHAP: content-scanner
     const [scanState, setScanState] = useState<ScanState>("scanning");
@@ -81,10 +74,7 @@ function LegacyFileBody({ mxEvent, mediaEventHelper, forExport, showFileInfo }: 
                 },
         [mxEvent],
     ) as any as typeof mediaEventHelper;
-=======
-    const documentPreviewsEnabled = useSettingValue("feature_pdf_viewer");
->>>>>>> v1.12.32
-
+    
     const content = mxEvent.getContent<MediaEventContent>();
     scanningMediaHelper?.onScanStateChange(() => {
         if (scanState !== scanningMediaHelper.getScanState()) {
@@ -92,6 +82,8 @@ function LegacyFileBody({ mxEvent, mediaEventHelper, forExport, showFileInfo }: 
         }
     });
     //  end :TCHAP:
+
+    const documentPreviewsEnabled = useSettingValue("feature_pdf_viewer");
     const vm = useCreateAutoDisposedViewModel(
         () =>
             new FileBodyViewModel({
@@ -117,11 +109,7 @@ function LegacyFileBody({ mxEvent, mediaEventHelper, forExport, showFileInfo }: 
             timelineRenderingType,
             documentPreviewsEnabled,
         });
-<<<<<<< HEAD
-    }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, vm, scanningMediaHelper ]);
-=======
-    }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, documentPreviewsEnabled, vm]);
->>>>>>> v1.12.32
+    }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, documentPreviewsEnabled, vm, scanningMediaHelper]);
 
 
     // :TCHAP: return <FileBodyView vm={vm} refIFrame={refIFrame} refLink={refLink} className="mx_MFileBody" />;

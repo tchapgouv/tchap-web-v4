@@ -389,16 +389,15 @@ export enum Action {
     FocusMessageSearch = "focus_search",
 
     /**
-<<<<<<< HEAD
      * :TCHAP: sso-agentconnect-flow - Open new page to check email instance before launching SSO
      */
     EmailPrecheckSSO = "email_precheck_sso",
-=======
+    
+    /**
      * Opens the given event's attachment in its document viewer in the right panel. Use with an
      * OpenDocumentViewerPayload.
      */
     OpenDocumentViewer = "open_document_viewer",
->>>>>>> v1.12.32
 
     /**
      * Open the direct message dialog

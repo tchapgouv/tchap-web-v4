@@ -220,11 +220,8 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                         type="number"
                         value={this.state.crawlerSleepTime.toString()}
                         onChange={this.onCrawlerSleepTimeChange}
-<<<<<<< HEAD
                     /> */}
                     {/* end :TCHAP: */}
-=======
-                    />
                     <h3>{_t("settings|security|tokenizer_mode")}</h3>
                     <Root>
                         <InlineField
@@ -256,7 +253,6 @@ export default class ManageEventIndexDialog extends React.Component<IProps, ISta
                             <HelpMessage>{_t("settings|security|tokenizer_mode_language_description")}</HelpMessage>
                         </InlineField>
                     </Root>
->>>>>>> v1.12.32
                 </div>
             </div>
         );

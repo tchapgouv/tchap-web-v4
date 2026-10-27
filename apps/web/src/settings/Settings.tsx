@@ -373,13 +373,10 @@ export interface Settings {
     "inviteRules": IBaseSetting<ComputedInviteConfig>;
     "blockInvites": IBaseSetting<boolean>;
     "Developer.elementCallUrl": IBaseSetting<string>;
-<<<<<<< HEAD
     // :TCHAP:
     "Tauri.autoLaunch": IBaseSetting<"enabled" | "disabled">;
     // end :TCHAP:
-=======
     "Developer.elementCallMockComponent": IBaseSetting<boolean>;
->>>>>>> v1.12.32
     "RoomList.CustomSectionData": IBaseSetting<CustomSectionsData>;
     "RoomList.OrderedCustomSections": IBaseSetting<ReorderableSection[]>;
     "RoomList.SectionExpansionState": IBaseSetting<SectionExpansionState>;
@@ -742,18 +739,13 @@ export const SETTINGS: Settings = {
     "Notifications.activityIsUnread": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("settings|activityIsUnread"),
-<<<<<<< HEAD
         // :TCHAP: default: false,
         default: true,
         // end :TCHAP:
-        controller: new RequiresSettingsController(["Notifications.showbold"]),
-=======
-        default: false,
         controller: [
             new AnalyticsController("WebSettingsActivityIsUnreadToggle"),
             new RequiresSettingsController(["Notifications.showbold"]),
         ],
->>>>>>> v1.12.32
     },
     "Notifications.tac_only_notifications": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -1567,7 +1559,6 @@ export const SETTINGS: Settings = {
         displayName: _td("devtools|settings|elementCallUrl"),
         default: "",
     },
-<<<<<<< HEAD
     // :TCHAP: desktop settings
     "Tauri.autoLaunch": {
         supportedLevels: [SettingLevel.PLATFORM],
@@ -1577,13 +1568,12 @@ export const SETTINGS: Settings = {
             { value: "disabled", label: _td("settings|start_automatically|disabled") }
         ],
         default: "enabled",
-=======
+    },
     "Developer.elementCallMockComponent": {
         // With feature_element_call_react: render the mock Element Call component (HostBridge buttons, no
         // media) instead of the real one. Used by Playwright and for development without a LiveKit backend.
         supportedLevels: [SettingLevel.DEVICE],
         displayName: _td("devtools|settings|elementCallMockComponent"),
         default: false,
->>>>>>> v1.12.32
     },
 };

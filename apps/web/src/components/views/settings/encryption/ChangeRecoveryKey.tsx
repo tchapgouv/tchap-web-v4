@@ -104,21 +104,12 @@ export function ChangeRecoveryKey({
                 <KeyPanel
                     // encodedPrivateKey is always defined, the optional typing is incorrect
                     recoveryKey={recoveryKey.encodedPrivateKey!}
-<<<<<<< HEAD
                     onConfirmClick={() => {
                             // :TCHAP: recovery-code-flow-improve
                             copyPlaintext(recoveryKey.encodedPrivateKey!);
                             // end :TCHAP:
-                            setState((currentState) =>
-                                currentState === "save_key_change_flow"
-                                    ? "confirm_key_change_flow"
-                                    : "confirm_key_setup_flow",
-                            )
-                        }
-                    }
-=======
-                    onConfirmClick={() => setState("confirm_key_flow")}
->>>>>>> v1.12.32
+                            setState("confirm_key_flow")
+                        }}
                     onCancelClick={onCancelClickWrapper}
                 />
             );

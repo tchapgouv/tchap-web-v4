@@ -204,15 +204,12 @@ export class FileBodyViewModel
                 showDownload,
                 downloadLabel,
                 downloadTitle: downloadTitle,
-<<<<<<< HEAD
                 // :TCHAP: content-scanner
                 ...(scanningState && { scanningState }),
                 // end :TCHAP:
-=======
                 showOpen,
                 openLabel,
                 showInlineDownload,
->>>>>>> v1.12.32
             };
         }
 
@@ -227,15 +224,12 @@ export class FileBodyViewModel
                 downloadLabel,
                 downloadTitle: downloadTitle,
                 downloadHref: media.srcHttp,
-<<<<<<< HEAD
                 // :TCHAP: content-scanner
                 ...(scanningState && { scanningState }),
                 // end :TCHAP:
-=======
                 showOpen,
                 openLabel,
                 showInlineDownload,
->>>>>>> v1.12.32
             };
         }
 

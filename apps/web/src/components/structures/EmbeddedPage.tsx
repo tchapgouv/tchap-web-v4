@@ -128,18 +128,17 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
             [`${className}_loggedIn`]: !!client,
         });
 
-<<<<<<< HEAD
         // :TCHAP: we trust our html, go back previous version
         // const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
         //     ...sanitizeHtmlParams,
         //     transformTags: {
-        //         ...objectExcluding(transformTags, [
-        //             // Disable the transformer for `img` as it only allows mxc resources
-        //             "img",
-        //             // Disable the default transformer as it forbids inline styles
-        //             "*",
-        //         ]),
-        //         a: (tagName: string, attribs: sanitizeHtml.Attributes) => {
+        //         ...transformTags,
+        //         // The shared sanitizer supplies restrictive defaults when these handlers are
+        //         // omitted, so embedded pages use identity transforms to preserve their image
+        //         // URLs and inline styles.
+        //         "img": (tagName: string, attribs: HtmlSanitizeAttributes) => ({ tagName, attribs }),
+        //         "*": (tagName: string, attribs: HtmlSanitizeAttributes) => ({ tagName, attribs }),
+        //         "a": (tagName: string, attribs: HtmlSanitizeAttributes) => {
         //             if (attribs.href?.startsWith("#/")) {
         //                 return { tagName, attribs };
         //             }
@@ -149,25 +148,6 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         // });
         const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
         // end :TCHAP:
-=======
-        const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
-            ...sanitizeHtmlParams,
-            transformTags: {
-                ...transformTags,
-                // The shared sanitizer supplies restrictive defaults when these handlers are
-                // omitted, so embedded pages use identity transforms to preserve their image
-                // URLs and inline styles.
-                "img": (tagName: string, attribs: HtmlSanitizeAttributes) => ({ tagName, attribs }),
-                "*": (tagName: string, attribs: HtmlSanitizeAttributes) => ({ tagName, attribs }),
-                "a": (tagName: string, attribs: HtmlSanitizeAttributes) => {
-                    if (attribs.href?.startsWith("#/")) {
-                        return { tagName, attribs };
-                    }
-                    return transformTags.a(tagName, attribs);
-                },
-            },
-        });
->>>>>>> v1.12.32
 
         if (this.props.scrollbar) {
             return <AutoHideScrollbar className={classes}>{content}</AutoHideScrollbar>;

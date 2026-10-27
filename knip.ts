@@ -88,35 +88,16 @@ export default {
                 "serve",
             ],
         },
-<<<<<<< HEAD
         // // :TCHAP:
         // "apps/desktop": {
-        //     entry: ["src/preload.cts!", "electron-builder.ts!", "scripts/**", "hak/**"],
+        //     entry: ["src/preload.cts!", "electron-builder.ts!", "scripts/**"],
         //     project: ["**/*.{js,ts,pcss}"],
-        //     ignoreDependencies: [
-        //         // Brought in via hak scripts
-        //         "matrix-seshat",
-        //     ],
         //     ignoreBinaries: [
-        //         // Used to build seshat (optional)
-        //         "rustc",
         //         // Used by the fetch-package script (optional)
         //         "gpg",
-        //         // Used for the macOS universal builds
-        //         "lipo",
         //     ],
         // },
         // end :TCHAP:
-=======
-        "apps/desktop": {
-            entry: ["src/preload.cts!", "electron-builder.ts!", "scripts/**"],
-            project: ["**/*.{js,ts,pcss}"],
-            ignoreBinaries: [
-                // Used by the fetch-package script (optional)
-                "gpg",
-            ],
-        },
->>>>>>> v1.12.32
         "modules": {
             project: ["**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,pcss}!", "!playwright/**!"],
             ignoreDependencies: [
