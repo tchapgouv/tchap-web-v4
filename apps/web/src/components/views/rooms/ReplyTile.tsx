@@ -21,7 +21,7 @@ import { isVoiceMessage } from "../../../utils/EventUtils";
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MemberAvatar from "../avatars/MemberAvatar";
 // :TCHAP: content-scanner - import MVoiceMessageBody from "../messages/MVoiceMessageBody";
-import MVoiceMessageBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningAudioBody";
+import MVoiceMessageBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVoiceMessageBody";
 // end :TCHAP:
 import { type ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";

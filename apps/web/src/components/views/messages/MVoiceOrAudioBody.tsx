@@ -11,7 +11,7 @@ import React from "react";
 // :TCHAP: content-scanner - import MAudioBody from "./MAudioBody";
 // import MVoiceMessageBody from "./MVoiceMessageBody";
 import MAudioBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningAudioBody";
-import MVoiceMessageBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningAudioBody";
+import MVoiceMessageBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVoiceMessageBody";
 // end :TCHAP:
 import { type IBodyProps } from "./IBodyProps";
 import { isVoiceMessage } from "../../../utils/EventUtils";
