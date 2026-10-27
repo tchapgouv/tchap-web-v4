@@ -1,5 +1,4 @@
 {
-    "src/customisations/ComponentVisibility.ts": "src/tchap/customisations/TchapComponentVisibility.ts",
     "src/customisations/Media.ts": "src/tchap/customisations/ContentScanningMedia.ts",
     "src/components/views/messages/DownloadActionButton.tsx": "src/tchap/customisations/components/views/messages/ContentScanningDownloadActionButton.tsx",
     "src/components/views/dialogs/RoomUpgradeWarningDialog.tsx": "src/tchap/components/views/dialogs/TchapRoomUpgradeWarningDialog.tsx",
