@@ -299,6 +299,11 @@
             "src/tchap/async-components/views/dialogs/security/TchapExportE2eKeysDialog.tsx"
         ]
     },
+    "join-rules-settings": {
+        "files": [
+            "apps/web/src/components/views/settings/JoinRuleSettings.tsx"
+        ] 
+    },
     "help-user-settings-tab": {
         "files": [
             "apps/web/src/components/views/dialogs/UserSettingsDialog.tsx"
