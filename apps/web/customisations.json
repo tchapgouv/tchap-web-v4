@@ -1,4 +1,0 @@
-{
-    "src/components/views/dialogs/RoomUpgradeWarningDialog.tsx": "src/tchap/components/views/dialogs/TchapRoomUpgradeWarningDialog.tsx",
-    "src/components/views/settings/tabs/user/HelpUserSettingsTab.tsx": "src/tchap/components/views/settings/tabs/user/TchapHelpUserSettingsTab.tsx"
-}
