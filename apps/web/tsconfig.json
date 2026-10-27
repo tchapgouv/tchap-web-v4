@@ -18,6 +18,7 @@
         "strict": true,
         "types": ["node", "modernizr"],
         "paths": {
+<<<<<<< HEAD
             "~tchap-web/*": ["./*"],
             // "@vector-im/compound-web": ["../../node_modules/compound-web-tchap"],
             // "@vector-im/compound-web/*": ["../../node_modules/compound-web-tchap/*"],
@@ -26,6 +27,16 @@
             "test-utils": ["./test/test-utils"],
             "test-utils/*": ["./test/test-utils/*"],
             "jest-mock-vitest-adapter": ["./test/setup/adapter.ts"]
+=======
+            // The Element Call component's typings import matrix-js-sdk by its package entry and `lib/*`
+            // build outputs; resolve those to the `src/*` modules the rest of Element Web uses, so that e.g.
+            // `MatrixClient` is one type (mirrors the webpack aliases).
+            "matrix-js-sdk": ["./node_modules/matrix-js-sdk/src/matrix.ts"],
+            "matrix-js-sdk/lib/*": ["./node_modules/matrix-js-sdk/src/*"],
+            "test-utils-rtl": ["./src/test/test-utils/vitest-matrix-react"],
+            "test-utils": ["./src/test/test-utils"],
+            "test-utils/*": ["./src/test/test-utils/*"]
+>>>>>>> v1.12.32
         },
         "skipLibCheck": true
     },

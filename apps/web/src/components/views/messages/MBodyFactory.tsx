@@ -5,13 +5,20 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+<<<<<<< HEAD
 import React, { type JSX, type RefObject, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MsgType } from "matrix-js-sdk/src/matrix";
 import { type ImageContent,type MediaEventContent } from "matrix-js-sdk/src/types";
+=======
+import React, { type JSX, type RefObject, useContext, useEffect, useRef } from "react";
+import { type MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
+import { type ImageContent } from "matrix-js-sdk/src/types";
+>>>>>>> v1.12.32
 import {
     DecryptionFailureBodyView,
     FileBodyView,
     ImageBodyView,
+    MediaPreviewGroupPreview,
     RedactedBodyView,
     VideoBodyView,
     useCreateAutoDisposedViewModel,
@@ -29,6 +36,8 @@ import { RedactedBodyViewModel } from "../../../viewmodels/message-body/Redacted
 import { getRedactedBodyViewModelProps } from "../../../viewmodels/room/timeline/event-tile/EventTileRedactedBodyState";
 import { VideoBodyViewModel } from "../../../viewmodels/message-body/VideoBodyViewModel";
 import { isMimeTypeAllowed } from "../../../utils/blobs";
+import { type MediaEventHelper } from "../../../utils/MediaEventHelper";
+import { MBodyTileViewModel } from "../../../viewmodels/message-body/MBodyTileViewModel";
 
 import { ContentScanningFileBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningFileBodyView";
 // import { useScanningMediaHelper } from "~tchap-web/src/tchap/customisations/components/views/messages/useScanningMediaHelper";
@@ -38,15 +47,31 @@ import { ContentScanningImageBodyView } from "~tchap-web/src/tchap/customisation
 
 type MBodyComponent = React.ComponentType<IBodyProps>;
 
-export function FileBodyFactory({
-    mxEvent,
-    mediaEventHelper,
-    forExport,
-    showFileInfo,
-}: Pick<IBodyProps, "mxEvent" | "mediaEventHelper" | "forExport" | "showFileInfo">): JSX.Element {
+type FileBodyProps = Pick<IBodyProps, "mxEvent" | "mediaEventHelper" | "forExport" | "showFileInfo">;
+
+export function FileBodyFactory(props: FileBodyProps): JSX.Element {
+    // Only the standalone m.file body uses the preview tile. Image/video/audio bodies embed this as a
+    // fallback for media they cannot render themselves — sometimes download-only (`showFileInfo: false`)
+    // in the panels which don't render the media, e.g. the files and notification panels — and those,
+    // like exports, keep the classic file body.
+    if (props.forExport || props.showFileInfo === false || props.mxEvent.getContent().msgtype !== MsgType.File) {
+        return <LegacyFileBody {...props} />;
+    }
+
+    // preview file body can't handle this, let the legacy file body handle it
+    if (props.mediaEventHelper === undefined) {
+        return <LegacyFileBody {...props} />;
+    }
+
+    return <PreviewFileBody mediaEventHelper={props.mediaEventHelper} mxEvent={props.mxEvent} />;
+}
+
+/// the old look for files, still used for images, videos, audio, voice messages
+function LegacyFileBody({ mxEvent, mediaEventHelper, forExport, showFileInfo }: FileBodyProps): JSX.Element {
     const { timelineRenderingType } = useContext(RoomContext);
     const refIFrame = useRef<HTMLIFrameElement>(null) as RefObject<HTMLIFrameElement>;
     const refLink = useRef<HTMLAnchorElement>(null) as RefObject<HTMLAnchorElement>;
+<<<<<<< HEAD
     // Replace MediaEventHelper with ContentScannerMediaHelper
     // :TCHAP: content-scanner
     const [scanState, setScanState] = useState<ScanState>("scanning");
@@ -56,6 +81,9 @@ export function FileBodyFactory({
                 },
         [mxEvent],
     ) as any as typeof mediaEventHelper;
+=======
+    const documentPreviewsEnabled = useSettingValue("feature_pdf_viewer");
+>>>>>>> v1.12.32
 
     const content = mxEvent.getContent<MediaEventContent>();
     scanningMediaHelper?.onScanStateChange(() => {
@@ -75,6 +103,7 @@ export function FileBodyFactory({
                 timelineRenderingType,
                 refIFrame,
                 refLink,
+                documentPreviewsEnabled,
             }),
     );
 
@@ -86,12 +115,41 @@ export function FileBodyFactory({
             forExport,
             showFileInfo,
             timelineRenderingType,
+            documentPreviewsEnabled,
         });
+<<<<<<< HEAD
     }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, vm, scanningMediaHelper ]);
+=======
+    }, [mxEvent, mediaEventHelper, forExport, showFileInfo, timelineRenderingType, documentPreviewsEnabled, vm]);
+>>>>>>> v1.12.32
 
 
     // :TCHAP: return <FileBodyView vm={vm} refIFrame={refIFrame} refLink={refLink} className="mx_MFileBody" />;
     return <ContentScanningFileBodyView vm={vm} refIFrame={refIFrame} refLink={refLink} content={content} scanState={scanState} />;
+}
+
+interface PreviewFileBodyProps {
+    mxEvent: MatrixEvent;
+    mediaEventHelper: MediaEventHelper;
+}
+
+/// the new preview file tile
+function PreviewFileBody({ mxEvent, mediaEventHelper }: PreviewFileBodyProps): JSX.Element {
+    const documentPreviewsEnabled = useSettingValue("feature_pdf_viewer");
+    const vm = useCreateAutoDisposedViewModel(
+        () => new MBodyTileViewModel(mxEvent, mediaEventHelper, documentPreviewsEnabled),
+    );
+
+    // The view model is built once, so turning the lab on has to reach an already-rendered tile.
+    useEffect(() => {
+        vm.setDocumentPreviewsEnabled(documentPreviewsEnabled);
+    }, [documentPreviewsEnabled, vm]);
+
+    return (
+        <div className="mx_EventTile_content">
+            <MediaPreviewGroupPreview vm={vm} />
+        </div>
+    );
 }
 
 export function VideoBodyFactory({

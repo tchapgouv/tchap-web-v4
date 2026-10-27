@@ -8,7 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 // @vitest-environment happy-dom
 
-import { vi, describe, it, expect, beforeEach, afterEach, type Mocked } from "vitest";
+import { vi, describe, it, expect, beforeAll, beforeEach, afterEach, type Mocked } from "vitest";
 import React, { type ComponentProps, createRef, type RefObject } from "react";
 import { cleanup, fireEvent, render, type RenderResult, screen, waitFor, within, act } from "test-utils-rtl";
 import {
@@ -396,6 +396,11 @@ describe("<MatrixChat />", () => {
     });
 
     describe("qr login", () => {
+        beforeAll(async () => {
+            // Preload to avoid the first lazy-load hitting a test timeout
+            await import("../../async-components/views/dialogs/QrLoginDialog");
+        });
+
         beforeEach(() => {
             const authConfig = makeDelegatedAuthMetadata();
             defaultProps.config.validated_server_config!.delegatedAuthentication = authConfig;
@@ -554,6 +559,8 @@ describe("<MatrixChat />", () => {
             vi.spyOn(logger, "error").mockClear();
             vi.spyOn(logger, "log").mockClear();
 
+            mockPlatformPeg();
+
             loginClient.whoami.mockResolvedValue({
                 user_id: userId,
                 device_id: deviceId,
@@ -568,7 +575,6 @@ describe("<MatrixChat />", () => {
                     clientId,
                     codeVerifier: "123456",
                     deviceId,
-                    redirectUri: "https://cb",
                 },
             });
         });
@@ -595,21 +601,21 @@ describe("<MatrixChat />", () => {
         it("should make correct request to complete authorization", async () => {
             getComponent({ urlParams });
 
-            await flushPromises();
-
-            expect(OAuth2.prototype.completeAuthorizationCodeGrant).toHaveBeenCalledWith(code);
+            await waitFor(() => {
+                expect(OAuth2.prototype.completeAuthorizationCodeGrant).toHaveBeenCalledWith(code, expect.anything());
+            });
         });
 
         it("should look up userId using access token", async () => {
             getComponent({ urlParams });
 
-            await flushPromises();
-
-            // check we used a client with the correct accesstoken
-            expect(MatrixJs.createClient).toHaveBeenCalledWith({
-                baseUrl: homeserverUrl,
-                accessToken,
-                idBaseUrl: identityServerUrl,
+            await waitFor(() => {
+                // check we used a client with the correct accesstoken
+                expect(MatrixJs.createClient).toHaveBeenCalledWith({
+                    baseUrl: homeserverUrl,
+                    accessToken,
+                    idBaseUrl: identityServerUrl,
+                });
             });
             expect(loginClient.whoami).toHaveBeenCalled();
         });
@@ -618,12 +624,12 @@ describe("<MatrixChat />", () => {
             loginClient.whoami.mockRejectedValue(new Error("oups"));
             getComponent({ urlParams });
 
-            await flushPromises();
-
-            expect(logger.error).toHaveBeenCalledWith(
-                "Failed to login via OAuth",
-                new Error("Failed to retrieve userId using accessToken"),
-            );
+            await waitFor(() => {
+                expect(logger.error).toHaveBeenCalledWith(
+                    "Failed to login via OAuth",
+                    new Error("Failed to retrieve userId using accessToken"),
+                );
+            });
             await expectOAuthError();
         });
 
@@ -656,7 +662,7 @@ describe("<MatrixChat />", () => {
                 );
 
                 await expectOAuthError(
-                    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
+                    "We asked the browser to remember which account provider you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
                 );
             });
 
@@ -942,6 +948,21 @@ describe("<MatrixChat />", () => {
                             join_rule: "invite",
                         },
                     });
+                    const restrictedJoinRule = new MatrixEvent({
+                        type: "m.room.join_rules",
+                        content: {
+                            join_rule: "restricted",
+                            allow: [{ type: "m.room_membership", room_id: "!authorised-space:server.org" }],
+                        },
+                    });
+                    // A restricted room can name no space at all, and then nobody satisfies the rule.
+                    const unauthorisedRestrictedJoinRule = new MatrixEvent({
+                        type: "m.room.join_rules",
+                        content: {
+                            join_rule: "restricted",
+                            allow: [],
+                        },
+                    });
                     describe("for a room", () => {
                         beforeEach(() => {
                             vi.spyOn(room.currentState, "getJoinedMemberCount").mockReturnValue(2);
@@ -967,9 +988,27 @@ describe("<MatrixChat />", () => {
                             dispatchAction();
                             await screen.findByRole("dialog");
                             expect(
+                                screen.getByText("This room is private and cannot be rejoined without an invite."),
+                            ).toBeInTheDocument();
+                        });
+                        it("should say a restricted room can be rejoined from an authorised space", async () => {
+                            vi.spyOn(room.currentState, "getStateEvents").mockReturnValue(restrictedJoinRule);
+                            dispatchAction();
+                            await screen.findByRole("dialog");
+                            expect(
                                 screen.getByText(
-                                    "This room is not public. You will not be able to rejoin without an invite.",
+                                    "This room is restricted and cannot be rejoined unless you are in one of its authorised spaces or invited.",
                                 ),
+                            ).toBeInTheDocument();
+                        });
+                        it("should warn when a restricted room has no authorised spaces", async () => {
+                            vi.spyOn(room.currentState, "getStateEvents").mockReturnValue(
+                                unauthorisedRestrictedJoinRule,
+                            );
+                            dispatchAction();
+                            await screen.findByRole("dialog");
+                            expect(
+                                screen.getByText("This room is private and cannot be rejoined without an invite."),
                             ).toBeInTheDocument();
                         });
                         it("should warn when user is the last admin", async () => {
@@ -1035,9 +1074,27 @@ describe("<MatrixChat />", () => {
                             dispatchAction();
                             await screen.findByRole("dialog");
                             expect(
+                                screen.getByText("This space is private and cannot be rejoined without an invite."),
+                            ).toBeInTheDocument();
+                        });
+                        it("should say a restricted space can be rejoined from an authorised space", async () => {
+                            vi.spyOn(spaceRoom.currentState, "getStateEvents").mockReturnValue(restrictedJoinRule);
+                            dispatchAction();
+                            await screen.findByRole("dialog");
+                            expect(
                                 screen.getByText(
-                                    "This space is not public. You will not be able to rejoin without an invite.",
+                                    "This space is restricted and cannot be rejoined unless you are in one of its authorised spaces or invited.",
                                 ),
+                            ).toBeInTheDocument();
+                        });
+                        it("should warn when a restricted space has no authorised spaces", async () => {
+                            vi.spyOn(spaceRoom.currentState, "getStateEvents").mockReturnValue(
+                                unauthorisedRestrictedJoinRule,
+                            );
+                            dispatchAction();
+                            await screen.findByRole("dialog");
+                            expect(
+                                screen.getByText("This space is private and cannot be rejoined without an invite."),
                             ).toBeInTheDocument();
                         });
                     });
@@ -1632,7 +1689,7 @@ describe("<MatrixChat />", () => {
             // warning dialog
             expect(
                 within(dialog).getByText(
-                    "We asked the browser to remember which homeserver you use to let you sign in, " +
+                    "We asked the browser to remember which account provider you use to let you sign in, " +
                         "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
                 ),
             ).toBeInTheDocument();
@@ -1667,11 +1724,7 @@ describe("<MatrixChat />", () => {
                 const dialog = await screen.findByRole("dialog");
 
                 // warning dialog
-                expect(
-                    within(dialog).getByText(
-                        "There was a problem communicating with the homeserver, please try again later.",
-                    ),
-                ).toBeInTheDocument();
+                expect(within(dialog).getByText("Something went wrong. Please try again later.")).toBeInTheDocument();
             });
 
             it("should not clear storage", async () => {

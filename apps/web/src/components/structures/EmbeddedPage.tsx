@@ -8,9 +8,9 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React from "react";
-import sanitizeHtml from "sanitize-html";
 import classnames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
+import { sanitizeHtml, type HtmlSanitizeAttributes } from "@element-hq/element-web-shared-utils";
 import { AutoHideScrollbar } from "@element-hq/web-shared-components";
 
 import { _t } from "../../languageHandler";
@@ -21,7 +21,6 @@ import { type ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions.ts";
 import { sanitizedHtmlNode } from "../../HtmlUtils.tsx";
 import { sanitizeHtmlParams, transformTags } from "../../Linkify.ts";
-import { objectExcluding } from "../../utils/objects.ts";
 
 interface IProps {
     // URL to request embedded page content from
@@ -129,6 +128,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
             [`${className}_loggedIn`]: !!client,
         });
 
+<<<<<<< HEAD
         // :TCHAP: we trust our html, go back previous version
         // const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
         //     ...sanitizeHtmlParams,
@@ -149,6 +149,25 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         // });
         const content = <div dangerouslySetInnerHTML={{ __html: this.state.page }} dir="auto" className={className} />;
         // end :TCHAP:
+=======
+        const content = sanitizedHtmlNode(this.state.page, `${className}_body`, {
+            ...sanitizeHtmlParams,
+            transformTags: {
+                ...transformTags,
+                // The shared sanitizer supplies restrictive defaults when these handlers are
+                // omitted, so embedded pages use identity transforms to preserve their image
+                // URLs and inline styles.
+                "img": (tagName: string, attribs: HtmlSanitizeAttributes) => ({ tagName, attribs }),
+                "*": (tagName: string, attribs: HtmlSanitizeAttributes) => ({ tagName, attribs }),
+                "a": (tagName: string, attribs: HtmlSanitizeAttributes) => {
+                    if (attribs.href?.startsWith("#/")) {
+                        return { tagName, attribs };
+                    }
+                    return transformTags.a(tagName, attribs);
+                },
+            },
+        });
+>>>>>>> v1.12.32
 
         if (this.props.scrollbar) {
             return <AutoHideScrollbar className={classes}>{content}</AutoHideScrollbar>;

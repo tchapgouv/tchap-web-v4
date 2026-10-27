@@ -83,18 +83,38 @@ describe("<EncryptionUserSettingsTab />", () => {
     it("should display the recovery out of sync panel when secrets are not cached", async () => {
         vi.mocked(DeviceListener.sharedInstance().getDeviceState).mockReturnValue("key_storage_out_of_sync");
 
-        const user = userEvent.setup();
         const { asFragment } = renderComponent();
 
         await waitFor(() => screen.getByRole("button", { name: "Enter recovery key" }));
         expect(asFragment()).toMatchSnapshot();
+    });
 
+    it("should enter the 'reset identity' flow if user clicks 'forgot password' and we are missing identity keys", async () => {
+        vi.mocked(DeviceListener.sharedInstance().getDeviceState).mockReturnValue("key_storage_out_of_sync");
+        vi.spyOn(DeviceListener.sharedInstance(), "keyStorageOutOfSyncNeedsCrossSigningReset").mockResolvedValue(true);
+        renderComponent();
+        await waitFor(() => screen.getByRole("button", { name: "Enter recovery key" }));
+
+        const user = userEvent.setup();
         await user.click(screen.getByRole("button", { name: "Forgot recovery key?" }));
-        expect(
-            screen.getByRole("heading", {
-                name: "Forgot your recovery key? You’ll need to reset your digital identity.",
-            }),
-        ).toBeVisible();
+        await waitFor(() =>
+            expect(
+                screen.getByRole("heading", {
+                    name: "Forgot your recovery key? You’ll need to reset your digital identity.",
+                }),
+            ).toBeVisible(),
+        );
+    });
+
+    it("should enter the 'change recovery key' flow if user clicks 'forgot password' and we have identity keys", async () => {
+        vi.mocked(DeviceListener.sharedInstance().getDeviceState).mockReturnValue("key_storage_out_of_sync");
+        vi.spyOn(DeviceListener.sharedInstance(), "keyStorageOutOfSyncNeedsCrossSigningReset").mockResolvedValue(false);
+        renderComponent();
+        await waitFor(() => screen.getByRole("button", { name: "Enter recovery key" }));
+
+        const user = userEvent.setup();
+        await user.click(screen.getByRole("button", { name: "Forgot recovery key?" }));
+        await waitFor(() => expect(screen.getByText("Change recovery key")).toBeVisible());
     });
 
     it("should display the change recovery key panel when the user clicks on the change recovery button", async () => {
@@ -126,7 +146,7 @@ describe("<EncryptionUserSettingsTab />", () => {
         const user = userEvent.setup();
 
         const { asFragment } = renderComponent();
-        const button = await waitFor(() => screen.getByRole("button", { name: "Reset cryptographic identity" }));
+        const button = await waitFor(() => screen.getByRole("button", { name: "Reset digital identity" }));
         await user.click(button);
         await waitFor(() =>
             expect(screen.getByText("Are you sure you want to reset your digital identity?")).toBeInTheDocument(),
@@ -191,7 +211,7 @@ describe("<EncryptionUserSettingsTab />", () => {
 
         await user.click(screen.getByRole("button", { name: "Back" }));
         await waitFor(() =>
-            screen.getByText("Your key storage is out of sync. Click one of the buttons below to fix the problem."),
+            screen.getByText("Your key storage is out of sync. Select one of the buttons below to fix the problem."),
         );
     });
 

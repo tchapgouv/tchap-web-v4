@@ -9,6 +9,7 @@ Please see LICENSE files in the repository root for full details.
 
 import React from "react";
 import { KeyIcon, ErrorSolidIcon, SettingsSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { Link } from "@vector-im/compound-web";
 import { type ComponentType } from "react";
 import { type Interaction as InteractionEvent } from "@matrix-org/analytics-events/types/typescript/Interaction";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -20,9 +21,7 @@ import { DeviceListener, type DeviceState } from "../device-listener";
 import SetupEncryptionDialog from "../components/views/dialogs/security/SetupEncryptionDialog";
 import { AccessCancelledError, accessSecretStorage } from "../SecurityManager";
 import ToastStore, { type IToast } from "../stores/ToastStore";
-import GenericToast from "../components/views/toasts/GenericToast";
-import { ModuleRunner } from "../modules/ModuleRunner";
-import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
+import { GenericToast } from "@element-hq/web-shared-components";
 import Spinner from "../components/views/elements/Spinner";
 import { type OpenToTabPayload } from "../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../dispatcher/actions";
@@ -32,8 +31,12 @@ import ConfirmKeyStorageOffDialog from "../components/views/dialogs/ConfirmKeySt
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { resetKeyBackupAndWait } from "../utils/crypto/resetKeyBackup";
 import { PosthogAnalytics } from "../PosthogAnalytics";
+<<<<<<< HEAD
 import Tchapi18nUtils from "../tchap/i18n/Tchapi18nUtils";
 import { TCHAP_AVAILABLE_LINK } from "../tchap/util/TchapUrls";
+=======
+import { encryptionSettingsStateForKeyStorageOutOfSyncForgotRecovery } from "../components/views/settings/tabs/user/EncryptionUserSettingsTab.tsx";
+>>>>>>> v1.12.32
 
 const TOAST_KEY = "setupencryption";
 
@@ -131,6 +134,7 @@ const getDescription = (state: DeviceStateForToast): string | React.ReactNode =>
         case "set_up_recovery":
             return _t("encryption|set_up_recovery_toast_description");
         case "verify_this_session":
+<<<<<<< HEAD
             // :TCHAP: return _t("encryption|verify_toast_description", undefined, {
             //     a: (sub) => (
             //         <a
@@ -144,6 +148,19 @@ const getDescription = (state: DeviceStateForToast): string | React.ReactNode =>
             // });
             return _t("encryption|verify_toast_description");
             // end :TCHAP:
+=======
+            return _t("encryption|verify_toast_description", undefined, {
+                a: (sub) => (
+                    <Link
+                        href="https://docs.element.io/latest/element-support/device-verification/how-to-verify-devices/"
+                        target="_blank"
+                        size="sm"
+                    >
+                        {sub}
+                    </Link>
+                ),
+            });
+>>>>>>> v1.12.32
         case "key_storage_out_of_sync":
             // :TCHAP: return _t("encryption|key_storage_out_of_sync_description")
             return _t("encryption|key_storage_out_of_sync_description", {},
@@ -164,14 +181,6 @@ const getDescription = (state: DeviceStateForToast): string | React.ReactNode =>
  */
 export const showToast = (state: DeviceStateForToast): void => {
     const myLogger = logger.getChild(`SetupEncryptionToast[${state}]:`);
-    if (
-        ModuleRunner.instance.extensions.cryptoSetup.setupEncryptionNeeded({
-            kind: state as any,
-            storeProvider: { getInstance: () => SetupEncryptionStore.sharedInstance() },
-        })
-    ) {
-        return;
-    }
 
     const onPrimaryClick = async (): Promise<void> => {
         switch (state) {
@@ -285,11 +294,8 @@ export const showToast = (state: DeviceStateForToast): void => {
             }
             case "key_storage_out_of_sync": {
                 // Open the user settings dialog to the encryption tab and start the flow to reset encryption or change the recovery key
-                const deviceListener = DeviceListener.sharedInstance();
-                const needsCrossSigningReset = await deviceListener.keyStorageOutOfSyncNeedsCrossSigningReset(true);
-                const props = {
-                    initialEncryptionState: needsCrossSigningReset ? "reset_identity_forgot" : "change_recovery_key",
-                };
+                const initialEncryptionState = await encryptionSettingsStateForKeyStorageOutOfSyncForgotRecovery();
+                const props = { initialEncryptionState };
                 myLogger.debug(`Secondary button clicked: opening encryption settings dialog with props`, props);
                 const payload: OpenToTabPayload = {
                     action: Action.ViewUserSettings,
@@ -345,7 +351,7 @@ export const showToast = (state: DeviceStateForToast): void => {
             // A real error happened - jump to the reset identity or change
             // recovery tab
             const needsCrossSigningReset =
-                await DeviceListener.sharedInstance().keyStorageOutOfSyncNeedsCrossSigningReset(true);
+                await DeviceListener.sharedInstance().keyStorageOutOfSyncNeedsCrossSigningReset();
             const props = {
                 initialEncryptionState: needsCrossSigningReset ? "reset_identity_sync_failed" : "change_recovery_key",
             };

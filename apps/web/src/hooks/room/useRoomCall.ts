@@ -239,6 +239,8 @@ export const useRoomCall = (
     } else {
         widget = groupCall?.widget ?? jitsiWidget;
     }
+    const [canPinWidget, setCanPinWidget] = useState(false);
+    const [widgetPinned, setWidgetPinned] = useState(false);
     const updateWidgetState = useCallback((): void => {
         setCanPinWidget(sdkContext.widgetLayoutStore.canAddToContainer(room, "top"));
         setWidgetPinned(!!widget && sdkContext.widgetLayoutStore.isInContainer(room, widget, "top"));
@@ -247,8 +249,6 @@ export const useRoomCall = (
     useEffect(() => {
         updateWidgetState();
     }, [room, jitsiWidget, groupCall, updateWidgetState]);
-    const [canPinWidget, setCanPinWidget] = useState(false);
-    const [widgetPinned, setWidgetPinned] = useState(false);
     // We only want to prompt to pin the widget if it's not element call based.
     const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;

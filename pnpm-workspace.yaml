@@ -12,6 +12,7 @@ packages:
   - "modules/*"
 
 catalog:
+<<<<<<< HEAD
   # typescript
   "typescript": 7.0.2
   "@typescript/native": npm:typescript@7.0.2
@@ -48,6 +49,44 @@ catalog:
   unplugin-dts: 1.0.1
   # nx
   nx: 23.1.2
+=======
+    # typescript
+    "typescript": 7.0.2
+    "@typescript/native": npm:typescript@7.0.2
+    "@types/node": ts7.0
+    # react
+    react: ^19.0.0
+    react-dom: ^19.0.0
+    "@types/react": ^19.2.10
+    "@types/react-dom": ^19.2.3
+    # playwright
+    "@playwright/test": 1.63.0
+    "playwright-core": 1.63.0
+    serve: 14.2.6
+    # Compound
+    "@vector-im/compound-design-tokens": 10.2.1
+    "@vector-im/compound-web": 10.1.0
+    # i18n
+    matrix-web-i18n: 3.6.0
+    # emojibase
+    "@matrix-org/emojibase-bindings": 1.5.0
+    # fonts
+    "@fontsource/inter": 5.3.0
+    # vite
+    vite: 8.3.1
+    vite-plugin-node-polyfills: 0.28.0
+    vite-plugin-svgr: 5.2.0
+    vitest: 5.0.2
+    "@vitest/coverage-v8": 5.0.2
+    "@vitest/browser-playwright": 5.0.2
+    "@vitest/browser": 5.0.2
+    "@vitest/spy": 5.0.2
+    "@vitest/ui": 5.0.2
+    "@vitejs/plugin-react": 6.1.1
+    unplugin-dts: 1.1.1
+    # nx
+    nx: 23.2.1
+>>>>>>> v1.12.32
 
 catalogs:
   ts6:
@@ -71,6 +110,7 @@ packageExtensions:
       vite: "^8.0.0"
 
 allowBuilds:
+<<<<<<< HEAD
   # Needed to make the git dependency in layered.sh happy
   matrix-js-sdk: true
   "matrix-js-sdk@git+https://github.com/matrix-org/matrix-js-sdk.git": true
@@ -128,6 +168,64 @@ patchedDependencies:
   # :TCHAP: simple squarer button for compound-web, workaround because error with pnpm x patch-package, normal tchap patch system
   "@vector-im/compound-web": patches/@vector-im__compound-web.patch
   '@vector-im/compound-web@9.9.0': patches/@vector-im__compound-web@9.9.0.patch
+=======
+    matrix-js-sdk: true
+    # Needed to make the git dependency in layered.sh happy
+    "matrix-js-sdk@git+https://github.com/matrix-org/matrix-js-sdk.git": true
+    "matrix-js-sdk@file:matrix-js-sdk/matrix-js-sdk.tgz": true
+    # Element Call's React component is a git dependency on the `component` directory of the
+    # element-call repository, whose `prepare` script builds it on install (nothing is published yet).
+    # pnpm matches git-hosted packages by repository URL, not by bare name.
+    "@element-hq/element-call-component@git+https://github.com/element-hq/element-call.git": true
+    # Installs the CLI, which we do not need
+    "@sentry/cli": false
+    # Installs nx cloud client, which we do not need
+    nx: false
+    # Runs `vp config` to set up git hooks, which we do not need
+    unrs-resolver: false
+    # Prints funding banner
+    core-js: false
+    # Builds native bindings, which we do not need
+    cpu-features: false
+    # Copies the 7z binaries which match our arch, though somehow works without it
+    electron-winstaller: false
+    # Installs esbuild binary, though somehow works without it
+    esbuild: false
+    # Performs additional version checks, which we do not need
+    protobufjs: false
+    # Builds optional crypto binding, which we do not need
+    ssh2: false
+    # The following are to make wrangler-action happy - https://github.com/cloudflare/wrangler-action/issues/436
+    sharp: true
+    workerd: true
+    # Optionally builds itself from source if a specific environment variable is present, which we do not need
+    "@parcel/watcher": false
+    # Builds native bindings, which we do not need as they are handled by `electron-builder install-app-deps`
+    pkcs11js: false
+
+patchedDependencies:
+    # Workaround for missing types export
+    "@vector-im/matrix-wysiwyg": patches/@vector-im__matrix-wysiwyg.patch
+    # Workaround for lack of React 19 support
+    react-blurhash: patches/react-blurhash.patch
+    # Workaround for https://github.com/nfrasser/linkifyjs/issues/429
+    linkify-html: patches/linkify-html.patch
+    # Workaround to access a private API
+    "@types/auto-launch": patches/@types__auto-launch.patch
+    # Workaround for missing return types
+    postcss-mixins: patches/postcss-mixins.patch
+    # Workaround for some babel rules being false positively flagged
+    knip: patches/knip.patch
+    # Workaround for being stuck on an old version of plist due to electron-builder not supporting ESM yet
+    plist: patches/plist.patch
+    # Workaround for type fails
+    "@arcmantle/vite-plugin-import-css-sheet": patches/@arcmantle__vite-plugin-import-css-sheet.patch
+    # Workaround for scroll anchoring landing on transient placeholder rows (pending upstream)
+    "@tanstack/virtual-core@3": patches/@tanstack__virtual-core@3.patch
+    # Tweaks to record screenshot diffs as vitest artifacts
+    vitest-plugin-vis@5.1.1: patches/vitest-plugin-vis@5.1.1.patch
+    storybook-addon-vis@4.2.3: patches/storybook-addon-vis@4.2.3.patch
+>>>>>>> v1.12.32
 
 peerDependencyRules:
   allowedVersions:
@@ -141,6 +239,7 @@ allowedDeprecatedVersions:
   react-beautiful-dnd: "13"
 
 overrides:
+<<<<<<< HEAD
   pretty-format@30>react-is: 19.2.8
   "@types/react": "catalog:"
   "@types/react-dom": "catalog:"
@@ -153,6 +252,24 @@ overrides:
   # the Window numeric index signature added to newer TypeScript's lib.dom and
   # fails to typecheck against it.
   "@types/jsdom": ^30.0.0
+=======
+    # Only one instance of LiveKit in the build: the Element Call component and
+    # Element Web must share it, E2EE workers included.
+    livekit-client: "^2.22.2"
+    pretty-format@30>react-is: 19.3.0
+    "@types/react": "catalog:"
+    "@types/react-dom": "catalog:"
+    caniuse-lite: 1.0.30001810
+
+    # Make sure we only have one instance of the widget API in the build;
+    # failure to do so results in (unspecified) breakage in downstream builds
+    # cf https://github.com/element-hq/element-web/pull/31851
+    matrix-widget-api: "^1.18.0"
+
+    "@types/node": 25.9.3
+    config-file-ts: 0.2.8-rc1
+    node-abi: 4.35.0
+>>>>>>> v1.12.32
 
   # https://github.com/advisories/GHSA-6v5v-wf23-fmfq
   markdown-it: ^14.3.0
