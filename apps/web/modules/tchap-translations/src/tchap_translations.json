@@ -1,8 +1,4 @@
 {
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": {
-        "en": "<b>A new version of this room will be created</b>. All current messages will remain accessible in this room. All members will be invited back.",
-        "fr": "<b>Une nouvelle version de ce salon va être créée</b>. Tous les messages actuels resteront accessibles dans ce salon. Tous les membres vont être réinvités."
-    },
     "A new email has been sent": {
         "en": "A new email has been sent",
         "fr": "Un nouvel email de renouvellement vous a été adressé"
@@ -74,10 +70,6 @@
         "fr": "Saisir le code de vérification"
     },
     "Export room members": { "en": "Export room members", "fr": "Exporter les membres du salon" },
-    "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room": {
-        "en": "External members cannot be re-invited. If you need to give access to externals, you will have to create a new room.",
-        "fr": "Les membres externes ne pourront pas être réinvités. Si vous avez besoin de donner accès aux externes, il faudra créer un nouveau salon."
-    },
     "Eye": { "en": "Eye", "fr": "OEil" },
     "restore_key_backup_dialog|key_fetch_in_progress": {
         "en": "Fetching messages from server…",
@@ -222,8 +214,6 @@
     },
     "Trusted": { "en": "Trusted", "fr": "Vérifié" },
     "Type of room": { "en": "Type of room", "fr": "Type de salon" },
-    "Upgrade private room": { "en": "This room will be updated", "fr": "Ce salon va être mis à jour" },
-    "Upgrade room": { "en": "Upgrade room", "fr": "Mettre à jour le salon" },
     "Verified!": { "en": "Verified!", "fr": "Vérifié !" },
     "Wait for at least %(wait)s seconds between two emails": {
         "en": "Wait for at least %(wait)s seconds between two emails",
