@@ -55,10 +55,6 @@
         "en": "Create your Tchap Key password",
         "fr": "Créez votre mot de passe Clé Tchap"
     },
-    "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
-        "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
-        "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
-    },
     "Direct Messages": { "en": "Direct Messages", "fr": "Messages directs" },
     "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
         "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room.",
