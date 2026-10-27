@@ -44,11 +44,9 @@ import { PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SDKContextClass } from "../../../contexts/SDKContextClass.ts";
 import DMRoomMap from "../../../utils/DMRoomMap.ts";
-import { videoDir } from "@tauri-apps/api/path";
 import { TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import * as tchapRoomHook from "~tchap-web/src/tchap/util/TchapRoomHook";
 import SdkConfig from "~tchap-web/src/SdkConfig.ts";
-import TchapJoinRuleSettings from "~tchap-web/src/tchap/components/views/settings/TchapJoinRuleSettings.tsx";
 
 describe("<JoinRuleSettings />", () => {
     const userId = "@alice:server.org";
@@ -433,7 +431,7 @@ describe("<JoinRuleSettings />", () => {
         };
 
         //arrange
-        render(<TchapJoinRuleSettings {...props} />);
+        render(<JoinRuleSettings {...props} />);
 
         expect(screen.queryByText(publicText)).toBe(null);
         expect(screen.queryByText(privateText)).toBeDefined();
@@ -456,7 +454,7 @@ describe("<JoinRuleSettings />", () => {
         };
 
         //arrange
-        render(<TchapJoinRuleSettings {...props} />);
+        render(<JoinRuleSettings {...props} />);
 
         expect(screen.queryByText(publicText)).toBe(null);
         expect(screen.queryByText(privateText)).toBeDefined();
@@ -472,7 +470,7 @@ describe("<JoinRuleSettings />", () => {
             onError(error: Error) {},
         };
 
-        render(<TchapJoinRuleSettings {...props} />);
+        render(<JoinRuleSettings {...props} />);
 
         // link room access button
         const linkSwitch = screen.getByRole("switch", { name: "room_settings" });
@@ -517,7 +515,7 @@ describe("<JoinRuleSettings />", () => {
             onError(error: Error) {},
         };
 
-        const { container } = render(<TchapJoinRuleSettings {...props} />);
+        render(<JoinRuleSettings {...props} />);
 
         // click on access room by link
         const linkButton = screen.getByRole("switch", { name: "room_settings" });
