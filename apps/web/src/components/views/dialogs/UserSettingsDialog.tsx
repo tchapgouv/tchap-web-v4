@@ -35,7 +35,9 @@ import SecurityUserSettingsTab from "../settings/tabs/user/SecurityUserSettingsT
 import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserSettingsTab";
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
-import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
+// :TCHAP: help-user-settings-tab - import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
+import HelpUserSettingsTab from "~tchap-web/src/tchap/components/views/settings/tabs/user/TchapHelpUserSettingsTab";
+// :end :TCHAP:
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";

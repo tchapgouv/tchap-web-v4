@@ -55,10 +55,6 @@
         "en": "Create your Tchap Key password",
         "fr": "Créez votre mot de passe Clé Tchap"
     },
-    "Decryption fail: Please open Tchap on an other connected device to allow key sharing.": {
-        "en": "Decryption fail: Please open Tchap on an other connected device to allow key sharing.",
-        "fr": "Message verrouillé par sécurité. Récupérez vos clés Tchap pour déverrouiller vos messages."
-    },
     "Direct Messages": { "en": "Direct Messages", "fr": "Messages directs" },
     "Download the list of all this room's members, in a text file. Useful for adding them all to another room.": {
         "en": "Download the list of all this room's members, in a text file. Useful for adding them all to another room.",
@@ -83,7 +79,7 @@
         "en": "Fetching messages from server…",
         "fr": "Récupération des messages depuis le serveur…"
     },
-    "Finish": { "en": "Finish", "fr": "Terminer" },
+    "encryption|verification|complete_action": { "en": "Finish", "fr": "Terminer" },
     "Frequently Asked Questions (FAQ)": { "en": "Frequently Asked Questions (FAQ)", "fr": "Foire Aux Questions (FAQ)" },
     "auth|logout_dialog|skip_key_backup": { "en": "Log out anyway", "fr": "Se déconnecter quand-même" },
     "I renewed the validity of my account": { "en": "Continue", "fr": "Continuer" },
@@ -108,7 +104,6 @@
         "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
         "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
     },
-    "Incoming Verification Request": { "en": "Incoming Verification Request", "fr": "Partage de vos Clés Tchap" },
     "restore_key_backup_dialog|incorrect_security_phrase_title": {
         "en": "Verification code not recognized",
         "fr": "Code de vérification non reconnu"
@@ -193,7 +188,7 @@
         "en": "The email was not sent sucessfully, please retry",
         "fr": "L'email de renouvellement n'a pas pu être envoyé, veuillez réessayer"
     },
-    "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.": {
+    "encryption|verification|complete_description": {
         "en": "The sharing of your Tchap Keys has succeeded. Your messages will be unlocked.",
         "fr": "Le partage de vos Clés Tchap a réussi. Vos messages vont être déverrouillés au fur et à mesure."
     },
@@ -224,7 +219,7 @@
     "Type of room": { "en": "Type of room", "fr": "Type de salon" },
     "Upgrade private room": { "en": "This room will be updated", "fr": "Ce salon va être mis à jour" },
     "Upgrade room": { "en": "Upgrade room", "fr": "Mettre à jour le salon" },
-    "Verified!": { "en": "Verified!", "fr": "Vérifié !" },
+    "encryption|verification|complete_title": { "en": "Verified!", "fr": "Vérifié !" },
     "Wait for at least %(wait)s seconds between two emails": {
         "en": "Wait for at least %(wait)s seconds between two emails",
         "fr": "Attendez au moins %(wait)s secondes entre l'envoi de deux emails"
