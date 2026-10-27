@@ -8,8 +8,11 @@ Please see LICENSE files in the repository root for full details.
 
 import React from "react";
 
-import MAudioBody from "./MAudioBody";
-import MVoiceMessageBody from "./MVoiceMessageBody";
+// :TCHAP: content-scanner - import MAudioBody from "./MAudioBody";
+// import MVoiceMessageBody from "./MVoiceMessageBody";
+import MAudioBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningAudioBody";
+import MVoiceMessageBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVoiceMessageBody";
+// end :TCHAP:
 import { type IBodyProps } from "./IBodyProps";
 import { isVoiceMessage } from "../../../utils/EventUtils";
 
