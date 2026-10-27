@@ -108,7 +108,6 @@
         "en": "If you've submitted a bug to the Tchap team (via support or GitHub), debug logs can help us track down the problem.",
         "fr": "Si vous avez signalé une anomalie à l'équipe Tchap (via le support ou GitHub), les journaux de débogage peuvent nous aider à cibler le problème."
     },
-    "Incoming Verification Request": { "en": "Incoming Verification Request", "fr": "Partage de vos Clés Tchap" },
     "restore_key_backup_dialog|incorrect_security_phrase_title": {
         "en": "Verification code not recognized",
         "fr": "Code de vérification non reconnu"
