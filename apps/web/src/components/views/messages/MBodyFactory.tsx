@@ -34,6 +34,7 @@ import { type MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { MBodyTileViewModel } from "../../../viewmodels/message-body/MBodyTileViewModel";
 
 import { ContentScanningFileBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningFileBodyView";
+import { ContentScanningPreviewFileBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningPreviewFileBodyView";
 // import { useScanningMediaHelper } from "~tchap-web/src/tchap/customisations/components/views/messages/useScanningMediaHelper";
 import { ContentScannerMediaHelper, type ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 import { ContentScanningVideoBodyView } from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVideoBodyView";
@@ -122,10 +123,31 @@ interface PreviewFileBodyProps {
 }
 
 /// the new preview file tile
-function PreviewFileBody({ mxEvent, mediaEventHelper }: PreviewFileBodyProps): JSX.Element {
+// :TCHAP: content-scanner
+// function PreviewFileBody({ mxEvent, mediaEventHelper }: PreviewFileBodyProps): JSX.Element {
+function PreviewFileBody({ mxEvent }: PreviewFileBodyProps): JSX.Element {
+// end :TCHAP:
     const documentPreviewsEnabled = useSettingValue("feature_pdf_viewer");
+    // :TCHAP: content-scanner
+    // The helper has the same lifetime as the tile view model.
+    const [scanningMediaHelper] = useState(() => new ContentScannerMediaHelper(mxEvent));
+    const [scanState, setScanState] = useState<ScanState>("scanning");
+    useEffect(() => {
+        setScanState(scanningMediaHelper.getScanState());
+        const unsubscribe = scanningMediaHelper.onScanStateChange(() => {
+            setScanState(scanningMediaHelper.getScanState());
+        });
+        return () => {
+            unsubscribe();
+            scanningMediaHelper.destroy();
+        };
+    }, [scanningMediaHelper]);
+    // end :TCHAP:
     const vm = useCreateAutoDisposedViewModel(
-        () => new MBodyTileViewModel(mxEvent, mediaEventHelper, documentPreviewsEnabled),
+        // :TCHAP: content-scanner
+        // () => new MBodyTileViewModel(mxEvent, mediaEventHelper, documentPreviewsEnabled),
+        () => new MBodyTileViewModel(mxEvent, scanningMediaHelper, documentPreviewsEnabled),
+        // end :TCHAP:
     );
 
     // The view model is built once, so turning the lab on has to reach an already-rendered tile.
@@ -135,7 +157,10 @@ function PreviewFileBody({ mxEvent, mediaEventHelper }: PreviewFileBodyProps): J
 
     return (
         <div className="mx_EventTile_content">
-            <MediaPreviewGroupPreview vm={vm} />
+            {/* :TCHAP: content-scanner */}
+            {/* <MediaPreviewGroupPreview vm={vm} /> */}
+            <ContentScanningPreviewFileBodyView vm={vm} content={mxEvent.getContent<MediaEventContent>()} scanState={scanState} />
+            {/* end :TCHAP: */}
         </div>
     );
 }

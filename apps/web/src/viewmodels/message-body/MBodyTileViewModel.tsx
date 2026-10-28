@@ -21,11 +21,22 @@ import { FileDownloader } from "../../utils/FileDownloader";
 import { fileSize } from "../../utils/FileUtils";
 import { documentViewerForEvent, openDocumentViewer } from "../../utils/documentViewer";
 
+// :TCHAP: content-scanner
+// Only the file access used by this tile is required, including scan-gated helpers.
+type FileMediaHelper = Pick<MediaEventHelper, "fileName" | "sourceBlob">;
+// end :TCHAP:
+
 export class MBodyTileViewModel extends MediaPreviewGroupViewModel {
     private readonly mxEvent: MatrixEvent;
-    private readonly mediaEventHelper: MediaEventHelper;
+    // :TCHAP: content-scanner
+    // private readonly mediaEventHelper: MediaEventHelper;
+    private readonly mediaEventHelper: FileMediaHelper;
+    // end :TCHAP:
 
-    public constructor(mxEvent: MatrixEvent, mediaEventHelper: MediaEventHelper, documentPreviewsEnabled = false) {
+    // :TCHAP: content-scanner
+    // public constructor(mxEvent: MatrixEvent, mediaEventHelper: MediaEventHelper, documentPreviewsEnabled = false) {
+    public constructor(mxEvent: MatrixEvent, mediaEventHelper: FileMediaHelper, documentPreviewsEnabled = false) {
+        // end :TCHAP:
         super(MBodyTileViewModel.buildSnapshot(mxEvent, mediaEventHelper, documentPreviewsEnabled));
         this.mxEvent = mxEvent;
         this.mediaEventHelper = mediaEventHelper;
@@ -43,7 +54,10 @@ export class MBodyTileViewModel extends MediaPreviewGroupViewModel {
 
     private static buildSnapshot(
         mxEvent: MatrixEvent,
-        mediaEventHelper: MediaEventHelper,
+        // :TCHAP: content-scanner
+        // mediaEventHelper: MediaEventHelper,
+        mediaEventHelper: FileMediaHelper,
+        // end :TCHAP:
         documentPreviewsEnabled: boolean,
     ): MediaPreviewGroupSnapshot {
         const downloader = new FileDownloader();
