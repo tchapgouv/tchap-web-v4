@@ -46,7 +46,10 @@ const InviteButton: React.FC<Props> = ({ vm }) => {
         return (
             <InviteTooltip canInvite={vm.canInvite}>
                 <Button
-                    kind="primary"
+                    // :TCHAP: export-room-members
+                    // kind="primary"
+                    kind="secondary"
+                    // end :TCHAP:
                     onClick={vm.onInviteButtonClick}
                     size="md"
                     iconOnly={true}
@@ -63,8 +66,12 @@ const InviteButton: React.FC<Props> = ({ vm }) => {
     return (
         <InviteTooltip canInvite={vm.canInvite}>
             <Button
-                kind="primary"
-                className="mx_MemberListHeaderView_inviteButton"
+                // :TCHAP: export-room-members
+                // kind="primary"
+                // className="mx_MemberListHeaderView_inviteButton"
+                kind="secondary"
+                className="tc_MemberList_action"
+                // end :TCHAP:
                 size="md"
                 Icon={UserAddIcon}
                 disabled={!vm.canInvite}
