@@ -21,11 +21,11 @@ import { type MediaEventContent } from "matrix-js-sdk/src/types";
 import { _t } from "~tchap-web/src/languageHandler";
 import { presentableTextForFile } from "~tchap-web/src/utils/FileUtils";
 
-import OriginalImageReplyBody from "../../../../components/views/messages/OriginalImageReplyBody";
+import OriginalImageReplyBody from "~tchap-web/src/components/views/messages/MImageReplyBody";
 import { BlockedIcon } from "../../../../components/views/elements/BlockedIcon";
 import { ContentScanningStatus } from "../../../../components/views/elements/ContentScanningStatus";
 import { Media } from "../../../ContentScanningMedia";
-import { ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
+import { type ContentScannerMediaHelper, type ScanState } from "~tchap-web/src/tchap/content-scanner/ContentScannerMediaHelper";
 
 const FORCED_IMAGE_HEIGHT = 44;
 

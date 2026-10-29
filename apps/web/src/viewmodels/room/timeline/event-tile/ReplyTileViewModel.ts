@@ -33,8 +33,12 @@ import { renderReplyTile } from "../../../../events/EventTileFactory";
 import { type GetRelationsForEvent } from "../../../../components/views/rooms/EventTile";
 import { type IBodyProps } from "../../../../components/views/messages/IBodyProps";
 import { FileBodyFactory, VideoBodyFactory, renderMBody } from "../../../../components/views/messages/MBodyFactory";
-import MImageReplyBody from "../../../../components/views/messages/MImageReplyBody";
-import MVoiceMessageBody from "../../../../components/views/messages/MVoiceMessageBody";
+// :TCHAP: content-scanner
+// import MImageReplyBody from "../../../../components/views/messages/MImageReplyBody";
+// import MVoiceMessageBody from "../../../../components/views/messages/MVoiceMessageBody";
+import MImageReplyBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningImageReplyBody";
+import MVoiceMessageBody from "~tchap-web/src/tchap/customisations/components/views/messages/ContentScanningVoiceMessageBody";
+// end :TCHAP:
 import { isVoiceMessage } from "../../../../utils/EventUtils";
 import { getEventDisplayInfo } from "../../../../utils/EventRenderingUtils";
 import { MemberAvatarViewModel as AppMemberAvatarViewModel } from "../../../../components/viewmodels/avatars/MemberAvatarViewModel";
