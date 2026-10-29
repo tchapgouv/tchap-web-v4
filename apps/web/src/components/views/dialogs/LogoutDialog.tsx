@@ -159,7 +159,32 @@ function ConfirmLogout(props: SubComponentProps): JSX.Element {
         <QuestionDialog
             hasCancelButton={true}
             title={_t("action|sign_out")}
-            description={_t("auth|logout_dialog|description")}
+            // :TCHAP: warning-logout-dialog description={_t("auth|logout_dialog|description")}
+            description={_t("auth|logout_dialog|description",  {},
+                {
+                    div: (text) => (
+                        <div style={{ marginTop: "10px", color: "red", display: "flex", alignItems: "center" }}>
+                                <img
+                                src={InfoIcon}
+                                alt="info"
+                                style={{
+                                    width: "16px",
+                                    height: "16px",
+                                    filter: "brightness(0) saturate(100%) invert(13%) sepia(94%) saturate(7151%) hue-rotate(3deg) brightness(97%) contrast(118%)",
+                                    marginRight: "5px"
+                                }}
+                            />
+                            {text}
+                        </div>
+                    ),
+                    a: (sub) => (
+                        <ExternalLink href={TchapUrls.lockedMessagesPage} style={{ color: "red", textDecoration: "underline" }}>
+                            {sub}
+                        </ExternalLink>
+                    ),
+                })}
+            // end :TCHAP:
+
             button={_t("action|sign_out")}
             onFinished={props.onFinished}
         />
