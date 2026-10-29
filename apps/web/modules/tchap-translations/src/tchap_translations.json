@@ -1091,10 +1091,6 @@
         "en": "Compare a list of unique emojis between your two devices in order to verify your identity",
         "fr": "Comparez une liste unique d'émojis entre vos deux appareils pour vérifier votre identité"
     },
-    "encryption|verification|reset_all": {
-        "en": "Reinitialize all",
-        "fr": "Tout réinitialiser"
-    },
     "invite|warning_external": {
         "en": "You are going to invite people external to the public sector. If you continue, from now on this room will be open to external people on invite.",
         "fr": "Vous allez inviter des personnes externes au secteur public. Si vous continuez, ce salon sera désormais ouvert aux invités externes par invitation."
