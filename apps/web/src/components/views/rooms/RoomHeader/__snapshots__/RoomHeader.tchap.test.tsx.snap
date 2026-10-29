@@ -3,13 +3,13 @@
 exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
 <div>
   <header
-    class="_flex_4dswl_9 mx_RoomHeader light-panel"
+    class="_flex mx_RoomHeader light-panel"
     style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
   >
     <button
       aria-label="Open room settings"
       aria-live="off"
-      class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+      class="_avatar mx_BaseAvatar _avatar-imageless"
       data-color="3"
       data-testid="avatar-img"
       data-type="round"
@@ -26,12 +26,12 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
       type="button"
     >
       <div
-        class="mx_RoomHeader_info _box-flex_1odfs_9"
+        class="mx_RoomHeader_info _box-flex"
         style="--mx-box-flex: 1;"
       >
         <div
           aria-level="1"
-          class="_typography_6v6n8_153 _font-body-lg-semibold_6v6n8_74 mx_RoomHeader_heading"
+          class="_typography _font-body-lg-semibold mx_RoomHeader_heading"
           dir="auto"
           role="heading"
         >
@@ -46,14 +46,14 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
     <button
       aria-disabled="false"
       aria-label="Video call"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -73,14 +73,14 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
     <button
       aria-label="Threads"
       aria-labelledby="react-use-id-2"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -99,14 +99,14 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
     <button
       aria-label="Notifications"
       aria-labelledby="react-use-id-3"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -126,14 +126,14 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
     <button
       aria-label="Room info"
       aria-labelledby="react-use-id-4"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -151,7 +151,7 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
       </div>
     </button>
     <div
-      class="_typography_6v6n8_153 _font-body-sm-medium_6v6n8_41"
+      class="_typography _font-body-sm-medium"
     >
       <div
         aria-label="0 members"
@@ -161,7 +161,7 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
         tabindex="0"
       >
         <div
-          class="_stacked-avatars_va14e_109"
+          class="_stacked-avatars"
         />
         0
       </div>
@@ -173,13 +173,13 @@ exports[`RoomHeader > Tchap custo > should render as expected 1`] = `
 exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
 <DocumentFragment>
   <header
-    class="_flex_4dswl_9 mx_RoomHeader light-panel"
+    class="_flex mx_RoomHeader light-panel"
     style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
   >
     <button
       aria-label="Open room settings"
       aria-live="off"
-      class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+      class="_avatar mx_BaseAvatar _avatar-imageless"
       data-color="3"
       data-testid="avatar-img"
       data-type="round"
@@ -196,12 +196,12 @@ exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
       type="button"
     >
       <div
-        class="mx_RoomHeader_info _box-flex_1odfs_9"
+        class="mx_RoomHeader_info _box-flex"
         style="--mx-box-flex: 1;"
       >
         <div
           aria-level="1"
-          class="_typography_6v6n8_153 _font-body-lg-semibold_6v6n8_74 mx_RoomHeader_heading"
+          class="_typography _font-body-lg-semibold mx_RoomHeader_heading"
           dir="auto"
           role="heading"
         >
@@ -215,7 +215,7 @@ exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
           class="tc_badge"
         >
           <span
-            class="_typography_6v6n8_153 _font-body-sm-medium_6v6n8_41 _badge_10dml_8 badge-content"
+            class="_typography _font-body-sm-medium _badge badge-content"
             data-kind="green"
           >
             <svg
@@ -241,14 +241,14 @@ exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
     <button
       aria-disabled="false"
       aria-label="Video call"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -268,14 +268,14 @@ exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
     <button
       aria-disabled="false"
       aria-label="Voice call"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -295,14 +295,14 @@ exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
     <button
       aria-label="Threads"
       aria-labelledby="react-use-id-3"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -321,14 +321,14 @@ exports[`RoomHeader > dm > does not show the face pile for DMs 1`] = `
     <button
       aria-label="Room info"
       aria-labelledby="react-use-id-4"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg

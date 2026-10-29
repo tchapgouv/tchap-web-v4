@@ -6,16 +6,18 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
 Please see LICENSE files in the repository root for full details.
 */
 
-import { mocked } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 
 import { haveRendererForEvent } from "~tchap-web/src/events/EventTileFactory";
-import { stubClient } from "~tchap-web/test/test-utils";
+import { stubClient } from "test-utils";
 import { eventTriggersUnreadCount } from "~tchap-web/src/Unread";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 
-jest.mock("~tchap-web/src/events/EventTileFactory", () => ({
-    haveRendererForEvent: jest.fn(),
+vi.mock("~tchap-web/src/events/EventTileFactory", () => ({
+    haveRendererForEvent: vi.fn(),
 }));
 
 describe("Unread", () => {
@@ -33,8 +35,8 @@ describe("Unread", () => {
         });
 
         beforeEach(() => {
-            jest.clearAllMocks();
-            mocked(haveRendererForEvent).mockClear().mockReturnValue(false);
+            vi.clearAllMocks();
+            vi.mocked(haveRendererForEvent).mockClear().mockReturnValue(false);
         });
 
         it("returns false when the event was sent by the current user", () => {

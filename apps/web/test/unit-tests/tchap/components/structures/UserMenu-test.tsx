@@ -1,10 +1,13 @@
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import React from "react";
-import { logRoles, render, screen } from "jest-matrix-react";
+import { logRoles, render, screen } from "test-utils-rtl";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import UnwrappedUserMenu from "~tchap-web/src/tchap/components/structures/UserMenu.tsx";
-import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
-import { stubClient, wrapInSdkContext } from "~tchap-web/test/test-utils";
+import { TestSDKContext } from "test-utils";
+import { stubClient, wrapInSdkContext } from "test-utils";
 import dispatch from "~tchap-web/src/dispatcher/dispatcher";
 import { Action } from "~tchap-web/src/dispatcher/actions";
 
@@ -16,7 +19,7 @@ describe("<UserMenu>", () => {
     beforeEach(() => {
         client = stubClient();
         sdkContext = new TestSDKContext();
-        jest.spyOn(dispatch, "dispatch");
+        vi.spyOn(dispatch, "dispatch");
     });
 
     describe("<UserMenu> open directly all parameters", () => {
@@ -32,7 +35,4 @@ describe("<UserMenu>", () => {
             expect(container).toMatchSnapshot();
         });
     });
-
-    // Here are the tests for checking the props of the component
-    describe("<UserMenu> props", () => {});
 });

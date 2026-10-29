@@ -3,6 +3,10 @@ Copyright 2026 DINUM / Tchap
 SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
 */
 
+// @vitest-environment happy-dom
+
+import { beforeAll, describe, expect, it, vi } from "vitest";
+
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 
@@ -19,7 +23,7 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
         // mock SdkConfig.get("homeserver_list")
         SdkConfig.put({ homeserver_list: homeserverList } as unknown as ConfigOptions);
         // Keep the homeserver list order deterministic
-        jest.spyOn(Math, "random").mockReturnValue(0.9999);
+        vi.spyOn(Math, "random").mockReturnValue(0.9999);
     });
 
     const okResponse = (hs: string): Response =>
@@ -29,7 +33,7 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
         }) as unknown as Response;
 
     it("returns the homeserver of the first successful response", async () => {
-        const fetchSpy = jest.spyOn(global, "fetch").mockResolvedValue(okResponse("dev01.tchap.incubateur.net"));
+        const fetchSpy = vi.spyOn(global, "fetch").mockResolvedValue(okResponse("dev01.tchap.incubateur.net"));
 
         const result = await TchapUtils.fetchHomeserverForEmail(email);
 
@@ -44,7 +48,7 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
     });
 
     it("retries on a different homeserver when the first request fails", async () => {
-        const fetchSpy = jest.spyOn(global, "fetch").mockImplementation(async (url) => {
+        const fetchSpy = vi.spyOn(global, "fetch").mockImplementation(async (url) => {
             if ((url as string).startsWith("https://matrix.dev01")) {
                 throw new Error("network error");
             }
@@ -61,7 +65,7 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
     });
 
     it("retries on the next homeserver when the response is not ok", async () => {
-        const fetchSpy = jest.spyOn(global, "fetch").mockImplementation(async (url) => {
+        const fetchSpy = vi.spyOn(global, "fetch").mockImplementation(async (url) => {
             if ((url as string).startsWith("https://matrix.dev01")) {
                 return { ok: false, status: 500 } as Response;
             }
@@ -78,7 +82,7 @@ describe("TchapUtils.fetchHomeserverForEmail", () => {
     });
 
     it("returns undefined when every homeserver of the list fails", async () => {
-        const fetchSpy = jest.spyOn(global, "fetch").mockRejectedValue(new Error("network error"));
+        const fetchSpy = vi.spyOn(global, "fetch").mockRejectedValue(new Error("network error"));
 
         const result = await TchapUtils.fetchHomeserverForEmail(email);
 

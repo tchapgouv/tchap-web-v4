@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TchapRoomLinkAccess should activate link when clicking on the switch 1`] = `
+exports[`TchapRoomLinkAccess > should activate link when clicking on the switch 1`] = `
 <div
   aria-describedby="mx_Dialog_content"
   aria-labelledby="mx_BaseDialog_title"
@@ -52,6 +52,7 @@ exports[`TchapRoomLinkAccess should activate link when clicking on the switch 1`
     </span>
   </div>
   <div
+    aria-describedby="react-use-id-1"
     aria-label="Close dialog"
     class="mx_AccessibleButton mx_Dialog_cancelButton"
     role="button"
@@ -72,7 +73,7 @@ exports[`TchapRoomLinkAccess should activate link when clicking on the switch 1`
 </div>
 `;
 
-exports[`TchapRoomLinkAccess should use existing alias 1`] = `
+exports[`TchapRoomLinkAccess > should use existing alias 1`] = `
 <div
   aria-describedby="mx_Dialog_content"
   aria-labelledby="mx_BaseDialog_title"
@@ -124,6 +125,7 @@ exports[`TchapRoomLinkAccess should use existing alias 1`] = `
     </span>
   </div>
   <div
+    aria-describedby="react-use-id-1"
     aria-label="Close dialog"
     class="mx_AccessibleButton mx_Dialog_cancelButton"
     role="button"

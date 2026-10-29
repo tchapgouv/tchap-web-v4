@@ -1,27 +1,30 @@
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it, type MockedObject, vi, type Mock as vitest_Mock } from "vitest";
 import React from "react";
-import { render, fireEvent, screen, act, waitFor } from "jest-matrix-react";
-import { mocked, type MockedObject } from "jest-mock";
+import { render, fireEvent, screen, act, waitFor } from "test-utils-rtl";
+
 
 import type BasePlatform from "~tchap-web/src/BasePlatform";
 
 import EmailVerificationPage from "~tchap-web/src/tchap/components/views/sso/EmailVerificationPage";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
-import { flushPromises } from "~tchap-web/test/test-utils";
+import { flushPromises } from "test-utils";
 import Login from "~tchap-web/src/Login";
 import * as authorize from "~tchap-web/src/utils/oauth/authorize";
 import * as routing from "~tchap-web/src/vector/routing";
 import Modal from "~tchap-web/src/Modal";
 import QuestionDialog from "~tchap-web/src/components/views/dialogs/QuestionDialog";
 
-jest.mock("~tchap-web/src/tchap/util/TchapUtils");
-jest.mock("~tchap-web/src/Login");
+vi.mock("~tchap-web/src/tchap/util/TchapUtils");
+vi.mock("~tchap-web/src/Login");
 
 describe("Tests sso and oidc native flow", () => {
     const userEmail = "marc@tchap.beta.gouv.fr";
     const defaultHsUrl = "https://matrix.agent1.fr";
-    const mockedTchapUtils = mocked(TchapUtils);
-    const mockedLogin = Login as jest.Mock;
+    const mockedTchapUtils = vi.mocked(TchapUtils);
+    const mockedLogin = Login as vitest_Mock;
 
     const mockedFetchHomeserverFromEmail = (hs: string = defaultHsUrl) => {
         mockedTchapUtils.fetchHomeserverForEmail.mockImplementation(() =>
@@ -56,18 +59,18 @@ describe("Tests sso and oidc native flow", () => {
 
     const mockedPlatformPegStartSSO = (withError: boolean) => {
         if (withError) {
-            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
+            vi.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
                 throw new Error();
             });
         } else {
-            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
+            vi.spyOn(authorize, "startOAuthLogin").mockImplementation(() => {
                 console.log("starting oauth");
             });
         }
     };
 
     // Créer un mock pour onServerConfigChange
-    const onServerConfigChangeMock = jest.fn();
+    const onServerConfigChangeMock = vi.fn();
 
     const renderEmailVerificationPage = () =>
         render(
@@ -78,21 +81,23 @@ describe("Tests sso and oidc native flow", () => {
 
     describe("MAS flow activated", () => {
         beforeEach(() => {
-            jest.clearAllMocks();
+            vi.clearAllMocks();
             // Dans le beforeEach du bloc "MAS flow activated"
-            jest.spyOn(authorize, "startOAuthLogin").mockImplementation(
-                jest.fn(),
+            vi.spyOn(authorize, "startOAuthLogin").mockImplementation(
+                vi.fn(),
             );
 
-            mockedLogin.mockImplementation(() => ({
-                hsUrl: defaultHsUrl,
-                delegatedAuthentication: {},
-                getFlows: jest
-                    .fn()
-                    .mockResolvedValue([
-                        { type: "oauthNativeFlow", clientId: "clientId" },
-                    ]),
-            }));
+            mockedLogin.mockImplementation(function () {
+                return {
+                    hsUrl: defaultHsUrl,
+                    delegatedAuthentication: {},
+                    getFlows: vi
+                        .fn()
+                        .mockResolvedValue([
+                            { type: "oauthNativeFlow", clientId: "clientId" },
+                        ]),
+                    };
+                });
         });
 
         it("should display correct title and button label when mas flow is activated", () => {
@@ -105,7 +110,7 @@ describe("Tests sso and oidc native flow", () => {
         });
 
         it("should call start oidc native flow with login_hint", async () => {
-            jest.spyOn(routing, "getScreenFromLocation").mockReturnValue({
+            vi.spyOn(routing, "getScreenFromLocation").mockReturnValue({
                 screen: "email-precheck-sso",
                 params: {
                     createAccount: false,
@@ -144,7 +149,7 @@ describe("Tests sso and oidc native flow", () => {
 
         it("should call start oidc native flow with createAccount", async () => {
             // We clicked on create account button from welcome page
-            jest.spyOn(routing, "getScreenFromLocation").mockReturnValue({
+            vi.spyOn(routing, "getScreenFromLocation").mockReturnValue({
                 screen: "email-precheck-sso",
                 params: {
                     createAccount: true,
@@ -183,17 +188,17 @@ describe("Tests sso and oidc native flow", () => {
 
         it("should open modal when detect external email", async () => {
             // We clicked on create account button from welcome page
-            jest.spyOn(routing, "getScreenFromLocation").mockReturnValue({
+            vi.spyOn(routing, "getScreenFromLocation").mockReturnValue({
                 screen: "email-precheck-sso",
                 params: {
                     createAccount: true,
                 },
             });
 
-            jest.spyOn(TchapUtils, "isExternalHomeserver").mockReturnValue(
+            vi.spyOn(TchapUtils, "isExternalHomeserver").mockReturnValue(
                 true,
             );
-            jest.spyOn(Modal, "createDialog");
+            vi.spyOn(Modal, "createDialog");
             renderEmailVerificationPage();
 
             // Mock the implementation without error, what we want is to be sure they are called with the correct parameters

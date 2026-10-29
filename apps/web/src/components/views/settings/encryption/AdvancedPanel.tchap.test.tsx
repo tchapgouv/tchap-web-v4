@@ -10,7 +10,7 @@
 import React from "react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
-import { logRoles, render, screen, waitFor } from "test-utils-rtl";
+import { render, screen, waitFor } from "test-utils-rtl";
 import userEvent from "@testing-library/user-event";
 import { createTestClient, withClientContextRenderOptions } from "test-utils";
 
@@ -30,7 +30,9 @@ describe("<AdvancedPanel />", () => {
             <AdvancedPanel onResetIdentityClick={onResetIdentityClick} />,
             withClientContextRenderOptions(matrixClient),
         );
+        // :TCHAP:
         screen.getByText("Show advanced").click();
+        // end :TCHAP:
         // Wait for the device keys to be displayed
         await waitFor(() => expect(screen.getByText("ed25519")).toBeInTheDocument());
         return renderResult;
@@ -44,6 +46,7 @@ describe("<AdvancedPanel />", () => {
             expect(screen.getByTestId("encryptionDetails")).toMatchSnapshot();
         });
 
+        // :TCHAP:
         it("should display the device keys", async () => {
             await renderAdvancedPanel();
             
@@ -55,10 +58,11 @@ describe("<AdvancedPanel />", () => {
             // :TCHAP: Hide button should display
             expect(screen.getByText("Hide advanced"));
         });
+        // end :TCHAP:
 
         it("should display the device keys", async () => {
             await renderAdvancedPanel();
-            
+
             // session id
             expect(screen.getByText("ABCDEFGHI")).toBeInTheDocument();
             // session key
@@ -72,7 +76,7 @@ describe("<AdvancedPanel />", () => {
             const onResetIdentityClick = vi.fn();
             await renderAdvancedPanel(onResetIdentityClick);
 
-            const resetIdentityButton = screen.getByRole("button", { name: "Reset cryptographic identity" });
+            const resetIdentityButton = screen.getByRole("button", { name: "Reset digital identity" });
             await user.click(resetIdentityButton);
 
             expect(onResetIdentityClick).toHaveBeenCalled();

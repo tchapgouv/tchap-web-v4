@@ -7,29 +7,19 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+// @vitest-environment happy-dom
+
+import { vi, describe, it, expect, beforeAll, beforeEach, afterEach } from "vitest";
 import React from "react";
-import {
-    render,
-    screen,
-    fireEvent,
-    act,
-    cleanup,
-    waitFor,
-    within,
-} from "jest-matrix-react";
-import { mocked } from "jest-mock";
+import { render, screen, fireEvent, act, cleanup, waitFor, within } from "test-utils-rtl";
 import { type MatrixClient, type Room } from "matrix-js-sdk/src/matrix";
+import { mkStubRoom, wrapInMatrixClientContext, wrapInSdkContext, TestSDKContext } from "test-utils";
+
 
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 import { MetaSpace, type SpaceKey } from "~tchap-web/src/stores/spaces";
 import { shouldShowComponent } from "~tchap-web/src/customisations/helpers/UIComponents";
 import { UIComponent } from "~tchap-web/src/settings/UIFeature";
-import {
-    mkStubRoom,
-    wrapInMatrixClientContext,
-    wrapInSdkContext,
-} from "~tchap-web/test/test-utils";
-import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import { type SpaceNotificationState } from "~tchap-web/src/stores/notifications/SpaceNotificationState";
 import SettingsStore from "~tchap-web/src/settings/SettingsStore";
@@ -80,7 +70,7 @@ const pickUp = async (element: HTMLElement) => {
     await screen.findByText(/You have lifted an item/i);
 
     act(() => {
-        jest.runOnlyPendingTimers();
+        vi.runOnlyPendingTimers();
     });
 };
 
@@ -102,8 +92,8 @@ const drop = async (element: HTMLElement) => {
     await screen.findByText(/You have dropped the item/i);
 };
 
-jest.mock("~tchap-web/src/stores/spaces/SpaceStore", () => {
-    const EventEmitter = jest.requireActual("events");
+vi.mock("~tchap-web/src/stores/spaces/SpaceStore", async () => {
+    const { EventEmitter } = await vi.importActual<typeof import("events")>("events");
     class MockSpaceStore extends EventEmitter {
         invitedSpaces: SpaceKey[] = [];
         enabledMetaSpaces: MetaSpace[] = [];
@@ -111,32 +101,33 @@ jest.mock("~tchap-web/src/stores/spaces/SpaceStore", () => {
         activeSpace: SpaceKey = "!space1";
         getChildSpaces = () => [] as Room[];
         getNotificationState = () => null as SpaceNotificationState | null;
-        setActiveSpace = jest.fn();
-        moveRootSpace = jest.fn();
-        start = jest.fn();
+        setActiveSpace = vi.fn();
+        moveRootSpace = vi.fn();
+        start = vi.fn();
     }
-    return MockSpaceStore;
+    return { default: MockSpaceStore };
 });
 
-jest.mock("~tchap-web/src/customisations/helpers/UIComponents", () => ({
-    shouldShowComponent: jest.fn(),
+vi.mock("~tchap-web/src/customisations/helpers/UIComponents", () => ({
+    shouldShowComponent: vi.fn(),
 }));
 
 describe("<SpacePanel />", () => {
     const mockClient = {
-        getUserId: jest.fn().mockReturnValue("@test:test"),
-        getSafeUserId: jest.fn().mockReturnValue("@test:test"),
-        getClientWellKnown: jest.fn(),
-        mxcUrlToHttp: jest.fn(),
-        getRoom: jest.fn(),
-        isGuest: jest.fn(),
-        getAccountData: jest.fn(),
-        on: jest.fn(),
-        off: jest.fn(),
-        removeListener: jest.fn(),
-        isVersionSupported: jest.fn().mockResolvedValue(true),
-        doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
-        getAuthMetadata: jest.fn().mockRejectedValue(new Error("Legacy auth")),
+        getUserId: vi.fn().mockReturnValue("@test:test"),
+        getSafeUserId: vi.fn().mockReturnValue("@test:test"),
+        getClientWellKnown: vi.fn(),
+        mxcUrlToHttp: vi.fn(),
+        getRoom: vi.fn(),
+        isGuest: vi.fn(),
+        getAccountData: vi.fn(),
+        on: vi.fn(),
+        off: vi.fn(),
+        removeListener: vi.fn(),
+        isVersionSupported: vi.fn().mockResolvedValue(true),
+        doesServerSupportUnstableFeature: vi.fn().mockResolvedValue(false),
+        getAuthMetadata: vi.fn().mockRejectedValue(new Error("Legacy auth")),
+        getSyncState: vi.fn().mockReturnValue("SYNCING"),
     } as unknown as MatrixClient;
     const sdkContext = new TestSDKContext();
     const SpacePanel = wrapInSdkContext(
@@ -147,9 +138,9 @@ describe("<SpacePanel />", () => {
     const featureThreadName: string = "feature_thread";
 
     beforeAll(() => {
-        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
-        jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(mockClient);
-        jest.spyOn(
+        vi.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+        vi.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(mockClient);
+        vi.spyOn(
             TchapUIFeature,
             "isFeatureActiveForHomeserver",
         ).mockImplementation(
@@ -164,15 +155,16 @@ describe("<SpacePanel />", () => {
             MetaSpace.Orphans,
             MetaSpace.VideoRooms,
         );
-        mocked(shouldShowComponent).mockClear().mockReturnValue(true);
+        vi.mocked(shouldShowComponent).mockClear().mockReturnValue(true);
     });
     afterEach(() => {
         cleanup();
+        vi.useRealTimers();
     });
 
     it("should show all activated MetaSpaces in the correct order", async () => {
         const originalGetValue = SettingsStore.getValue;
-        const spySettingsStore = jest
+        const spySettingsStore = vi
             .spyOn(SettingsStore, "getValue")
             .mockImplementation((setting) => {
                 return setting === "feature_video_rooms"
@@ -209,7 +201,7 @@ describe("<SpacePanel />", () => {
         });
 
         it("does not render create space button when UIComponent.CreateSpaces component should not be shown", () => {
-            mocked(shouldShowComponent).mockReturnValue(false);
+            vi.mocked(shouldShowComponent).mockReturnValue(false);
             render(<SpacePanel />);
             expect(shouldShowComponent).toHaveBeenCalledWith(
                 UIComponent.CreateSpaces,
@@ -225,7 +217,7 @@ describe("<SpacePanel />", () => {
             mkStubRoom("!room3:server", "Room 3", mockClient),
         ];
         DMRoomMap.makeShared(mockClient);
-        jest.useFakeTimers();
+        vi.useFakeTimers({ shouldAdvanceTime: true });
 
         const { getByLabelText } = render(<SpacePanel />);
 
@@ -257,7 +249,7 @@ describe("<SpacePanel />", () => {
         });
 
         it("returns true when the the homeserver include thread feature", () => {
-            jest.spyOn(
+            vi.spyOn(
                 TchapUIFeature,
                 "isFeatureActiveForHomeserver",
             ).mockReturnValue(true);
@@ -271,7 +263,7 @@ describe("<SpacePanel />", () => {
         });
 
         it("returns false when the the homeserver doesnt include thread feature", async () => {
-            jest.spyOn(
+            vi.spyOn(
                 TchapUIFeature,
                 "isFeatureActiveForHomeserver",
             ).mockReturnValue(false);

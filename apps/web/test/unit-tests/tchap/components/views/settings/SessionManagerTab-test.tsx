@@ -6,7 +6,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+// @vitest-environment happy-dom
+
 import React from "react";
+import { describe, it, expect, beforeEach, afterAll, vi, type MockedObject, type Mocked } from "vitest";
 import {
     act,
     fireEvent,
@@ -16,7 +19,7 @@ import {
     waitFor,
     waitForElementToBeRemoved,
     within,
-} from "jest-matrix-react";
+} from "test-utils-rtl";
 import { logger } from "matrix-js-sdk/src/logger";
 import { type CryptoApi, DeviceVerificationStatus, type VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { sleep } from "matrix-js-sdk/src/utils";
@@ -33,8 +36,6 @@ import {
     MatrixError,
     type MatrixClient,
 } from "matrix-js-sdk/src/matrix";
-import { mocked, type MockedObject } from "jest-mock-vitest-adapter";
-
 import {
     clearAllModals,
     flushPromises,
@@ -44,7 +45,8 @@ import {
     mockClientMethodsServer,
     mockClientMethodsUser,
     mockPlatformPeg,
-} from "~tchap-web/test/test-utils";
+    TestSDKContext,
+} from "test-utils";
 import SessionManagerTab from "~tchap-web/src/components/views/settings/tabs/user/SessionManagerTab";
 import Modal from "~tchap-web/src/Modal";
 import LogoutDialog from "~tchap-web/src/components/views/dialogs/LogoutDialog";
@@ -56,10 +58,13 @@ import { INACTIVE_DEVICE_AGE_MS } from "~tchap-web/src/components/views/settings
 import SettingsStore from "~tchap-web/src/settings/SettingsStore";
 import { getClientInformationEventType } from "~tchap-web/src/utils/device/clientInformation";
 import { SDKContext } from "~tchap-web/src/contexts/SDKContext";
-import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
-import { makeDelegatedAuthMetadata } from "~tchap-web/test/test-utils/auth";
+import { makeDelegatedAuthMetadata } from "test-utils/auth";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
+
+vi.mock("../../../auth/LoginWithQR", () => ({
+    default: () => <div data-testid="login-with-qr" />,
+}));
 
 mockPlatformPeg();
 
@@ -118,18 +123,18 @@ describe("<SessionManagerTab />", () => {
     });
 
     const mockVerificationRequest = {
-        cancel: jest.fn(),
-        on: jest.fn(),
-        off: jest.fn(),
+        cancel: vi.fn(),
+        on: vi.fn(),
+        off: vi.fn(),
     } as unknown as VerificationRequest;
 
-    const mockCrypto = mocked({
-        getDeviceVerificationStatus: jest.fn(),
-        getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
-        requestDeviceVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
-        supportsSecretsForQrLogin: jest.fn().mockReturnValue(false),
-        isCrossSigningReady: jest.fn().mockReturnValue(true),
-        getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
+    const mockCrypto = vi.mocked({
+        getDeviceVerificationStatus: vi.fn(),
+        getUserDeviceInfo: vi.fn().mockResolvedValue(new Map()),
+        requestDeviceVerification: vi.fn().mockResolvedValue(mockVerificationRequest),
+        supportsSecretsForQrLogin: vi.fn().mockReturnValue(false),
+        isCrossSigningReady: vi.fn().mockReturnValue(true),
+        getVerificationRequestsToDeviceInProgress: vi.fn().mockReturnValue([]),
     } as unknown as CryptoApi);
 
     let mockClient!: MockedObject<MatrixClient>;
@@ -206,22 +211,22 @@ describe("<SessionManagerTab />", () => {
             ...mockClientMethodsUser(aliceId),
             ...mockClientMethodsServer(),
             ...mockClientMethodsCrypto(),
-            getCrypto: jest.fn().mockReturnValue(mockCrypto),
-            getDevices: jest.fn(),
-            getDeviceId: jest.fn().mockReturnValue(deviceId),
-            deleteMultipleDevices: jest.fn(),
-            generateClientSecret: jest.fn(),
-            setDeviceDetails: jest.fn(),
-            getAccountData: jest.fn(),
-            deleteAccountData: jest.fn(),
-            doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(true),
-            getPushers: jest.fn(),
-            setPusher: jest.fn(),
-            setLocalNotificationSettings: jest.fn(),
-            getAuthMetadata: jest.fn().mockRejectedValue(new MatrixError({ errcode: "M_UNRECOGNIZED" }, 404)),
+            getCrypto: vi.fn().mockReturnValue(mockCrypto),
+            getDevices: vi.fn(),
+            getDeviceId: vi.fn().mockReturnValue(deviceId),
+            deleteMultipleDevices: vi.fn(),
+            generateClientSecret: vi.fn(),
+            setDeviceDetails: vi.fn(),
+            getAccountData: vi.fn(),
+            deleteAccountData: vi.fn(),
+            doesServerSupportUnstableFeature: vi.fn().mockResolvedValue(true),
+            getPushers: vi.fn(),
+            setPusher: vi.fn(),
+            setLocalNotificationSettings: vi.fn(),
+            getAuthMetadata: vi.fn().mockRejectedValue(new MatrixError({ errcode: "M_UNRECOGNIZED" }, 404)),
         });
-        jest.clearAllMocks();
-        jest.spyOn(logger, "error").mockRestore();
+        vi.clearAllMocks();
+        vi.spyOn(logger, "error").mockRestore();
         mockCrypto.getDeviceVerificationStatus.mockReset().mockResolvedValue(new DeviceVerificationStatus({}));
 
         mockClient.getDevices.mockReset().mockResolvedValue({ devices: [alicesDevice, alicesMobileDevice] });
@@ -265,7 +270,7 @@ describe("<SessionManagerTab />", () => {
         await clearAllModals();
 
         // :TCHAP:
-        jest.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockReturnValue(true);
+        vi.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockReturnValue(true);
     });
 
     afterAll(() => {
@@ -280,7 +285,7 @@ describe("<SessionManagerTab />", () => {
 
     it("removes spinner when device fetch fails", async () => {
         // eat the expected error log
-        jest.spyOn(logger, "error").mockImplementation(() => {});
+        vi.spyOn(logger, "error").mockImplementation(() => {});
         mockClient.getDevices.mockRejectedValue({ httpStatus: 404 });
         const { container } = render(getComponent());
 
@@ -435,7 +440,7 @@ describe("<SessionManagerTab />", () => {
                 devices: [alicesDevice, alicesMobileDevice],
             });
             const { getByTestId } = render(getComponent());
-            const modalSpy = jest.spyOn(Modal, "createDialog");
+            const modalSpy = vi.spyOn(Modal, "createDialog");
 
             await act(async () => {
                 await flushPromises();
@@ -548,7 +553,7 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("renders device verification cta on other sessions when current session is verified", async () => {
-            const modalSpy = jest.spyOn(Modal, "createDialog");
+            const modalSpy = vi.spyOn(Modal, "createDialog");
 
             // make the current device verified
             mockClient.getDevices.mockResolvedValue({
@@ -607,7 +612,7 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("refreshes devices after verifying other device", async () => {
-            const modalSpy = jest.spyOn(Modal, "createDialog");
+            const modalSpy = vi.spyOn(Modal, "createDialog");
 
             // make the current device verified
             mockClient.getDevices.mockResolvedValue({
@@ -776,7 +781,7 @@ describe("<SessionManagerTab />", () => {
 
     describe("Sign out", () => {
         it("Signs out of current device", async () => {
-            const modalSpy = jest.spyOn(Modal, "createDialog");
+            const modalSpy = vi.spyOn(Modal, "createDialog");
 
             mockClient.getDevices.mockResolvedValue({
                 devices: [alicesDevice],
@@ -798,7 +803,7 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("Signs out of current device from kebab menu", async () => {
-            const modalSpy = jest.spyOn(Modal, "createDialog");
+            const modalSpy = vi.spyOn(Modal, "createDialog");
             mockClient.getDevices.mockResolvedValue({
                 devices: [alicesDevice],
             });
@@ -840,7 +845,7 @@ describe("<SessionManagerTab />", () => {
             });
 
             fireEvent.click(getByTestId("current-session-menu"));
-            fireEvent.click(getByLabelText("Remove all other sessions (2)"));
+            fireEvent.click(getByLabelText("Remove all other devices (2)"));
             await confirmSignout(getByTestId);
 
             // other devices deleted, excluding current device
@@ -881,7 +886,7 @@ describe("<SessionManagerTab />", () => {
             expect(mockClient.deleteAccountData).not.toHaveBeenCalled();
 
             fireEvent.click(getByTestId("current-session-menu"));
-            fireEvent.click(getByLabelText("Remove all other sessions (2)"));
+            fireEvent.click(getByLabelText("Remove all other devices (2)"));
             await confirmSignout(getByTestId);
 
             // only called once for signed out device with account data event
@@ -1162,7 +1167,7 @@ describe("<SessionManagerTab />", () => {
                 });
 
                 fireEvent.click(getByTestId("other-sessions-menu"));
-                fireEvent.click(getByLabelText("Remove 2 sessions"));
+                fireEvent.click(getByLabelText("Remove 2 devices"));
                 await confirmSignout(getByTestId);
 
                 // other devices deleted, excluding current device
@@ -1184,7 +1189,7 @@ describe("<SessionManagerTab />", () => {
 
             // signing out the current device works as usual
             it("Signs out of current device", async () => {
-                const modalSpy = jest.spyOn(Modal, "createDialog");
+                const modalSpy = vi.spyOn(Modal, "createDialog");
 
                 mockClient.getDevices.mockResolvedValue({
                     devices: [alicesDevice],
@@ -1367,7 +1372,7 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("displays an error when session display name fails to save", async () => {
-            const logSpy = jest.spyOn(logger, "error");
+            const logSpy = vi.spyOn(logger, "error");
             const error = new Error("oups");
             mockClient.setDeviceDetails.mockRejectedValue(error);
             const { getByTestId } = render(getComponent());
@@ -1406,7 +1411,7 @@ describe("<SessionManagerTab />", () => {
             toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
 
             // header displayed correctly
-            expect(getByText("2 sessions selected")).toBeTruthy();
+            expect(getByText("2 devices selected")).toBeTruthy();
 
             expect(isDeviceSelected(getByTestId, alicesMobileDevice.device_id)).toBeTruthy();
             expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeTruthy();
@@ -1430,7 +1435,7 @@ describe("<SessionManagerTab />", () => {
             toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
 
             // header displayed correctly
-            expect(getByText("2 sessions selected")).toBeTruthy();
+            expect(getByText("2 devices selected")).toBeTruthy();
 
             fireEvent.click(getByTestId("cancel-selection-cta"));
 
@@ -1469,7 +1474,7 @@ describe("<SessionManagerTab />", () => {
                 fireEvent.click(getByTestId("device-select-all-checkbox"));
 
                 // header displayed correctly
-                expect(getByText("2 sessions selected")).toBeTruthy();
+                expect(getByText("2 devices selected")).toBeTruthy();
                 expect(isSelectAllChecked(getByTestId)).toBeTruthy();
 
                 // devices selected
@@ -1489,7 +1494,7 @@ describe("<SessionManagerTab />", () => {
                 fireEvent.click(getByTestId("device-select-all-checkbox"));
 
                 // header displayed correctly
-                expect(getByText("2 sessions selected")).toBeTruthy();
+                expect(getByText("2 devices selected")).toBeTruthy();
                 expect(isSelectAllChecked(getByTestId)).toBeTruthy();
 
                 // devices selected
@@ -1507,7 +1512,7 @@ describe("<SessionManagerTab />", () => {
                 fireEvent.click(getByTestId("device-select-all-checkbox"));
 
                 // header displayed correctly
-                expect(getByText("2 sessions selected")).toBeTruthy();
+                expect(getByText("2 devices selected")).toBeTruthy();
                 expect(isSelectAllChecked(getByTestId)).toBeTruthy();
 
                 // devices selected
@@ -1616,7 +1621,7 @@ describe("<SessionManagerTab />", () => {
     });
 
     describe("MSC4108 QR code login", () => {
-        const settingsValueSpy = jest.spyOn(SettingsStore, "getValue");
+        const settingsValueSpy = vi.spyOn(SettingsStore, "getValue");
         const issuer = "https://issuer.org";
 
         beforeEach(() => {
@@ -1641,13 +1646,13 @@ describe("<SessionManagerTab />", () => {
                     "urn:ietf:params:oauth:grant-type:device_code",
                 ],
             });
-            mockCrypto.exportSecretsBundle = jest.fn();
+            mockCrypto.exportSecretsBundle = vi.fn();
         });
 
         
         // in tchap we hide all those sections
         it("should not renders qr code login section if not active in FF", async () => {
-            jest.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockReturnValue(false);
+            vi.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockReturnValue(false);
             const { queryByText } = render(getComponent());
 
             // wait for versions call to settle

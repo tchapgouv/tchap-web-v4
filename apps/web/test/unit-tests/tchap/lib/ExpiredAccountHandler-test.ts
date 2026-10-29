@@ -1,28 +1,31 @@
-import { mocked, type MockedObject } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, type MockedObject, vi } from "vitest";
+
 import { HttpApiEvent, type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import ExpiredAccountDialog from "~tchap-web/src/tchap/components/views/dialogs/ExpiredAccountDialog";
 import ExpiredAccountHandler from "~tchap-web/src/tchap/ext/ExpiredAccountHandler";
 import Modal from "~tchap-web/src/Modal";
 import defaultDispatcher from "~tchap-web/src/dispatcher/dispatcher";
-import { getMockClientWithEventEmitter } from "~tchap-web/test/test-utils";
+import { getMockClientWithEventEmitter } from "test-utils";
 
 describe("ExpiredAccountHandler", () => {
     let mockClient: MockedObject<MatrixClient>;
 
     beforeEach(() => {
-        Modal.createDialog = jest.fn();
+        Modal.createDialog = vi.fn();
         // @ts-ignore mock (type error because empty return)
-        mocked(Modal.createDialog).mockReturnValue({});
+        vi.mocked(Modal.createDialog).mockReturnValue({});
 
         mockClient = getMockClientWithEventEmitter({
-            stopClient: jest.fn(),
-            removeAllListeners: jest.fn(),
+            stopClient: vi.fn(),
+            removeAllListeners: vi.fn(),
         });
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     // TODO : it would be nice to test that our handler is propoerly registered on app load, in src/vector/index.ts

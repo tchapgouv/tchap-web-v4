@@ -6,12 +6,15 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-import { render, screen } from "jest-matrix-react";
+// @vitest-environment happy-dom
+
 import React, { type ComponentProps } from "react";
+import { vi, describe, it, expect } from "vitest";
+import { render, screen } from "test-utils-rtl";
 import userEvent from "@testing-library/user-event";
 
 import { PowerLevelSelector } from "~tchap-web/src/components/views/settings/PowerLevelSelector";
-import { stubClient } from "~tchap-web/test/test-utils";
+import { stubClient } from "test-utils";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 
 describe("PowerLevelSelector", () => {
@@ -34,7 +37,7 @@ describe("PowerLevelSelector", () => {
                     title="title"
                     // filter nothing by default
                     filter={() => true}
-                    onClick={jest.fn()}
+                    onClick={vi.fn()}
                     {...props}
                 >
                     empty label
@@ -87,7 +90,7 @@ describe("PowerLevelSelector", () => {
 
     // TCHAP //
     it("should be able to change the power level of the current user", async () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         const userLevels = {
             [currentUser]: 100,
             "@alice:server.org": 100,
@@ -115,7 +118,7 @@ describe("PowerLevelSelector", () => {
     });
 
     it("should display modal warning if user is last admin", async () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
 
         renderPLS({ onClick });
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`InviteDialog should display external warning when a text is mxId in encrypted room 1`] = `
+exports[`InviteDialog > should display external warning when a text is mxId in encrypted room 1`] = `
 <div
   class="tc_live_warning_section"
   data-testid="tc_warning"
@@ -12,7 +12,7 @@ exports[`InviteDialog should display external warning when a text is mxId in enc
 </div>
 `;
 
-exports[`InviteDialog should display external warning when a user email is selected in private room 1`] = `
+exports[`InviteDialog > should display external warning when a user email is selected in private room 1`] = `
 <div
   class="tc_live_warning_section"
   data-testid="tc_warning"
@@ -24,7 +24,7 @@ exports[`InviteDialog should display external warning when a user email is selec
 </div>
 `;
 
-exports[`InviteDialog should warn when room is public so not possible to add external 1`] = `
+exports[`InviteDialog > should warn when room is public so not possible to add external 1`] = `
 <div
   class="tc_live_warning_section"
   data-testid="tc_warning"

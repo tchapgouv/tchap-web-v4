@@ -1,10 +1,13 @@
-import { type Mocked, mocked } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it, type Mocked, vi } from "vitest";
+
 import { type CryptoApi } from "matrix-js-sdk/src/crypto-api";
 import { type Room, Visibility, type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { TchapRoomAccessRule, TchapRoomAccessRuleVisibility, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
-import { mkRoom, stubClient } from "~tchap-web/test/test-utils";
+import { mkRoom, stubClient } from "test-utils";
 
 describe("Provides utils method to get room type and state", () => {
     let room: Mocked<Room>;
@@ -12,14 +15,14 @@ describe("Provides utils method to get room type and state", () => {
     let cryptoApi: Mocked<CryptoApi>;
 
     beforeEach(() => {
-        client = mocked(stubClient());
+        client = vi.mocked(stubClient());
         room = mkRoom(client, "test");
-        cryptoApi = mocked(client.getCrypto()!);
+        cryptoApi = vi.mocked(client.getCrypto()!);
     });
 
     it("returns correct room type for room with encryption", async () => {
-        jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
-        jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
+        vi.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+        vi.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
         const resultRestricted = await TchapRoomUtils.getTchapRoomTypeInternal(
             { rule: TchapRoomAccessRule.Restricted },
             room,
@@ -33,8 +36,8 @@ describe("Provides utils method to get room type and state", () => {
     });
 
     it("returns room type Private with non encryption external for room", async () => {
-        jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
-        jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
+        vi.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+        vi.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
 
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
             {
@@ -48,8 +51,8 @@ describe("Provides utils method to get room type and state", () => {
     });
 
     it("returns room type Private with non encryption for room without encryption", async () => {
-        jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
-        jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
+        vi.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+        vi.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
 
         const result = await TchapRoomUtils.getTchapRoomTypeInternal(
             {
@@ -63,22 +66,22 @@ describe("Provides utils method to get room type and state", () => {
     });
 
     it("returns room type Forum for room without encryption and visibility public", async () => {
-        jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Public });
-        jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
+        vi.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Public });
+        vi.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(false);
         const result = await TchapRoomUtils.getTchapRoomTypeInternal({ rule: TchapRoomAccessRule.Restricted }, room);
         expect(result).toStrictEqual(TchapRoomType.Forum);
     });
 
     it("returns room type External for room with encryption and unrestricted access rule", async () => {
-        jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
-        jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
+        vi.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+        vi.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
         const result = await TchapRoomUtils.getTchapRoomTypeInternal({ rule: TchapRoomAccessRule.Unrestricted }, room);
         expect(result).toStrictEqual(TchapRoomType.External);
     });
 
     it("returns room type Private for default value on encrypted room if no room_access_rules is found", async () => {
-        jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
-        jest.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
+        vi.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+        vi.spyOn(cryptoApi, "isEncryptionEnabledInRoom").mockResolvedValue(true);
         const resultRestricted = await TchapRoomUtils.getTchapRoomTypeInternal(undefined, room);
         expect(resultRestricted).toStrictEqual(TchapRoomType.Private);
     });

@@ -6,16 +6,18 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+// @vitest-environment happy-dom
+
 import React from "react";
-import { render, fireEvent, screen } from "jest-matrix-react";
+import { afterEach, beforeEach, describe, expect, it, type MockedObject, vi } from "vitest";
+import { render, fireEvent, screen } from "test-utils-rtl";
 import { Room, type MatrixClient, JoinRule, MatrixEvent, HistoryVisibility } from "matrix-js-sdk/src/matrix";
-import { mocked, type MockedObject } from "jest-mock";
 import userEvent from "@testing-library/user-event";
 import { LinkedTextContext } from "@element-hq/web-shared-components";
 
 import RoomSummaryCardView from "~tchap-web/src/components/views/right_panel/RoomSummaryCardView";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
-import { flushPromises, stubClient } from "~tchap-web/test/test-utils";
+import { flushPromises, stubClient } from "test-utils";
 import { RoomPermalinkCreator } from "~tchap-web/src/utils/permalinks/Permalinks";
 import { _t } from "~tchap-web/src/languageHandler";
 import {
@@ -31,8 +33,8 @@ import * as tchapRoomHook from "~tchap-web/src/tchap/util/TchapRoomHook";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 
 // Mock the viewmodel hooks
-jest.mock("~tchap-web/src/components/viewmodels/right_panel/RoomSummaryCardViewModel", () => ({
-    useRoomSummaryCardViewModel: jest.fn(),
+vi.mock("~tchap-web/src/components/viewmodels/right_panel/RoomSummaryCardViewModel", () => ({
+    useRoomSummaryCardViewModel: vi.fn(),
 }));
 
 describe("<RoomSummaryCard />", () => {
@@ -45,7 +47,7 @@ describe("<RoomSummaryCard />", () => {
     const getComponent = (props = {}) => {
         const defaultProps = {
             room,
-            onClose: jest.fn(),
+            onClose: vi.fn(),
             permalinkCreator: new RoomPermalinkCreator(room),
         };
 
@@ -74,36 +76,36 @@ describe("<RoomSummaryCard />", () => {
         canInviteToState: true,
         pinCount: 0,
         searchInputRef: { current: null },
-        onUpdateSearchInput: jest.fn(),
-        onRoomMembersClick: jest.fn(),
-        onRoomThreadsClick: jest.fn(),
-        onRoomFilesClick: jest.fn(),
-        onRoomExtensionsClick: jest.fn(),
-        onRoomPinsClick: jest.fn(),
-        onRoomSettingsClick: jest.fn(),
-        onLeaveRoomClick: jest.fn(),
-        onShareRoomClick: jest.fn(),
-        onRoomExportClick: jest.fn(),
-        onRoomPollHistoryClick: jest.fn(),
-        onReportRoomClick: jest.fn(),
-        onFavoriteToggleClick: jest.fn(),
-        onInviteToRoomClick: jest.fn(),
+        onUpdateSearchInput: vi.fn(),
+        onRoomMembersClick: vi.fn(),
+        onRoomThreadsClick: vi.fn(),
+        onRoomFilesClick: vi.fn(),
+        onRoomExtensionsClick: vi.fn(),
+        onRoomPinsClick: vi.fn(),
+        onRoomSettingsClick: vi.fn(),
+        onLeaveRoomClick: vi.fn(),
+        onShareRoomClick: vi.fn(),
+        onRoomExportClick: vi.fn(),
+        onRoomPollHistoryClick: vi.fn(),
+        onReportRoomClick: vi.fn(),
+        onFavoriteToggleClick: vi.fn(),
+        onInviteToRoomClick: vi.fn(),
     };
 
     beforeEach(() => {
-        mockClient = mocked(stubClient());
+        mockClient = vi.mocked(stubClient());
         room = new Room(roomId, mockClient, userId);
-        mocked(useRoomSummaryCardViewModel).mockReturnValue(vmDefaultValues);
+        vi.mocked(useRoomSummaryCardViewModel).mockReturnValue(vmDefaultValues);
         DMRoomMap.makeShared(mockClient);
-        jest.spyOn(tchapRoomHook, "useTchapRoom").mockReturnValue({
+        vi.spyOn(tchapRoomHook, "useTchapRoom").mockReturnValue({
             currentRoomType: TchapRoomType.Private,
-            updateTchapRoomType: jest.fn().mockResolvedValue(TchapRoomType.Private),
+            updateTchapRoomType: vi.fn().mockResolvedValue(TchapRoomType.Private),
         });
         mockClient.getRoom.mockReturnValue(room);
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it("renders the room summary", () => {
@@ -146,7 +148,7 @@ describe("<RoomSummaryCard />", () => {
 
     describe("search", () => {
         it("has the search field", async () => {
-            const onSearchChange = jest.fn();
+            const onSearchChange = vi.fn();
             const { getByPlaceholderText } = getComponent({
                 onSearchChange,
             });
@@ -154,7 +156,7 @@ describe("<RoomSummaryCard />", () => {
         });
 
         it("should focus the search field if focusRoomSearch=true", () => {
-            const onSearchChange = jest.fn();
+            const onSearchChange = vi.fn();
             const { getByPlaceholderText } = getComponent({
                 onSearchChange,
                 focusRoomSearch: true,
@@ -163,8 +165,8 @@ describe("<RoomSummaryCard />", () => {
         });
 
         it("should cancel search on escape", () => {
-            const onSearchChange = jest.fn();
-            const onSearchCancel = jest.fn();
+            const onSearchChange = vi.fn();
+            const onSearchCancel = vi.fn();
 
             const { getByPlaceholderText } = getComponent({
                 onSearchChange,
@@ -179,7 +181,7 @@ describe("<RoomSummaryCard />", () => {
         it("should update the search field value correctly", async () => {
             const user = userEvent.setup();
 
-            const onSearchChange = jest.fn();
+            const onSearchChange = vi.fn();
             const { getByPlaceholderText } = getComponent({
                 onSearchChange,
             });
@@ -265,7 +267,7 @@ describe("<RoomSummaryCard />", () => {
     });
 
     it("does not render irrelevant options if video room", () => {
-        mocked(useRoomSummaryCardViewModel).mockReturnValue({
+        vi.mocked(useRoomSummaryCardViewModel).mockReturnValue({
             ...vmDefaultValues,
             isVideoRoom: true,
         });
@@ -304,7 +306,7 @@ describe("<RoomSummaryCard />", () => {
 
     describe("public room label", () => {
         it("does not show public room label for a DM", async () => {
-            mocked(useRoomSummaryCardViewModel).mockReturnValue({
+            vi.mocked(useRoomSummaryCardViewModel).mockReturnValue({
                 ...vmDefaultValues,
                 isDirectMessage: true,
             });
@@ -317,7 +319,7 @@ describe("<RoomSummaryCard />", () => {
         });
 
         it("does not show public room label for non public room", async () => {
-            mocked(useRoomSummaryCardViewModel).mockReturnValue({
+            vi.mocked(useRoomSummaryCardViewModel).mockReturnValue({
                 ...vmDefaultValues,
                 isDirectMessage: false,
                 roomJoinRule: JoinRule.Invite,
@@ -330,9 +332,9 @@ describe("<RoomSummaryCard />", () => {
         });
 
       it("shows a public room label for a public room", async () => {
-            jest.spyOn(tchapRoomHook, "useTchapRoom").mockReturnValue({
+            vi.spyOn(tchapRoomHook, "useTchapRoom").mockReturnValue({
                 currentRoomType: TchapRoomType.Forum,
-                updateTchapRoomType: jest.fn().mockResolvedValue(TchapRoomType.Forum),
+                updateTchapRoomType: vi.fn().mockResolvedValue(TchapRoomType.Forum),
             });
             getComponent();
 
@@ -344,7 +346,7 @@ describe("<RoomSummaryCard />", () => {
 
     describe("user status", () => {
         it("shows the other user's status when set", () => {
-            mocked(useRoomSummaryCardViewModel).mockReturnValue({
+            vi.mocked(useRoomSummaryCardViewModel).mockReturnValue({
                 ...vmDefaultValues,
                 isDirectMessage: true,
                 userStatus: { emoji: "💬", text: "In a meeting" },
@@ -357,7 +359,7 @@ describe("<RoomSummaryCard />", () => {
         });
 
         it("does not show a status when there is none", () => {
-            mocked(useRoomSummaryCardViewModel).mockReturnValue({
+            vi.mocked(useRoomSummaryCardViewModel).mockReturnValue({
                 ...vmDefaultValues,
                 isDirectMessage: true,
                 userStatus: undefined,
@@ -373,8 +375,8 @@ describe("<RoomSummaryCard />", () => {
     describe("tchap custo", () => {
       // other custo are ui and handle with scanpshot is enough
       it("should disable copy link if joinrule is invite", () => {
-        jest.spyOn(TchapRoomUtils, "getRoomJoinRule").mockReturnValue(JoinRule.Invite);
-        mocked(useRoomSummaryCardViewModel).mockReturnValue({
+        vi.spyOn(TchapRoomUtils, "getRoomJoinRule").mockReturnValue(JoinRule.Invite);
+        vi.mocked(useRoomSummaryCardViewModel).mockReturnValue({
             ...vmDefaultValues,
             isDirectMessage: true,
             userStatus: undefined,

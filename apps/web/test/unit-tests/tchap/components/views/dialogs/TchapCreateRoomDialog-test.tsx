@@ -1,5 +1,8 @@
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import React from "react";
-import { type RenderResult, render, screen } from "jest-matrix-react";
+import { type RenderResult, render, screen } from "test-utils-rtl";
 import userEvent from "@testing-library/user-event";
 import { EventEmitter } from "node:events";
 
@@ -7,7 +10,7 @@ import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import TchapCreateRoomDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapCreateRoomDialog";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
-import { flushPromises } from "~tchap-web/test/test-utils";
+import { flushPromises } from "test-utils";
 
 //mocking module with jest.mock should be done outside the test. Before any import of the mocked module.
 //I could not make a mock of TchapCreateRoomDialog, the real implementation was taken each time. Then I used jest spyOn
@@ -36,7 +39,7 @@ describe("TchapCreateRoomDialog", () => {
         defaultName: undefined, // unused for Tchap version
         parentSpace: undefined, // unused for Tchap version
         defaultEncrypted: undefined, // unused for Tchap version
-        onFinished: jest.fn(),
+        onFinished: vi.fn(),
     };
 
     //simulate the submit of the form
@@ -75,15 +78,15 @@ describe("TchapCreateRoomDialog", () => {
     const getComponent = (props: Record<string, any>) => render(<TchapCreateRoomDialog {...defaultProps} {...props} />);
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
 
         //mock matrix client
         mockClient = new MockClient();
-        jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
+        vi.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
 
         //mock tchap utils
-        jest.spyOn(TchapUtils, "getShortDomain").mockReturnValue("AGENT");
-        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+        vi.spyOn(TchapUtils, "getShortDomain").mockReturnValue("AGENT");
+        vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
             showForumFederationSwitch: true,
             forumFederationSwitchDefaultValue: false,
         });
@@ -91,7 +94,7 @@ describe("TchapCreateRoomDialog", () => {
 
     describe("forum federation switch", () => {
         it("should be present", () => {
-            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
                 showForumFederationSwitch: true,
                 forumFederationSwitchDefaultValue: false,
             });
@@ -103,7 +106,7 @@ describe("TchapCreateRoomDialog", () => {
         });
 
         it("should be absent", () => {
-            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
                 showForumFederationSwitch: false,
                 forumFederationSwitchDefaultValue: false,
             });
@@ -115,7 +118,7 @@ describe("TchapCreateRoomDialog", () => {
         });
 
         it("should be true by default", async () => {
-            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
                 showForumFederationSwitch: true,
                 forumFederationSwitchDefaultValue: true,
             });
@@ -127,7 +130,7 @@ describe("TchapCreateRoomDialog", () => {
         });
 
         it("should be false by default", () => {
-            jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+            vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
                 showForumFederationSwitch: true,
                 forumFederationSwitchDefaultValue: false,
             });
@@ -138,7 +141,7 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it("Should not create any room wihout a name", async () => {
-        const onFinished = jest.fn();
+        const onFinished = vi.fn();
         const wrapper = getComponent({ onFinished });
 
         await selectRoomType(TchapRoomType.Private);
@@ -149,7 +152,7 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it("Should create a room with default value", async () => {
-        const onFinished = jest.fn();
+        const onFinished = vi.fn();
         const defaultName = "defaultName";
         const wrapper = getComponent({ onFinished });
 
@@ -163,7 +166,7 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it("Should create a private room", async () => {
-        const onFinished = jest.fn();
+        const onFinished = vi.fn();
 
         const wrapper = getComponent({ onFinished });
 
@@ -201,7 +204,7 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it("Should create a public room without federation", async () => {
-        const onFinished = jest.fn();
+        const onFinished = vi.fn();
 
         const publicRoomWithoutFederationExpectedOpts = {
             createOpts: {
@@ -238,9 +241,9 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it("Should create a public room with federation and switch", async () => {
-        const onFinished = jest.fn();
+        const onFinished = vi.fn();
 
-        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+        vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
             showForumFederationSwitch: true,
             forumFederationSwitchDefaultValue: false,
         });
@@ -282,9 +285,9 @@ describe("TchapCreateRoomDialog", () => {
     });
 
     it("Should create a public room with federation but no switch", async () => {
-        const onFinished = jest.fn();
+        const onFinished = vi.fn();
 
-        jest.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
+        vi.spyOn(TchapUtils, "getRoomFederationOptions").mockReturnValue({
             showForumFederationSwitch: false,
             forumFederationSwitchDefaultValue: false,
         });
@@ -341,5 +344,5 @@ class MockClient extends EventEmitter {
     // downloadKeys = jest.fn();
     // isRoomEncrypted = jest.fn();
     // getClientWellKnown = jest.fn();
-    getDomain = jest.fn();
+    getDomain = vi.fn();
 }

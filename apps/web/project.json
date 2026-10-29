@@ -42,13 +42,6 @@
             "executor": "nx:noop",
             "dependsOn": ["^build"]
         },
-        "test:unit:tchap": {
-            "command": "jest",
-            "options": {
-                "cwd": "apps/web"
-            },
-            "dependsOn": ["test:unit:prepare"]
-        },
         "test:unit:prepare": {
             "executor": "nx:noop",
             "dependsOn": ["^build"]
@@ -58,7 +51,7 @@
             "options": { "cwd": "apps/web" },
             "dependsOn": ["test:unit:prepare"]
         },
-        "test:vitest:tchap": {
+        "test:unit:tchap": {
             "command": "vitest run -c ./vitest.tchap.config.ts",
             "options": { "cwd": "apps/web" },
             "dependsOn": ["test:unit:prepare"]

@@ -1,4 +1,6 @@
-import { type Mocked, mocked } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { describe, it, expect, beforeEach, afterEach, vi, type Mocked, type MockInstance } from "vitest";
 import {
     type HttpApiEvent,
     type HttpApiEventHandlerMap,
@@ -8,9 +10,9 @@ import {
     TypedEventEmitter,
     MatrixHttpApi,
 } from "matrix-js-sdk/src/matrix";
-import fetchMock from "@fetch-mock/jest";
+import fetchMock from "@fetch-mock/vitest";
 
-import { getMockClientWithEventEmitter, mockClientMethodsCrypto } from "~tchap-web/test/test-utils";
+import { getMockClientWithEventEmitter, mockClientMethodsCrypto } from "test-utils";
 import { collectBugReport } from "~tchap-web/src/rageshake/submit-rageshake";
 
 /**
@@ -35,12 +37,12 @@ describe("Rageshakes", () => {
             credentials: { userId: "@test:example.com" },
             deviceId: "AAAAAAAAAA",
             baseUrl: "https://alice-server.com",
-            getHomeserverUrl: jest.fn().mockReturnValue("https://alice-server.com"),
+            getHomeserverUrl: vi.fn().mockReturnValue("https://alice-server.com"),
             ...mockClientMethodsCrypto(),
-            getThreePids: jest.fn(),
+            getThreePids: vi.fn(),
             http: mockHttpAPI,
         });
-        mocked(mockClient.getCrypto()!.getOwnDeviceKeys).mockResolvedValue({
+        vi.mocked(mockClient.getCrypto()!.getOwnDeviceKeys).mockResolvedValue({
             ed25519: "",
             curve25519: "",
         });
@@ -59,17 +61,17 @@ describe("Rageshakes", () => {
 
     describe("Basic Information", () => {
         let mockWindow: Mocked<Window>;
-        let windowSpy: jest.SpyInstance;
+        let windowSpy: MockInstance;
 
         beforeEach(() => {
             mockWindow = {
-                matchMedia: jest.fn().mockReturnValue({ matches: false }),
+                matchMedia: vi.fn().mockReturnValue({ matches: false }),
                 navigator: {
                     userAgent: "",
                 },
             } as unknown as Mocked<Window>;
             // @ts-ignore - We just need partial mock
-            windowSpy = jest.spyOn(global, "window", "get").mockReturnValue(mockWindow);
+            windowSpy = vi.spyOn(global, "window", "get").mockReturnValue(mockWindow);
         });
 
         afterEach(() => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TchapMailSignature should render correctly snapshot 1`] = `
+exports[`TchapMailSignature > should render correctly snapshot 1`] = `
 <a
   href="https://tchap.gouv.fr"
   style="sans-serif;color:#000091; font-weight: bold; text-decoration: none;"

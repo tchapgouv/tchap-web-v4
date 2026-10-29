@@ -1,6 +1,9 @@
+// @vitest-environment happy-dom
+
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { stubClient } from "~tchap-web/test/test-utils";
+import { stubClient } from "test-utils";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
@@ -14,7 +17,7 @@ describe("TchapUIFeature", () => {
 
     beforeEach(() => {
         const mockClient: MatrixClient = stubClient();
-        jest.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
+        vi.spyOn(mockClient, "getDomain").mockImplementation(() => homeserverName);
     });
 
     afterEach(function () {

@@ -1,4 +1,7 @@
+// @vitest-environment happy-dom
+
 import React from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
     ConditionKind,
     type IPushRules,
@@ -9,14 +12,14 @@ import {
     ThreepidMedium,
     TweakName,
 } from "matrix-js-sdk/src/matrix";
-import { cleanup, render, screen, waitForElementToBeRemoved } from "jest-matrix-react";
+import { cleanup, render, screen, waitForElementToBeRemoved } from "test-utils-rtl";
 
 import Notifications from "~tchap-web/src/components/views/settings/Notifications";
-import { clearAllModals, getMockClientWithEventEmitter, mockClientMethodsUser } from "~tchap-web/test/test-utils";
+import { clearAllModals, getMockClientWithEventEmitter, mockClientMethodsUser } from "test-utils";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 
 // don't pollute test output with error logs from mock rejections
-jest.mock("matrix-js-sdk/src/logger");
+vi.mock("matrix-js-sdk/src/logger");
 
 // Avoid indirectly importing any eagerly created stores that would require extra setup
 // jest.mock("~tchap-web/src/Notifier");
@@ -166,15 +169,15 @@ describe("<Notifications />", () => {
     // Mock client with notification settings
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(),
-        getPushRules: jest.fn(),
-        getPushers: jest.fn(),
-        getThreePids: jest.fn(),
-        setPusher: jest.fn(),
-        removePusher: jest.fn(),
-        setPushRuleEnabled: jest.fn(),
-        setPushRuleActions: jest.fn(),
-        getRooms: jest.fn().mockReturnValue([]),
-        getAccountData: jest.fn().mockImplementation((eventType) => {
+        getPushRules: vi.fn(),
+        getPushers: vi.fn(),
+        getThreePids: vi.fn(),
+        setPusher: vi.fn(),
+        removePusher: vi.fn(),
+        setPushRuleEnabled: vi.fn(),
+        setPushRuleActions: vi.fn(),
+        getRooms: vi.fn().mockReturnValue([]),
+        getAccountData: vi.fn().mockImplementation((eventType) => {
             if (eventType.startsWith(LOCAL_NOTIFICATION_SETTINGS_PREFIX.name)) {
                 return new MatrixEvent({
                     type: eventType,
@@ -184,16 +187,16 @@ describe("<Notifications />", () => {
                 });
             }
         }),
-        setAccountData: jest.fn(),
-        sendReadReceipt: jest.fn(),
-        supportsThreads: jest.fn().mockReturnValue(true),
-        isInitialSyncComplete: jest.fn().mockReturnValue(false),
-        addPushRule: jest.fn().mockResolvedValue({}),
-        deletePushRule: jest.fn().mockResolvedValue({}),
+        setAccountData: vi.fn(),
+        sendReadReceipt: vi.fn(),
+        supportsThreads: vi.fn().mockReturnValue(true),
+        isInitialSyncComplete: vi.fn().mockReturnValue(false),
+        addPushRule: vi.fn().mockResolvedValue({}),
+        deletePushRule: vi.fn().mockResolvedValue({}),
     });
 
     // Set the home servername used later to match with the config
-    jest.spyOn(mockClient, "getDomain").mockReturnValue(homeserverName);
+    vi.spyOn(mockClient, "getDomain").mockReturnValue(homeserverName);
 
     const testEmail = "tester@test.com";
 
