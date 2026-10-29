@@ -321,5 +321,11 @@
             "apps/web/src/viewmodels/message-body/MBodyTileViewModel.tsx",
             "apps/web/src/viewmodels/room/timeline/event-tile/ReplyTileViewModel.ts"
         ]
+    },
+    "toast-above-persisted-call": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1731",
+        "files": [
+            "src/components/structures/ToastContainer.tsx"
+        ]
     }
 }
