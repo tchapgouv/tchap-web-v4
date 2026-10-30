@@ -2,16 +2,16 @@
 name: Tchap_Docker
 on:
     workflow_dispatch: {}
-    pull_request: {}
     push:
         tags: [tchap-*]
         branches: [develop_tchap]
+    pull_request: {}
 concurrency: ${{ github.workflow }}-${{ github.ref_name }}
 permissions: {}
 jobs:
     buildx:
         name: Docker Buildx
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-26.04
         environment: ${{ github.event_name != 'pull_request' && 'dockerhub' || '' }}
         permissions:
             id-token: write # needed for signing the images with GitHub OIDC Token
@@ -30,23 +30,15 @@ jobs:
               if: github.event_name != 'pull_request'
 
             - name: Set up QEMU
-              uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a # v4
+              uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4
 
             - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
+              uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
               with:
                   install: true
-        
-            - name: Login to GitHub Container Registry
-              uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.repository_owner }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-
 
             - name: Build and load
-              uses: docker/bake-action@d3418bd7d0e9324001bca92fa8ba175ea7e6dc9b # v7
+              uses: docker/bake-action@018cb6412ab401ebaa809aa5f85966b74628600f # v7
               with:
                   source: .
                   files: ./docker-bake.hcl
@@ -54,7 +46,6 @@ jobs:
                   set: |
                       element-web.tags=${{ env.TEST_TAG }}
                       element-web-modules.tags=${{ env.TEST_TAG_MODULES }}
-
 
             - name: Test the image
               env:
@@ -91,7 +82,6 @@ jobs:
 
                   # Clean up
                   docker stop "$CONTAINER_ID"
-
 
             - name: Test the modules image
               env:
@@ -130,18 +120,43 @@ jobs:
 
             - name: Docker meta
               id: meta
-              uses: docker/metadata-action@c1e51972afc2121e065aed6d45c65596fe445f3f # v5
+              uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6
+              if: github.event_name != 'pull_request'
               with:
+                  #:tchap:
                   images: |
                       ghcr.io/${{ github.repository_owner }}/tchap-web-v4
                   tags: |
                       type=ref,event=branch
                       type=ref,event=tag
+                  flavor: |
+                      latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+                  bake-target: docker-metadata-action
 
+            - name: Docker meta (modules)
+              id: meta-modules
+              uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6
+              if: github.event_name != 'pull_request'
+              with:
+                  #:tchap:
+                  images: ghcr.io/${{ github.repository_owner }}/tchap-web-v4/modules
+                  tags: |
+                      type=ref,event=branch
+                      type=ref,event=tag
+                  flavor: |
+                      latest=${{ contains(github.ref_name, '-rc.') && 'false' || 'auto' }}
+                  bake-target: docker-metadata-action-modules
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4
+              if: github.event_name != 'pull_request'
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.repository_owner }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
             # Both targets are built in a single bake so that the app is only compiled once.
             - name: Build and push
               id: build-and-push
-              uses: docker/bake-action@d3418bd7d0e9324001bca92fa8ba175ea7e6dc9b # v7
+              uses: docker/bake-action@018cb6412ab401ebaa809aa5f85966b74628600f # v7
               if: github.event_name != 'pull_request'
               with:
                   source: .
