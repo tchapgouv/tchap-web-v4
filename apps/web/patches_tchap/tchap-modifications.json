@@ -321,5 +321,9 @@
             "apps/web/src/viewmodels/message-body/MBodyTileViewModel.tsx",
             "apps/web/src/viewmodels/room/timeline/event-tile/ReplyTileViewModel.ts"
         ]
+    },
+    "join-call-button-size": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1736",
+        "files": ["src/components/views/rooms/RoomHeader/RoomHeader.tsx"]
     }
 }
