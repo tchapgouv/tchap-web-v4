@@ -1,4 +1,7 @@
-import { mocked, type Mocked } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, type Mocked, vi } from "vitest";
+
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import {
@@ -6,13 +9,13 @@ import {
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
     stubClient,
-} from "~tchap-web/test/test-utils";
+} from "test-utils";
 import createRoom from "~tchap-web/src/createRoom";
 import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import Modal from "~tchap-web/src/Modal";
 
-jest.mock("~tchap-web/src/tchap/ext/ExternalAccountHandler.ts");
+vi.mock("~tchap-web/src/tchap/ext/ExternalAccountHandler.ts");
 
 describe("createRoom", () => {
     mockPlatformPeg();
@@ -34,9 +37,9 @@ describe("createRoom", () => {
     SdkConfig.put(config);
 
     beforeEach(() => {
-        Modal.createDialog = jest.fn();
+        Modal.createDialog = vi.fn();
         // @ts-ignore mock (type error because empty return)
-        mocked(Modal.createDialog).mockReturnValue({});
+        vi.mocked(Modal.createDialog).mockReturnValue({});
 
         client = getMockClientWithEventEmitter({
             ...stubClient(),
@@ -44,15 +47,15 @@ describe("createRoom", () => {
         });
     });
 
-    afterEach(() => jest.clearAllMocks());
+    afterEach(() => vi.clearAllMocks());
 
     it("doesn't create room when user is from external instance", async () => {
         // we mock tht something wrong happened
-        jest.spyOn(client, "createRoom").mockRejectedValue(new Error("test") as never);
+        vi.spyOn(client, "createRoom").mockRejectedValue(new Error("test") as never);
 
         // don't know why isUserExternal is not returning true despite the setup we did for being an external user
         // so we mock it, not the best...
-        jest.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
+        vi.spyOn(ExternalAccountHandler, "isUserExternal").mockReturnValue(true);
 
         await createRoom(client, {});
 

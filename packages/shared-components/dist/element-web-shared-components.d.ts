@@ -159,6 +159,8 @@ export declare interface ActionBarViewSnapshot {
 /** Where in the viewport to place the target when scrolling to an anchor. */
 export declare type AnchorAlign = "start" | "center" | "end";
 
+export declare function attachmentIcon(_mimeType?: string): MediaPreviewIcon;
+
 /**
  * AudioPlayer component displays an audio player with play/pause controls, seek bar, and media information.
  * The component expects a view model that provides the current state of the audio playback,
@@ -586,7 +588,7 @@ export declare interface CustomThemesViewSnapshot {
 declare interface DateSeparatorTimelineItem {
     key: string;
     kind: "date-separator";
-    label: string;
+    ts: number;
 }
 
 /**
@@ -891,6 +893,30 @@ export declare interface DmTombstoneCallTileViewSnapshot extends RoomTombstoneCa
     isCallDeclined: boolean;
 }
 
+/** The lifecycle state of the document a viewer is presenting. */
+export declare type DocumentViewerStatus = "loading" | "ready" | "error";
+
+/**
+ * The frame shared by the right panel document viewers: an optional toolbar, the document surface,
+ * and the loading and error overlays. What goes on the surface is up to the viewer built on it.
+ */
+export declare function DocumentViewerView({ status, toolbar, children, className, }: Readonly<DocumentViewerViewProps>): JSX.Element;
+
+/** Props for {@link DocumentViewerView}. */
+export declare interface DocumentViewerViewProps {
+    /** The lifecycle state presented over the document surface. */
+    status: DocumentViewerStatus;
+    /** Controls shown in a bar above the document, if the viewer has any. */
+    toolbar?: ReactNode;
+    /**
+     * The document surface. Rendered whatever the status, so a viewer that renders imperatively can
+     * keep its mount point stable while the loading overlay is up.
+     */
+    children?: ReactNode;
+    /** Optional CSS class for host-level styling, applied to the outer element. */
+    className?: string;
+}
+
 /**
  * View to show the duration of the call.
  */
@@ -966,6 +992,174 @@ export declare interface E2ePadlockProps {
     title: string;
     /** Optional CSS class name applied to the icon container. */
     className?: string;
+}
+
+/**
+ * The tile for an Element Call rendered as an in-process React component rather than as an iframe.
+ *
+ * The tile decides only where the call is shown; what is shown is `vm.ElementCall` in the persisted
+ * root, which every tile of the call renders alike, so moving the call between containers does not
+ * disturb the component.
+ *
+ * The tile has no styling of its own: the application names the classes of its elements in the
+ * snapshot, and the containers the tile is dropped into style it like any other app tile through them.
+ */
+export declare const ElementCallAppTileView: FC<ElementCallAppTileViewProps>;
+
+export declare interface ElementCallAppTileViewActions {
+    /**
+     * Renders its children in a React tree outside this one, so that the call survives this tile
+     * unmounting and can move between containers without reloading.
+     *
+     * `PersistedElement` is not available in shared components, so the view model supplies it. It
+     * can be any component that renders its children elsewhere and keeps them alive.
+     */
+    PersistedElement: FC<{
+        persistKey: string;
+        zIndex: number;
+        children: ReactNode;
+    }>;
+    /**
+     * Element Call itself, with everything Element Web hands it (the client, the host bridge, the
+     * theme and the language). Rendered inside the persisted root, so every tile of the call
+     * renders the same component instance.
+     */
+    ElementCall: FC;
+}
+
+/**
+ * The application's CSS class names for the tile's elements. The tile has no styling of its own:
+ * the containers it is dropped into style its box through these classes.
+ */
+export declare interface ElementCallAppTileViewClassNames {
+    /** The tile's root element. */
+    root?: string;
+    /** The element wrapping the persisted root, which fixes the tile's height. */
+    persistedWrapper?: string;
+    /** The element wrapping Element Call inside the persisted root. */
+    body?: string;
+}
+
+/**
+ * The view model for the Element Call app tile.
+ */
+export declare type ElementCallAppTileViewModel = ViewModel<ElementCallAppTileViewSnapshot> & ElementCallAppTileViewActions;
+
+export declare interface ElementCallAppTileViewProps {
+    /**
+     * The ElementCallAppTileViewModel, which exposes the ElementCallAppTileViewSnapshot and the
+     * two components this view cannot import: the persisted root and Element Call itself.
+     */
+    vm: ElementCallAppTileViewModel;
+    /**
+     * Rendered over the call, inside the persisted root: the picture-in-picture window's own
+     * controls, for instance.
+     */
+    overlay?: ReactNode;
+}
+
+export declare interface ElementCallAppTileViewSnapshot {
+    /**
+     * Whether there is nothing to show: no Element Call in this room, or no room at all.
+     * The tile renders nothing at all in that case, rather than an empty frame.
+     */
+    hidden: boolean;
+    /**
+     * The application's class names for the tile's elements, which is how a floating tile (the
+     * picture-in-picture window) and a docked one come to look different.
+     */
+    classNames?: ElementCallAppTileViewClassNames;
+    /** Identifies the persisted root that holds the call, across every tile that shows it. */
+    persistKey: string;
+    /** Stacking order of the persisted root relative to other persisted apps. */
+    zIndex: number;
+    /** Set while the tile is being dragged or resized, so the call does not swallow the pointer. */
+    pointerEvents?: CSSProperties["pointerEvents"];
+}
+
+/** One line of the log: what the mock told the host, or what the host asked of the mock. */
+export declare interface ElementCallMockLogEntry {
+    id: number;
+    text: string;
+}
+
+/** One member of the room's MatrixRTC session. */
+export declare interface ElementCallMockParticipant {
+    id: string;
+    /** The member as the mock lists them, our own device marked as such. */
+    label: string;
+}
+
+/**
+ * What the Element Call mock shows in place of a call: who is in the room's MatrixRTC session, a
+ * button for every host bridge callback, a log of what was said in both directions, and the
+ * configuration the host asked for.
+ *
+ * Everything it renders comes from {@link ElementCallMockViewModel}; the simulated Element Call
+ * behind it — memberships, joining, muting, talking to the host — is that view model's business.
+ *
+ * The root is a region named after the title, in both states, so that tests can find the mock
+ * wherever the application puts it.
+ */
+export declare const ElementCallMockView: ({ vm }: ElementCallMockViewProps) => JSX.Element;
+
+export declare interface ElementCallMockViewActions {
+    /** Joins the call when in the lobby, leaves it when in the call. */
+    toggleJoined(): Promise<void>;
+    /** Asks the host to keep the mock on screen, or to stop doing so. */
+    toggleAlwaysOnScreen(): Promise<void>;
+    /** Mutes or unmutes, and tells the host about the state that results. */
+    toggleAudio(): Promise<void>;
+    toggleVideo(): Promise<void>;
+    /** Leaves the call, gives up the screen and asks the host to dismiss the mock. */
+    close(): Promise<void>;
+}
+
+/**
+ * The view model for the Element Call mock.
+ */
+export declare type ElementCallMockViewModel = ViewModel<ElementCallMockViewSnapshot, ElementCallMockViewActions>;
+
+export declare interface ElementCallMockViewProps {
+    /** The view model driving the mock. */
+    vm: ElementCallMockViewModel;
+}
+
+export declare interface ElementCallMockViewSnapshot {
+    /**
+     * Whether the host's client does not know the room the mock was asked to call in: nothing but
+     * an error is rendered in that case.
+     */
+    unknownRoom: boolean;
+    /** The room the mock is calling in. */
+    roomId: string;
+    /** What the host said the user asked for. */
+    intent: string;
+    /** Whether the mock is in the call: it has published an RTC membership and told the host. */
+    joined: boolean;
+    /** The theme the host asked for, or undefined to leave it to the mock. */
+    theme?: string;
+    /** The theme and the language as the header shows them, "default" when the host named neither. */
+    themeLabel: string;
+    languageLabel: string;
+    /** Everyone in the room's MatrixRTC session. */
+    participants: ElementCallMockParticipant[];
+    /** The mute state the mock reports to the host. */
+    audioEnabled: boolean;
+    videoEnabled: boolean;
+    /** Whether the mock has asked the host to keep it on screen. */
+    alwaysOnScreen: boolean;
+    /** Whether the host offers to close the call; without that there is nothing to close us. */
+    canClose: boolean;
+    /** What the host bridge says about itself, as Element Call reads it. */
+    supportsReactions: boolean;
+    allowJoinUnmutedViaIntent: boolean;
+    /** What was said in both directions, oldest first. */
+    log: ElementCallMockLogEntry[];
+    /** The intent, the host's overrides and the configuration they add up to, pretty-printed. */
+    configJson: string;
+    /** What `initializeElementCall` was given, or that it was never called. */
+    initializedWith: string;
 }
 
 /**
@@ -1196,6 +1390,9 @@ export declare interface EventPreviewViewSnapshot {
     previewTooltip?: string;
 }
 
+/** The send states a tile draws differently. */
+export declare type EventSendState = "encrypting" | "sending" | "sent" | "failed";
+
 /**
  * EventTileBubble renders a compact event tile with an icon, title, and optional subtitle/content.
  *
@@ -1414,6 +1611,8 @@ export declare interface EventTileViewSlots {
 declare interface EventTimelineItem {
     key: string;
     kind: "event";
+    /** The opaque event object from the client (e.g., matrix-js-sdk MatrixEvent) */
+    event: TimelineEvent;
     /** Whether this event continues unbroken from the previous sender (suppresses avatar/name). */
     continuation: boolean;
     /**
@@ -1422,6 +1621,11 @@ declare interface EventTimelineItem {
      * corner — border-radius only, so it is recomputed every build, never cached.
      */
     lastInSection: boolean;
+    /**
+     * How far a message of ours, or our pending edit or redaction of it, has got on its way to
+     * the server. Absent once the server has it, and for other people's messages.
+     */
+    sendState?: EventSendState;
 }
 
 /**
@@ -1485,6 +1689,10 @@ export declare interface FileBodyViewActions {
      * Click handler for a download button.
      */
     onDownloadClick?: () => void;
+    /**
+     * Click handler for the open-in-viewer button.
+     */
+    onOpenClick?: () => void;
     /**
      * Click handler for the unencrypted download anchor.
      */
@@ -1573,6 +1781,23 @@ export declare interface FileBodyViewSnapshot {
      */
     downloadHref?: string;
     scanningState?: "scanning" | "unsafe" | "error" | "done";
+    /**
+     * Whether to render a control, inside the info row, that opens the file in a viewer. Only set for
+     * file types the host knows how to display, so no action icons appear by default.
+     */
+    showOpen?: boolean;
+    /**
+     * Label for the open control, used as its accessible name and its tooltip. Required in practice
+     * whenever `showOpen` is set, since the view has no sensible generic wording for "open this
+     * particular kind of file".
+     */
+    openLabel?: string;
+    /**
+     * Whether to render a download control inside the info row. Set alongside {@link showOpen} so that
+     * downloading stays visible as an explicit action once the row has an action for opening. Distinct
+     * from {@link showDownload}, which is the separate full-width download control below the row.
+     */
+    showInlineDownload?: boolean;
 }
 
 /**
@@ -1746,6 +1971,82 @@ declare interface GapTimelineItem {
  * @see {@link linkifyString}
  */
 export declare function generateLinkedTextOptions({ urlListener, roomAliasListener, userIdListener, urlTargetTransformer, hrefTransformer, onLinkClick, }: LinkedTextOptions): linkifyjs.Opts;
+
+/**
+ * The standard body of a toast: a description, optional detail and one or two action buttons.
+ * Intended to be rendered inside a toast container which provides the frame, title and icon.
+ *
+ * @example
+ * ```tsx
+ * <GenericToast
+ *     description="Something happened."
+ *     primaryLabel="OK"
+ *     onPrimaryClick={() => {}}
+ *     secondaryLabel="Later"
+ *     onSecondaryClick={() => {}}
+ * />
+ * ```
+ */
+export declare function GenericToast({ description, detail, primaryLabel, PrimaryIcon, secondaryLabel, SecondaryIcon, destructive, onPrimaryClick, onSecondaryClick, overrideWidth, }: GenericToastProps): JSX.Element;
+
+declare interface GenericToastBaseProps {
+    /**
+     * The main body of the toast.
+     */
+    description: ReactNode;
+    /**
+     * Optional extra content rendered underneath the description.
+     */
+    detail?: ReactNode;
+    /**
+     * Label of the primary action button.
+     */
+    primaryLabel: string;
+    /**
+     * Optional icon rendered inside the primary action button.
+     */
+    PrimaryIcon?: ComponentType<default_2.SVGAttributes<SVGElement>>;
+    /**
+     * Called when the primary action button is clicked.
+     */
+    onPrimaryClick(this: void): void;
+    /**
+     * If set, this will override the max-width (of the description) making the toast wider or narrower than standard.
+     */
+    overrideWidth?: string;
+}
+
+/**
+ * Props for {@link GenericToast}. A secondary button is rendered only when both
+ * `secondaryLabel` and `onSecondaryClick` are provided.
+ */
+export declare type GenericToastProps = GenericToastWithSecondaryProps | GenericToastWithoutSecondaryProps;
+
+declare interface GenericToastWithoutSecondaryProps extends GenericToastBaseProps {
+    secondaryLabel?: undefined;
+    SecondaryIcon?: undefined;
+    destructive?: undefined;
+    onSecondaryClick?: undefined;
+}
+
+declare interface GenericToastWithSecondaryProps extends GenericToastBaseProps {
+    /**
+     * Label of the secondary action button.
+     */
+    secondaryLabel: string;
+    /**
+     * Optional icon rendered inside the secondary action button.
+     */
+    SecondaryIcon?: ComponentType<default_2.SVGAttributes<SVGElement>>;
+    /**
+     * Which of the two buttons, if any, should be rendered as a destructive action.
+     */
+    destructive?: "primary" | "secondary";
+    /**
+     * Called when the secondary action button is clicked.
+     */
+    onSecondaryClick(this: void): void;
+}
 
 /**
  * Returns the ARIA props to spread onto the virtualized list container element.
@@ -1995,7 +2296,7 @@ export declare class I18nApi implements I18nApi_2 {
     humanizeTime: (timeMillis: number) => string;
 }
 
-export declare const I18nContext: Context<any>;
+export declare const I18nContext: Context<I18nApi_2 | null>;
 
 /**
  * An action dispatched to the roving tabindex reducer for node registration and
@@ -2268,6 +2569,13 @@ export declare interface ImageReplyBodyViewProps {
 }
 
 /**
+ * - full: show full image contained in tile
+ * - banner: show image covering tile, height 100px
+ * - tallbanner: show image covering tile, height 300px
+ */
+export declare type ImageSize = "full" | "banner" | "tallbanner";
+
+/**
  * Imperative scroll-to-anchor handle the View hands to ViewModel actions, to scroll
  * without waiting for a data update. The VM invokes it only when the target is already
  * in the loaded window; otherwise it sets `pendingAnchor` and lets a load() drive the
@@ -2349,6 +2657,12 @@ export declare interface LeftResizablePanelViewActions {
 }
 
 /**
+ * Limits composed status text to the UI grapheme guideline without exceeding the
+ * protocol UTF-8 byte cap. Truncation always keeps complete grapheme clusters.
+ */
+export declare function limitUserStatusInputText(text: string): string;
+
+/**
  * A component that renders URLs as clickable links inside some plain text.
  *
  * Requires a `<LinkedTextContext.Provider>`
@@ -2427,6 +2741,8 @@ export declare type LinkedTextProps = ComponentProps<typeof Text_2> & {
 
 export declare type LinkEventListener = linkifyjs.EventListeners;
 
+export declare function linkIcon(): MediaPreviewIcon;
+
 /**
  * `data-linkified` is applied to all links generated by the linkifaction functions and `<LinkedText>`.
  */
@@ -2487,6 +2803,33 @@ declare type MapToVoidThis<T> = {
     [K in keyof T]: T[K] extends (...args: infer A) => infer R ? (this: void, ...args: A) => R : T[K];
 };
 
+/** The document lifecycle state presented by the Markdown viewer. */
+export declare type MarkdownViewerStatus = DocumentViewerStatus;
+
+/**
+ * Renders a Markdown document, already converted to HTML by the host, on the shared
+ * {@link DocumentViewerView} shell.
+ *
+ * The host owns loading, rendering and sanitizing. This view owns the typography of the document's
+ * markup.
+ */
+export declare function MarkdownViewerView({ status, html, onContentClick, className, }: Readonly<MarkdownViewerViewProps>): JSX.Element;
+
+/** Props for {@link MarkdownViewerView}. */
+export declare interface MarkdownViewerViewProps {
+    /** The lifecycle state currently presented. */
+    status: MarkdownViewerStatus;
+    /**
+     * The rendered document. This is inserted into the DOM as-is, so the host must have sanitized it
+     * already; the view does nothing to make it safe.
+     */
+    html: string;
+    /** Called for clicks anywhere in the document, so the host can route the links it handles itself. */
+    onContentClick?: MouseEventHandler<HTMLDivElement>;
+    /** Optional CSS class for host-level styling, applied to the outer element. */
+    className?: string;
+}
+
 /**
  * A component to display the body of a media message.
  *
@@ -2508,6 +2851,148 @@ declare type MediaBodyProps<C extends ElementType> = {
      */
     className?: string;
 } & ComponentProps<C>;
+
+export declare interface MediaPreviewEntryButton {
+    icon: JSX.Element;
+    onClick: () => void;
+    label: string;
+}
+
+export declare type MediaPreviewGroupAudioEntry = MediaPreviewGroupEntryBase & MediaPreviewGroupEntryAudioContent;
+
+export declare interface MediaPreviewGroupCollapse {
+    /** Whether the group is currently collapsed, i.e. only showing a subset of the entries. */
+    collapsed: boolean;
+    /** How many further entries are available while collapsed. */
+    hiddenCount: number;
+    /** Invoked when the user toggles between the collapsed and expanded state. */
+    onToggle: () => void;
+}
+
+export declare type MediaPreviewGroupEntry = MediaPreviewGroupImageEntry | MediaPreviewGroupVideoEntry | MediaPreviewGroupAudioEntry | MediaPreviewGroupTextEntry;
+
+export declare type MediaPreviewGroupEntryAudioContent = {
+    type: "audio";
+    /**
+     * url of the audio
+     */
+    audio: string;
+    /**
+     * optional: what happens when the audio is clicked
+     */
+    audioOnClick?: () => void;
+};
+
+export declare type MediaPreviewGroupEntryBase = {
+    /**
+     * Identifies the entry within its group, used as the React key. Must be stable across renders
+     * and unique within the group: the previewed link for URL previews, the event ID for attachments.
+     */
+    id: string;
+    /**
+     * header content
+     */
+    header: string;
+    /**
+     * optional: header link url
+     */
+    headerUrl?: string;
+    /**
+     * body content
+     */
+    body: string;
+    /**
+     * buttons to add to the right of the tile
+     */
+    buttons?: MediaPreviewEntryButton[];
+} & MediaPreviewIcon;
+
+export declare type MediaPreviewGroupEntryContent = MediaPreviewGroupEntryImageContent | MediaPreviewGroupEntryVideoContent | MediaPreviewGroupEntryAudioContent | MediaPreviewGroupEntryTextContent;
+
+export declare type MediaPreviewGroupEntryImageContent = {
+    type: "image";
+    /**
+     * url of the image
+     */
+    image: string;
+    /**
+     * alt text for image
+     */
+    imageAlt: string;
+    /**
+     * optional: what happens when the image is clicked
+     */
+    imageOnClick?: () => void;
+    /**
+     * height of the image
+     */
+    imageSize: ImageSize;
+};
+
+export declare type MediaPreviewGroupEntryTextContent = {
+    type: "text";
+};
+
+export declare type MediaPreviewGroupEntryVideoContent = {
+    type: "video";
+    /**
+     * url of the video
+     */
+    video: string;
+    /**
+     * optional: what happens when the video is clicked
+     */
+    videoOnClick?: () => void;
+    /**
+     * height of the video
+     */
+    videoSize: ImageSize;
+};
+
+export declare type MediaPreviewGroupImageEntry = MediaPreviewGroupEntryBase & MediaPreviewGroupEntryImageContent;
+
+export declare function MediaPreviewGroupPreview({ vm, className }: MediaPreviewGroupPreviewProps): JSX.Element | null;
+
+export declare interface MediaPreviewGroupPreviewProps {
+    vm: MediaPreviewGroupViewModel;
+    /**
+     * Optional host-level class names applied to the group container.
+     */
+    className?: string;
+}
+
+export declare interface MediaPreviewGroupSnapshot {
+    /**
+     * tiles in the media preview group
+     */
+    entries: Array<MediaPreviewGroupEntry>;
+    /**
+     * collapse settings for the VM
+     * omit is not collapsible
+     */
+    collapse?: MediaPreviewGroupCollapse;
+}
+
+export declare type MediaPreviewGroupTextEntry = MediaPreviewGroupEntryBase & MediaPreviewGroupEntryTextContent;
+
+export declare type MediaPreviewGroupVideoEntry = MediaPreviewGroupEntryBase & MediaPreviewGroupEntryVideoContent;
+
+export declare type MediaPreviewGroupViewModel = ViewModel<MediaPreviewGroupSnapshot>;
+
+export declare interface MediaPreviewIcon {
+    /**
+     * left icon of the tile
+     */
+    icon: JSX.Element;
+    /**
+     * what happens when the icon is clicked
+     */
+    onClick?: () => void;
+    /**
+     * fill colour of the icon
+     */
+    color: string;
+}
 
 /**
  * View for rendering the avatar for a given member.
@@ -2577,6 +3062,10 @@ export declare interface MessageComposerUrlPreviewSnapshot {
     entries: MessageComposerUrlPreviewSnapshotEntry[];
     /** Content of the composer when the snapshot is computed */
     content: string;
+    /** The links that are in the message body, including the ones that are removed */
+    contentLinks: Set<string>;
+    /** Whether the entries have been changed by removing it */
+    isModified: boolean;
 }
 
 /**
@@ -2932,6 +3421,45 @@ declare type ParseFormattedBody = (formattedBody: string, replacer?: Replacer) =
 /** The ARIA pattern used to make the virtualized list accessible. */
 export declare type Pattern = "listbox" | "treegrid";
 
+/** The document lifecycle state presented by the PDF viewer. */
+export declare type PdfViewerStatus = DocumentViewerStatus;
+
+/**
+ * A PDF viewer on the shared {@link DocumentViewerView} shell: the page and zoom controls, with
+ * `children` as the document surface.
+ */
+export declare function PdfViewerView({ status, currentPage, pageCount, pageInput, children, onPageInputChange, onPageInputFocus, onPageInputBlur, onPageInputCancel, onPageSubmit, onZoomIn, onZoomOut, zoomPercent, className, }: Readonly<PropsWithChildren<PdfViewerViewProps>>): JSX.Element;
+
+/** Controlled state and host integration points for {@link PdfViewerView}. */
+export declare interface PdfViewerViewProps {
+    /** The lifecycle state currently presented over the document surface. */
+    status: PdfViewerStatus;
+    /** The page currently visible in the host renderer. */
+    currentPage: number;
+    /** The number of pages reported by the loaded document. Zero hides the page controls. */
+    pageCount: number;
+    /** The controlled value of the page-number input. */
+    pageInput: string;
+    /** Called with each new value typed into the controlled page-number input. */
+    onPageInputChange: (value: string) => void;
+    /** Called when the page-number input enters its editing state. */
+    onPageInputFocus: () => void;
+    /** Called when the page-number input leaves its editing state. */
+    onPageInputBlur: () => void;
+    /** Called when the user cancels a page-number edit with Escape. */
+    onPageInputCancel: () => void;
+    /** Called when the user submits the page-number form. */
+    onPageSubmit: () => void;
+    /** Called when the user presses the zoom-in button. */
+    onZoomIn: () => void;
+    /** Called when the user presses the zoom-out button. */
+    onZoomOut: () => void;
+    /** The current zoom level as a percentage. Omitted until the host reports one. */
+    zoomPercent?: number;
+    /** Optional CSS class for the outer element. */
+    className?: string;
+}
+
 export declare function percentageOf(val: number, min: number, max: number): number;
 
 export declare function percentageWithin(pct: number, min: number, max: number): number;
@@ -3282,7 +3810,7 @@ export declare interface ReactionsRowViewSnapshot {
     addReactionButtonDisabled?: boolean;
 }
 
-export declare function ReadMarker({ eventId, kind, showLine, onCurrentMarkerRef, onGhostLineRef, onGhostTransitionEnd, className, }: Readonly<ReadMarkerProps>): JSX.Element;
+export declare function ReadMarker({ eventId, kind, showLine, label, as: Host, onCurrentMarkerRef, onGhostLineRef, onGhostTransitionEnd, className, }: Readonly<ReadMarkerProps>): JSX.Element;
 
 export declare type ReadMarkerKind = "current" | "ghost";
 
@@ -3301,9 +3829,23 @@ export declare interface ReadMarkerProps {
      */
     showLine?: boolean;
     /**
-     * Ref callback for the active read marker `<li>`.
+     * Text shown at the right-hand end of the line, e.g. "New".
+     *
+     * A labelled marker takes up space, unlike the plain line, so give it a row of its
+     * own rather than sitting it between two messages. Ignored while the marker is
+     * fading out, which animates the line in a way a label could not follow.
      */
-    onCurrentMarkerRef?: RefCallback<HTMLLIElement>;
+    label?: string;
+    /**
+     * Element to render as. Pass `"div"` if the caller already puts each row in its own
+     * list item, since a list item cannot contain another one.
+     * @default "li"
+     */
+    as?: "li" | "div";
+    /**
+     * Ref callback for the active read marker's host element.
+     */
+    onCurrentMarkerRef?: RefCallback<HTMLElement>;
     /**
      * Ref callback for the ghost marker `<hr>`.
      */
@@ -3377,6 +3919,46 @@ export declare function replaceByRegexes(text: string, mapping: IVariables): str
 export declare function replaceByRegexes(text: string, mapping: Tags): default_2.ReactNode;
 
 declare type Replacer = HTMLReactParserOptions["replace"];
+
+export declare interface ReplyTileSenderViewSnapshot {
+    /** Optional member avatar ViewModel for the quoted event sender. */
+    avatarViewModel?: MemberAvatarViewModel;
+    /** Optional profile ViewModel for the quoted event sender. */
+    profileViewModel?: DisambiguatedProfileViewModel;
+}
+
+/**
+ * Renders the presentation shell for a compact event reply.
+ *
+ * Event-specific data and body rendering remain in the host application so
+ * this component can be reused by different timeline implementations.
+ */
+export declare function ReplyTileView({ vm }: ReplyTileViewProps): JSX.Element;
+
+export declare interface ReplyTileViewActions {
+    /** Invoked when the reply link is activated. */
+    onClick?: MouseEventHandler<HTMLAnchorElement>;
+}
+
+export declare type ReplyTileViewModel = ViewModel<ReplyTileViewSnapshot, ReplyTileViewActions>;
+
+export declare interface ReplyTileViewProps {
+    /** ViewModel providing reply presentation and activation behavior. */
+    vm: ReplyTileViewModel;
+}
+
+export declare interface ReplyTileViewSnapshot {
+    /** The permalink for the event being quoted. */
+    href: string;
+    /** Optional sender presentation. */
+    sender?: ReplyTileSenderViewSnapshot;
+    /** Whether the reply should use the compact inline layout. */
+    inline?: boolean;
+    /** Whether the reply is an informational event. */
+    info?: boolean;
+    /** The rendered reply body. */
+    body: ReactNode;
+}
 
 export { ResizableGroup }
 
@@ -4965,6 +5547,11 @@ export declare interface SetStatusViewSnapshot {
      * choosing an emoji for a custom status.
      */
     recentEmojis?: string[];
+    /**
+     * If true, the view will show as disabled and cannot be interacted with.
+     * Default: false
+     */
+    disabled?: boolean;
 }
 
 /**
@@ -5048,20 +5635,17 @@ export declare type TextualBodyContentRef = Ref<TextualBodyContentElement>;
  * Renders a textual message body for timeline events.
  *
  * The view supports text, notice, emote, and caption layouts, optional
- * link or action wrappers, edited and moderation markers, and appended
+ * link wrapper, edited and moderation markers, and appended
  * URL previews.
  */
 export declare function TextualBodyView({ vm, body, bodyRef, urlPreviews, className, }: Readonly<TextualBodyViewProps>): JSX.Element;
 
 export declare interface TextualBodyViewActions {
     /**
-     * Capture-phase click handler attached to the root message-body container.
+     * Click handler attached to the root message-body container.
+     * Runs in the bubble phase so that interactive children (e.g. pills) can handle their own clicks first.
      */
     onRootClick?: MouseEventHandler<HTMLDivElement>;
-    /**
-     * Activation handler used when `bodyWrapper` is `ACTION`.
-     */
-    onBodyActionClick?: MouseEventHandler<HTMLButtonElement>;
     /**
      * Click handler for the edited marker.
      */
@@ -5074,8 +5658,7 @@ export declare interface TextualBodyViewActions {
 
 export declare const enum TextualBodyViewBodyWrapperKind {
     NONE = "NONE",
-    LINK = "LINK",
-    ACTION = "ACTION"
+    LINK = "LINK"
 }
 
 export declare const enum TextualBodyViewKind {
@@ -5127,10 +5710,6 @@ export declare interface TextualBodyViewSnapshot {
      * Href used when `bodyWrapper` is `LINK`.
      */
     bodyLinkHref?: string;
-    /**
-     * Accessible label used when `bodyWrapper` is `ACTION`.
-     */
-    bodyActionAriaLabel?: string;
     /**
      * Whether to render the edited marker.
      */
@@ -5341,6 +5920,11 @@ declare interface TileTypeToViewModelMap {
     "tombstone-call-room": RoomTombstoneCallTileViewModel;
     "tombstone-call-dm": DmTombstoneCallTileViewModel;
 }
+
+/**
+ * Opaque type representing an event object from the parent application
+ */
+export declare type TimelineEvent = unknown;
 
 export declare type TimelineItem = EventTimelineItem | DateSeparatorTimelineItem | ReadMarkerTimelineItem | LoadingTimelineItem | GapTimelineItem;
 
@@ -5602,51 +6186,6 @@ export declare interface UploadButtonViewSnapshot {
         label: string;
         icon?: ComponentType<SVGAttributes<SVGElement>>;
     }[];
-}
-
-/**
- * Renders the URL preview group attached to a single event.
- *
- * The view lays out one or more link previews, can collapse or expand
- * overflowed previews, and exposes a control to hide the group.
- */
-export declare function UrlPreviewGroupView({ vm, className }: UrlPreviewGroupViewProps): JSX.Element | null;
-
-/** User actions emitted by the URL preview group view. */
-export declare interface UrlPreviewGroupViewActions {
-    /** Invoked when the preview limit toggle is clicked. */
-    onTogglePreviewLimit: () => void;
-    /** Invoked when the hide-preview action is clicked. */
-    onHideClick: () => Promise<void>;
-    /** Invoked when a preview image is clicked. */
-    onImageClick: (preview: UrlPreview) => void;
-}
-
-/** View model contract for the URL preview group view. */
-export declare type UrlPreviewGroupViewModel = ViewModel<UrlPreviewGroupViewSnapshot, UrlPreviewGroupViewActions>;
-
-/** Props for the URL preview group view. */
-export declare interface UrlPreviewGroupViewProps {
-    /**
-     * The view model for the component.
-     */
-    vm: ViewModel<UrlPreviewGroupViewSnapshot> & UrlPreviewGroupViewActions;
-    /**
-     * Extra CSS classes to apply to the component.
-     */
-    className?: string;
-}
-
-/** Snapshot data for rendering URL previews attached to an event. */
-export declare interface UrlPreviewGroupViewSnapshot {
-    /** URL previews to render. */
-    previews: Array<UrlPreview>;
-    /** Total number of previews available before limiting. */
-    totalPreviewCount: number;
-    /** Whether the preview list is currently limited. */
-    previewsLimited: boolean;
-    /** Whether more previews exist than are currently rendered. */
-    overPreviewLimit: boolean;
 }
 
 /**
@@ -6364,3 +6903,15 @@ export declare interface WidgetPipViewSnapshot {
 }
 
 export { }
+
+
+
+declare global {
+    type TranslationKey = _TranslationKey<typeof Translations>;
+}
+
+declare module "vitest/browser" {
+    interface BrowserCommands {
+        parkPointer: () => Promise<void>;
+    }
+}

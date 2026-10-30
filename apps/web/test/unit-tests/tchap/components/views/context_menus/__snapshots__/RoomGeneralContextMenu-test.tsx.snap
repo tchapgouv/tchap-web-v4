@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
+exports[`RoomGeneralContextMenu > renders the default context menu 1`] = `
 <div>
   <div
     class="mx_ContextualMenu_wrapper"
@@ -123,7 +123,7 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             </span>
           </li>
           <li
-            aria-label="Copy room link"
+            aria-label="Copy link"
             class="mx_AccessibleButton mx_IconizedContextMenu_item"
             role="menuitem"
             tabindex="-1"
@@ -142,7 +142,7 @@ exports[`RoomGeneralContextMenu renders the default context menu 1`] = `
             <span
               class="mx_IconizedContextMenu_label"
             >
-              Copy room link
+              Copy link
             </span>
           </li>
           <li

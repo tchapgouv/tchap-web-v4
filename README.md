@@ -88,9 +88,9 @@ Take a look at [tchap-translations](./apps/web/modules/tchap-translations/README
 
 ### Tests
 
-- Now that `matrix-react-sdk` is merged inside tchap-web, we only target the `test/tchap` folder in order to run our tests on only the files that tchap has modified.
+- All Tchap unit tests use Vitest. Run `pnpm test:unit:tchap` from `apps/web` to execute them.
 - For every modification, we need to copy the existing test (if there is one) of the component, move it to tchap folder and modify it accordingly.
-- There is another type of unit-test that are directly inside `src` folders which use vitest as runner. We add our test by copying the existing and add the suffixe *.tchap.test, pnpm test:vitest:tchap, will only find those files to tests
+- There is another type of unit-test that are directly inside `src` folders which use vitest as runner. We add our test by copying the existing and add the suffixe *.tchap.test, `pnpm test:unit:tchap --args="src/"` (from apps/web), will only find those files to tests
 - This project is tested with BrowserStack.
 
 ## Copyright & License

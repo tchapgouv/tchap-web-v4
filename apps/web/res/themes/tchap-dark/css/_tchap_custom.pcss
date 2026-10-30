@@ -12,7 +12,7 @@ example of how to override a style
 }
 */
 
-/* This is for release anouncement description text*/
+/* This is for release anouncement description text */
 /* otherwise the text is grey on bleu background */
 div[data-floating-ui-portal][data-floating-ui-inert] * {
     color: white;
@@ -44,7 +44,7 @@ div[data-floating-ui-portal] {
 }
 
 /* Alleger le Background d'une ligne de message au survol */
-.mx_EventTile[data-layout=bubble].mx_EventTile_selected:before, .mx_EventTile[data-layout=bubble]:hover:before {
+.mx_EventTile[data-layout="bubble"].mx_EventTile_selected::before, .mx_EventTile[data-layout="bubble"]:hover::before {
     background: var(--eventbubble-bg-hover, var(--cpd-color-gray-100));
 }
 

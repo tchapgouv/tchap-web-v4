@@ -1,12 +1,15 @@
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import React from "react";
-import { logRoles, render, screen, waitFor, waitForElementToBeRemoved } from "jest-matrix-react";
-import { mocked } from "jest-mock";
+import { logRoles, render, screen, waitFor, waitForElementToBeRemoved } from "test-utils-rtl";
+
 import { EventType, GuestAccess, JoinRule, type MatrixClient, type Room } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
-import { flushPromises, waitEnoughCyclesForModal } from "../../../../../test-utils";
+import { flushPromises, waitEnoughCyclesForModal } from "test-utils";
 
-import { mkStubRoom, stubClient } from "~tchap-web//test/test-utils/test-utils";
+import { mkStubRoom, stubClient } from "test-utils/test-utils";
 import { makeRoomPermalink } from "~tchap-web//src/utils/permalinks/Permalinks";
 import TchapRoomLinkAccess from "~tchap-web//src/tchap/components/views/rooms/TchapRoomLinkAccess";
 import { TchapRoomType } from "~tchap-web//src/tchap/@types/tchap";
@@ -14,17 +17,17 @@ import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 
-jest.mock("~tchap-web/src/tchap/util/TchapRoomUtils");
-jest.mock("~tchap-web//src/utils/permalinks/Permalinks");
-jest.mock("~tchap-web/src/utils/permalinks/ElementPermalinkConstructor");
+vi.mock("~tchap-web/src/tchap/util/TchapRoomUtils");
+vi.mock("~tchap-web//src/utils/permalinks/Permalinks");
+vi.mock("~tchap-web/src/utils/permalinks/ElementPermalinkConstructor");
 
 describe("TchapRoomLinkAccess", () => {
     const client: MatrixClient = stubClient();
     const room: Room = mkStubRoom("roomId", "test", client);
 
-    const mockedTchapRoomUtils = mocked(TchapRoomUtils);
-    const mockedMakeRoomPermalink = mocked(makeRoomPermalink);
-    const onUpdateParentView = jest.fn().mockImplementation(() => {});
+    const mockedTchapRoomUtils = vi.mocked(TchapRoomUtils);
+    const mockedMakeRoomPermalink = vi.mocked(makeRoomPermalink);
+    const onUpdateParentView = vi.fn().mockImplementation(() => {});
 
     const mockedLinked = "https://testmocked.matrix.org";
 
@@ -40,16 +43,16 @@ describe("TchapRoomLinkAccess", () => {
         mockedTchapRoomUtils.getRoomGuessAccessRule.mockImplementation(() => GuestAccess.CanJoin);
         mockedMakeRoomPermalink.mockImplementation(() => mockedLinked);
 
-        client.createAlias = jest.fn().mockResolvedValue("alias");
+        client.createAlias = vi.fn().mockResolvedValue("alias");
         DMRoomMap.makeShared(client);
-        jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(null);
+        vi.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue(null);
 
-        jest.spyOn(client, "sendStateEvent").mockResolvedValue(Promise.resolve({ event_id: "" }));
-        jest.spyOn(client, "sendStateEvent").mockResolvedValue(Promise.resolve({ event_id: "" }));
+        vi.spyOn(client, "sendStateEvent").mockResolvedValue(Promise.resolve({ event_id: "" }));
+        vi.spyOn(client, "sendStateEvent").mockResolvedValue(Promise.resolve({ event_id: "" }));
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render correct initial value when joinrule is public", async () => {
@@ -111,7 +114,7 @@ describe("TchapRoomLinkAccess", () => {
         mockedTchapRoomUtils.getRoomJoinRule.mockImplementation(() => JoinRule.Invite);
         mockedTchapRoomUtils.isUserAdmin.mockImplementation(() => false);
 
-        jest.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue("userB");
+        vi.spyOn(DMRoomMap.shared(), "getUserIdForRoomId").mockReturnValue("userB");
 
         getComponent();
 
@@ -140,9 +143,11 @@ describe("TchapRoomLinkAccess", () => {
         // should open dialog
         userEvent.click(switchLink);
 
+        vi.useFakeTimers();
         await waitEnoughCyclesForModal({
             useFakeTimers: true,
         });
+        vi.useRealTimers();
 
         const dialog = await screen.findByRole("dialog");
 
@@ -165,7 +170,7 @@ describe("TchapRoomLinkAccess", () => {
     });
 
     it("should use existing alias", async () => {
-        jest.spyOn(room, "getCanonicalAlias").mockImplementation(() => "alias:domaing@test.fr");
+        vi.spyOn(room, "getCanonicalAlias").mockImplementation(() => "alias:domaing@test.fr");
         mockedTchapRoomUtils.getRoomJoinRule.mockImplementation(() => JoinRule.Invite);
         const { container } = getComponent();
 
@@ -176,9 +181,11 @@ describe("TchapRoomLinkAccess", () => {
         // should open dialog
         userEvent.click(switchLink);
 
+        vi.useFakeTimers();
         await waitEnoughCyclesForModal({
             useFakeTimers: true,
         });
+        vi.useRealTimers();
 
         const dialog = await screen.findByRole("dialog");
 

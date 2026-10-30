@@ -161,7 +161,11 @@
     },
     "export-room-members": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1263",
-        "files": ["src/components/views/rooms/MemberList/MemberListHeaderView.tsx"]
+        "files": [
+            "src/components/views/rooms/MemberList/MemberListHeaderView.tsx",
+            "src/tchap/components/views/rooms/TchapExportMembersButton.tsx",
+            "res/css/tchap/views/rooms/_TchapExportMembersButton.pcss"
+        ]
     },
     "flow-legacy-call-element-call": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1174",
@@ -313,7 +317,9 @@
         "files": [
             "apps/web/src/components/views/messages/MBodyFactory.tsx",
             "packages/shared-components/src/room/timeline/event-tile/actions/ActionBarView/ActionBarView.tsx",
-            "apps/web/src/components/views/messages/MVoiceOrAudioBody.tsx"
+            "apps/web/src/components/views/messages/MVoiceOrAudioBody.tsx",
+            "apps/web/src/viewmodels/message-body/MBodyTileViewModel.tsx",
+            "apps/web/src/viewmodels/room/timeline/event-tile/ReplyTileViewModel.ts"
         ]
     }
 }

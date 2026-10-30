@@ -1,4 +1,7 @@
-import { render } from "jest-matrix-react";
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it } from "vitest";
+import { render } from "test-utils-rtl";
 import React from "react";
 
 import SdkConfig from "~tchap-web/src/SdkConfig";

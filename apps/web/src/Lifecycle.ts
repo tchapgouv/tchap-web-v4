@@ -10,12 +10,11 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import { type ReactNode } from "react";
-import { MatrixClient, OAuth2, createClient, SSOAction, decodeBase64 } from "matrix-js-sdk/src/matrix";
+import { type MatrixClient, createClient, SSOAction, decodeBase64 } from "matrix-js-sdk/src/matrix";
 import { type AESEncryptedSecretStoragePayload } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg, type MatrixClientPegAssignOpts } from "./MatrixClientPeg";
-import { ModuleRunner } from "./modules/ModuleRunner";
 import EventIndexPeg from "./indexing/EventIndexPeg";
 import { createMatrixClient, createClientWithCreds, type IMatrixClientCreds } from "./utils/createMatrixClient";
 import UserActivity from "./UserActivity";
@@ -38,7 +37,6 @@ import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
 import { PosthogAnalytics } from "./PosthogAnalytics";
-import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { _t } from "./languageHandler";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
@@ -52,21 +50,21 @@ import { SDKContextClass } from "./contexts/SDKContextClass";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOAuthLogin, type CompleteOAuthLoginResponse } from "./utils/oauth/authorize";
 import { getOAuthErrorMessage } from "./utils/oauth/error";
-import { getOAuthParams, getStoredOAuthClientId, persistOAuthClientId } from "./utils/oauth/persistOAuthSettings";
+import { getStoredOAuthClientId, persistOAuthClientId } from "./utils/oauth/persistOAuthSettings";
 import {
-    ACCESS_TOKEN_IV,
+    ACCESS_TOKEN_NAME,
     ACCESS_TOKEN_STORAGE_KEY,
+    getFallbackStorageKey,
     HAS_ACCESS_TOKEN_STORAGE_KEY,
     HAS_REFRESH_TOKEN_STORAGE_KEY,
     persistTokens,
-    REFRESH_TOKEN_IV,
+    REFRESH_TOKEN_NAME,
     REFRESH_TOKEN_STORAGE_KEY,
     tryDecryptToken,
 } from "./utils/tokens/tokens";
 import { checkBrowserSupport } from "./SupportedBrowser";
 import { type URLParams } from "./vector/url_utils.ts";
 import { type OnLoggedInPayload } from "./dispatcher/payloads/OnLoggedInPayload.ts";
-import { filterBoolean } from "./utils/arrays.ts";
 import { clearUploadedMediaCache } from "./utils/UploadedMediaCache";
 import { CallStatusListener } from "./CallStatusListener.ts";
 import { CallStore } from "./stores/CallStore.ts";
@@ -176,32 +174,11 @@ interface ILoadSessionOpts {
  */
 export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean> {
     try {
-        let enableGuest = opts.enableGuest || false;
+        const enableGuest = opts.enableGuest || false;
         const guestHsUrl = opts.guestHsUrl;
         const guestIsUrl = opts.guestIsUrl;
-        const urlParams = opts.urlParams;
         const defaultDeviceDisplayName = opts.defaultDeviceDisplayName;
 
-        if (enableGuest && !guestHsUrl) {
-            logger.warn("Cannot enable guest access: can't determine HS URL to use");
-            enableGuest = false;
-        }
-
-        if (enableGuest && guestHsUrl && urlParams?.guest?.guest_user_id && urlParams?.guest?.guest_access_token) {
-            logger.log("Using guest access credentials");
-            await doSetLoggedIn(
-                {
-                    userId: urlParams.guest.guest_user_id,
-                    accessToken: urlParams.guest.guest_access_token,
-                    homeserverUrl: guestHsUrl,
-                    identityServerUrl: guestIsUrl,
-                    guest: true,
-                },
-                true,
-                false,
-            );
-            return true;
-        }
         const success = await restoreSessionFromStorage({
             ignoreGuest: Boolean(opts.ignoreGuest),
         });
@@ -435,7 +412,19 @@ async function loadOrCreatePickleKey(credentials: IMatrixClientCreds): Promise<s
     // Try to load the pickle key
     const userId = credentials.userId;
     const deviceId = credentials.deviceId;
-    let pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
+    let pickleKey: string | undefined;
+    try {
+        pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
+    } catch (e) {
+        logger.error(`Failed to read pickle key for ${userId}|${deviceId}`, e);
+        // Fall through and try to create a new one. This is assumed to not destroy anything because
+        // both callers of this function are fresh logins with a server-issued device ID and clear
+        // all storage around this point (onSuccessfulDelegatedAuthLogin before, setLoggedIn ->
+        // doSetLoggedIn after), so no data encrypted under a previous pickle key for this device
+        // survives.
+        // If creation also fails we end up with no pickle key and the tokens are stored unencrypted.
+    }
+
     if (!pickleKey) {
         // Create it if it did not exist
         pickleKey =
@@ -547,14 +536,33 @@ export interface IStoredSession {
  * @param storageKey key used to store the token, eg ACCESS_TOKEN_STORAGE_KEY
  * @returns Promise that resolves to token or undefined
  */
-async function getStoredToken(storageKey: string): Promise<string | undefined> {
-    let token: string | undefined;
+async function getStoredToken(storageKey: string): Promise<string | AESEncryptedSecretStoragePayload | undefined> {
+    // A token at the fallback key was written because an IndexedDB write failed, and is cleared
+    // again as soon as one succeeds. It is therefore always at least as new as whatever
+    // IndexedDB holds, and must take precedence — otherwise a stale IndexedDB value shadows it
+    // forever, and a rotated refresh token is silently lost.
+    const fallbackStorageKey = getFallbackStorageKey(storageKey);
+    const fallbackToken = localStorage.getItem(fallbackStorageKey) ?? undefined;
+    if (fallbackToken) {
+        logger.warn(`Using localStorage fallback for ${storageKey}; a previous IndexedDB write failed`);
+        try {
+            // try to move the token back into IndexedDB now that it may be writable again
+            await StorageAccess.idbSave("account", storageKey, fallbackToken);
+            localStorage.removeItem(fallbackStorageKey);
+        } catch (e) {
+            logger.error(`Recovery of token ${storageKey} into IndexedDB failed`, e);
+        }
+        return fallbackToken;
+    }
+
+    let token: string | AESEncryptedSecretStoragePayload | undefined;
     try {
         token = await StorageAccess.idbLoad("account", storageKey);
     } catch (e) {
         logger.error(`StorageManager.idbLoad failed for account:${storageKey}`, e);
     }
     if (!token) {
+        // Legacy location, from before tokens were moved into IndexedDB.
         token = localStorage.getItem(storageKey) ?? undefined;
         if (token) {
             try {
@@ -566,6 +574,17 @@ async function getStoredToken(storageKey: string): Promise<string | undefined> {
             }
         }
     }
+
+    // Note that when IndexedDB has a token we ignore any token at the primary key in localStorage,
+    // rather than treating it as a fallback. It is residue from an older version of
+    // persistTokenInStorage, whose fallback wrote there rather than to the fallback key above, and
+    // which never cleared it after a later successful write — so it may well be older than the
+    // IndexedDB copy, and preferring it could demote a working session to a dead token.
+    //
+    // We do not delete it here either. This is a read path, and the token we just loaded may yet
+    // turn out to be undecryptable (see tryDecryptToken), in which case that plaintext copy is the
+    // only way back into the account. persistTokenInStorage sweeps it up once it has successfully
+    // written a token of its own, which proves the copy is spare.
     return token;
 }
 
@@ -609,6 +628,40 @@ async function abortLogin(): Promise<void> {
     }
 }
 
+/**
+ * Process a token which was loaded from storage by {@link getStoredToken} and decrypt if needed.
+ *
+ * {@link tryDecryptToken} only handles the encrypted case, so the two situations it used to absorb
+ * are decided here instead: a token persisted while no pickle key was available is stored as a
+ * plain string and is returned as-is, and an encrypted token with no pickle key to decrypt it is
+ * unrecoverable.
+ *
+ * @param pickleKey Pickle key for this session, or undefined if none could be read.
+ * @param token The token as it came out of storage.
+ * @param tokenName Name of the token, e.g. {@link ACCESS_TOKEN_NAME}.
+ *
+ * @returns the decrypted token.
+ * @throws if the token is encrypted but cannot be decrypted.
+ */
+async function processStoredToken(
+    pickleKey: string | undefined,
+    token: string | AESEncryptedSecretStoragePayload,
+    tokenName: string,
+): Promise<string> {
+    if (typeof token === "string") {
+        // Stored unencrypted, because there was no pickle key when it was persisted.
+        return token;
+    }
+
+    if (!pickleKey) {
+        // The token is encrypted and we have no way to read it. Keep this message stable: it is the
+        // signature support uses to identify this failure in rageshake logs.
+        throw new Error(`Error decrypting secret ${tokenName}: no pickle key found.`);
+    }
+
+    return tryDecryptToken(pickleKey, token, tokenName);
+}
+
 /** Attempt to restore the session from localStorage or indexeddb.
  *
  * If the credentials are found, and the session is successfully restored,
@@ -647,15 +700,21 @@ export async function restoreSessionFromStorage(opts?: { ignoreGuest?: boolean }
             return false;
         }
 
-        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
+        let pickleKey: string | undefined;
+        try {
+            pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
+        } catch (e) {
+            logger.error(`Failed to read pickle key for ${userId}|${deviceId}`, e);
+        }
+
         if (pickleKey) {
             logger.log(`Got pickle key for ${userId}|${deviceId}`);
         } else {
             logger.log(`No pickle key available for ${userId}|${deviceId}`);
         }
-        const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_IV);
+        const decryptedAccessToken = await processStoredToken(pickleKey, accessToken, ACCESS_TOKEN_NAME);
         const decryptedRefreshToken =
-            refreshToken && (await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV));
+            refreshToken && (await processStoredToken(pickleKey, refreshToken, REFRESH_TOKEN_NAME));
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -755,8 +814,12 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
 
     if (!credentials.pickleKey && credentials.deviceId !== undefined) {
         logger.info("Lifecycle#hydrateSession: Pickle key not provided - trying to get one");
-        credentials.pickleKey =
-            (await PlatformPeg.get()?.getPickleKey(credentials.userId, credentials.deviceId)) ?? undefined;
+        try {
+            credentials.pickleKey =
+                (await PlatformPeg.get()?.getPickleKey(credentials.userId, credentials.deviceId)) ?? undefined;
+        } catch (e) {
+            logger.error(`Failed to read pickle key for ${credentials.userId}|${credentials.deviceId}`, e);
+        }
     }
 
     return doSetLoggedIn(credentials, overwrite, false);
@@ -809,14 +872,19 @@ async function doSetLoggedIn(
         await abortLogin();
     }
 
-    let auth: OAuth2 | undefined;
-    try {
-        auth = await hydrateAuth(credentials);
-    } catch {}
-
     // check the session lock just before creating the new client
     checkSessionLock();
-    MatrixClientPeg.set(createClientWithCreds(credentials, auth));
+
+    let oauthClientId: string | undefined;
+    if (credentials.refreshToken) {
+        try {
+            oauthClientId = getStoredOAuthClientId();
+        } catch (e) {
+            logger.warn("Have a refresh token but no stored OAuth2 client ID: tokens will not be refreshed", e);
+        }
+    }
+
+    MatrixClientPeg.set(createClientWithCreds(credentials, oauthClientId));
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
@@ -843,8 +911,7 @@ async function doSetLoggedIn(
     dis.dispatch<OnLoggedInPayload>({ action: Action.OnLoggedIn, client }, true);
 
     const clientPegOpts: MatrixClientPegAssignOpts = {
-        userVerificationCaCertsPem:
-            ModuleApi.instance.client.creationManagement.userVerificationCaCertsPem ?? undefined,
+        x509: ModuleApi.instance.client.creationManagement.x509 ?? undefined,
     };
 
     if (credentials.pickleKey) {
@@ -912,75 +979,10 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         localStorage.setItem("mx_device_id", credentials.deviceId);
     }
 
-    ModuleRunner.instance.extensions.cryptoSetup?.persistCredentials(credentials);
-
     logger.log(`Session persisted for ${credentials.userId}`);
 }
 
 let _isLoggingOut = false;
-
-/**
- * Logs out the current session.
- * When user has authenticated using OAuth2 native flow revoke tokens with OAuth2 provider.
- * Otherwise, call /logout on the homeserver.
- * @param client
- * @param oauth
- */
-async function doLogout(client: MatrixClient, oauth: OAuth2 | null): Promise<void> {
-    // :TCHAP:
-    // if (oauth) {
-    //     const accessToken = client.getAccessToken();
-    //     const refreshToken = client.getRefreshToken();
-
-    //     await Promise.all(
-    //         filterBoolean([
-    //             accessToken ? oauth.revokeToken(accessToken, "access_token") : null,
-    //             refreshToken ? oauth.revokeToken(refreshToken, "refresh_token") : null,
-    //         ]),
-    //     );
-
-    //     client.stopClient();
-    //     client.http.abort();
-    const oauthLogout = async (client: MatrixClient, oauth: OAuth2) => {
-            const accessToken = client.getAccessToken();
-            const refreshToken = client.getRefreshToken();
-
-            await Promise.all(
-                filterBoolean([
-                    accessToken ? oauth.revokeToken(accessToken, "access_token") : null,
-                    refreshToken ? oauth.revokeToken(refreshToken, "refresh_token") : null,
-                ]),
-            );
-
-            client.stopClient();
-            client.http.abort();
-    }
-
- 
-    if (oauth) {
-        await oauthLogout(client, oauth);
-    } else {
-         await client.logout(true);
-    }
-
-    // TODO reimplement createSignoutRequest without oidc-client-ts lib
-    // Only send premanent logout request to MAS if in web platform
-    // if (window.__TAURI__) {
-    //     // standard element web, signout only current device
-    //     await oauthLogout(client, oauth!);
-    //     return;
-    // }
-    // const signoutRequest = (await oidcClientStore.createSignoutRequest()).url;
-    // if (signoutRequest) {
-    //     console.log("**** Doing signout request logout to MAS");
-    //     client.stopClient();
-    //     client.http.abort();
-    //     window.location.href = signoutRequest;
-    // } else {
-    //     await client.logout(true);
-    // }
-    // end :TCHAP:
-}
 
 /**
  * Logs the current session out and transitions to the logged-out state
@@ -988,16 +990,6 @@ async function doLogout(client: MatrixClient, oauth: OAuth2 | null): Promise<voi
 export async function logout(): Promise<void> {
     const client = MatrixClientPeg.get();
     if (!client) return;
-
-    let oauth: OAuth2 | undefined;
-    try {
-        oauth = await hydrateAuth({
-            homeserverUrl: client.getHomeserverUrl(),
-            deviceId: client.getDeviceId()!,
-        });
-    } catch {
-        // This is fine
-    }
 
     PosthogAnalytics.instance.logout();
 
@@ -1012,17 +1004,12 @@ export async function logout(): Promise<void> {
     _isLoggingOut = true;
     void PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
 
-    doLogout(client, oauth ?? null).then(onLoggedOut, (err) => {
-        // Just throwing an error here is going to be very unhelpful
-        // if you're trying to log out because your server's down and
-        // you want to log into a different server, so just forget the
-        // access token. It's annoying that this will leave the access
-        // token still valid, but we should fix this by having access
-        // tokens expire (and if you really think you've been compromised,
-        // change your password).
+    try {
+        await client.logout(true);
+    } catch (err) {
         logger.warn("Failed to call logout API: token will not be invalidated", err);
-        return onLoggedOut();
-    });
+    }
+    await onLoggedOut();
 }
 
 export function softLogout(): void {
@@ -1136,7 +1123,7 @@ async function startMatrixClient(
 
 /*
  * Stops a running client and all related services, and clears persistent
- * storage. Used after a session has been logged out.
+ * storage. Used after a session has been logged out (or at least attempted to be logged out).
  */
 export async function onLoggedOut(): Promise<void> {
     // Ensure that we dispatch a view change **before** stopping the client,
@@ -1146,7 +1133,6 @@ export async function onLoggedOut(): Promise<void> {
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     clearUploadedMediaCache();
-    LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
     await PlatformPeg.get()?.clearStorage();
     SettingsStore.reset();
 
@@ -1280,18 +1266,3 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Prom
         false,
     );
 };
-
-/**
- * Instantiate an OAuth2 instance from storage
- * Returned promise will reject if the session or the server are not OAuth2-native.
- */
-export async function hydrateAuth(
-    credentials: Pick<IMatrixClientCreds, "homeserverUrl" | "deviceId">,
-): Promise<OAuth2> {
-    const storedClientId = getStoredOAuthClientId();
-
-    const tempClient = new MatrixClient({ baseUrl: credentials.homeserverUrl });
-    const authMetadata = await tempClient.getAuthMetadata();
-
-    return new OAuth2(authMetadata, { ...getOAuthParams(storedClientId), deviceId: credentials.deviceId });
-}

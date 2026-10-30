@@ -1,15 +1,18 @@
+// @vitest-environment happy-dom
+
+import { type RenderResult, fireEvent, render } from "test-utils-rtl";
 import React from "react";
-import { type RenderResult, fireEvent, render } from "jest-matrix-react";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, type MockInstance, vi } from "vitest";
 
 import BugReportDialog from "~tchap-web/src/components/views/dialogs/BugReportDialog";
-import { flushPromises } from "~tchap-web/test/test-utils";
+import { flushPromises } from "test-utils";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 
 describe("<BugReportDialog>", () => {
     const bugReportUrl = "/bug/report/url";
     const userText = "halo i haz problem";
     const label = "mylabel";
-    let sendBugReportSpy: jest.SpyInstance;
+    let sendBugReportSpy: MockInstance;
 
     beforeAll(() => {
         SdkConfig.reset(); // in case other tests didn't clean up
@@ -20,10 +23,12 @@ describe("<BugReportDialog>", () => {
         SdkConfig.reset(); // we touch the config, so clean up
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         // Mocking trick to mock a default export : use requireActual.
-        const actual = jest.requireActual("~tchap-web/src/rageshake/submit-rageshake");
-        sendBugReportSpy = jest.spyOn(actual, "default").mockResolvedValue(bugReportUrl);
+        const actual = await vi.importActual<
+            typeof import("~tchap-web/src/rageshake/submit-rageshake")
+        >("~tchap-web/src/rageshake/submit-rageshake");
+        sendBugReportSpy = vi.spyOn(actual, "default").mockResolvedValue(bugReportUrl);
     });
 
     afterEach(() => {

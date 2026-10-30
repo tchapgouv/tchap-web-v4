@@ -1,9 +1,12 @@
-import { mocked, type MockedObject } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, type MockedObject, vi } from "vitest";
+
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import ExternalAccountHandler from "~tchap-web/src/tchap/ext/ExternalAccountHandler";
 import Modal from "~tchap-web/src/Modal";
-import { getMockClientWithEventEmitter, mockClientMethodsUser } from "~tchap-web/test/test-utils";
+import { getMockClientWithEventEmitter, mockClientMethodsUser } from "test-utils";
 import SdkConfig, { type ConfigOptions } from "~tchap-web/src/SdkConfig";
 import ErrorDialog from "~tchap-web/src/components/views/dialogs/ErrorDialog";
 import { _t } from "~tchap-web/src/languageHandler";
@@ -15,9 +18,9 @@ describe("ExternalAccountHandler", () => {
     const userIdNotExterne = "@bob:test.com";
 
     beforeEach(() => {
-        Modal.createDialog = jest.fn();
+        Modal.createDialog = vi.fn();
         // @ts-ignore mock (type error because empty return)
-        mocked(Modal.createDialog).mockReturnValue({});
+        vi.mocked(Modal.createDialog).mockReturnValue({});
 
         const config: ConfigOptions = {
             homeserver_list: [
@@ -35,13 +38,13 @@ describe("ExternalAccountHandler", () => {
 
         mockClient = getMockClientWithEventEmitter({
             ...mockClientMethodsUser(userId),
-            stopClient: jest.fn(),
-            removeAllListeners: jest.fn(),
+            stopClient: vi.fn(),
+            removeAllListeners: vi.fn(),
         });
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         SdkConfig.reset();
     });
 
@@ -80,8 +83,8 @@ describe("ExternalAccountHandler", () => {
     it("should not indicate the user as external", () => {
         mockClient = getMockClientWithEventEmitter({
             ...mockClientMethodsUser(userIdNotExterne),
-            stopClient: jest.fn(),
-            removeAllListeners: jest.fn(),
+            stopClient: vi.fn(),
+            removeAllListeners: vi.fn(),
         });
 
         const isExternal = ExternalAccountHandler.isUserExternal(mockClient);

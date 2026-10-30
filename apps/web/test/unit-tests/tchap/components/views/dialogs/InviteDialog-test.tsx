@@ -1,8 +1,11 @@
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, type Mocked, vi, type Mock as vitest_Mock } from "vitest";
 import React from "react";
-import { cleanup, render, screen, waitFor } from "jest-matrix-react";
+import { cleanup, render, screen, waitFor } from "test-utils-rtl";
 import userEvent from "@testing-library/user-event";
 import { EventTimeline, type MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
-import { type Mocked } from "jest-mock";
+
 
 import InviteDialog from "~tchap-web/src/components/views/dialogs/InviteDialog";
 import { InviteKind } from "~tchap-web/src/components/views/dialogs/InviteDialogTypes";
@@ -12,14 +15,14 @@ import { type ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServer
 import { type IConfigOptions } from "~tchap-web/src/IConfigOptions";
 import { type IProfileInfo } from "~tchap-web/src/hooks/useProfileInfo";
 import Modal from "~tchap-web/src/Modal";
-import { filterConsole, flushPromises, getMockClientWithEventEmitter, TestSDKContext } from "~tchap-web/test/test-utils";
+import { filterConsole, flushPromises, getMockClientWithEventEmitter, TestSDKContext } from "test-utils";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 import { SDKContextClass } from "~tchap-web/src/contexts/SDKContextClass";
 
 // Mock TchapUtils to control checkIfEmailIsExternal in tests
-jest.mock("~tchap-web/src/tchap/util/TchapUtils");
+vi.mock("~tchap-web/src/tchap/util/TchapUtils");
 
 const getSearchField = () => screen.getByTestId("invite-dialog-input");
 
@@ -69,18 +72,18 @@ describe("InviteDialog", () => {
 
     beforeEach(() => {
         mockClient = getMockClientWithEventEmitter({
-            getUserId: jest.fn().mockReturnValue(bobId),
-            getDomain: jest.fn().mockReturnValue("tchap.gouv.fr"),
-            getSafeUserId: jest.fn().mockReturnValue(bobId),
-            isGuest: jest.fn().mockReturnValue(false),
-            getVisibleRooms: jest.fn().mockReturnValue([]),
-            getRoom: jest.fn(),
-            getRooms: jest.fn(),
-            getAccountData: jest.fn(),
-            getPushActionsForEvent: jest.fn(),
-            mxcUrlToHttp: jest.fn().mockReturnValue(""),
-            isRoomEncrypted: jest.fn().mockReturnValue(false),
-            getProfileInfo: jest.fn().mockImplementation(async (userId: string) => {
+            getUserId: vi.fn().mockReturnValue(bobId),
+            getDomain: vi.fn().mockReturnValue("tchap.gouv.fr"),
+            getSafeUserId: vi.fn().mockReturnValue(bobId),
+            isGuest: vi.fn().mockReturnValue(false),
+            getVisibleRooms: vi.fn().mockReturnValue([]),
+            getRoom: vi.fn(),
+            getRooms: vi.fn(),
+            getAccountData: vi.fn(),
+            getPushActionsForEvent: vi.fn(),
+            mxcUrlToHttp: vi.fn().mockReturnValue(""),
+            isRoomEncrypted: vi.fn().mockReturnValue(false),
+            getProfileInfo: vi.fn().mockImplementation(async (userId: string) => {
                 if (userId === aliceId) return aliceProfileInfo;
                 if (userId === bobId) return bobProfileInfo;
 
@@ -89,26 +92,26 @@ describe("InviteDialog", () => {
                     error: "Profile not found",
                 });
             }),
-            getIdentityServerUrl: jest.fn(),
-            searchUserDirectory: jest.fn().mockResolvedValue({}),
-            lookupThreePid: jest.fn(),
-            registerWithIdentityServer: jest.fn().mockResolvedValue({
+            getIdentityServerUrl: vi.fn(),
+            searchUserDirectory: vi.fn().mockResolvedValue({}),
+            lookupThreePid: vi.fn(),
+            registerWithIdentityServer: vi.fn().mockResolvedValue({
                 access_token: "access_token",
                 token: "token",
             }),
-            getOpenIdToken: jest.fn().mockResolvedValue({}),
-            getIdentityAccount: jest.fn().mockResolvedValue({}),
-            getTerms: jest.fn().mockResolvedValue({ policies: [] }),
-            supportsThreads: jest.fn().mockReturnValue(false),
-            isInitialSyncComplete: jest.fn().mockReturnValue(true),
-            getClientWellKnown: jest.fn().mockResolvedValue({}),
+            getOpenIdToken: vi.fn().mockResolvedValue({}),
+            getIdentityAccount: vi.fn().mockResolvedValue({}),
+            getTerms: vi.fn().mockResolvedValue({ policies: [] }),
+            supportsThreads: vi.fn().mockReturnValue(false),
+            isInitialSyncComplete: vi.fn().mockReturnValue(true),
+            getClientWellKnown: vi.fn().mockResolvedValue({}),
         });
         SdkConfig.put({ validated_server_config: {} as ValidatedServerConfig } as IConfigOptions);
         DMRoomMap.makeShared(mockClient);
 
         room = new Room(roomId, mockClient, mockClient.getSafeUserId());
 
-        jest.spyOn(DMRoomMap.shared(), "getUniqueRoomsWithIndividuals").mockReturnValue({
+        vi.spyOn(DMRoomMap.shared(), "getUniqueRoomsWithIndividuals").mockReturnValue({
             [aliceId]: room,
         });
         mockClient.getRooms.mockReturnValue([room]);
@@ -121,7 +124,7 @@ describe("InviteDialog", () => {
         sdkContext._client = mockClient;
 
         // Default: emails are not external
-        jest.spyOn(TchapUtils, "checkIfEmailIsExternal").mockResolvedValue(false);
+        vi.spyOn(TchapUtils, "checkIfEmailIsExternal").mockResolvedValue(false);
 
     });
 
@@ -129,19 +132,19 @@ describe("InviteDialog", () => {
         Modal.closeCurrentModal();
         cleanup();
         SDKContextClass.instance.onLoggedOut();
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it("should entered values as lowercase", async () => {
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
 
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         const input = getSearchField();
         input.focus();
@@ -159,13 +162,13 @@ describe("InviteDialog", () => {
     });
 
     it("should add pasted email values as lowercase", async () => {
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(aliceUppercaseEmail);
@@ -180,14 +183,14 @@ describe("InviteDialog", () => {
     });
 
     it("should not crash if empty values are entered", async () => {
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         const input = getSearchField();
         input.focus();
@@ -199,14 +202,14 @@ describe("InviteDialog", () => {
     });
 
     it("should not crash if empty values are pasted", async () => {
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
         const input = getSearchField();
 
         // Juste paste some values without enter
@@ -217,15 +220,15 @@ describe("InviteDialog", () => {
 
     it("should display external warning when a user email is selected in private room", async () => {
         // Mock checkIfEmailIsExternal to return true for external emails
-        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+        (TchapUtils.checkIfEmailIsExternal as vitest_Mock).mockResolvedValue(true);
 
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         // Paste an external email
         await pasteIntoSearchField(externalEmail);
@@ -238,15 +241,15 @@ describe("InviteDialog", () => {
 
     it("should not display external warning when room is already open to external users", async () => {
         // Mock checkIfEmailIsExternal to return true for external emails
-        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+        (TchapUtils.checkIfEmailIsExternal as vitest_Mock).mockResolvedValue(true);
 
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.External;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
@@ -259,16 +262,16 @@ describe("InviteDialog", () => {
 
     it("should warn when room is public so not possible to add external", async () => {
         // Mock checkIfEmailIsExternal to return true for external emails
-        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+        (TchapUtils.checkIfEmailIsExternal as vitest_Mock).mockResolvedValue(true);
 
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Forum;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
@@ -281,18 +284,18 @@ describe("InviteDialog", () => {
 
     it("should invite button be disable when user doesnt have permission to change to external room", async () => {
         // Mock checkIfEmailIsExternal to return true for external emails
-        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+        (TchapUtils.checkIfEmailIsExternal as vitest_Mock).mockResolvedValue(true);
 
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
 
         // No permission to change access_rules
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             false,
         );
 
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
@@ -305,16 +308,16 @@ describe("InviteDialog", () => {
 
     it("should not show any warning if the invitedialog type is DM", async () => {
         // Mock checkIfEmailIsExternal to return true for external emails
-        (TchapUtils.checkIfEmailIsExternal as jest.Mock).mockResolvedValue(true);
+        (TchapUtils.checkIfEmailIsExternal as vitest_Mock).mockResolvedValue(true);
 
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
 
-        render(<InviteDialog kind={InviteKind.Dm} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Dm} onFinished={vi.fn()} />);
 
         // Juste paste some values without enter
         await pasteIntoSearchField(externalEmail);
@@ -326,15 +329,15 @@ describe("InviteDialog", () => {
     });
 
     it("should display external warning when a text is mxId in encrypted room", async () => {
-        (TchapUtils.isExternalHomeserver as jest.Mock).mockResolvedValue(true);
+        (TchapUtils.isExternalHomeserver as vitest_Mock).mockResolvedValue(true);
 
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async (room) => {
             return TchapRoomType.Private;
         });
-        jest.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
+        vi.spyOn(room.getLiveTimeline().getState(EventTimeline.FORWARDS)!, "mayClientSendStateEvent").mockReturnValue(
             true,
         );
-        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={jest.fn()} />);
+        render(<InviteDialog kind={InviteKind.Invite} roomId={roomId} onFinished={vi.fn()} />);
 
         // Paste an external email
         await pasteIntoSearchField("@user.test-yopext.tchap.incubateur.net:ext01.tchap.incubateur.net");

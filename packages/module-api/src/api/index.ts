@@ -7,8 +7,6 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import type { Root } from "react-dom/client";
-import { type LegacyModuleApiExtension } from "./legacy-modules";
-import { type LegacyCustomisationsApiExtension } from "./legacy-customisations";
 import { type ConfigApi } from "./config";
 import { type I18nApi } from "./i18n";
 import { type CustomComponentsApi } from "./custom-components";
@@ -27,6 +25,7 @@ import { type ComposerApi } from "./composer.ts";
 import { type StorageHelperApi } from "./storage-helper.ts";
 import { type SettingsApi } from "./settings.ts";
 import { type UrlPreviewApi } from "./urlpreview.ts";
+import { type X509Api } from "./x509.ts";
 
 /**
  * Module interface for modules to implement.
@@ -85,13 +84,7 @@ export function isModule(module: unknown): module is ModuleExport {
  * The API for modules to interact with the application.
  * @public
  */
-export interface Api
-    extends
-        LegacyModuleApiExtension,
-        LegacyCustomisationsApiExtension,
-        DialogApiExtension,
-        AccountAuthApiExtension,
-        ProfileApiExtension {
+export interface Api extends DialogApiExtension, AccountAuthApiExtension, ProfileApiExtension {
     /**
      * The API to read config.json values.
      * Keys should be scoped to the module in reverse domain name notation.
@@ -143,6 +136,13 @@ export interface Api
      * Access some very specific functionality from the client.
      */
     readonly client: ClientApi;
+
+    /**
+     * Allows modules to access hardware keys attached to the user's device as part of experimental
+     * X.509-based identity verification.
+     * @alpha Subject to change.
+     */
+    readonly x509?: X509Api;
 
     /**
      * API for modules to auto-approve widget preloading, identity token requests, and capability requests.

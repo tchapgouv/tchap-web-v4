@@ -1,23 +1,24 @@
+// @vitest-environment happy-dom
+
 import React from "react";
-import { render, screen, waitFor } from "jest-matrix-react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen, waitFor } from "test-utils-rtl";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
-import { mocked } from "jest-mock";
-
+import { createTestClient, withClientContextRenderOptions } from "test-utils";
 import { ChangeRecoveryKey } from "~tchap-web/src/components/views/settings/encryption/ChangeRecoveryKey";
-import { createTestClient, withClientContextRenderOptions } from "~tchap-web/test/test-utils";
 import { copyPlaintext } from "~tchap-web/src/utils/strings";
 import Modal from "~tchap-web/src/Modal";
 import Spinner from "~tchap-web/src/components/views/elements/Spinner";
 import TchapRecoveryCodeSuccessDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapRecoveryCodeSuccessDialog";
 import ErrorDialog from "~tchap-web/src/components/views/dialogs/ErrorDialog";
 
-jest.mock("~tchap-web/src/utils/strings", () => ({
-    copyPlaintext: jest.fn(),
+vi.mock("~tchap-web/src/utils/strings", () => ({
+    copyPlaintext: vi.fn(),
 }));
 
 afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
 });
 
 describe("<ChangeRecoveryKey />", () => {
@@ -25,13 +26,13 @@ describe("<ChangeRecoveryKey />", () => {
 
     beforeEach(() => {
         matrixClient = createTestClient();
-        jest.spyOn(Modal, "createDialog").mockReturnValue({
+        vi.spyOn(Modal, "createDialog").mockReturnValue({
             finished: Promise.resolve([true]),
-            close: jest.fn(),
+            close: vi.fn(),
         });
     });
 
-    function renderComponent(userHasRecoveryKey = true, onFinish = jest.fn(), onCancelClick = jest.fn()) {
+    function renderComponent(userHasRecoveryKey = true, onFinish = vi.fn(), onCancelClick = vi.fn()) {
         return render(
             <ChangeRecoveryKey
                 userHasRecoveryKey={userHasRecoveryKey}
@@ -46,8 +47,8 @@ describe("<ChangeRecoveryKey />", () => {
         it("should display information about the recovery key", async () => {
             const user = userEvent.setup();
 
-            const onCancelClick = jest.fn();
-            const { asFragment } = renderComponent(false, jest.fn(), onCancelClick);
+            const onCancelClick = vi.fn();
+            const { asFragment } = renderComponent(false, vi.fn(), onCancelClick);
             await waitFor(() =>
                 expect(
                     screen.getByText(
@@ -64,8 +65,8 @@ describe("<ChangeRecoveryKey />", () => {
         it("should display the recovery key", async () => {
             const user = userEvent.setup();
 
-            const onCancelClick = jest.fn();
-            const { asFragment } = renderComponent(false, jest.fn(), onCancelClick);
+            const onCancelClick = vi.fn();
+            const { asFragment } = renderComponent(false, vi.fn(), onCancelClick);
             await waitFor(() => user.click(screen.getByRole("button", { name: "Continue" })));
 
             expect(screen.getByText("Save your recovery key somewhere safe")).toBeInTheDocument();
@@ -83,7 +84,7 @@ describe("<ChangeRecoveryKey />", () => {
         it("should ask the user to enter the recovery key", async () => {
             const user = userEvent.setup();
 
-            const onFinish = jest.fn();
+            const onFinish = vi.fn();
             const { asFragment } = renderComponent(false, onFinish);
             // Display the recovery key to save
             await waitFor(() => user.click(screen.getByRole("button", { name: "Continue" })));
@@ -109,7 +110,7 @@ describe("<ChangeRecoveryKey />", () => {
             expect(screen.getByText("The recovery key you entered is not correct.")).toBeInTheDocument();
             expect(asFragment()).toMatchSnapshot();
 
-            const setAccountDataSpy = jest.spyOn(matrixClient, "setAccountData");
+            const setAccountDataSpy = vi.spyOn(matrixClient, "setAccountData");
             await userEvent.clear(input);
             // If the user enters the correct recovery key, the finish button should be enabled
             await userEvent.type(input, "encoded private key");
@@ -123,8 +124,8 @@ describe("<ChangeRecoveryKey />", () => {
         });
 
         it("should display errors from bootstrapSecretStorage", async () => {
-            const consoleErrorSpy = jest.spyOn(console, "error").mockReturnValue(undefined);
-            mocked(matrixClient.getCrypto()!).bootstrapSecretStorage.mockRejectedValue(new Error("can't bootstrap"));
+            const consoleErrorSpy = vi.spyOn(console, "error").mockReturnValue(undefined);
+            vi.mocked(matrixClient.getCrypto()!).bootstrapSecretStorage.mockRejectedValue(new Error("can't bootstrap"));
 
             const user = userEvent.setup();
             const { getByRole, getByText, getByTitle } = renderComponent(false);

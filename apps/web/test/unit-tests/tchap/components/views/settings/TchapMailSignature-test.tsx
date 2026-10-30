@@ -1,4 +1,7 @@
-import { render, screen } from "jest-matrix-react";
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "test-utils-rtl";
 import React from "react";
 import userEvent from "@testing-library/user-event";
 
@@ -10,14 +13,18 @@ describe("TchapMailSignature", () => {
 
     beforeEach(() => {
         // Mock clipboard API
-        const ClipboardItemMock = jest.fn().mockImplementation((data) => data) as unknown as typeof ClipboardItem;
-        ClipboardItemMock.supports = jest.fn().mockReturnValue(true);
+        const ClipboardItemMock = vi.fn(function (data: Record<string, Blob>) {
+            return data;
+        }) as unknown as typeof ClipboardItem;
+        ClipboardItemMock.supports = vi.fn().mockReturnValue(true);
         global.ClipboardItem = ClipboardItemMock;
 
-        Object.assign(navigator, {
-            clipboard: {
-                write: jest.fn(),
+        Object.defineProperty(navigator, "clipboard", {
+            value: {
+                write: vi.fn(),
             },
+            writable: true,
+            configurable: true,
         });
     });
 

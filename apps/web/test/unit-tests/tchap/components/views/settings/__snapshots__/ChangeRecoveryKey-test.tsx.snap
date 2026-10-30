@@ -1,21 +1,21 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<ChangeRecoveryKey /> flow to change the recovery key should display the recovery key 1`] = `
+exports[`<ChangeRecoveryKey /> > flow to change the recovery key > should display the recovery key 1`] = `
 <DocumentFragment>
   <nav
-    class="_breadcrumb_t96w3_8"
+    class="_breadcrumb"
   >
     <button
       aria-disabled="false"
       aria-label="Back"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="secondary"
       role="button"
       style="--cpd-icon-button-size: 28px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -32,11 +32,11 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
       </div>
     </button>
     <ol
-      class="_pages_t96w3_17"
+      class="_pages"
     >
       <li>
         <a
-          class="_link_13esb_8"
+          class="_link"
           data-kind="primary"
           data-size="sm"
           rel="noreferrer noopener"
@@ -49,7 +49,7 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
       <li>
         <span
           aria-current="page"
-          class="_last-page_t96w3_30"
+          class="_last-page"
         >
           Change recovery key
         </span>
@@ -63,7 +63,7 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
       class="mx_EncryptionCard_header"
     >
       <div
-        class="_big-icon_1ssbv_8"
+        class="_big-icon"
         data-kind="primary"
         data-size="lg"
       >
@@ -80,45 +80,45 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
         </svg>
       </div>
       <h2
-        class="_typography_6v6n8_153 _font-heading-sm-semibold_6v6n8_93"
+        class="_typography _font-heading-sm-semibold"
       >
         Change recovery key?
       </h2>
       <span>
-        Write down this new recovery key somewhere safe. Then click Continue to confirm the change.
+        Write down this new recovery key somewhere safe. Then select Continue to confirm the change.
       </span>
     </div>
     <div
       class="mx_KeyPanel"
     >
       <span
-        class="_typography_6v6n8_153 _font-body-md-medium_6v6n8_60"
+        class="_typography _font-body-md-medium"
       >
         Recovery key
       </span>
       <div>
         <span
-          class="_typography_6v6n8_153 _font-body-md-regular_6v6n8_50 mx_KeyPanel_key"
+          class="_typography _font-body-md-regular mx_KeyPanel_key"
           data-testid="recoveryKey"
         >
           encoded private key
         </span>
         <span
-          class="_typography_6v6n8_153 _font-body-sm-regular_6v6n8_31"
+          class="_typography _font-body-sm-regular"
         >
           Do not share this with anyone!
         </span>
       </div>
       <button
         aria-label="Copy"
-        class="_icon-button_1215g_8"
+        class="_icon-button"
         data-kind="primary"
         role="button"
         style="--cpd-icon-button-size: 28px;"
         tabindex="0"
       >
         <div
-          class="_indicator-icon_147l5_17"
+          class="_indicator-icon"
           style="--cpd-icon-button-size: 100%;"
         >
           <svg
@@ -142,7 +142,7 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
       class="mx_EncryptionCard_buttons"
     >
       <button
-        class="_button_1nw83_8"
+        class="_button"
         data-kind="primary"
         data-size="lg"
         role="button"
@@ -151,7 +151,7 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
         action
       </button>
       <button
-        class="_button_1nw83_8"
+        class="_button"
         data-kind="tertiary"
         data-size="lg"
         role="button"
@@ -164,22 +164,22 @@ exports[`<ChangeRecoveryKey /> flow to change the recovery key should display th
 </DocumentFragment>
 `;
 
-exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user to enter the recovery key 1`] = `
+exports[`<ChangeRecoveryKey /> > flow to set up a recovery key > should ask the user to enter the recovery key 1`] = `
 <DocumentFragment>
   <nav
-    class="_breadcrumb_t96w3_8"
+    class="_breadcrumb"
   >
     <button
       aria-disabled="false"
       aria-label="Back"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="secondary"
       role="button"
       style="--cpd-icon-button-size: 28px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -196,11 +196,11 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       </div>
     </button>
     <ol
-      class="_pages_t96w3_17"
+      class="_pages"
     >
       <li>
         <a
-          class="_link_13esb_8"
+          class="_link"
           data-kind="primary"
           data-size="sm"
           rel="noreferrer noopener"
@@ -213,7 +213,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       <li>
         <span
           aria-current="page"
-          class="_last-page_t96w3_30"
+          class="_last-page"
         >
           Get recovery key
         </span>
@@ -227,7 +227,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       class="mx_EncryptionCard_header"
     >
       <div
-        class="_big-icon_1ssbv_8"
+        class="_big-icon"
         data-kind="primary"
         data-size="lg"
       >
@@ -244,7 +244,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
         </svg>
       </div>
       <h2
-        class="_typography_6v6n8_153 _font-heading-sm-semibold_6v6n8_93"
+        class="_typography _font-heading-sm-semibold"
       >
         Enter your recovery key to confirm
       </h2>
@@ -253,23 +253,23 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       </span>
     </div>
     <form
-      class="_root_1o4d9_17 mx_KeyForm"
+      class="_root mx_KeyForm"
     >
       <div
-        class="_field_1o4d9_27"
+        class="_field"
       >
         <label
-          class="_label_1o4d9_60"
+          class="_label"
           for="radix-react-use-id-1"
         >
           Enter recovery key
         </label>
         <div
-          class="_container_1s836_8 mx_KeyForm_password mx_no_textinput"
+          class="_container mx_KeyForm_password mx_no_textinput"
           id="react-use-id-2"
         >
           <input
-            class="_control_d83jn_10 _control_1s836_13"
+            class="_control _control"
             id="radix-react-use-id-1"
             name="recoveryKey"
             required=""
@@ -279,7 +279,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
           <button
             aria-controls="react-use-id-2"
             aria-labelledby="react-use-id-3"
-            class="_action_1s836_24"
+            class="_action"
             type="button"
           >
             <svg
@@ -302,7 +302,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       >
         <button
           aria-disabled="true"
-          class="_button_1nw83_8"
+          class="_button"
           data-kind="primary"
           data-size="lg"
           role="button"
@@ -311,7 +311,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
           Finish set up
         </button>
         <button
-          class="_button_1nw83_8"
+          class="_button"
           data-kind="tertiary"
           data-size="lg"
           role="button"
@@ -325,22 +325,22 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
 </DocumentFragment>
 `;
 
-exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user to enter the recovery key 2`] = `
+exports[`<ChangeRecoveryKey /> > flow to set up a recovery key > should ask the user to enter the recovery key 2`] = `
 <DocumentFragment>
   <nav
-    class="_breadcrumb_t96w3_8"
+    class="_breadcrumb"
   >
     <button
       aria-disabled="false"
       aria-label="Back"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="secondary"
       role="button"
       style="--cpd-icon-button-size: 28px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -357,11 +357,11 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       </div>
     </button>
     <ol
-      class="_pages_t96w3_17"
+      class="_pages"
     >
       <li>
         <a
-          class="_link_13esb_8"
+          class="_link"
           data-kind="primary"
           data-size="sm"
           rel="noreferrer noopener"
@@ -374,7 +374,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       <li>
         <span
           aria-current="page"
-          class="_last-page_t96w3_30"
+          class="_last-page"
         >
           Get recovery key
         </span>
@@ -388,7 +388,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       class="mx_EncryptionCard_header"
     >
       <div
-        class="_big-icon_1ssbv_8"
+        class="_big-icon"
         data-kind="primary"
         data-size="lg"
       >
@@ -405,7 +405,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
         </svg>
       </div>
       <h2
-        class="_typography_6v6n8_153 _font-heading-sm-semibold_6v6n8_93"
+        class="_typography _font-heading-sm-semibold"
       >
         Enter your recovery key to confirm
       </h2>
@@ -414,27 +414,27 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       </span>
     </div>
     <form
-      class="_root_1o4d9_17 mx_KeyForm"
+      class="_root mx_KeyForm"
     >
       <div
-        class="_field_1o4d9_27"
+        class="_field"
         data-invalid="true"
       >
         <label
-          class="_label_1o4d9_60"
+          class="_label"
           data-invalid="true"
           for="radix-react-use-id-1"
         >
           Enter recovery key
         </label>
         <div
-          class="_container_1s836_8 mx_KeyForm_password mx_no_textinput"
+          class="_container mx_KeyForm_password mx_no_textinput"
           id="react-use-id-2"
         >
           <input
             aria-describedby="radix-react-use-id-3"
             aria-invalid="true"
-            class="_control_d83jn_10 _control_1s836_13"
+            class="_control _control"
             data-invalid="true"
             id="radix-react-use-id-1"
             name="recoveryKey"
@@ -445,7 +445,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
           <button
             aria-controls="react-use-id-2"
             aria-labelledby="react-use-id-4"
-            class="_action_1s836_24"
+            class="_action"
             type="button"
           >
             <svg
@@ -463,7 +463,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
           </button>
         </div>
         <span
-          class="_message_1o4d9_86 _error-message_1o4d9_96"
+          class="_message _error-message"
           id="radix-react-use-id-3"
         >
           <svg
@@ -485,7 +485,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
       >
         <button
           aria-disabled="true"
-          class="_button_1nw83_8"
+          class="_button"
           data-kind="primary"
           data-size="lg"
           role="button"
@@ -494,7 +494,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
           Finish set up
         </button>
         <button
-          class="_button_1nw83_8"
+          class="_button"
           data-kind="tertiary"
           data-size="lg"
           role="button"
@@ -508,22 +508,22 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should ask the user
 </DocumentFragment>
 `;
 
-exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display information about the recovery key 1`] = `
+exports[`<ChangeRecoveryKey /> > flow to set up a recovery key > should display information about the recovery key 1`] = `
 <DocumentFragment>
   <nav
-    class="_breadcrumb_t96w3_8"
+    class="_breadcrumb"
   >
     <button
       aria-disabled="false"
       aria-label="Back"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="secondary"
       role="button"
       style="--cpd-icon-button-size: 28px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -540,11 +540,11 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
       </div>
     </button>
     <ol
-      class="_pages_t96w3_17"
+      class="_pages"
     >
       <li>
         <a
-          class="_link_13esb_8"
+          class="_link"
           data-kind="primary"
           data-size="sm"
           rel="noreferrer noopener"
@@ -557,7 +557,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
       <li>
         <span
           aria-current="page"
-          class="_last-page_t96w3_30"
+          class="_last-page"
         >
           Get recovery key
         </span>
@@ -571,7 +571,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
       class="mx_EncryptionCard_header"
     >
       <div
-        class="_big-icon_1ssbv_8"
+        class="_big-icon"
         data-kind="primary"
         data-size="lg"
       >
@@ -588,7 +588,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
         </svg>
       </div>
       <h2
-        class="_typography_6v6n8_153 _font-heading-sm-semibold_6v6n8_93"
+        class="_typography _font-heading-sm-semibold"
       >
         Get recovery key
       </h2>
@@ -597,15 +597,15 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
       </span>
     </div>
     <span
-      class="_typography_6v6n8_153 _font-body-md-medium_6v6n8_60 mx_InformationPanel_description"
+      class="_typography _font-body-md-medium mx_InformationPanel_description"
     >
-      After clicking continue, we’ll generate a recovery key for you.
+      After selecting Continue, we'll generate a recovery key for you.
     </span>
     <div
       class="mx_EncryptionCard_buttons"
     >
       <button
-        class="_button_1nw83_8"
+        class="_button"
         data-kind="primary"
         data-size="lg"
         role="button"
@@ -614,7 +614,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
         Continue
       </button>
       <button
-        class="_button_1nw83_8"
+        class="_button"
         data-kind="tertiary"
         data-size="lg"
         role="button"
@@ -627,22 +627,22 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display info
 </DocumentFragment>
 `;
 
-exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the recovery key 1`] = `
+exports[`<ChangeRecoveryKey /> > flow to set up a recovery key > should display the recovery key 1`] = `
 <DocumentFragment>
   <nav
-    class="_breadcrumb_t96w3_8"
+    class="_breadcrumb"
   >
     <button
       aria-disabled="false"
       aria-label="Back"
-      class="_icon-button_1215g_8"
+      class="_icon-button"
       data-kind="secondary"
       role="button"
       style="--cpd-icon-button-size: 28px;"
       tabindex="0"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg
@@ -659,11 +659,11 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
       </div>
     </button>
     <ol
-      class="_pages_t96w3_17"
+      class="_pages"
     >
       <li>
         <a
-          class="_link_13esb_8"
+          class="_link"
           data-kind="primary"
           data-size="sm"
           rel="noreferrer noopener"
@@ -676,7 +676,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
       <li>
         <span
           aria-current="page"
-          class="_last-page_t96w3_30"
+          class="_last-page"
         >
           Get recovery key
         </span>
@@ -690,7 +690,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
       class="mx_EncryptionCard_header"
     >
       <div
-        class="_big-icon_1ssbv_8"
+        class="_big-icon"
         data-kind="primary"
         data-size="lg"
       >
@@ -707,7 +707,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
         </svg>
       </div>
       <h2
-        class="_typography_6v6n8_153 _font-heading-sm-semibold_6v6n8_93"
+        class="_typography _font-heading-sm-semibold"
       >
         Save your recovery key somewhere safe
       </h2>
@@ -719,33 +719,33 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
       class="mx_KeyPanel"
     >
       <span
-        class="_typography_6v6n8_153 _font-body-md-medium_6v6n8_60"
+        class="_typography _font-body-md-medium"
       >
         Recovery key
       </span>
       <div>
         <span
-          class="_typography_6v6n8_153 _font-body-md-regular_6v6n8_50 mx_KeyPanel_key"
+          class="_typography _font-body-md-regular mx_KeyPanel_key"
           data-testid="recoveryKey"
         >
           encoded private key
         </span>
         <span
-          class="_typography_6v6n8_153 _font-body-sm-regular_6v6n8_31"
+          class="_typography _font-body-sm-regular"
         >
           Do not share this with anyone!
         </span>
       </div>
       <button
         aria-label="Copy"
-        class="_icon-button_1215g_8"
+        class="_icon-button"
         data-kind="primary"
         role="button"
         style="--cpd-icon-button-size: 28px;"
         tabindex="0"
       >
         <div
-          class="_indicator-icon_147l5_17"
+          class="_indicator-icon"
           style="--cpd-icon-button-size: 100%;"
         >
           <svg
@@ -769,7 +769,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
       class="mx_EncryptionCard_buttons"
     >
       <button
-        class="_button_1nw83_8"
+        class="_button"
         data-kind="primary"
         data-size="lg"
         role="button"
@@ -778,7 +778,7 @@ exports[`<ChangeRecoveryKey /> flow to set up a recovery key should display the 
         action
       </button>
       <button
-        class="_button_1nw83_8"
+        class="_button"
         data-kind="tertiary"
         data-size="lg"
         role="button"

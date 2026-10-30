@@ -6,17 +6,17 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { fireEvent, render, screen, within } from "jest-matrix-react";
-import React from "react";
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, type MockedObject, vi } from "vitest";
+import { fireEvent, render, screen, within } from "test-utils-rtl";
 import { type MatrixClient, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import userEvent from "@testing-library/user-event";
-import { type MockedObject } from "jest-mock-vitest-adapter";
 import { ToastContext, ToastRack } from "@element-hq/web-shared-components";
 
 import AccountUserSettingsTab from "~tchap-web/src/components/views/settings/tabs/user/AccountUserSettingsTab";
 import { SDKContext } from "~tchap-web/src/contexts/SDKContext";
-import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
 import SettingsStore from "~tchap-web/src/settings/SettingsStore";
 import {
     getMockClientWithEventEmitter,
@@ -24,7 +24,9 @@ import {
     mockClientMethodsUser,
     mockPlatformPeg,
     flushPromises,
-} from "~tchap-web/test/test-utils";
+    TestSDKContext,
+} from "test-utils";
+import React from "react";
 import { UIFeature } from "~tchap-web/src/settings/UIFeature";
 import MatrixClientContext from "~tchap-web/src/contexts/MatrixClientContext";
 import Modal from "~tchap-web/src/Modal";
@@ -33,19 +35,19 @@ import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 let changePasswordOnError: (e: Error) => void;
 let changePasswordOnFinished: () => void;
 
-jest.mock(
+vi.mock(
     "~tchap-web/src/components/views/settings/ChangePassword",
     () =>
-        ({ onError, onFinished }: { onError: (e: Error) => void; onFinished: () => void }) => {
+        ({default: ({ onError, onFinished }: { onError: (e: Error) => void; onFinished: () => void }) => {
             changePasswordOnError = onError;
             changePasswordOnFinished = onFinished;
             return <button>Mock change password</button>;
         },
-);
+}));
 
 describe("<AccountUserSettingsTab />", () => {
     const defaultProps = {
-        closeSettingsFn: jest.fn(),
+        closeSettingsFn: vi.fn(),
     };
 
     const userId = "@alice:server.org";
@@ -64,21 +66,22 @@ describe("<AccountUserSettingsTab />", () => {
     );
 
     beforeEach(() => {
-        jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        vi.spyOn(SettingsStore, "getValue").mockReturnValue(false);
         mockPlatformPeg();
-        jest.clearAllMocks();
-        jest.spyOn(SettingsStore, "getValue").mockRestore();
-        jest.spyOn(logger, "error").mockRestore();
+        vi.clearAllMocks();
+        vi.spyOn(SettingsStore, "getValue").mockRestore();
+        vi.spyOn(logger, "error").mockRestore();
 
         mockClient = getMockClientWithEventEmitter({
             ...mockClientMethodsUser(userId),
             ...mockClientMethodsServer(),
-            getCapabilities: jest.fn(),
-            getThreePids: jest.fn(),
-            getIdentityServerUrl: jest.fn(),
-            deleteThreePid: jest.fn(),
-            getMediaConfig: jest.fn(),
-            getAuthMetadata: jest.fn().mockRejectedValue(new Error("not implemented")),
+            getCapabilities: vi.fn(),
+            getThreePids: vi.fn(),
+            getIdentityServerUrl: vi.fn(),
+            deleteThreePid: vi.fn(),
+            getMediaConfig: vi.fn(),
+            getAuthMetadata: vi.fn().mockRejectedValue(new Error("not implemented")),
+            getSyncState: vi.fn().mockReturnValue("SYNCING"),
         });
 
         mockClient.getCapabilities.mockResolvedValue({});
@@ -94,7 +97,7 @@ describe("<AccountUserSettingsTab />", () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it("does not show account management link when not available", () => {
@@ -118,7 +121,7 @@ describe("<AccountUserSettingsTab />", () => {
 
     describe("deactivate account", () => {
         it("should not render section when account deactivation feature is disabled", () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            vi.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName !== UIFeature.Deactivate,
             );
             render(getComponent());
@@ -127,7 +130,7 @@ describe("<AccountUserSettingsTab />", () => {
             expect(SettingsStore.getValue).toHaveBeenCalledWith(UIFeature.Deactivate);
         });
         it("should not render section when account is managed externally", async () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            vi.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === UIFeature.Deactivate,
             );
             // account is managed externally when we have delegated auth configured
@@ -142,7 +145,7 @@ describe("<AccountUserSettingsTab />", () => {
             expect(screen.queryByText("Deactivate Account")).not.toBeInTheDocument();
         });
         it("should render section when account deactivation feature is enabled", () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            vi.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === UIFeature.Deactivate,
             );
             render(getComponent());
@@ -150,13 +153,13 @@ describe("<AccountUserSettingsTab />", () => {
             expect(screen.getByText("Deactivate Account", { selector: "h2" }).parentElement!).toMatchSnapshot();
         });
         it("should display the deactivate account dialog when clicked", async () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            vi.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === UIFeature.Deactivate,
             );
 
             const finishedDeferred = Promise.withResolvers<[boolean]>();
-            const createDialogFn = jest.fn().mockReturnValue({ finished: finishedDeferred.promise });
-            jest.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
+            const createDialogFn = vi.fn().mockReturnValue({ finished: finishedDeferred.promise });
+            vi.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
 
             render(getComponent());
 
@@ -165,13 +168,13 @@ describe("<AccountUserSettingsTab />", () => {
             expect(createDialogFn).toHaveBeenCalled();
         });
         it("should close settings if account deactivated", async () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            vi.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === UIFeature.Deactivate,
             );
 
             const finishedDeferred = Promise.withResolvers<[boolean]>();
-            const createDialogFn = jest.fn().mockReturnValue({ finished: finishedDeferred.promise });
-            jest.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
+            const createDialogFn = vi.fn().mockReturnValue({ finished: finishedDeferred.promise });
+            vi.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
 
             render(getComponent());
 
@@ -183,13 +186,13 @@ describe("<AccountUserSettingsTab />", () => {
             expect(defaultProps.closeSettingsFn).toHaveBeenCalled();
         });
         it("should not close settings if account not deactivated", async () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            vi.spyOn(SettingsStore, "getValue").mockImplementation(
                 (settingName) => settingName === UIFeature.Deactivate,
             );
 
             const finishedDeferred = Promise.withResolvers<[boolean]>();
-            const createDialogFn = jest.fn().mockReturnValue({ finished: finishedDeferred.promise });
-            jest.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
+            const createDialogFn = vi.fn().mockReturnValue({ finished: finishedDeferred.promise });
+            vi.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
 
             render(getComponent());
 
@@ -213,8 +216,8 @@ describe("<AccountUserSettingsTab />", () => {
         });
 
         it("should display a dialog if password change succeeded", async () => {
-            const createDialogFn = jest.fn();
-            jest.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
+            const createDialogFn = vi.fn();
+            vi.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
 
             render(getComponent());
 
@@ -234,8 +237,8 @@ describe("<AccountUserSettingsTab />", () => {
             const ERROR_STRING =
                 "Your password must contain exactly 5 lowercase letters, a box drawing character and the badger emoji.";
 
-            const createDialogFn = jest.fn();
-            jest.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
+            const createDialogFn = vi.fn();
+            vi.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
 
             render(getComponent());
 
@@ -254,7 +257,7 @@ describe("<AccountUserSettingsTab />", () => {
 
     describe("Tchap custo", () => {
         it("should render red list section feature is enabled", () => {
-            jest.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockImplementation(
+            vi.spyOn(TchapUIFeature, "isFeatureActiveForHomeserver").mockImplementation(
                 (featureName: string) => featureName === "feature_red_list",
             );
             const { container } = render(getComponent());

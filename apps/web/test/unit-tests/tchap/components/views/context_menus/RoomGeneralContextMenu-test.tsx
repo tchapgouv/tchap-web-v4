@@ -1,10 +1,13 @@
-import { logRoles, render, screen } from "jest-matrix-react";
-import { mocked } from "jest-mock";
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { logRoles, render, screen } from "test-utils-rtl";
+
 import { type MatrixClient, PendingEventOrdering, Room, JoinRule, KnownMembership } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
-import { stubClient } from "~tchap-web/test/test-utils/test-utils";
-import { clearAllModals } from "~tchap-web/test/test-utils";
+import { stubClient } from "test-utils/test-utils";
+import { clearAllModals } from "test-utils";
 import { ChevronFace } from "~tchap-web/src/components/structures/ContextMenu";
 import {
     RoomGeneralContextMenu,
@@ -17,7 +20,7 @@ import * as getTagsForRoomUtils from "~tchap-web/src/utils/room/getTagsForRoom";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils";
 
-jest.mock("~tchap-web/src/tchap/util/TchapRoomUtils");
+vi.mock("~tchap-web/src/tchap/util/TchapRoomUtils");
 
 describe("RoomGeneralContextMenu", () => {
     const ROOM_ID = "!123:matrix.org";
@@ -27,7 +30,7 @@ describe("RoomGeneralContextMenu", () => {
 
     let onFinished: () => void;
 
-    const mockedTchapRoomUtils = mocked(TchapRoomUtils);
+    const mockedTchapRoomUtils = vi.mocked(TchapRoomUtils);
 
     function getComponent(props?: Partial<RoomGeneralContextMenuProps>) {
         return render(
@@ -47,29 +50,29 @@ describe("RoomGeneralContextMenu", () => {
     }
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
 
         stubClient();
-        mockClient = mocked(MatrixClientPeg.safeGet());
+        mockClient = vi.mocked(MatrixClientPeg.safeGet());
 
         room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
 
         const dmRoomMap = {
-            getUserIdForRoomId: jest.fn().mockReturnValue(null),
+            getUserIdForRoomId: vi.fn().mockReturnValue(null),
         } as unknown as DMRoomMap;
         DMRoomMap.setShared(dmRoomMap);
 
-        jest.spyOn(getTagsForRoomUtils, "getTagsForRoom").mockReturnValueOnce([
+        vi.spyOn(getTagsForRoomUtils, "getTagsForRoom").mockReturnValueOnce([
             DefaultTagID.DM,
             DefaultTagID.Favourite,
         ]);
 
         room.updateMyMembership(KnownMembership.Join);
-        jest.spyOn(room, "canInvite").mockReturnValue(true);
+        vi.spyOn(room, "canInvite").mockReturnValue(true);
 
-        onFinished = jest.fn();
+        onFinished = vi.fn();
     });
 
     afterEach(async () => {
@@ -89,7 +92,7 @@ describe("RoomGeneralContextMenu", () => {
 
         logRoles(container);
 
-        const roomLinkButton = screen.getByRole("menuitem", { name: "Copy room link" });
+        const roomLinkButton = screen.getByRole("menuitem", { name: "Copy link" });
 
         expect(roomLinkButton).not.toHaveAttribute("aria-disabled");
     });
@@ -99,7 +102,7 @@ describe("RoomGeneralContextMenu", () => {
 
         getComponent({});
 
-        const roomLinkButton = screen.getByRole("menuitem", { name: "Copy room link" });
+        const roomLinkButton = screen.getByRole("menuitem", { name: "Copy link" });
 
         expect(roomLinkButton).toHaveAttribute("aria-disabled", "true");
     });

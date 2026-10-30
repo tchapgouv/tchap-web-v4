@@ -1,6 +1,9 @@
+// @vitest-environment happy-dom
+
 import React from "react";
-import { render, screen } from "jest-matrix-react";
-import { mocked } from "jest-mock";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "test-utils-rtl";
+
 import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { CallErrorCode, CallState } from "matrix-js-sdk/src/webrtc/call";
 
@@ -25,19 +28,19 @@ describe("<LegacyCallEvent>", () => {
         };
 
         callEventGrouper = {
-            addListener: jest.fn(),
-            removeListener: jest.fn(),
-            invite: jest.fn().mockReturnValue(callInviteEvent),
+            addListener: vi.fn(),
+            removeListener: vi.fn(),
+            invite: vi.fn().mockReturnValue(callInviteEvent),
             isVoice: true,
         };
 
-        Modal.createDialog = jest.fn();
+        Modal.createDialog = vi.fn();
         // @ts-ignore mock (type error because empty return)
-        mocked(Modal.createDialog).mockReturnValue({});
+        vi.mocked(Modal.createDialog).mockReturnValue({});
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     const renderEvent = () => {

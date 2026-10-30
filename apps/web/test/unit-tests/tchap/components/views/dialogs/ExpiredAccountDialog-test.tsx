@@ -1,22 +1,25 @@
+// @vitest-environment happy-dom
+
+import { afterEach, describe, expect, it, vi } from "vitest";
 import React from "react";
-import { render, screen, waitFor } from "jest-matrix-react";
+import { render, screen, waitFor } from "test-utils-rtl";
 
 import ExpiredAccountDialog from "~tchap-web/src/tchap/components/views/dialogs/ExpiredAccountDialog";
-import { flushPromises } from "~tchap-web/test/test-utils";
+import { flushPromises } from "test-utils";
 import TchapUtils from "~tchap-web/src/tchap/util/TchapUtils";
 
 describe("ExpiredAccountDialog", () => {
     afterEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     describe("'Send email' button", () => {
         it("sends email when button is clicked", async () => {
             // true = email sent successfully
-            const onRequestNewEmailMock = jest.fn().mockResolvedValue(true);
+            const onRequestNewEmailMock = vi.fn().mockResolvedValue(true);
 
             const component = render(
-                <ExpiredAccountDialog onFinished={jest.fn()} onRequestNewEmail={onRequestNewEmailMock} />,
+                <ExpiredAccountDialog onFinished={vi.fn()} onRequestNewEmail={onRequestNewEmailMock} />,
             );
             const sendEmailButton = screen.getByTestId("dialog-send-email-button");
             sendEmailButton.click();
@@ -34,10 +37,10 @@ describe("ExpiredAccountDialog", () => {
 
         it("tells user if sending email failed", async () => {
             // false = email sending failed
-            const onRequestNewEmailMock = jest.fn().mockResolvedValue(false);
+            const onRequestNewEmailMock = vi.fn().mockResolvedValue(false);
 
             const component = render(
-                <ExpiredAccountDialog onFinished={jest.fn()} onRequestNewEmail={onRequestNewEmailMock} />,
+                <ExpiredAccountDialog onFinished={vi.fn()} onRequestNewEmail={onRequestNewEmailMock} />,
             );
             const sendEmailButton = screen.getByTestId("dialog-send-email-button");
             sendEmailButton.click();
@@ -55,9 +58,9 @@ describe("ExpiredAccountDialog", () => {
 
         it("sends only one email when button is clicked twice", async () => {
             // true = email sent successfully
-            const onRequestNewEmailMock = jest.fn().mockResolvedValue(true);
+            const onRequestNewEmailMock = vi.fn().mockResolvedValue(true);
 
-            render(<ExpiredAccountDialog onFinished={jest.fn()} onRequestNewEmail={onRequestNewEmailMock} />);
+            render(<ExpiredAccountDialog onFinished={vi.fn()} onRequestNewEmail={onRequestNewEmailMock} />);
             const sendEmailButton = screen.getByTestId("dialog-send-email-button");
 
             sendEmailButton.click();
@@ -71,11 +74,11 @@ describe("ExpiredAccountDialog", () => {
 
     describe("'I renewed my account' button", () => {
         it("if the account is renewed, it displays confirmation message, and offers page reload", async () => {
-            const onFinishedMock = jest.fn();
-            jest.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(false);
+            const onFinishedMock = vi.fn();
+            vi.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(false);
 
             const component = render(
-                <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={jest.fn()} />,
+                <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={vi.fn()} />,
             );
             const primaryButton = component.getByTestId("dialog-primary-button");
 
@@ -94,11 +97,11 @@ describe("ExpiredAccountDialog", () => {
         });
 
         it("if the account is still not renewed, it displays explanation and keeps dialog up", async () => {
-            const onFinishedMock = jest.fn();
-            jest.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(true);
+            const onFinishedMock = vi.fn();
+            vi.spyOn(TchapUtils, "isAccountExpired").mockResolvedValue(true);
 
             const component = render(
-                <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={jest.fn()} />,
+                <ExpiredAccountDialog onFinished={onFinishedMock} onRequestNewEmail={vi.fn()} />,
             );
             const iRenewedButton = component.getByTestId("dialog-primary-button");
 

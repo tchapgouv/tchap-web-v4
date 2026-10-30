@@ -5,8 +5,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+// @vitest-environment happy-dom
+
 import React from "react";
-import { render, fireEvent } from "jest-matrix-react";
+import { afterEach, beforeEach, vi, describe, it, expect } from "vitest";
+import { render, fireEvent } from "test-utils-rtl";
 import { type MatrixCall } from "matrix-js-sdk/src/matrix";
 import { type CallFeed } from "matrix-js-sdk/src/webrtc/callFeed";
 import { SDPStreamMetadataPurpose } from "matrix-js-sdk/src/webrtc/callEventTypes";
@@ -16,9 +19,9 @@ import {
     clientAndSDKContextRenderOptions,
     createTestClient,
     stubClient,
-} from "~tchap-web/test/test-utils";
+} from "test-utils";
 import DMRoomMap from "~tchap-web/src/utils/DMRoomMap";
-import { TestSDKContext } from "~tchap-web/test/unit-tests/TestSDKContext.ts";
+import { TestSDKContext } from "test-utils";
 import { type ConfigOptions } from "~tchap-web/src/IConfigOptions";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 
@@ -49,17 +52,17 @@ describe("LegacyCallView", () => {
         const element = document.createElement("div");
         // @ts-expect-error
         document.fullscreenElement = element;
-        document.exitFullscreen = jest.fn();
+        document.exitFullscreen = vi.fn();
 
         const call = {
-            on: jest.fn(),
-            removeListener: jest.fn(),
-            getFeeds: jest.fn().mockReturnValue([]),
-            isLocalOnHold: jest.fn().mockReturnValue(false),
-            isRemoteOnHold: jest.fn().mockReturnValue(false),
-            isMicrophoneMuted: jest.fn().mockReturnValue(false),
-            isLocalVideoMuted: jest.fn().mockReturnValue(false),
-            isScreensharing: jest.fn().mockReturnValue(false),
+            on: vi.fn(),
+            removeListener: vi.fn(),
+            getFeeds: vi.fn().mockReturnValue([]),
+            isLocalOnHold: vi.fn().mockReturnValue(false),
+            isRemoteOnHold: vi.fn().mockReturnValue(false),
+            isMicrophoneMuted: vi.fn().mockReturnValue(false),
+            isLocalVideoMuted: vi.fn().mockReturnValue(false),
+            isScreensharing: vi.fn().mockReturnValue(false),
         } as unknown as MatrixCall;
 
         const { unmount } = render(
@@ -75,9 +78,9 @@ describe("LegacyCallView", () => {
         const cli = stubClient();
         const call = {
             roomId: "test-room",
-            on: jest.fn(),
-            removeListener: jest.fn(),
-            getFeeds: jest.fn().mockReturnValue(
+            on: vi.fn(),
+            removeListener: vi.fn(),
+            getFeeds: vi.fn().mockReturnValue(
                 [
                     { local: true },
                     { local: false },
@@ -86,28 +89,28 @@ describe("LegacyCallView", () => {
                     (x, i) =>
                         ({
                             stream: { id: "test-" + i },
-                            addListener: jest.fn(),
-                            removeListener: jest.fn(),
-                            getMember: jest.fn(),
-                            isAudioMuted: jest.fn().mockReturnValue(true),
-                            isVideoMuted: jest.fn().mockReturnValue(true),
-                            isLocal: jest.fn().mockReturnValue(x.local),
+                            addListener: vi.fn(),
+                            removeListener: vi.fn(),
+                            getMember: vi.fn(),
+                            isAudioMuted: vi.fn().mockReturnValue(true),
+                            isVideoMuted: vi.fn().mockReturnValue(true),
+                            isLocal: vi.fn().mockReturnValue(x.local),
                             purpose:
                                 x.screenshare &&
                                 SDPStreamMetadataPurpose.Screenshare,
                         }) as unknown as CallFeed,
                 ),
             ),
-            isLocalOnHold: jest.fn().mockReturnValue(false),
-            isRemoteOnHold: jest.fn().mockReturnValue(false),
-            isMicrophoneMuted: jest.fn().mockReturnValue(true),
-            isLocalVideoMuted: jest.fn().mockReturnValue(true),
-            isScreensharing: jest.fn().mockReturnValue(true),
-            noIncomingFeeds: jest.fn().mockReturnValue(false),
-            opponentSupportsSDPStreamMetadata: jest.fn().mockReturnValue(true),
+            isLocalOnHold: vi.fn().mockReturnValue(false),
+            isRemoteOnHold: vi.fn().mockReturnValue(false),
+            isMicrophoneMuted: vi.fn().mockReturnValue(true),
+            isLocalVideoMuted: vi.fn().mockReturnValue(true),
+            isScreensharing: vi.fn().mockReturnValue(true),
+            noIncomingFeeds: vi.fn().mockReturnValue(false),
+            opponentSupportsSDPStreamMetadata: vi.fn().mockReturnValue(true),
         } as unknown as MatrixCall;
         DMRoomMap.setShared({
-            getUserIdForRoomId: jest.fn().mockReturnValue("test-user"),
+            getUserIdForRoomId: vi.fn().mockReturnValue("test-user"),
         } as unknown as DMRoomMap);
 
         const { container, rerender } = render(
@@ -126,17 +129,17 @@ describe("LegacyCallView", () => {
     it("should not show the sidebar button in picture-in-picture mode", async () => {
         const cli = stubClient();
         const call = {
-            on: jest.fn(),
-            removeListener: jest.fn(),
-            getFeeds: jest.fn().mockReturnValue([]),
-            isLocalOnHold: jest.fn().mockReturnValue(false),
-            isRemoteOnHold: jest.fn().mockReturnValue(false),
-            isMicrophoneMuted: jest.fn().mockReturnValue(false),
-            isLocalVideoMuted: jest.fn().mockReturnValue(false),
-            isScreensharing: jest.fn().mockReturnValue(false),
+            on: vi.fn(),
+            removeListener: vi.fn(),
+            getFeeds: vi.fn().mockReturnValue([]),
+            isLocalOnHold: vi.fn().mockReturnValue(false),
+            isRemoteOnHold: vi.fn().mockReturnValue(false),
+            isMicrophoneMuted: vi.fn().mockReturnValue(false),
+            isLocalVideoMuted: vi.fn().mockReturnValue(false),
+            isScreensharing: vi.fn().mockReturnValue(false),
         } as unknown as MatrixCall;
         DMRoomMap.setShared({
-            getUserIdForRoomId: jest.fn().mockReturnValue("test-user"),
+            getUserIdForRoomId: vi.fn().mockReturnValue("test-user"),
         } as unknown as DMRoomMap);
 
         const { container } = render(
@@ -155,9 +158,9 @@ describe("LegacyCallView", () => {
 
         const call = {
             roomId: "test-room",
-            on: jest.fn(),
-            removeListener: jest.fn(),
-            getFeeds: jest.fn().mockReturnValue(
+            on: vi.fn(),
+            removeListener: vi.fn(),
+            getFeeds: vi.fn().mockReturnValue(
                 [
                     { local: true },
                     { local: false },
@@ -166,33 +169,33 @@ describe("LegacyCallView", () => {
                     (x, i) =>
                         ({
                             stream: { id: "test-" + i },
-                            addListener: jest.fn(),
-                            removeListener: jest.fn(),
-                            getMember: jest.fn(),
-                            isAudioMuted: jest.fn().mockReturnValue(true),
-                            isVideoMuted: jest.fn().mockReturnValue(true),
-                            isLocal: jest.fn().mockReturnValue(x.local),
+                            addListener: vi.fn(),
+                            removeListener: vi.fn(),
+                            getMember: vi.fn(),
+                            isAudioMuted: vi.fn().mockReturnValue(true),
+                            isVideoMuted: vi.fn().mockReturnValue(true),
+                            isLocal: vi.fn().mockReturnValue(x.local),
                             purpose:
                                 x.screenshare &&
                                 SDPStreamMetadataPurpose.Screenshare,
                         }) as unknown as CallFeed,
                 ),
             ),
-            isLocalOnHold: jest.fn().mockReturnValue(false),
-            isRemoteOnHold: jest.fn().mockReturnValue(true),
-            isMicrophoneMuted: jest.fn().mockReturnValue(true),
-            isLocalVideoMuted: jest.fn().mockReturnValue(true),
-            isScreensharing: jest.fn().mockReturnValue(true),
-            noIncomingFeeds: jest.fn().mockReturnValue(false),
-            opponentSupportsSDPStreamMetadata: jest.fn().mockReturnValue(true),
-            getOpponentMember: jest.fn(),
+            isLocalOnHold: vi.fn().mockReturnValue(false),
+            isRemoteOnHold: vi.fn().mockReturnValue(true),
+            isMicrophoneMuted: vi.fn().mockReturnValue(true),
+            isLocalVideoMuted: vi.fn().mockReturnValue(true),
+            isScreensharing: vi.fn().mockReturnValue(true),
+            noIncomingFeeds: vi.fn().mockReturnValue(false),
+            opponentSupportsSDPStreamMetadata: vi.fn().mockReturnValue(true),
+            getOpponentMember: vi.fn(),
         } as unknown as MatrixCall;
 
-        jest.spyOn(
+        vi.spyOn(
             sdkContext.legacyCallHandler,
             "roomIdForCall",
         ).mockReturnValue(call.roomId);
-        jest.spyOn(sdkContext.legacyCallHandler, "setActiveCallRoomId");
+        vi.spyOn(sdkContext.legacyCallHandler, "setActiveCallRoomId");
 
         const { getByText } = render(
             <LegacyCallView call={call} sidebarShown />,
@@ -212,9 +215,9 @@ describe("LegacyCallView", () => {
 
         const call = {
             roomId: "test-room",
-            on: jest.fn(),
-            removeListener: jest.fn(),
-            getFeeds: jest.fn().mockReturnValue(
+            on: vi.fn(),
+            removeListener: vi.fn(),
+            getFeeds: vi.fn().mockReturnValue(
                 [
                     { local: true },
                     { local: false },
@@ -223,33 +226,33 @@ describe("LegacyCallView", () => {
                     (x, i) =>
                         ({
                             stream: { id: "test-" + i },
-                            addListener: jest.fn(),
-                            removeListener: jest.fn(),
-                            getMember: jest.fn(),
-                            isAudioMuted: jest.fn().mockReturnValue(true),
-                            isVideoMuted: jest.fn().mockReturnValue(true),
-                            isLocal: jest.fn().mockReturnValue(x.local),
+                            addListener: vi.fn(),
+                            removeListener: vi.fn(),
+                            getMember: vi.fn(),
+                            isAudioMuted: vi.fn().mockReturnValue(true),
+                            isVideoMuted: vi.fn().mockReturnValue(true),
+                            isLocal: vi.fn().mockReturnValue(x.local),
                             purpose:
                                 x.screenshare &&
                                 SDPStreamMetadataPurpose.Screenshare,
                         }) as unknown as CallFeed,
                 ),
             ),
-            isLocalOnHold: jest.fn().mockReturnValue(false),
-            isRemoteOnHold: jest.fn().mockReturnValue(false),
-            isMicrophoneMuted: jest.fn().mockReturnValue(true),
-            isLocalVideoMuted: jest.fn().mockReturnValue(true),
-            isScreensharing: jest.fn().mockReturnValue(true),
-            noIncomingFeeds: jest.fn().mockReturnValue(false),
-            opponentSupportsSDPStreamMetadata: jest.fn().mockReturnValue(true),
-            getOpponentMember: jest.fn(),
+            isLocalOnHold: vi.fn().mockReturnValue(false),
+            isRemoteOnHold: vi.fn().mockReturnValue(false),
+            isMicrophoneMuted: vi.fn().mockReturnValue(true),
+            isLocalVideoMuted: vi.fn().mockReturnValue(true),
+            isScreensharing: vi.fn().mockReturnValue(true),
+            noIncomingFeeds: vi.fn().mockReturnValue(false),
+            opponentSupportsSDPStreamMetadata: vi.fn().mockReturnValue(true),
+            getOpponentMember: vi.fn(),
         } as unknown as MatrixCall;
 
-        jest.spyOn(
+        vi.spyOn(
             sdkContext.legacyCallHandler,
             "roomIdForCall",
         ).mockReturnValue(call.roomId);
-        jest.spyOn(sdkContext.legacyCallHandler, "hangupOrReject");
+        vi.spyOn(sdkContext.legacyCallHandler, "hangupOrReject");
 
         const { getByLabelText } = render(
             <LegacyCallView call={call} sidebarShown />,

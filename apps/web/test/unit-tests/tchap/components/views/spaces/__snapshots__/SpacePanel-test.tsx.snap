@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
+exports[`<SpacePanel /> > tchap custo > should render as expected 1`] = `
 <div>
   <nav
     aria-label="Spaces"
@@ -27,7 +27,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
           class="mx_UserMenu_userAvatar"
         >
           <span
-            class="_avatar_va14e_8 mx_BaseAvatar mx_UserMenu_userAvatar_BaseAvatar _avatar-imageless_va14e_55"
+            class="_avatar mx_BaseAvatar mx_UserMenu_userAvatar_BaseAvatar _avatar-imageless"
             data-color="5"
             data-testid="avatar-img"
             data-type="round"
@@ -59,7 +59,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
     </div>
     <ul
       aria-label="Spaces"
-      class="_scrollbar_1d5jg_8 mx_AutoHideScrollbar mx_SpaceTreeLevel"
+      class="_scrollbar mx_AutoHideScrollbar mx_SpaceTreeLevel"
       data-rbd-droppable-context-id="5"
       data-rbd-droppable-id="top-level-spaces"
       role="tree"
@@ -689,7 +689,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
               class="mx_SpaceButton_avatarWrapper"
             >
               <span
-                class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+                class="_avatar mx_BaseAvatar _avatar-imageless"
                 data-color="1"
                 data-testid="avatar-img"
                 data-type="square"
@@ -746,7 +746,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
               class="mx_SpaceButton_avatarWrapper"
             >
               <span
-                class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+                class="_avatar mx_BaseAvatar _avatar-imageless"
                 data-color="2"
                 data-testid="avatar-img"
                 data-type="square"
@@ -803,7 +803,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
               class="mx_SpaceButton_avatarWrapper"
             >
               <span
-                class="_avatar_va14e_8 mx_BaseAvatar _avatar-imageless_va14e_55"
+                class="_avatar mx_BaseAvatar _avatar-imageless"
                 data-color="3"
                 data-testid="avatar-img"
                 data-type="square"
@@ -886,7 +886,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
         aria-expanded="false"
         aria-haspopup="menu"
         aria-label="Threads"
-        class="_icon-button_1215g_8 mx_ThreadsActivityCentreButton"
+        class="_icon-button mx_ThreadsActivityCentreButton"
         data-kind="primary"
         data-state="closed"
         id="radix-react-use-id-1"
@@ -896,7 +896,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
         type="button"
       >
         <div
-          class="_indicator-icon_147l5_17"
+          class="_indicator-icon"
           style="--cpd-icon-button-size: 100%;"
         >
           <svg
@@ -918,7 +918,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
       aria-expanded="false"
       aria-label="quick_settings"
       aria-labelledby="react-use-id-2"
-      class="_icon-button_1215g_8 mx_QuickSettingsButton"
+      class="_icon-button mx_QuickSettingsButton"
       data-kind="primary"
       role="button"
       style="--cpd-icon-button-size: 32px;"
@@ -926,7 +926,7 @@ exports[`<SpacePanel /> tchap custo should render as expected 1`] = `
       title="quick_settings"
     >
       <div
-        class="_indicator-icon_147l5_17"
+        class="_indicator-icon"
         style="--cpd-icon-button-size: 100%;"
       >
         <svg

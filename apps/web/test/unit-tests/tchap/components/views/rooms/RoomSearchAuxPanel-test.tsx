@@ -1,5 +1,8 @@
+// @vitest-environment happy-dom
+
 import React from "react";
-import { render, screen } from "jest-matrix-react";
+import { describe, expect, it, vi } from "vitest";
+import { render, screen } from "test-utils-rtl";
 
 import RoomSearchAuxPanel from "~tchap-web/src/components/views/rooms/RoomSearchAuxPanel";
 import { SearchScope } from "~tchap-web/src/Searching";
@@ -16,8 +19,8 @@ describe("RoomSearchAuxPanel", () => {
                     promise: new Promise(() => {}),
                 }}
                 isRoomEncrypted={false}
-                onSearchScopeChange={jest.fn()}
-                onCancelClick={jest.fn()}
+                onSearchScopeChange={vi.fn()}
+                onCancelClick={vi.fn()}
             />,
         );
 
@@ -27,13 +30,13 @@ describe("RoomSearchAuxPanel", () => {
     });
 
     it("should allow the user to toggle to all rooms search", async () => {
-        const onSearchScopeChange = jest.fn();
+        const onSearchScopeChange = vi.fn();
 
         render(
             <RoomSearchAuxPanel
                 isRoomEncrypted={false}
                 onSearchScopeChange={onSearchScopeChange}
-                onCancelClick={jest.fn()}
+                onCancelClick={vi.fn()}
             />,
         );
 
@@ -42,7 +45,7 @@ describe("RoomSearchAuxPanel", () => {
     });
 
     it("should allow the user to toggle back to room-specific search", async () => {
-        const onSearchScopeChange = jest.fn();
+        const onSearchScopeChange = vi.fn();
 
         render(
             <RoomSearchAuxPanel
@@ -54,7 +57,7 @@ describe("RoomSearchAuxPanel", () => {
                 }}
                 isRoomEncrypted={false}
                 onSearchScopeChange={onSearchScopeChange}
-                onCancelClick={jest.fn()}
+                onCancelClick={vi.fn()}
             />,
         );
 
@@ -63,12 +66,12 @@ describe("RoomSearchAuxPanel", () => {
     });
 
     it("should allow the user to cancel a search", async () => {
-        const onCancelClick = jest.fn();
+        const onCancelClick = vi.fn();
 
         render(
             <RoomSearchAuxPanel
                 isRoomEncrypted={false}
-                onSearchScopeChange={jest.fn()}
+                onSearchScopeChange={vi.fn()}
                 onCancelClick={onCancelClick}
             />,
         );
@@ -88,8 +91,8 @@ describe("RoomSearchAuxPanel", () => {
                     promise: new Promise(() => {}),
                 }}
                 isRoomEncrypted={true}
-                onSearchScopeChange={jest.fn()}
-                onCancelClick={jest.fn()}
+                onSearchScopeChange={vi.fn()}
+                onCancelClick={vi.fn()}
             />,
         );
         expect(screen.getByTestId("tchap-search-warning-box")).toBeInTheDocument();
@@ -106,8 +109,8 @@ describe("RoomSearchAuxPanel", () => {
                     promise: new Promise(() => {}),
                 }}
                 isRoomEncrypted={false}
-                onSearchScopeChange={jest.fn()}
-                onCancelClick={jest.fn()}
+                onSearchScopeChange={vi.fn()}
+                onCancelClick={vi.fn()}
             />,
         );
 

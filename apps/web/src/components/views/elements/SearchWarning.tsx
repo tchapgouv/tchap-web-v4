@@ -149,7 +149,20 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true, 
             // finishes draining mid-session), so mark it as a polite live region for screen readers.
             return (
                 <div className="mx_SearchWarning" role="status">
-                    <span>{_t("seshat|warning_kind_search_partial")}</span>
+                    <span>
+                        {_t("seshat|warning_kind_search_partial")}
+                        {/* :TCHAP: search-no-results-warning adapt help message with documentation link */}
+                        {" "}
+                        <a
+                            href={TchapUrls.helpSearchMessage}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            aria-label={`${_t("action|learn_more")} (opens in new tab)`}
+                        >
+                            {_t("action|learn_more")}
+                        </a>
+                        {/* end :TCHAP: */}
+                    </span>
                 </div>
             );
         }
@@ -183,26 +196,6 @@ export default function SearchWarning({ isRoomEncrypted, kind, showLogo = true, 
             </div>
         );
     }
-
-    // :TCHAP: search-no-results-warning we don't display usage warning if it is web build
-    if (EventIndexPeg.get()) {
-        return (
-            <>
-                {_t("search|summary|warning", null, {
-                    a: (sub: string) => (
-                        <a
-                            href={TchapUrls.helpSearchMessage}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            aria-label={`${sub} (opens in new tab)`}
-                        >
-                            {sub}
-                        </a>
-                    ),
-                })}
-            </>);
-    }
-    // end :TCHAP:
 
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");

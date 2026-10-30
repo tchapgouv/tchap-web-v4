@@ -1,8 +1,11 @@
-import { waitFor, renderHook, act } from "jest-matrix-react";
+// @vitest-environment happy-dom
+
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { waitFor, renderHook, act } from "test-utils-rtl";
 import { type Room, type MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook";
-import { mkRoom, stubClient } from "~tchap-web/test/test-utils";
+import { mkRoom, stubClient } from "test-utils";
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap";
 import { MatrixClientPeg } from "~tchap-web/src/MatrixClientPeg";
 import { TchapStore } from "~tchap-web/src/tchap/util/TchapStore";
@@ -18,12 +21,12 @@ describe("useTchapRoomHook", () => {
     });
 
     afterEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it("should do initial fetch of room type", async () => {
         // Mock the store to return some room type
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async () => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async () => {
             return TchapRoomType.Forum;
         });
 
@@ -37,11 +40,11 @@ describe("useTchapRoomHook", () => {
 
     it("should fetch new room type on store update", () => {
         // Mock the store to return some room type
-        jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async () => {
+        vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async () => {
             return TchapRoomType.Private;
         });
 
-        jest.spyOn(TchapStore, "getTchapTypeChangedEventName").mockImplementation((room) => {
+        vi.spyOn(TchapStore, "getTchapTypeChangedEventName").mockImplementation((room) => {
             return "UPDATE";
         });
 
@@ -53,7 +56,7 @@ describe("useTchapRoomHook", () => {
             });
 
             // Mock the uodate of the roomType
-            jest.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async () => {
+            vi.spyOn(TchapStore.instance, "getRoomType").mockImplementation(async () => {
                 return TchapRoomType.External;
             });
 

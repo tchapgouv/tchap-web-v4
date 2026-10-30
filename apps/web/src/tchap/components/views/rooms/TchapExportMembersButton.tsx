@@ -72,9 +72,13 @@ export default class MemberList extends React.Component<IProps, IState> {
             >
                 <Button
                     kind="secondary"
-                    size="sm"
+                    // :TCHAP: export-room-members size="sm"
+                    size="md"
+                    // end :TCHAP:
                     Icon={UserExportIcon}
-                    className="mx_MemberListHeaderView_invite_large tc_MemberList_export"
+                    // :TCHAP: export-room-members className="mx_MemberListHeaderView_invite_large tc_MemberList_export"
+                    className="tc_MemberList_action tc_MemberList_export"
+                    // end :TCHAP:
                     onClick={this.onExportButtonClick}
                 >
                     {_t("Export room members")}

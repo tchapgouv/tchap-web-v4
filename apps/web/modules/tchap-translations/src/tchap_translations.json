@@ -1091,10 +1091,6 @@
         "en": "Compare a list of unique emojis between your two devices in order to verify your identity",
         "fr": "Comparez une liste unique d'émojis entre vos deux appareils pour vérifier votre identité"
     },
-    "encryption|verification|reset_all": {
-        "en": "Reinitialize all",
-        "fr": "Tout réinitialiser"
-    },
     "invite|warning_external": {
         "en": "You are going to invite people external to the public sector. If you continue, from now on this room will be open to external people on invite.",
         "fr": "Vous allez inviter des personnes externes au secteur public. Si vous continuez, ce salon sera désormais ouvert aux invités externes par invitation."
@@ -1114,10 +1110,6 @@
     "room|intro|private_unencrypted_warning": {
         "en": "This room is unencrypted and only accessible by invitation. Avoid sharing sensitive data.",
         "fr": "Ce salon non chiffré est accessible uniquement sur invitation. Évitez d’y partager des informations sensibles."
-    },
-    "search|summary|warning": {
-        "en": "It is possible that your messages were not cached yet hence not accessible for search. <a> Learn more </a>",
-        "fr": "Il est possible que vos messages n'aient pas encore été mis en cache et soient donc inaccessibles par la recherche. <a> En savoir plus </a>"
     },
     "quick_settings|support_title": {
         "en": "Help and support",

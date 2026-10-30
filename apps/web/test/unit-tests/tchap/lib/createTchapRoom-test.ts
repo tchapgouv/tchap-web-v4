@@ -1,3 +1,6 @@
+// @vitest-environment happy-dom
+
+import { beforeEach, describe, expect, it } from "vitest";
 import { TchapRoomType } from "../../../../src/tchap/@types/tchap";
 import TchapCreateRoom from "../../../../src/tchap/ext/createTchapRoom";
 

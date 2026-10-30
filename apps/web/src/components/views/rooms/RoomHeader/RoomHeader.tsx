@@ -16,7 +16,6 @@ import ThreadsIcon from "@vector-im/compound-design-tokens/assets/web/icons/thre
 import RoomInfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info-solid";
 import NotificationsIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications-solid";
 import { HistoryVisibility, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
-import { type ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 import { Flex, Box, StatusTextView } from "@element-hq/web-shared-components";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { HistoryIcon, UserProfileSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
@@ -54,24 +53,13 @@ import QuestionDialog from "../../dialogs/QuestionDialog.tsx";
 import { useIsEncrypted } from "../../../../hooks/useIsEncrypted.ts";
 import { useUserStatus } from "../../../../hooks/useUserStatus.ts";
 import { SDKContext } from "../../../../contexts/SDKContext.ts";
-
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature"; // :TCHAP: customize-room-header-bar
 import { TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import Modal from "~tchap-web/src/Modal.tsx";
 import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
 import TchapRoomTypeRoomHeader from "~tchap-web/src/tchap/components/views/rooms/TchapRoomTypeRoomHeader.tsx"; // :TCHAP: customize-room-header-bar
 
-
-
-function RoomHeaderButtons({
-    room,
-    legacyAdditionalButtons,
-    extraButtons,
-}: {
-    room: Room;
-    legacyAdditionalButtons?: ViewRoomOpts["buttons"];
-    extraButtons?: JSX.Element;
-}): JSX.Element {
+function RoomHeaderButtons({ room, extraButtons }: { room: Room; extraButtons?: JSX.Element }): JSX.Element {
     const sdkContext = useContext(SDKContext);
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500, includeInvited: true });
@@ -339,24 +327,6 @@ function RoomHeaderButtons({
         <>
             {extraButtons}
 
-            {legacyAdditionalButtons?.map((props) => {
-                const label = props.label();
-
-                return (
-                    <Tooltip label={label} key={props.id}>
-                        <IconButton
-                            aria-label={label}
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                props.onClick();
-                            }}
-                        >
-                            {typeof props.icon === "function" ? props.icon() : props.icon}
-                        </IconButton>
-                    </Tooltip>
-                );
-            })}
-
             {isViewingCall && <CallGuestLinkButton room={room} />}
 
             {activeCallSessionType && !isConnectedToCall && !isViewingCall ? (
@@ -505,14 +475,11 @@ function historyVisibilityIcon(historyVisibility: HistoryVisibility): JSX.Elemen
 export default function RoomHeader({
     room,
     extraButtons,
-    legacyAdditionalButtons,
     oobData,
 }: {
     room: Room | LocalRoom;
     // Extra buttons added by a new element web module API module
     extraButtons?: JSX.Element;
-    // DEPRECATED: Buttons added by a legacy react-sdk module API module.
-    legacyAdditionalButtons?: ViewRoomOpts["buttons"];
     oobData?: IOOBData;
 }): JSX.Element {
     const sdkContext = useContext(SDKContext);
@@ -619,13 +586,7 @@ export default function RoomHeader({
                     </Box>
                 </button>
                 {/* If the room is local-only then we don't want to show any additional buttons, as it won't work */}
-                {room instanceof LocalRoom === false && (
-                    <RoomHeaderButtons
-                        room={room}
-                        legacyAdditionalButtons={legacyAdditionalButtons}
-                        extraButtons={extraButtons}
-                    />
-                )}
+                {room instanceof LocalRoom === false && <RoomHeaderButtons room={room} extraButtons={extraButtons} />}
             </Flex>
             {askToJoinEnabled && <RoomKnocksBar room={room} />}
         </CurrentRightPanelPhaseContextProvider>
