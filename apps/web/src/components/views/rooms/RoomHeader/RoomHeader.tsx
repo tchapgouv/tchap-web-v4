@@ -140,7 +140,9 @@ function RoomHeaderButtons({ room, extraButtons }: { room: Room; extraButtons?: 
             }
         >
             <Button
-                size="sm"
+                // :TCHAP: join-call-button-size size="sm"
+                size="md"
+                // end :TCHAP:
                 // :TCHAP: add distinction between join click and start click
                 // onClick={activeCallSessionType === CallType.Video ? videoClick : voiceClick}
                 onClick={activeCallSessionType === CallType.Video ? (ev: React.MouseEvent) => videoClick(ev, true) : voiceClick}
