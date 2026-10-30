@@ -10,6 +10,9 @@ import React from "react";
 import classNames from "classnames";
 import { IconButton, Text } from "@vector-im/compound-web";
 import { type EmptyObject } from "matrix-js-sdk/src/matrix";
+// :TCHAP: toast-above-persisted-call
+import ReactDOM from "react-dom";
+// end :TCHAP:
 import { CloseIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import ToastStore, { type IToast } from "../../stores/ToastStore";
@@ -96,10 +99,20 @@ export default class ToastContainer extends React.Component<EmptyObject, IState>
                 mx_ToastContainer_stacked: isStacked,
             });
         }
-        return toast ? (
+        // :TCHAP: toast-above-persisted-call
+        // return toast ? (
+        //     <div className={containerClasses} role="alert">
+        //         {toast}
+        //     </div>
+        // ) : null;
+        const content = toast ? (
             <div className={containerClasses} role="alert">
+                {/* end :TCHAP: */}
                 {toast}
             </div>
         ) : null;
+        const container = document.getElementById("mx_PersistedElement_container");
+        return container ? ReactDOM.createPortal(content, container) : content;
+        // end :TCHAP:
     }
 }
