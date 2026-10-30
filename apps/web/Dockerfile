@@ -10,6 +10,13 @@ FROM --platform=$BUILDPLATFORM node:24-bullseye@sha256:25f3016fcdae6b5d65bd9bcb4
 COPY --from=pnpm /opt/pnpm /opt/pnpm
 RUN ln -s /opt/pnpm/pnpm /usr/local/bin/pnpm
 
+#:tchap: jq is missing from node:24-bullseye but scripts/docker-package.sh needs it
+# (via scripts/get-version-from-git.sh) when building from a non-release branch.
+# Pin to the bullseye suite: bullseye-security is frozen since bullseye LTS ended (2026-08)
+# and its pool returns 404 for the indexed versions.
+RUN apt-get update && apt-get install -y --no-install-recommends jq/bullseye && rm -rf /var/lib/apt/lists/*
+#:tchap:end
+
 # Support custom branch of the js-sdk. This also helps us build images of element-web develop.
 ARG USE_CUSTOM_SDKS=false
 ARG JS_SDK_REPO="https://github.com/matrix-org/matrix-js-sdk.git"
