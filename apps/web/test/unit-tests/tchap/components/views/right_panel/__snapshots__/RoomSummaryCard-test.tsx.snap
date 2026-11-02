@@ -70,7 +70,7 @@ exports[`<RoomSummaryCard /> > has button to edit topic 1`] = `
         />
         <section
           class="_flex mx_RoomSummaryCard_badges"
-          style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: start; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: wrap;"
+          style="--mx-flex-display: flex; --mx-flex-direction: column; --mx-flex-align: center; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
         >
           <div
             class="tc_badge"
@@ -99,7 +99,7 @@ exports[`<RoomSummaryCard /> > has button to edit topic 1`] = `
           </div>
           <span
             class="_typography _font-body-sm-medium _badge"
-            data-kind="blue"
+            data-kind="default"
           >
             <svg
               color="var(--cpd-color-icon-info-primary)"
@@ -761,7 +761,7 @@ exports[`<RoomSummaryCard /> > renders the room summary 1`] = `
         />
         <section
           class="_flex mx_RoomSummaryCard_badges"
-          style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: start; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: wrap;"
+          style="--mx-flex-display: flex; --mx-flex-direction: column; --mx-flex-align: center; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
         >
           <div
             class="tc_badge"
@@ -790,7 +790,7 @@ exports[`<RoomSummaryCard /> > renders the room summary 1`] = `
           </div>
           <span
             class="_typography _font-body-sm-medium _badge"
-            data-kind="blue"
+            data-kind="default"
           >
             <svg
               color="var(--cpd-color-icon-info-primary)"
@@ -1410,7 +1410,7 @@ exports[`<RoomSummaryCard /> > renders the room topic in the summary 1`] = `
         />
         <section
           class="_flex mx_RoomSummaryCard_badges"
-          style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: start; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: wrap;"
+          style="--mx-flex-display: flex; --mx-flex-direction: column; --mx-flex-align: center; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
         >
           <div
             class="tc_badge"
@@ -1439,7 +1439,7 @@ exports[`<RoomSummaryCard /> > renders the room topic in the summary 1`] = `
           </div>
           <span
             class="_typography _font-body-sm-medium _badge"
-            data-kind="blue"
+            data-kind="default"
           >
             <svg
               color="var(--cpd-color-icon-info-primary)"
