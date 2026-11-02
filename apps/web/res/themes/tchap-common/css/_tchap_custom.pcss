@@ -293,3 +293,9 @@
 .mx_Field, .mx_Field input, .mx_Field select, .mx_Field textarea, .mx_Dropdown_input {
       border-radius: 4px !important;
 }
+
+// Room list: keep idle room names in primary colour
+// (Element uses text-secondary since element-hq/element-web#32421)
+.mx_RoomListItemView [data-testid="room-name"] {
+    color: var(--cpd-color-text-primary);
+}
