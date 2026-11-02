@@ -31,21 +31,21 @@ export function HistoryVisibilityBadge({ historyVisibility }: Props): JSX.Elemen
         case "invited":
         case "joined":
             return (
-                <Badge kind="blue">
+                <Badge kind="default" /* :TCHAP: history-visibility-badge kind="blue" */>
                     <VisibilityOffIcon {...iconProps} />
                     {_t("room|history_visibility_badge|private")}
                 </Badge>
             );
         case "shared":
             return (
-                <Badge kind="blue">
+                <Badge kind="default" /* :TCHAP: history-visibility-badge kind="blue" */>
                     <HistoryIcon {...iconProps} />
                     {_t("room|history_visibility_badge|shared")}
                 </Badge>
             );
         case "world_readable":
             return (
-                <Badge kind="blue">
+                <Badge kind="default" /* :TCHAP: history-visibility-badge kind="blue" */>
                     <UserProfileSolidIcon {...iconProps} />
                     {_t("room|history_visibility_badge|world_readable")}
                 </Badge>

@@ -12492,15 +12492,15 @@ function CO({ historyVisibility: e }) {
 	switch (e) {
 		case "invited":
 		case "joined": return /* @__PURE__ */ (0, R.jsxs)(O, {
-			kind: "blue",
+			kind: "default",
 			children: [/* @__PURE__ */ (0, R.jsx)(eT, { ...t }), H("room|history_visibility_badge|private")]
 		});
 		case "shared": return /* @__PURE__ */ (0, R.jsxs)(O, {
-			kind: "blue",
+			kind: "default",
 			children: [/* @__PURE__ */ (0, R.jsx)(IC, { ...t }), H("room|history_visibility_badge|shared")]
 		});
 		case "world_readable": return /* @__PURE__ */ (0, R.jsxs)(O, {
-			kind: "blue",
+			kind: "default",
 			children: [/* @__PURE__ */ (0, R.jsx)(Kw, { ...t }), H("room|history_visibility_badge|world_readable")]
 		});
 		default: return null;
