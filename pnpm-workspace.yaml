@@ -27,7 +27,7 @@ catalog:
     serve: 14.2.6
     # Compound
     # :TCHAP: "@vector-im/compound-design-tokens": 10.2.1
-    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#main
+    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
     "@vector-im/compound-web": 10.1.0
     # i18n
     matrix-web-i18n: 3.6.0
@@ -226,7 +226,7 @@ overrides:
     "@arcmantle/vite-plugin-import-css-sheet>typescript": "catalog:ts6"
     "react-docgen-typescript>typescript": "catalog:ts6"
     # :TCHAP: to be used in compound-web too
-    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#web-fix-heading-size
+    "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
 
 minimumReleaseAgeExclude:
   - "matrix-js-sdk"
