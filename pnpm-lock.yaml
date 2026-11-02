@@ -312,7 +312,7 @@ overrides:
   '@microsoft/api-extractor>typescript': npm:@typescript/typescript6@6.0.2
   '@arcmantle/vite-plugin-import-css-sheet>typescript': npm:@typescript/typescript6@6.0.2
   react-docgen-typescript>typescript: npm:@typescript/typescript6@6.0.2
-  '@vector-im/compound-design-tokens': github:tchapgouv/compound-design-tokens#web-fix-heading-size
+  '@vector-im/compound-design-tokens': github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
 
 packageExtensionsChecksum: sha256-kCJccFy7l6HmjcpzmxV958fHndI9zZq246f1ttgkURI=
 
@@ -472,7 +472,7 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        specifier: github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.3.0)(react@19.3.0)
       '@vector-im/compound-web':
         specifier: 'catalog:'
@@ -977,7 +977,7 @@ importers:
         specifier: ^1.1.6
         version: 1.1.23(@types/react-dom@19.2.3)(@types/react@19.3.0)(react-dom@19.3.0)(react@19.3.0)
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        specifier: github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.3.0)(react@19.3.0)
       '@vector-im/compound-web':
         specifier: ^9.0.0
@@ -1056,7 +1056,7 @@ importers:
   modules/restricted-guests:
     dependencies:
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        specifier: github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.3.0)(react@19.3.0)
       '@vector-im/compound-web':
         specifier: ^9.0.0
@@ -1124,7 +1124,7 @@ importers:
   modules/widget-toggles:
     dependencies:
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        specifier: github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.3.0)(react@19.3.0)
       '@vector-im/compound-web':
         specifier: ^9.0.0
@@ -1307,7 +1307,7 @@ importers:
         specifier: 3.14.13
         version: 3.14.13(react-dom@19.3.0)(react@19.3.0)
       '@vector-im/compound-design-tokens':
-        specifier: github:tchapgouv/compound-design-tokens#web-fix-heading-size
+        specifier: github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
         version: https://codeload.github.com/tchapgouv/compound-design-tokens/tar.gz/adb175d69a4fff4040268387da125928c4682c15(@types/react@19.3.0)(react@19.3.0)
       classnames:
         specifier: ^2.5.1
