@@ -29,13 +29,19 @@ interface Props {
 const displayTchapWarning = (
     searchInfo: SearchInfo | undefined,
     isRoomEncrypted: boolean,
+    scope: SearchScope,
 ): React.ReactElement | undefined => {
-
     if ((searchInfo?.count === undefined || searchInfo?.count === 0) && isRoomEncrypted) {
         return (
             <div className="tc_search_warning" data-testid="tchap-search-warning-box">
                 <WarningIcon width="24px" height="24px" />
-                <SearchWarning kind={WarningKind.Search} isRoomEncrypted={isRoomEncrypted} showLogo={false} />
+                <SearchWarning
+                    kind={WarningKind.Search}
+                    isRoomEncrypted={isRoomEncrypted}
+                    showLogo={false}
+                    scope={scope}
+                    roomId={searchInfo?.roomId}
+                />
             </div>
         );
     }
@@ -97,7 +103,7 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                 </div>
             </div>
             {/*:TCHAP search-no-results-warning */}
-            {displayTchapWarning(searchInfo, isRoomEncrypted)}
+            {displayTchapWarning(searchInfo, isRoomEncrypted, scope)}
             {/* end :TCHAP: */}
         </>
     );
