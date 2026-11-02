@@ -59,3 +59,10 @@ div[data-floating-ui-portal] {
 ._roomListItem_rtaba_8 {
     color: var(--cpd-color-text-primary);
 }
+
+/* Temp fix for dark mode notification count until it is coherent inside tchap compound-design-token 
+    for value --cpd-color-icon-success-primary and --cpd-color-text-on-solid-primary
+*/
+[data-testid="notification-decoration"] > span {
+  background-color: var(--cpd-color-bg-action-primary-rest);
+}
