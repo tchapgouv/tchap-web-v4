@@ -9,6 +9,11 @@
     gap: var(--cpd-space-2x);
     color: var(--badge-external-text-color);
 
+    /* SearchWarning renders nothing when there is nothing to warn about: don't leave an empty box */
+    &:not(:has(.mx_SearchWarning)) {
+        display: none;
+    }
+
     svg {
         color: var(--external-color);
     }
