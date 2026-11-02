@@ -325,5 +325,13 @@
     "join-call-button-size": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1736",
         "files": ["src/components/views/rooms/RoomHeader/RoomHeader.tsx"]
+    },
+    "history-visibility-badge": {
+        "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1746",
+        "files": [
+            "src/components/views/right_panel/RoomSummaryCardView.tsx",
+            "packages/shared-components/src/room/HistoryVisibilityBadge/HistoryVisibilityBadge.tsx",
+            "packages/shared-components/src/room/HistoryVisibilityBadge/__snapshots__/HistoryVisibilityBadge.test.tsx.snap"
+        ]
     }
 }

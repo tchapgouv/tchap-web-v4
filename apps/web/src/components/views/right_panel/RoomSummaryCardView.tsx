@@ -172,7 +172,10 @@ const RoomSummaryCardView: React.FC<IProps> = ({
                 as="section"
                 justify="center"
                 gap="var(--cpd-space-2x)"
-                wrap="wrap"
+                /* :TCHAP: history-visibility-badge wrap="wrap" */
+                direction="column"
+                align="center"
+                /* end :TCHAP: */
                 className="mx_RoomSummaryCard_badges"
             >
                 {/* :TCHAP: */}
