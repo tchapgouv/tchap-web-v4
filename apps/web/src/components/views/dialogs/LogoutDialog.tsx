@@ -118,9 +118,11 @@ export default function LogoutDialog(props: IProps): JSX.Element {
                             <Button destructive={true} onClick={onLogoutConfirm} Icon={DeleteIcon}>
                                 {_t("auth|logout_dialog|continue")}
                             </Button>
+                            {/* :TCHAP: hide-check-recovery-key-button - it only opens the encryption settings, until element ships a real check (element-hq/element-web#35404)
                             <Button kind="secondary" onClick={() => openSettingsWithState("main")}>
                                 {_t("auth|logout_dialog|check_recovery_key")}
                             </Button>
+                            end :TCHAP: */}
                             <Button kind="tertiary" onClick={() => openSettingsWithState("change_recovery_key")}>
                                 {_t("auth|logout_dialog|generate_recovery_key")}
                             </Button>

@@ -48,5 +48,6 @@
   "encryption|verification|verify_by_completing_one_of",
   "unsupported_browser",
   "room_settings|security|join_rule_invite",
-  "room_settings|security|join_rule_public"
+  "room_settings|security|join_rule_public",
+  "auth|logout_dialog|check_recovery_key"
 ]

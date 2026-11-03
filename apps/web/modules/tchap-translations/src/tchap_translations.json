@@ -1138,10 +1138,6 @@
         "en": "Make sure you have access to your verification code before removing this device",
         "fr": "Assurez-vous d'avoir accès à votre code de vérification avant de supprimer cet appareil"
     },
-    "auth|logout_dialog|check_recovery_key": {
-        "en": "Check my verification code",
-        "fr": "Vérifier mon code de vérification"
-    },
     "auth|logout_dialog|generate_recovery_key": {
         "en": "Generate a new verification code",
         "fr": "Générer un nouveau code de vérification"
