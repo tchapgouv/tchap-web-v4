@@ -73,7 +73,6 @@
     },
     "encryption|verification|complete_action": { "en": "Finish", "fr": "Terminer" },
     "Frequently Asked Questions (FAQ)": { "en": "Frequently Asked Questions (FAQ)", "fr": "Foire Aux Questions (FAQ)" },
-    "auth|logout_dialog|skip_key_backup": { "en": "Log out anyway", "fr": "Se déconnecter quand-même" },
     "I renewed the validity of my account": { "en": "Continue", "fr": "Continuer" },
     "I wrote down my code": { "en": "I wrote down my code", "fr": "J'ai noté mon code" },
     "If you do not have another connected device, <b>we advise you to save your keys in a file on your device</b>.": {
@@ -578,10 +577,6 @@
         "en": "Please don't close this window. You will need it later.",
         "fr": "Ne pas fermer cette page. Elle sera nécessaire pour la suite."
     },
-    "migrating_crypto": {
-        "en": "Hang tight. We are updating %(brand)s to make encryption faster and more reliable. Don't worry, it can take some time",
-        "fr": "Accrochez-vous. Nous mettons à jour %(brand)s pour que le chiffrement soit plus rapide et plus fiable. N'ayez crainte, cela peut prendre jusqu'à 10 minutes"
-    },
     "incompatible_browser|supported_browsers": {
         "en": "For the best experience, use recent version of <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, or <Safari>Safari</Safari>.  Don't hesitate to contact your IT department of your ministery or organization and consult the list of compatible browsers: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj",
         "fr": "Pour une meilleure expérience, veuillez utiliser des versions récentes de <Chrome>Chrome</Chrome>, <Firefox>Firefox</Firefox>, <Edge>Edge</Edge>, ou <Safari>Safari</Safari>.  N'hésitez pas à vous rapprocher du service informatique de votre ministère ou organisation et consulter la liste des navigateurs compatibles: https://aide.tchap.numerique.gouv.fr/fr/article/navigateurs-et-versions-compatibles-avec-tchap-web-18m6mcj"
@@ -770,14 +765,6 @@
         "en": "Enter the verification code displayed on the previous screen to finish the recovery setup.",
         "fr": "Saisissez le code de vérification affiché sur l'écran précédent pour terminer la configuration de la récupération."
     },
-    "settings|encryption|recovery|description": {
-        "en": "Recover historic messages with the verification code if you lost all your verified account",
-        "fr": "Récupérez l'historique de vos messages à l'aide du code de vérification si vous n'avez aucun autre appareil vérifié."
-    },
-    "settings|encryption|recovery|set_up_recovery_secondary_description": {
-        "en": "After clicking continue, we will generate a verification code for you.",
-        "fr": "Après avoir cliqué sur continuer, nous allons générer un code de vérification pour vous."
-    },
     "settings|encryption|recovery|change_recovery_confirm_button": {
         "en": "Confirm the new verification code",
         "fr": "Confirmer le nouveau code de vérification"
@@ -793,10 +780,6 @@
     "settings|encryption|recovery|enter_key_error": {
         "en": "The verification code you entered is incorrect.",
         "fr": "Le code de vérification que vous avez saisie est incorrect."
-    },
-    "settings|encryption|recovery|set_up_recovery_description": {
-        "en": "The storage of your keys is protected by a verification code. If you need a new verification code after creation, you can create it by selecting \"%(changeRecoveryKeyButton)s\".",
-        "fr": "Le stockage de vos clés est protégé par un code de vérification. Si vous avez besoin d'un nouveau code de vérification après la création, vous pouvez le recréer en sélectionnant « %(changeRecoveryKeyButton)s »."
     },
     "slash_command|visio": {
         "en": "Create a link to Visio with a message",
@@ -846,9 +829,9 @@
         "en": "Write down this verification code somewhere safe, like a password manager, encrypted note, or a physical safe.",
         "fr": "Recopier ce code de vérification dans un endroit sûr, comme un gestionnaire de mots de passe, une note chiffrée ou un coffre-fort physique."
     },
-    "auth|logout_dialog|description": {
-        "en": "Are you sure you want to sign out? <div>Keep at least one connected device in order to not lose any messages during your leave.</div><a>Learn more</a>",
-        "fr": "Voulez-vous vraiment vous déconnecter ? <div>Gardez au moins un appareil connecté pour ne pas perdre les messages reçus en votre absence.</div><a>En savoir plus</a>"
+    "auth|logout_dialog|keep_access_description": {
+        "en": "<div>Keep at least one connected device in order to not lose any messages during your leave.</div><a>Learn more</a>",
+        "fr": "<div>Gardez au moins un appareil connecté pour ne pas perdre les messages reçus en votre absence.</div><a>En savoir plus</a>"
     },
     "footer|code_source": {
         "en": "The code of Tchap is publicly available and based on the Matrix protocol. The development of the application benefits from the advances of the Matrix community, in terms of functional improvements and security.",
@@ -867,8 +850,16 @@
         "fr": "Sauvegardez automatiquement vos messages et récupérez-les à tout moment à l’aide du code de vérification. Cela vous permettra de consulter l'historique de vos messages sur tous les nouveaux appareils. <a>En savoir plus</a>"
     },
     "settings|encryption|advanced|breadcrumb_title": {
-        "en": "Automatically save your messages and recover them at any time with the verification code. This will allow you to see historic messages on all new devices. <a> Learn more </a>",
-        "fr": "Êtes-vous sûr de vouloir réinitialiser la sécurité de tous vos appareils?"
+        "en": "Can't confirm? You'll need to reset the security of all your devices.",
+        "fr": "Vous ne pouvez pas confirmer ? Vous devez réinitialiser la sécurité de tous vos appareils."
+    },
+    "settings|encryption|advanced|breadcrumb_title_compromised": {
+        "en": "Are you sure you want to reset the security of all your devices?",
+        "fr": "Êtes-vous sûr de vouloir réinitialiser la sécurité de tous vos appareils ?"
+    },
+    "settings|encryption|advanced|breadcrumb_title_cant_confirm": {
+        "en": "You need to reset the security of all your devices",
+        "fr": "Vous devez réinitialiser la sécurité de tous vos appareils"
     },
     "settings|encryption|advanced|breadcrumb_title_sync_failed": {
         "en": "Failed to sync key storage. You need to reset the security of all your devices.",
@@ -957,10 +948,6 @@
     "encryption|verification|confirm_identity_description": {
         "en": "Verify your device to access locked messages and prove your identity to others.",
         "fr": "Vérifiez votre appareil pour accéder aux messages verrouillés et prouver votre identité aux autres."
-    },
-    "encryption|set_up_recovery_toast_description": {
-        "en": "Generate a verification code that can be used to restore your encrypted message history in case you lose access to your devices.",
-        "fr": "Générez un code de vérification qui peut être utilisée pour restaurer l'historique de vos messages chiffrés au cas où vous perdriez l'accès à vos appareils."
     },
     "encryption|set_up_recovery": {
         "en": "Configure the verification",
@@ -1134,5 +1121,49 @@
     "room|server_notice_title": {
         "en": "Tchap Announcement",
         "fr": "Annonces Tchap"
+    },
+    "encryption|recovery_key_description": {
+        "en": "Recover historic messages with the verification code if you lost all your verified account",
+        "fr": "Récupérez l'historique de vos messages à l'aide du code de vérification si vous n'avez aucun autre appareil vérifié."
+    },
+    "encryption|create_recovery_key": {
+        "en": "Create a verification code",
+        "fr": "Créer un code de vérification"
+    },
+    "action|not_now": {
+        "en": "Not now",
+        "fr": "Pas maintenant"
+    },
+    "auth|logout_dialog|check_recovery_key_title": {
+        "en": "Make sure you have access to your verification code before removing this device",
+        "fr": "Assurez-vous d'avoir accès à votre code de vérification avant de supprimer cet appareil"
+    },
+    "auth|logout_dialog|check_recovery_key": {
+        "en": "Check my verification code",
+        "fr": "Vérifier mon code de vérification"
+    },
+    "auth|logout_dialog|generate_recovery_key": {
+        "en": "Generate a new verification code",
+        "fr": "Générer un nouveau code de vérification"
+    },
+    "auth|logout_dialog|continue": {
+        "en": "Remove this device anyway",
+        "fr": "Supprimer cet appareil quand même"
+    },
+    "settings|encryption|advanced|breadcrumb_description": {
+        "en": "If you don't have access to any other verified device and you don't have your verification code, you will need to reset the security of all your devices to continue using Tchap.",
+        "fr": "Si vous n'avez accès à aucun autre appareil vérifié et que vous n'avez pas votre code de vérification, vous devrez réinitialiser la sécurité de tous vos appareils pour continuer à utiliser Tchap."
+    },
+    "settings|encryption|advanced|breadcrumb_description_no_verification_method": {
+        "en": "You don't have access to any other verified device or a verification code, so you will need to reset the security of all your devices to continue using Tchap.",
+        "fr": "Vous n'avez accès à aucun autre appareil vérifié ni à votre code de vérification : vous devez réinitialiser la sécurité de tous vos appareils pour continuer à utiliser Tchap."
+    },
+    "settings|encryption|advanced|breadcrumb_alert_cant_confirm": {
+        "en": "Only reset the security of your devices if you don't have access to another verified device and you don't have your verification code.",
+        "fr": "Ne réinitialisez la sécurité de vos appareils que si vous n'avez accès à aucun autre appareil vérifié et que vous n'avez pas votre code de vérification."
+    },
+    "settings|encryption|key_storage|recovery_requires_key_storage": {
+        "en": "Automatic backup of messages must be turned on to set up the verification code",
+        "fr": "La sauvegarde automatique des messages doit être activée pour configurer le code de vérification"
     }
 }
