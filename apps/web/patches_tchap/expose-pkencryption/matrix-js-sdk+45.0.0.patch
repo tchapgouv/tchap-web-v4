@@ -2,7 +2,7 @@ diff --git a/node_modules/matrix-js-sdk/src/crypto-api/index.ts b/node_modules/m
 index 218e6e1..16c4fc8 100644
 --- a/node_modules/matrix-js-sdk/src/crypto-api/index.ts
 +++ b/node_modules/matrix-js-sdk/src/crypto-api/index.ts
-@@ -730,6 +730,14 @@ export interface CryptoApi {
+@@ -748,6 +748,14 @@ export interface CryptoApi {
       * @param secrets - The secrets bundle received from the other device
       */
      importSecretsBundle?(secrets: SecretsBundleJson): Promise<void>;
@@ -21,7 +21,7 @@ diff --git a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts b/node_mo
 index 3904a9d..e947d1d 100644
 --- a/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
 +++ b/node_modules/matrix-js-sdk/src/rust-crypto/rust-crypto.ts
-@@ -2247,6 +2247,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
+@@ -2275,6 +2275,19 @@ export class RustCrypto extends TypedEventEmitter<RustCryptoEvents, CryptoEventH
              logger.warn("pushSecretToVerifiedDevices: Error processing outgoing requests", e);
          });
      }
