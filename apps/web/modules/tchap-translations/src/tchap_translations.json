@@ -1134,6 +1134,10 @@
         "en": "Not now",
         "fr": "Pas maintenant"
     },
+    "auth|logout_dialog|setup_secure_backup_description": {
+        "en": "This is your only device. If you remove it, you'll need your verification code to confirm your digital identity and restore your encrypted chats the next time you sign in.",
+        "fr": "Il s'agit de votre seul appareil. Si vous le supprimez, vous aurez besoin de votre code de vérification pour confirmer votre identité numérique et restaurer vos discussions chiffrées lors de votre prochaine connexion."
+    },
     "auth|logout_dialog|check_recovery_key_title": {
         "en": "Make sure you have access to your verification code before removing this device",
         "fr": "Assurez-vous d'avoir accès à votre code de vérification avant de supprimer cet appareil"
