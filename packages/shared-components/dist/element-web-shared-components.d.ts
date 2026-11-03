@@ -2657,6 +2657,42 @@ export declare interface LeftResizablePanelViewActions {
 }
 
 /**
+ * A full-screen message shown when the session predates the current crypto stack and cannot be migrated.
+ *
+ * The only way forward is to sign out and back in, so the view offers a sign out button and nothing else.
+ *
+ * @example
+ * ```tsx
+ * <LegacyCryptoUnsupportedView vm={legacyCryptoUnsupportedViewModel} />
+ * ```
+ */
+export declare function LegacyCryptoUnsupportedView({ vm }: Readonly<LegacyCryptoUnsupportedViewProps>): JSX.Element;
+
+/** User actions emitted by the legacy crypto unsupported screen. */
+export declare interface LegacyCryptoUnsupportedViewActions {
+    /** Invoked when the sign out button is clicked. */
+    onSignOutClick: MouseEventHandler<HTMLButtonElement>;
+}
+
+/** View model contract for the legacy crypto unsupported screen. */
+export declare type LegacyCryptoUnsupportedViewModel = ViewModel<LegacyCryptoUnsupportedViewSnapshot, LegacyCryptoUnsupportedViewActions>;
+
+declare interface LegacyCryptoUnsupportedViewProps {
+    /**
+     * The view model for the legacy crypto unsupported screen.
+     */
+    vm: LegacyCryptoUnsupportedViewModel;
+}
+
+/** Snapshot data for the legacy crypto unsupported screen. */
+export declare interface LegacyCryptoUnsupportedViewSnapshot {
+    /** The application brand name, for example "Element". */
+    brand: string;
+    /** The last application version that still supports migrating this session, for example "v1.12.30". */
+    version: string;
+}
+
+/**
  * Limits composed status text to the UI grapheme guideline without exceeding the
  * protocol UTF-8 byte cap. Truncation always keeps complete grapheme clusters.
  */
@@ -6883,6 +6919,7 @@ export declare interface WidgetPipViewProps {
      * This allows any avatar implementation to be used in this view (like RoomAvatar).
      */
     RoomAvatar: default_2.FC<{
+        className?: string;
         size: string;
     }>;
 }
