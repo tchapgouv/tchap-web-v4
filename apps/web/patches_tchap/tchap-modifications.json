@@ -337,5 +337,13 @@
     "hide-check-recovery-key-button": {
         "comment": "Hidden until element ships a real recovery key check: https://github.com/element-hq/element-web/pull/35404",
         "files": ["src/components/views/dialogs/LogoutDialog.tsx"]
+    },
+    "legacy-crypto-unsupported-send-logs": {
+        "comment": "Element asks to downgrade to an Element version, which Tchap users cannot do: offer to send logs to support instead",
+        "files": [
+            "src/viewmodels/crypto/legacyCryptoUnsupportedViewModel.ts",
+            "packages/shared-components/src/crypto/LegacyCryptoUnsupportedView/LegacyCryptoUnsupportedView.tsx",
+            "packages/shared-components/src/crypto/LegacyCryptoUnsupportedView/LegacyCryptoUnsupportedView.module.css"
+        ]
     }
 }

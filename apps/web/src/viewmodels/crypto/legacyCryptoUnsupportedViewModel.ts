@@ -12,6 +12,12 @@ import {
 } from "@element-hq/web-shared-components";
 
 import type { MatrixDispatcher } from "../../dispatcher/dispatcher";
+// :TCHAP: legacy-crypto-unsupported-send-logs
+import Modal from "../../Modal";
+import SdkConfig from "../../SdkConfig";
+import BugReportDialog from "../../components/views/dialogs/BugReportDialog";
+import { _t } from "../../languageHandler";
+// end :TCHAP:
 
 /**
  * The last release that could still migrate a libolm crypto store. Users on an older session must
@@ -51,4 +57,15 @@ export class LegacyCryptoUnsupportedViewModel
     public onSignOutClick = (): void => {
         this.props.dispatcher.dispatch({ action: "logout" });
     };
+
+    // :TCHAP: legacy-crypto-unsupported-send-logs - Tchap users cannot downgrade, so let them send their logs to support
+    public onSendLogsClick = SdkConfig.get().bug_report_endpoint_url
+        ? (): void => {
+              Modal.createDialog(BugReportDialog, {
+                  label: "legacy-crypto-unsupported",
+                  initialText: _t("error|legacy_crypto_unsupported|bug_report_text"),
+              });
+          }
+        : undefined;
+    // end :TCHAP:
 }

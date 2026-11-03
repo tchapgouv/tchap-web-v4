@@ -261,6 +261,14 @@
     },
     "auth|forgot_password_send_email": { "en": "Send email", "fr": "Envoyer le mail" },
     "auth|misconfigured_title": { "en": " ", "fr": " " },
+    "error|legacy_crypto_unsupported|actions": {
+        "en": "Send your logs to support so that we can analyse the problem.",
+        "fr": "Envoyez vos journaux au support pour que nous puissions analyser le problème."
+    },
+    "error|legacy_crypto_unsupported|bug_report_text": {
+        "en": "My session is blocked on the \"This device cannot be used\" screen: the encryption store of this device could not be migrated (legacy libolm store).",
+        "fr": "Ma session est bloquée sur l'écran « Cet appareil ne peut pas être utilisé » : le coffre de chiffrement de cet appareil n'a pas pu être migré (ancien coffre libolm)."
+    },
     "error|misconfigured": { "en": "Your Tchap is not well configured", "fr": "Votre Tchap est mal configuré" },
     "auth|reset_password|other_devices_logout_warning_1": {
         "en": "We will log you out from your devices to lock the messages stored on them. This option is usefull if you think your account has been hacked or a device has been lost.",

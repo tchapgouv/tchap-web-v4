@@ -8,6 +8,7 @@
 import React, { type JSX, type MouseEventHandler } from "react";
 import { Button, Heading, Text } from "@vector-im/compound-web";
 import SignOutIcon from "@vector-im/compound-design-tokens/assets/web/icons/sign-out";
+import SendIcon from "@vector-im/compound-design-tokens/assets/web/icons/send-solid"; // :TCHAP: legacy-crypto-unsupported-send-logs
 
 import styles from "./LegacyCryptoUnsupportedView.module.css";
 import { type ViewModel, useViewModel } from "../../core/viewmodel";
@@ -26,6 +27,9 @@ export interface LegacyCryptoUnsupportedViewSnapshot {
 export interface LegacyCryptoUnsupportedViewActions {
     /** Invoked when the sign out button is clicked. */
     onSignOutClick: MouseEventHandler<HTMLButtonElement>;
+    // :TCHAP: legacy-crypto-unsupported-send-logs - Invoked when the send logs button is clicked. The button is hidden when undefined.
+    onSendLogsClick?: MouseEventHandler<HTMLButtonElement>;
+    // end :TCHAP:
 }
 
 /** View model contract for the legacy crypto unsupported screen. */
@@ -65,9 +69,22 @@ export function LegacyCryptoUnsupportedView({ vm }: Readonly<LegacyCryptoUnsuppo
                 <Text size="lg">
                     {_t("error|legacy_crypto_unsupported|actions", { version }, { b: (t) => <strong>{t}</strong> })}
                 </Text>
-                <Button kind="destructive" Icon={SignOutIcon} onClick={vm.onSignOutClick}>
-                    {_t("action|remove_this_device")}
-                </Button>
+                {/* :TCHAP: legacy-crypto-unsupported-send-logs - send logs next to sign out, like SessionRestoreErrorDialog */}
+                {vm.onSendLogsClick ? (
+                    <div className={styles.buttons}>
+                        <Button kind="destructive" Icon={SignOutIcon} onClick={vm.onSignOutClick}>
+                            {_t("action|remove_this_device")}
+                        </Button>
+                        <Button kind="primary" Icon={SendIcon} onClick={vm.onSendLogsClick}>
+                            {_t("bug_reporting|send_logs")}
+                        </Button>
+                    </div>
+                ) : (
+                    <Button kind="destructive" Icon={SignOutIcon} onClick={vm.onSignOutClick}>
+                        {_t("action|remove_this_device")}
+                    </Button>
+                )}
+                {/* end :TCHAP: */}
             </Flex>
         </div>
     );

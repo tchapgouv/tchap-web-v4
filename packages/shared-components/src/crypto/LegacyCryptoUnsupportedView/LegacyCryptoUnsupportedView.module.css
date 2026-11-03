@@ -16,3 +16,14 @@
     max-width: 400px;
     text-align: center;
 }
+
+/* :TCHAP: legacy-crypto-unsupported-send-logs - both buttons on one line, with the same width */
+.buttons {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    gap: var(--cpd-space-4x);
+    width: max-content;
+    white-space: nowrap;
+}
+/* end :TCHAP: */
