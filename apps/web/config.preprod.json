@@ -134,7 +134,7 @@
     "tchap_desktop": {
         "deep_link_scheme": "tchap-preprod"
     },
-    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    "map_style_url": "https://openmaptiles.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
         "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",
         "api_host": "https://posthog.preprod.tchap.numerique.gouv.fr"

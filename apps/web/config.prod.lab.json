@@ -243,7 +243,7 @@
         "feature_red_list": ["*"],
         "feature_qrcode_login": []
     },
-    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    "map_style_url": "https://openmaptiles.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
         "project_api_key": "phc_gm2O25mu8NTQtKpozdoVwZCixWqdq7PUHLLjDNDzVIe",
         "api_host": "https://posthog.tchap.numerique.gouv.fr"
