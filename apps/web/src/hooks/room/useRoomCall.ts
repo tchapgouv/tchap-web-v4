@@ -41,11 +41,7 @@ import { useScopedRoomContext } from "../../contexts/ScopedRoomContext";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 import { SDKContext } from "../../contexts/SDKContext.ts";
-<<<<<<< HEAD
-=======
-import SdkConfig from "../../SdkConfig";
 import { ensureSlotOpen } from "../../utils/room/rtcSlot";
->>>>>>> v1.12.33
 
 const logger = rootLogger.getChild("useRoomCall");
 

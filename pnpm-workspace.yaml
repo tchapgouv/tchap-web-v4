@@ -26,14 +26,9 @@ catalog:
     "playwright-core": 1.64.0
     serve: 14.2.6
     # Compound
-<<<<<<< HEAD
-    # :TCHAP: "@vector-im/compound-design-tokens": 10.2.1
+    # :TCHAP: "@vector-im/compound-design-tokens": 11.2.0
     "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
-    "@vector-im/compound-web": 10.1.0
-=======
-    "@vector-im/compound-design-tokens": 11.2.0
     "@vector-im/compound-web": 10.3.1
->>>>>>> v1.12.33
     # i18n
     matrix-web-i18n: 3.6.0
     # emojibase
@@ -133,22 +128,11 @@ patchedDependencies:
     # Workaround for scroll anchoring landing on transient placeholder rows (pending upstream)
     "@tanstack/virtual-core@3": patches/@tanstack__virtual-core@3.patch
     # Tweaks to record screenshot diffs as vitest artifacts
-<<<<<<< HEAD
-    vitest-plugin-vis@5.1.1: patches/vitest-plugin-vis@5.1.1.patch
-    storybook-addon-vis@4.2.3: patches/storybook-addon-vis@4.2.3.patch
+    vitest-plugin-vis@5: patches/vitest-plugin-vis@5.1.5.patch
+    storybook-addon-vis@4: patches/storybook-addon-vis@4.3.1.patch
     # :TCHAP: simple squarer button for compound-web, workaround because error with pnpm x patch-package, normal tchap patch system
     "@vector-im/compound-web": patches/@vector-im__compound-web.patch
     '@vector-im/compound-web@9.9.0': patches/@vector-im__compound-web@9.9.0.patch
-
-peerDependencyRules:
-  allowedVersions:
-    react: "19"
-    react-dom: "19"
-    eslint: "8"
-    vite: "8"
-=======
-    vitest-plugin-vis@5: patches/vitest-plugin-vis@5.1.5.patch
-    storybook-addon-vis@4: patches/storybook-addon-vis@4.3.1.patch
 
 peerDependencyRules:
     allowedVersions:
@@ -157,7 +141,6 @@ peerDependencyRules:
         eslint: "8"
         vite: "8"
         nx: "23"
->>>>>>> v1.12.33
 
 allowedDeprecatedVersions:
   eslint: "8"
@@ -239,21 +222,7 @@ overrides:
     "@vector-im/compound-design-tokens": github:tchapgouv/compound-design-tokens#adb175d69a4fff4040268387da125928c4682c15
 
 minimumReleaseAgeExclude:
-<<<<<<< HEAD
-  - "matrix-js-sdk"
-  - "@matrix-org/*"
-  - "@vector-im/*"
-  - "@element-hq/*"
-  # Temporary for testing purposes
-  - "@typescript/*"
-  - typescript@7.0.2
-  # New timeline: 3.14.8/3.17.6 carry the upstream end-anchored-prepend fix
-  # (#1237); they were freshly published so are still inside the release-age
-  # window. Revisit once the release has aged past the cutoff.
-  - "@tanstack/*"
-=======
     - "matrix-js-sdk"
     - "@matrix-org/*"
     - "@vector-im/*"
     - "@element-hq/*"
->>>>>>> v1.12.33

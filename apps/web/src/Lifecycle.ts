@@ -885,13 +885,10 @@ async function doSetLoggedIn(
             softLogout,
         " freshLogin: " + credentials.freshLogin,
     );
-<<<<<<< HEAD
-=======
 
     // A logout which is still clearing storage would wipe the session we are about to persist
     await waitForLogoutCleanup();
 
->>>>>>> v1.12.33
     if (clearStorageEnabled) {
         await clearStorage();
     }

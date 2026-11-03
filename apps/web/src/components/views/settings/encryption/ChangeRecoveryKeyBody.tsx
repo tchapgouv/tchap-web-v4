@@ -24,6 +24,10 @@ import { EncryptionCardButtons } from "./EncryptionCardButtons";
 import { logErrorAndShowErrorDialog } from "../../../../utils/ErrorUtils.tsx";
 import { DeviceListener, RECOVERY_ACCOUNT_DATA_KEY } from "../../../../device-listener";
 import { resetKeyBackupAndWait } from "../../../../utils/crypto/resetKeyBackup";
+import Spinner from "../../elements/Spinner.tsx";
+
+import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP:
+import TchapRecoveryCodeSuccessDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapRecoveryCodeSuccessDialog.tsx"; // :TCHAP:
 
 /**
  * The possible states of the component.
@@ -85,7 +89,12 @@ export function ChangeRecoveryKeyBody({
                 <KeyPanel
                     // encodedPrivateKey is always defined, the optional typing is incorrect
                     recoveryKey={recoveryKey.encodedPrivateKey!}
-                    onConfirmClick={() => setState("confirm_key_flow")}
+                    onConfirmClick={() => {
+                        // :TCHAP: recovery-code-flow-improve
+                        void copyPlainTextToClipboard(recoveryKey.encodedPrivateKey!);
+                        // end :TCHAP:
+                        setState("confirm_key_flow");
+                    }}
                     onCancelClick={onCancelClickWrapper}
                 />
             );
@@ -101,6 +110,9 @@ export function ChangeRecoveryKeyBody({
                         const crypto = matrixClient.getCrypto();
                         if (!crypto) return onFinish();
 
+                        // :TCHAP: recovery-code-flow-improve
+                        const spinner = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
+                        // end :TCHAP:
                         try {
                             const deviceListener = DeviceListener.sharedInstance();
 
@@ -131,8 +143,15 @@ export function ChangeRecoveryKeyBody({
                             // Record the fact that the user explicitly enabled recovery.
                             await matrixClient.setAccountData(RECOVERY_ACCOUNT_DATA_KEY, { enabled: true });
 
-                            onFinish();
+                            // :TCHAP: recovery-code-flow-improve - onFinish()
+                            spinner.close();
+                            const { finished } = Modal.createDialog(TchapRecoveryCodeSuccessDialog);
+                            void finished.then(() => onFinish());
+                            // end :TCHAP:
                         } catch (e) {
+                            // :TCHAP: recovery-code-flow-improve
+                            spinner.close();
+                            // end :TCHAP:
                             logErrorAndShowErrorDialog("Failed to set up secret storage", e);
                         }
                     }}
@@ -241,7 +260,8 @@ function KeyPanel({ recoveryKey, onConfirmClick, onCancelClick }: KeyPanelProps)
                 </IconButton>
             </div>
             <EncryptionCardButtons>
-                <Button onClick={onConfirmClick}>{_t("action|continue")}</Button>
+                {/* :TCHAP: <Button onClick={onConfirmClick}>{_t("action|continue")}</Button> */}
+                <Button onClick={onConfirmClick}>{_t("action|copy_and_continue")}</Button>
                 <Button kind="tertiary" onClick={onCancelClick}>
                     {_t("action|cancel")}
                 </Button>

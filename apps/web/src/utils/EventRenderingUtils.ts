@@ -19,13 +19,9 @@ import {
 import SettingsStore from "../settings/SettingsStore";
 import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory } from "../events/EventTileFactory";
 import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
-<<<<<<< HEAD
-import { ElementCallEventType, ElementCallMemberEventType } from "../call-types";
-=======
 import { ElementCallEventType } from "../call-types";
 import { ModuleApi } from "../modules/Api";
 import type { MessageRenderInfo } from "../modules/customComponentApi";
->>>>>>> v1.12.33
 
 const calcIsInfoMessage = (
     eventType: EventType | string,

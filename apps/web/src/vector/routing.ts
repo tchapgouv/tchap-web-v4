@@ -58,28 +58,24 @@ function onHashChange(ev: HashChangeEvent): void {
         pendingLocationHashes = pendingLocationHashes.slice(pendingIndex + 1);
         return;
     }
-<<<<<<< HEAD
 
     // :TCHAP:
     // When MAS is activated we don't want to display login or register page
 
-    if (["#/login"].includes(window.location.hash)) {
+    if (["#/login"].includes(location.hash)) {
         logger.log("onHashChange MAS active, replacing with email-precheck-sso");
         window.location.replace("#/email-precheck-sso");
         routeUrl(window.location);
         return;
     }
-    if (["#/register"].includes(window.location.hash)) {
+    if (["#/register"].includes(location.hash)) {
         logger.log("onHashChange MAS active, replacing with email-precheck-sso?createAccount=true");
         window.location.replace("#/email-precheck-sso?createAccount=true");
         routeUrl(window.location);
         return;
     }
     // end :TCHAP:
-    routeUrl(window.location);
-=======
     routeUrl(location);
->>>>>>> v1.12.33
 }
 
 // This will be called whenever the SDK changes screens,

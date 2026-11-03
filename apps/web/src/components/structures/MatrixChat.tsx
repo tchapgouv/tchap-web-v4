@@ -2403,14 +2403,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             case Views.LOCK_STOLEN:
                 return <SessionLockStolenView />;
-<<<<<<< HEAD
             // :TCHAP: sso-agentconnect-flow
             case Views.EMAIL_PRECHECK_SSO:
                 //propagate onServerConfigChange
                 return(
                     <EmailVerificationPage
                         onServerConfigChange={this.onServerConfigChange}
-=======
+                    />
+                );
             case Views.LEGACY_CRYPTO_UNSUPPORTED:
                 return (
                     <LegacyCryptoUnsupportedView
@@ -2420,7 +2420,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                 brand: SdkConfig.get().brand,
                             })
                         }
->>>>>>> v1.12.33
                     />
                 );
         }

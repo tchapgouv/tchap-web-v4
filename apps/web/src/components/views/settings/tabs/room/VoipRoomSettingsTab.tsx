@@ -86,12 +86,7 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ room }) => {
                 }
             }
         },
-<<<<<<< HEAD
-        // [room.client, room.roomId, content, isPublic], // :TCHAP:
-        [room.client, room.roomId, content], 
-=======
         [room, content, isPublic, maySend, matrixRtcSlotsEnabled],
->>>>>>> v1.12.33
     );
 
     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;

@@ -29,7 +29,7 @@ import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
 import ExternalLink from "../elements/ExternalLink";
 import TchapUrls from "~tchap-web/src/tchap/util/TchapUrls";
-import InfoIcon from "@vector-im/compound-design-tokens/icons/info.svg"; // :TCHAP:
+import InfoIconSvg from "@vector-im/compound-design-tokens/icons/info.svg"; // :TCHAP:
 import { BackupStatus, useKeyBackupStatus } from "../../../hooks/useKeyBackupStatus";
 import { useHasOtherVerifiedDevices } from "../../../hooks/useHasOtherVerifiedDevices";
 import { EncryptionCard } from "../settings/encryption/EncryptionCard";
@@ -194,15 +194,15 @@ function ConfirmLogout(props: SubComponentProps): JSX.Element {
     return (
         <QuestionDialog
             hasCancelButton={true}
-<<<<<<< HEAD
-            title={_t("action|sign_out")}
-            // :TCHAP: warning-logout-dialog description={_t("auth|logout_dialog|description")}
-            description={_t("auth|logout_dialog|description",  {},
+            danger={true}
+            title={_t("auth|logout_dialog|description")}
+            // :TCHAP: warning-logout-dialog description={_t("auth|logout_dialog|keep_access_description")}
+            description={_t("auth|logout_dialog|keep_access_description",  {},
                 {
                     div: (text) => (
                         <div style={{ marginTop: "10px", color: "red", display: "flex", alignItems: "center" }}>
                                 <img
-                                src={InfoIcon}
+                                src={InfoIconSvg}
                                 alt="info"
                                 style={{
                                     width: "16px",
@@ -222,11 +222,6 @@ function ConfirmLogout(props: SubComponentProps): JSX.Element {
                 })}
             // end :TCHAP:
 
-=======
-            danger={true}
-            title={_t("auth|logout_dialog|description")}
-            description={_t("auth|logout_dialog|keep_access_description")}
->>>>>>> v1.12.33
             button={_t("action|sign_out")}
             onFinished={props.onFinished}
         />

@@ -138,17 +138,15 @@ enum Views {
     // Another instance of the application has started up. We just show an error page.
     LOCK_STOLEN,
 
-<<<<<<< HEAD
     // :TCHAP: sso-agentconnect-flow email precheck screen from proconnect login
-    EMAIL_PRECHECK_SSO
-=======
+    EMAIL_PRECHECK_SSO,
+
     /**
      * We found a crypto store created by the legacy (libolm) crypto stack which was never migrated
      * to the rust stack, and which we can no longer migrate. We just show an error page inviting
      * the user to sign out and back in.
      */
     LEGACY_CRYPTO_UNSUPPORTED,
->>>>>>> v1.12.33
 }
 
 export default Views;

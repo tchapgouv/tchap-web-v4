@@ -82,8 +82,7 @@ export function ResetIdentityBody({ onCancelClick, onReset, variant }: ResetIden
                     <VisualListItem Icon={CheckCircle} success={true}>
                         {_t("settings|encryption|advanced|breadcrumb_first_description")}
                     </VisualListItem>
-<<<<<<< HEAD
-                    <VisualListItem Icon={InfoIcon}>
+                    <VisualListItem Icon={VisibilityOff}>
                         {/* :TCHAP: {_t("settings|encryption|advanced|breadcrumb_second_description")} */}
                         {_t("settings|encryption|advanced|breadcrumb_second_description", {}, {
                             a : (sub) => (
@@ -92,10 +91,6 @@ export function ResetIdentityBody({ onCancelClick, onReset, variant }: ResetIden
                                 </ExternalLink>)
                             }
                         )}
-=======
-                    <VisualListItem Icon={VisibilityOff}>
-                        {_t("settings|encryption|advanced|breadcrumb_second_description")}
->>>>>>> v1.12.33
                     </VisualListItem>
                     <VisualListItem Icon={Group}>
                         {_t("settings|encryption|advanced|breadcrumb_third_description")}
