@@ -58,7 +58,7 @@ export function RecoveryPanel({ onChangeRecoveryKeyClick }: RecoveryPanelProps):
         case "missing_recovery_key":
             content = (
                 <Button size="md" kind="primary" Icon={KeyIcon} onClick={() => onChangeRecoveryKeyClick(true)}>
-                    {_t("settings|encryption|recovery|set_up_recovery")}
+                    {_t("encryption|create_recovery_key")}
                 </Button>
             );
             break;
@@ -71,6 +71,7 @@ export function RecoveryPanel({ onChangeRecoveryKeyClick }: RecoveryPanelProps):
     }
 
     return (
+<<<<<<< HEAD
         // :TCHAP: encryption-panel-recovery-code
         // <SettingsSection
         //     legacy={false}
@@ -86,6 +87,19 @@ export function RecoveryPanel({ onChangeRecoveryKeyClick }: RecoveryPanelProps):
         //     {content}
         // </SettingsSection>
         <>
+=======
+        <SettingsSection
+            legacy={false}
+            heading={
+                <SettingsHeader
+                    hasRecommendedTag={isMissingRecoveryKey}
+                    label={_t("settings|encryption|recovery|title")}
+                />
+            }
+            subHeading={_t("encryption|recovery_key_description")}
+            data-testid="recoveryPanel"
+        >
+>>>>>>> v1.12.33
             {content}
         </>
     );

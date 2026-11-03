@@ -6,23 +6,12 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-import React, { type JSX, type MouseEventHandler, useCallback, useState } from "react";
-import {
-    Breadcrumb,
-    Button,
-    ErrorMessage,
-    Field,
-    IconButton,
-    Label,
-    PasswordControl,
-    Root,
-    Text,
-} from "@vector-im/compound-web";
-import CopyIcon from "@vector-im/compound-design-tokens/assets/web/icons/copy";
-import KeyIcon from "@vector-im/compound-design-tokens/assets/web/icons/key-solid";
+import React, { type ComponentProps, type JSX, useCallback } from "react";
+import { Breadcrumb } from "@vector-im/compound-web";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
+<<<<<<< HEAD
 import { EncryptionCard } from "./EncryptionCard";
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
 import { useAsyncMemo } from "../../../../hooks/useAsyncMemo";
@@ -37,13 +26,19 @@ import Spinner from "../../elements/Spinner.tsx";
 
 import Modal from "~tchap-web/src/Modal.tsx"; // :TCHAP:
 import TchapRecoveryCodeSuccessDialog from "~tchap-web/src/tchap/components/views/dialogs/TchapRecoveryCodeSuccessDialog.tsx"; // :TCHAP:
+=======
+import { ChangeRecoveryKeyBody } from "./ChangeRecoveryKeyBody";
+
+// Same props as the body, minus the class name, which the settings panel does not need
+type ChangeRecoveryKeyProps = Omit<ComponentProps<typeof ChangeRecoveryKeyBody>, "className">;
+>>>>>>> v1.12.33
 
 /**
- * The possible states of the component.
- * - `inform_user`: The user is informed about the recovery key.
- * - `save_key_flow`: A new generated recovery key is displayed to the user and they are asked to save it.
- * - `confirm_key_flow`: The user is asked to confirm the new recovery key.
+ * The Encryption Settings panel to set up or change the recovery key.
+ *
+ * A thin wrapper around {@link ChangeRecoveryKeyBody}, just adding breadcrumbs.
  */
+<<<<<<< HEAD
 type State = "inform_user" | "save_key_flow" | "confirm_key_flow";
 
 interface ChangeRecoveryKeyProps {
@@ -180,33 +175,35 @@ export function ChangeRecoveryKey({
             );
     }
 
+=======
+export function ChangeRecoveryKey(props: Readonly<ChangeRecoveryKeyProps>): JSX.Element {
+>>>>>>> v1.12.33
     const pages = [
         _t("settings|encryption|title"),
-        userHasRecoveryKey
+        props.userHasRecoveryKey
             ? _t("settings|encryption|recovery|change_recovery_key")
             : _t("settings|encryption|recovery|set_up_recovery"),
     ];
-    const labels = getLabels(state, userHasRecoveryKey);
+
+    const { onCancelClick } = props;
+    const onBreadcrumbClick = useCallback(() => {
+        logger.debug("ChangeRecoveryKey: user cancelled via the breadcrumbs");
+        onCancelClick();
+    }, [onCancelClick]);
 
     return (
         <>
             <Breadcrumb
                 backLabel={_t("action|back")}
-                onBackClick={onCancelClickWrapper}
+                onBackClick={onBreadcrumbClick}
                 pages={pages}
-                onPageClick={onCancelClickWrapper}
+                onPageClick={onBreadcrumbClick}
             />
-            <EncryptionCard
-                Icon={KeyIcon}
-                title={labels.title}
-                description={labels.description}
-                className="mx_ChangeRecoveryKey"
-            >
-                {content}
-            </EncryptionCard>
+            <ChangeRecoveryKeyBody {...props} />
         </>
     );
 }
+<<<<<<< HEAD
 
 type Labels = {
     /**
@@ -406,3 +403,5 @@ function KeyForm({ onCancelClick, onSubmit, recoveryKey, submitButtonLabel }: Ke
         </Root>
     );
 }
+=======
+>>>>>>> v1.12.33

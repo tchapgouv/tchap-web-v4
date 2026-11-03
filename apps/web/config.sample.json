@@ -24,8 +24,13 @@
     "disable_guests": true,
     "disable_login_language_selector": false,
     "disable_3pid_login": false,
+<<<<<<< HEAD
     "force_verification": false,
     "brand": "Tchap",
+=======
+    "force_verification": true,
+    "brand": "Element",
+>>>>>>> v1.12.33
     "integrations_ui_url": "https://scalar.vector.im/",
     "integrations_rest_url": "https://scalar.vector.im/api",
     "integrations_widgets_urls": [
@@ -84,7 +89,11 @@
         "brand": "Element Call",
         "disable": false,
         "use_exclusively": false
+<<<<<<< HEAD
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "permalink_prefix": "https://www.beta.tchap.gouv.fr"
+=======
+    }
+>>>>>>> v1.12.33
 }
