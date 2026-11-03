@@ -2672,6 +2672,7 @@ export declare function LegacyCryptoUnsupportedView({ vm }: Readonly<LegacyCrypt
 export declare interface LegacyCryptoUnsupportedViewActions {
     /** Invoked when the sign out button is clicked. */
     onSignOutClick: MouseEventHandler<HTMLButtonElement>;
+    onSendLogsClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 /** View model contract for the legacy crypto unsupported screen. */
