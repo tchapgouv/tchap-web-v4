@@ -916,8 +916,7 @@
     &.stateOwnEvent .line {
         border-end-start-radius: var(--event-tile-bubble-corner-radius);
         border-end-end-radius: 0;
-        /* :TCHAP: background: var(--event-tile-bubble-self-background); */
-        background: var(--eventbubble-self-bg);
+        background: var(--event-tile-bubble-self-background);
         margin-inline-start: auto;
     }
 
@@ -927,8 +926,7 @@
         background: transparent;
 
         :global(.mx_MediaBody) {
-            /* :TCHAP: background: var(--event-tile-bubble-self-background); */
-            background: var(--eventbubble-self-bg);
+            background: var(--event-tile-bubble-self-background);
             border-end-start-radius: var(--event-tile-bubble-corner-radius);
         }
     }
