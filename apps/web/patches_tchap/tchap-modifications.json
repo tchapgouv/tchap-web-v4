@@ -218,7 +218,7 @@
     },
     "recovery-code-flow-improve": {
         "issue": "https://github.com/tchapgouv/tchap-web-v4/issues/1365",
-        "files": ["src/components/views/settings/encryption/ChangeRecoveryKey.tsx"]
+        "files": ["src/components/views/settings/encryption/ChangeRecoveryKeyBody.tsx"]
     },
     "desktop-manage-search-messages": {
         "issue": "https://github.com/tchapgouv/tchap-desktop/issues/78",
@@ -332,6 +332,18 @@
             "src/components/views/right_panel/RoomSummaryCardView.tsx",
             "packages/shared-components/src/room/HistoryVisibilityBadge/HistoryVisibilityBadge.tsx",
             "packages/shared-components/src/room/HistoryVisibilityBadge/__snapshots__/HistoryVisibilityBadge.test.tsx.snap"
+        ]
+    },
+    "hide-check-recovery-key-button": {
+        "comment": "Hidden until element ships a real recovery key check: https://github.com/element-hq/element-web/pull/35404",
+        "files": ["src/components/views/dialogs/LogoutDialog.tsx"]
+    },
+    "legacy-crypto-unsupported-send-logs": {
+        "comment": "Element asks to downgrade to an Element version, which Tchap users cannot do: offer to send logs to support instead",
+        "files": [
+            "src/viewmodels/crypto/legacyCryptoUnsupportedViewModel.ts",
+            "packages/shared-components/src/crypto/LegacyCryptoUnsupportedView/LegacyCryptoUnsupportedView.tsx",
+            "packages/shared-components/src/crypto/LegacyCryptoUnsupportedView/LegacyCryptoUnsupportedView.module.css"
         ]
     }
 }

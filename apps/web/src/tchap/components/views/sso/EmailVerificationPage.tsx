@@ -24,11 +24,11 @@ import Field from "~tchap-web/src/components/views/elements/Field";
 import Spinner from "~tchap-web/src/components/views/elements/Spinner";
 import { ButtonEvent } from "~tchap-web/src/components/views/elements/AccessibleButton";
 import { Button } from "@vector-im/compound-web";
+import { emailLooksValid } from "@element-hq/element-web-shared-utils";
 import { ErrorMessage } from "~tchap-web/src/components/structures/ErrorMessage";
 import Login, { OAuthNativeFlow } from "~tchap-web/src/Login";
 import TchapUtils from "../../../util/TchapUtils";
 import { ValidatedServerConfig } from "~tchap-web/src/utils/ValidatedServerConfig";
-import * as Email from "~tchap-web/src/email";
 import { startOAuthLogin } from "../../../../utils/oauth/authorize";
 import { getScreenFromLocation } from "~tchap-web/src/vector/routing";
 import Modal from "~tchap-web/src/Modal";
@@ -56,7 +56,7 @@ export default function EmailVerificationPage(props: IProps) {
 
     const checkEmailField = async (fieldString: string = email): Promise<boolean> => {
         const fieldOk = await emailFieldRef.current?.validate({ allowEmpty: false, focused: true });
-        return !!fieldOk && Email.looksValid(fieldString);
+        return !!fieldOk && emailLooksValid(fieldString);
     };
 
     const displayError = (errorString: string): void => {
