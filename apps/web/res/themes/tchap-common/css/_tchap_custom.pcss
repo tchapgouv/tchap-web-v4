@@ -241,12 +241,9 @@
     padding: 15px 12px 15px;
 }
 
-.mx_EventTile[data-layout="bubble"][data-self="true"] {
-    --backgroundColor: var(--cpd-color-bg-subtle-primary);
-}
-/* not messages, but visible events */
-.mx_EventTile[data-layout="bubble"][data-self="true"].mx_EventTile_info {
-    --backgroundColor: transparent;
+/* Self bubble colour, passed to the shared EventTileView like _EventTile.pcss does */
+.mx_EventTile {
+    --event-tile-bubble-self-background: var(--cpd-color-bg-subtle-primary);
 }
 
 /* send button using ui kit blue */
