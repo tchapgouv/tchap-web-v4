@@ -640,7 +640,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 minify: false,
                 templateParameters: {
                     og_image_url: ogImageUrl,
-                    csp_extra_source: "https://integration.lasuite.numerique.gouv.fr/", // :TCHAP:
+                    csp_extra_source: 'https://lasuite.numerique.gouv.fr/widgets/support-v1.0.0.js  https://cdn.jsdelivr.net/npm/altcha@3.3.0/dist/main/altcha.min.js', // :TCHAP:
                 },
             }),
 
