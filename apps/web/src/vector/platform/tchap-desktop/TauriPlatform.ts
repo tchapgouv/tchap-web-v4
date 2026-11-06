@@ -6,6 +6,7 @@ import { check, type Update } from '@tauri-apps/plugin-updater';
 import { relaunch } from '@tauri-apps/plugin-process';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import { onOpenUrl } from '@tauri-apps/plugin-deep-link';
+import { attachLogger, LogLevel } from '@tauri-apps/plugin-log';
 import { secureRandomString } from 'matrix-js-sdk/src/randomstring';
 import { type MatrixEvent, type Room, type MatrixClient, type SSOAction, type OAuthRegistrationRequest } from 'matrix-js-sdk/src/matrix';
 import { isPermissionGranted, requestPermission } from '@tauri-apps/plugin-notification';
@@ -76,11 +77,28 @@ export default class TauriPlatform extends BasePlatform {
 
         dis.register(onAction);
 
+        // catch Tauri logs
+        this.forwardRustLogs();
+
         this.ipc.call("welcome");
 
         this.checkDeepLinkOpen();
 
         this.onDownloadFinish();
+    }
+
+    // Tauri logs -> console, recorded by rageshake
+    private forwardRustLogs(): void {
+        attachLogger(({ level, message }) => {
+            const line = `[Tauri] ${message}`;
+            if (level === LogLevel.Error) console.error(line);
+            else if (level === LogLevel.Warn) console.warn(line);
+            else if (level === LogLevel.Info) console.info(line);
+            else console.debug(line);
+        })
+            // Not beforeunload: it can be cancelled (upload, call, export in progress)
+            .then((detach) => window.addEventListener("pagehide", detach, { once: true }))
+            .catch((e) => logger.warn("[Tauri] Cannot forward Rust logs", e));
     }
 
     public onDownloadFinish(): void {
