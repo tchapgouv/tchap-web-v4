@@ -77,8 +77,7 @@ export default class TauriPlatform extends BasePlatform {
 
         dis.register(onAction);
 
-        // catch Tauri logs
-        this.forwardRustLogs();
+        this.forwardTauriLogs();
 
         this.ipc.call("welcome");
 
@@ -88,7 +87,7 @@ export default class TauriPlatform extends BasePlatform {
     }
 
     // Tauri logs -> console, recorded by rageshake
-    private forwardRustLogs(): void {
+    private forwardTauriLogs(): void {
         attachLogger(({ level, message }) => {
             const line = `[Tauri] ${message}`;
             if (level === LogLevel.Error) console.error(line);
@@ -96,9 +95,9 @@ export default class TauriPlatform extends BasePlatform {
             else if (level === LogLevel.Info) console.info(line);
             else console.debug(line);
         })
-            // Not beforeunload: it can be cancelled (upload, call, export in progress)
+            // Not beforeunload: it can be cancelled
             .then((detach) => window.addEventListener("pagehide", detach, { once: true }))
-            .catch((e) => logger.warn("[Tauri] Cannot forward Rust logs", e));
+            .catch((e) => console.warn("[Tauri] Cannot forward Tauri logs", e));
     }
 
     public onDownloadFinish(): void {
