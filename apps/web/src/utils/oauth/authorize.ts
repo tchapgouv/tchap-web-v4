@@ -6,14 +6,16 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { OAuth2, OAuth2Error, type ValidatedAuthMetadata } from "matrix-js-sdk/src/matrix";
+import { type MatrixClient, OAuth2, OAuth2Error, type ValidatedAuthMetadata } from "matrix-js-sdk/src/matrix";
 import { secureRandomString } from "matrix-js-sdk/src/randomstring";
 
 import { OAuthClientError } from "./error";
 import PlatformPeg from "../../PlatformPeg";
 import { type URLParams } from "../../vector/url_utils.ts";
-import { getRedirectUrl, loadAuthContext, storeAuthContext } from "./persistOAuthSettings.ts";
+import { getRedirectUrl, getStoredOAuthClientId, loadAuthContext, storeAuthContext } from "./persistOAuthSettings.ts";
 import type TauriPlatform from "~tchap-web/src/vector/platform/tchap-desktop/TauriPlatform.ts";
+
+import { tchapCreateSignoutRequest } from "~tchap-web/src/tchap/util/TchapSignoutRequest.ts";
 
 const RESPONSE_MODE = "fragment";
 
@@ -144,13 +146,19 @@ export const completeOAuthLogin = async (
 };
 
 // :TCHAP: oidc-logout - logout from MAS TODO
-// export const createSignoutRequest = async (accessToken?: string, refreshToken?: string): Promise<string> => {
-//     const context = loadAuthContext();
-//     const oauth = await new OAuth2(context!.metadata, context!.authContext)
-//     oauth.
-//     return client.createSignoutRequest({
-//         id_token_hint: idToken,
-//         post_logout_redirect_uri: PlatformPeg.get()!.getOAuthCallbackUrl().href
-//     })
-// }
-// end :TCHAP: 
+export const createSignoutRequest = async (client: MatrixClient): Promise<string> => {
+    const metadata = await client.getAuthMetadata();
+    // const authClient = new IdentityAuthClient(metadata.issuer);
+    // const idAccessToken = await authClient.registerForToken(false);
+    const { access_token: idAccessToken } = await client.getOpenIdToken();
+    console.log("**** metadata ", metadata);
+    console.log("**** idAccessToken ", idAccessToken);
+
+    return tchapCreateSignoutRequest({
+        url: metadata.end_session_endpoint,
+        client_id: getStoredOAuthClientId(),
+        id_token_hint: idAccessToken,
+        post_logout_redirect_uri: PlatformPeg.get()!.getOAuthCallbackUrl().href
+    })
+}
+// end :TCHAP:

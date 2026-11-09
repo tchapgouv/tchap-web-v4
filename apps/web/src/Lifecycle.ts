@@ -48,7 +48,7 @@ import { Action } from "./dispatcher/actions";
 import { type OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SDKContextClass } from "./contexts/SDKContextClass";
 import { messageForLoginError } from "./utils/ErrorUtils";
-import { completeOAuthLogin, type CompleteOAuthLoginResponse } from "./utils/oauth/authorize";
+import { completeOAuthLogin, createSignoutRequest, type CompleteOAuthLoginResponse } from "./utils/oauth/authorize";
 import { getOAuthErrorMessage } from "./utils/oauth/error";
 import { getStoredOAuthClientId, persistOAuthClientId } from "./utils/oauth/persistOAuthSettings";
 import {
@@ -452,6 +452,7 @@ async function loadOrCreatePickleKey(credentials: IMatrixClientCreds): Promise<s
  */
 async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): Promise<void> {
     // :TCHAP: add delegatedLoginSuccess await clearStorage({ delegatedLoginSuccess: true });
+    console.log("**** credentials",  credentials);
     await clearStorage({ delegatedLoginSuccess: true });
     // SSO does not go through setLoggedIn so we need to load/create the pickle key here too
     credentials.pickleKey = await loadOrCreatePickleKey(credentials);
@@ -993,6 +994,9 @@ export async function logout(): Promise<void> {
 
     PosthogAnalytics.instance.logout();
 
+    // :TCHAP:
+    const url = await createSignoutRequest(client);
+    console.log("**** url", url);
     if (client.isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
@@ -1006,6 +1010,7 @@ export async function logout(): Promise<void> {
 
     try {
         await client.logout(true);
+        window.location.href = url;
     } catch (err) {
         logger.warn("Failed to call logout API: token will not be invalidated", err);
     }
