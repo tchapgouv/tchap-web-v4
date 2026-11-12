@@ -134,7 +134,7 @@
     "tchap_desktop": {
         "deep_link_scheme": "tchap-preprod"
     },
-    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    "map_style_url": "https://openmaptiles.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {
         "project_api_key": "phc_yf5yr3PrgiUTZMZpSmUlR6hdtqAejwhcUMQGsK8Nx5w",
         "api_host": "https://posthog.preprod.tchap.numerique.gouv.fr"
@@ -144,5 +144,9 @@
         "use_exclusively": true
     },
     "logout_redirect_url": "#/welcome",
-    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json"
+    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json",
+    "sentry": {
+        "dsn": "https://30cfdd988b77af60c26730c06a4906b5@matrix.i.tchap.gouv.fr/sentry/1",
+        "environment": "preprod-web"
+    }
 }
