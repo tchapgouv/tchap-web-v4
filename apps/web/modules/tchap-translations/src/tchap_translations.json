@@ -15,17 +15,9 @@
         "en": "Allow access to this room to all users, even outside \"%(domain)s\" domain",
         "fr": "Autoriser l'accès à tous les utilisateurs, même ceux qui ne sont pas membres du domaine \"%(domain)s\""
     },
-    "Allow external users to join this room": {
-        "en": "Allow external users to join this room",
-        "fr": "Autoriser les externes à rejoindre ce salon"
-    },
     "An email has been sent to you. Click on the link it contains, click below.": {
         "en": "An email has been sent to you. Its title is : \"Renew your Tchap account\" Once you’ve followed the link it contains, click on the button \"Continue\".",
         "fr": "Un email vous a été envoyé pour renouveler votre compte. Une fois que vous aurez suivi le lien qu'il contient, cliquez sur le bouton \"Continuer\"."
-    },
-    "Are you sure you want to allow the externals to join this room ?": {
-        "en": "Are you sure you want to allow the externals to join this room ?",
-        "fr": "Voulez-vous vraiment autoriser l’accès aux externes à ce salon ?"
     },
     "restore_key_backup_dialog|recovery_key_mismatch_description": {
         "en": "Please try again with your verification code.",
@@ -188,7 +180,6 @@
         "en": "Your Tchap account has expired",
         "fr": "Votre compte Tchap a expiré"
     },
-    "This action is irreversible.": { "en": "This action is irreversible.", "fr": "Cette action est irréversible." },
     "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.": {
         "en": "This file will be protected by a password, which will be asked next time you log in, when you will import the keys to unlock your messages.",
         "fr": "Ce fichier sera protégé par un mot de passe, qui vous sera demandé à votre prochaine connexion, lorsque vous importerez les clés pour déverrouiller vos messages."
