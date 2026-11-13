@@ -90,14 +90,14 @@ export default class TauriPlatform extends BasePlatform {
     private forwardTauriLogs(): void {
         attachLogger(({ level, message }) => {
             const line = `[Tauri] ${message}`;
-            if (level === LogLevel.Error) console.error(line);
-            else if (level === LogLevel.Warn) console.warn(line);
-            else if (level === LogLevel.Info) console.info(line);
-            else console.debug(line);
+            if (level === LogLevel.Error) logger.error(line);
+            else if (level === LogLevel.Warn) logger.warn(line);
+            else if (level === LogLevel.Info) logger.info(line);
+            else logger.debug(line);
         })
             // Not beforeunload: it can be cancelled
             .then((detach) => window.addEventListener("pagehide", detach, { once: true }))
-            .catch((e) => console.warn("[Tauri] Cannot forward Tauri logs", e));
+            .catch((e) => logger.warn("[Tauri] Cannot forward Tauri logs", e));
     }
 
     public onDownloadFinish(): void {
@@ -105,8 +105,6 @@ export default class TauriPlatform extends BasePlatform {
             const path = event.payload as string;
             // Extract filename from path (works for Windows, Linux, macOS)
             const filename = path.split(/[/\\]/).pop() || path;
-            console.log("*** [Tauri] download finish", event);
-            console.log("*** [Tauri] download finish filename", filename);
             // Open the confirmation modal directly from tauri
             this.ipc.call("user_download_action", { filename });
         });
@@ -114,7 +112,7 @@ export default class TauriPlatform extends BasePlatform {
 
     public async checkDeepLinkOpen(): Promise<void> {
         await onOpenUrl((urls) => {
-            console.log('*** [Tauri] deep link:', urls)
+            logger.info('*** [Tauri] deep link:', urls)
             if (urls[0]) {
                 const url = new URL(urls[0]);
                 // When coming back from UIA reset cross signing action
@@ -125,7 +123,6 @@ export default class TauriPlatform extends BasePlatform {
 
                 const parsedParams = parseAppUrl(url);
 
-                console.log('*** [Tauri] deeplin params:', parsedParams.params);
                 // callback return from sso connexion
                 if (parsedParams.params.legacy_sso) window.location.replace(`/?loginToken=${parsedParams.params.legacy_sso.loginToken}`);
                 // note : removing the no_universal_links in this case, freeze the app.
@@ -138,21 +135,21 @@ export default class TauriPlatform extends BasePlatform {
         showUpdate: (currentVersion: string, mostRecentVersion: string) => void,
         showNoUpdate?: () => void,
     ): Promise<UpdateStatus> => {
-        console.log("[PollForUpdate] checking an update");
+        logger.info("[PollForUpdate] checking an update");
         return check().then(
             (update: Update | null) => {
                 if(update) {
-                console.log("[PollForUpdate] Update found", update);
+                logger.info("[PollForUpdate] Update found", update);
                     const mostRecentVersion = update.version;
                     if (this.shouldShowUpdate(mostRecentVersion)) {
-                        console.log("Update available to " + mostRecentVersion + ", will notify user");
+                        logger.info("Update available to " + mostRecentVersion + ", will notify user");
                         showUpdate(update.currentVersion, mostRecentVersion);
                     } else {
-                        console.log("Update available to " + mostRecentVersion + " but won't be shown");
+                        logger.info("Update available to " + mostRecentVersion + " but won't be shown");
                     }
                     return { status: UpdateCheckStatus.Ready };
                 } else {
-                    console.log("No update available");
+                    logger.info("No update available");
                     showNoUpdate?.();
                 }
 
@@ -169,7 +166,6 @@ export default class TauriPlatform extends BasePlatform {
     }
 
     public startUpdater(): void {
-        console.log("Starting the updater for Tauri");
         setInterval(() => this.pollForUpdate(showUpdateToast, hideUpdateToast), POKE_RATE_MS);
     }
 
@@ -225,7 +221,6 @@ export default class TauriPlatform extends BasePlatform {
     // Used by manual update button in setting
     public async canSelfUpdate(): Promise<boolean> {
         const canUpdate = await this.ipc.call("can_self_update");
-        console.log('*** [Tauri] canUpdate', Boolean(canUpdate));
         return Boolean(canUpdate);
     }
 
@@ -261,7 +256,8 @@ export default class TauriPlatform extends BasePlatform {
             // Read a record from store
             const value = await tauriSecureStorage?.getItem(key);
             return value;
-        } catch {
+        } catch(e) {
+            logger.error("[Tauri] could not get pickle key", e);
             // if we can't connect to the password storage, assume there's no
             // pickle key
             return null;
@@ -277,7 +273,7 @@ export default class TauriPlatform extends BasePlatform {
             await tauriSecureStorage.createItem(key, value);
             return value;
         } catch(e) {
-            console.error("[Tauri] could not create pickle key", e);
+            logger.error("[Tauri] could not create pickle key", e);
             // if we can't connect to the password storage, assume there's no
             // pickle key
             return null;
@@ -324,7 +320,6 @@ export default class TauriPlatform extends BasePlatform {
         const scheme = SdkConfig.get().tchap_desktop.deep_link_scheme;
         url.protocol = scheme;
         // Trim the double slash into a single slash to comply with https://datatracker.ietf.org/doc/html/rfc8252#section-7.1
-        console.log("**** url", url)
         url.href = url.href.replace(/^https?/, scheme);
         if (url.href.startsWith(`${url.protocol}//`)) {
             url.href = url.href.replace("://", ":/");
@@ -434,7 +429,7 @@ export default class TauriPlatform extends BasePlatform {
             return badgePath
         }
 
-        console.log("[Tauri plaform] set notification badge count", count);
+        logger.info("[Tauri plaform] set notification badge count", count);
         // From tauri doc, to remove the badge, the setbadge count needs to be undefined
         const notifCount = !count || count == 0 ? undefined : count;
 
@@ -501,7 +496,7 @@ export default class TauriPlatform extends BasePlatform {
                 Modal.createDialog(Spinner, { message: _t("auth|desktop_waiting_sso")});
             },
             (rejected) => {
-                console.log("rejected", rejected);
+                logger.error("rejected", rejected);
             }
         );;
     }
