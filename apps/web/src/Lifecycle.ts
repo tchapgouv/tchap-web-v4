@@ -1015,10 +1015,14 @@ export async function logout(): Promise<void> {
     void PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
 
     try {
-        await client.logout(true);
         // :TCHAP:
-        if (signoutRequestUrl) window.location.href = signoutRequestUrl;
+        if (signoutRequestUrl) {
+            await fetch(signoutRequestUrl, { credentials: "include", mode: "no-cors" }).catch((err) =>
+                logger.warn("Failed to logout from MAS", err),
+            );
+        }
         // end :TCHAP:
+        await client.logout(true);
     } catch (err) {
         logger.warn("Failed to call logout API: token will not be invalidated", err);
     }
