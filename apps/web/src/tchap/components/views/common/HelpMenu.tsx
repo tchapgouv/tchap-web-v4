@@ -48,12 +48,6 @@ export const HelpButtonComponent = (): JSX.Element => {
             script.async = true
             document.body.appendChild(script)
         }
-
-        return () => {
-            if(window._lasuite_widget) {
-                window._lasuite_widget.push(['support', 'close'])
-            }
-        }
     }, [updateThreepids]);
     
     const supportButtonClick = () => {
@@ -80,7 +74,6 @@ export const HelpButtonComponent = (): JSX.Element => {
 
     return (
         <IconizedContextMenuOption
-            id="lasuite-widget-support-root"
             icon={<ChatIcon />}
             label={_t("quick_faq|contact")}
             aria-controls="lasuite-widget-support-root"

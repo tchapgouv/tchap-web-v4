@@ -241,7 +241,8 @@
             "agent.ssi.tchap.gouv.fr"
         ],
         "feature_red_list": ["*"],
-        "feature_qrcode_login": []
+        "feature_qrcode_login": [],
+        "new_support_tool": []
     },
     "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
     "posthog": {

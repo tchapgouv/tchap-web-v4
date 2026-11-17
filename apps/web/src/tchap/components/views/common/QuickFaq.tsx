@@ -19,6 +19,7 @@ import {
     InfoIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { HelpButtonComponent } from "./HelpMenu";
+import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
 
 const QuickFaqButton: React.FC<{
     isPanelCollapsed: boolean;
@@ -43,7 +44,15 @@ const QuickFaqButton: React.FC<{
                             TchapUrls.openHelper("https://www.tchap.gouv.fr/faq");
                         }}
                     />
-                    <HelpButtonComponent />
+                    { TchapUIFeature.isFeatureActiveForHomeserver("new_support_tool") ? 
+                        <HelpButtonComponent />
+                        : <IconizedContextMenuOption
+                        icon={<ChatIcon />}
+                        label={_t("quick_faq|contact")}
+                        onClick={(e) => {
+                            TchapUrls.openHelper("mailto:support@tchap.beta.gouv.fr");
+                        }}
+                    />}
                     <IconizedContextMenuOption
                         icon={<HomeIcon />}
                         label={_t("quick_faq|guides")}

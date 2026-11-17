@@ -34,6 +34,7 @@ Tchap is a web app that allows you to chat through the matrix protocol for the F
     - feature_red_list: Activate the option for red list
 - tchap_desktop:
     - "deep_link_scheme": Determine the value of the scheme depending on the environment, used by tchap-desktop
+    - new_support_tool: activate or not the new support tool, wiill display the correct form dialog
 
 ## File structures
 - apps/web/modules -> used for translation, old element module system
