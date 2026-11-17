@@ -167,7 +167,7 @@ export default function EmailVerificationPage(props: IProps) {
             <AuthBody>
                 <section className="tc-verification-page_header">
                     <div className="tc-verification-page_header_img">
-                        <img src="/themes/tchap/img/logos/tchap-logo.svg" alt="" width="64" height="64"></img>
+                        <img src="themes/tchap/img/logos/tchap-logo.svg" alt="" width="64" height="64"></img>
                     </div>
                     <h1>{_t("auth|email_verification_title")}</h1>
                     <p> {_t("auth|email_verification_description")} </p>

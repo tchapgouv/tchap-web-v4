@@ -18,12 +18,12 @@ export const TchapHeader: React.FC = () => {
                             </div>
                             <div className="fr-header__service">
                                 <a
-                                    href="/#/welcome"
+                                    href="#/welcome"
                                     title="Accueil - Tchap - DINUM"
                                     className="lasuite-header__service-link"
                                 >
                                     <img
-                                        src="/themes/tchap/img/logos/tchap-logo.svg"
+                                        src="themes/tchap/img/logos/tchap-logo.svg"
                                         alt=""
                                         className="r-responsive-img"
                                         width="32"

@@ -253,7 +253,7 @@
         "use_exclusively": true
     },
     "logout_redirect_url": "#/welcome",
-    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json",
+    "custom_translations_url": "modules/tchap-translations/tchap_translations.json",
     "sentry": {
         "dsn": "https://b2211480868e818c15b6b5623d2b1069@matrix.agent.dinum.tchap.gouv.fr/sentry/1",
         "environment": "prod-web"
