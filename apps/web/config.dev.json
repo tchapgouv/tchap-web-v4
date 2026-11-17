@@ -18,6 +18,10 @@
             "server_name": "Agents 2"
         },
         {
+            "base_url": "https://matrix.dev03.tchap.incubateur.net",
+            "server_name": "Agents 3"
+        },
+        {
             "base_url": "https://matrix.ext01.tchap.incubateur.net",
             "server_name": "Externes"
         }
@@ -136,7 +140,7 @@
     "tchap_desktop": {
         "deep_link_scheme": "tchap-dev"
     },
-    "map_style_url": "https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json",
+    "map_style_url": "https://openmaptiles.data.gouv.fr/styles/osm-bright/style.json",
     "element_call": {
         "brand": "Appel de groupe",
         "use_exclusively": true
@@ -146,5 +150,5 @@
         "api_host": "https://posthog.tchap.incubateur.net"
     },
     "logout_redirect_url": "#/welcome",
-    "custom_translations_url": "/modules/tchap-translations/tchap_translations.json"
+    "custom_translations_url": "modules/tchap-translations/tchap_translations.json"
 }

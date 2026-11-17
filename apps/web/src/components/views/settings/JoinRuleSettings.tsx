@@ -28,12 +28,8 @@ import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/Pr
 import SettingsStore from "../../../settings/SettingsStore";
 import LabelledCheckbox from "../elements/LabelledCheckbox";
 import { SDKContextClass } from "../../../contexts/SDKContextClass.ts";
-import { useTchapRoom } from "~tchap-web/src/tchap/util/TchapRoomHook.ts";
-import { TchapIAccessRuleEventContent, TchapRoomAccessRule, TchapRoomAccessRulesEventId, TchapRoomType } from "~tchap-web/src/tchap/@types/tchap.ts";
 import TchapRoomUtils from "~tchap-web/src/tchap/util/TchapRoomUtils.ts";
 import TchapRoomLinkAccess from "~tchap-web/src/tchap/components/views/rooms/TchapRoomLinkAccess.tsx";
-import QuestionDialog from "../dialogs/QuestionDialog.tsx";
-import { Form, SettingsToggleInput } from "@vector-im/compound-web";
 
 export interface JoinRuleSettingsProps {
     room: Room;
@@ -203,13 +199,6 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
         );
 
     // :TCHAP: join-rules-settings
-    const { currentRoomType } = useTchapRoom(room);
-    const [contentTchapAccessRule, setTchapAccessRule] = useLocalEcho<TchapIAccessRuleEventContent>(
-        () => room.currentState.getStateEvents(TchapRoomAccessRulesEventId, "")?.getContent(),
-        (content) => cli.sendStateEvent(room.roomId, TchapRoomAccessRulesEventId, content, ""),
-        onError,
-    );
-    const { rule: accessRule = undefined } = contentTchapAccessRule || {};
     // Used to hide join rule option if link is activated
     const [isShareLinkActivated, setIsLinkSharingActivated] = useState(false);
 
@@ -232,44 +221,6 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
     const renderLinkSharing = () => {
         return <TchapRoomLinkAccess room={room} onUpdateParentView={activateLinkSharingChange}></TchapRoomLinkAccess>;
     };
-    const openedToExternalUsers = accessRule === TchapRoomAccessRule.Unrestricted;
-    // should not authorize external user in forum
-    const disableOpenToExternalUsers = openedToExternalUsers || currentRoomType === TchapRoomType.Forum;
-
-    const onExternalAccessChange = async () => {
-        const { finished } = Modal.createDialog(QuestionDialog, {
-            title: _t("Allow external users to join this room"),
-            description:
-                _t("This action is irreversible.") +
-                " " +
-                _t("Are you sure you want to allow the externals to join this room ?"),
-            button: _t("action|ok"),
-        });
-        const [confirmed] = await finished;
-        if (!confirmed) return;
-        setTchapAccessRule({ ...contentTchapAccessRule, rule: TchapRoomAccessRule.Unrestricted });
-    };
-
-    const renderStandaloneExternalButton = () => {
-        return (
-            <Form.Root
-                className="tc_JoinRuleSettings_externs_switch"
-                onSubmit={(evt) => {
-                    evt.preventDefault();
-                    evt.stopPropagation();
-                }}
-            >
-                <SettingsToggleInput
-                    name="open_to_external_switch"
-                    label={_t("Allow external users to join this room")}
-                    onChange={onExternalAccessChange}
-                    checked={openedToExternalUsers}
-                    disabled={disableOpenToExternalUsers}
-                    helpMessage={_t("room_settings|security|link_sharing_caption")}
-                />
-            </Form.Root>
-        );
-    };
     // end :TCHAP:
 
     // :TCHAP: join-rules-settings - we do not permit to change the type of room, thus display only one option
@@ -290,18 +241,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
     const definitions: IDefinition<JoinRule>[] = [];
 
     if (joinRule === JoinRule.Invite) {
-        let privateRoomDescription = <div>{_t("room_settings|security|join_rule_invite_description")}</div>;
-        // :TCHAP: We could add functions in 'TchapUtils' to determine the type of room and rely on this logic to display components as we did in Android :
-        // :TCHAP: https://github.com/tchapgouv/tchap-android/blob/develop/vector/src/main/java/fr/gouv/tchap/core/utils/RoomUtils.kt#L31
-        if (accessRule) {
-            privateRoomDescription = (
-                <div>
-                    <div>{_t("room_settings|security|join_rule_invite_description")}</div>
-                    <span>{renderStandaloneExternalButton()}</span>
-                </div>
-            );
-        }
-
+        const privateRoomDescription = <div>{_t("room_settings|security|join_rule_invite_description")}</div>;
         definitions.push({
             value: JoinRule.Invite,
             label: _t("create_room|join_rule_invite"),
@@ -547,7 +487,6 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                 className="mx_JoinRuleSettings_radioButton"
             />
             )}
-            {isShareLinkActivated && renderStandaloneExternalButton()}
             {renderLinkSharing()}
         </>
         // end :TCHAP:

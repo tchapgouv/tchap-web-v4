@@ -371,7 +371,6 @@ describe("<JoinRuleSettings />", () => {
     //assert that spaces option is not here while private and public are
     const privateText = "Private (invite only)";
     const publicText = "Public";
-    const allowExternalText = "Allow external users to join this room";
     const spaceText = "Anyone in a space can find and join";
     function mkStubRoomWithInviteRule(
         roomId: string,
@@ -435,7 +434,6 @@ describe("<JoinRuleSettings />", () => {
 
         expect(screen.queryByText(publicText)).toBe(null);
         expect(screen.queryByText(privateText)).toBeDefined();
-        expect(screen.queryByText(allowExternalText)).toBe(null);
         expect(screen.queryByText(spaceText)).toBe(null);
     });
 
@@ -458,7 +456,6 @@ describe("<JoinRuleSettings />", () => {
 
         expect(screen.queryByText(publicText)).toBe(null);
         expect(screen.queryByText(privateText)).toBeDefined();
-        expect(screen.queryByText(allowExternalText)).toBeDefined();
         expect(screen.queryByText(spaceText)).toBe(null);
     });
 
@@ -478,7 +475,7 @@ describe("<JoinRuleSettings />", () => {
         expect(linkSwitch).toBeDisabled();
     });
 
-    it("should render standalone external switch when access link is activated and joinrule is invite", async () => {
+    it("should hide join rule options when access link is activated", async () => {
 
         SdkConfig.put({
             permalink_prefix: "https://tchap.gouv.fr",
@@ -525,12 +522,9 @@ describe("<JoinRuleSettings />", () => {
         // click confirm we want to activate access by link
         const okButton = screen.getByTestId("dialog-primary-button");
         await act(() => fireEvent.click(okButton));
-        // should only display room link and external switch
+        // join rule options are hidden once the link is activated
         expect(screen.queryByText(privateText)).toBe(null);
         screen.debug();
-        // should see external link switch
-        expect(screen.getByRole("switch", { name: "Allow external users to join this room" })).toBeInTheDocument();
-
         // should see copy link
         expect(screen.getByRole("button", { name: "Copy" })).toBeInTheDocument();
     });
