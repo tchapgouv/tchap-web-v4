@@ -158,6 +158,10 @@ jobs:
               id: build-and-push
               uses: docker/bake-action@018cb6412ab401ebaa809aa5f85966b74628600f # v7
               if: github.event_name != 'pull_request'
+              env:
+                  #:tchap: without this, large pushes (e.g. Element upgrade merges) break the signing step:
+                  # the provenance makes METADATA exceed the 128 KB env var limit ("Argument list too long").
+                  BUILDX_METADATA_PROVENANCE: disabled
               with:
                   source: .
                   files: |
