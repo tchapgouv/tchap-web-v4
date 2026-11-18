@@ -1308,7 +1308,6 @@
     },
     "member_list_back_action_label": "Istabas dalībnieki",
     "message_edit_dialog_title": "Ziņas labojumi",
-    "migrating_crypto": "Uzgaidiet! Mēs atjauninām %(brand)s, lai šifrēšana būtu ātrāka un uzticamāka.",
     "mobile_guide": {
         "toast_accept": "Izmantot lietotni",
         "toast_description": "%(brand)s mobilajā tīmekļa pārlūkprogrammā ir eksperimentāls. Lai iegūtu labāku pieredzi un jaunāko funkcionalitāti, izmantojiet mūsu bezmaksas mobilo lietotni.",
@@ -2864,10 +2863,6 @@
             "error_loading": "Nevar ielādēt notikumu, uz kuru tika atbildēts, jo tas vai nu neeksistē, vai arī jums nav atļaujas to skatīt.",
             "in_reply_to": "<a>Atbildē uz</a> <pill>",
             "in_reply_to_for_export": "Atbildot uz <a>šo ziņu</a>"
-        },
-        "scalar_starter_link": {
-            "dialog_description": "Jūs tiksiet novirzīts uz trešās puses vietni, lai jūs varētu autentificēt savu kontu %(integrationsUrl)s lietošanai. Vai vēlaties turpināt?",
-            "dialog_title": "Pievienot integrāciju"
         },
         "self_redaction": "Ziņa ir izdzēsta",
         "send_state_encrypting": "Ziņas šifrēšana...",
