@@ -1,0 +1,23 @@
+# Runs the minimal e2e scenario on dev01 against the pushed commit.
+name: Tchap E2E minimal
+on:
+    push:
+        branches: [develop_tchap, main]
+permissions:
+    contents: read
+jobs:
+    e2e-minimal:
+        name: E2E minimal
+        uses: tchapgouv/tchap-e2e-playwright/.github/workflows/minimal.yml@main
+        with:
+            web-ref: ${{ github.sha }}
+        secrets:
+            MAILPIT_PWD: ${{ secrets.MAILPIT_PWD }}
+            SYNAPSE_ADMIN_TOKEN: ${{ secrets.SYNAPSE_ADMIN_TOKEN }}
+            TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+            MAS_ADMIN_CLIENT_ID: ${{ secrets.MAS_ADMIN_CLIENT_ID }}
+            MAS_ADMIN_CLIENT_SECRET: ${{ secrets.MAS_ADMIN_CLIENT_SECRET }}
+            OTHER_MAS_ADMIN_CLIENT_ID: ${{ secrets.OTHER_MAS_ADMIN_CLIENT_ID }}
+            OTHER_MAS_ADMIN_SECRET: ${{ secrets.OTHER_MAS_ADMIN_SECRET }}
+            EXTERNAL_MAS_ADMIN_CLIENT_ID: ${{ secrets.EXTERNAL_MAS_ADMIN_CLIENT_ID }}
+            EXTERNAL_MAS_ADMIN_SECRET: ${{ secrets.EXTERNAL_MAS_ADMIN_SECRET }}
