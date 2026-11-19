@@ -1,0 +1,45 @@
+# Runs the e2e scenario and reports its conclusion
+# Only the conclusion and the run URL come back here
+name: Tchap E2E dispatch
+on:
+    push:
+        branches: [develop_tchap, main]
+permissions: {}
+jobs:
+    e2e:
+        name: E2E
+        runs-on: ubuntu-24.04
+        environment:
+            name: e2e-runner
+            deployment: false
+        # The App token lasts 1 hour
+        timeout-minutes: 60
+        steps:
+            - name: Get a token for the runner
+              id: app-token
+              uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+              with:
+                  client-id: ${{ vars.E2E_DISPATCH_APP_CLIENT_ID }}
+                  private-key: ${{ secrets.E2E_DISPATCH_APP_PRIVATE_KEY }}
+                  owner: tchapgouv
+                  repositories: tchap-e2e-runner
+
+            - name: Run and wait for the minimal e2e workflow
+              env:
+                  GH_TOKEN: ${{ steps.app-token.outputs.token }}
+                  REPO: tchapgouv/tchap-e2e-runner
+                  WORKFLOW: minimal.yml
+                  RUNNER_BRANCH: main
+                  E2E_BRANCH: main
+              run: |
+                  # Start the run, get its URL
+                  url=$(gh workflow run "$WORKFLOW" -R "$REPO" --ref "$RUNNER_BRANCH" -f web-ref="$GITHUB_SHA" -f e2e-ref="$E2E_BRANCH" | grep -E '/actions/runs/[0-9]+$')
+                  echo "Runner run: $url"
+                  # Run ID = end of the URL
+                  run="repos/$REPO/actions/runs/${url##*/}"
+                  # Wait for the end
+                  until [ "$(gh api "$run" --jq .status)" = completed ]; do sleep 30; done
+                  conclusion=$(gh api "$run" --jq .conclusion)
+                  echo "### E2E minimal: $conclusion ([run]($url))" >> "$GITHUB_STEP_SUMMARY"
+                  # Fail unless success
+                  [ "$conclusion" = success ]
