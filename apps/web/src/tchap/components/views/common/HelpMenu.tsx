@@ -52,7 +52,6 @@ export const HelpButtonComponent = (): JSX.Element => {
             // and will be rejected because no csp defined for this cdn
             // The manually loaded one will be used
             const scriptAltcha = document.createElement('script')
-            scriptAltcha.id = 'lasuite-support-widget'
             scriptAltcha.src = 'altcha/altcha.min.js'
             scriptAltcha.type = 'module'
             scriptAltcha.async = true
