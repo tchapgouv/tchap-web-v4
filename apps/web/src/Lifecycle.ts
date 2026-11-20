@@ -49,9 +49,9 @@ import { Action } from "./dispatcher/actions";
 import { type OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SDKContextClass } from "./contexts/SDKContextClass";
 import { messageForLoginError } from "./utils/ErrorUtils";
-import { completeOAuthLogin, type CompleteOAuthLoginResponse } from "./utils/oauth/authorize";
+import { completeOAuthLogin, createSignoutRequest, type CompleteOAuthLoginResponse } from "./utils/oauth/authorize";
 import { getOAuthErrorMessage } from "./utils/oauth/error";
-import { getStoredOAuthClientId, persistOAuthClientId } from "./utils/oauth/persistOAuthSettings";
+import { getStoredOAuthClientId, persistOAuthClientId, persistOAuthIdToken } from "./utils/oauth/persistOAuthSettings";
 import {
     ACCESS_TOKEN_NAME,
     ACCESS_TOKEN_STORAGE_KEY,
@@ -287,7 +287,8 @@ async function attemptOAuthLogin(urlParams: NonNullable<URLParams["oauth2"]>): P
     console.log("We have OAuth2 params - attempting login");
 
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId } =
+        // :TCHAP: added idToken - const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId  } =
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, idToken  } =
             await completeOAuthLogin(urlParams);
 
         await configureFromCompletedOAuthLogin({
@@ -296,6 +297,7 @@ async function attemptOAuthLogin(urlParams: NonNullable<URLParams["oauth2"]>): P
             homeserverUrl,
             identityServerUrl,
             clientId,
+            idToken
         });
 
         return true;
@@ -316,6 +318,7 @@ export async function configureFromCompletedOAuthLogin({
     homeserverUrl,
     identityServerUrl,
     clientId,
+    idToken // :TCHAP:
 }: CompleteOAuthLoginResponse): Promise<IMatrixClientCreds> {
     const {
         user_id: userId,
@@ -337,6 +340,10 @@ export async function configureFromCompletedOAuthLogin({
     await onSuccessfulDelegatedAuthLogin(credentials);
     // this needs to happen after success handler which clears storages
     persistOAuthClientId(clientId);
+
+    // :TCHAP:
+    persistOAuthIdToken(idToken);
+    // end :TCHAP:
     return credentials;
 }
 
@@ -477,6 +484,7 @@ async function loadOrCreatePickleKey(credentials: IMatrixClientCreds): Promise<s
  */
 async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): Promise<void> {
     // :TCHAP: add delegatedLoginSuccess await clearStorage({ delegatedLoginSuccess: true });
+    console.log("**** credentials",  credentials);
     await clearStorage({ delegatedLoginSuccess: true });
     // SSO does not go through setLoggedIn so we need to load/create the pickle key here too
     credentials.pickleKey = await loadOrCreatePickleKey(credentials);
@@ -1022,6 +1030,8 @@ export async function logout(): Promise<void> {
 
     PosthogAnalytics.instance.logout();
 
+    // :TCHAP:
+    const signoutRequestUrl = await createSignoutRequest(client);
     if (client.isGuest()) {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
@@ -1034,6 +1044,13 @@ export async function logout(): Promise<void> {
     void PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
 
     try {
+        // :TCHAP:
+        if (signoutRequestUrl) {
+            await fetch(signoutRequestUrl, { credentials: "include", mode: "no-cors" }).catch((err) =>
+                logger.warn("Failed to logout from MAS", err),
+            );
+        }
+        // end :TCHAP:
         await client.logout(true);
     } catch (err) {
         logger.warn("Failed to call logout API: token will not be invalidated", err);
