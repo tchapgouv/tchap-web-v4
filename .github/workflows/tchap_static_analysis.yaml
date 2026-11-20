@@ -3,7 +3,7 @@ name: Static Analysis Tchap # avoid having same name as Element workflows, it ca
 on:
     pull_request: {}
     push:
-        branches: [develop, master]
+        branches: [develop_tchap, main]
     repository_dispatch:
         types: [element-web-notify]
 env:
