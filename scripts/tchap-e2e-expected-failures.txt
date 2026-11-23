@@ -1,0 +1,164 @@
+# Baseline des échecs e2e « connus ».
+#
+# Une ligne = une sous-chaîne recherchée dans la clé d'un test échoué :
+#     <fichier du spec> :: <suites › titre du test> :: <projet>
+# Exemple :
+#     playwright/e2e/room/room.spec.ts :: Room › should send a message :: Chrome
+#
+# Les échecs dont la clé contient l'un de ces motifs sont signalés « connus » :
+# ils ne font pas échouer le run. Seuls les échecs absents de cette liste sont
+# considérés comme des régressions.
+#
+# Lignes vides et lignes commençant par « # » sont ignorées.
+playwright/e2e/app-loading/feature-detection.spec.ts :: shows error page if browser lacks Intl support :: Chrome
+playwright/e2e/app-loading/guest-registration.spec.ts :: Shows the user menu for guests :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should be correctly rendered - light theme :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should be correctly rendered - light theme with monospace font :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should be correctly rendered - high contrast theme :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should be correctly rendered - dark theme :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should play an audio file :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should support downloading an audio file :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should support replying to audio file with another audio file :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should support creating a reply chain with multiple audio files :: Chrome
+playwright/e2e/audio-player/audio-player.spec.ts :: Audio player › should be rendered, play, and support replying on a thread :: Chrome
+playwright/e2e/composer/CIDER.spec.ts :: Composer › CIDER › can send mention :: Chrome
+playwright/e2e/composer/CIDER.spec.ts :: Composer › CIDER › can paste a file :: Chrome
+playwright/e2e/composer/RTE.spec.ts :: Composer › Rich text editor › sends a message when you click send or press Enter :: Chrome
+playwright/e2e/composer/RTE.spec.ts :: Composer › Rich text editor › can write formatted text :: Chrome
+playwright/e2e/composer/RTE.spec.ts :: Composer › Rich text editor › can paste a file :: Chrome
+playwright/e2e/composer/RTE.spec.ts :: Composer › Rich text editor › can paste a file in a thread :: Chrome
+playwright/e2e/composer/RTE.spec.ts :: Composer › Rich text editor › links › create link with a forward selection :: Chrome
+playwright/e2e/composer/RTE.spec.ts :: Composer › Rich text editor › Drafts › drafts with rich and plain text :: Chrome
+playwright/e2e/crypto/backups-mas.spec.ts :: Encryption state after registration › Key backup is enabled by default :: Chrome
+playwright/e2e/crypto/backups-mas.spec.ts :: Encryption state after registration › user is prompted to set up recovery :: Chrome
+playwright/e2e/crypto/backups-mas.spec.ts :: Key backup reset from elsewhere › Key backup is disabled when reset from elsewhere :: Chrome
+playwright/e2e/crypto/complete-security.spec.ts :: Complete security › Complete Security dialog appears correctly :: Chrome
+playwright/e2e/crypto/complete-security.spec.ts :: Complete security › should go straight to the welcome screen if we have no signed device :: Chrome
+playwright/e2e/crypto/crypto.spec.ts :: Cryptography › Setting up key backup by recovery key :: Chrome
+playwright/e2e/crypto/crypto.spec.ts :: Cryptography › Can reset cross-signing keys :: Chrome
+playwright/e2e/crypto/crypto.spec.ts :: Cryptography › Key backup status updates after resetting identity :: Chrome
+playwright/e2e/crypto/decryption-failure-messages.spec.ts :: Cryptography › decryption failure messages › should handle device-relative historical messages :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › Verify device with SAS during login :: Chrome
+playwright/e2e/crypto/event-shields.spec.ts :: Cryptography › event shields › should show the correct shield on e2e events :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › No toast after verification, even if the secrets take a while to arrive :: Chrome
+playwright/e2e/crypto/crypto.spec.ts :: Cryptography › Can reset identity if previous reset was interrupted :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › Verify device with QR code during login :: Chrome
+playwright/e2e/crypto/crypto.spec.ts :: Cryptography › creating a DM should work, being e2e-encrypted / user verification :: Chrome
+playwright/e2e/crypto/event-shields.spec.ts :: Cryptography › event shields › Should show a grey padlock for a key restored from backup :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › Verify device with Security Phrase during login :: Chrome
+playwright/e2e/crypto/crypto.spec.ts :: Cryptography › should allow verification when there is no existing DM :: Chrome
+playwright/e2e/crypto/invisible-crypto.spec.ts :: Invisible cryptography › Messages fail to decrypt when sender is previously verified :: Chrome
+playwright/e2e/crypto/event-shields.spec.ts :: Cryptography › event shields › should show the correct shield on edited e2e events :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › Verify device with Recovery Key during login :: Chrome
+playwright/e2e/crypto/logout.spec.ts :: Logout tests › Ask to set up recovery on logout if not setup :: Chrome
+playwright/e2e/crypto/event-shields.spec.ts :: Cryptography › event shields › should show correct shields on events sent by devices which have since been deleted :: Chrome
+playwright/e2e/crypto/toasts.spec.ts :: Key storage out of sync toast › should prompt for recovery key if 'enter recovery key' pressed :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › With force_verification off › Verify device with Recovery Key from settings :: Chrome
+playwright/e2e/crypto/logout.spec.ts :: Logout tests › If recovery is set up remind the user to check their recovery key :: Chrome
+playwright/e2e/crypto/event-shields.spec.ts :: Cryptography › event shields › should show correct shields on events sent by users with changed identity :: Chrome
+playwright/e2e/crypto/toasts.spec.ts :: Key storage out of sync toast › should open settings to reset flow if 'forgot recovery key' pressed :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › With force_verification off › After cancelling verify with another device, I can try again #29882 :: Chrome
+playwright/e2e/crypto/logout.spec.ts :: Logout tests › Ask to set up recovery on logout even if not in encrypted room :: Chrome
+playwright/e2e/crypto/toasts.spec.ts :: 'Turn on key storage' toast › should not show toast if key storage is on :: Chrome
+playwright/e2e/crypto/device-verification.spec.ts :: Device verification › With force_verification off › Handle incoming verification request with SAS :: Chrome
+playwright/e2e/crypto/dehydration.spec.ts :: Dehydration › Verify device and reset creates dehydrated device :: Chrome
+playwright/e2e/crypto/toasts.spec.ts :: 'Turn on key storage' toast › should not show toast if key storage is off because we turned it off :: Chrome
+playwright/e2e/crypto/dehydration.spec.ts :: Dehydration › 'Create recovery key' creates dehydrated device :: Chrome
+playwright/e2e/crypto/dehydration-mas.spec.ts :: Device dehydration, on a MAS-enabled homeserver › Can read messages sent while logged out :: Chrome
+playwright/e2e/crypto/toasts.spec.ts :: 'Turn on key storage' toast › should show toast if key storage is off but account data is missing :: Chrome
+playwright/e2e/crypto/dehydration.spec.ts :: Dehydration › Reset identity during login and back up your chats re-creates dehydrated device :: Chrome
+playwright/e2e/crypto/toasts.spec.ts :: Verify this device toast › The toast is displayed if we are not verified :: Chrome
+playwright/e2e/crypto/dehydration.spec.ts :: Dehydration › 'Reset cryptographic identity' removes dehydrated device :: Chrome
+playwright/e2e/crypto/dehydration.spec.ts :: Dehydration › Can read messages sent while logged out :: Chrome
+playwright/e2e/devtools/lowbandwidth.spec.ts :: Devtools › should allow enabling low bandwidth mode :: Chrome
+playwright/e2e/editing/editing.spec.ts :: Editing › should render and interact with the message edit history dialog :: Chrome
+playwright/e2e/editing/editing.spec.ts :: Editing › should close the composer when clicking save after making a change and undoing it :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › visible when enabled › should be able to open bug report dialog via slash command :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › visible when enabled › should be able to open bug report dialog via feedback dialog :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › visible when enabled › should be able to open bug report dialog via Settings :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › hidden when disabled › should NOT be able to open bug report dialog via feedback dialog :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › hidden when disabled › should NOT be able to open bug report dialog via Settings :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › via bug report endpoint › should be able to rageshake to a URL :: Chrome
+playwright/e2e/feedback/rageshakes.spec.ts :: Rageshakes › via local download › should be able to rageshake to local download :: Chrome
+playwright/e2e/file-upload/image-upload.spec.ts :: Image Upload › should allow upload via drag and drop :: Chrome
+playwright/e2e/forgot-password/forgot-password.spec.ts :: Forgot Password › renders properly :: Chrome
+playwright/e2e/forgot-password/forgot-password.spec.ts :: Forgot Password › renders email verification dialog properly :: Chrome
+playwright/e2e/integration-manager/kick.spec.ts :: Integration Manager: Kick › should kick the target :: Chrome
+playwright/e2e/integration-manager/get-openid-token.spec.ts :: Integration Manager: Get OpenID Token › should successfully obtain an openID token :: Chrome
+playwright/e2e/integration-manager/read_events.spec.ts :: Integration Manager: Read Events › should read a state event by state key :: Chrome
+playwright/e2e/integration-manager/send_event.spec.ts :: Integration Manager: Send Event › should send a state event :: Chrome
+playwright/e2e/integration-manager/kick.spec.ts :: Integration Manager: Kick › should not kick the target if lacking permissions :: Chrome
+playwright/e2e/integration-manager/read_events.spec.ts :: Integration Manager: Read Events › should read a state event with empty state key :: Chrome
+playwright/e2e/integration-manager/send_event.spec.ts :: Integration Manager: Send Event › should send a state event with empty content :: Chrome
+playwright/e2e/integration-manager/kick.spec.ts :: Integration Manager: Kick › should no-op if the target already left :: Chrome
+playwright/e2e/integration-manager/read_events.spec.ts :: Integration Manager: Read Events › should read state events with any state key :: Chrome
+playwright/e2e/integration-manager/send_event.spec.ts :: Integration Manager: Send Event › should send a state event with empty state key :: Chrome
+playwright/e2e/integration-manager/kick.spec.ts :: Integration Manager: Kick › should no-op if the target was banned :: Chrome
+playwright/e2e/integration-manager/read_events.spec.ts :: Integration Manager: Read Events › should fail to read an event type which is not allowed :: Chrome
+playwright/e2e/integration-manager/send_event.spec.ts :: Integration Manager: Send Event › should fail to send an event type which is not allowed :: Chrome
+playwright/e2e/integration-manager/kick.spec.ts :: Integration Manager: Kick › should no-op if the target was never a room member :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list-header.spec.ts :: Header section of the room list › should render the header section :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list-filter-sort.spec.ts :: Room list filters and sort › Room list › Unread filter › unread filter should only match unread rooms that have a count when Notifications.showbold=off :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list-search.spec.ts :: Search section of the room list › should open the room directory when the search button is clicked :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list-filter-sort.spec.ts :: Room list filters and sort › Room list › Unread filter › unread filter should only match unread rooms that have an activity when Notifications.activityIsUnread=true :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list.spec.ts :: Room list › Room list › should render the room list :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list-unread-toast.spec.ts :: Room list unread activity toast › flat list › does not show a toast when the only unread room below the fold has an activity dot :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list.spec.ts :: Room list › Avatar decoration › should be a video room :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list.spec.ts :: Room list › Notification decoration › should render a message preview when enable in settings :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list.spec.ts :: Room list › Notification decoration › should render an activity decoration :: Chrome
+playwright/e2e/left-panel/room-list-panel/room-list.spec.ts :: Room list › Show people in space › should hide and show the DMs of a space when the People preference is toggled :: Chrome
+playwright/e2e/location/location.spec.ts :: Location sharing › is prompted for and can consent to live location sharing :: Chrome
+playwright/e2e/messages/messages.spec.ts :: Message url previews › should render a basic preview :: Chrome
+playwright/e2e/messages/messages.spec.ts :: Message url previews › should render a preview with a thumbnail :: Chrome
+playwright/e2e/modules/composer.spec.ts :: Composer API › should be able to select custom uploader :: Chrome
+playwright/e2e/modules/custom-component.spec.ts :: Custom Component API › basic functionality › should disallow downloading media when the allowDownloading hint is set to false :: Chrome
+playwright/e2e/modules/custom-component.spec.ts :: Custom Component API › basic functionality › should allow downloading media when the allowDownloading hint is set to true :: Chrome
+playwright/e2e/oidc/oidc-native.spec.ts :: OIDC Native › can register the oauth2 client and an account :: Chrome
+playwright/e2e/oidc/oidc-native.spec.ts :: OIDC Native › it should log out the user & wipe data when logging out via MAS :: Chrome
+playwright/e2e/oidc/oidc-native.spec.ts :: OIDC Native › can log in to an existing MAS account :: Chrome
+playwright/e2e/oidc/oidc-native.spec.ts :: OIDC Native › with force_verification on › verify dialog cannot be dismissed :: Chrome
+playwright/e2e/oidc/oidc-native.spec.ts :: OIDC Native › with force_verification on › continues to show verification prompt after cancelling device verification :: Chrome
+playwright/e2e/read-receipts/editing-messages-thread-roots.spec.ts :: Read receipts › editing messages › thread roots › An edit of a thread root leaves the room read :: Chrome
+playwright/e2e/read-receipts/editing-messages-in-threads.spec.ts :: Read receipts › editing messages › in threads › Marking a room as read after an edit in a thread makes it read :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Receiving a message makes a room unread :: Chrome
+playwright/e2e/read-receipts/editing-messages-in-threads.spec.ts :: Read receipts › editing messages › in threads › Editing a thread message after marking as read leaves the room read :: Chrome
+playwright/e2e/read-receipts/editing-messages-thread-roots.spec.ts :: Read receipts › editing messages › thread roots › Editing a thread root that is a reply after marking as read leaves the room read :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Reading an older thread message leaves the thread unread :: Chrome
+playwright/e2e/read-receipts/editing-messages-thread-roots.spec.ts :: Read receipts › editing messages › thread roots › Marking a room as read after an edit of a thread root that is a reply leaves it read :: Chrome
+playwright/e2e/read-receipts/editing-messages-in-threads.spec.ts :: Read receipts › editing messages › in threads › A room where all threaded edits are read is still read after restart :: Chrome
+playwright/e2e/read-receipts/high-level.spec.ts :: Read receipts › Paging up › Paging up to find old threads that were previously read leaves the room read :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Reading only one thread's message makes that thread read but not others :: Chrome
+playwright/e2e/read-receipts/editing-messages-in-threads.spec.ts :: Read receipts › editing messages › in threads › A room where all threaded edits are marked as read is still read after restart :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Reading the main timeline does not mark a thread message as read :: Chrome
+playwright/e2e/read-receipts/new-messages-thread-roots.spec.ts :: Read receipts › new messages › thread roots › Reading a thread root does not mark the thread as read :: Chrome
+playwright/e2e/read-receipts/reactions-in-threads.spec.ts :: Read receipts › reactions › in threads › A reaction to a threaded message does not make the room unread :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Marking a room with unread threads as read makes it read :: Chrome
+playwright/e2e/read-receipts/high-level.spec.ts :: Read receipts › Paging up › Paging up to find old threads that were never read keeps the room unread :: Chrome
+playwright/e2e/read-receipts/new-messages-thread-roots.spec.ts :: Read receipts › new messages › thread roots › Creating a new thread based on a reply makes the room unread :: Chrome
+playwright/e2e/read-receipts/reactions-in-threads.spec.ts :: Read receipts › reactions › in threads › Reacting to a thread message after marking as read does not make the room unread :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Sending a new thread message after marking as read makes it unread :: Chrome
+playwright/e2e/read-receipts/new-messages-thread-roots.spec.ts :: Read receipts › new messages › thread roots › Reading a thread whose root is a reply makes the thread read :: Chrome
+playwright/e2e/read-receipts/reactions-in-threads.spec.ts :: Read receipts › reactions › in threads › A room with a reaction to a threaded message is still unread after restart :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › Sending a new different-thread message after marking as read makes it unread :: Chrome
+playwright/e2e/read-receipts/reactions-thread-roots.spec.ts :: Read receipts › reactions › thread roots › A reaction to a thread root does not make the room unread :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › A room with a new threaded message is still unread after restart :: Chrome
+playwright/e2e/read-receipts/high-level.spec.ts :: Read receipts › Paging up › Looking in thread view to find old threads that were never read makes the room unread :: Chrome
+playwright/e2e/read-receipts/read-receipts.spec.ts :: Read receipts › Recognises unread messages on other thread after receiving a receipt for earlier ones :: Chrome
+playwright/e2e/read-receipts/reactions-thread-roots.spec.ts :: Read receipts › reactions › thread roots › Reading a reaction to a thread root leaves the room read :: Chrome
+playwright/e2e/read-receipts/new-messages-in-threads.spec.ts :: Read receipts › new messages › in threads › A room where all threaded messages are read is still read after restart :: Chrome
+playwright/e2e/read-receipts/read-receipts.spec.ts :: Read receipts › Considers room read if there are receipts for main and other thread :: Chrome
+playwright/e2e/read-receipts/reactions-thread-roots.spec.ts :: Read receipts › reactions › thread roots › Reacting to a thread root after marking as read makes the room unread but not the thread :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Redacting the threaded message pointed to by my receipt leaves the room read :: Chrome
+playwright/e2e/read-receipts/read-receipts.spec.ts :: Read receipts › Recognises unread messages on a thread after receiving a unthreaded receipt for earlier ones :: Chrome
+playwright/e2e/read-receipts/high-level.spec.ts :: Read receipts › Paging up › After marking room as read, paging up to find old threads that were never read leaves the room read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Reading an unread thread after a redaction of the latest message makes it read :: Chrome
+playwright/e2e/read-receipts/redactions-thread-roots.spec.ts :: Read receipts › redactions › thread roots › Sending a threaded message onto a redacted thread root leaves the room unread :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Reading an unread thread after a redaction of the latest message makes it read after restart :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Reading an unread thread after a redaction of an older message makes it read :: Chrome
+playwright/e2e/read-receipts/high-level.spec.ts :: Read receipts › Paging up › After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Marking an unread thread as read after a redaction makes it read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Sending and redacting a message after marking the thread as read leaves it read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Redacting a message after marking the thread as read leaves it read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Reacting to a redacted message leaves the thread read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Editing a redacted message leaves the thread read :: Chrome
+playwright/e2e/read-receipts/redactions-in-threads.spec.ts :: Read receipts › redactions › in threads › Reading a thread root when its only message has been redacted leaves the room read :: Chrome

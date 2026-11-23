@@ -54,3 +54,6 @@ storybook-static
 
 # :TCHAP:
 apps/desktop/
+
+# :TCHAP:
+.tchap-e2e-state/
