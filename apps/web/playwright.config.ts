@@ -15,6 +15,7 @@ import {
 } from "@playwright/test";
 
 import { type WorkerOptions } from "./playwright/services";
+import { excludedElementTestPatterns } from "./playwright/e2e/tchap/excludedElementTests";
 
 const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
 
@@ -98,6 +99,9 @@ export default defineConfig<{}, WorkerOptions>({
         stdout: "pipe",
     },
     testDir: "playwright/e2e",
+    // :TCHAP:
+    grepInvert: excludedElementTestPatterns,
+    // end :TCHAP:
     outputDir: "playwright/test-results",
     workers: 1,
     retries: process.env.CI ? 2 : 0,

@@ -1,0 +1,125 @@
+# Manually run a subset of the Playwright e2e tests (e.g. a single spec file)
+# against a fresh Tchap build.
+# Usage: Actions -> "Tchap Playwright e2e" -> Run workflow
+#   test_path: playwright/e2e (default) or e.g. playwright/e2e/room/create-room.spec.ts
+#   project:   Playwright project to run (default Chrome)
+#   grep:      optional --grep title filter
+name: Tchap Playwright e2e
+on:
+    workflow_dispatch:
+        inputs:
+            test_path:
+                description: "Test file or directory to run, relative to apps/web (must be under playwright/e2e)"
+                required: true
+                type: string
+                default: "playwright/e2e"
+            project:
+                description: "Playwright project"
+                required: true
+                type: choice
+                options: [Chrome, Firefox, WebKit, Dendrite, Pinecone]
+                default: Chrome
+            grep:
+                description: "Optional --grep pattern to filter tests by title"
+                required: false
+                type: string
+                default: ""
+    # On merge into develop_tchap or main, run the full suite (default inputs) on Chrome
+    push:
+        branches: [develop_tchap, main]
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+    cancel-in-progress: true
+
+env:
+    # These must be set for fetchdep.sh to get the right branch
+    REPOSITORY: ${{ github.repository }}
+    PR_NUMBER: ${{ github.event.pull_request.number }}
+
+jobs:
+    build:
+        name: "Build Tchap webapp"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - name: pnpm cache
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+              with:
+                  node-version: "lts/*"
+                  cache: "pnpm"
+
+            - name: Install Dependencies
+              run: "pnpm install --frozen-lockfile"
+
+            - name: "Copy the config file at the right place"
+              working-directory: apps/web
+              run: "cp config.dev.json config.json"
+
+            - name: Build
+              working-directory: apps/web
+              env:
+                  CI_PACKAGE: true
+              run: "VERSION=$(scripts/get-version-from-git.sh) pnpm run build"
+
+            - name: Upload build in artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: webapp
+                  path: apps/web/webapp
+                  retention-days: 1
+
+    playwright:
+        name: "Run Playwright tests [${{ inputs.project }}]"
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - name: pnpm cache
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+              with:
+                  node-version: "lts/*"
+                  cache: "pnpm"
+
+            - name: Install Dependencies
+              run: "pnpm install --frozen-lockfile"
+
+            - name: 📥 Download webapp artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: webapp
+                  path: apps/web/webapp
+
+            - name: Setup playwright
+              uses: ./.github/actions/setup-playwright
+              with:
+                  needs-webkit: ${{ inputs.project == 'WebKit' }}
+                  write-cache: true
+
+            - name: Run Playwright tests
+              working-directory: apps/web
+              env:
+                  TEST_PATH: ${{ inputs.test_path }}
+                  PLAYWRIGHT_PROJECT: ${{ inputs.project }}
+                  TEST_GREP: ${{ inputs.grep }}
+              run: |
+                  case "${TEST_PATH}" in
+                      playwright/e2e|playwright/e2e/*) ;;
+                      *) echo "::error::test_path must be playwright/e2e or a path under it"; exit 1 ;;
+                  esac
+                  args=("${TEST_PATH}" "--project=${PLAYWRIGHT_PROJECT}")
+                  if [ -n "${TEST_GREP}" ]; then
+                      args+=("--grep" "${TEST_GREP}")
+                  fi
+                  pnpm test:playwright -- "${args[@]}"
+
+            - name: Upload blob report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: tchap-playwright-blob-${{ inputs.project }}
+                  path: apps/web/blob-report
+                  retention-days: 7
+                  if-no-files-found: warn
