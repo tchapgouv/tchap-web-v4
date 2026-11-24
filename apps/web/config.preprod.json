@@ -31,6 +31,7 @@
     "uisi_autorageshake_app": "element-auto-uisi",
     "default_country_code": "FR",
     "show_labs_settings": false,
+    "force_verification": false,
     "features": {
         "feature_video_rooms": false,
         "feature_notification_settings2": false,

@@ -82,6 +82,8 @@ export default defineConfig({
                 "@vector-im/compound-web",
                 "react-virtuoso",
                 "react-resizable-panels",
+                "react/jsx-runtime",
+                "html-react-parser",
             ],
             plugins: [
                 // needs to transform at build time the import from compound-web to compound-web-tchap
