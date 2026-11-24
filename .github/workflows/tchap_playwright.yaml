@@ -24,9 +24,8 @@ on:
                 required: false
                 type: string
                 default: ""
-    # On merge into develop_tchap or main, run the full suite (default inputs) on Chrome
-    push:
-        branches: [develop_tchap, main]
+    pull_request:
+        types: [opened, synchronize, reopened]
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
@@ -71,7 +70,7 @@ jobs:
                   retention-days: 1
 
     playwright:
-        name: "Run Playwright tests [${{ inputs.project }}]"
+        name: "Run Playwright tests [${{ inputs.project || 'Chrome' }}]"
         needs: build
         runs-on: ubuntu-latest
         steps:
@@ -101,9 +100,10 @@ jobs:
             - name: Run Playwright tests
               working-directory: apps/web
               env:
-                  TEST_PATH: ${{ inputs.test_path }}
-                  PLAYWRIGHT_PROJECT: ${{ inputs.project }}
-                  TEST_GREP: ${{ inputs.grep }}
+                  # inputs.* are empty on push events: fall back to the dispatch defaults
+                  TEST_PATH: ${{ inputs.test_path || 'playwright/e2e' }}
+                  PLAYWRIGHT_PROJECT: ${{ inputs.project || 'Chrome' }}
+                  TEST_GREP: ${{ inputs.grep || '' }}
               run: |
                   case "${TEST_PATH}" in
                       playwright/e2e|playwright/e2e/*) ;;
@@ -113,13 +113,13 @@ jobs:
                   if [ -n "${TEST_GREP}" ]; then
                       args+=("--grep" "${TEST_GREP}")
                   fi
-                  pnpm test:playwright -- "${args[@]}"
+                  pnpm test:playwright -- "${args[@]}" --workers=3 --retries=0 --trace=off --reporter=line
 
             - name: Upload blob report
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                  name: tchap-playwright-blob-${{ inputs.project }}
+                  name: tchap-playwright-blob-${{ inputs.project || 'Chrome' }}
                   path: apps/web/blob-report
                   retention-days: 7
                   if-no-files-found: warn

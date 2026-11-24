@@ -11,6 +11,15 @@ import { fileURLToPath } from "node:url";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const webRoot = path.resolve(scriptDir, "../../..");
 const exclusionsFile = path.join(scriptDir, "excludedElementTests.ts");
+const changelogFile = path.join(scriptDir, "excludedElementTests.changelog.md");
+
+const changelogHeader = [
+    "# Changelog — excludedElementTests.ts",
+    "",
+    "Known-failure exclusion updates recorded by `updateExcludedElementTests.ts`, newest first.",
+    "Each section is grouped by run date, git commit and branch.",
+    "",
+].join("\n");
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
@@ -118,13 +127,51 @@ function failedFromErrorContexts(): FailedTest[] {
         if (!fs.existsSync(contextFile)) {
             continue;
         }
-        const name = /^Name:\s*(.+)$/m.exec(fs.readFileSync(contextFile, "utf8"))?.[1]?.trim();
+        const name = /^\s*-?\s*Name:\s*(.+)$/m.exec(fs.readFileSync(contextFile, "utf8"))?.[1]?.trim();
         if (name) {
             const parts = name.split(" >> ");
             failed.push({ parts, grepTitle: parts.join(" ") });
         }
     }
     return failed;
+}
+
+interface GitInfo {
+    branch: string;
+    hash: string;
+    title: string;
+}
+
+function readGitInfo(): GitInfo {
+    const git = (args: string[]): string => {
+        try {
+            return execFileSync("git", args, { cwd: webRoot, encoding: "utf8" }).trim();
+        } catch {
+            return "";
+        }
+    };
+    return {
+        branch: git(["rev-parse", "--abbrev-ref", "HEAD"]) || "unknown",
+        hash: git(["rev-parse", "--short", "HEAD"]) || "unknown",
+        title: git(["log", "-1", "--pretty=%s"]) || "unknown",
+    };
+}
+
+function appendChangelog(added: string[], git: GitInfo): void {
+    const date = new Date().toISOString().slice(0, 10);
+    const details =
+        added.length > 0
+            ? `Added ${added.length} exclusion pattern(s) from the last run:\n\n${added.map((pattern) => `- \`${pattern}\``).join("\n")}`
+            : "No new exclusion patterns (existing entries only normalized).";
+    const section = `## ${date} — \`${git.hash}\` ${git.title} — branch \`${git.branch}\`\n\n${details}\n\n`;
+    const content = fs.existsSync(changelogFile) ? fs.readFileSync(changelogFile, "utf8") : changelogHeader;
+    const firstSection = content.indexOf("\n## ");
+    const updated =
+        firstSection === -1
+            ? `${content.replace(/\n*$/, "\n")}\n${section}`
+            : `${content.slice(0, firstSection + 1)}${section}${content.slice(firstSection + 1)}`;
+    fs.writeFileSync(changelogFile, updated);
+    console.log(`Updated ${changelogFile}.`);
 }
 
 function readExistingPatterns(source: string): { patterns: string[]; start: number; end: number } {
@@ -183,7 +230,7 @@ function main(): void {
     }
 
     const merged = [...new Set([...existing, ...added])].sort();
-    if (added.length === 0 && merged.length === existing.length) {
+    if (JSON.stringify(merged) === JSON.stringify(existing)) {
         return;
     }
     if (dryRun) {
@@ -195,6 +242,7 @@ function main(): void {
     const updated = `${source.slice(0, start)}const excludedElementTestPatternStrings: string[] = [\n${body}\n${source.slice(end + 1)}`;
     fs.writeFileSync(exclusionsFile, updated);
     console.log(`Updated ${exclusionsFile} (${merged.length} patterns total).`);
+    appendChangelog(added, readGitInfo());
 }
 
 main();
