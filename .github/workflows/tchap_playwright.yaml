@@ -115,6 +115,13 @@ jobs:
                   fi
                   pnpm test:playwright -- "${args[@]}" --workers=3 --retries=0 --trace=off --reporter=line
 
+            # On failure, print the new exclusions (patterns + changelog section) in the
+            # log as a copy-paste block instead of opening a PR. Nothing is written to disk.
+            - name: Show new exclusions to copy-paste
+              if: failure()
+              working-directory: apps/web
+              run: node playwright/e2e/tchap/updateExcludedElementTests.ts --print
+
             - name: Upload blob report
               if: always()
               uses: actions/upload-artifact@v4

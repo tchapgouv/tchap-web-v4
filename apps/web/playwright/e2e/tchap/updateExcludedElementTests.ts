@@ -1,6 +1,7 @@
 /*
-Copyright 2026 Tchap
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
+
+Command : pnpm dlx tsx ./playwright/e2e/tchap/updateExcludedElementTests.ts
+Run after a test was run : npm test:playwright --project=Chrome --workers=3 --retries=0 --trace=off --reporter=line --shard=3/5
 */
 
 import { execFileSync } from "node:child_process";
@@ -23,6 +24,7 @@ const changelogHeader = [
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
+const printOnly = args.includes("--print");
 const resultsDirArg = args.find((arg) => arg.startsWith("--results-dir="));
 const resultsDir = path.resolve(webRoot, resultsDirArg?.slice("--results-dir=".length) ?? "playwright/test-results");
 const projectArgs = args.filter((arg) => arg.startsWith("--project="));
@@ -157,13 +159,36 @@ function readGitInfo(): GitInfo {
     };
 }
 
-function appendChangelog(added: string[], git: GitInfo): void {
+function buildChangelogSection(added: string[], git: GitInfo): string {
     const date = new Date().toISOString().slice(0, 10);
     const details =
         added.length > 0
             ? `Added ${added.length} exclusion pattern(s) from the last run:\n\n${added.map((pattern) => `- \`${pattern}\``).join("\n")}`
             : "No new exclusion patterns (existing entries only normalized).";
-    const section = `## ${date} — \`${git.hash}\` ${git.title} — branch \`${git.branch}\`\n\n${details}\n\n`;
+    return `## ${date} — \`${git.hash}\` ${git.title} — branch \`${git.branch}\`\n\n${details}\n`;
+}
+
+function printCopyPasteBlock(added: string[]): void {
+    const git = readGitInfo();
+    console.log(`::group::Tchap e2e — ${added.length} new excluded test(s) to copy-paste`);
+    console.log("Paste the patterns below into excludedElementTestPatternStrings in");
+    console.log("apps/web/playwright/e2e/tchap/excludedElementTests.ts:");
+    console.log("");
+    console.log("```ts");
+    console.log(added.map((pattern) => `    ${JSON.stringify(pattern)},`).join("\n") || "    // (no new patterns)");
+    console.log("```");
+    console.log("");
+    console.log("Paste the section below at the top of");
+    console.log("apps/web/playwright/e2e/tchap/excludedElementTests.changelog.md (after the header):");
+    console.log("");
+    console.log("```md");
+    console.log(buildChangelogSection(added, git));
+    console.log("```");
+    console.log("::endgroup::");
+}
+
+function appendChangelog(added: string[], git: GitInfo): void {
+    const section = `${buildChangelogSection(added, git)}\n`;
     const content = fs.existsSync(changelogFile) ? fs.readFileSync(changelogFile, "utf8") : changelogHeader;
     const firstSection = content.indexOf("\n## ");
     const updated =
@@ -231,6 +256,10 @@ function main(): void {
 
     const merged = [...new Set([...existing, ...added])].sort();
     if (JSON.stringify(merged) === JSON.stringify(existing)) {
+        return;
+    }
+    if (printOnly) {
+        printCopyPasteBlock(added);
         return;
     }
     if (dryRun) {
