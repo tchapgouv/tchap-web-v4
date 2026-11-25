@@ -640,7 +640,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 minify: false,
                 templateParameters: {
                     og_image_url: ogImageUrl,
-                    csp_extra_source: "https://integration.lasuite.numerique.gouv.fr/", // :TCHAP:
+                    csp_extra_source: 'https://lasuite.numerique.gouv.fr/widgets/support-v1.0.0.js', // :TCHAP:
                 },
             }),
 
@@ -746,6 +746,13 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                         from: "tchap_translations.json",
                         context: path.join(__dirname, "modules/tchap-translations/src"),
                         to: path.join(__dirname, "webapp", "modules", "tchap-translations"),
+                    },
+                    // end :TCHAP:
+                    // :TCHAP: for new help form altcha script
+                    {
+                        from: "altcha.min.js",
+                        context: getPackageRoot("altcha", ""),
+                        to: path.join(__dirname, "webapp", "altcha"),
                     },
                     // end :TCHAP:
                 ],
