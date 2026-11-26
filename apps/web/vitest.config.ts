@@ -64,6 +64,12 @@ export default defineProject({
                 find: "../modules.js",
                 replacement: resolve("./__mocks__/empty.js"),
             },
+            // :TCHAP:
+            {
+                find: "~tchap-web",
+                replacement: resolve("./"),
+            }
+            // end :TCHAP:
         ],
     },
     test: {
