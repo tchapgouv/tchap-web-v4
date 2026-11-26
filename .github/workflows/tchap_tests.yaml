@@ -4,7 +4,7 @@ name: Tests Tchap # avoid having same name as Element workflows, it causes probl
 on:
     pull_request: {}
     push:
-        branches: [develop, master]
+        branches: [develop_tchap, main]
     merge_group:
         types: [checks_requested]
     repository_dispatch:
