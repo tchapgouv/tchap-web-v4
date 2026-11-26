@@ -1,9 +1,12 @@
 # Manually run a subset of the Playwright e2e tests (e.g. a single spec file)
-# against a fresh Tchap build.
+# against a fresh Tchap build, sharded across parallel jobs like element-web's
+# build-and-test.yaml.
+#
 # Usage: Actions -> "Tchap Playwright e2e" -> Run workflow
-#   test_path: playwright/e2e (default) or e.g. playwright/e2e/room/create-room.spec.ts
-#   project:   Playwright project to run (default Chrome)
-#   grep:      optional --grep title filter
+#   test_path:   playwright/e2e (default) or e.g. playwright/e2e/room/create-room.spec.ts
+#   project:     Playwright project (default Chrome)
+#   grep:        optional --grep title filter
+#   shard_count: number of parallel shards (default 4; 1 disables sharding)
 name: Tchap Playwright e2e
 on:
     workflow_dispatch:
@@ -24,6 +27,11 @@ on:
                 required: false
                 type: string
                 default: ""
+            shard_count:
+                description: "Number of parallel shards (default 4; 1 disables sharding)"
+                required: false
+                type: string
+                default: "4"
     pull_request:
         types: [opened, synchronize, reopened]
 
@@ -70,9 +78,17 @@ jobs:
                   retention-days: 1
 
     playwright:
-        name: "Run Playwright tests [${{ inputs.project || 'Chrome' }}]"
+        name: "Run Playwright tests [${{ matrix.runner }}/${{ inputs.shard_count || 4 }}] [${{ inputs.project || 'Chrome' }}]"
         needs: build
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                runner: [1, 2, 3, 4]
+        env:
+            # Like element-web: N parallel runners on PRs, 1 on schedule/cron
+            NUM_RUNNERS: ${{ inputs.shard_count || 4 }}
+            SHARD: ${{ format('{0}/{1}', matrix.runner, inputs.shard_count || 4) }}
         steps:
             - uses: actions/checkout@v4
             - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -113,7 +129,64 @@ jobs:
                   if [ -n "${TEST_GREP}" ]; then
                       args+=("--grep" "${TEST_GREP}")
                   fi
-                  pnpm test:playwright -- "${args[@]}" --workers=3 --retries=0 --trace=off --reporter=line
+                  # Shard across the matrix runners, like element-web's vitest job
+                  args+=("--shard=${SHARD}")
+                  pnpm test:playwright -- "${args[@]}" --retries=2 --trace=off --reporter=blob
+
+            - name: Upload test results
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: test-results-${{ matrix.runner }}-${{ inputs.project || 'Chrome' }}
+                  path: apps/web/playwright/test-results
+                  retention-days: 1
+                  if-no-files-found: ignore
+
+            - name: Upload blob report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: blob-report-${{ matrix.runner }}-${{ inputs.project || 'Chrome' }}
+                  path: apps/web/blob-report
+                  retention-days: 1
+                  if-no-files-found: warn
+
+    merge-reports:
+        name: Merge blob reports
+        needs: [playwright]
+        if: always()
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+            - name: pnpm cache
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+              with:
+                  node-version: "lts/*"
+                  cache: "pnpm"
+                  cache-dependency-path: pnpm-lock.yaml
+
+            - name: Install Dependencies
+              run: "pnpm install --frozen-lockfile"
+
+            - name: Download blob reports from GitHub Actions Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: blob-report-*
+                  path: all-blob-reports
+                  merge-multiple: true
+
+            - name: Download test results from shards
+              if: failure()
+              uses: actions/download-artifact@v4
+              with:
+                  pattern: test-results-*
+                  path: apps/web/playwright/test-results
+                  merge-multiple: true
+
+            - name: Merge into HTML Report
+              if: success()
+              run: pnpm playwright merge-reports --reporter=html ./all-blob-reports
 
             # On failure, print the new exclusions (patterns + changelog section) in the
             # log as a copy-paste block instead of opening a PR. Nothing is written to disk.
@@ -122,11 +195,14 @@ jobs:
               working-directory: apps/web
               run: node playwright/e2e/tchap/updateExcludedElementTests.ts --print
 
-            - name: Upload blob report
-              if: always()
+            - name: Upload HTML report
               uses: actions/upload-artifact@v4
               with:
-                  name: tchap-playwright-blob-${{ inputs.project || 'Chrome' }}
-                  path: apps/web/blob-report
-                  retention-days: 7
-                  if-no-files-found: warn
+                  name: html-report
+                  path: playwright-report
+                  retention-days: 14
+                  if-no-files-found: error
+
+            - name: Check status of tests
+              if: failure() || cancelled()
+              run: exit 1
