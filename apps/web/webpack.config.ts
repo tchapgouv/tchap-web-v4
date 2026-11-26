@@ -835,7 +835,8 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
             // Disable host check
             allowedHosts: "all",
             // :TCHAP:
-            port: 8088,
+            //port: 8088,
+            port: 8080,
             // end :TCHAP:
         },
     };
