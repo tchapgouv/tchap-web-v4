@@ -39,6 +39,7 @@ import { ElementCallMemberEventType } from "../../call-types";
 import { LocalRoom, LocalRoomState } from "../../models/LocalRoom";
 import { useScopedRoomContext } from "../../contexts/ScopedRoomContext";
 import TchapUIFeature from "~tchap-web/src/tchap/util/TchapUIFeature";
+import { useElementCallSupport } from "../useElementCallSupport";
 import SdkConfig from "~tchap-web/src/SdkConfig";
 import { SDKContext } from "../../contexts/SDKContext.ts";
 import { ensureSlotOpen } from "../../utils/room/rtcSlot";
@@ -131,6 +132,10 @@ export const useRoomCall = (
     }, []);
     const useElementCallExclusively = !enableLegacyCallsVoip || sdkConfigEcOnly;
 
+    // :TCHAP: on PM instances, Element Call is only usable if the SFU websocket is reachable
+    const { ecUnblocked } = useElementCallSupport();
+    // end :TCHAP:
+
     const serverIsConfiguredForElementCall = useEventEmitterState(
         CallStore.instance,
         CallStoreEvent.TransportsUpdated,
@@ -197,7 +202,7 @@ export const useRoomCall = (
         const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
             // :TCHAP:
-            if (TchapUIFeature.isFeatureActiveForHomeserver("feature_use_ec_in_dm")) {
+            if (TchapUIFeature.isFeatureActiveForHomeserver("feature_use_ec_in_dm") && ecUnblocked) {
                 options.push(PlatformCallType.ElementCall);
             } else {
                 options.push(PlatformCallType.LegacyCall);
@@ -235,6 +240,9 @@ export const useRoomCall = (
         mayCreateElementCalls,
         useElementCallExclusively,
         groupCall?.widget.type,
+        // :TCHAP:
+        ecUnblocked,
+        // end :TCHAP:
     ]);
 
     let widget: IApp | undefined;

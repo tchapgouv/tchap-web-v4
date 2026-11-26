@@ -58,6 +58,7 @@ import { ElementCallMemberEventType } from "../../../../call-types";
 import { SDKContext } from "../../../../contexts/SDKContext";
 import { SDKContextClass } from "../../../../contexts/SDKContextClass.ts";
 import TchapUIFeature from "../../../..//tchap/util/TchapUIFeature.ts";
+import TchapElementCallSupport from "~tchap-web/src/tchap/util/TchapElementCallSupport.ts";
 import TchapRoomUtils from "../../../../tchap/util/TchapRoomUtils.ts";
 import { TchapRoomType } from "../../../../tchap/@types/tchap.ts";
 import Modal from "../../../../Modal.tsx";
@@ -678,6 +679,48 @@ describe("RoomHeader", () => {
             const { container } = render(<RoomHeader room={room} />, getWrapper());
 
             expect(queryByLabelText(container, "Video call")).toBeNull();
+        });
+
+        describe("element call websocket support", () => {
+            /**
+             * Stubs the element call support detection: true if the sfu websocket is reachable
+             * on a pm instance, and always true on other instances.
+             */
+            const mockElementCallSupport = (ecUnblocked: boolean): void => {
+                vi.spyOn(TchapElementCallSupport, "isPersistedSupported").mockReturnValue(ecUnblocked);
+                vi.spyOn(TchapElementCallSupport, "getSupportState").mockResolvedValue({ ecUnblocked });
+            };
+
+            it("hides the group video call button when the sfu websocket is blocked", async () => {
+                mockElementCallSupport(false);
+                mockRoomMembers(room, 4);
+                const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+                await waitFor(() => expect(queryByLabelText(container, "Video call")).toBeNull());
+            });
+
+            it("shows the group video call button when the sfu websocket is reachable", async () => {
+                mockElementCallSupport(true);
+                mockRoomMembers(room, 4);
+                render(<RoomHeader room={room} />, getWrapper());
+
+                await waitFor(() => expect(screen.getByRole("button", { name: "Video call" })).toBeInTheDocument());
+            });
+
+            it("keeps the legacy dm call buttons when the sfu websocket is blocked", async () => {
+                vi.mocked(DMRoomMap.shared().getUserIdForRoomId).mockImplementation((roomId) =>
+                    roomId === room.roomId ? "@bob:example.org" : undefined,
+                );
+                room.getMember = vi.fn((userId) => new RoomMember(room.roomId, userId));
+                mockRoomMembers(room, 2);
+                mockElementCallSupport(false);
+                const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+                await waitFor(() => {
+                    expect(queryByLabelText(container, "Video call")).not.toBeNull();
+                    expect(queryByLabelText(container, "Voice call")).not.toBeNull();
+                });
+            });
         });
     });
 });

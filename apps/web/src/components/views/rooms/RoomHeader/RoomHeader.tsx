@@ -25,6 +25,7 @@ import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStore
 import { useRoomMemberCount, useRoomMembers } from "../../../../hooks/useRoomMembers.ts";
 import { _t } from "../../../../languageHandler";
 import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/useRoomCall";
+import { useElementCallSupport } from "../../../../hooks/useElementCallSupport";
 import { useRoomThreadNotifications } from "../../../../hooks/room/useRoomThreadNotifications.ts";
 import { useGlobalNotificationState } from "../../../../hooks/useGlobalNotificationState.ts";
 import { useFeatureEnabled } from "../../../../hooks/useSettings.ts";
@@ -324,6 +325,8 @@ function RoomHeaderButtons({ room, extraButtons }: { room: Room; extraButtons?: 
 
     // :TCHAP:
     const { currentRoomType }  = useTchapRoom(room);
+    // on PM instances, the group call button is only shown if the SFU websocket is reachable
+    const { ecUnblocked } = useElementCallSupport();
 
     return (
         <>
@@ -339,6 +342,7 @@ function RoomHeaderButtons({ room, extraButtons }: { room: Room; extraButtons?: 
                     {!isVideoRoom && videoCallButton}
                     */ }
                     {!isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_group_call") &&
+                        ecUnblocked &&
                         currentRoomType !== TchapRoomType.Forum &&
                         !isVideoRoom && videoCallButton}
 
