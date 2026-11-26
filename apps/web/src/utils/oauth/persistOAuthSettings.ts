@@ -79,3 +79,15 @@ export function loadAuthContext(): Context | null {
 export function storeAuthContext(context: Context): void {
     sessionStorage.setItem(stateSessionStorageKey, JSON.stringify(context));
 }
+
+
+// :TCHAP:
+const stateIdtokenStorageKey = "mx_oauth_id_token";
+export const persistOAuthIdToken = (idToken: string) : void => {
+    localStorage.setItem(stateIdtokenStorageKey, idToken);
+}
+
+export const getOAuthIdToken = () : string | null =>{
+    return localStorage.getItem(stateIdtokenStorageKey);
+}
+// end :TCHAP:

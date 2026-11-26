@@ -465,7 +465,8 @@ export default abstract class BasePlatform {
             application_type: "web",
             tos_uri: config.oidc_metadata?.tos_uri ?? config.terms_and_conditions_links?.[0]?.url,
             policy_uri: config.oidc_metadata?.policy_uri ?? config.privacy_policy_url,
-        };
+            id_token_signed_response_alg: "RS256", // :TCHAP: needed by MAS end_session
+        } as OAuthRegistrationRequest; // :TCHAP: id_token_signed_response_alg is not in the type
     }
 
     /**

@@ -6,14 +6,16 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import { OAuth2, OAuth2Error, type ValidatedAuthMetadata } from "matrix-js-sdk/src/matrix";
+import { generateScope, type MatrixClient, OAuth2, OAuth2Error, type ValidatedAuthMetadata } from "matrix-js-sdk/src/matrix";
 import { secureRandomString } from "matrix-js-sdk/src/randomstring";
 
 import { OAuthClientError } from "./error";
 import PlatformPeg from "../../PlatformPeg";
 import { type URLParams } from "../../vector/url_utils.ts";
-import { getRedirectUrl, loadAuthContext, storeAuthContext } from "./persistOAuthSettings.ts";
+import { getOAuthIdToken, getRedirectUrl, loadAuthContext, storeAuthContext } from "./persistOAuthSettings.ts";
 import type TauriPlatform from "~tchap-web/src/vector/platform/tchap-desktop/TauriPlatform.ts";
+
+import { tchapCreateSignoutRequest } from "~tchap-web/src/tchap/util/TchapSignoutRequest.ts";
 
 const RESPONSE_MODE = "fragment";
 
@@ -55,6 +57,7 @@ export const startOAuthLogin = async (
         getRedirectUrl(),
         RESPONSE_MODE,
         isRegistration ? "create" : undefined,
+        "openid " + generateScope(auth.context.deviceId) // :TCHAP: added open Id scope manually to get id token
     );
 
     // :TCHAP: desktop-tauri-browser
@@ -140,17 +143,23 @@ export const completeOAuthLogin = async (
         accessToken: bearerToken.access_token,
         refreshToken: bearerToken.refresh_token,
         clientId: context.authContext.clientId,
+        idToken: bearerToken.id_token
     };
 };
 
 // :TCHAP: oidc-logout - logout from MAS TODO
-// export const createSignoutRequest = async (accessToken?: string, refreshToken?: string): Promise<string> => {
-//     const context = loadAuthContext();
-//     const oauth = await new OAuth2(context!.metadata, context!.authContext)
-//     oauth.
-//     return client.createSignoutRequest({
-//         id_token_hint: idToken,
-//         post_logout_redirect_uri: PlatformPeg.get()!.getOAuthCallbackUrl().href
-//     })
-// }
-// end :TCHAP: 
+export const createSignoutRequest = async (client: MatrixClient): Promise<string | null> => {
+    const metadata = await client.getAuthMetadata();
+    const idAccessToken = getOAuthIdToken();
+    if (!idAccessToken) {
+        console.log("*** [TCHAP] Can not find id token, cant create signout request to MAS")
+        return null
+    }
+
+    return tchapCreateSignoutRequest({
+        url: metadata.end_session_endpoint,
+        id_token_hint: idAccessToken,
+        post_logout_redirect_uri: PlatformPeg.get()!.getOAuthCallbackUrl().href
+    })
+}
+// end :TCHAP:
