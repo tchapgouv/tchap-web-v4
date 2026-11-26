@@ -42,6 +42,10 @@
             "server_name": "Education"
         },
         {
+            "base_url": "https://matrix.agent.education2.tchap.gouv.fr",
+            "server_name": "Education 2"
+        },
+        {
             "base_url": "https://matrix.agent.elysee.tchap.gouv.fr",
             "server_name": "Elysée"
         },
@@ -56,6 +60,10 @@
         {
             "base_url": "https://matrix.agent.interieur.tchap.gouv.fr",
             "server_name": "Interieur"
+        },
+        {
+            "base_url": "https://matrix.agent.interieur2.tchap.gouv.fr",
+            "server_name": "Interieur 2"
         },
         {
             "base_url": "https://matrix.agent.intradef.tchap.gouv.fr",
@@ -93,8 +101,7 @@
         "feature_notification_settings2": false,
         "feature_new_room_decoration_ui": true,
         "feature_rust_crypto": true,
-        "feature_latex_maths": true,
-        "feature_new_room_list": false
+        "feature_latex_maths": true
     },
     "feedback": {
         "existing_issues_url": "https://github.com/tchapgouv/tchap-web-v4/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
@@ -112,10 +119,12 @@
             "agent.diplomatie.tchap.gouv.fr",
             "agent.dinum.tchap.gouv.fr",
             "agent.education.tchap.gouv.fr",
+            "agent.education2.tchap.gouv.fr",
             "agent.elysee.tchap.gouv.fr",
             "agent.externe.tchap.gouv.fr",
             "agent.finances.tchap.gouv.fr",
             "agent.interieur.tchap.gouv.fr",
+            "agent.interieur2.tchap.gouv.fr",
             "agent.intradef.tchap.gouv.fr",
             "agent.justice.tchap.gouv.fr",
             "agent.pm.tchap.gouv.fr",
@@ -132,10 +141,12 @@
         "https://matrix.agent.diplomatie.tchap.gouv.fr": false,
         "https://matrix.agent.dinum.tchap.gouv.fr": false,
         "https://matrix.agent.education.tchap.gouv.fr": false,
+        "https://matrix.agent.education2.tchap.gouv.fr": false,
         "https://matrix.agent.elysee.tchap.gouv.fr": false,
         "https://matrix.agent.externe.tchap.gouv.fr": false,
         "https://matrix.agent.finances.tchap.gouv.fr": false,
         "https://matrix.agent.interieur.tchap.gouv.fr": false,
+        "https://matrix.agent.interieur2.tchap.gouv.fr": false,
         "https://matrix.agent.intradef.tchap.gouv.fr": false,
         "https://matrix.agent.justice.tchap.gouv.fr": false,
         "https://matrix.agent.pm.tchap.gouv.fr": false,
@@ -220,8 +231,10 @@
             "agent.social.tchap.gouv.fr",
             "agent.finances.tchap.gouv.fr",
             "agent.education.tchap.gouv.fr",
+            "agent.education2.tchap.gouv.fr",
             "agent.collectivites.tchap.gouv.fr",
             "agent.interieur.tchap.gouv.fr",
+            "agent.interieur2.tchap.gouv.fr",
             "agent.intradef.tchap.gouv.fr"
         ],
         "feature_screenshare_call": ["*"],
@@ -234,6 +247,7 @@
             "agent.dev-durable.tchap.gouv.fr",
             "agent.dinum.tchap.gouv.fr",
             "agent.education.tchap.gouv.fr",
+            "agent.education2.tchap.gouv.fr",
             "agent.externe.tchap.gouv.fr",
             "agent.finances.tchap.gouv.fr",
             "agent.intradef.tchap.gouv.fr",
@@ -243,7 +257,7 @@
         ],
         "feature_red_list": ["*"],
         "feature_qrcode_login": [],
-        "new_support_tool": []
+        "new_support_tool": ["*"]
     },
     "tchap_desktop": {
         "deep_link_scheme": "tchap"
