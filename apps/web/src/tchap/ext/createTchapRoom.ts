@@ -38,13 +38,10 @@ export default class TchapCreateRoom {
 
         switch (tchapRoomType) {
             case TchapRoomType.Forum: {
-                // Space "Forum" only for space members and not encrypted
-                if (parentSpace) {
-                    createRoomOpts.visibility = Visibility.Private;
-                } else {
-                    //"Forum" only for tchap members and not encrypted
-                    createRoomOpts.visibility = Visibility.Public;
-                }
+                //"Forum" only for tchap members and not encrypted
+                // Searchable for all users even outside space
+                createRoomOpts.visibility = Visibility.Public;
+                
                 createRoomOpts.preset = Preset.PublicChat;
                 // Here we could have used createRoomOpts.accessRule directly,
                 // but since accessRules are a custom Tchap event, it is ignored by later code.
@@ -57,12 +54,8 @@ export default class TchapCreateRoom {
                     state_key: "",
                 });
 
-                //Open to space by default
-                if (parentSpace) {
-                    opts.joinRule = JoinRule.Restricted;
-                } else {
-                    opts.joinRule = JoinRule.Public;
-                }
+                // Open to everyone by default, even outside of the space
+                opts.joinRule = JoinRule.Public;
                 opts.encryption = false;
                 opts.historyVisibility = HistoryVisibility.Shared;
                 break;
